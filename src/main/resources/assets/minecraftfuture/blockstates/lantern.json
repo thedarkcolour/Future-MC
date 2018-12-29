@@ -1,0 +1,18 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraftfuture:lantern"
+  },
+  "variants": {
+    "inventory": { "model": "minecraftfuture:item/lantern"},
+    "normal": { "model": "minecraftfuture:lantern"},
+    "facing": {
+      "north": { "model": "minecraftfuture:lantern"},
+      "south": { "model": "minecraftfuture:lantern"},
+      "west": { "model": "minecraftfuture:lantern"},
+      "east": { "model": "minecraftfuture:lantern"},
+      "up": { "model": "minecraftfuture:lantern"},
+      "down": { "model": "minecraftfuture:hanging_lantern"}
+        }
+  }
+}

@@ -1,0 +1,16 @@
+[
+{
+  "modid": "minecraftfuture",
+  "name": "The Future",
+  "description": "Adds features from future updates.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Herobrine"],
+  "credits": "Herobrine knows all.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

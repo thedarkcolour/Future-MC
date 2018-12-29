@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "xxx",
+        "xax",
+        "xxx"
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "minecraft:iron_nugget",
+            "data": 0
+        },
+        "a":
+        {
+            "item": "minecraft:torch",
+            "data": 0
+        }
+    },
+    "result":
+    {
+        "item": "minecraftfuture:lantern",
+        "count": 1,
+        "data": 0
+    }
+}
