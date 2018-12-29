@@ -1,0 +1,3 @@
+Version 0.0.1 - First version! Blocks added:
+    Lantern - A more powerful light source than a torch that can hang on the ceiling or sit on the floor.
+    Stonecutter - A decorative block. Recipe not yet implemented.
