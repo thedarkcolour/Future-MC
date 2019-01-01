@@ -1,4 +1,11 @@
 tile.minecraftfuture.lantern.name=Lantern
 tile.minecraftfuture.stonecutter.name=Stonecutter
+tile.minecraftfuture.flowerwhite.name=Lily of the Valley
+tile.minecraftfuture.flowerblack.name=Wither Rose
+tile.minecraftfuture.flowerblue.name=Cornflower
+item.minecraftfuture.dyeblue.name=Blue Dye
+item.minecraftfuture.dyewhite.name=White Dye
+item.minecraftfuture.dyeblack.name=Black Dye
+item.minecraftfuture.trident.name=Trident
 
 itemGroup.Future=The Future

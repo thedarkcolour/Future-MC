@@ -1,6 +1,7 @@
 package com.herobrine.future.blocks;
 
 import com.herobrine.future.futurejava;
+import com.herobrine.future.items.futureItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -34,9 +35,9 @@ public class lantern extends Block {
     public lantern() {
         super(Material.IRON);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
-        setUnlocalizedName(futurejava.MODID + ".lantern");
+        setUnlocalizedName(futureItems.MODID + ".lantern");
         setRegistryName(lantern);
-        setCreativeTab(futurejava.futuretab);
+        setCreativeTab(futureItems.futuretab);
         setLightLevel(1);
         setSoundType(SoundType.METAL);
     }
@@ -45,13 +46,12 @@ public class lantern extends Block {
     @SideOnly(Side.CLIENT)
     public void initModel() {
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 1, new ModelResourceLocation(getRegistryName(), "hanging"));
     }
 
     @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        if (facing.getAxis().isVertical() && this.canAttachTo(worldIn, pos.down(), facing)) {
-            return this.getDefaultState().withProperty(FACING, facing);
+        if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR) {
+            return this.getDefaultState().withProperty(FACING, EnumFacing.DOWN);
         } else {
             for (EnumFacing enumfacing : EnumFacing.Plane.VERTICAL) {
                 if (this.canAttachTo(worldIn, pos.offset(enumfacing.getOpposite()), enumfacing)) {
@@ -74,8 +74,7 @@ public class lantern extends Block {
 
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-        IBlockState downState = worldIn.getBlockState(pos.down());
-        if (!downState.isTopSolid() && downState.getBlockFaceShape(worldIn, pos.down(), EnumFacing.UP) != BlockFaceShape.SOLID) {
+        if (!canPlaceBlockAt(worldIn, pos)) {
             this.dropBlockAsItem(worldIn, pos, state, 0);
             worldIn.setBlockToAir(pos);
         }
@@ -104,24 +103,21 @@ public class lantern extends Block {
 
     @Override    /**Place-able on given side**/
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-            if (this.canPlaceAt(worldIn, pos)) { return true; }
-            else return false;
+        return this.canPlaceAt(worldIn, pos);
     }
     //private booleans
     private boolean canAttachTo(World worldIn, BlockPos pos, EnumFacing facing) {
         IBlockState state = worldIn.getBlockState(pos);
         boolean flag = isExceptBlockForAttachWithPiston(state.getBlock());
-        return !flag && state.getBlockFaceShape(worldIn, pos, facing) == BlockFaceShape.SOLID && !state.canProvidePower();
+        return !flag && this.canPlaceBlockAt(worldIn, pos);
     }
 
     private boolean canPlaceAt(World worldIn, BlockPos pos) {
-            BlockPos blockpos = pos.down();
-            IBlockState state = worldIn.getBlockState(blockpos);
-            Block block = state.getBlock();
-        if (block == this) {return false;}
-        if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR & worldIn.getBlockState(pos.up()).getBlock() == Blocks.AIR) {return false;}
-        else return true;
-        }
+        BlockPos blockpos = pos.down();
+        IBlockState state = worldIn.getBlockState(blockpos);
+        Block block = state.getBlock();
+        return block != this && !(worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR & worldIn.getBlockState(pos.up()).getBlock() == Blocks.AIR);
+    }
 
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         switch(state.getValue(FACING)) {
@@ -134,10 +130,5 @@ public class lantern extends Block {
         }
     }
 
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
-    {
-        return BlockFaceShape.UNDEFINED;
-    }
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) { return BlockFaceShape.UNDEFINED; }
 }
-
-

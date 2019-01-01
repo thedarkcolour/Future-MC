@@ -22,18 +22,11 @@ public class futurejava {
 
     public static final String MODID = "minecraftfuture";
     public static final String MODNAME = "Minecraft Future";
-    public static final String VERSION = "0.0.1";
+    public static final String VERSION = "0.0.2";
 
     @SidedProxy(clientSide = "com.herobrine.future.proxy.ClientProxy",
                 serverSide = "com.herobrine.future.proxy.ServerProxy")
     public static CommonProxy proxy;
-
-    public static CreativeTabs futuretab = new CreativeTabs("Future") {
-        @Override    //New creative tab
-        public ItemStack getTabIconItem() {
-            return new ItemStack(futureBlocks.lantern);
-        }
-    };
 
     @Mod.Instance
     public static futurejava instance;

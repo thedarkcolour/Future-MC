@@ -1,6 +1,7 @@
 package com.herobrine.future.blocks;
 
 import com.herobrine.future.futurejava;
+import com.herobrine.future.items.futureItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -29,9 +30,9 @@ public class stonecutter extends Block {
 
     public stonecutter() {
         super(Material.ROCK);
-        setUnlocalizedName(futurejava.MODID + ".stonecutter");
+        setUnlocalizedName(futureItems.MODID + ".stonecutter");
         setRegistryName("stonecutter");
-        setCreativeTab(futurejava.futuretab);
+        setCreativeTab(futureItems.futuretab);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
 

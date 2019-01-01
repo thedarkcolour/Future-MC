@@ -5,7 +5,7 @@
   },
   "variants": {
     "inventory": { "model": "minecraftfuture:item/lantern"},
-    "normal": { "model": "minecraftfuture:lantern"},
+    "normal": [{}],
     "facing": {
       "north": { "model": "minecraftfuture:lantern"},
       "south": { "model": "minecraftfuture:lantern"},

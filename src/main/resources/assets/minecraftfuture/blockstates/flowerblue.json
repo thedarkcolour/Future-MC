@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraftfuture:flowerblue"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": {"model": "minecraftfuture:item/flowerblue"}
+  }
+}
