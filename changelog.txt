@@ -1,3 +1,17 @@
+Version 0.0.2 - An update! New things:
+    Lantern - Now properly hangs from blocks like the fence.
+    *Trident* - A non-functional combat item that is planned to deal 9 damage and have an attack speed
+                of 1.1.
+    *Cornflower* - Decorative blue flower. Planned to be crafted into Blue Dye.
+    *Blue Dye* - A substitute for Lapis Lazuli in crafting recipes that require a blue dye.
+    *Lily of the Valley* - Decorative white flower. Planned to be crafted into White Dye.
+    *White Dye* - A substitute for bonemeal in crafting recipes that require a white dye.
+    *Wither Rose* - Harmful dark flower that is planned to inflict Wither when the player walks over it. 
+                    Planned to be crafted into Black Dye.
+    *Black Dye* - A substitute for Ink Sacs in recipes that require a black dye.
+
+
+
 Version 0.0.1 - First version! Blocks added:
-    Lantern - A more powerful light source than a torch that can hang on the ceiling or sit on the floor.
-    Stonecutter - A decorative block. Recipe not yet implemented.
+    *Lantern* - An upgraded light source that can hang on the ceiling or sit on the floor.
+    *Stonecutter* - A decorative block. Recipe not yet implemented.
