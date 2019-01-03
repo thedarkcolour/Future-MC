@@ -1,18 +1,17 @@
 package com.herobrine.future.items;
 
-import com.herobrine.future.utils.futureItems;
-import com.herobrine.future.utils.futurejava;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class dyeblue extends Item {
-    public dyeblue() {
-        setRegistryName("dyeblue");
-        setUnlocalizedName(futurejava.MODID + ".dyeblue");
-        setCreativeTab(futureItems.futuretab);
+public class suspiciousstew extends ItemFood {
+    public suspiciousstew(String name, int amount, float saturation, boolean isWolfFood) {
+        super(amount, saturation,isWolfFood);
+        setMaxStackSize(1);
+        setRegistryName(name);
+        setUnlocalizedName(name);
     }
 
     @SideOnly(Side.CLIENT)

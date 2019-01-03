@@ -1,8 +1,10 @@
 package com.herobrine.future.blocks;
 
-import com.herobrine.future.futurejava;
-import com.herobrine.future.items.futureItems;
+import com.herobrine.future.utils.futurejava;
+import com.herobrine.future.utils.futureItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockFlower;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -36,10 +38,11 @@ public class lantern extends Block {
         super(Material.IRON);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
         setUnlocalizedName(futureItems.MODID + ".lantern");
-        setRegistryName(lantern);
+        setRegistryName("lantern");
         setCreativeTab(futureItems.futuretab);
         setLightLevel(1);
         setSoundType(SoundType.METAL);
+        setHarvestLevel("pickaxe", 1);
     }
 
 
@@ -48,6 +51,7 @@ public class lantern extends Block {
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
 
+    //Overrides
     @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR) {
@@ -61,7 +65,7 @@ public class lantern extends Block {
             return this.getDefaultState();
         }
     }
-    //Overrides
+
     @Override
     protected BlockStateContainer createBlockState() { return new BlockStateContainer(this, FACING); }
 
@@ -116,7 +120,8 @@ public class lantern extends Block {
         BlockPos blockpos = pos.down();
         IBlockState state = worldIn.getBlockState(blockpos);
         Block block = state.getBlock();
-        return block != this && !(worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR & worldIn.getBlockState(pos.up()).getBlock() == Blocks.AIR);
+        Block blockdown = worldIn.getBlockState(blockpos).getBlock();
+        return block != this && !((worldIn.getBlockState(blockpos).getBlock() == Blocks.AIR || BlockBush.class.isAssignableFrom(blockdown.getClass())) & worldIn.getBlockState(pos.up()).getBlock() == Blocks.AIR);
     }
 
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {

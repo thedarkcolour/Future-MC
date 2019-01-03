@@ -1,0 +1,12 @@
+{
+  "result": {
+    "item": "minecraftfuture:dyewhite"
+  },
+  "ingredients": [
+    {
+      "item": "minecraftfuture:flowerwhite",
+      "data": 0
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

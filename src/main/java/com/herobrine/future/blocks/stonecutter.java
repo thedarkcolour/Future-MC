@@ -1,7 +1,7 @@
 package com.herobrine.future.blocks;
 
-import com.herobrine.future.futurejava;
-import com.herobrine.future.items.futureItems;
+import com.herobrine.future.utils.futurejava;
+import com.herobrine.future.utils.futureItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -34,6 +34,7 @@ public class stonecutter extends Block {
         setRegistryName("stonecutter");
         setCreativeTab(futureItems.futuretab);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+        setHarvestLevel("pickaxe", 1);
     }
 
     @SideOnly(Side.CLIENT)

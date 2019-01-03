@@ -1,5 +1,6 @@
 package com.herobrine.future.items;
 
+import com.herobrine.future.utils.futureItems;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;

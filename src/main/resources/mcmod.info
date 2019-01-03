@@ -1,10 +1,10 @@
 [
 {
   "modid": "minecraftfuture",
-  "name": "The Future",
+  "name": "Minecraft Future",
   "description": "Adds features from future updates.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
+  "version": "0.0.3",
+  "mcversion": "1.12",
   "url": "",
   "updateUrl": "",
   "authorList": ["Herobrine"],

@@ -1,6 +1,6 @@
 package com.herobrine.future.blocks;
 
-import com.herobrine.future.items.futureItems;
+import com.herobrine.future.utils.futureItems;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
