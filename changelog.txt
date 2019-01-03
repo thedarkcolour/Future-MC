@@ -1,3 +1,10 @@
+Version 0.0.3 - An update! New things:
+    Lantern - No longer placeable on plants. Planning to limit placement even further so it cannot be placeable on slabs or stairs.
+    Wither Rose - Now deals damage and inflicts Wither effect. Now emits particles.
+    Dyes - Now craftable from their respective flowers and equivalents.
+    *New Config File* - All features are toggleable in this config file.
+    Many small refactors all around to accomadate config file.
+    
 Version 0.0.2 - An update! New things:
     Lantern - Now properly hangs from blocks like the fence.
     *Trident* - A non-functional combat item that is planned to deal 9 damage and have an attack speed
