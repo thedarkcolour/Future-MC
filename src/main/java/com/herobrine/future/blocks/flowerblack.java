@@ -35,7 +35,7 @@ public class flowerblack extends BlockBush { //Adds black flower
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
 
-    @SideOnly(Side.CLIENT)
+    @SideOnly(Side.CLIENT) //Particle
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
             double d0 = (double)pos.getX() + rand.nextDouble() * 0.5D + 0.2D;
             double d1 = (double)pos.getY() + rand.nextDouble() * 0.3D + 0.2D;
