@@ -1,7 +1,7 @@
 package com.herobrine.future.blocks;
 
 import com.herobrine.future.utils.futurejava;
-import com.herobrine.future.utils.futureItems;
+import com.herobrine.future.utils.init;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockFlower;
@@ -37,10 +37,11 @@ public class lantern extends Block {
     public lantern() {
         super(Material.IRON);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
-        setUnlocalizedName(futureItems.MODID + ".lantern");
+        setUnlocalizedName(init.MODID + ".lantern");
         setRegistryName("lantern");
-        setCreativeTab(futureItems.futuretab);
+        setCreativeTab(init.futuretab);
         setLightLevel(1);
+        setHardness(5);
         setSoundType(SoundType.METAL);
         setHarvestLevel("pickaxe", 1);
     }

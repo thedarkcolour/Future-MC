@@ -1,7 +1,7 @@
 package com.herobrine.future.blocks;
 
 import com.herobrine.future.utils.futurejava;
-import com.herobrine.future.utils.futureItems;
+import com.herobrine.future.utils.init;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -30,11 +30,12 @@ public class stonecutter extends Block {
 
     public stonecutter() {
         super(Material.ROCK);
-        setUnlocalizedName(futureItems.MODID + ".stonecutter");
+        setUnlocalizedName(init.MODID + ".stonecutter");
         setRegistryName("stonecutter");
-        setCreativeTab(futureItems.futuretab);
+        setCreativeTab(init.futuretab);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-        setHarvestLevel("pickaxe", 1);
+        setHarvestLevel("pickaxe", 0);
+        setHardness(5.0F);
     }
 
     @SideOnly(Side.CLIENT)

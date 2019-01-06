@@ -1,11 +1,10 @@
 {
   "result": {
-    "item": "minecraftfuture:dyeblack"
+    "item": "dyeblack"
   },
   "ingredients": [
     {
-      "item": "minecraftfuture:flowerblack",
-      "data": 0
+      "item": "flowerblack"
     }
   ],
   "type": "minecraft:crafting_shapeless"

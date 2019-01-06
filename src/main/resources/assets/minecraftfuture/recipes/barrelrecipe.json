@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "xax",
+    "x x",
+    "xax"
+  ],
+  "key":
+  {
+    "x":
+    {
+      "item": "minecraft:planks",
+      "data": 0
+    },
+    "a":
+    {
+      "item": "minecraft:wooden_slab",
+      "data": 0
+    }
+  },
+  "result":
+  {
+    "item": "minecraftfuture:barrel"
+  }
+}

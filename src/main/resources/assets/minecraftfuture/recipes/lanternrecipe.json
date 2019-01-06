@@ -10,19 +10,15 @@
     {
         "x":
         {
-            "item": "minecraft:iron_nugget",
-            "data": 0
+            "item": "minecraft:iron_nugget"
         },
         "a":
         {
-            "item": "minecraft:torch",
-            "data": 0
+            "item": "minecraft:torch"
         }
     },
     "result":
     {
-        "item": "minecraftfuture:lantern",
-        "count": 1,
-        "data": 0
+        "item": "lantern"
     }
 }

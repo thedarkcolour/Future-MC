@@ -1,6 +1,7 @@
 package com.herobrine.future.blocks;
 
-import com.herobrine.future.utils.futureItems;
+import com.herobrine.future.utils.Config;
+import com.herobrine.future.utils.init;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -8,6 +9,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
@@ -25,8 +27,8 @@ public class flowerblack extends BlockBush { //Adds black flower
     public flowerblack() {
         super(Material.PLANTS);
         setRegistryName("flowerblack");
-        setUnlocalizedName(futureItems.MODID + ".flowerblack");
-        setCreativeTab(futureItems.futuretab);
+        setUnlocalizedName(init.MODID + ".flowerblack");
+        setCreativeTab(init.futuretab);
         setSoundType(SoundType.PLANT);
     }
 
@@ -35,7 +37,7 @@ public class flowerblack extends BlockBush { //Adds black flower
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
 
-    @SideOnly(Side.CLIENT) //Particle
+    @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
             double d0 = (double)pos.getX() + rand.nextDouble() * 0.5D + 0.2D;
             double d1 = (double)pos.getY() + rand.nextDouble() * 0.3D + 0.2D;
@@ -44,12 +46,16 @@ public class flowerblack extends BlockBush { //Adds black flower
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) { {
+    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+        if(Config.drose) {
             if (entityIn instanceof EntityLivingBase) {
-                ((EntityLivingBase)entityIn).addPotionEffect(new PotionEffect(MobEffects.WITHER, 40));
+                ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.WITHER, 40));
                 entityIn.attackEntityFrom(DamageSource.WITHER, 1.0F);
-
             }
         }
+    }
+
+    protected boolean canSustainBush(IBlockState state) {
+        return state.getBlock() == Blocks.SOUL_SAND;
     }
 }

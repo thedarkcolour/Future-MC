@@ -1,6 +1,6 @@
 package com.herobrine.future.items;
 
-import com.herobrine.future.utils.futureItems;
+import com.herobrine.future.utils.init;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
@@ -9,9 +9,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class dyeblack extends Item {
     public dyeblack() {
-        setUnlocalizedName(futureItems.MODID + ".dyeblack");
+        setUnlocalizedName(init.MODID + ".dyeblack");
         setRegistryName("dyeblack");
-        setCreativeTab(futureItems.futuretab);
+        setCreativeTab(init.futuretab);
     }
 
     @SideOnly(Side.CLIENT)

@@ -1,6 +1,6 @@
 package com.herobrine.future.blocks;
 
-import com.herobrine.future.utils.futureItems;
+import com.herobrine.future.utils.init;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -14,8 +14,8 @@ public class flowerblue extends BlockBush { //Adds blue flower
     public flowerblue() {
         super(Material.PLANTS);
         setRegistryName("flowerblue");
-        setUnlocalizedName(futureItems.MODID + ".flowerblue");
-        setCreativeTab(futureItems.futuretab);
+        setUnlocalizedName(init.MODID + ".flowerblue");
+        setCreativeTab(init.futuretab);
         setSoundType(SoundType.PLANT);
     }
 
