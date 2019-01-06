@@ -1,6 +1,6 @@
 Version 0.0.4 - Finally Done! New things:
     Server Proxy - Exists once again. Fixes issue # 1.
-    Wither Rose - Now has an option in the config to toggle whether it does damage or not.
+    Wither Rose - Now has an option in the config to toggle whether it does damage or not. Now placeable on soul sand.
     Barrel - Now craftable: Can store items like the one from 1.14 as well! Drops inventory when destroyed.
     Stonecutter - No longer breaks instantly.
     Lantern - No longer breaks instantly.
