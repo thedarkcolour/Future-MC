@@ -10,7 +10,7 @@ public class worldgenhelper {
 
     public static BlockPos getGroundPos(World world, int x, int z) {
         final BlockPos topPos = world.getHeight(new BlockPos(x, 0, z));
-        if (topPos.getY() == 0) {
+        if (topPos.getY() > 125) {
             return null;
         }
 
@@ -27,6 +27,16 @@ public class worldgenhelper {
 
         return pos.up();
     }
+
+    /**
+    public static BlockPos getNetherPos(World worldIn, int x, int z, BlockPos pos) {
+        IBlockState state = worldIn.getBlockState(pos);
+        for(int i = 0; 0>128; i++) {
+            if (worldIn.getBlockState(pos.down()).getBlock() != Blocks.SOUL_SAND && state.getBlock() != Blocks.AIR) {
+                return null;
+            }
+        }
+    }*/
 
     public static boolean isTreeBlock(IBlockState blockState, World world, BlockPos pos) {
         Block block = blockState.getBlock();
