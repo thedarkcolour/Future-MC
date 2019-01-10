@@ -10,10 +10,13 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerBarrel extends Container {
-    private TileEntityBarrel te;
+    public TileEntityBarrel te;
+    public static TileEntityBarrel tee;
+    public static IInventory playerInv;
 
     public ContainerBarrel(IInventory playerInventory, TileEntityBarrel te) {
         this.te = te;
+        this.playerInv = playerInventory;
         addOwnSlots();
         addPlayerSlots(playerInventory);
     }

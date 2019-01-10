@@ -1,6 +1,6 @@
 package com.herobrine.future.blocks.blocks;
 
-import com.herobrine.future.utils.init;
+import com.herobrine.future.utils.Init;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 
@@ -8,11 +8,10 @@ public class GuiBarrel extends GuiContainer {
     public static final int WIDTH = 177;
     public static final int HEIGHT = 166;
 
-    private static final ResourceLocation background = new ResourceLocation(init.MODID, "textures/gui/gui.png");
+    private static final ResourceLocation background = new ResourceLocation(Init.MODID, "textures/gui/gui.png");
 
     public GuiBarrel(TileEntityBarrel tileEntity, ContainerBarrel container) {
         super(container);
-
         xSize = WIDTH;
         ySize = HEIGHT;
     }
@@ -24,8 +23,7 @@ public class GuiBarrel extends GuiContainer {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
-    {
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         this.fontRenderer.drawString("Barrel", 8, 6, 4210752);
         this.fontRenderer.drawString("Inventory", 8, this.ySize - 92, 4210752);
     }

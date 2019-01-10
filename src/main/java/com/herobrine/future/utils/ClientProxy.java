@@ -11,16 +11,18 @@ import net.minecraftforge.fml.relauncher.Side;
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
-    public static void preInit(FMLPreInitializationEvent e) { preInit(e); }
+    public static void preInit(FMLPreInitializationEvent e) {
+        preInit(e);
+    }
 
     public static void init(FMLInitializationEvent e) {
-        oredict.registerOres();
-        NetworkRegistry.INSTANCE.registerGuiHandler(futurejava.instance, new GuiHandler());
+        OreDict.registerOres();
+        OreDict.registerOreDictEntries();
+        NetworkRegistry.INSTANCE.registerGuiHandler(FutureJava.instance, new GuiHandler());
     }
 
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-        init.initModel();   //calls model init
+        Init.initModel();   //calls model Init
     }
 }
-

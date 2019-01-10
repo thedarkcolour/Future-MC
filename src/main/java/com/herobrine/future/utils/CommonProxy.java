@@ -3,6 +3,7 @@ package com.herobrine.future.utils;
 import com.herobrine.future.blocks.*;
 import com.herobrine.future.blocks.blocks.TileEntityBarrel;
 import com.herobrine.future.items.*;
+import com.herobrine.future.utils.worldgen.WorldGenFlower;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -28,7 +29,8 @@ public class CommonProxy {
         Config.readConfig();
     }
     public static void init(FMLInitializationEvent e) {
-        NetworkRegistry.INSTANCE.registerGuiHandler(futurejava.instance, new GuiHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(FutureJava.instance, new GuiHandler());
+        GameRegistry.registerWorldGenerator(new WorldGenFlower(), 0);
     }
     public static void postInit(FMLPostInitializationEvent e) {
         if (config.hasChanged()) {
@@ -38,27 +40,30 @@ public class CommonProxy {
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {    //registers blocks
-        if (Config.lant) event.getRegistry().register(new lantern());
-        if (Config.stonec) event.getRegistry().register(new stonecutter());
-        if (Config.barl) event.getRegistry().register(new barrel());
-        if (Config.bluef) event.getRegistry().register(new flowerblue());
-        if (Config.lily) event.getRegistry().register(new flowerwhite());
-        if (Config.wrose) event.getRegistry().register(new flowerblack());
-        if (Config.barl) GameRegistry.registerTileEntity(TileEntityBarrel.class, init.MODID + "_testcontainerblock");
+        if (Config.lant) event.getRegistry().register(new Lantern());
+        if (Config.stonec) event.getRegistry().register(new Stonecutter());
+        if (Config.barl) event.getRegistry().register(new Barrel());
+        if (Config.bluef) event.getRegistry().register(new FlowerBlue());
+        if (Config.lily) event.getRegistry().register(new FlowerWhite());
+        if (Config.wrose) event.getRegistry().register(new FlowerBlack());
+        if (Config.loom) event.getRegistry().register(new Loom());
+        if (Config.barl) GameRegistry.registerTileEntity(TileEntityBarrel.class, Init.MODID + ":containerbarrel");
     }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {  //registers items
-        if (Config.trident) event.getRegistry().register(new trident("trident", init.TRIDENT, init.futuretab));
-        if (Config.lant) event.getRegistry().register(new ItemBlock(init.lantern).setRegistryName(init.lantern.getRegistryName()));
-        if (Config.bluef) event.getRegistry().register(new ItemBlock(init.flowerblue).setRegistryName(init.flowerblue.getRegistryName()));
-        if (Config.lily) event.getRegistry().register(new ItemBlock(init.flowerwhite).setRegistryName(init.flowerwhite.getRegistryName()));
-        if (Config.wrose) event.getRegistry().register(new ItemBlock(init.flowerblack).setRegistryName(init.flowerblack.getRegistryName()));
-        if (Config.susstew) event.getRegistry().register(new suspiciousstew("suspiciousstew", 6, 0.6F, false));
-        if (Config.dyes && Config.dyeb) event.getRegistry().register(new dyeblue());
-        if (Config.dyes && Config.dyew) event.getRegistry().register(new dyewhite());
-        if (Config.dyes && Config.dyebk) event.getRegistry().register(new dyeblack());
-        if (Config.stonec) event.getRegistry().register(new ItemBlock(init.stonecutter).setRegistryName(init.stonecutter.getRegistryName()));
-        if (Config.barl) event.getRegistry().register(new ItemBlock(init.barrel).setRegistryName(init.barrel.getRegistryName()));
+        if (Config.trident) event.getRegistry().register(new Trident("Trident", Init.TRIDENT, Init.futuretab));
+        if (Config.lant) event.getRegistry().register(new ItemBlock(Init.lantern).setRegistryName(Init.lantern.getRegistryName()));
+        if (Config.bluef) event.getRegistry().register(new ItemBlock(Init.flowerblue).setRegistryName(Init.flowerblue.getRegistryName()));
+        if (Config.lily) event.getRegistry().register(new ItemBlock(Init.flowerwhite).setRegistryName(Init.flowerwhite.getRegistryName()));
+        if (Config.wrose) event.getRegistry().register(new ItemBlock(Init.flowerblack).setRegistryName(Init.flowerblack.getRegistryName()));
+        if (Config.susstew) event.getRegistry().register(new SuspiciousStew("SuspiciousStew", 6, 0.6F, false));
+        if (Config.dyes && Config.dyeb) event.getRegistry().register(new DyeBlue());
+        if (Config.dyes && Config.dyew) event.getRegistry().register(new DyeWhite());
+        if (Config.dyes && Config.dyebr) event.getRegistry().register(new DyeBrown());
+        if (Config.dyes && Config.dyebk) event.getRegistry().register(new DyeBlack());
+        if (Config.stonec) event.getRegistry().register(new ItemBlock(Init.stonecutter).setRegistryName(Init.stonecutter.getRegistryName()));
+        if (Config.loom) event.getRegistry().register(new ItemBlock(Init.loom).setRegistryName(Init.loom.getRegistryName()));
+        if (Config.barl) event.getRegistry().register(new ItemBlock(Init.barrel).setRegistryName(Init.barrel.getRegistryName()));
     }
 }
