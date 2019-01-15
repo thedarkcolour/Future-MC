@@ -1,3 +1,7 @@
+Version 0.0.6 - Berry Bushes! New things:
+    *Sweet Berry Bush* - Generates in Taiga biomes, grows berries that can be harvested and eaten.
+    *Sweet Berries* - New food item that can restore 2 hunger points, just like a Melon slice. Can be harvested from Sweet Berry Bushes.
+
 Version 0.0.5 - New things:
     Lily of the Valley - Now generates in forest biomes.
     Cornflower - Now generates in the Plains biome.
