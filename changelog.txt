@@ -1,4 +1,4 @@
-Version 0.0.6 - Berry Bushes! New things:
+Version 0.1.1 - Berry Bushes! New things:
     *Sweet Berry Bush* - Generates in Taiga biomes, grows berries that can be harvested and eaten.
     *Sweet Berries* - New food item that can restore 2 hunger points, just like a Melon slice. Can be harvested from Sweet Berry Bushes.
 
