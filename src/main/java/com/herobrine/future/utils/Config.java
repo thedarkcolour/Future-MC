@@ -23,6 +23,7 @@ public class Config {
     public static boolean lilyg = true;   //enabled?
     public static boolean bluefg = true;   //enabled?
     public static boolean loom = true;  //enabled?
+    public static boolean berrybush = true;
 
     public static void readConfig() {
         Configuration cfg = CommonProxy.config;
@@ -57,5 +58,6 @@ public class Config {
         lilyg = cfg.getBoolean("lilygeneration", CATEGORY_GENERAL, lilyg, "whether the Lily of the Valley generates in the world (forests)");
         bluefg = cfg.getBoolean("cornflowergeneration", CATEGORY_GENERAL, bluefg, "whether the Cornflower generates in the world (plains)");
         loom = cfg.getBoolean("loomenabled", CATEGORY_GENERAL, loom, "whether the loom is enabled");
+        berrybush = cfg.getBoolean("berrybushenabled", CATEGORY_GENERAL, berrybush, "whether Berry Bushes and Berries are enabled");
     }
 }

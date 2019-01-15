@@ -55,6 +55,12 @@ public class Init {
     @GameRegistry.ObjectHolder("minecraftfuture:Barrel")
     public static com.herobrine.future.blocks.Barrel barrel;    //Barrel
 
+    @GameRegistry.ObjectHolder("minecraftfuture:berrybush")
+    public static com.herobrine.future.blocks.BerryBush berrybush;
+
+    @GameRegistry.ObjectHolder("minecraftfuture:sweetberry")
+    public static com.herobrine.future.items.ItemBerry sweetberry;
+
     @SubscribeEvent //renders everything
     public static void initModel() {   /**      REMEMBER TO CHECK COMMON PROXY IF GAME CRASHES      **/
         if (Config.trident) trident.initModel();
@@ -70,5 +76,7 @@ public class Init {
         if (Config.stonec) stonecutter.initModel();
         if (Config.loom) loom.initModel();
         if (Config.barl) barrel.initModel();
+        if (Config.berrybush) berrybush.initModel();
+        if (Config.berrybush) sweetberry.initModel();
         }
     }
