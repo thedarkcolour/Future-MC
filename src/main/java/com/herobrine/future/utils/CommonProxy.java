@@ -7,6 +7,7 @@ import com.herobrine.future.utils.worldgen.WorldGenFlower;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -49,6 +50,7 @@ public class CommonProxy {
         if (Config.berrybush) event.getRegistry().register(new BerryBush());
         if (Config.loom) event.getRegistry().register(new Loom());
         if (Config.barl) GameRegistry.registerTileEntity(TileEntityBarrel.class, Init.MODID + ":containerbarrel");
+        if (Config.campfire) event.getRegistry().register(new Campfire());
     }
 
     @SubscribeEvent
@@ -60,7 +62,6 @@ public class CommonProxy {
         if (Config.wrose) event.getRegistry().register(new ItemBlock(Init.flowerblack).setRegistryName(Init.flowerblack.getRegistryName()));
         if (Config.susstew) event.getRegistry().register(new SuspiciousStew("SuspiciousStew", 6, 0.6F, false));
         if (Config.berrybush) event.getRegistry().register(new ItemBerry(2, 0.2F, false));
-        //if (Config.berrybush) event.getRegistry().register(new ItemBlock(Init.berrybush).setRegistryName(Init.berrybush.getRegistryName()));
         if (Config.dyes && Config.dyeb) event.getRegistry().register(new DyeBlue());
         if (Config.dyes && Config.dyew) event.getRegistry().register(new DyeWhite());
         if (Config.dyes && Config.dyebr) event.getRegistry().register(new DyeBrown());
@@ -68,5 +69,6 @@ public class CommonProxy {
         if (Config.stonec) event.getRegistry().register(new ItemBlock(Init.stonecutter).setRegistryName(Init.stonecutter.getRegistryName()));
         if (Config.loom) event.getRegistry().register(new ItemBlock(Init.loom).setRegistryName(Init.loom.getRegistryName()));
         if (Config.barl) event.getRegistry().register(new ItemBlock(Init.barrel).setRegistryName(Init.barrel.getRegistryName()));
+        if (Config.campfire) event.getRegistry().register(new ItemBlock(Init.campfire).setRegistryName(Init.campfire.getRegistryName()));
     }
 }

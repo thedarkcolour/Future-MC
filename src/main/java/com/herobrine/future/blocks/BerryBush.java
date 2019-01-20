@@ -80,7 +80,7 @@ public class BerryBush extends BlockBush implements IGrowable {
     }
 
     public IBlockState withAge(int age) {
-        return this.getDefaultState().withProperty(this.getAgeProperty(), Integer.valueOf(age));
+        return this.getDefaultState().withProperty(this.getAgeProperty(), age);
     }
 
     @Override
@@ -142,7 +142,6 @@ public class BerryBush extends BlockBush implements IGrowable {
             }
         if (worldIn.getBlockState(pos).getBlock().getMetaFromState(state) == 3) {
             worldIn.setBlockState(pos, withAge(1));
-            Random r = new Random();
             spawnAsEntity(worldIn, pos, new ItemStack(Init.sweetberry, 3));
         }
         return false;

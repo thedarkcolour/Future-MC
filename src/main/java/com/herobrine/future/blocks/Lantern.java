@@ -101,6 +101,11 @@ public class Lantern extends Block {
     public boolean isOpaqueCube(IBlockState state) { return false; }
 
     @Override
+    public boolean isTopSolid(IBlockState state) {
+        return false;
+    }
+
+    @Override
     public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }

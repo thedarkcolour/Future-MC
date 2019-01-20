@@ -42,10 +42,10 @@ public class FlowerBlack extends BlockBush { //Adds black flower
 
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-            double d0 = (double)pos.getX() + rand.nextDouble() * 0.5D + 0.2D;
-            double d1 = (double)pos.getY() + rand.nextDouble() * 0.3D + 0.2D;
-            double d2 = (double)pos.getZ() + rand.nextDouble() * 0.5D + 0.2D;
-            worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+        double d0 = (double)pos.getX() + rand.nextDouble() * 0.5D + 0.2D;
+        double d1 = (double)pos.getY() + rand.nextDouble() * 0.3D + 0.2D;
+        double d2 = (double)pos.getZ() + rand.nextDouble() * 0.5D + 0.2D;
+        worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D);
     }
 
     @Override

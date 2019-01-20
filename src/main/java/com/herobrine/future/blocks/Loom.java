@@ -2,6 +2,7 @@ package com.herobrine.future.blocks;
 
 import com.herobrine.future.utils.Init;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -24,6 +25,8 @@ public class Loom extends Block {
         setUnlocalizedName(Init.MODID + ".Loom");
         setRegistryName("Loom");
         setCreativeTab(Init.futuretab);
+        setSoundType(SoundType.WOOD);
+        setHardness(2.0F);
     }
 
     @SideOnly(Side.CLIENT)
@@ -50,5 +53,4 @@ public class Loom extends Block {
     public int getMetaFromState(IBlockState state) {
         return state.getValue(FACING).getIndex();
     }
-
 }

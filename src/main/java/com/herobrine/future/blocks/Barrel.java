@@ -1,6 +1,6 @@
 package com.herobrine.future.blocks;
 
-import com.herobrine.future.blocks.blocks.TileEntityBarrel;
+import com.herobrine.future.blocks.tile.TileEntityBarrel;
 import com.herobrine.future.utils.FutureJava;
 import com.herobrine.future.utils.Init;
 import net.minecraft.block.Block;
@@ -36,7 +36,7 @@ public class Barrel extends Block implements ITileEntityProvider {
         setRegistryName("Barrel");
         setSoundType(SoundType.WOOD);
         setCreativeTab(Init.futuretab);
-        setHardness(3.0F);
+        setHardness(2.0F);
     }
 
     @SideOnly(Side.CLIENT)
@@ -105,6 +105,5 @@ public class Barrel extends Block implements ITileEntityProvider {
         }
         super.breakBlock(world, pos, state);
     }
-
     public int success = 1;
 }

@@ -1,8 +1,8 @@
 package com.herobrine.future.utils;
 
-import com.herobrine.future.blocks.blocks.ContainerBarrel;
-import com.herobrine.future.blocks.blocks.GuiBarrel;
-import com.herobrine.future.blocks.blocks.TileEntityBarrel;
+import com.herobrine.future.blocks.tile.ContainerBarrel;
+import com.herobrine.future.blocks.tile.GuiBarrel;
+import com.herobrine.future.blocks.tile.TileEntityBarrel;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
