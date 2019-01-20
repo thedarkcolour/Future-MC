@@ -1,3 +1,8 @@
+Version 0.0.7 - Campfire! New things:
+   *Campfire* - A decorative block that emits a small amount of light and smoke. Cheap to craft, early game light source.
+   Stonecutter - Now renders correctly when placed next to solid blocks. Torches can no longer be placed on top of the stonecutter.
+   Sorry this update took so long, I spent too long trying to add custom particles to the Campfire. I failed :(
+
 Version 0.0.6 - Berry Bushes! New things:
     *Sweet Berry Bush* - Generates in Taiga biomes, grows berries that can be harvested and eaten.
     *Sweet Berries* - New food item that can restore 2 hunger points, just like a Melon slice. Can be harvested from Sweet Berry Bushes.
