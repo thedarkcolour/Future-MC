@@ -7,11 +7,11 @@
     "inventory": { "model": "minecraftfuture:item/lantern"},
     "normal": [{}],
     "facing": {
-      "north": { "model": "minecraftfuture:lantern"},
-      "south": { "model": "minecraftfuture:lantern"},
-      "west": { "model": "minecraftfuture:lantern"},
-      "east": { "model": "minecraftfuture:lantern"},
-      "up": { "model": "minecraftfuture:lantern"},
+      "north": {},
+      "south": {},
+      "west": {},
+      "east": {},
+      "up": {},
       "down": { "model": "minecraftfuture:hanging_lantern"}
         }
   }
