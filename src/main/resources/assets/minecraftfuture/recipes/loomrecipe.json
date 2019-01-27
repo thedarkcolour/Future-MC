@@ -2,25 +2,23 @@
   "type": "minecraft:crafting_shaped",
   "pattern":
   [
-    "xax",
-    "x x",
-    "xax"
+    "xx",
+    "aa"
   ],
   "key":
   {
     "x":
     {
-      "type": "forge:ore_dict",
-      "ore":"plankWood"
+      "item": "minecraft:string"
     },
     "a":
     {
       "type": "forge:ore_dict",
-      "ore":"slabWood"
+      "ore":"plankWood"
     }
   },
   "result":
   {
-    "item": "minecraftfuture:barrel"
+    "item": "loom"
   }
 }
