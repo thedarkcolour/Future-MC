@@ -1,10 +1,9 @@
+
 package com.herobrine.future.blocks;
 
 import com.herobrine.future.utils.Config;
-import com.herobrine.future.utils.FutureJava;
 import com.herobrine.future.utils.Init;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDynamicLiquid;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -51,7 +50,7 @@ public class Campfire extends Block {
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         double d0 = (double)pos.getX() + rand.nextDouble() * 0.5D + 0.2D;
-        double d1 = (double)pos.getY() + rand.nextDouble() * 0.31D + 0.2D;
+        double d1 = (double)pos.getY() + rand.nextDouble() * 0.35D + 0.2D;
         double d2 = (double)pos.getZ() + rand.nextDouble() * 0.5D + 0.2D;
         if(worldIn.getBlockState(pos) == this.getDefaultState()){
             worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
@@ -62,8 +61,22 @@ public class Campfire extends Block {
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        this.setLightLevel(0.5625F);
+    public int getLightValue(IBlockState state) {
+        if (state.getValue(lit) == 1) {
+            return state.getValue(lit) + 8;
+        } else {
+            return state.getValue(lit);
+        }
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        Block block = worldIn.getBlockState(pos.up()).getBlock();
+        if (block instanceof BlockLiquid | block instanceof BlockFluidBase) {
+            return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(lit, 0);
+        } else {
+            return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(lit, 1);
+        }
     }
 
     @Override
@@ -76,6 +89,11 @@ public class Campfire extends Block {
     }
 
     @Override
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+        this.neighborChanged(state, worldIn, pos, worldIn.getBlockState(pos).getBlock(), pos);
+    }
+
+    @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = playerIn.getHeldItem(hand);
         Block block = worldIn.getBlockState(pos.up()).getBlock();
@@ -84,7 +102,6 @@ public class Campfire extends Block {
                 if (!(block instanceof BlockLiquid | block instanceof BlockFluidBase)) {
                     worldIn.setBlockState(pos, withLit(1));
                     stack.damageItem(1, playerIn);
-                    this.setLightLevel(0.5625F);
                 }
             }
         } return false;
@@ -95,7 +112,6 @@ public class Campfire extends Block {
         Block block = worldIn.getBlockState(pos.up()).getBlock();
         if (block instanceof BlockFluidBase | block instanceof BlockLiquid) {
             worldIn.setBlockState(pos, withLit(0));
-            this.setLightLevel(0F);
         }
     }
 
