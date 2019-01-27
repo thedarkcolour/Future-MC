@@ -2,5 +2,18 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "minecraftfuture:items/trident"
-  }
+  },
+
+  "firstperson": {
+    "model": "item/hold_trident"
+  },
+
+  "overrides": [
+    {
+      "predicate": {
+        "pulling": 1
+      },
+      "model": "item/throw_trident"
+    }
+  ]
 }
