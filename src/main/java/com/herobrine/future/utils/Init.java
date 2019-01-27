@@ -1,20 +1,37 @@
 package com.herobrine.future.utils;
 
+import com.herobrine.future.blocks.StrippedLog;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Init {
     public static final Item.ToolMaterial TRIDENT = EnumHelper.addToolMaterial("TRIDENT", 3, 250, 9f, 5.0f, 22);
     public static final String MODID = "minecraftfuture";
+    public static final List<String> variants = Arrays.asList("oak", "spruce", "birch", "jungle", "acacia", "dark_oak");
+    public static List<Block> strippedLogs = new ArrayList<>();
     public static CreativeTabs futuretab = new CreativeTabs("Future") {
         @Override    //New creative tab
         public ItemStack getTabIconItem() {
             return new ItemStack(Init.lantern);
-        }};
+        }
+    };
+
+    public static void init() {
+        for (String variant : variants) {
+            strippedLogs.add(new StrippedLog(variant));
+        }
+    }
 
     @GameRegistry.ObjectHolder("minecraftfuture:Trident")
     public static com.herobrine.future.items.Trident trident;    //Trident
@@ -81,9 +98,9 @@ public class Init {
         if (Config.barl) barrel.initModel();
         if (Config.berrybush) berrybush.initModel();
         if (Config.berrybush) sweetberry.initModel();
-        if (Config.campfire) {
-            campfire.initModel();
-            //campfireParticle.initModel();
+        if (Config.campfire) campfire.initModel();
+        for (Block block : Init.strippedLogs) {
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation( Item.getItemFromBlock(block).getRegistryName(), "inventory"));
         }
     }
 }

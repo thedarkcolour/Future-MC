@@ -18,7 +18,7 @@ public class FutureJava {
 
     public static final String MODID = "minecraftfuture";
     public static final String MODNAME = "Minecraft Future";
-    public static final String VERSION = "0.0.7";
+    public static final String VERSION = "0.0.8";
 
     @SidedProxy(clientSide = "com.herobrine.future.utils.ClientProxy",
                 serverSide = "com.herobrine.future.utils.ServerProxy")

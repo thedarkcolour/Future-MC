@@ -69,12 +69,12 @@ public class Lantern extends Block {
     @Override
     protected BlockStateContainer createBlockState() { return new BlockStateContainer(this, FACING); }
 
-
     @Override
     public IBlockState getStateFromMeta(int meta) { return this.getDefaultState().withProperty(FACING, EnumFacing.getFront(meta & 7)); }
 
     @Override
     public int getMetaFromState(IBlockState state) { return state.getValue(FACING).getIndex(); }
+
 
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {

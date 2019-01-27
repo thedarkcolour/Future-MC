@@ -26,6 +26,7 @@ public class Config {
     public static boolean berrybush = true;
     public static boolean campfire = true;
     public static boolean campfiredmg = true;
+    public static boolean striplog = true;
 
     public static void readConfig() {
         Configuration cfg = CommonProxy.config;
@@ -62,6 +63,7 @@ public class Config {
         loom = cfg.getBoolean("loomenabled", CATEGORY_GENERAL, loom, "whether the loom is enabled");
         berrybush = cfg.getBoolean("berrybushenabled", CATEGORY_GENERAL, berrybush, "whether Berry Bushes and Berries are enabled");
         campfire = cfg.getBoolean("campfireenabled", CATEGORY_GENERAL, campfire, "whether the campfire is enabled");
-        campfiredmg = cfg.getBoolean("campfiredamagesplayer", CATEGORY_GENERAL, campfiredmg, "Whether the campfire does damage to players when walked on");
+        campfiredmg = cfg.getBoolean("campfiredamagesplayer", CATEGORY_GENERAL, campfiredmg, "whether the campfire does damage to players when walked on");
+        striplog = cfg.getBoolean("strippedlogenabled", CATEGORY_GENERAL, striplog, "whether you can use an Axe to strip logs of their bark");
     }
 }

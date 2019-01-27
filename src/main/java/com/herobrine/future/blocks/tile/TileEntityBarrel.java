@@ -14,23 +14,7 @@ public class TileEntityBarrel extends TileEntity {
     public static final int SIZE = 27;
 
     public ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE);
-    private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);  /***/
-/**
-    @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
-        if (compound.hasKey("items")) {
-            itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
-        }
-    }
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
-        compound.setTag("items", this.getInventory().serializeNBT());
-        return compound;
-    }
- */
+    private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
 
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
