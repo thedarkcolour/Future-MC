@@ -1,3 +1,8 @@
+Version 0.0.8 - Big update! New things:
+  *Stripped Logs* - A wooden log that gets its fancy new look when activated with an Axe.
+  Campfire - Patched this block, as it was broken before. Now works as intended!
+  Trident - Preparing to add some functionality, might come in a few updates or so.
+
 Version 0.0.7 - Campfire! New things:
    *Campfire* - A decorative block that emits a small amount of light and smoke. Cheap to craft, early game light source.
    Stonecutter - Now renders correctly when placed next to solid blocks. Torches can no longer be placed on top of the stonecutter.
