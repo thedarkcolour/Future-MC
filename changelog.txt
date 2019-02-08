@@ -1,6 +1,7 @@
 Version 0.0.9 - New things:
  *Walls* - Walls that were added in 1.14 are now craftable decorative blocks. 12 new wall variants!
  Trident - Animation now properly disabled by default.
+ Stonecutter - Preparing to add functionality.
 
 Version 0.0.8 - Big update! New things:
   *Stripped Logs* - A wooden log that gets its fancy new look when activated with an Axe.
