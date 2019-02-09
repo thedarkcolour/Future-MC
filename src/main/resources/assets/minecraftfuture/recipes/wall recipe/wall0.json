@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "   ",
+        "aaa",
+        "aaa"
+    ],
+    "key":
+    {
+        "a":
+        {
+            "item": "minecraft:brick_block"
+        }
+    },
+    "result":
+    {
+        "item": "brick_wall",
+        "count": 6
+    }
+}

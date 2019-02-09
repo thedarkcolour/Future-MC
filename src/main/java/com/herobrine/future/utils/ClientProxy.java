@@ -18,15 +18,12 @@ public class ClientProxy extends CommonProxy {
 
     public static void init(FMLInitializationEvent e) {
         OreDict.registerOres();
-        OreDict.registerOreDictEntries();
         NetworkRegistry.INSTANCE.registerGuiHandler(FutureJava.instance, new GuiHandler());
     }
 
     public static void postInit(FMLPostInitializationEvent e) {
         postInit(e);
     }
-
-
 
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {

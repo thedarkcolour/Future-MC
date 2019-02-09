@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "   ",
+        "aaa",
+        "aaa"
+    ],
+    "key":
+    {
+        "a":
+        {
+            "item": "minecraft:stone",
+            "data": 5
+        }
+    },
+    "result":
+    {
+        "item": "andesite_wall",
+        "count": 6
+    }
+}

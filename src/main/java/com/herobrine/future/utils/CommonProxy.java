@@ -2,6 +2,7 @@ package com.herobrine.future.utils;
 
 import com.herobrine.future.blocks.*;
 import com.herobrine.future.blocks.tile.TileEntityBarrel;
+import com.herobrine.future.blocks.tile.TileEntityStonecutter;
 import com.herobrine.future.items.*;
 import com.herobrine.future.utils.worldgen.WorldGenFlower;
 import net.minecraft.block.Block;
@@ -34,10 +35,12 @@ import java.io.File;
 @Mod.EventBusSubscriber
 public class CommonProxy {
     public static Configuration config;
+    public static Configuration developer_config;
 
     public static void preInit(FMLPreInitializationEvent e) {
         File directory = e.getModConfigurationDirectory();
         config = new Configuration(new File(directory.getPath(), "minecraftfuture.cfg"));
+        developer_config = new Configuration(new File(directory.getPath(), "minecraftfuturedeveloper.cfg"));
         Config.readConfig();
         Init.init();
     }
@@ -60,29 +63,31 @@ public class CommonProxy {
             EntityPlayer player = event.getEntityPlayer();
             ItemStack stack = event.getItemStack();
 
-            if (stack.getItem() instanceof ItemTool) {
-                ItemTool tool = (ItemTool) stack.getItem();
-                if (tool.getToolClasses(stack).contains("axe")) {
-                    IBlockState state = world.getBlockState(pos);
-                    Block block = state.getBlock();
+            if (Config.striplog) {
+                if (stack.func_77973_b() instanceof ItemTool) {
+                    ItemTool tool = (ItemTool) stack.func_77973_b();
+                    if (tool.getToolClasses(stack).contains("axe")) {
+                        IBlockState state = world.func_180495_p(pos);
+                        Block block = state.func_177230_c();
 
-                    if (block == Blocks.LOG || block == Blocks.LOG2) {
-                        IProperty axis = null, variant = null;
-                        for (IProperty<?> prop : state.getProperties().keySet()) {
-                            if (prop.getName().equals("axis")) {
-                                axis = prop;
+                        if (block == Blocks.field_150364_r || block == Blocks.field_150363_s) {
+                            IProperty axis = null, variant = null;
+                            for (IProperty<?> prop : state.func_177228_b().keySet()) {
+                                if (prop.func_177701_a().equals("axis")) {
+                                    axis = prop;
+                                }
+                                if (prop.func_177701_a().equals("variant")) {
+                                    variant = prop;
+                                }
                             }
-                            if (prop.getName().equals("variant")) {
-                                variant = prop;
-                            }
-                        }
-                        if (axis != null && variant != null) {
-                            if (Init.variants.contains(state.getValue(variant).toString())) {
-                                int i = Init.variants.indexOf(state.getValue(variant).toString());
-                                player.swingArm(event.getHand());
-                                world.playSound(player, pos, SoundEvents.BLOCK_WOOD_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                                world.setBlockState(pos, Init.strippedLogs.get(i).getDefaultState().withProperty(axis, state.getValue(axis)), 0b1011);
-                                stack.damageItem(1, player);
+                            if (axis != null && variant != null) {
+                                if (Init.variantsLog.contains(state.func_177229_b(variant).toString())) {
+                                    int i = Init.variantsLog.indexOf(state.func_177229_b(variant).toString());
+                                    player.func_184609_a(event.getHand());
+                                    world.func_184133_a(player, pos, SoundEvents.field_187881_gQ, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                                    world.func_180501_a(pos, Init.strippedLogs.get(i).func_176223_P().func_177226_a(axis, state.func_177229_b(axis)), 0b1011);
+                                    stack.func_77972_a(1, player);
+                                }
                             }
                         }
                     }
@@ -102,10 +107,9 @@ public class CommonProxy {
         if (Config.berrybush) event.getRegistry().register(new BerryBush());
         if (Config.loom) event.getRegistry().register(new Loom());
         if (Config.barl) GameRegistry.registerTileEntity(TileEntityBarrel.class, Init.MODID + ":containerbarrel");
+        if (Config.stonec) GameRegistry.registerTileEntity(TileEntityStonecutter.class, Init.MODID + ":containerstonecutter");
         if (Config.campfire) event.getRegistry().register(new Campfire());
-        for (Block block : Init.strippedLogs) {
-            event.getRegistry().register(block);
-        }
+
     }
 
     @SubscribeEvent
@@ -125,8 +129,34 @@ public class CommonProxy {
         if (Config.loom) event.getRegistry().register(new ItemBlock(Init.loom).setRegistryName(Init.loom.getRegistryName()));
         if (Config.barl) event.getRegistry().register(new ItemBlock(Init.barrel).setRegistryName(Init.barrel.getRegistryName()));
         if (Config.campfire) event.getRegistry().register(new ItemBlock(Init.campfire).setRegistryName(Init.campfire.getRegistryName()));
-        for (Block block : Init.strippedLogs) {
-            event.getRegistry().register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+
+    }
+
+    @SubscribeEvent
+    public static void registerSpecialBlocks(RegistryEvent.Register<Block> event) {
+        if (Config.striplog) {
+            for (Block block : Init.strippedLogs) {
+                event.getRegistry().register(block);
+            }
+        }
+        if (Config.newwall) {
+            for (Block block : Init.newwall) {
+                event.getRegistry().register(block);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void registerSpecialItems(RegistryEvent.Register<Item> event) {
+        if (Config.striplog) {
+            for (Block block : Init.strippedLogs) {
+                event.getRegistry().register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+            }
+        }
+        if (Config.newwall) {
+            for (Block block : Init.newwall) {
+                event.getRegistry().register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+            }
         }
     }
 }

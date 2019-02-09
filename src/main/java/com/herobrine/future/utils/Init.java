@@ -1,5 +1,6 @@
 package com.herobrine.future.utils;
 
+import com.herobrine.future.blocks.NewWall;
 import com.herobrine.future.blocks.StrippedLog;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -18,18 +19,23 @@ import java.util.List;
 public class Init {
     public static final Item.ToolMaterial TRIDENT = EnumHelper.addToolMaterial("TRIDENT", 3, 250, 9f, 5.0f, 22);
     public static final String MODID = "minecraftfuture";
-    public static final List<String> variants = Arrays.asList("oak", "spruce", "birch", "jungle", "acacia", "dark_oak");
+    public static final List<String> variantsLog = Arrays.asList("oak", "spruce", "birch", "jungle", "acacia", "dark_oak");
+    public static final List<String> variantsWall = Arrays.asList("brick", "granite", "andesite", "diorite", "sandstone", "red_sandstone", "stone_brick", "mossy_stone", "nether_brick", "nether_brick_red", "end_stone", "prismarine"); //12 values
     public static List<Block> strippedLogs = new ArrayList<>();
+    public static List<Block> newwall = new ArrayList<>();
     public static CreativeTabs futuretab = new CreativeTabs("Future") {
         @Override    //New creative tab
-        public ItemStack getTabIconItem() {
+        public ItemStack func_78016_d() {
             return new ItemStack(Init.lantern);
         }
     };
 
     public static void init() {
-        for (String variant : variants) {
+        for (String variant: variantsLog) {
             strippedLogs.add(new StrippedLog(variant));
+        }
+        for (String variant : variantsWall) {
+            newwall.add(new NewWall(variant));
         }
     }
 
@@ -99,8 +105,15 @@ public class Init {
         if (Config.berrybush) berrybush.initModel();
         if (Config.berrybush) sweetberry.initModel();
         if (Config.campfire) campfire.initModel();
-        for (Block block : Init.strippedLogs) {
-            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation( Item.getItemFromBlock(block).getRegistryName(), "inventory"));
+        if (Config.striplog) {
+            for (Block block : Init.strippedLogs) {
+                ModelLoader.setCustomModelResourceLocation(Item.func_150898_a(block), 0, new ModelResourceLocation( Item.func_150898_a(block).getRegistryName(), "inventory"));
+            }
+        }
+        if (Config.newwall) {
+            for (Block block : Init.newwall) {
+                ModelLoader.setCustomModelResourceLocation(Item.func_150898_a(block), 0, new ModelResourceLocation( Item.func_150898_a(block).getRegistryName(), "inventory"));
+            }
         }
     }
 }

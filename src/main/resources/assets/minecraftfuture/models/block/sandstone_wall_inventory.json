@@ -1,0 +1,6 @@
+{
+    "parent": "minecraftfuture:block/wall_inventory",
+    "textures": {
+        "wall": "blocks/sandstone_normal"
+    }
+}

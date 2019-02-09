@@ -9,26 +9,26 @@ import net.minecraft.world.World;
 public class WorldGenHelper {
 
     public static BlockPos getGroundPos(World world, int x, int z) {
-        final BlockPos topPos = world.getHeight(new BlockPos(x, 0, z));
-        if (topPos.getY() > 120) {
+        final BlockPos topPos = world.func_175645_m(new BlockPos(x, 0, z));
+        if (topPos.func_177956_o() > 120) {
             return null;
         }
 
         final BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(topPos);
 
-        IBlockState blockState = world.getBlockState(pos);
+        IBlockState blockState = world.func_180495_p(pos);
         while (isAir(blockState, world, pos)) {
-            pos.move(EnumFacing.DOWN);
-            if (pos.getY() < 31) {
+            pos.func_189536_c(EnumFacing.DOWN);
+            if (pos.func_177956_o() < 31) {
                 return null;
             }
-            blockState = world.getBlockState(pos);
+            blockState = world.func_180495_p(pos);
         }
-        return pos.up();
+        return pos.func_177984_a();
     }
 
     public static boolean isAir(IBlockState blockState, World world, BlockPos pos) {
-        Block block = blockState.getBlock();
+        Block block = blockState.func_177230_c();
         return block.isAir(blockState, world, pos);
     }
 }

@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "   ",
+        "aaa",
+        "aaa"
+    ],
+    "key":
+    {
+        "a":
+        {
+            "item": "minecraft:red_sandstone",
+            "data": 0
+        }
+    },
+    "result":
+    {
+        "item": "red_sandstone_wall",
+        "count": 6
+    }
+}

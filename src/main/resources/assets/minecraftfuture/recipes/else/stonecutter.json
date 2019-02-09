@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "   ",
+    " x ",
+    "aaa"
+  ],
+  "key":
+  {
+    "x":
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    "a":
+    {
+      "type": "forge:ore_dict",
+      "ore":"stone"
+    }
+  },
+  "result":
+  {
+    "item": "stonecutter"
+  }
+}

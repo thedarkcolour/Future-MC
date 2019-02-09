@@ -7,7 +7,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -31,113 +32,118 @@ import java.util.Random;
 
 public class Campfire extends Block {
     private static final AxisAlignedBB boundingBox = new AxisAlignedBB(0,0,0,1,0.3125,1);
-    public static final PropertyInteger lit = PropertyInteger.create("lit", 0, 1);
+    //public static final PropertyInteger lit = PropertyInteger.create("lit", 0, 1);
+    public static final PropertyBool lit = PropertyBool.func_177716_a("lit");
     public Campfire() {
-        super(Material.WOOD);
-        setUnlocalizedName(Init.MODID + ".Campfire");
+        super(Material.field_151575_d);
+        func_149663_c(Init.MODID + ".Campfire");
         setRegistryName("Campfire");
-        setCreativeTab(Init.futuretab);
-        setSoundType(SoundType.WOOD);
-        setHardness(2.0F);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(lit, Integer.valueOf(1)));
+        func_149647_a(Init.futuretab);
+        func_149672_a(SoundType.field_185848_a);
+        func_149711_c(2.0F);
+        this.func_180632_j(this.field_176227_L.func_177621_b().func_177226_a(lit, Boolean.valueOf(true)));
     }
 
     @SideOnly(Side.CLIENT)
     public void initModel() {
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.func_150898_a(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
 
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        double d0 = (double)pos.getX() + rand.nextDouble() * 0.5D + 0.2D;
-        double d1 = (double)pos.getY() + rand.nextDouble() * 0.35D + 0.2D;
-        double d2 = (double)pos.getZ() + rand.nextDouble() * 0.5D + 0.2D;
-        if(worldIn.getBlockState(pos) == this.getDefaultState()){
-            worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+    public void func_180655_c(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        double d0 = (double)pos.func_177958_n() + rand.nextDouble() * 0.5D + 0.2D;
+        double d1 = (double)pos.func_177956_o() + rand.nextDouble() * 0.35D + 0.2D;
+        double d2 = (double)pos.func_177952_p() + rand.nextDouble() * 0.5D + 0.2D;
+        if(worldIn.func_180495_p(pos) == this.func_176223_P()){
+            worldIn.func_175688_a(EnumParticleTypes.SMOKE_LARGE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
             if(rand.nextInt(20) == 0) {
-                worldIn.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+                worldIn.func_175688_a(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
             }
         }
     }
 
     @Override
-    public int getLightValue(IBlockState state) {
-        if (state.getValue(lit) == 1) {
-            return state.getValue(lit) + 8;
+    public int func_149750_m(IBlockState state) {
+        if (state.func_177229_b(lit)) {
+            return 9;
         } else {
-            return state.getValue(lit);
+            return 0;
         }
     }
 
     @Override
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        Block block = worldIn.getBlockState(pos.up()).getBlock();
+    public IBlockState func_180642_a(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        Block block = worldIn.func_180495_p(pos.func_177984_a()).func_177230_c();
         if (block instanceof BlockLiquid | block instanceof BlockFluidBase) {
-            return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(lit, 0);
+            return super.func_180642_a(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).func_177226_a(lit, false);
         } else {
-            return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(lit, 1);
+            return super.func_180642_a(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).func_177226_a(lit, true);
         }
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+    public void func_180634_a(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
         if(Config.campfiredmg) {
             if (entityIn instanceof EntityLivingBase) {
-                entityIn.attackEntityFrom(DamageSource.IN_FIRE, 1.0F);
+                entityIn.func_70097_a(DamageSource.field_76372_a, 1.0F);
             }
         }
     }
 
     @Override
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-        this.neighborChanged(state, worldIn, pos, worldIn.getBlockState(pos).getBlock(), pos);
+    public void func_176213_c(World worldIn, BlockPos pos, IBlockState state) {
+        this.func_189540_a(state, worldIn, pos, worldIn.func_180495_p(pos).func_177230_c(), pos);
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        ItemStack stack = playerIn.getHeldItem(hand);
-        Block block = worldIn.getBlockState(pos.up()).getBlock();
-        if (worldIn.getBlockState(pos) != this.getDefaultState()) {
-            if (stack.getItem() == Items.FLINT_AND_STEEL) {
+    public boolean func_180639_a(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack stack = playerIn.func_184586_b(hand);
+        Block block = worldIn.func_180495_p(pos.func_177984_a()).func_177230_c();
+        if (worldIn.func_180495_p(pos) != this.func_176223_P()) {
+            if (stack.func_77973_b() == Items.field_151033_d) {
                 if (!(block instanceof BlockLiquid | block instanceof BlockFluidBase)) {
-                    worldIn.setBlockState(pos, withLit(1));
-                    stack.damageItem(1, playerIn);
+                    worldIn.func_175656_a(pos, withLit(true));
+                    stack.func_77972_a(1, playerIn);
                 }
             }
         } return false;
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-        Block block = worldIn.getBlockState(pos.up()).getBlock();
+    public void func_189540_a(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        Block block = worldIn.func_180495_p(pos.func_177984_a()).func_177230_c();
         if (block instanceof BlockFluidBase | block instanceof BlockLiquid) {
-            worldIn.setBlockState(pos, withLit(0));
+            worldIn.func_175656_a(pos, withLit(false));
         }
     }
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Items.COAL;
+    public Item func_180660_a(IBlockState state, Random rand, int fortune) {
+        return Items.field_151044_h;
     }
 
     @Override
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.down()).isTopSolid();
+    public boolean func_176196_c(World worldIn, BlockPos pos) {
+        return worldIn.func_180495_p(pos.func_177977_b()).func_185896_q();
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
+    protected BlockStateContainer func_180661_e() {
         return new BlockStateContainer(this, lit);
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState();
+    public IBlockState func_176203_a(int meta) {
+        return this.func_176223_P();
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(lit);
+    public int func_176201_c(IBlockState state) {
+        if (state.func_177229_b(lit)) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -146,22 +152,22 @@ public class Campfire extends Block {
     }
 
     @Override
-    public boolean isBlockNormalCube(IBlockState state) {
+    public boolean func_149637_q(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullBlock(IBlockState state) {
+    public boolean func_149730_j(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean func_149662_c(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isTopSolid(IBlockState state) {
+    public boolean func_185481_k(IBlockState state) {
         return false;
     }
 
@@ -171,15 +177,17 @@ public class Campfire extends Block {
     }
 
     @Override
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer func_180664_k() {
         return BlockRenderLayer.CUTOUT;
     }
 
-    public IBlockState withLit(int lit) {
-        return this.getDefaultState().withProperty(this.lit, lit);
+    public IBlockState withLit(boolean lit) {
+        return this.func_176223_P().func_177226_a(this.lit, lit);
     }
 
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    public AxisAlignedBB func_185496_a(IBlockState state, IBlockAccess source, BlockPos pos) {
         return boundingBox;
     }
+
+    public BlockFaceShape func_193383_a(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) { return BlockFaceShape.UNDEFINED; }
 }

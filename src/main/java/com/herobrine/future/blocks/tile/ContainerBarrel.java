@@ -11,7 +11,6 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerBarrel extends Container {
     public TileEntityBarrel te;
-    public static TileEntityBarrel tee;
     public static IInventory playerInv;
 
     public ContainerBarrel(IInventory playerInventory, TileEntityBarrel te) {
@@ -26,7 +25,7 @@ public class ContainerBarrel extends Container {
             for (int col = 0; col < 9; ++col) {
                 int x = 9 + col * 18 - 1;
                 int y = row * 18 + 70 + 14;
-                this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 9, x, y));
+                this.func_75146_a(new Slot(playerInventory, col + row * 9 + 9, x, y));
             }
         }
 
@@ -34,7 +33,7 @@ public class ContainerBarrel extends Container {
         for (int row = 0; row < 9; ++row) {
             int x = 9 + row * 18 - 1;
             int y = 58 + 70 + 14;
-            this.addSlotToContainer(new Slot(playerInventory, row, x, y));
+            this.func_75146_a(new Slot(playerInventory, row, x, y));
         }
     }
 
@@ -45,40 +44,40 @@ public class ContainerBarrel extends Container {
             for (int col = 0; col < 9; ++col) {
                 int x = 8 + col * 18;
                 int y = 18 + row * 18;
-                addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, x, y));
+                func_75146_a(new SlotItemHandler(itemHandler, slotIndex, x, y));
                 slotIndex++;
             }
         }
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
+    public ItemStack func_82846_b(EntityPlayer playerIn, int index) {
+        ItemStack itemstack = ItemStack.field_190927_a;
+        Slot slot = this.field_75151_b.get(index);
 
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
+        if (slot != null && slot.func_75216_d()) {
+            ItemStack itemstack1 = slot.func_75211_c();
+            itemstack = itemstack1.func_77946_l();
 
             if (index < TileEntityBarrel.SIZE) {
-                if (!this.mergeItemStack(itemstack1, TileEntityBarrel.SIZE, this.inventorySlots.size(), true)) {
-                    return ItemStack.EMPTY;
+                if (!this.func_75135_a(itemstack1, TileEntityBarrel.SIZE, this.field_75151_b.size(), true)) {
+                    return ItemStack.field_190927_a;
                 }
-            } else if (!this.mergeItemStack(itemstack1, 0, TileEntityBarrel.SIZE, false)) {
-                return ItemStack.EMPTY;
+            } else if (!this.func_75135_a(itemstack1, 0, TileEntityBarrel.SIZE, false)) {
+                return ItemStack.field_190927_a;
             }
 
-            if (itemstack1.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+            if (itemstack1.func_190926_b()) {
+                slot.func_75215_d(ItemStack.field_190927_a);
             } else {
-                slot.onSlotChanged();
+                slot.func_75218_e();
             }
         }
         return itemstack;
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean func_75145_c(EntityPlayer playerIn) {
         return te.canInteractWith(playerIn);
     }
 }

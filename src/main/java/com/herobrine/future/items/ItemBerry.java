@@ -22,9 +22,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemBerry extends ItemFood {
     public ItemBerry(int amount, float saturation, boolean isWolfFood) {
         super(amount, saturation,isWolfFood);
-        setUnlocalizedName(Init.MODID + ".sweetberry");
+        func_77655_b(Init.MODID + ".sweetberry");
         setRegistryName("sweetberry");
-        setCreativeTab(Init.futuretab);
+        func_77637_a(Init.futuretab);
     }
 
     @SideOnly(Side.CLIENT)
@@ -33,24 +33,24 @@ public class ItemBerry extends ItemFood {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        pos = pos.offset(facing);
-        ItemStack itemstack = player.getHeldItem(hand);
+    public EnumActionResult func_180614_a(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        pos = pos.func_177972_a(facing);
+        ItemStack itemstack = player.func_184586_b(hand);
         Block block = Init.berrybush;
 
-        if (!player.canPlayerEdit(pos, facing, itemstack)) {
+        if (!player.func_175151_a(pos, facing, itemstack)) {
             return EnumActionResult.FAIL;
-        } else if (!player.canEat(false)) {
-            if(block.canPlaceBlockAt(worldIn, pos)) {
-                if (worldIn.isAirBlock(pos)) {
-                    worldIn.playSound(player, pos, SoundEvents.BLOCK_GRASS_PLACE, SoundCategory.BLOCKS, 1.0F, 0.8F);
-                    worldIn.setBlockState(pos, block.getDefaultState());
-                    itemstack.shrink(1);
+        } else if (!player.func_71043_e(false)) {
+            if(block.func_176196_c(worldIn, pos)) {
+                if (worldIn.func_175623_d(pos)) {
+                    worldIn.func_184133_a(player, pos, SoundEvents.field_187577_bU, SoundCategory.BLOCKS, 1.0F, 0.8F);
+                    worldIn.func_175656_a(pos, block.func_176223_P());
+                    itemstack.func_190918_g(1);
                     return EnumActionResult.SUCCESS;
                 }
             }
             if (player instanceof EntityPlayerMP) {
-                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, itemstack);
+                CriteriaTriggers.field_193137_x.func_193173_a((EntityPlayerMP)player, pos, itemstack);
             }
         }
         return EnumActionResult.SUCCESS;

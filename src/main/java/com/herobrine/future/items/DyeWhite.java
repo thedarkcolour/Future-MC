@@ -9,9 +9,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class DyeWhite extends Item {
     public DyeWhite() {
-        setUnlocalizedName(Init.MODID + ".DyeWhite");
+        func_77655_b(Init.MODID + ".DyeWhite");
         setRegistryName("DyeWhite");
-        setCreativeTab(Init.futuretab);
+        func_77637_a(Init.futuretab);
     }
 
     @SideOnly(Side.CLIENT)

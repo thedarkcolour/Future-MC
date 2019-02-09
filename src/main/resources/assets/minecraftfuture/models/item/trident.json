@@ -4,16 +4,18 @@
     "layer0": "minecraftfuture:items/trident"
   },
 
-  "firstperson": {
-    "model": "item/hold_trident"
-  },
-
   "overrides": [
     {
       "predicate": {
-        "pulling": 1
+        "throwing": 1
       },
-      "model": "item/throw_trident"
-    }
+      "model": "minecraftfuture:item/throw_trident"
+    },
+      {
+      "predicate": {
+          "holding": 1
+      },
+          "model": "minecraftfuture:item/hold_trident"
+      }
   ]
 }

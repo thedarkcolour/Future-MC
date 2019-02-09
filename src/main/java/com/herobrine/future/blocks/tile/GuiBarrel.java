@@ -12,26 +12,26 @@ public class GuiBarrel extends GuiContainer {
 
     public GuiBarrel(TileEntityBarrel tileEntity, ContainerBarrel container) {
         super(container);
-        xSize = WIDTH;
-        ySize = HEIGHT;
+        field_146999_f = WIDTH;
+        field_147000_g = HEIGHT;
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        mc.getTextureManager().bindTexture(background);
-        drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+    protected void func_146976_a(float partialTicks, int mouseX, int mouseY) {
+        field_146297_k.func_110434_K().func_110577_a(background);
+        func_73729_b(field_147003_i, field_147009_r, 0, 0, field_146999_f, field_147000_g);
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.fontRenderer.drawString("Barrel", 8, 6, 4210752);
-        this.fontRenderer.drawString("Inventory", 8, this.ySize - 92, 4210752);
+    protected void func_146979_b(int mouseX, int mouseY) {
+        this.field_146289_q.func_78276_b("Barrel", 8, 6, 4210752);
+        this.field_146289_q.func_78276_b("Inventory", 8, this.field_147000_g - 92, 4210752);
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        this.drawDefaultBackground();
-        super.drawScreen(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+    public void func_73863_a(int mouseX, int mouseY, float partialTicks) {
+        this.func_146276_q_();
+        super.func_73863_a(mouseX, mouseY, partialTicks);
+        this.func_191948_b(mouseX, mouseY);
     }
 }

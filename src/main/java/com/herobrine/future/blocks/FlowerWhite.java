@@ -14,20 +14,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class FlowerWhite extends BlockBush { //Adds white flower
     public FlowerWhite() {
-        super(Material.PLANTS);
+        super(Material.field_151585_k);
         setRegistryName("FlowerWhite");
-        setUnlocalizedName(Init.MODID + ".FlowerWhite");
-        setCreativeTab(Init.futuretab);
-        setSoundType(SoundType.PLANT);
+        func_149663_c(Init.MODID + ".FlowerWhite");
+        func_149647_a(Init.futuretab);
+        func_149672_a(SoundType.field_185850_c);
     }
 
     @SideOnly(Side.CLIENT)
     public void initModel() {
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.func_150898_a(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
 
     @Override
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        return super.canPlaceBlockAt(worldIn, pos);
+    public boolean func_176196_c(World worldIn, BlockPos pos) {
+        return super.func_176196_c(worldIn, pos);
     }
 }

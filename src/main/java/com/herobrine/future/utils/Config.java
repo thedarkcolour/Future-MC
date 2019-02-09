@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Level;
 public class Config {
 
     private static final String CATEGORY_GENERAL = "general";
+    private static final String CATEGORY_DEVMODE = "minecraft future developer";
     public static boolean lily = true;   //lily enabled?
     public static boolean bluef = true; //cornflower enabled?
     public static boolean wrose = true; //wither rose enabled?
@@ -27,6 +28,11 @@ public class Config {
     public static boolean campfire = true;
     public static boolean campfiredmg = true;
     public static boolean striplog = true;
+    public static boolean newwall = true;
+
+    /**        DEV FEATURES        */
+    public static boolean tridentanimation = false;
+    public static boolean stonecutterfunctions = false;
 
     public static void readConfig() {
         Configuration cfg = CommonProxy.config;
@@ -44,6 +50,7 @@ public class Config {
 
     public static void init(Configuration cfg) {
         cfg.addCustomCategoryComment(CATEGORY_GENERAL, "General configuration");
+        cfg.addCustomCategoryComment(CATEGORY_DEVMODE, "Unfinished features that may be implemented later on. Use at your own risk.");
         lily = cfg.getBoolean("lilyenabled", CATEGORY_GENERAL, lily, "whether Lily of the Valley is enabled");
         bluef = cfg.getBoolean("cornflowerenabled", CATEGORY_GENERAL, bluef, "whether Cornflower is enabled");
         wrose = cfg.getBoolean("witherroseenabled", CATEGORY_GENERAL, wrose, "whether Wither Rose is enabled");
@@ -65,5 +72,14 @@ public class Config {
         campfire = cfg.getBoolean("campfireenabled", CATEGORY_GENERAL, campfire, "whether the campfire is enabled");
         campfiredmg = cfg.getBoolean("campfiredamagesplayer", CATEGORY_GENERAL, campfiredmg, "whether the campfire does damage to players when walked on");
         striplog = cfg.getBoolean("strippedlogenabled", CATEGORY_GENERAL, striplog, "whether you can use an Axe to strip logs of their bark");
+        newwall = cfg.getBoolean("1.14wallsenabled", CATEGORY_GENERAL, newwall, "whether the new wall variants from 1.14 are enabled");
+
+        /**
+         * Developer options
+         *
+         * ...does anyone ever read this?
+         */
+        tridentanimation = cfg.getBoolean("tridentanimationenabled", CATEGORY_DEVMODE, tridentanimation, "Adds animation (Unfinished as of 0.0.8) that will be further refined in later updates. Crashes the game when trident is placed in item frame");
+        stonecutterfunctions = cfg.getBoolean("stonecutterfunctions", CATEGORY_DEVMODE, stonecutterfunctions, "Allows stonecutter to open a gui (Does not work, may cause errors)");
     }
 }
