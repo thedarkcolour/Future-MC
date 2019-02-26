@@ -1,3 +1,14 @@
+Version 0.1.0 - Planned changes:
+ *Stonecutter Functionality* - Stonecutter will now be able to craft blocks.
+ *New Config file* - Config file is now a proper Forge annotated config file that can be edited through Mod Options.
+ Lanterns - Changed block placement to use a more efficient boolean property, and if possible, will hang from the ceiling block if the   below block is broken.
+ Campfire - Now properly stays lit and unlit when the chunks unload.
+ Config file - Fixed many broken options.
+ Dyes - Switched to a single item ID with metadata. Oredictionary now properly implemented!
+ Walls - No longer break instantly.
+ Stripped Logs - Updated texture to use current log textures.
+ ...more may be added! I am close to finishing the update.
+
 Version 0.0.9 - New things:
  *Walls* - Walls that were added in 1.14 are now craftable decorative blocks. 12 new wall variants!
  Trident - Animation now properly disabled by default.
