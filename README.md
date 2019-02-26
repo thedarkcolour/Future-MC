@@ -1,2 +1,2 @@
-# MinecraftFuture
+# MinecraftFuture [![CurseForge](http://cf.way2muchnoise.eu/full_310059_downloads.svg)](https://minecraft.curseforge.com/projects/minecraft-future) [![CurseForge](http://cf.way2muchnoise.eu/versions/for%20Minecraft_310059_all.svg)](https://minecraft.curseforge.com/projects/minecraft-future/files) [![CurseForge](http://cf.way2muchnoise.eu/packs/full_310059_in_modpacks.svg)] (https://minecraft.curseforge.com/projects/minecraft-future/relations/dependents)
 Adds blocks from previous versions. This mod is very incomplete, I will add more as I continue to work on it.
