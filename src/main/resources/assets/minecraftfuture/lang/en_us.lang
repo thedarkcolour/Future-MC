@@ -25,6 +25,7 @@ tile.minecraftfuture.nether_brick_wall.name=Nether Brick Wall
 tile.minecraftfuture.sandstone_wall.name=Sandstone Wall
 tile.minecraftfuture.red_sandstone_wall.name=Red Sandstone Wall
 tile.minecraftfuture.nether_brick_red_wall.name=Red Nether Brick Wall
+tile.minecraftfuture.SmoothStone.name=Smooth Stone
 item.minecraftfuture.DyeBlue.name=Blue Dye
 item.minecraftfuture.DyeWhite.name=White Dye
 item.minecraftfuture.DyeBrown.name=Brown Dye
@@ -33,5 +34,6 @@ item.minecraftfuture.Trident.name=Trident
 item.minecraftfuture.SuspiciousStew.name=Suspicious Stew
 item.minecraftfuture.sweetberry.name=Sweet Berries
 container.Barrel=Barrel
+entity.ItemFrame.name=Item Frame
 
 itemGroup.Future=The Future

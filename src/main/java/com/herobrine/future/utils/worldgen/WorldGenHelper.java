@@ -6,29 +6,29 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class WorldGenHelper {
+class WorldGenHelper {
 
-    public static BlockPos getGroundPos(World world, int x, int z) {
-        final BlockPos topPos = world.func_175645_m(new BlockPos(x, 0, z));
-        if (topPos.func_177956_o() > 120) {
+    static BlockPos getGroundPos(World world, int x, int z) {
+        final BlockPos topPos = world.getHeight(new BlockPos(x, 0, z));
+        if (topPos.getY() > 120) {
             return null;
         }
 
         final BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(topPos);
 
-        IBlockState blockState = world.func_180495_p(pos);
+        IBlockState blockState = world.getBlockState(pos);
         while (isAir(blockState, world, pos)) {
-            pos.func_189536_c(EnumFacing.DOWN);
-            if (pos.func_177956_o() < 31) {
+            pos.move(EnumFacing.DOWN);
+            if (pos.getY() < 31) {
                 return null;
             }
-            blockState = world.func_180495_p(pos);
+            blockState = world.getBlockState(pos);
         }
-        return pos.func_177984_a();
+        return pos.up();
     }
 
-    public static boolean isAir(IBlockState blockState, World world, BlockPos pos) {
-        Block block = blockState.func_177230_c();
+    private static boolean isAir(IBlockState blockState, World world, BlockPos pos) {
+        Block block = blockState.getBlock();
         return block.isAir(blockState, world, pos);
     }
 }

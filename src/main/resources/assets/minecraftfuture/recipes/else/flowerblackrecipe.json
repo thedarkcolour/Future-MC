@@ -1,11 +1,12 @@
 {
-  "result": {
-    "item": "dyeblack"
-  },
-  "ingredients": [
-    {
-      "item": "flowerblack"
-    }
-  ],
-  "type": "minecraft:crafting_shapeless"
+    "result": {
+        "item": "dye",
+        "data": 3
+    },
+    "ingredients": [
+        {
+            "item": "flowerblack"
+        }
+    ],
+    "type": "minecraft:crafting_shapeless"
 }

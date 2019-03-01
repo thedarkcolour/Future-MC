@@ -1,18 +1,12 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "minecraftfuture:lantern"
-  },
-  "variants": {
-    "inventory": { "model": "minecraftfuture:item/lantern"},
-    "normal": [{}],
-    "facing": {
-      "north": {},
-      "south": {},
-      "west": {},
-      "east": {},
-      "up": {},
-      "down": { "model": "minecraftfuture:hanging_lantern"}
-        }
-  }
+    "forge_marker": 1,
+    "defaults": {
+        "model": "minecraftfuture:lantern"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": { "model": "minecraftfuture:item/lantern"},
+        "hanging=false" : { "model": "minecraftfuture:lantern" },
+        "hanging=true" : { "model": "minecraftfuture:hanging_lantern"}
+    }
 }

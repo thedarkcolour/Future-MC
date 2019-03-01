@@ -1,6 +1,7 @@
 package com.herobrine.future.items;
 
-import com.herobrine.future.utils.Init;
+import com.herobrine.future.utils.blocks.IModel;
+import com.herobrine.future.utils.proxy.Init;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -15,42 +16,42 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBerry extends ItemFood {
+public class ItemBerry extends ItemFood implements IModel {
     public ItemBerry(int amount, float saturation, boolean isWolfFood) {
         super(amount, saturation,isWolfFood);
-        func_77655_b(Init.MODID + ".sweetberry");
+        setUnlocalizedName(Init.MODID + ".sweetberry");
         setRegistryName("sweetberry");
-        func_77637_a(Init.futuretab);
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void initModel() {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+        setCreativeTab(Init.futuretab);
     }
 
     @Override
-    public EnumActionResult func_180614_a(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        pos = pos.func_177972_a(facing);
-        ItemStack itemstack = player.func_184586_b(hand);
+    @SideOnly(Side.CLIENT)
+    public void models() {
+        model(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+    }
+
+    @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        pos = pos.offset(facing);
+        ItemStack itemstack = player.getHeldItem(hand);
         Block block = Init.berrybush;
 
-        if (!player.func_175151_a(pos, facing, itemstack)) {
+        if (!player.canPlayerEdit(pos, facing, itemstack)) {
             return EnumActionResult.FAIL;
-        } else if (!player.func_71043_e(false)) {
-            if(block.func_176196_c(worldIn, pos)) {
-                if (worldIn.func_175623_d(pos)) {
-                    worldIn.func_184133_a(player, pos, SoundEvents.field_187577_bU, SoundCategory.BLOCKS, 1.0F, 0.8F);
-                    worldIn.func_175656_a(pos, block.func_176223_P());
-                    itemstack.func_190918_g(1);
+        } else if (!player.canEat(false)) {
+            if(block.canPlaceBlockAt(worldIn, pos)) {
+                if (worldIn.isAirBlock(pos)) {
+                    worldIn.playSound(player, pos, SoundEvents.BLOCK_GRASS_PLACE, SoundCategory.BLOCKS, 1.0F, 0.8F);
+                    worldIn.setBlockState(pos, block.getDefaultState());
+                    itemstack.shrink(1);
                     return EnumActionResult.SUCCESS;
                 }
             }
             if (player instanceof EntityPlayerMP) {
-                CriteriaTriggers.field_193137_x.func_193173_a((EntityPlayerMP)player, pos, itemstack);
+                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, itemstack);
             }
         }
         return EnumActionResult.SUCCESS;

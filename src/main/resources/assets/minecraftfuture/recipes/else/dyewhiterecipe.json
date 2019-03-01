@@ -1,12 +1,13 @@
 {
-  "result": {
-    "item": "dyewhite"
-  },
-  "ingredients": [
-    {
-      "item": "minecraft:dye",
-      "data": 15
-    }
-  ],
-  "type": "minecraft:crafting_shapeless"
+    "result": {
+        "item": "dye",
+        "data": 0
+    },
+    "ingredients": [
+        {
+            "item": "minecraft:dye",
+            "data": 15
+        }
+    ],
+    "type": "minecraft:crafting_shapeless"
 }

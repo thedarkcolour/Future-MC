@@ -1,12 +1,12 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "minecraftfuture:campfire_on"
-  },
-  "variants": {
-    "normal": [{}],
-    "inventory": [{}],
-    "lit=true": {"model": "minecraftfuture:campfire_on"},
-    "lit=false": {"model": "minecraftfuture:campfire"}
-  }
+    "forge_marker": 1,
+    "defaults": {
+        "model": "minecraftfuture:campfire_on"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}],
+        "lit=true": {"model": "minecraftfuture:campfire_on"},
+        "lit=false": {"model": "minecraftfuture:campfire"}
+    }
 }

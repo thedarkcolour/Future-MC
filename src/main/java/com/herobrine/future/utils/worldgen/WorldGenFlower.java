@@ -3,8 +3,8 @@ package com.herobrine.future.utils.worldgen;
 import com.herobrine.future.blocks.BerryBush;
 import com.herobrine.future.blocks.FlowerBlue;
 import com.herobrine.future.blocks.FlowerWhite;
-import com.herobrine.future.utils.Config;
-import com.herobrine.future.utils.Init;
+import com.herobrine.future.utils.config.FutureConfig;
+import com.herobrine.future.utils.proxy.Init;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.math.BlockPos;
@@ -22,74 +22,74 @@ public class WorldGenFlower implements IWorldGenerator {
         final int x = chunkX * 16 + 8;
         final int z = chunkZ * 16 + 8;
 
-        if (Config.bluefg) {
+        if (FutureConfig.b.cornflowergen && FutureConfig.b.cornflower) {
             generateFlower(Init.flowerblue, world, random, x, z);
         }
-        if(Config.lilyg) {
+        if(FutureConfig.b.lilygen && FutureConfig.b.lily) {
             generateFlower1(Init.flowerwhite, world, random, x, z);
         }
-        if(Config.berrybush) {
+        if(FutureConfig.a.berrybush && FutureConfig.a.berrybushgen) {
             generateBush(Init.berrybush, world, random, x, z);
         }
     }
 
     private void generateFlower(FlowerBlue flowerBlock, World world, Random random, int x, int z) {
         if (random.nextFloat() < 0.5) {
-            final int posX = x + world.field_73012_v.nextInt(16);
-            final int posZ = z + world.field_73012_v.nextInt(16);
+            final int posX = x + world.rand.nextInt(16);
+            final int posZ = z + world.rand.nextInt(16);
             final BlockPos newPos = WorldGenHelper.getGroundPos(world, posX, posZ);
 
-            if (newPos != null && flowerBlock.func_176196_c(world, newPos) && world.func_180494_b(newPos) == Biome.func_150568_d(1)) {
-                world.func_180501_a(newPos, flowerBlock.func_176223_P(), 2);
-            } else if(newPos != null && flowerBlock.func_176196_c(world, newPos) && world.func_180494_b(newPos) == Biome.func_150568_d(132)) {
-                world.func_180501_a(newPos, flowerBlock.func_176223_P(), 2);
+            if (newPos != null && flowerBlock.canPlaceBlockAt(world, newPos) && world.getBiome(newPos) == Biome.getBiome(1)) {
+                world.setBlockState(newPos, flowerBlock.getDefaultState(), 2);
+            } else if(newPos != null && flowerBlock.canPlaceBlockAt(world, newPos) && world.getBiome(newPos) == Biome.getBiome(132)) {
+                world.setBlockState(newPos, flowerBlock.getDefaultState(), 2);
             }
         }
     }
 
     private void generateFlower1(FlowerWhite flowerBlock, World world, Random random, int x, int z) {
         if (random.nextFloat() < 2) {
-            final int posX = x + world.field_73012_v.nextInt(16);
-            final int posZ = z + world.field_73012_v.nextInt(16);
+            final int posX = x + world.rand.nextInt(16);
+            final int posZ = z + world.rand.nextInt(16);
             final BlockPos newPos = WorldGenHelper.getGroundPos(world, posX, posZ);
-            if (newPos != null && flowerBlock.func_176196_c(world, newPos) && world.func_180494_b(newPos) == Biome.func_150568_d(4)) {
-                world.func_180501_a(newPos, flowerBlock.func_176223_P(), 2);
-            } else if(newPos != null && flowerBlock.func_176196_c(world, newPos) && world.func_180494_b(newPos) == Biome.func_150568_d(132)) {
-                world.func_180501_a(newPos, flowerBlock.func_176223_P(),  2);
-            } else if(newPos != null && flowerBlock.func_176196_c(world, newPos) && world.func_180494_b(newPos) == Biome.func_150568_d(5)) {
-                world.func_180501_a(newPos, flowerBlock.func_176223_P(),  2);
-            } else if(newPos != null && flowerBlock.func_176196_c(world, newPos) && world.func_180494_b(newPos) == Biomes.field_150583_P) {
-                world.func_180501_a(newPos, flowerBlock.func_176223_P(), 2);
+            if (newPos != null && flowerBlock.canPlaceBlockAt(world, newPos) && world.getBiome(newPos) == Biome.getBiome(4)) {
+                world.setBlockState(newPos, flowerBlock.getDefaultState(), 2);
+            } else if(newPos != null && flowerBlock.canPlaceBlockAt(world, newPos) && world.getBiome(newPos) == Biome.getBiome(132)) {
+                world.setBlockState(newPos, flowerBlock.getDefaultState(),  2);
+            } else if(newPos != null && flowerBlock.canPlaceBlockAt(world, newPos) && world.getBiome(newPos) == Biome.getBiome(5)) {
+                world.setBlockState(newPos, flowerBlock.getDefaultState(),  2);
+            } else if(newPos != null && flowerBlock.canPlaceBlockAt(world, newPos) && world.getBiome(newPos) == Biomes.BIRCH_FOREST) {
+                world.setBlockState(newPos, flowerBlock.getDefaultState(), 2);
             }
         }
     }
 
     private void generateBush(BerryBush flowerBlock, World world, Random random, int x, int z) {
         if (random.nextDouble() < 0.3) {
-            final int posX = x + world.field_73012_v.nextInt(16);
-            final int posZ = z + world.field_73012_v.nextInt(16);
+            final int posX = x + world.rand.nextInt(16);
+            final int posZ = z + world.rand.nextInt(16);
             final BlockPos newPos = WorldGenHelper.getGroundPos(world, posX, posZ);
 
-            if(newPos != null && flowerBlock.func_176196_c(world, newPos)) {
-                IBlockState bush = flowerBlock.func_176223_P().func_177226_a(BerryBush.AGE, 1);
-                if (world.func_180494_b(newPos) == Biomes.field_76768_g) {
-                    world.func_180501_a(newPos, bush, 2);
-                } else if (world.func_180494_b(newPos) == Biomes.field_76784_u) {
-                    world.func_180501_a(newPos, bush, 2);
-                } else if (world.func_180494_b(newPos) == Biomes.field_150584_S) {
-                    world.func_180501_a(newPos, bush, 2);
-                } else if (world.func_180494_b(newPos) == Biomes.field_150579_T) {
-                    world.func_180501_a(newPos, bush, 2);
-                } else if (world.func_180494_b(newPos) == Biomes.field_185432_ad) {
-                    world.func_180501_a(newPos, bush, 2);
-                } else if (world.func_180494_b(newPos) == Biomes.field_150581_V) {
-                    world.func_180501_a(newPos, bush, 2);
-                } else if (world.func_180494_b(newPos) == Biomes.field_150578_U) {
-                    world.func_180501_a(newPos, bush, 2);
-                } else if (world.func_180494_b(newPos) == Biomes.field_185433_ae) {
-                    world.func_180501_a(newPos, bush, 2);
-                } else if (world.func_180494_b(newPos) == Biomes.field_185431_ac) {
-                    world.func_180501_a(newPos, bush, 2);
+            if(newPos != null && flowerBlock.canPlaceBlockAt(world, newPos)) {
+                IBlockState bush = flowerBlock.getDefaultState().withProperty(BerryBush.AGE, 1);
+                if (world.getBiome(newPos) == Biomes.TAIGA) {
+                    world.setBlockState(newPos, bush, 2);
+                } else if (world.getBiome(newPos) == Biomes.TAIGA_HILLS) {
+                    world.setBlockState(newPos, bush, 2);
+                } else if (world.getBiome(newPos) == Biomes.COLD_TAIGA) {
+                    world.setBlockState(newPos, bush, 2);
+                } else if (world.getBiome(newPos) == Biomes.COLD_TAIGA_HILLS) {
+                    world.setBlockState(newPos, bush, 2);
+                } else if (world.getBiome(newPos) == Biomes.MUTATED_REDWOOD_TAIGA) {
+                    world.setBlockState(newPos, bush, 2);
+                } else if (world.getBiome(newPos) == Biomes.REDWOOD_TAIGA_HILLS) {
+                    world.setBlockState(newPos, bush, 2);
+                } else if (world.getBiome(newPos) == Biomes.REDWOOD_TAIGA) {
+                    world.setBlockState(newPos, bush, 2);
+                } else if (world.getBiome(newPos) == Biomes.MUTATED_REDWOOD_TAIGA_HILLS) {
+                    world.setBlockState(newPos, bush, 2);
+                } else if (world.getBiome(newPos) == Biomes.MUTATED_TAIGA_COLD) {
+                    world.setBlockState(newPos, bush, 2);
                 }
             }
         }

@@ -1,77 +1,224 @@
 package com.herobrine.future.entity;
 
-import com.herobrine.future.utils.Init;
+import com.herobrine.future.FutureJava;
+import com.herobrine.future.utils.proxy.Init;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.world.WorldServer;
+
+import javax.annotation.Nullable;
+
+import static net.minecraft.item.ItemStack.EMPTY;
 
 public class EntityTrident extends EntityArrow {
-    private static final DataParameter<Integer> DURABILTY = EntityDataManager.func_187226_a(EntityTrident.class, DataSerializers.field_187192_b);
+    private static final DataParameter<Byte> LOYALTY_LEVEL = EntityDataManager.createKey(EntityTrident.class, DataSerializers.BYTE);
+    private static final DataParameter<Byte> CRITICAL = EntityDataManager.createKey(EntityTrident.class, DataSerializers.BYTE);
+    private ItemStack thrownStack;
+    private boolean dealtDamage;
+    int returningTicks;
 
-    public EntityTrident(World worldIn, EntityLivingBase shooter, float velocity) {
-        super(worldIn, shooter);
+    public EntityTrident(World worldIn) {
+        super(worldIn);
+        this.thrownStack = new ItemStack(Init.trident);
+    }
 
-        MinecraftForge.EVENT_BUS.register(this);
+    public EntityTrident(World world, EntityLivingBase shooter, ItemStack stack) {
+        super(world, shooter);
+        this.thrownStack = new ItemStack(Init.trident);
+        this.dataManager.set(LOYALTY_LEVEL, (byte) 0);
+    }
+
+    public EntityTrident(World worldIn, double x, double y, double z) {
+        super(worldIn, x, y, z);
+        this.thrownStack = new ItemStack(Init.trident);
     }
 
     @Override
-    protected void func_70088_a() {
-        super.func_70088_a();
+    protected void entityInit() {
+        super.entityInit();
+        this.dataManager.register(LOYALTY_LEVEL, (byte) 0);
+        this.dataManager.register(CRITICAL, (byte) 0);
     }
 
     @Override
-    public void func_70186_c(double par1, double par3, double par5, float par7, float par8) {
-        float f2 = MathHelper.func_76133_a(par1*par3*par5*par7*par8);
-        par1 /= f2;
-        par3 /= f2;
-        par5 /= f2;
-        par1 += this.field_70146_Z.nextGaussian() * (this.field_70146_Z.nextBoolean() ? -1 : 1) * 0.0007499999832361937D * par8;
-        par3 += this.field_70146_Z.nextGaussian() * (this.field_70146_Z.nextBoolean() ? -1 : 1) * 0.0007499999832361937D * par8;
-        par5 += this.field_70146_Z.nextGaussian() * (this.field_70146_Z.nextBoolean() ? -1 : 1) * 0.0007499999832361937D * par8;
-        par1 *= par7;
-        par3 *= par7;
-        par5 *= par7;
-        this.field_70159_w = par1;
-        this.field_70181_x = par3;
-        this.field_70179_y = par5;
-        float f3 = MathHelper.func_76133_a(par1 * par1 + par5 * par5);
-        this.field_70126_B = this.field_70177_z = (float) (Math.atan2(par1, par5) * 180.0D / Math.PI);
-        this.field_70127_C = this.field_70125_A = (float) (Math.atan2(par3, f3) * 180.0D / Math.PI);
+    public void onUpdate() {
+        if (this.timeInGround > 4) {
+            this.dealtDamage = true;
+        }
+
+        Entity entity = this.getShooter();
+        if ((this.dealtDamage || this.canCrit()) && entity != null) {
+            int loyalty = this.dataManager.get(LOYALTY_LEVEL);
+            if (loyalty > 0) {
+                if (!this.world.isRemote && this.pickupStatus == PickupStatus.ALLOWED) {
+                    this.entityDropItem(this.getArrowStack(), 0.1F);
+                }
+
+                this.setDead();
+            } else if (loyalty > 0) {
+                this.hasClip(true);
+                Vec3d vec3d = new Vec3d(entity.posX - this.posX, entity.posY + (double)entity.getEyeHeight() - this.posY, entity.posZ - this.posZ);
+                this.posY += vec3d.y * 0.015D * (double)loyalty;
+                if (this.world.isRemote) {
+                    this.lastTickPosY = this.posY;
+                }
+
+                vec3d = vec3d.normalize();
+                double d = 0.05D * (double)loyalty;
+                this.motionX += vec3d.x * d - this.motionX * 0.05D;
+                this.motionY += vec3d.y * d - this.motionY * 0.05D;
+                this.motionZ += vec3d.z * d - this.motionZ * 0.05D;
+                if (this.returningTicks == 0) {
+                    this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 10.0F, 1.0F);
+                }
+
+                ++this.returningTicks;
+            }
+        }
+
+        super.onUpdate();
+    }
+
+    @Nullable
+    @Override
+    protected Entity findEntityOnPath(Vec3d start, Vec3d end) {
+        return this.dealtDamage ? null : super.findEntityOnPath(start, end);
     }
 
     @Override
-    protected ItemStack func_184550_j() {
-        return new ItemStack(Init.trident);
-    }
+    protected void onHit(RayTraceResult raytraceResultIn) {
+        Entity entity = raytraceResultIn.entityHit;
+        float f = 8.0F;
+        if (entity instanceof EntityLivingBase) {
+            EntityLivingBase lvt_4_1_ = (EntityLivingBase)entity;
+            f += EnchantmentHelper.getModifierForCreature(this.thrownStack, lvt_4_1_.getCreatureAttribute());
+        }
 
-    @Override
-    public void func_70100_b_(EntityPlayer entityIn) {
-        if(!this.field_70170_p.field_72995_K && this.field_70254_i && this.field_70249_b <= 0) {
-            boolean flag = this.field_70251_a == EntityArrow.PickupStatus.ALLOWED || this.field_70251_a == EntityArrow.PickupStatus.CREATIVE_ONLY && entityIn.field_71075_bZ.field_75098_d;
-
-            if (this.field_70251_a == EntityArrow.PickupStatus.ALLOWED && !entityIn.field_71071_by.func_70441_a(func_184550_j())) {
-                flag = false;
+        Entity entity1 = this.getShooter();
+        DamageSource source = DamageSource.causeArrowDamage(this, (entity1 == null ? this : entity1));
+        this.dealtDamage = true;
+        SoundEvent lvt_6_1_ = SoundEvents.ENTITY_ARROW_HIT;
+        /*if (entity.attackEntityFrom(source, f) && entity instanceof EntityLivingBase) {
+            EntityLivingBase target = (EntityLivingBase)entity;
+            if (entity1 instanceof EntityLivingBase) {
+                EnchantmentHelper.applyThornEnchantments(target, entity1);
+                EnchantmentHelper.applyArthropodEnchantments((EntityLivingBase)entity1, target);
             }
 
-            if (flag) {
-                this.func_184185_a(SoundEvents.field_187638_cR, 0.2F, ((this.field_70146_Z.nextFloat() - this.field_70146_Z.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-                entityIn.func_71001_a(this, 1);
-                this.func_70106_y();
+            this.arrowHit(target);
+        }*/
+
+        this.motionX *= -0.009999999776482582D;
+        this.motionY *= -0.10000000149011612D;
+        this.motionZ *= -0.009999999776482582D;
+        float lvt_7_2_ = 1.0F;/*
+        if (this.world.isThundering() && EnchantmentHelper.hasChanneling(this.thrownStack)) {
+            BlockPos lvt_8_1_ = entity.getPosition();
+            if (this.world.canSeeSky(lvt_8_1_)) {
+                EntityLightningBolt lvt_9_1_ = new EntityLightningBolt(this.world, (double)lvt_8_1_.getX() + 0.5D, (double)lvt_8_1_.getY(), (double)lvt_8_1_.getZ() + 0.5D, false);
+                lvt_9_1_.setCaster(lvt_4_2_ instanceof EntityPlayerMP ? (EntityPlayerMP)lvt_4_2_ : null);
+                this.world.addWeatherEffect(lvt_9_1_);
+                lvt_6_1_ = SoundEvents.ITEM_TRIDENT_THUNDER;
+                lvt_7_2_ = 5.0F;
             }
+        }*/
+
+        this.playSound(lvt_6_1_, lvt_7_2_, 1.0F);
+    }
+
+    protected SoundEvent getHitGroundSound() {
+        return SoundEvents.ENTITY_ARROW_HIT;
+    }
+
+    @Override
+    public void onCollideWithPlayer(EntityPlayer entityIn) {
+        Entity entity = this.getShooter();
+        if (entity == null || entity.getUniqueID() == entityIn.getUniqueID()) {
+            super.onCollideWithPlayer(entityIn);
         }
     }
 
     @Override
-    protected void func_184549_a(RayTraceResult raytraceResultIn) {
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
+        if (compound.hasKey("Trident", 10)) {
+            this.thrownStack = read(compound.getCompoundTag("Trident"));
+        }
 
+        this.dealtDamage = compound.getBoolean("DealtDamage");
+        this.dataManager.set(LOYALTY_LEVEL, (byte)0);
+    }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        compound.setTag("Trident", this.thrownStack.writeToNBT(new NBTTagCompound()));
+        compound.setBoolean("DealtDamage", this.dealtDamage);
+    }
+
+    @Override
+    public boolean isInRangeToRender3d(double x, double y, double z) {
+        return true;
+    }
+
+    //
+    //    This section adds missing methods used in 1.13 code
+    //    May not have good names for each method
+    //
+
+    public void hasClip(boolean bool) {
+        this.noClip = bool;
+        this.func_203047_q(2, bool);
+    }
+
+    public boolean canCrit() {
+        if (!this.world.isRemote) {
+            return this.noClip;
+        } else {
+            return true;//(this.dataManager.get(CRITICAL) & 2) != 0;
+        }
+    }
+
+    protected void func_203047_q(int p_203049_1_, boolean p_203049_2_) {
+        byte b0 = this.dataManager.get(CRITICAL);
+        if (p_203049_2_) {
+            this.dataManager.set(CRITICAL, (byte)(b0 | p_203049_1_));
+        } else {
+            this.dataManager.set(CRITICAL, (byte)(b0 & ~p_203049_1_));
+        }
+
+    }
+
+    @Nullable
+    public Entity getShooter() {                                                                                           // Maybe problematic?
+        return this.shootingEntity != null && this.world instanceof WorldServer ? ((WorldServer)this.world).getEntityFromUuid(this.shootingEntity.getUniqueID()) : null;
+    }
+
+    @Override
+    protected ItemStack getArrowStack() {
+        return this.thrownStack.copy();
+    }
+
+    public static ItemStack read(NBTTagCompound compound) {
+        try {
+            return new ItemStack(compound);
+        } catch (RuntimeException runtimeexception) {
+            FutureJava.logger.debug("Tried to load invalid item: {}", compound, runtimeexception);
+            return EMPTY;
+        }
     }
 }

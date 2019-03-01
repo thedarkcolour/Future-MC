@@ -1,9 +1,9 @@
 [
 {
   "modid": "minecraftfuture",
-  "name": "Minecraft Future",
+  "name": "Future MC",
   "description": "Adds features from future updates.",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "mcversion": "1.12",
   "url": "",
   "updateUrl": "",
