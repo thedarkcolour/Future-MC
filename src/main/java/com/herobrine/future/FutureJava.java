@@ -165,7 +165,7 @@ public class FutureJava {
             if (FutureConfig.a.berrybush) event.getRegistry().register(new BerryBush());
             if (FutureConfig.a.loom) event.getRegistry().register(new Loom());
             if (FutureConfig.a.barrel) GameRegistry.registerTileEntity(TileEntityBarrel.class, Init.MODID + ":containerbarrel");
-            if (FutureConfig.a.stonecutter && false/*FutureConfig.c.stonecutterFunction*/) GameRegistry.registerTileEntity(TileEntityStonecutter.class, Init.MODID + ":containerstonecutter");
+            //if (FutureConfig.a.stonecutter && false/*FutureConfig.c.stonecutterFunction*/) GameRegistry.registerTileEntity(TileEntityStonecutter.class, Init.MODID + ":containerstonecutter");
             if (FutureConfig.a.campfire) event.getRegistry().register(new Campfire());
             if (FutureConfig.a.smoothstone) event.getRegistry().register(new SmoothStone());
         }
