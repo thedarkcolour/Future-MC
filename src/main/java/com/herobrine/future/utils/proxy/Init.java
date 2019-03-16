@@ -1,8 +1,11 @@
 package com.herobrine.future.utils.proxy;
 
+import com.herobrine.future.blocks.FurnaceAdvanced;
 import com.herobrine.future.blocks.NewWall;
 import com.herobrine.future.blocks.StrippedLog;
-import com.herobrine.future.utils.config.FutureConfig;
+import com.herobrine.future.config.FutureConfig;
+import com.herobrine.future.items.ItemSuspiciousStew;
+import com.herobrine.future.items.ItemTrident;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -22,6 +25,7 @@ public class Init {
     private static final List<String> variantsWall = Arrays.asList("brick", "granite", "andesite", "diorite", "sandstone", "red_sandstone", "stone_brick", "mossy_stone", "nether_brick", "nether_brick_red", "end_stone", "prismarine"); //12 values
     public static List<Block> strippedLogs = new ArrayList<>();
     public static List<Block> newwall = new ArrayList<>();
+    public static List<Block> advancedFurnace = new ArrayList<>();
     public static CreativeTabs futuretab = new CreativeTabs("Future") {
         @Override    //New creative tab
         public ItemStack getTabIconItem() {
@@ -33,13 +37,19 @@ public class Init {
         for (String variant: variantsLog) {
             strippedLogs.add(new StrippedLog(variant));
         }
+
         for (String variant : variantsWall) {
             newwall.add(new NewWall(variant));
         }
+
+        for (FurnaceAdvanced.FurnaceType type: FurnaceAdvanced.FurnaceType.values()) {
+            advancedFurnace.add(new FurnaceAdvanced(type));
+            System.out.println(type);
+        }
     }
 
-    @GameRegistry.ObjectHolder("minecraftfuture:Trident")
-    public static com.herobrine.future.items.Trident trident;    //Trident
+    @GameRegistry.ObjectHolder("minecraftfuture:trident")
+    public static ItemTrident itemTrident;    //ItemTrident
 
     @GameRegistry.ObjectHolder("minecraftfuture:Lantern")
     public static com.herobrine.future.blocks.Lantern lantern;          //Lantern
@@ -54,13 +64,13 @@ public class Init {
     public static com.herobrine.future.blocks.FlowerBlack flowerblack;  //Wither Rose
 
     @GameRegistry.ObjectHolder("minecraftfuture:SuspiciousStew")
-    public static com.herobrine.future.items.SuspiciousStew suspiciousstew;
-
-    @GameRegistry.ObjectHolder("minecraftfuture:Stonecutter")
-    public static com.herobrine.future.blocks.Stonecutter stonecutter;
+    public static ItemSuspiciousStew suspiciousstew;
 
     @GameRegistry.ObjectHolder("minecraftfuture:loom")
     public static com.herobrine.future.blocks.Loom loom;
+
+    @GameRegistry.ObjectHolder("minecraftfuture:stonecutter")
+    public static com.herobrine.future.blocks.StonecutterBase stonecutter;
 
     @GameRegistry.ObjectHolder("minecraftfuture:Barrel")
     public static com.herobrine.future.blocks.Barrel barrel;
@@ -84,26 +94,18 @@ public class Init {
         ModelLoader.setCustomModelResourceLocation(item, metadata, model);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @SubscribeEvent //renders everything
     public static void initModel() {   /*      REMEMBER TO CHECK COMMON PROXY IF GAME CRASHES      */
-        if (FutureConfig.a.trident) trident.models();
+        if (FutureConfig.a.trident) itemTrident.models();
         if (FutureConfig.a.lantern) lantern.models();
         if (FutureConfig.b.cornflower) flowerblue.models();
         if (FutureConfig.b.lily) flowerwhite.models();
         if (FutureConfig.b.witherrose) flowerblack.models();
         if (FutureConfig.b.suspiciousstew) suspiciousstew.models();
-
-        if (FutureConfig.a.stonecutter) {
-            if(!FutureConfig.a.oldstonecutter) {
-                stonecutter.models();
-            }/*
-            else {
-                OldStonecutter.models();
-            }*/
-        }
-
         if (FutureConfig.a.loom) loom.models();
         if (FutureConfig.a.barrel) barrel.models();
+        if (FutureConfig.a.stonecutter) stonecutter.models();
         if (FutureConfig.a.berrybush) berrybush.models();
         if (FutureConfig.a.sweetberry && FutureConfig.a.berrybush) sweetberry.models();
         if (FutureConfig.a.campfire) campfire.models();
@@ -115,10 +117,19 @@ public class Init {
                 model(Item.getItemFromBlock(block), 0, new ModelResourceLocation( Item.getItemFromBlock(block).getRegistryName(), "inventory"));
             }
         }
+
         if (FutureConfig.a.newwallvariants) {
             for (Block block : Init.newwall) {
                 model(Item.getItemFromBlock(block), 0, new ModelResourceLocation( Item.getItemFromBlock(block).getRegistryName(), "inventory"));
             }
+        }
+
+        if (FutureConfig.a.smoker) {
+            model(Item.getItemFromBlock(advancedFurnace.get(0)), 0, new ModelResourceLocation(advancedFurnace.get(0).getRegistryName(), "inventory"));
+        }
+
+        if (FutureConfig.a.blastfurnace) {
+            model(Item.getItemFromBlock(advancedFurnace.get(1)), 0, new ModelResourceLocation(advancedFurnace.get(1).getRegistryName(), "inventory"));
         }
     }
 }

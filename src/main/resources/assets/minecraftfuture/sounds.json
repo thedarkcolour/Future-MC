@@ -1,0 +1,34 @@
+{
+    "throw_trident": {
+        "subtitle": "minecraftfuture.subtitle.throw_trident",
+        "sounds": [ "minecraftfuture:trident/throw" ]
+    },
+    "pierce_trident": {
+        "subtitle": "minecraftfuture.subtitle.pierce_trident",
+        "sounds": [ "minecraftfuture:trident/pierce" ]
+    },
+    "impact_trident": {
+        "subtitle": "minecraftfuture.subtitle.impact_trident",
+        "sounds": [ "minecraftfuture:trident/impact" ]
+    },
+    "channeling_trident": {
+        "subtitle": "minecraftfuture.subtitle.channeling_trident",
+        "sounds": [ "minecraftfuture:trident/channeling" ]
+    },
+    "loyalty": {
+        "subtitle": "minecraftfuture.subtitle.loyalty_trident",
+        "sounds": [ "minecraftfuture:trident/loyalty" ]
+    },
+    "riptide_trident_i": {
+        "subtitle": "minecraftfuture.subtitle.riptide_trident_i",
+        "sounds": [ "minecraftfuture:trident/riptide_i" ]
+    },
+    "riptide_trident_ii": {
+        "subtitle": "minecraftfuture.subtitle.riptide_trident_ii",
+        "sounds": [ "minecraftfuture:trident/riptide_ii" ]
+    },
+    "riptide_trident_iii": {
+        "subtitle": "minecraftfuture.subtitle.riptide_trident_iii",
+        "sounds": [ "minecraftfuture:trident/riptide_iii" ]
+    }
+}

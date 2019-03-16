@@ -2,7 +2,7 @@ package com.herobrine.future.blocks;
 
 import com.herobrine.future.FutureJava;
 import com.herobrine.future.tile.barrel.TileEntityBarrel;
-import com.herobrine.future.utils.blocks.IModel;
+import com.herobrine.future.utils.IModel;
 import com.herobrine.future.utils.proxy.Init;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -13,7 +13,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,6 +20,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -72,16 +72,17 @@ public class Barrel extends Block implements ITileEntityProvider, IModel {
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
         TileEntity tile = world.getTileEntity(pos);
         IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH);
-        if (tile instanceof TileEntityBarrel)
+        if (tile instanceof TileEntityBarrel) {
+
             for(int slot=0; slot < 27; slot++) {
                 ItemStack stack = itemHandler.getStackInSlot(slot);
                 if (!stack.isEmpty()) {
-                    EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-                    world.spawnEntity(item);
-                    if(world.spawnEntity(item) == true)
-                        stack.setCount(0);
+                    spawnAsEntity(world, pos, stack);
+                    //stack.setCount(0);
                 }
             }
+        }
+
         super.breakBlock(world, pos, state);
     }
 
@@ -97,7 +98,6 @@ public class Barrel extends Block implements ITileEntityProvider, IModel {
                 (float) (entity.posZ - clickedBlock.getZ()));
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta & 7));
@@ -106,5 +106,15 @@ public class Barrel extends Block implements ITileEntityProvider, IModel {
     @Override
     public int getMetaFromState(IBlockState state) {
         return state.getValue(FACING).getIndex();
+    }
+
+    @Override
+    public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return true;
+    }
+
+    @Override
+    public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return 5;
     }
 }

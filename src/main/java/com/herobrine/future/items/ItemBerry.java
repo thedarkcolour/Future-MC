@@ -1,9 +1,9 @@
 package com.herobrine.future.items;
 
-import com.herobrine.future.utils.blocks.IModel;
+import com.herobrine.future.blocks.BerryBush;
+import com.herobrine.future.utils.IModel;
 import com.herobrine.future.utils.proxy.Init;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -37,15 +37,16 @@ public class ItemBerry extends ItemFood implements IModel {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         pos = pos.offset(facing);
         ItemStack itemstack = player.getHeldItem(hand);
-        Block block = Init.berrybush;
+        BerryBush block = Init.berrybush;
 
         if (!player.canPlayerEdit(pos, facing, itemstack)) {
             return EnumActionResult.FAIL;
-        } else if (!player.canEat(false)) {
+        }
+        else if (!player.canEat(false)) {
             if(block.canPlaceBlockAt(worldIn, pos)) {
                 if (worldIn.isAirBlock(pos)) {
                     worldIn.playSound(player, pos, SoundEvents.BLOCK_GRASS_PLACE, SoundCategory.BLOCKS, 1.0F, 0.8F);
-                    worldIn.setBlockState(pos, block.getDefaultState());
+                    worldIn.setBlockState(pos, block.state.getBaseState().withProperty(BerryBush.AGE, 0));
                     itemstack.shrink(1);
                     return EnumActionResult.SUCCESS;
                 }
@@ -54,6 +55,6 @@ public class ItemBerry extends ItemFood implements IModel {
                 CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, itemstack);
             }
         }
-        return EnumActionResult.SUCCESS;
+        return EnumActionResult.FAIL;
     }
 }

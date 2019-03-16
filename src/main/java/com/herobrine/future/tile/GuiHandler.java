@@ -1,11 +1,11 @@
 package com.herobrine.future.tile;
 
+import com.herobrine.future.tile.advancedfurnace.ContainerAdvancedFurnace;
+import com.herobrine.future.tile.advancedfurnace.GuiAdvancedFurnace;
+import com.herobrine.future.tile.advancedfurnace.TileEntityAdvancedFurnace;
 import com.herobrine.future.tile.barrel.ContainerBarrel;
 import com.herobrine.future.tile.barrel.GuiBarrel;
 import com.herobrine.future.tile.barrel.TileEntityBarrel;
-import com.herobrine.future.tile.stonecutter.ContainerStonecutter;
-import com.herobrine.future.tile.stonecutter.GuiStonecutter;
-import com.herobrine.future.tile.stonecutter.TileEntityStonecutter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {
     private static final int GUI_ID = 1;
-    private static final int GUI_STONECUTTER = 2;
+    private static final int GUI_ADVANCED_FURNACE = 2;
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -23,8 +23,8 @@ public class GuiHandler implements IGuiHandler {
         switch (ID) {
             case GUI_ID:
                 return new ContainerBarrel(player.inventory, (TileEntityBarrel) te);
-            case GUI_STONECUTTER:
-                 return new ContainerStonecutter(player.inventory, (TileEntityStonecutter) te);
+            case GUI_ADVANCED_FURNACE:
+                return new ContainerAdvancedFurnace(player.inventory, (TileEntityAdvancedFurnace) te);
             default: return null;
         }
     }
@@ -35,11 +35,9 @@ public class GuiHandler implements IGuiHandler {
         TileEntity te = world.getTileEntity(pos);
         switch (ID) {
             case GUI_ID:
-                TileEntityBarrel barrel = (TileEntityBarrel) te;
-                return new GuiBarrel(new ContainerBarrel(player.inventory, barrel));
-            case GUI_STONECUTTER:
-                TileEntityStonecutter stonecutter = (TileEntityStonecutter) te;
-                return new GuiStonecutter(stonecutter, new ContainerStonecutter(player.inventory, stonecutter));
+                return new GuiBarrel(new ContainerBarrel(player.inventory, (TileEntityBarrel) te));
+            case GUI_ADVANCED_FURNACE:
+                return new GuiAdvancedFurnace(new ContainerAdvancedFurnace(player.inventory, (TileEntityAdvancedFurnace) te));
             default: return null;
         }
     }

@@ -1,8 +1,8 @@
 
 package com.herobrine.future.blocks;
 
-import com.herobrine.future.utils.blocks.IModel;
-import com.herobrine.future.utils.config.FutureConfig;
+import com.herobrine.future.config.FutureConfig;
+import com.herobrine.future.utils.IModel;
 import com.herobrine.future.utils.proxy.Init;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -67,7 +67,7 @@ public class Campfire extends Block implements IModel {
     @Override
     public int getLightValue(IBlockState state) {
         if (state.getValue(LIT)) {
-            return 9;
+            return 15;
         } else {
             return 0;
         }

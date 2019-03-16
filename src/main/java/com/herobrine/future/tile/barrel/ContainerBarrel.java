@@ -15,16 +15,16 @@ public class ContainerBarrel extends Container {
 
     public ContainerBarrel(IInventory playerInventory, TileEntityBarrel te) {
         this.te = te;
+        addOwnSlots();
         playerInv = playerInventory;
         addPlayerSlots(playerInventory);
-        addOwnSlots();
     }
 
     private void addPlayerSlots(IInventory playerInventory) {
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
                 int x = 9 + col * 18 - 1;
-                int y = row * 18 + 70 + 14;
+                int y = row * 18 + 70 + 15;
                 this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 9, x, y));
             }
         }
@@ -32,7 +32,7 @@ public class ContainerBarrel extends Container {
         // Slots for the hotbar
         for (int row = 0; row < 9; ++row) {
             int x = 9 + row * 18 - 1;
-            int y = 58 + 70 + 14;
+            int y = 58 + 70 + 15;
             this.addSlotToContainer(new Slot(playerInventory, row, x, y));
         }
     }
@@ -59,11 +59,11 @@ public class ContainerBarrel extends Container {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
-            if (index < 27) {
-                if (!this.mergeItemStack(itemstack1, 27, this.inventorySlots.size(), true)) {
+            if (index < 36) {
+                if (!this.mergeItemStack(itemstack1, 36, this.inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.mergeItemStack(itemstack1, 0, 27, false)) {
+            } else if (!this.mergeItemStack(itemstack1, 0, 36, false)) {
                 return ItemStack.EMPTY;
             }
             if (itemstack1.isEmpty()) {

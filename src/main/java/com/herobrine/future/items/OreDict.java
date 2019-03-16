@@ -1,6 +1,6 @@
 package com.herobrine.future.items;
 
-import com.herobrine.future.utils.config.FutureConfig;
+import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.utils.proxy.Init;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

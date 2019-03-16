@@ -1,6 +1,6 @@
 package com.herobrine.future.items;
 
-import com.herobrine.future.utils.blocks.IModel;
+import com.herobrine.future.utils.IModel;
 import com.herobrine.future.utils.proxy.Init;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;

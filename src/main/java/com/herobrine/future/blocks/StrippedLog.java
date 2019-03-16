@@ -15,10 +15,10 @@ public class StrippedLog extends BlockLog {
 
     public StrippedLog(String variant) {
         super();
-        setDefaultState(blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
         setUnlocalizedName(Init.MODID + ".stripped_" + variant + "_log");
         setRegistryName("stripped_" + variant + "_log");
         setCreativeTab(Init.futuretab);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
     }
 
     @Override

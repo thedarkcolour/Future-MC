@@ -1,20 +1,14 @@
 package com.herobrine.future.blocks;
 
-import com.herobrine.future.utils.blocks.IModel;
 import com.herobrine.future.utils.proxy.Init;
-import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.item.Item;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.init.Biomes;
+import net.minecraft.world.biome.Biome;
 
-public class FlowerBlue extends BlockBush implements IModel { //Adds blue flower
+import java.util.Random;
+
+public class FlowerBlue extends BlockFlower { //Adds blue flower
     public FlowerBlue() {
-        super(Material.PLANTS);
         setRegistryName("FlowerBlue");
         setUnlocalizedName(Init.MODID + ".FlowerBlue");
         setCreativeTab(Init.futuretab);
@@ -22,13 +16,17 @@ public class FlowerBlue extends BlockBush implements IModel { //Adds blue flower
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void models() {
-        model(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+    public boolean isBiomeValid(Biome biome) {
+        return biome == Biomes.PLAINS || biome == Biomes.MUTATED_FOREST;
     }
 
     @Override
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        return super.canPlaceBlockAt(worldIn, pos);
+    public boolean getSpawnChance(Random random) {
+        return random.nextInt(100) > 96;
+    }
+
+    @Override
+    public boolean getChunkChance(Random random) {
+        return random.nextInt(100) > 90;
     }
 }

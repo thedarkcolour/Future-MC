@@ -1,7 +1,7 @@
 package com.herobrine.future.blocks;
 
 import com.herobrine.future.FutureJava;
-import com.herobrine.future.utils.blocks.IModel;
+import com.herobrine.future.utils.IModel;
 import com.herobrine.future.utils.proxy.Init;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;

@@ -1,6 +1,7 @@
 package com.herobrine.future.utils.proxy;
 
 import com.herobrine.future.FutureJava;
+import com.herobrine.future.entity.Entities;
 import com.herobrine.future.tile.GuiHandler;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -16,7 +17,7 @@ public class ClientProxy implements IProxy {
 
     @Override
     public void preInit(FMLPreInitializationEvent e) {
-        //RenderingRegistry.registerEntityRenderingHandler(EntityTrident.class, new RenderTrident(new ModelTrident()));
+        Entities.initModels();
     }
 
     @Override

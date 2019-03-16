@@ -1,7 +1,7 @@
 package com.herobrine.future.blocks;
 
 import com.herobrine.future.FutureJava;
-import com.herobrine.future.utils.blocks.IModel;
+import com.herobrine.future.utils.IModel;
 import com.herobrine.future.utils.proxy.Init;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
@@ -26,7 +26,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SuppressWarnings("deprecation")
 public class Lantern extends Block implements IModel {
     public static final ResourceLocation lantern = new ResourceLocation(FutureJava.MODID, "Lantern");
     private static final PropertyBool HANGING = PropertyBool.create("hanging");
@@ -53,9 +52,7 @@ public class Lantern extends Block implements IModel {
 
     @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-
         if (!isBlockInvalid(worldIn, pos.down()) && !isBlockInvalid(worldIn, pos.up())) { // Case if both top/bottom blocks are valid
-
             if (facing == EnumFacing.DOWN) {
                 return this.getDefaultState().withProperty(HANGING, true); // Only hang if top block is right clicked
             }
@@ -190,6 +187,6 @@ public class Lantern extends Block implements IModel {
 
     @Override
     public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
-        return blockState.getValue(HANGING) ? 15 : 1;
+        return blockState.getValue(HANGING) ? 15 : 0;
     }
 }
