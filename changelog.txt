@@ -1,3 +1,21 @@
+Version 0.1.2 - Better Furnaces! New things:
+ *Blast Furnace* - Block from 1.14 that smelts ores at twice the speed of a furnace, and uses half the fuel! (efficient fuel is toggleable in config)
+ *Smoker* - Block from 1.14 that cooks food at twice the speed of a furnace, and uses half the fuel! (efficient fuel is toggleable in config)
+ *Smithing Table* - Decorative block from 1.14.
+ *Fletching Table* - Decorative block from 1.14.
+ Stonecutter - Back in the creative tab.
+ Stonecutter - Added config option to use old model from Minecraft PE.
+ Berry Bushes - No longer crash game when bonemealing past fourth stage.
+ Suspicious Stew - Now gives a totally random effect. Can be set to use the crafted flower as its effect in the config.
+ Sweet Berries - Added proper OreDictionary entries to work with Thermal Expansions' Phytogenic Insolator.
+ *Español* - Things from this mod will now translate into Mexican Spanish.
+
+Version 0.1.1 - Tridents! New things:
+ *Throw-able Tridents* - Tridents can now be thrown as ranged weapons.
+ *Trident Enchantments* - Tridents now have 3 special enchantments: Loyalty, Channeling, and Impaling.
+ Flowers - Adjusted natural generation to generate in rarer patches, because lonely flowers in every chunk was odd-looking.
+ I will now have wiki pages for this mod's content.
+
 Version 0.1.0 - Planned changes:
  *Stonecutter Functionality* - Stonecutter will now be able to craft blocks.
  *New Config file* - Config file is now a proper Forge annotated config file that can be edited through Mod Options.
