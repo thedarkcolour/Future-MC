@@ -13,9 +13,9 @@ public class Enchantments {
     public static final EnumEnchantmentType TRIDENT = EnumHelper.addEnchantmentType("weapons", (item) -> (item instanceof ItemTrident));
 
     public static final Enchantment LOYALTY = new EnchantLoyalty();
-    public static final Enchantment CHANNELING = new EnchantmentChanneling();
+    public static final Enchantment CHANNELING = new EnchantChanneling();
     //public static final Enchantment RIPTIDE = new EnchantmentRiptide();
-    public static final Enchantment IMPALING = new EnchantmentImpaling();
+    public static final Enchantment IMPALING = new EnchantImpaling();
 
     @SubscribeEvent
     public static void registerEnchantments(RegistryEvent.Register<Enchantment> event) {

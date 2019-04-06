@@ -1,6 +1,7 @@
 package com.herobrine.future.tile.barrel;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -10,13 +11,14 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerBarrel extends Container {
-    private TileEntityBarrel te;
-    private static IInventory playerInv;
+    public final TileBarrel te;
+    public final InventoryPlayer playerInventory;
 
-    public ContainerBarrel(IInventory playerInventory, TileEntityBarrel te) {
+    public ContainerBarrel(InventoryPlayer playerInv, TileBarrel te) {
         this.te = te;
+        this.playerInventory = playerInv;
+
         addOwnSlots();
-        playerInv = playerInventory;
         addPlayerSlots(playerInventory);
     }
 
@@ -29,7 +31,7 @@ public class ContainerBarrel extends Container {
             }
         }
 
-        // Slots for the hotbar
+        // Slots for the hotBar
         for (int row = 0; row < 9; ++row) {
             int x = 9 + row * 18 - 1;
             int y = 58 + 70 + 15;
@@ -39,13 +41,13 @@ public class ContainerBarrel extends Container {
 
     private void addOwnSlots() {
         IItemHandler itemHandler = this.te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        int slotIndex = 0;
+        int slotIndex = 26;
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
                 int x = 8 + col * 18;
                 int y = 18 + row * 18;
                 addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, x, y));
-                slotIndex++;
+                slotIndex--;
             }
         }
     }
@@ -56,17 +58,17 @@ public class ContainerBarrel extends Container {
         Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
+            ItemStack itemStack1 = slot.getStack();
+            itemstack = itemStack1.copy();
 
-            if (index < 36) {
-                if (!this.mergeItemStack(itemstack1, 36, this.inventorySlots.size(), true)) {
+            if (index < 27) {
+                if (!this.mergeItemStack(itemStack1, 27, this.inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.mergeItemStack(itemstack1, 0, 36, false)) {
+            } else if (!this.mergeItemStack(itemStack1, 0, 27, false)) {
                 return ItemStack.EMPTY;
             }
-            if (itemstack1.isEmpty()) {
+            if (itemStack1.isEmpty()) {
                 slot.putStack(ItemStack.EMPTY);
             } else {
                 slot.onSlotChanged();

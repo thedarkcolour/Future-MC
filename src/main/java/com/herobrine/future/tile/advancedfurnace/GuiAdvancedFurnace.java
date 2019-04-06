@@ -1,23 +1,43 @@
 package com.herobrine.future.tile.advancedfurnace;
 
-import com.herobrine.future.blocks.FurnaceAdvanced;
+import com.herobrine.future.blocks.BlockFurnaceAdvanced;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiAdvancedFurnace extends GuiContainer {
     private static final int WIDTH = 176;
     private static final int HEIGHT = 166;
-    private static TileEntityAdvancedFurnace te;
+    private final TileAdvancedFurnace te;
+    private final ContainerAdvancedFurnace container;
+    private final InventoryPlayer playerInventory;
 
     private static final ResourceLocation background = new ResourceLocation("textures/gui/container/furnace.png");
 
-    public GuiAdvancedFurnace(ContainerAdvancedFurnace container) {
+    public GuiAdvancedFurnace(InventoryPlayer playerInventory, ContainerAdvancedFurnace container) {
         super(container);
-        te = container.te;
+        this.container = container;
+        this.te = container.te;
+        this.playerInventory = playerInventory;
 
         xSize = WIDTH;
         ySize = HEIGHT;
+    }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        if(te.getType() == BlockFurnaceAdvanced.FurnaceType.SMOKER) {
+            String s = I18n.format("container.Smoker");
+            this.fontRenderer.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 4210752);
+            this.fontRenderer.drawString(playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 93, 4210752);
+        }
+        if(te.getType() == BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE) {
+            String s = I18n.format("container.BlastFurnace");
+            this.fontRenderer.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 4210752);
+            this.fontRenderer.drawString(playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 93, 4210752);
+        }
     }
 
     @Override
@@ -26,18 +46,15 @@ public class GuiAdvancedFurnace extends GuiContainer {
         mc.getTextureManager().bindTexture(background);
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;
-        this.drawTexturedModalRect(i, j, 0, 0, WIDTH, HEIGHT);
-    }
 
-    @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        if(te.getType() == FurnaceAdvanced.FurnaceType.SMOKER) {
-            this.fontRenderer.drawString("Smoker", 8, 6, 4210752);
-            this.fontRenderer.drawString("Inventory", 8, this.ySize - 40, 4210752);
-        }
-        if(te.getType() == FurnaceAdvanced.FurnaceType.BLAST_FURNACE) {
-            this.fontRenderer.drawString("Blast Furnace", 8, 6, 4210752);
-            this.fontRenderer.drawString("Inventory", 8, this.ySize -40, 4210752);
+        this.drawTexturedModalRect(i, j, 0, 0, WIDTH, HEIGHT);
+
+        if(container.isBurning()) {
+            int k = container.getScaledFire();
+            this.drawTexturedModalRect(i + 56, j + 36 + 12 - k, 176, 12 - k, 14, k + 1);
+
+            int l = container.getScaledArrow();
+            this.drawTexturedModalRect(i + 79, j + 34, 176, 14, l + 1, 16);
         }
     }
 
@@ -46,5 +63,6 @@ public class GuiAdvancedFurnace extends GuiContainer {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
+
     }
 }

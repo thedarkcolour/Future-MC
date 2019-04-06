@@ -1,13 +1,11 @@
 package com.herobrine.future.items;
 
 import com.google.common.collect.Multimap;
-import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.enchantment.EnchantHelper;
-import com.herobrine.future.enchantment.EnchantmentImpaling;
-import com.herobrine.future.entity.EntityTrident;
+import com.herobrine.future.enchantment.EnchantImpaling;
+import com.herobrine.future.entity.trident.EntityTrident;
+import com.herobrine.future.init.Init;
 import com.herobrine.future.sound.Sounds;
-import com.herobrine.future.utils.IModel;
-import com.herobrine.future.utils.proxy.Init;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,34 +20,27 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemTrident extends Item implements IModel {
+public class ItemTrident extends Item {
     public ItemTrident() {
-        setRegistryName("trident");
+        setRegistryName("Trident");
         setUnlocalizedName(Init.MODID + ".Trident");
         setCreativeTab(Init.futuretab);
         setMaxDamage(250);
         setMaxStackSize(1);
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
-    public void models() {
-        model(this, 0, new ModelResourceLocation("minecraftfuture:trident", "inventory"));
+    public void model() {
+        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
 
     @Override
     public boolean canDestroyBlockInCreative(World world, BlockPos pos, ItemStack stack, EntityPlayer player) {
         return false;
-    }
-
-    @Override
-    public EnumAction getItemUseAction(ItemStack stack) {
-        if(FutureConfig.c.tridentthrow) {
-            return EnumAction.BOW;
-        } else return EnumAction.NONE;
     }
 
     @Override
@@ -77,14 +68,14 @@ public class ItemTrident extends Item implements IModel {
 
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
-        if (entityLiving instanceof EntityPlayer && FutureConfig.c.tridentthrow) { //Not fully implemented
+        if (entityLiving instanceof EntityPlayer) {
             EntityPlayer entityPlayer = (EntityPlayer)entityLiving;
             int i = this.getUseDuration(stack, timeLeft);
             if (i >= 10) {
                 if (!worldIn.isRemote) {
                     stack.damageItem(1, entityPlayer);
                     EntityTrident entitytrident = new EntityTrident(worldIn, entityPlayer, stack);
-                    entitytrident.setDamage(EnchantmentImpaling.getDamageForTrident(EnchantHelper.getImpaling(entitytrident.getThrownStack())));
+                    entitytrident.setDamage(EnchantImpaling.getDamageForTrident(EnchantHelper.getImpaling(entitytrident.getThrownStack())));
 
                     entitytrident.shoot(entityPlayer, entityPlayer.rotationPitch, entityPlayer.rotationYaw, 0.0F, 2.5F + 0F * 0.5F, 1.0F);
                     if (entityPlayer.capabilities.isCreativeMode) {
@@ -97,7 +88,7 @@ public class ItemTrident extends Item implements IModel {
                     }
                 }
 
-                SoundEvent soundevent = Sounds.TRIDENT_THROW;
+                SoundEvent soundevent = Sounds.TRIDENT_THROW; // TO-DO RIPTIDE
                 //float f = entityPlayer.rotationYaw;
                 //float f1 = entityPlayer.rotationPitch;
                 //float f2 = -MathHelper.sin(f * ((float) Math.PI / 180F)) * MathHelper.cos(f1 * ((float) Math.PI / 180F));
@@ -162,5 +153,10 @@ public class ItemTrident extends Item implements IModel {
     @Override
     public int getItemStackLimit() {
         return 1;
+    }
+
+    @Override
+    public EnumAction getItemUseAction(ItemStack stack) {
+        return EnumAction.BOW;
     }
 }

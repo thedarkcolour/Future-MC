@@ -1,4 +1,5 @@
-{   "parent": "block/block",
+{
+    "parent": "block/block",
     "textures": {
         "particle": "minecraftfuture:blocks/stonecutter_bottom",
         "bottom": "minecraftfuture:blocks/stonecutter_bottom",

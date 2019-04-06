@@ -6,7 +6,9 @@
     "variants": {
         "normal": [{}],
         "inventory": [{}],
-        "lit=true": {"model": "minecraftfuture:campfire_on"},
-        "lit=false": {"model": "minecraftfuture:campfire"}
+        "lit=false,new=false": {"model": "minecraftfuture:campfire"},
+        "lit=true,new=false": {"model": "minecraftfuture:campfire_on"},
+        "lit=false,new=true": {"model": "minecraftfuture:campfire"},
+		"lit=true,new=true": {"model": "minecraftfuture:campfire_on"}
     }
 }

@@ -18,17 +18,5 @@
     "loyalty": {
         "subtitle": "minecraftfuture.subtitle.loyalty_trident",
         "sounds": [ "minecraftfuture:trident/loyalty" ]
-    },
-    "riptide_trident_i": {
-        "subtitle": "minecraftfuture.subtitle.riptide_trident_i",
-        "sounds": [ "minecraftfuture:trident/riptide_i" ]
-    },
-    "riptide_trident_ii": {
-        "subtitle": "minecraftfuture.subtitle.riptide_trident_ii",
-        "sounds": [ "minecraftfuture:trident/riptide_ii" ]
-    },
-    "riptide_trident_iii": {
-        "subtitle": "minecraftfuture.subtitle.riptide_trident_iii",
-        "sounds": [ "minecraftfuture:trident/riptide_iii" ]
     }
 }

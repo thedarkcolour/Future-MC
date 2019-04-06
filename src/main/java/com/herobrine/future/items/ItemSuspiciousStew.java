@@ -1,8 +1,7 @@
 package com.herobrine.future.items;
 
 import com.herobrine.future.config.FutureConfig;
-import com.herobrine.future.utils.IModel;
-import com.herobrine.future.utils.proxy.Init;
+import com.herobrine.future.init.Init;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,21 +12,25 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemSuspiciousStew extends ItemFood implements IModel {
-    public ItemSuspiciousStew(String name, int amount, float saturation, boolean isWolfFood) {
-        super(amount, saturation, isWolfFood);
+import java.util.Random;
+
+@SuppressWarnings("ConstantConditions")
+public class ItemSuspiciousStew extends ItemFood {
+    public ItemSuspiciousStew() {
+        super(6, 0.6F, false);
         setMaxStackSize(1);
-        setRegistryName(name);
-        setUnlocalizedName(Init.MODID + "." + name);
+        setRegistryName("SuspiciousStew");
+        setUnlocalizedName(Init.MODID + ".SuspiciousStew");
+        setCreativeTab(Init.futuretab);
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
     public void models() {
-        model(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
 
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
@@ -38,25 +41,86 @@ public class ItemSuspiciousStew extends ItemFood implements IModel {
     @Override
     public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
         NBTTagCompound nbt = stack.getTagCompound();
-        if(nbt == null) {stack.setTagCompound(new NBTTagCompound());}
-        if(nbt.hasNoTags()) {
-            nbt.setString("effect", "NULL");
+        if(FutureConfig.modFlowers.suspiciousStewEffect && !FutureConfig.modFlowers.isSuspiciousStewRandom) {
+            if(nbt == null) {
+                stack.setTagCompound(new NBTTagCompound());
+            }
+
+            if(nbt.hasNoTags()) {
+                nbt.setString("effect", "NULL");
+            }
         }
     }
 
     protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
-        if(!worldIn.isRemote & stack.hasTagCompound() && FutureConfig.b.suspicioussteweffect) {
-            String tag = (stack.getTagCompound().getString("effect"));
-            switch(tag) {
-                case "REGEN": player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 140, 1)); break;
-                case "JUMP": player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 100, 1)); break;
-                case "POISON": player.addPotionEffect(new PotionEffect(MobEffects.POISON, 220, 1)); break;
-                case "WITHER": player.addPotionEffect(new PotionEffect(MobEffects.WITHER, 140, 1)); break;
-                case "WEAKNESS":player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 160, 1)); break;
-                case "BLINDNESS":player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 140, 1)); break;
-                case "FIRE_RESISTANCE":player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 60, 1)); break;
-                case "SATURATION":player.addPotionEffect(new PotionEffect(MobEffects.SATURATION, 100, 1)); break;
-                case "SPEED":player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 100, 1));
+        if(!worldIn.isRemote && FutureConfig.modFlowers.suspiciousStewEffect) {
+            if(FutureConfig.modFlowers.isSuspiciousStewRandom)  {
+                Random random = new Random();
+                switch (random.nextInt(9)) {
+                    case 0: {
+                        player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 140, 1));
+                    } break;
+                    case 1: {
+                        player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 100, 1));
+                    } break;
+                    case 2: {
+                        player.addPotionEffect(new PotionEffect(MobEffects.POISON, 220, 1));
+                    } break;
+                    case 3: {
+                        player.addPotionEffect(new PotionEffect(MobEffects.WITHER, 140, 1));
+                    } break;
+                    case 4: {
+                        player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 160, 1));
+                    } break;
+                    case 5: {
+                        player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 140, 1));
+                    } break;
+                    case 6: {
+                        player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 60, 1));
+                    } break;
+                    case 7: {
+                        player.addPotionEffect(new PotionEffect(MobEffects.SATURATION, 100, 1));
+                    } break;
+                    case 8: {
+                        player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 100, 1));
+                    }
+                }
+            }
+            else if (stack.hasTagCompound()) {
+                String tag = (stack.getTagCompound().getString("effect"));
+
+                switch(tag) {
+                    case "REGEN": {
+                        player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 140, 1));
+                    } break;
+                    case "JUMP": {
+                        player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 100, 1));
+                    } break;
+                    case "POISON": {
+                        player.addPotionEffect(new PotionEffect(MobEffects.POISON, 220, 1));
+                    } break;
+                    case "WITHER": {
+                        player.addPotionEffect(new PotionEffect(MobEffects.WITHER, 140, 1));
+                    } break;
+                    case "WEAKNESS": {
+                        player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 160, 1));
+                    } break;
+                    case "BLINDNESS": {
+                        player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 140, 1));
+                    } break;
+                    case "FIRE_RESISTANCE": {
+                        player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 60, 1));
+                    } break;
+                    case "SATURATION": {
+                        player.addPotionEffect(new PotionEffect(MobEffects.SATURATION, 100, 1));
+                    } break;
+                    case "SPEED": {
+                        player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 100, 1));
+                    } break;
+                    case "NULL": {
+
+                    }
+                }
             }
         }
     }

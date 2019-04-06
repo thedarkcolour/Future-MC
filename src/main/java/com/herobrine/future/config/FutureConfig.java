@@ -1,42 +1,29 @@
 package com.herobrine.future.config;
 
-import com.herobrine.future.FutureJava;
+import com.herobrine.future.init.Init;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Comment;
-import net.minecraftforge.common.config.Config.Ignore;
 import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Config(modid = FutureJava.MODID, name = FutureConfig.CONFIG_NAME)
+@Config(modid = Init.MODID, name = FutureConfig.CONFIG_NAME)
 public class FutureConfig {
     private static final String MODID = "future-mc";
     static final String CONFIG_NAME = MODID + "/" + MODID;
     @Name("General")
     @Comment("Most config options for the mod are found here.")
-    public static General a = new General();
+    public static General general = new General();
 
     @Name("Flowers")
     @Comment("Config options related to the new flowers are found here.")
-    public static Flowers b = new Flowers();
-
-    @Name("Developer")
-    @Comment({"Developer options. Features that are incomplete are found here.",
-            "These options can crash your game and may corrupt your worlds, so make " +
-            "sure that you backup your worlds before enabling these options."})
-    public static Developer c = new Developer();
-
-    @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-    }
+    public static Flowers modFlowers = new Flowers();
 
     @SubscribeEvent
     public void onConfigChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
-            ConfigManager.sync(FutureJava.MODID, Type.INSTANCE);
+        ConfigManager.sync(Init.MODID, Type.INSTANCE);
     }
 
     public static class General {
@@ -50,8 +37,13 @@ public class FutureConfig {
 
         @Name("Stonecutter")
         @Comment({"Whether the Stonecutter block is added to the game.",
-                "This block is decorative."})
+                "This block is decorative only."})
         public boolean stonecutter = true;
+
+        @Name("Old Stonecutter Model")
+        @Comment("Whether the Stonecutter block uses the old model from Minecraft PE.")
+        @Config.Ignore
+        public boolean stonecutterOld = true;
 
         @Name("Loom")
         @Comment({"Whether the Loom block is added to the game.",
@@ -65,51 +57,64 @@ public class FutureConfig {
         @Name("Berry Bush")
         @Comment({"Whether the Berry Bush is added to the game.",
                 "If disabled, sweetberries are also disabled."})
-        public boolean berrybush = true;
+        public boolean berryBush = true;
 
         @Name("Berry Bush generates")
         @Comment("Whether the Berry Bush naturally generates in the world.")
-        public boolean berrybushgen = true;
-
-        @Name("Sweetberries")
-        @Comment({"Whether the Sweetberry food is added to the game,",
-                "and whether you can harvest the Berry Bush."})
-        public boolean sweetberry = true;
+        public boolean berryBushGen = true;
 
         @Name("Campfire")
         @Comment("Whether the Campfire block is added to the game.")
         public boolean campfire = true;
 
+        @Name("Old Campfire Model")
+        @Comment("Whether to use the campfire model from the 19w02a snapshot.")
+        public boolean oldCampfire = true;
+
         @Name("Campfire damage")
         @Comment("Whether the Campfire hurts you when you walk on it.")
-        public boolean campfiredmg = true;
+        public boolean campfireDMG = true;
+
+        @Name("Campfire burns out in rain")
+        @Comment("Whether the Campfire will burn out when it rains.")
+        public boolean campfireBurnsOutInRain = false;
 
         @Name("New Wall Variants")
         @Comment("Whether the 1.14 Wall Variants are added.")
-        public boolean newwallvariants = true;
+        public boolean newWallVariants = true;
 
         @Name("Stripped Logs")
         @Comment({"Whether stripped logs are added to the game, ",
-                "and whether using an axe on a log will strip the log"})
-        public boolean strippedlogs = true;
+                "and whether using an axe on general log will strip the log"})
+        public boolean strippedLogs = true;
 
         @Name("Smooth Stone")
         @Comment("Whether the smooth stone block is added to the game.")
-        public boolean smoothstone = true;
+        public boolean smoothStone = true;
 
         @Name("Smoker")
         @Comment("Whether the Smoker block is added to the game.")
-        @Ignore
-        public boolean smoker = false;
+        public boolean smoker = true;
 
         @Name("Blast Furnace")
         @Comment("Whether the Blast Furnace block is added to the game.")
-        @Ignore
-        public boolean blastfurnace = false;
+        public boolean blastFurnace = true;
 
-        @Name("Flint And Steel patch")
-        @Comment("Patches the flint and steel to only place a fire block when possible. This fixes the annoying ghost fire block from appearing.")
-        public boolean flintandsteelpatch = false;
+        @Name("Fletching Table")
+        @Comment({"Whether the Fletching Table block is added to the game.",
+                    "This block is decorative only."})
+        public boolean fletchingTable = true;
+
+        @Name("Smithing Table")
+        @Comment({"Whether the Smithing Table block is added to the game.",
+                "This block is decorative only."})
+        public boolean smithingTable = true;
+
+        @Name("Smoker and Blast Furnace use more fuel")
+        @Comment("Whether the Smoker and Blast Furnace consume fuel as fast as they smelt items. " +
+                "False means a piece of coal will smelt sixteen items, and True means a piece of" +
+                " coal only smelts eight items.")
+        public boolean furnaceDoubleFuel = false;
     }
 
     public static class Flowers {
@@ -119,7 +124,7 @@ public class FutureConfig {
 
         @Name("Lily of the Valley generates")
         @Comment("Whether the Lily of the Valley flower naturally generates in the world.")
-        public boolean lilygen = true;
+        public boolean lilyGen = true;
 
         @Name("Cornflower")
         @Comment("Whether the Cornflower flower is added to the game.")
@@ -127,15 +132,15 @@ public class FutureConfig {
 
         @Name("Cornflower generates")
         @Comment("Whether the Cornflower flower naturally generates in the world.")
-        public boolean cornflowergen = true;
+        public boolean cornflowerGen = true;
 
         @Name("Wither Rose")
         @Comment("Whether the Wither Rose flower is added to the game.")
-        public boolean witherrose = true;
+        public boolean witherRose = true;
 
         @Name("Wither Rose Damage")
         @Comment("Whether the Wither Rose flower will deal damage when walked on.")
-        public boolean witherrosedmg = true;
+        public boolean witherRoseDMG = true;
 
         @Name("New Dyes")
         @Comment("Whether the new dyes from 1.14 are added to the game.")
@@ -143,21 +148,14 @@ public class FutureConfig {
 
         @Name("Suspicious Stew")
         @Comment("Whether the Suspicious Stew item is added to the game.")
-        public boolean suspiciousstew = true;
+        public boolean suspiciousStew = true;
 
         @Name("Suspicious Stew effects")
         @Comment("Whether the Suspicious Stew item gives an effect when consumed.")
-        public boolean suspicioussteweffect = true;
-    }
-    public static class Developer {
-        @Ignore
-        @Name("ItemTrident is throwable")
-        @Comment({"If enabled, allows the ItemTrident to be thrown.",
-                "This option is incomplete, and may not work properly."})
-        public boolean tridentthrow = true;
+        public boolean suspiciousStewEffect = true;
 
-        @Name("Debug messages")
-        @Comment({"When enabled, certain extra things will be printed to the log.", "This is an option that the author uses to test out the mod before publishing. You don't need this."})
-        public boolean debug = false;
+        @Name("Suspicious Stew Random Effect")
+        @Comment("Whether the Suspicious Stew grants a random effect rather than an effect based on what flower it was crafted with")
+        public boolean isSuspiciousStewRandom = true;
     }
 }

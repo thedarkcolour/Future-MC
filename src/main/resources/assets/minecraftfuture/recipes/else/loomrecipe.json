@@ -9,12 +9,13 @@
     {
         "x":
         {
-            "item": "minecraft:string"
+            "type": "forge:ore_dict",
+            "ore": "string"
         },
         "a":
         {
             "type": "forge:ore_dict",
-            "ore":"plankWood"
+            "ore": "plankWood"
         }
     },
     "result":

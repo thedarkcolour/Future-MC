@@ -1,33 +1,38 @@
 package com.herobrine.future.tile.barrel;
 
-import com.herobrine.future.utils.proxy.Init;
+import com.herobrine.future.init.Init;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiBarrel extends GuiContainer {
+    public final InventoryPlayer playerInventory;
+    public final TileBarrel te;
     private static final int WIDTH = 176;
-    private static final int HEIGHT = 168;
+    private static final int HEIGHT = 167;
 
     private static final ResourceLocation background = new ResourceLocation(Init.MODID, "textures/gui/gui.png");
 
-    public GuiBarrel(ContainerBarrel container) {
-        super(container);
+    public GuiBarrel(InventoryPlayer playerInv, TileBarrel te) {
+        super(new ContainerBarrel(playerInv, te));
+        this.te = te;
+        this.playerInventory = playerInv;
+
         xSize = WIDTH;
         ySize = HEIGHT;
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         mc.getTextureManager().bindTexture(background);
-        drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, xSize, ySize);
+        drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
     }
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.fontRenderer.drawString("Barrel", 8, 6, 4210752);
-        this.fontRenderer.drawString("Inventory", 8, this.ySize - 9, 4210752);
+        this.fontRenderer.drawString(I18n.format("container.Barrel"), 8, 6, 4210752);
+        this.fontRenderer.drawString(playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 92, 4210752);
     }
 
     @Override
