@@ -1,3 +1,16 @@
+Version 0.1.3 - Planned changes:
+ *Grindstone* - Block from 1.14 that repairs items and gives a better boost than combining them in the crafting table.
+ Campfire - Now re-lightable by using a Fire Charge.
+ *Deutsch* - Added German language support.
+
+Version 0.1.2c - Quick Patch:
+ Fixed Campfire not burning out in rain when config option was enabled
+ Allowed usage of mod in versions as old as Forge 14.23.5.2776
+ Fixed config not working in game
+
+Version 0.1.2b - Quick Patch:
+ Fixed stonecutter model config
+
 Version 0.1.2 - Better Furnaces! New things:
  *Blast Furnace* - Block from 1.14 that smelts ores at twice the speed of a furnace, and uses half the fuel! (efficient fuel is toggleable in config)
  *Smoker* - Block from 1.14 that cooks food at twice the speed of a furnace, and uses half the fuel! (efficient fuel is toggleable in config)
