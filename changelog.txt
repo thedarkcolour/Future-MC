@@ -1,7 +1,7 @@
 Version 0.1.3 - Planned changes:
  *Grindstone* - Block from 1.14 that repairs items and gives a better boost than combining them in the crafting table.
+ *Crossbow* - Ranged weapon from 1.14 that loads an arrow before shooting.
  Campfire - Now re-lightable by using a Fire Charge.
- Stonecutter - Now has functionality.
  *Deutsch* - Added German language support.
 
 Version 0.1.2c - Quick Patch:
