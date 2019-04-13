@@ -1,6 +1,9 @@
 Version 0.1.3 - Planned changes:
  *Grindstone* - Block from 1.14 that repairs items and gives a better boost than combining them in the crafting table.
  *Crossbow* - Ranged weapon from 1.14 that loads an arrow before shooting.
+ *Bamboo* - Plant from 1.14 that can be grown to high heights!
+ *Bamboo Jungle* - Jungle biome that is home to the Bamboo plant.
+ Trident - Can now be shot by dispensers.
  Campfire - Now re-lightable by using a Fire Charge.
  *Deutsch* - Added German language support.
 
