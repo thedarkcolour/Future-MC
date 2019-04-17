@@ -7,6 +7,7 @@ Version 0.1.3 - Planned changes:
  Trident - Can now be shot by dispensers.
  Campfire - Now re-lightable by using a Fire Charge.
  Campfire - Now uses current model from 1.14 instead of the old one.
+ Barrel - Disables in favor of the Charm mod.
  Lily of the Valley - Tweaked worldgen to match vanilla flowers.
  Cornflower - Tweaked worldgen to match vanilla flowers.
  Sweet Berry Bush - Tweaked worldgen to match vanilla flowers.
