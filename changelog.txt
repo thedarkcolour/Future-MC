@@ -1,6 +1,5 @@
 Version 0.1.3 - Planned changes:
  *Grindstone* - Block from 1.14 that repairs items and gives a better boost than combining them in the crafting table.
- *Crossbow* - Ranged weapon from 1.14 that loads an arrow before shooting
  *Bamboo* - Plant from 1.14 that can be grown to high heights!
  *Bamboo Jungle* - Jungle biome that is home to the Bamboo plant.
  *Slabs* - Added slab variants from 1.14.
@@ -14,6 +13,8 @@ Version 0.1.3 - Planned changes:
  Sweet Berry Bush - Tweaked worldgen to match vanilla flowers.
  *Deutsch* - Added German language support.
  *Pусский* - Added Russian language support, thanks to Mr_Krab on GitHub.
+ 
+ Decided not to implement Crossbow this update.
 
 Version 0.1.2c - Quick Patch:
  Fixed Campfire not burning out in rain when config option was enabled
