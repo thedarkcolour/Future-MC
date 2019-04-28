@@ -4,6 +4,7 @@ Version 0.1.3 - Planned changes:
  *Bamboo Jungle* - Jungle biome that is home to the Bamboo plant.
  *Slabs* - Added slab variants from 1.14.
  *Smooth Quartz* - Added Smooth Quartz variant from 1.14.
+ Smoker & Blast Furnace - Fixed bug that messed up progress when no item was inside the input slot.
  Trident - Can now be shot by dispensers.
  Campfire - Now re-lightable by using a Fire Charge.
  Campfire - Now uses current model from 1.14 instead of the old one.
