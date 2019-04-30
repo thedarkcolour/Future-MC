@@ -12,6 +12,7 @@ Version 0.1.3 - Bamboo! New things:
  Lily of the Valley - Tweaked worldgen to match vanilla flowers.
  Cornflower - Tweaked worldgen to match vanilla flowers.
  Sweet Berry Bush - Tweaked worldgen to match vanilla flowers.
+ Suspicious Stew - Fixed bug when eaten from creative menu.
  Lantern - No longer causes fences to attach to it.
  Campfire - Removed tile entity.
  *Deutsch* - Added German language support.
