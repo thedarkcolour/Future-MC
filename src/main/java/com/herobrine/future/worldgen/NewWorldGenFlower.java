@@ -3,7 +3,10 @@ package com.herobrine.future.worldgen;
 import com.herobrine.future.blocks.BlockFlower;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldType;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
@@ -19,31 +22,32 @@ public class NewWorldGenFlower implements IWorldGenerator {
         this.state = flower.getDefaultState();
     }
 
-    @Override
-    public void generate(Random rand, int chunkX, int chunkZ, World worldIn, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-        int x = chunkX * 16;
-        int z = chunkZ * 16;
+    private void generate(World world, Random random, BlockPos pos) {
+        for (int i = 0; i < 64; ++i) {
+            BlockPos blockpos = pos.add(random.nextInt(8) - random.nextInt(8), random.nextInt(4) - random.nextInt(4), random.nextInt(8) - random.nextInt(8));
 
-        if(flower.getChunkChance(rand)) {
-            for(int i = 0; i < 16; i++) {
-                for(int j = 0; j < 16; j++) {
-                    if(flower.getSpawnChance(rand))
-                    placeFlowerBlock(x + i, z + j, worldIn);
-                }
+            if (world.isAirBlock(blockpos) && (!world.provider.isNether() || blockpos.getY() < 255) && this.flower.canBlockStay(world, blockpos, this.state)) {
+                world.setBlockState(blockpos, this.state, 2);
             }
         }
     }
 
-    public void placeFlowerBlock(int x, int z, World worldIn) {
-        if(!worldIn.provider.isNether()) {
-            for (int i = 32; i < 100; i++) {
-                BlockPos pos = new BlockPos(x + 8, i, z + 8);
+    @Override
+    public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+        int x = chunkX * 16 + 8;
+        int z = chunkZ * 16 + 8;
 
-                if(flower.isBiomeValid(worldIn.getBiome(pos)) && worldIn.isBlockLoaded(pos)) {
-                    if (worldIn.isAirBlock(pos) && this.flower.canBlockStay(worldIn, pos, this.state)) {
-                        worldIn.setBlockState(pos, this.state, 2);
-                    }
-                }
+        Biome biome = world.getBiomeForCoordsBody(new BlockPos(x, 0, z));
+        ChunkPos chunkPos = world.getChunkFromChunkCoords(chunkX, chunkZ).getPos();
+
+        if(flower.isBiomeValid(biome) && world.getWorldType() != WorldType.FLAT) {
+            for (int i = 0; i < 5; i++) {
+                int xPos = rand.nextInt(16) + 8;
+                int zPos = rand.nextInt(16) + 8;
+                int yPos = rand.nextInt(world.getHeight(chunkPos.getBlock(0, 0, 0).add(xPos, 0, zPos)).getY() + 32);
+                BlockPos pos = chunkPos.getBlock(0, 0, 0).add(xPos, yPos, zPos);
+
+                generate(world, rand, pos);
             }
         }
     }

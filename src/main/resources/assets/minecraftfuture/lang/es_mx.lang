@@ -1,18 +1,28 @@
+# Bloques funcionales
 tile.minecraftfuture.Lantern.name=Farol
+tile.minecraftfuture.Barrel.name=Barril
+tile.minecraftfuture.Loom.name=Telar
 tile.minecraftfuture.Stonecutter.name=Cortapiedras
+tile.minecraftfuture.Blast_Furnace.name=Alto horno
+tile.minecraftfuture.Smoker.name=Ahumador
+tile.minecraftfuture.Grindstone.name=Afiladora
+
+# Plantas
 tile.minecraftfuture.FlowerWhite.name=Lirio de valle
 tile.minecraftfuture.FlowerBlack.name=Rosa del Wither
 tile.minecraftfuture.FlowerBlue.name=Aciano
-tile.minecraftfuture.Barrel.name=Barril
-tile.minecraftfuture.Loom.name=Telar
-tile.minecraftfuture.Campfire.name=Hoguera
 tile.minecraftfuture.BerryBush.name=Arbusto de bayas dulces
+item.minecraftfuture.SweetBerry.name=Bayas dulces
+tile.minecraftfuture.Bamboo.name=Bambú
+tile.minecraftfuture.Campfire.name=Hoguera
 tile.minecraftfuture.stripped_oak_log.name=Tronco de roble sin corteza
 tile.minecraftfuture.stripped_spruce_log.name=Tronco de abeto sin corteza
 tile.minecraftfuture.stripped_birch_log.name=Tronco de abedul sin corteza
 tile.minecraftfuture.stripped_jungle_log.name=Tronco de jungla sin corteza
 tile.minecraftfuture.stripped_acacia_log.name=Tronco de acacia sin corteza
 tile.minecraftfuture.stripped_dark_oak_log.name=Tronco de roble oscuro sin corteza
+
+# Paredes
 tile.minecraftfuture.brick_wall.name=Pared de ladrillos
 tile.minecraftfuture.andesite_wall.name=Pared de andesita
 tile.minecraftfuture.diorite_wall.name=Pared de diorita
@@ -25,26 +35,58 @@ tile.minecraftfuture.nether_brick_wall.name=Pared de ladrillos del Nether
 tile.minecraftfuture.sandstone_wall.name=Pared de arenisca
 tile.minecraftfuture.red_sandstone_wall.name=Pared de arenisca roja
 tile.minecraftfuture.nether_brick_red_wall.name=Pared de ladrillos del Nether rojos
+
+# Losas
+tile.minecraftfuture.granite_slab.name=Losa de granito
+tile.minecraftfuture.andesite_slab.name=Losa de andesita
+tile.minecraftfuture.diorite_slab.name=Losa de diorita
+tile.minecraftfuture.polished_granite_slab.name=Losa de granito pulido
+tile.minecraftfuture.polished_andesite_slab.name=Losa de andesita pulida
+tile.minecraftfuture.polished_diorite_slab.name=Losa de diorita pulida
+tile.minecraftfuture.stone_slab.name=Losa de piedra
+tile.minecraftfuture.prismarine_slab.name=Losa de prismarina
+tile.minecraftfuture.dark_prismarine_slab.name=Losa de prismarina oscuro
+tile.minecraftfuture.prismarine_brick_slab.name=Losa de ladrillos de prismarinas
+tile.minecraftfuture.smooth_red_sandstone_slab.name=Losa de arenisca roja lisa
+tile.minecraftfuture.smooth_sandstone_slab.name=Losa de arenisca lisa
+tile.minecraftfuture.mossy_stone_brick_slab.name=Losa de ladrillos de piedra musgosa
+tile.minecraftfuture.mossy_stone_slab.name=Losa de piedra musgosa
+tile.minecraftfuture.smooth_quartz_slab.name=Losa de cuarzo liso
+tile.minecraftfuture.red_nether_brick_slab.name=Losa de ladrillos del Nether rojos
+tile.minecraftfuture.end_stone_brick_slab.name=Losa de ladrillos de piedra del End
+
+# Bloques decorativos
 tile.minecraftfuture.SmoothStone.name=Piedra lisa
-tile.minecraftfuture.Blast_Furnace.name=Alto horno
-tile.minecraftfuture.Smoker.name=Ahumador
+tile.minecraftfuture.SmoothQuartz.name=Cuarzo liso
 tile.minecraftfuture.FletchingTable.name=Mesa de flechas
 tile.minecraftfuture.SmithingTable.name=Mesa de herrería
+entity.ItemFrame.name=Marco
+
 item.minecraftfuture.DyeBlue.name=Tinte azul
 item.minecraftfuture.DyeWhite.name=Tinte blanco
 item.minecraftfuture.DyeBrown.name=Tinte café
 item.minecraftfuture.DyeBlack.name=Tinte negro
+
+# Ítems
 item.minecraftfuture.Trident.name=Tridente
-item.minecraftfuture.SuspiciousStew.name=Suspicious Stew
-item.minecraftfuture.SweetBerry.name=Sweet Berries
+item.minecraftfuture.Crossbow.name=Ballesta
+item.minecraftfuture.Crossbow_Loaded.name=Ballesta con flecha
+item.minecraftfuture.SuspiciousStew.name=Sopa sospechosa
+
+# GUI
 container.Barrel=Barril
 container.BlastFurnace=Alto horno
 container.Smoker=Ahumador
-entity.ItemFrame.name=Marco
+container.Grindstone=Reparar y desencantar
+container.Stonecutter=Cortapiedras
+
 entity.trident.name=Tridente
+
+# Encantamientos
 enchantment.loyalty=Lealtad
 enchantment.channeling=Conductividad
 enchantment.riptide=Propulsión acutica
 enchantment.impaling=Empalamiento
+enchantment.quick_charge=Carga rápida
 
 itemGroup.Future=MC futuro

@@ -23,7 +23,7 @@ public class BlockStrippedLog extends BlockLog {
         super();
         setUnlocalizedName(Init.MODID + ".stripped_" + variant + "_log");
         setRegistryName("stripped_" + variant + "_log");
-        setCreativeTab(Init.futuretab);
+        setCreativeTab(Init.FUTURE_MC_TAB);
         this.setDefaultState(getBlockState().getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
     }
 

@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "stone"
+    },
+    "variants": {
+        "inventory": [{}],
+        "variant=default": [{}]
+    }
+}

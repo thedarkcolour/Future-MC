@@ -8,6 +8,7 @@ import com.herobrine.future.enchantment.Enchantments;
 import com.herobrine.future.sound.Sounds;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -30,19 +31,21 @@ import java.util.List;
 import java.util.Map;
 
 public class EntityTrident extends EntityArrow {
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "Guava"})
     private static final Predicate<Entity> ARROW_TARGETS = Predicates.and(EntitySelectors.NOT_SPECTATING, EntitySelectors.IS_ALIVE, Entity::canBeCollidedWith);
     private ItemStack thrownStack;
     private boolean hasChanneled;
     private int ticksInGround = 0;
     private boolean isReturning;
 
+    @SuppressWarnings("unused")
     public EntityTrident(World world) {
         super(world);
     }
 
-    public EntityTrident(World world, double x, double y, double z) {
+    public EntityTrident(World world, double x, double y, double z, ItemStack stack) {
         super(world, x, y, z);
+        this.thrownStack = stack;
     }
 
     public EntityTrident(World world, EntityLivingBase shooter, ItemStack stack) {
@@ -64,22 +67,6 @@ public class EntityTrident extends EntityArrow {
     protected ItemStack getArrowStack() {
         return this.thrownStack.copy();
     }
-/*
-    @Override
-    public void onCollideWithPlayer(EntityPlayer entityIn) {
-        if (!this.world.isRemote) { // && this.ticksExisted == 16
-            if (this.pickupStatus == EntityArrow.PickupStatus.ALLOWED && !entityIn.inventory.addItemStackToInventory(getArrowStack())) {
-                entityIn.onItemPickup(this, 1);
-                this.setDead();
-                return;
-            }
-
-            if (this.pickupStatus == EntityArrow.PickupStatus.CREATIVE_ONLY && entityIn.capabilities.isCreativeMode) {
-                entityIn.onItemPickup(this, 0);
-                this.setDead();
-            }
-        }
-    }*/
 
     @Override
     protected Entity findEntityOnPath(Vec3d start, Vec3d end) {
@@ -197,7 +184,8 @@ public class EntityTrident extends EntityArrow {
             this.playSound(Sounds.TRIDENT_IMPACT, 1.0F, 1.0F);
 
             if(!this.hasChanneled && EnchantHelper.hasChanneling(thrownStack)) { // Enchantment handling
-                shootingEntity.world.addWeatherEffect(new EntityLightningBolt(shootingEntity.world, this.posX, this.posY, this.posZ, false));
+                Entity living = shootingEntity == null ? this : shootingEntity;
+                living.world.addWeatherEffect(new EntityLightningBolt(living.world, this.posX, this.posY, this.posZ, false));
                 this.playSound(Sounds.TRIDENT_CHANNELING, 5.0F, 1.0F);
                 this.hasChanneled = true;
             }
@@ -277,9 +265,8 @@ public class EntityTrident extends EntityArrow {
         return damage;
     }
 
-    private EntityItem dropTridentStack(float offsetY) {
+    private void dropTridentStack(float offsetY) {
         if(thrownStack == null || thrownStack.isEmpty()) {
-            return null;
         }
         else {
             EntityItem entityitem = new EntityItem(this.world, this.posX, this.posY + (double)offsetY, this.posZ, thrownStack);
@@ -291,7 +278,6 @@ public class EntityTrident extends EntityArrow {
             else {
                 this.world.spawnEntity(entityitem);
             }
-            return entityitem;
         }
     }
 }

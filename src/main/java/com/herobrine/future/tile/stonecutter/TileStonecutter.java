@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Level;
 
 import java.util.ConcurrentModificationException;
 
-public class TileStonecutter extends TileEntity implements ITickable {
+public class TileStonecutter extends TileEntity {// implements ITickable {
     private int updateTicks = 0;
     private boolean hasUpdated = false;
 
@@ -18,9 +18,18 @@ public class TileStonecutter extends TileEntity implements ITickable {
 
     @Override
     public void onChunkUnload() {
-        this.updateTicks = 0;
+        //this.updateTicks = 0;
         this.hasUpdated = false;
     }
+
+    @Override
+    public void onLoad() {
+        if(!world.isBlockLoaded(pos) || world.isRemote) return;
+        int meta = world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos));
+        updateThis(meta);
+    }
+
+
 
     private void updateThis(int meta) {
         BlockStonecutter block = (BlockStonecutter) world.getBlockState(pos).getBlock();
@@ -41,7 +50,7 @@ public class TileStonecutter extends TileEntity implements ITickable {
         }
     }
 
-    @Override
+    //@Override
     public void update() {
         if(updateTicks < 20) {
             updateTicks++;

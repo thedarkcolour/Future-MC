@@ -61,8 +61,8 @@ public class    ContainerAdvancedFurnace extends Container {
         super.detectAndSendChanges();
 
         for (IContainerListener listener : listeners) {
-            if(this.fuelLeft != te.fuelLeft) listener.sendWindowProperty(this, 0, te.fuelLeft);
-            if(this.progress != te.progress) listener.sendWindowProperty(this, 2, te.progress);
+            listener.sendWindowProperty(this, 0, te.fuelLeft);
+            listener.sendWindowProperty(this, 2, te.progress);
         }
 
         this.fuelLeft = te.fuelLeft;

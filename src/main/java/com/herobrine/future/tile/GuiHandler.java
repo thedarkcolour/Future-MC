@@ -5,6 +5,10 @@ import com.herobrine.future.tile.advancedfurnace.TileAdvancedFurnace;
 import com.herobrine.future.tile.barrel.ContainerBarrel;
 import com.herobrine.future.tile.barrel.GuiBarrel;
 import com.herobrine.future.tile.barrel.TileBarrel;
+import com.herobrine.future.tile.grindstone.ContainerGrindstone;
+import com.herobrine.future.tile.grindstone.GuiGrindstone;
+import com.herobrine.future.tile.stonecutter.ContainerStonecutter;
+import com.herobrine.future.tile.stonecutter.GuiStonecutter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +18,9 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 public class GuiHandler implements IGuiHandler {
     public static final int GUI_BARREL = 1;
     public static final int GUI_FURNACE = 2;
-    //private static final int GUI_STONECUTTER = 2; Rip stonecutter...
+    public static final int GUI_GRINDSTONE = 3;
+    //public static final int GUI_STONECUTTER = 4;
+    //public static final int GUI_LECTERN = 5;
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -27,11 +33,14 @@ public class GuiHandler implements IGuiHandler {
             case GUI_FURNACE: {
                 return new ContainerAdvancedFurnace(player.inventory, (TileAdvancedFurnace) te);
             }
-            //case GUI_STONECUTTER:
-                //return new ContainerStonecutter(player.inventory, (TileStonecutter) te);
-            default: {
-                return null; // Should never reach this point
+            case GUI_GRINDSTONE: {
+                return new ContainerGrindstone(player.inventory, world, pos);
             }
+            /*case GUI_STONECUTTER: {
+                return new ContainerStonecutter(player.inventory, world, pos);
+            }*/
+            default: return null;
+
         }
     }
 
@@ -41,15 +50,18 @@ public class GuiHandler implements IGuiHandler {
         TileEntity te = world.getTileEntity(pos);
         switch (ID) {
             case GUI_BARREL: {
-                return new GuiBarrel(player.inventory, (TileBarrel) te);
+                return new GuiBarrel(new ContainerBarrel(player.inventory, (TileBarrel) te));
             }
             case GUI_FURNACE: {
-                return new GuiAdvancedFurnace(player.inventory, new ContainerAdvancedFurnace(player.inventory, (TileAdvancedFurnace) te));
+                return new GuiAdvancedFurnace(new ContainerAdvancedFurnace(player.inventory, (TileAdvancedFurnace) te));
             }
-            //case GUI_STONECUTTER:
-               // TileEntityStonecutter stonecutter = (TileStonecutter) te;
-               // return new GuiStonecutter(stonecutter, new ContainerStonecutter(player.inventory, stonecutter));
-            default: return null; // Should never reach this point
+            case GUI_GRINDSTONE: {
+                return new GuiGrindstone(new ContainerGrindstone(player.inventory, world, pos));
+            }
+            /*case GUI_STONECUTTER: {
+                return new GuiStonecutter(new ContainerStonecutter(player.inventory, world, pos));
+            }*/
+            default: return null;
         }
     }
 }

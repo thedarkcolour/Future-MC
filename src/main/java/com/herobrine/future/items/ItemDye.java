@@ -16,7 +16,7 @@ public class ItemDye extends Item {
         setMaxDamage(0);
         setUnlocalizedName(Init.MODID + "dye");
         setRegistryName("dye");
-        setCreativeTab(Init.futuretab);
+        setCreativeTab(Init.FUTURE_MC_TAB);
     }
 
     @SideOnly(Side.CLIENT)

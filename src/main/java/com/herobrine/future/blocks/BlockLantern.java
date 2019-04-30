@@ -5,8 +5,10 @@ import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockRenderLayer;
@@ -17,17 +19,20 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
 public class BlockLantern extends BlockBase {
     private static final PropertyBool HANGING = PropertyBool.create("hanging");
-    private static final AxisAlignedBB SITTING_AABB = new AxisAlignedBB(0.3125, 0, 0.3125, 0.6875, 0.5625, 0.6875);
-    private static final AxisAlignedBB HANGING_AABB = new AxisAlignedBB(0.3125,0.0625,0.3125,0.6875,0.625,0.6875);
+    private static final AxisAlignedBB SITTING_AABB = makeAABB(5, 0, 5, 11, 9, 11);
+    private static final AxisAlignedBB HANGING_AABB = makeAABB(5,1,5,11,10,11);
 
     public BlockLantern() {
         super(new BlockProperties("Lantern", Material.IRON));
         setLightLevel(1);
         setHardness(5);
         setSoundType(SoundType.METAL);
-        setHarvestLevel("pickaxe", 1);
+        setHarvestLevel("pickaxe", 0);
         setDefaultState(this.blockState.getBaseState().withProperty(HANGING, false));
     }
 
@@ -96,21 +101,12 @@ public class BlockLantern extends BlockBase {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        if (meta != 1) {
-            return this.getDefaultState().withProperty(HANGING, true);
-        }
-        else {
-            return this.getDefaultState().withProperty(HANGING, false);
-        }
+        return this.getDefaultState().withProperty(HANGING, meta != 1);
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        if (state.getValue(HANGING)) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return state.getValue(HANGING) ? 1 : 0;
     }
 
     @Override
@@ -134,30 +130,13 @@ public class BlockLantern extends BlockBase {
     }
 
     @Override
-    public boolean isFullBlock(IBlockState state) {
-        return false;
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+        return BlockFaceShape.UNDEFINED;
     }
 
-    @Override
-    public boolean isNormalCube(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return false;
-    }
-
-
-    @Override
-    public boolean isFullCube(IBlockState state) {
-        return false;
-    }
-
-
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-
-
-    @Override
-    public boolean isTopSolid(IBlockState state) {
-        return false;
-    }
+    @Override public boolean isFullBlock(IBlockState state) { return false; }
+    @Override public boolean isNormalCube(IBlockState state, IBlockAccess source, BlockPos pos) { return false; }
+    @Override public boolean isFullCube(IBlockState state) { return false; }
+    @Override public boolean isOpaqueCube(IBlockState state) { return false; }
+    @Override public boolean isTopSolid(IBlockState state) { return false; }
 }

@@ -16,11 +16,11 @@ public class GuiAdvancedFurnace extends GuiContainer {
 
     private static final ResourceLocation background = new ResourceLocation("textures/gui/container/furnace.png");
 
-    public GuiAdvancedFurnace(InventoryPlayer playerInventory, ContainerAdvancedFurnace container) {
+    public GuiAdvancedFurnace(ContainerAdvancedFurnace container) {
         super(container);
         this.container = container;
         this.te = container.te;
-        this.playerInventory = playerInventory;
+        this.playerInventory = container.playerInventory;
 
         xSize = WIDTH;
         ySize = HEIGHT;
@@ -63,6 +63,5 @@ public class GuiAdvancedFurnace extends GuiContainer {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
-
     }
 }

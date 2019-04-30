@@ -18,18 +18,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-@SuppressWarnings("ConstantConditions")
 public class ItemSuspiciousStew extends ItemFood {
     public ItemSuspiciousStew() {
         super(6, 0.6F, false);
         setMaxStackSize(1);
         setRegistryName("SuspiciousStew");
         setUnlocalizedName(Init.MODID + ".SuspiciousStew");
-        setCreativeTab(Init.futuretab);
+        setCreativeTab(Init.FUTURE_MC_TAB);
     }
 
     @SideOnly(Side.CLIENT)
-    public void models() {
+    public void model() {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
 
@@ -38,22 +37,19 @@ public class ItemSuspiciousStew extends ItemFood {
         return new ItemStack(Items.BOWL);
     }
 
-    @Override
-    public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
-        NBTTagCompound nbt = stack.getTagCompound();
+    public void createNBT(ItemStack stack) {
+        NBTTagCompound nbt = new NBTTagCompound();
         if(FutureConfig.modFlowers.suspiciousStewEffect && !FutureConfig.modFlowers.isSuspiciousStewRandom) {
-            if(nbt == null) {
-                stack.setTagCompound(new NBTTagCompound());
-            }
-
-            if(nbt.hasNoTags()) {
-                nbt.setString("effect", "NULL");
-            }
+            nbt.setString("effect", "NULL");
         }
+        stack.setTagCompound(nbt);
     }
 
     protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
         if(!worldIn.isRemote && FutureConfig.modFlowers.suspiciousStewEffect) {
+            if(stack.getTagCompound() == null) {
+                createNBT(stack);
+            }
             if(FutureConfig.modFlowers.isSuspiciousStewRandom)  {
                 Random random = new Random();
                 switch (random.nextInt(9)) {

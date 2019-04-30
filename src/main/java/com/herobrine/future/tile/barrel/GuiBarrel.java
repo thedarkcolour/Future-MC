@@ -5,6 +5,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class GuiBarrel extends GuiContainer {
     public final InventoryPlayer playerInventory;
@@ -14,10 +15,10 @@ public class GuiBarrel extends GuiContainer {
 
     private static final ResourceLocation background = new ResourceLocation(Init.MODID, "textures/gui/gui.png");
 
-    public GuiBarrel(InventoryPlayer playerInv, TileBarrel te) {
-        super(new ContainerBarrel(playerInv, te));
-        this.te = te;
-        this.playerInventory = playerInv;
+    public GuiBarrel(ContainerBarrel container) {
+        super(container);
+        this.te = container.te;
+        this.playerInventory = container.playerInventory;
 
         xSize = WIDTH;
         ySize = HEIGHT;
@@ -25,6 +26,7 @@ public class GuiBarrel extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         mc.getTextureManager().bindTexture(background);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
     }

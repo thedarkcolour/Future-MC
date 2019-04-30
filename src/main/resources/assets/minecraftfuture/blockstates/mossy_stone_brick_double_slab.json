@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "stonebrick_mossy"
+    },
+    "variants": {
+        "inventory": [{}],
+        "variant=default": [{}]
+    }
+}

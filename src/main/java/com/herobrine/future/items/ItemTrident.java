@@ -28,7 +28,7 @@ public class ItemTrident extends Item {
     public ItemTrident() {
         setRegistryName("Trident");
         setUnlocalizedName(Init.MODID + ".Trident");
-        setCreativeTab(Init.futuretab);
+        setCreativeTab(Init.FUTURE_MC_TAB);
         setMaxDamage(250);
         setMaxStackSize(1);
     }
@@ -65,6 +65,8 @@ public class ItemTrident extends Item {
             return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);
         }
     }
+
+
 
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {

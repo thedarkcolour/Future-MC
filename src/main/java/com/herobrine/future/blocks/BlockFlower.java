@@ -11,15 +11,12 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Random;
-
 public abstract class BlockFlower extends BlockBush {
     public BlockFlower(String regName) {
         setUnlocalizedName(Init.MODID + "." + regName);
         setRegistryName(regName);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @SideOnly(Side.CLIENT)
     public void model() {
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
@@ -34,8 +31,4 @@ public abstract class BlockFlower extends BlockBush {
     }
 
     public abstract boolean isBiomeValid(Biome biome);
-
-    public abstract boolean getSpawnChance(Random random);
-
-    public abstract boolean getChunkChance(Random random);
 }

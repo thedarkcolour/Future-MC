@@ -21,7 +21,7 @@ import java.util.Random;
 public class BlockWitherRose extends BlockFlower { //Adds black flower
     public BlockWitherRose() {
         super("FlowerBlack");
-        setCreativeTab(Init.futuretab);
+        setCreativeTab(Init.FUTURE_MC_TAB);
         setSoundType(SoundType.PLANT);
     }
 
@@ -45,16 +45,6 @@ public class BlockWitherRose extends BlockFlower { //Adds black flower
 
     @Override
     public boolean isBiomeValid(Biome biome) {
-        return false;
-    }
-
-    @Override
-    public boolean getSpawnChance(Random random) {
-        return false;
-    }
-
-    @Override
-    public boolean getChunkChance(Random random) {
         return false;
     }
 }

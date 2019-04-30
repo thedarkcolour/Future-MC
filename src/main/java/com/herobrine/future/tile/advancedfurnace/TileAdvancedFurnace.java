@@ -134,10 +134,8 @@ public abstract class TileAdvancedFurnace extends TileEntity implements ITickabl
                 finishSmelt(); // Consumes the input stack, inserts the output stack, and resets the progress
             }
             if(!getType().canCraft(inputCraft.getStackInSlot(0)) || fuelLeft == 0) { // Cancels the craft cycle
-                if(progress != 0) {
-                    progress--;
-                }
                 setIsBurning(false); // Fixes furnaces burning when not supposed to.
+                progress = 0;
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.herobrine.future.events;
+package com.herobrine.future.event;
 
 import com.herobrine.future.init.Init;
 import net.minecraft.entity.Entity;
@@ -19,9 +19,6 @@ public class WitherRoseEvent {
 
         if(attacker instanceof EntityWither) {
             entity.getEntityWorld().spawnEntity(new EntityItem(entity.getEntityWorld(), entity.posX, entity.posY, entity.posZ, new ItemStack(Init.WITHER_ROSE, 1)));
-        }/*
-        else if(event.getSource() == DamageSource.WITHER && event.getSource().getImmediateSource() instanceof EntityWitherSkull) {
-            entity.getEntityWorld().spawnEntity(new EntityItem(entity.getEntityWorld(), entity.posX, entity.posY, entity.posZ, new ItemStack(Init.WITHER_ROSE, 1)));
-        }*/
+        }
     }
 }

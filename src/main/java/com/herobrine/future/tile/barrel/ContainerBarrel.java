@@ -57,15 +57,15 @@ public class ContainerBarrel extends Container {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemStack1 = slot.getStack();
-            itemstack = itemStack1.copy();
+        if (slot != null && slot.getHasStack()) { // If the slot is valid and has a stack
+            ItemStack itemStack1 = slot.getStack(); // Get that stack
+            itemstack = itemStack1.copy(); // Old stack in slot
 
-            if (index < 27) {
-                if (!this.mergeItemStack(itemStack1, 27, this.inventorySlots.size(), true)) {
+            if(index < 27) {
+                if(!this.mergeItemStack(itemStack1, 27, this.inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.mergeItemStack(itemStack1, 0, 27, false)) {
+            } else if(!this.mergeItemStack(itemStack1, 0, 27, false)) {
                 return ItemStack.EMPTY;
             }
             if (itemStack1.isEmpty()) {

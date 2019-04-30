@@ -24,7 +24,7 @@ public class ItemBerry extends ItemFood {
         super(2, 0.2F, false);
         setUnlocalizedName(Init.MODID + ".SweetBerry");
         setRegistryName("SweetBerry");
-        setCreativeTab(Init.futuretab);
+        setCreativeTab(Init.FUTURE_MC_TAB);
     }
 
     @SuppressWarnings("ConstantConditions")

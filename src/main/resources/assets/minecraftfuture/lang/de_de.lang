@@ -1,0 +1,85 @@
+tile.minecraftfuture.Lantern.name=Laterne
+tile.minecraftfuture.Barrel.name=Fass
+tile.minecraftfuture.Loom.name=Webstuhl
+tile.minecraftfuture.Stonecutter.name=Steinsäge
+tile.minecraftfuture.Blast_Furnace.name=Schmelzofen
+tile.minecraftfuture.Smoker.name=Räucherofen
+tile.minecraftfuture.Grindstone.name=Schleifstein
+
+tile.minecraftfuture.FlowerWhite.name=Maiglöckchen
+tile.minecraftfuture.FlowerBlack.name=Witherrose
+tile.minecraftfuture.FlowerBlue.name=Kornblume
+tile.minecraftfuture.BerryBush.name=Süßbeerenbusch
+item.minecraftfuture.SweetBerry.name=Süßbeeren
+tile.minecraftfuture.Bamboo.name=Bambus
+tile.minecraftfuture.Campfire.name=Lagerfeuer
+tile.minecraftfuture.stripped_oak_log.name=Entrindeter Eichenstamm
+tile.minecraftfuture.stripped_spruce_log.name=Entrindeter Fichtenstamm
+tile.minecraftfuture.stripped_birch_log.name=Entrindeter Birkenstamm
+tile.minecraftfuture.stripped_jungle_log.name=Entrindeter Tropenbaumstamm
+tile.minecraftfuture.stripped_acacia_log.name=Entrindeter Akazienstamm
+tile.minecraftfuture.stripped_dark_oak_log.name=Entrindeter Schwarzeichenstamm
+
+tile.minecraftfuture.brick_wall.name=Ziegelsteinmauer
+tile.minecraftfuture.andesite_wall.name=Andesitmauer
+tile.minecraftfuture.diorite_wall.name=Dioritmauer
+tile.minecraftfuture.granite_wall.name=Granitmauer
+tile.minecraftfuture.prismarine_wall.name=Prismarinmauer
+tile.minecraftfuture.stone_brick_wall.name=Steinziegelmauer
+tile.minecraftfuture.mossy_stone_wall.name=Bemooste Steinziegelmauer
+tile.minecraftfuture.end_stone_wall.name=Endsteinziegelmauer
+tile.minecraftfuture.nether_brick_wall.name=Netherziegelmauer
+tile.minecraftfuture.sandstone_wall.name=Sandsteinmauer
+tile.minecraftfuture.red_sandstone_wall.name=Rote Sandsteinmauer
+tile.minecraftfuture.nether_brick_red_wall.name=Rote Netherziegelmauer
+
+# Slabs
+tile.minecraftfuture.granite_slab.name=Granite Slab
+tile.minecraftfuture.andesite_slab.name=Andesite Slab
+tile.minecraftfuture.diorite_slab.name=Diorite Slab
+tile.minecraftfuture.polished_granite_slab.name=Polished granite Slab
+tile.minecraftfuture.polished_andesite_slab.name=Polished andesite Slab
+tile.minecraftfuture.polished_diorite_slab.name=Polished diorite Slab
+tile.minecraftfuture.stone_slab.name=Stone Slab
+tile.minecraftfuture.prismarine_slab.name=Prismarine Slab
+tile.minecraftfuture.dark_prismarine_slab.name=Dark Prismarine Slab
+tile.minecraftfuture.prismarine_brick_slab.name=Prismarine Brick Slab
+tile.minecraftfuture.smooth_red_sandstone_slab.name=Smooth Red Sandstone Slab
+tile.minecraftfuture.smooth_sandstone_slab.name=Smooth Sandstone Slab
+tile.minecraftfuture.mossy_stone_brick_slab.name=Stone Brick Slab
+tile.minecraftfuture.mossy_stone_slab.name=Mossy Stone Slab
+tile.minecraftfuture.smooth_quartz_slab.name=Smooth Quartz Slab
+tile.minecraftfuture.red_nether_brick_slab.name=Red Nether Brick Slab
+tile.minecraftfuture.end_stone_brick_slab.name=End Stone Brick Slab
+
+tile.minecraftfuture.SmoothStone.name=Glatter Stein
+tile.minecraftfuture.SmoothQuartz.name=Smooth Quartz
+tile.minecraftfuture.FletchingTable.name=Bognertisch
+tile.minecraftfuture.SmithingTable.name=Schmeidetisch
+entity.ItemFrame.name=Rahmen
+
+item.minecraftfuture.DyeBlue.name=Blauer Farbstoff
+item.minecraftfuture.DyeWhite.name=Weißer Farbstoff
+item.minecraftfuture.DyeBrown.name=Brauner Farbstoff
+item.minecraftfuture.DyeBlack.name=Schwarzer Farbstoff
+
+item.minecraftfuture.Trident.name=Dreizack
+item.minecraftfuture.Crossbow.name=Armbrust
+item.minecraftfuture.Crossbow_Loaded.name=Armbrust mit Pfeil
+item.minecraftfuture.SuspiciousStew.name=Seltsame Suppe
+
+container.Barrel=Fass
+container.BlastFurnace=Schmelzofen
+container.Smoker=Räucherofen
+container.Grindstone=Reparieren und entzaubern
+container.Stonecutter=Steinsäge
+
+entity.trident.name=Dreizack
+
+enchantment.loyalty=Treue
+enchantment.channeling=Entladung
+enchantment.riptide=Sog
+enchantment.impaling=Harpune
+enchantment.quick_charge=Quick Charge
+
+itemGroup.Future=Future MC

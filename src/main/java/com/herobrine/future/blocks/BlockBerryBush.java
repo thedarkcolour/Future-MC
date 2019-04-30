@@ -25,8 +25,8 @@ import java.util.Random;
 
 public class BlockBerryBush extends BlockFlower implements IGrowable {
     public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 3);
-    private static final AxisAlignedBB YOUNG = new AxisAlignedBB(0.3, 0.0D, 0.3, 0.7, 0.5, 0.7);
-    private static final AxisAlignedBB MATURE = new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.975,0.9);
+    private static final AxisAlignedBB YOUNG = new AxisAlignedBB(0.3D, 0.0D, 0.3D, 0.7D, 0.5D, 0.7D);
+    private static final AxisAlignedBB MATURE = new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.975D,0.9D);
 
     public BlockBerryBush() {
         super("BerryBush");
@@ -106,16 +106,6 @@ public class BlockBerryBush extends BlockFlower implements IGrowable {
         return biome == Biomes.TAIGA || biome == Biomes.TAIGA_HILLS || biome == Biomes.COLD_TAIGA ||
                 biome == Biomes.COLD_TAIGA_HILLS || biome == Biomes.MUTATED_REDWOOD_TAIGA || biome == Biomes.MUTATED_REDWOOD_TAIGA_HILLS ||
                 biome == Biomes.REDWOOD_TAIGA || biome == Biomes.REDWOOD_TAIGA_HILLS || biome == Biomes.MUTATED_TAIGA_COLD;
-    }
-
-    @Override
-    public boolean getSpawnChance(Random random) {
-        return random.nextInt(100) > 96;
-    }
-
-    @Override
-    public boolean getChunkChance(Random random) {
-        return random.nextInt(100) > 93;
     }
 
     @Override

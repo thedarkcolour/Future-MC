@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "prismarine_rough"
+    },
+    "variants": {
+        "inventory": [{}],
+        "variant=default": [{}]
+    }
+}

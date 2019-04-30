@@ -1,0 +1,6 @@
+{
+    "parent": "minecraftfuture:item/slab_inv",
+    "textures": {
+        "tex": "blocks/stone"
+    }
+}

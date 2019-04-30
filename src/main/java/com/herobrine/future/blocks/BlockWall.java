@@ -51,7 +51,8 @@ public class BlockWall extends BlockBase {
 
         if (state.getValue(WEST)) {
             i |= 1 << EnumFacing.WEST.getHorizontalIndex();
-        } return i;
+        }
+        return i;
     }
 
     @Override

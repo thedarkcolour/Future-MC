@@ -1,0 +1,6 @@
+{
+    "parent": "minecraftfuture:block/slab_bottom",
+    "textures": {
+        "tex": "blocks/prismarine_rough"
+    }
+}

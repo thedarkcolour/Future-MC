@@ -1,12 +1,6 @@
 {
-    "parent": "block/orientable",
+    "parent": "block/cube_all",
     "textures": {
-        "particle": "blocks/stone_slab_top",
-        "down": "blocks/stone_slab_top",
-        "up": "blocks/stone_slab_top",
-        "north": "blocks/stone_slab_top",
-        "east": "blocks/stone_slab_top",
-        "south": "blocks/stone_slab_top",
-        "west": "blocks/stone_slab_top"
+        "all": "blocks/stone_slab_top"
     }
 }

@@ -18,5 +18,21 @@
     "loyalty": {
         "subtitle": "minecraftfuture.subtitle.loyalty_trident",
         "sounds": [ "minecraftfuture:trident/loyalty" ]
+    },
+    "charge": {
+        "subtitle": "minecraftfuture.subtitle.crossbow_charge",
+        "sounds": [ "minecraftfuture:crossbow/charge_success"]
+    },
+    "quick_charge": {
+        "subtitle": "minecraftfuture.subtitle.crossbow_quickCharge",
+        "sounds": [ "minecraftfuture:crossbow/charge_fail"]
+    },
+    "crossbow_fire": {
+        "subtitle": "minecraftfuture.subtitle.crossbow_fire",
+        "sounds": [ "minecraftfuture:crossbow/crossbow_fire"]
+    },
+    "crossbow_load": {
+        "subtitle": "minecraftfuture.subtitle.crossbow_load",
+        "sounds": [ "minecraftfuture:crossbow/crossbow_load"]
     }
 }

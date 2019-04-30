@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "mossy_cobblestone"
+    },
+    "variants": {
+        "inventory": [{}],
+        "variant=default": [{}]
+    }
+}

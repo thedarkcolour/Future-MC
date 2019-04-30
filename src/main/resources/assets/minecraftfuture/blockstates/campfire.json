@@ -1,14 +1,10 @@
 {
-    "forge_marker": 1,
-    "defaults": {
-        "model": "minecraftfuture:campfire_on"
-    },
-    "variants": {
-        "normal": [{}],
-        "inventory": [{}],
-        "lit=false,new=false": {"model": "minecraftfuture:campfire"},
-        "lit=true,new=false": {"model": "minecraftfuture:campfire_on"},
-        "lit=false,new=true": {"model": "minecraftfuture:campfire"},
-		"lit=true,new=true": {"model": "minecraftfuture:campfire_on"}
-    }
+    "multipart": [
+        {   "when": { "lit": "false"},
+            "apply": { "model": "minecraftfuture:campfire"}
+        },
+        {   "when": { "lit": "true"},
+            "apply": { "model": "minecraftfuture:campfire_on"}
+        }
+    ]
 }

@@ -25,7 +25,10 @@ public final class EnchantHelper {
         return EnchantmentHelper.getEnchantmentLevel(Enchantments.LOYALTY, stack);
     }
 
-    public static boolean isEven(int number) {
-        return number % 2 == 0;
+    public static int getQuickCharge(ItemStack stack) {
+        if(stack == null) {
+            return 0;
+        }
+        return EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
     }
 }

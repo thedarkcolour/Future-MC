@@ -1,4 +1,4 @@
-package com.herobrine.future.events;
+package com.herobrine.future.event;
 
 import com.herobrine.future.MainFuture;
 import com.herobrine.future.blocks.BlockStrippedLog;
@@ -75,7 +75,6 @@ public class StrippedLogEvent {
             variant = state.getValue(BlockNewLog.VARIANT).getName();
         }
 
-        System.out.println(variant);
         if (variant != null) {
             switch (variant) {
                 case "acacia":

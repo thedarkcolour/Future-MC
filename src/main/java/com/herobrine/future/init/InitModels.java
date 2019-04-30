@@ -1,13 +1,15 @@
 package com.herobrine.future.init;
 
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import com.herobrine.future.items.ItemNewSlab;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static com.herobrine.future.config.FutureConfig.general;
 import static com.herobrine.future.config.FutureConfig.modFlowers;
 import static com.herobrine.future.init.Init.*;
 
+@SideOnly(Side.CLIENT)
 public class InitModels {
-    @SubscribeEvent
     public static void initModel() {
         if(general.lantern) LANTERN.model(); // Blocks
         if(general.barrel) BARREL.model();
@@ -17,6 +19,7 @@ public class InitModels {
         if(general.loom) LOOM.model();
         if(general.fletchingTable) FLETCHING_TABLE.model();
         if(general.smithingTable) SMITHING_TABLE.model();
+        if(general.grindstone) GRINDSTONE.model();
 
         if(modFlowers.lily) LILY_OF_VALLEY.model();
         if(modFlowers.cornflower) CORNFLOWER.model();
@@ -46,10 +49,22 @@ public class InitModels {
             END_STONE_WALL.model();
             PRISMARINE_WALL.model();
         }
+        //if(general.newSlabVariants) {
+           // for (ItemNewSlab slab : ItemNewSlab.Slabs.SLAB_ITEMS) {
+          //      slab.model();
+         //   }
+        //}
+
         if(general.smoothStone) SMOOTH_STONE.model();
+        if(general.smoothQuartz) SMOOTH_QUARTZ.model();
 
         if(modFlowers.dyes) DYES.model();    // Items
         if(general.trident) TRIDENT.model();
-        if(modFlowers.suspiciousStew) SUSPICIOUS_STEW.models();
+        //if(general.crossbow) CROSSBOW.model();
+        if(modFlowers.suspiciousStew) SUSPICIOUS_STEW.model();
+
+        if(general.bamboo) {
+            BAMBOO_STALK.model();
+        }
     }
 }
