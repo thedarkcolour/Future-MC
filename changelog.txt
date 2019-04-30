@@ -13,6 +13,7 @@ Version 0.1.3 - Bamboo! New things:
  Cornflower - Tweaked worldgen to match vanilla flowers.
  Sweet Berry Bush - Tweaked worldgen to match vanilla flowers.
  Lantern - No longer causes fences to attach to it.
+ Campfire - Removed tile entity.
  *Deutsch* - Added German language support.
  *Pусский* - Added Russian language support, thanks to Mr_Krab on GitHub.
 
