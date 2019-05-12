@@ -1,3 +1,7 @@
+Version 0.1.4 - Patch update:
+ Grindstone - Now works properly and Curses persist. Got rid of ghost client EXP orbs.
+ Berry Bush - Now does damage when it has berries.
+
 Version 0.1.3 - Bamboo! New things:
  *Bamboo* - Plant from 1.14 that spawns in Bamboo Jungles.
  *Bamboo Jungle* - Biome from 1.14 where Bamboo can be found.
