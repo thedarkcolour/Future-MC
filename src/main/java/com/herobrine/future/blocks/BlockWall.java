@@ -1,5 +1,7 @@
 package com.herobrine.future.blocks;
 
+import com.herobrine.future.config.FutureConfig;
+import com.herobrine.future.init.Init;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.SoundType;
@@ -7,6 +9,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -32,6 +35,7 @@ public class BlockWall extends BlockBase {
         super(new BlockProperties(variant + "_wall"));
         setSoundType(SoundType.STONE);
         setHardness(3.0F);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : Init.FUTURE_MC_TAB);
     }
 
     private static int getAABBIndex(IBlockState state) {

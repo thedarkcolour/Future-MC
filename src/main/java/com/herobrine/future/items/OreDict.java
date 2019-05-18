@@ -12,6 +12,7 @@ public class OreDict {
         OreDictionary.registerOre("dyeBlack", new ItemStack(Init.DYES, 1, 3));
         OreDictionary.registerOre("seedSweetBerry", Init.SWEET_BERRY);
         OreDictionary.registerOre("cropSweetBerry", Init.SWEET_BERRY);
+        OreDictionary.registerOre("cropBamboo", Init.BAMBOO_STALK);
         /*if (FutureConfig.general.strippedLogs) {
             for (Block block : Init.strippedLogs) {
                 OreDictionary.registerOre("logWood", Item.getItemFromBlock(block));

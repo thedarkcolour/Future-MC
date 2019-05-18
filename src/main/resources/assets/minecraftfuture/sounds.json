@@ -34,5 +34,9 @@
     "crossbow_load": {
         "subtitle": "minecraftfuture.subtitle.crossbow_load",
         "sounds": [ "minecraftfuture:crossbow/crossbow_load"]
+    },
+    "grindstone_use": {
+        "subtitle": "minecraftfuture.subtitle.grindstone_use",
+        "sounds": [ "minecraftfuture:grindstone/use_0", "minecraftfuture:grindstone/use_1", "minecraftfuture:grindstone/use_2"]
     }
 }

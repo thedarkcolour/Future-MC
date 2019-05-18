@@ -5,6 +5,7 @@ tile.minecraftfuture.Stonecutter.name=Steinsäge
 tile.minecraftfuture.Blast_Furnace.name=Schmelzofen
 tile.minecraftfuture.Smoker.name=Räucherofen
 tile.minecraftfuture.Grindstone.name=Schleifstein
+tile.minecraftfuture.Composter.name=Komposta
 
 tile.minecraftfuture.FlowerWhite.name=Maiglöckchen
 tile.minecraftfuture.FlowerBlack.name=Witherrose
@@ -19,6 +20,7 @@ tile.minecraftfuture.stripped_birch_log.name=Entrindeter Birkenstamm
 tile.minecraftfuture.stripped_jungle_log.name=Entrindeter Tropenbaumstamm
 tile.minecraftfuture.stripped_acacia_log.name=Entrindeter Akazienstamm
 tile.minecraftfuture.stripped_dark_oak_log.name=Entrindeter Schwarzeichenstamm
+death.attack.berryBush=%1$s was poked to death by a sweet berry bush
 
 tile.minecraftfuture.brick_wall.name=Ziegelsteinmauer
 tile.minecraftfuture.andesite_wall.name=Andesitmauer

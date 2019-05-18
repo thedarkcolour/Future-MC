@@ -1,5 +1,6 @@
 package com.herobrine.future.blocks;
 
+import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
 import com.herobrine.future.sound.Sounds;
 import net.minecraft.block.Block;
@@ -10,6 +11,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockRenderLayer;
@@ -35,10 +37,12 @@ public class BlockBamboo extends BlockBase implements IPlantable, IGrowable {
     private static final AxisAlignedBB LARGE_AABB = makeAABB(5, 0, 5, 11, 16, 11);
     private static final AxisAlignedBB SMALL_AABB = makeAABB(5.5, 0, 5.5, 10.5, 16, 10.5);
 
+
     public BlockBamboo() {
         super(new BlockProperties("Bamboo", Material.PLANTS, Sounds.BAMBOO));
         setDefaultState(getBlockState().getBaseState().withProperty(THICK, false).withProperty(LEAVES, EnumLeaves.NO_LEAVES));
         setTickRandomly(true);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.MISC : Init.FUTURE_MC_TAB);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.herobrine.future.init;
 
-import com.herobrine.future.items.ItemNewSlab;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -20,11 +19,14 @@ public class InitModels {
         if(general.fletchingTable) FLETCHING_TABLE.model();
         if(general.smithingTable) SMITHING_TABLE.model();
         if(general.grindstone) GRINDSTONE.model();
+        //if(general.lectern) LECTERN.model();
+        if(general.composter) COMPOSTER.model();
 
         if(modFlowers.lily) LILY_OF_VALLEY.model();
         if(modFlowers.cornflower) CORNFLOWER.model();
         if(modFlowers.witherRose) WITHER_ROSE.model();
         if(general.berryBush) SWEET_BERRY.model();
+        if(general.bamboo) BAMBOO_STALK.model();
         if(general.campfire) CAMPFIRE.model();
 
         if(general.strippedLogs) {
@@ -50,9 +52,9 @@ public class InitModels {
             PRISMARINE_WALL.model();
         }
         //if(general.newSlabVariants) {
-           // for (ItemNewSlab slab : ItemNewSlab.Slabs.SLAB_ITEMS) {
-          //      slab.model();
-         //   }
+        // for (ItemNewSlab slab : ItemNewSlab.Slabs.SLAB_ITEMS) {
+        //      slab.model();
+        //   }
         //}
 
         if(general.smoothStone) SMOOTH_STONE.model();
@@ -62,9 +64,5 @@ public class InitModels {
         if(general.trident) TRIDENT.model();
         //if(general.crossbow) CROSSBOW.model();
         if(modFlowers.suspiciousStew) SUSPICIOUS_STEW.model();
-
-        if(general.bamboo) {
-            BAMBOO_STALK.model();
-        }
     }
 }

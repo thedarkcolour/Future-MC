@@ -81,10 +81,10 @@ public class FutureConfig {
         @RequiresMcRestart
         public boolean newWallVariants = true;
 
-        //@Name("New Slab Variants")
-        //@Comment("Whether the 1.14 Slab Variants are added.")
+        //@Name("Lectern")
+        //@Comment("Whether the Lectern block is added.")
         //@RequiresMcRestart
-        //public boolean newSlabVariants = false;
+        //public boolean lectern = true;
 
         @Name("Stripped Logs")
         @Comment({"Whether stripped logs are added to the game, ",
@@ -145,6 +145,21 @@ public class FutureConfig {
         @Comment("Whether the Bamboo plant is added to the game.")
         @RequiresMcRestart
         public boolean bamboo = true;
+
+        @Name("Bamboo Jungle")
+        @Comment("Whether the Bamboo Jungles are added to the game. WARNING: BREAKS WORLDS THAT ALREADY HAVE BAMBOO BIOMES!!!")
+        @RequiresMcRestart
+        public boolean bambooForest = true;
+
+        @Name("Use Vanilla Creative Tabs")
+        @Comment("Whether this mod will use Vanilla tabs or its own creative tab.")
+        @RequiresMcRestart
+        public boolean useVanillaTabs = false;
+
+        @Name("Composter")
+        @Comment("Whether the Composter block is added to the game.")
+        @RequiresMcRestart
+        public boolean composter = true;
     }
 
     public static class Flowers {

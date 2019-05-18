@@ -21,7 +21,6 @@ import java.util.Random;
 public class BlockWitherRose extends BlockFlower { //Adds black flower
     public BlockWitherRose() {
         super("FlowerBlack");
-        setCreativeTab(Init.FUTURE_MC_TAB);
         setSoundType(SoundType.PLANT);
     }
 

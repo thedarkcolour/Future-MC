@@ -1,9 +1,11 @@
 package com.herobrine.future.blocks;
 
+import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.world.biome.Biome;
@@ -15,6 +17,7 @@ public abstract class BlockFlower extends BlockBush {
     public BlockFlower(String regName) {
         setUnlocalizedName(Init.MODID + "." + regName);
         setRegistryName(regName);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : Init.FUTURE_MC_TAB);
     }
 
     @SideOnly(Side.CLIENT)

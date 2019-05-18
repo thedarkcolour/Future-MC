@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "minecraftfuture:lectern"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}],
+        "facing=north": [{}],
+        "facing=south": [{}],
+        "facing=east":  [{}],
+        "facing=west":  [{}]
+    }
+}

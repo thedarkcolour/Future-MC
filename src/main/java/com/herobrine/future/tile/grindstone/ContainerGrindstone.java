@@ -1,6 +1,7 @@
 package com.herobrine.future.tile.grindstone;
 
 import com.herobrine.future.init.Init;
+import com.herobrine.future.sound.Sounds;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -10,11 +11,11 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import java.util.Map;
 
@@ -121,9 +122,10 @@ public class ContainerGrindstone extends Container {
 
     public void handleCrafting() {
         // Handles two incompatible items
-        if(input.getStackInSlot(0).getItem() != input.getStackInSlot(1).getItem() && !input.getStackInSlot(0).isEmpty() && !input.getStackInSlot(1).isEmpty()) {
-            isRecipeInvalid = true;
+        if(input.getStackInSlot(0).getItem() != input.getStackInSlot(1).getItem()) {
+            isRecipeInvalid = !(input.getStackInSlot(0).isEmpty() || input.getStackInSlot(1).isEmpty());
         }
+
         // Handles two compatible items
         else if(input.getStackInSlot(0).getMaxDamage() > 1 && input.getStackInSlot(0).getMaxStackSize() == 1 && input.getStackInSlot(0).getItem() == input.getStackInSlot(1).getItem()) {
             isRecipeInvalid = false;
@@ -135,7 +137,15 @@ public class ContainerGrindstone extends Container {
                 sum = stack.getMaxDamage();
             }
 
-            output.setStackInSlot(0, new ItemStack(stack.getItem(), 1, stack.getMaxDamage() - sum));
+            ItemStack outItem = new ItemStack(stack.getItem(), 1, stack.getMaxDamage() - sum);
+
+            Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
+            for(Enchantment e : map.keySet()) {
+                if(e.isCurse()) {
+                    outItem.addEnchantment(e, 1);
+                }
+            }
+            output.setStackInSlot(0, outItem);
         }
         // Resets the grid when the two items are incompatible
         if(input.getStackInSlot(0).getItem() != input.getStackInSlot(1).getItem() && !output.getStackInSlot(0).isEmpty()) {
@@ -146,8 +156,11 @@ public class ContainerGrindstone extends Container {
     public void handleOutput() {
         ItemStack newStack = output.getStackInSlot(0);
         if(newStack.isEmpty() && newStack != oldStack) {
-            awardEXP(newStack, input.getStackInSlot(1));
-            clearInput();
+            if(!input.getStackInSlot(0).isEmpty() && !input.getStackInSlot(1).isEmpty() && !isRecipeInvalid) {
+                awardEXP(newStack, input.getStackInSlot(1));
+                world.playSound(this.pos.getX(), this.pos.getY(), this.pos.getZ(), Sounds.GRINDSTONE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+                clearInput(); // Clear it last, otherwise XP doesn't work
+            }
         }
         oldStack = output.getStackInSlot(0);
     }
@@ -157,11 +170,16 @@ public class ContainerGrindstone extends Container {
         for(ItemStack stack : input) {
             Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
             for(Enchantment enchantment : map.keySet()) {
-                exp += getEnchantmentEXP(enchantment, map.get(enchantment));
+                if(!enchantment.isCurse()) {
+                    exp += getEnchantmentEXP(enchantment, map.get(enchantment));
+                }
             }
         }
         if(exp > 0) {
-            world.spawnEntity(new EntityXPOrb(world, pos.getX(), pos.getY(), pos.getZ(), exp));
+            EntityXPOrb orb = new EntityXPOrb(world, pos.getX(), pos.getY(), pos.getZ(), 0);
+            orb.delayBeforeCanPickup = 5;
+            orb.xpValue = exp;
+            if(!world.isRemote) world.spawnEntity(orb);
         }
     }
 
@@ -194,16 +212,16 @@ public class ContainerGrindstone extends Container {
         float exp;
         switch (enchantment.getRarity()) {
             default: exp =+ 2F; break;
-            case UNCOMMON: exp =+ 4F; break;
-            case RARE: exp =+ 8F; break;
-            case VERY_RARE: exp =+ 16F;
+            case UNCOMMON: exp =+ 12F; break;
+            case RARE: exp =+ 18F; break;
+            case VERY_RARE: exp =+ 36F;
         }
         switch (enchantLevel) {
-            case 2: exp *= 1.25F;
-            case 3: exp *= 1.5F;
-            case 4: exp *= 1.75F;
-            case 5: exp *= 2F;
+            case 2: exp *= 1.4F;
+            case 3: exp *= 1.7F;
+            case 4: exp *= 1.9F;
+            case 5: exp *= 2.2F;
         }
-        return (int) exp;
+        return (int) exp * 3;
     }
 }

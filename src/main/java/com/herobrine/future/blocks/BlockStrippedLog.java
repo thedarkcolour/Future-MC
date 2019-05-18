@@ -1,5 +1,6 @@
 package com.herobrine.future.blocks;
 
+import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.BlockStateContainer;
@@ -23,7 +24,7 @@ public class BlockStrippedLog extends BlockLog {
         super();
         setUnlocalizedName(Init.MODID + ".stripped_" + variant + "_log");
         setRegistryName("stripped_" + variant + "_log");
-        setCreativeTab(Init.FUTURE_MC_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : Init.FUTURE_MC_TAB);
         this.setDefaultState(getBlockState().getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
     }
 

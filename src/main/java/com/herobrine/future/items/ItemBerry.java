@@ -1,9 +1,11 @@
 package com.herobrine.future.items;
 
 import com.herobrine.future.blocks.BlockBerryBush;
+import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
@@ -24,7 +26,7 @@ public class ItemBerry extends ItemFood {
         super(2, 0.2F, false);
         setUnlocalizedName(Init.MODID + ".SweetBerry");
         setRegistryName("SweetBerry");
-        setCreativeTab(Init.FUTURE_MC_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.FOOD : Init.FUTURE_MC_TAB);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -42,19 +44,19 @@ public class ItemBerry extends ItemFood {
         if (!player.canPlayerEdit(pos, facing, itemstack)) {
             return EnumActionResult.FAIL;
         }
-        else if (!player.canEat(false)) {
-            if(block.canPlaceBlockAt(worldIn, pos)) {
-                if (worldIn.isAirBlock(pos)) {
-                    worldIn.playSound(player, pos, SoundEvents.BLOCK_GRASS_PLACE, SoundCategory.BLOCKS, 1.0F, 0.8F);
-                    worldIn.setBlockState(pos, block.getBlockState().getBaseState().withProperty(BlockBerryBush.AGE, 0));
-                    itemstack.shrink(1);
-                    return EnumActionResult.SUCCESS;
-                }
-            }
-            if (player instanceof EntityPlayerMP) {
-                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, itemstack);
+        if(block.canPlaceBlockAt(worldIn, pos)) {
+            if (worldIn.isAirBlock(pos)) {
+                worldIn.playSound(player, pos, SoundEvents.BLOCK_GRASS_PLACE, SoundCategory.BLOCKS, 1.0F, 0.8F);
+                worldIn.setBlockState(pos, block.getBlockState().getBaseState().withProperty(BlockBerryBush.AGE, 0));
+                itemstack.shrink(1);
+
+                return EnumActionResult.SUCCESS;
             }
         }
+        if (player instanceof EntityPlayerMP) {
+            CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, itemstack);
+        }
+
         return EnumActionResult.FAIL;
     }
 }

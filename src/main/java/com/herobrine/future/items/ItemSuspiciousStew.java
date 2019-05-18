@@ -3,6 +3,7 @@ package com.herobrine.future.items;
 import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -24,7 +25,7 @@ public class ItemSuspiciousStew extends ItemFood {
         setMaxStackSize(1);
         setRegistryName("SuspiciousStew");
         setUnlocalizedName(Init.MODID + ".SuspiciousStew");
-        setCreativeTab(Init.FUTURE_MC_TAB);
+        if(!FutureConfig.general.useVanillaTabs) setCreativeTab(Init.FUTURE_MC_TAB);
     }
 
     @SideOnly(Side.CLIENT)

@@ -1,6 +1,7 @@
 package com.herobrine.future.blocks;
 
 import com.herobrine.future.config.FutureConfig;
+import com.herobrine.future.init.Init;
 import com.herobrine.future.tile.stonecutter.TileStonecutter;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
@@ -10,6 +11,7 @@ import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -32,6 +34,7 @@ public class BlockStonecutter extends BlockBase implements ITileEntityProvider {
         super(new BlockProperties("Stonecutter"));
         setHardness(3.0F);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(OLD, FutureConfig.general.stonecutterOld));
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : Init.FUTURE_MC_TAB);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -173,12 +176,13 @@ public class BlockStonecutter extends BlockBase implements ITileEntityProvider {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if(worldIn.isRemote) {
-            return false; //true
-        }
-        else {
-            //playerIn.openGui(MainFuture.instance, GuiHandler.GUI_STONECUTTER, worldIn, pos.getX(), pos.getY(), pos.getZ());
-            return false; //true
-        }
+        //if(worldIn.isRemote) {
+          //  return true; //false
+        //}
+       // else {
+          //  playerIn.openGui(MainFuture.instance, GuiHandler.GUI_STONECUTTER, worldIn, pos.getX(), pos.getY(), pos.getZ());
+          //  return true; //false
+        //}
+        return false;
     }
 }

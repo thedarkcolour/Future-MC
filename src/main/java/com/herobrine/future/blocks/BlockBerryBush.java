@@ -6,11 +6,14 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -27,6 +30,7 @@ public class BlockBerryBush extends BlockFlower implements IGrowable {
     public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 3);
     private static final AxisAlignedBB YOUNG = new AxisAlignedBB(0.3D, 0.0D, 0.3D, 0.7D, 0.5D, 0.7D);
     private static final AxisAlignedBB MATURE = new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.975D,0.9D);
+    public static final DamageSource BERRY_BUSH_DAMAGE = new DamageSource("berryBush");
 
     public BlockBerryBush() {
         super("BerryBush");
@@ -77,6 +81,31 @@ public class BlockBerryBush extends BlockFlower implements IGrowable {
                     worldIn.setBlockState(pos, this.blockState.getBaseState().withProperty(AGE, age + 1), 2);
                 }
                 ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
+            }
+        }
+    }
+
+    @Override
+    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+        if(state.getValue(AGE) > 0 && entityIn instanceof EntityLivingBase) {
+            if(worldIn.rand.nextInt(5) == 4) entityIn.attackEntityFrom(BERRY_BUSH_DAMAGE, 1.0F);
+            if(entityIn.motionX != 0D || entityIn.motionZ != 0D) {
+                entityIn.motionX *= 0.1D;
+                entityIn.motionZ *= 0.1D;
+            }
+        }
+    }
+
+    @Override
+    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+        if(!worldIn.isRemote) {
+            if (worldIn.getBlockState(pos).getBlock().getMetaFromState(state) == 2) {
+                worldIn.setBlockState(pos, this.blockState.getBaseState().withProperty(AGE, 1));
+                spawnAsEntity(worldIn, pos, new ItemStack(Init.SWEET_BERRY));
+            }
+            else if (worldIn.getBlockState(pos).getBlock().getMetaFromState(state) == 3) {
+                worldIn.setBlockState(pos, this.blockState.getBaseState().withProperty(AGE, 1));
+                spawnAsEntity(worldIn, pos, new ItemStack(Init.SWEET_BERRY, 3));
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.herobrine.future.blocks;
 
 import com.herobrine.future.config.FutureConfig;
+import com.herobrine.future.init.Init;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.SoundType;
@@ -9,6 +10,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,7 +33,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -44,6 +45,7 @@ public class BlockCampfire extends BlockBase {
         setSoundType(SoundType.WOOD);
         setHardness(2.0F);
         this.setDefaultState(getBlockState().getBaseState().withProperty(LIT, true));
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : Init.FUTURE_MC_TAB);
     }
 
     @Override

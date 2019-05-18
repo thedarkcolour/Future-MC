@@ -1,4 +1,5 @@
 package com.herobrine.future.tile;
+
 import com.herobrine.future.tile.advancedfurnace.ContainerAdvancedFurnace;
 import com.herobrine.future.tile.advancedfurnace.GuiAdvancedFurnace;
 import com.herobrine.future.tile.advancedfurnace.TileAdvancedFurnace;
@@ -8,7 +9,6 @@ import com.herobrine.future.tile.barrel.TileBarrel;
 import com.herobrine.future.tile.grindstone.ContainerGrindstone;
 import com.herobrine.future.tile.grindstone.GuiGrindstone;
 import com.herobrine.future.tile.stonecutter.ContainerStonecutter;
-import com.herobrine.future.tile.stonecutter.GuiStonecutter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +19,7 @@ public class GuiHandler implements IGuiHandler {
     public static final int GUI_BARREL = 1;
     public static final int GUI_FURNACE = 2;
     public static final int GUI_GRINDSTONE = 3;
-    //public static final int GUI_STONECUTTER = 4;
+    public static final int GUI_STONECUTTER = 4;
     //public static final int GUI_LECTERN = 5;
 
     @Override
@@ -36,9 +36,9 @@ public class GuiHandler implements IGuiHandler {
             case GUI_GRINDSTONE: {
                 return new ContainerGrindstone(player.inventory, world, pos);
             }
-            /*case GUI_STONECUTTER: {
+            case GUI_STONECUTTER: {
                 return new ContainerStonecutter(player.inventory, world, pos);
-            }*/
+            }
             default: return null;
 
         }

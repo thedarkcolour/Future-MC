@@ -1,6 +1,8 @@
 package com.herobrine.future.blocks;
 
 import com.herobrine.future.MainFuture;
+import com.herobrine.future.config.FutureConfig;
+import com.herobrine.future.init.Init;
 import com.herobrine.future.tile.GuiHandler;
 import com.herobrine.future.tile.barrel.TileBarrel;
 import net.minecraft.block.ITileEntityProvider;
@@ -9,6 +11,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -28,6 +31,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider {
         super(new BlockProperties("Barrel", Material.WOOD));
         setSoundType(SoundType.WOOD);
         setHardness(2.0F);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : Init.FUTURE_MC_TAB);
     }
 
     @Override

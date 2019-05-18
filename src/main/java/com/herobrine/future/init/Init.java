@@ -1,34 +1,36 @@
 package com.herobrine.future.init;
 
 import com.herobrine.future.blocks.*;
+import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.items.*;
 import com.herobrine.future.worldgen.WorldGenBamboo;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.Biome;
 
-public final class Init { // 0.1.2 - Stopped using GameRegistry.ObjectHolder, it was annoying and messy
-    public static CreativeTabs FUTURE_MC_TAB = new CreativeTabs("Future") {
+public final class Init {
+    public static CreativeTabs FUTURE_MC_TAB = FutureConfig.general.useVanillaTabs ? null : new CreativeTabs("Future") {
         @Override    //New creative tab
         public ItemStack getTabIconItem() {
             return new ItemStack(Init.LANTERN);
         }
     };
+
     public static final String MODID = "minecraftfuture";
 
     public static final BlockLantern LANTERN;
     public static final BlockStonecutter STONECUTTER; // TODO - Stonecutter functionality
-    public static final BlockLectern LECTERN; // TODO - Lectern
+    //public static final BlockLectern LECTERN; // TODO - Lectern
     public static final BlockBarrel BARREL;
-    public static final BlockFurnaceAdvanced SMOKER;
-    public static final BlockFurnaceAdvanced BLAST_FURNACE;
+    public static final BlockFurnaceAdvanced SMOKER, BLAST_FURNACE; // TODO - JEI compat
     public static final BlockRotatable LOOM; // TODO - Loom functionality
     public static final BlockRotatable FLETCHING_TABLE;
     public static final BlockRotatable SMITHING_TABLE;
     public static final BlockGrindstone GRINDSTONE;
-    public static final BlockComposter COMPOSTER; // TODO - Composter
+    public static final BlockComposter COMPOSTER; // TODO - CraftTweaker compat
 
     public static final BlockFlower LILY_OF_VALLEY;
     public static final BlockFlower CORNFLOWER;
@@ -60,7 +62,7 @@ public final class Init { // 0.1.2 - Stopped using GameRegistry.ObjectHolder, it
     public static final BlockBase SMOOTH_STONE;
     public static final BlockBase SMOOTH_QUARTZ;
 
-    public static final ItemDye DYES; // TODO - Dyes work on Sheep
+    public static final ItemDye DYES;
     public static final ItemTrident TRIDENT;
     public static final ItemCrossBow CROSSBOW; // TODO - Crossbow shooting
     public static final ItemSuspiciousStew SUSPICIOUS_STEW;
@@ -72,13 +74,13 @@ public final class Init { // 0.1.2 - Stopped using GameRegistry.ObjectHolder, it
     static {  // references
         LANTERN = new BlockLantern();
         STONECUTTER = new BlockStonecutter();
-        LECTERN = new BlockLectern();
+        //LECTERN = new BlockLectern();
         BARREL = new BlockBarrel();
         SMOKER = new BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.SMOKER);
         BLAST_FURNACE = new BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE);
-        LOOM = new BlockRotatable(new BlockProperties("Loom", Material.WOOD, SoundType.WOOD));
-        FLETCHING_TABLE = new BlockRotatable(new BlockProperties("FletchingTable", Material.WOOD, SoundType.WOOD));
-        SMITHING_TABLE = new BlockRotatable(new BlockProperties("SmithingTable", Material.WOOD, SoundType.WOOD));
+        LOOM = (BlockRotatable) new BlockRotatable(new BlockProperties("Loom", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FUTURE_MC_TAB);
+        FLETCHING_TABLE = (BlockRotatable) new BlockRotatable(new BlockProperties("FletchingTable", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FUTURE_MC_TAB);
+        SMITHING_TABLE = (BlockRotatable) new BlockRotatable(new BlockProperties("SmithingTable", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FUTURE_MC_TAB);
         GRINDSTONE = new BlockGrindstone();
         COMPOSTER = new BlockComposter();
 
@@ -117,8 +119,8 @@ public final class Init { // 0.1.2 - Stopped using GameRegistry.ObjectHolder, it
 
         ItemNewSlab.Slabs.initSlab();
 
-        SMOOTH_STONE = new BlockBase(new BlockProperties("SmoothStone"));
-        SMOOTH_QUARTZ = (BlockBase) new BlockBase(new BlockProperties("SmoothQuartz")).setHardness(2.0F);
+        SMOOTH_STONE = (BlockBase) new BlockBase(new BlockProperties("SmoothStone")).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : Init.FUTURE_MC_TAB);
+        SMOOTH_QUARTZ = (BlockBase) new BlockBase(new BlockProperties("SmoothQuartz")).setHardness(2.0F).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : Init.FUTURE_MC_TAB);
 
         BIOME_BAMBOO_JUNGLE = WorldGenBamboo.BIOME_BAMBOO_JUNGLE;
         BAMBOO_FEATURE = WorldGenBamboo.BAMBOO_FEATURE;

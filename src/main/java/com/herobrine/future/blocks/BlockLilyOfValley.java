@@ -8,7 +8,6 @@ import net.minecraft.world.biome.Biome;
 public class BlockLilyOfValley extends BlockFlower { //Adds white flower
     public BlockLilyOfValley() {
         super("FlowerWhite");
-        setCreativeTab(Init.FUTURE_MC_TAB);
         setSoundType(SoundType.PLANT);
     }
 

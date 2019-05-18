@@ -29,7 +29,7 @@ public class RenderTrident extends Render<EntityTrident> {
         GlStateManager.rotate(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks + 90.0F, 0.0F, 0.0F, 1.0F);
         this.modelTrident.renderer();
         GlStateManager.popMatrix();
-        //this.renderIn(entity, x, y, z, partialTicks);
+
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
         GlStateManager.enableLighting();
 
@@ -74,6 +74,4 @@ public class RenderTrident extends Render<EntityTrident> {
             return new RenderTrident(manager);
         }
     }
-
-
 }

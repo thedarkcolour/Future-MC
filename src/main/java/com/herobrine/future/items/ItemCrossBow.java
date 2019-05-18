@@ -1,10 +1,12 @@
 package com.herobrine.future.items;
 
 import com.herobrine.future.MainFuture;
+import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
 import com.herobrine.future.sound.Sounds;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -20,9 +22,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Level;
-import org.lwjgl.Sys;
 
-import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -32,7 +32,7 @@ public class ItemCrossBow extends Item {
         setRegistryName(registryName);
         setMaxStackSize(1);
         setMaxDamage(326);
-        setCreativeTab(Init.FUTURE_MC_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.COMBAT : Init.FUTURE_MC_TAB);
         this.addPropertyOverride(new ResourceLocation("pull"), ((stack, worldIn, entityIn) -> entityIn == null || entityIn.getActiveItemStack().getItem() != Init.CROSSBOW || isLoaded(stack) ? 0.0F : (float)(stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F));
         this.addPropertyOverride(new ResourceLocation("pulling"), (stack, worldIn, entityIn) -> !isLoaded(stack) && entityIn != null && entityIn.isHandActive() && entityIn.getActiveItemStack() == stack ? 1.0F : 0.0F);
         this.addPropertyOverride(new ResourceLocation("loaded"), (stack, worldIn, entityIn) -> isLoaded(stack) ? 1.0F : 0.0F);

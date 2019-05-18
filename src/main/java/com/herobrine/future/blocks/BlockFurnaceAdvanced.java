@@ -1,6 +1,7 @@
 package com.herobrine.future.blocks;
 
 import com.herobrine.future.MainFuture;
+import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
 import com.herobrine.future.tile.GuiHandler;
 import com.herobrine.future.tile.advancedfurnace.TileAdvancedFurnace;
@@ -13,6 +14,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -42,6 +44,8 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
     public BlockFurnaceAdvanced(FurnaceType type) {
         super(new BlockProperties(type.getRegName()));
         setHardness(3.5F);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : Init.FUTURE_MC_TAB);
+
         this.type = type;
     }
 
@@ -163,22 +167,13 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
         return getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()).withProperty(LIT, false);
     }
 
-    public IBlockState getBaseBlockState() {
-        return this.blockState.getBaseState();
-    }
-
     public static void setState(boolean active, World world, BlockPos pos) {
         BlockFurnaceAdvanced furnace = (BlockFurnaceAdvanced) world.getBlockState(pos).getBlock();
 
         if(world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileAdvancedFurnace) {
             EnumFacing facing = world.getBlockState(pos).getValue(BlockFurnaceAdvanced.FACING);
 
-            if(active) {
-                world.setBlockState(pos, furnace.getBaseBlockState().withProperty(BlockFurnaceAdvanced.FACING, facing).withProperty(BlockFurnaceAdvanced.LIT, true));
-            }
-            else {
-                world.setBlockState(pos, furnace.getBaseBlockState().withProperty(BlockFurnaceAdvanced.FACING, facing).withProperty(BlockFurnaceAdvanced.LIT, false));
-            }
+            world.setBlockState(pos, furnace.getDefaultState().withProperty(BlockFurnaceAdvanced.FACING, facing).withProperty(BlockFurnaceAdvanced.LIT, active));
         }
     }
 
@@ -204,7 +199,7 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
     }
 
     public IBlockState shortState(EnumFacing facing, boolean isLit) {
-        return getBaseBlockState().withProperty(FACING, facing).withProperty(LIT, isLit);
+        return getDefaultState().withProperty(FACING, facing).withProperty(LIT, isLit);
     }
 
     @SideOnly(Side.CLIENT)
@@ -242,7 +237,6 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
                         worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d3, d1, d2 + 0.52D, 0.0D, 0.0D, 0.0D);
                     }
                 }
-
             }
         }
     }

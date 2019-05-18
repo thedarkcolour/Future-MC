@@ -1,6 +1,7 @@
 package com.herobrine.future.items;
 
 import com.google.common.collect.Multimap;
+import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.enchantment.EnchantHelper;
 import com.herobrine.future.enchantment.EnchantImpaling;
 import com.herobrine.future.entity.trident.EntityTrident;
@@ -8,6 +9,7 @@ import com.herobrine.future.init.Init;
 import com.herobrine.future.sound.Sounds;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -28,7 +30,7 @@ public class ItemTrident extends Item {
     public ItemTrident() {
         setRegistryName("Trident");
         setUnlocalizedName(Init.MODID + ".Trident");
-        setCreativeTab(Init.FUTURE_MC_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.COMBAT : Init.FUTURE_MC_TAB);
         setMaxDamage(250);
         setMaxStackSize(1);
     }

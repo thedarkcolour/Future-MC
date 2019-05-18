@@ -118,6 +118,9 @@ public class GuiStonecutter extends GuiContainer {
                 GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
                 mc.getTextureManager().bindTexture(background);
                 GlStateManager.enableBlend();
+                GlStateManager.disableLighting();
+                RenderHelper.disableStandardItemLighting();
+
                 boolean mouseOver = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
                 int j = 0;
                 int i = 166;

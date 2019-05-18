@@ -1,14 +1,15 @@
 package com.herobrine.future.blocks;
 
+import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
 import net.minecraft.block.SoundType;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
 
 public class BlockCornflower extends BlockFlower { //Adds blue flower
     public BlockCornflower() {
         super("FlowerBlue");
-        setCreativeTab(Init.FUTURE_MC_TAB);
         setSoundType(SoundType.PLANT);
     }
 

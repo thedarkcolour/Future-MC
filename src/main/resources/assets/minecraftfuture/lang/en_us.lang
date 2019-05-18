@@ -6,6 +6,7 @@ tile.minecraftfuture.Stonecutter.name=Stonecutter
 tile.minecraftfuture.Blast_Furnace.name=Blast Furnace
 tile.minecraftfuture.Smoker.name=Smoker
 tile.minecraftfuture.Grindstone.name=Grindstone
+tile.minecraftfuture.Composter.name=Composter
 
 # Plants
 tile.minecraftfuture.FlowerWhite.name=Lily of the Valley
@@ -21,6 +22,7 @@ tile.minecraftfuture.stripped_birch_log.name=Stripped Birch Log
 tile.minecraftfuture.stripped_jungle_log.name=Stripped Jungle Log
 tile.minecraftfuture.stripped_acacia_log.name=Stripped Acacia Log
 tile.minecraftfuture.stripped_dark_oak_log.name=Stripped Dark Oak Log
+death.attack.berryBush=%1$s was poked to death by a sweet berry bush
 
 # Walls
 tile.minecraftfuture.brick_wall.name=Brick Wall

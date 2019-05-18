@@ -4,7 +4,6 @@ import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.entity.Entities;
 import com.herobrine.future.entity.trident.EntityTrident;
 import com.herobrine.future.init.Init;
-import com.herobrine.future.items.ItemNewSlab;
 import com.herobrine.future.items.OreDict;
 import com.herobrine.future.proxy.IProxy;
 import com.herobrine.future.tile.GuiHandler;
@@ -35,7 +34,7 @@ import org.apache.logging.log4j.Logger;
 )
 public class MainFuture {
     public static final String MODNAME = "Future MC";
-    public static final String VERSION = "0.1.3";
+    public static final String VERSION = "0.1.5";
     public static Logger logger;
 
     @SidedProxy(clientSide = "com.herobrine.future.proxy.ClientProxy", serverSide = "com.herobrine.future.proxy.ServerProxy")

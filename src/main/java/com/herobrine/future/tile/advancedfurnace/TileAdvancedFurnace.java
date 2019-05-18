@@ -119,13 +119,15 @@ public abstract class TileAdvancedFurnace extends TileEntity implements ITickabl
     protected void function() {
         if(!world.isRemote) {
             if(fuelLeft == 0) { // Skips if smelting
-                setIsBurning(false);
                 if(trySmelt()) { // Checks if the machine has a valid recipe
                     startSmelt(); // Consumes fuel
                 }
             }
             if(fuelLeft != 0 && getType().canCraft(inputCraft.getStackInSlot(0))) { // Checks if the machine can operate
                 doSmelt(); // Updates the progress, fuelTime, and isBurning
+            }
+            else {
+                setIsBurning(false); // Moved to after smelt starts, otherwise it blinks when it runs out of fuel
             }
 
             decreaseFuel();

@@ -1,3 +1,4 @@
+# Функциональные блоки
 tile.minecraftfuture.Lantern.name=Фонарь
 tile.minecraftfuture.Barrel.name=Бочка
 tile.minecraftfuture.Loom.name=Ткацкий станок
@@ -5,7 +6,9 @@ tile.minecraftfuture.Stonecutter.name=Каменотес
 tile.minecraftfuture.Blast_Furnace.name=Доменная печь
 tile.minecraftfuture.Smoker.name=Курильщик
 tile.minecraftfuture.Grindstone.name=точильный камень
+tile.minecraftfuture.Composter.name=Компостера
 
+# Растения
 tile.minecraftfuture.FlowerWhite.name=Ландыш
 tile.minecraftfuture.FlowerBlack.name=Увядшая роза
 tile.minecraftfuture.FlowerBlue.name=Василек
@@ -19,7 +22,9 @@ tile.minecraftfuture.stripped_birch_log.name=Бревенчатая береза
 tile.minecraftfuture.stripped_jungle_log.name=Бревенчатое тропическое дерево
 tile.minecraftfuture.stripped_acacia_log.name=Бревенчатая акация
 tile.minecraftfuture.stripped_dark_oak_log.name=Бревенчатый темный дуб
+death.attack.berryBush=%1$s was poked to death by a sweet berry bush
 
+# Стены
 tile.minecraftfuture.brick_wall.name=Кирпичная стена
 tile.minecraftfuture.andesite_wall.name=Андезитовая стена
 tile.minecraftfuture.diorite_wall.name=Диоритовая стена
@@ -30,56 +35,63 @@ tile.minecraftfuture.mossy_stone_wall.name=Мшистая каменная ки�
 tile.minecraftfuture.end_stone_wall.name=Стена из камня края
 tile.minecraftfuture.nether_brick_wall.name=Стена из незеритовых кирпичей
 tile.minecraftfuture.sandstone_wall.name=Песчаниковая стена
-tile.minecraftfuture.red_sandstone_wall.name=Красная песчениковая стена
+tile.minecraftfuture.red_sandstone_wall.name=Красная песчаниковая стена
 tile.minecraftfuture.nether_brick_red_wall.name=Стена из красных незеритовых кирпичей
 
-# Slabs
-tile.minecraftfuture.granite_slab.name=Granite Slab
-tile.minecraftfuture.andesite_slab.name=Andesite Slab
-tile.minecraftfuture.diorite_slab.name=Diorite Slab
-tile.minecraftfuture.polished_granite_slab.name=Polished granite Slab
-tile.minecraftfuture.polished_andesite_slab.name=Polished andesite Slab
-tile.minecraftfuture.polished_diorite_slab.name=Polished diorite Slab
-tile.minecraftfuture.stone_slab.name=Stone Slab
-tile.minecraftfuture.prismarine_slab.name=Prismarine Slab
-tile.minecraftfuture.dark_prismarine_slab.name=Dark Prismarine Slab
-tile.minecraftfuture.prismarine_brick_slab.name=Prismarine Brick Slab
-tile.minecraftfuture.smooth_red_sandstone_slab.name=Smooth Red Sandstone Slab
-tile.minecraftfuture.smooth_sandstone_slab.name=Smooth Sandstone Slab
-tile.minecraftfuture.mossy_stone_brick_slab.name=Stone Brick Slab
-tile.minecraftfuture.mossy_stone_slab.name=Mossy Stone Slab
-tile.minecraftfuture.smooth_quartz_slab.name=Smooth Quartz Slab
-tile.minecraftfuture.red_nether_brick_slab.name=Red Nether Brick Slab
-tile.minecraftfuture.end_stone_brick_slab.name=End Stone Brick Slab
+# Плиты
+tile.minecraftfuture.granite_slab.name=Гранитная плита
+tile.minecraftfuture.andesite_slab.name=Андезитовая плита
+tile.minecraftfuture.diorite_slab.name=Диоритовая плита
+tile.minecraftfuture.polished_granite_slab.name=Плита из полированного гранита
+tile.minecraftfuture.polished_andesite_slab.name=Плита из полированного андезита
+tile.minecraftfuture.polished_diorite_slab.name=Плита из полированного диорита
+tile.minecraftfuture.stone_slab.name=Каменная плита
+tile.minecraftfuture.prismarine_slab.name=Призмариновая плита
+tile.minecraftfuture.dark_prismarine_slab.name=Темная призмариновая плита
+tile.minecraftfuture.prismarine_brick_slab.name=Плита из призмаринованого кирпича
+tile.minecraftfuture.smooth_red_sandstone_slab.name=Плита из полированного красного песчаника
+tile.minecraftfuture.smooth_sandstone_slab.name=Плита из полированного песчаника
+tile.minecraftfuture.mossy_stone_brick_slab.name=Плита из мшистого каменного кирпича
+tile.minecraftfuture.mossy_stone_slab.name=Плита из мшистого камня
+tile.minecraftfuture.smooth_quartz_slab.name=Плита из полированного кварца
+tile.minecraftfuture.red_nether_brick_slab.name=Плита из красного незеритового кирпича
+tile.minecraftfuture.end_stone_brick_slab.name=Плита из кирпича края
 
+# Декоративные блоки
 tile.minecraftfuture.SmoothStone.name=Гладкий камень
-tile.minecraftfuture.SmoothQuartz.name=Smooth Quartz
+tile.minecraftfuture.SmoothQuartz.name=Гладкий кварц
 tile.minecraftfuture.FletchingTable.name=Струговой стол
 tile.minecraftfuture.SmithingTable.name=Кузнечный стол
 entity.ItemFrame.name=Предметная рамка
 
+# Материалы крафта
 item.minecraftfuture.DyeBlue.name=Синий краситель
 item.minecraftfuture.DyeWhite.name=Белая краска
 item.minecraftfuture.DyeBrown.name=Коричневая краска
 item.minecraftfuture.DyeBlack.name=Черный краситель
 
+# Итемы
 item.minecraftfuture.Trident.name=Трезубец
 item.minecraftfuture.Crossbow.name=Арбалет
 item.minecraftfuture.Crossbow_Loaded.name=Арбалет со стрелой
 item.minecraftfuture.SuspiciousStew.name=Подозрительное рагу
 
+# GUI
 container.Barrel=Бочка
 container.BlastFurnace=Доменная печь
 container.Smoker=Курильщик
 container.Grindstone=Точильный камень
-container.Stonecutter=Stonecutter
+container.Stonecutter=Каменотес
 
+# Сущности
 entity.trident.name=Трезубец
 
+# Чары
 enchantment.loyalty=Лояльность
 enchantment.channeling=Направление
 enchantment.riptide=Быстрина
 enchantment.impaling=Пронзание
 enchantment.quick_charge=Быстрая зарядка
 
+# Вкладка креатива
 itemGroup.Future=Future MC

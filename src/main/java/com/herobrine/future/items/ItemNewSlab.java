@@ -2,8 +2,10 @@ package com.herobrine.future.items;
 
 import com.herobrine.future.blocks.BlockNewSlab;
 import com.herobrine.future.config.FutureConfig;
+import com.herobrine.future.init.Init;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.model.ModelLoader;
@@ -21,6 +23,7 @@ public class ItemNewSlab extends ItemSlab {
         super(singleSlab, singleSlab, doubleSlab);
         setRegistryName(Objects.requireNonNull(singleSlab.getRegistryName()));
         setUnlocalizedName(singleSlab.getUnlocalizedName());
+        //setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : Init.FUTURE_MC_TAB);
 
         this.singleSlab = singleSlab;
     }

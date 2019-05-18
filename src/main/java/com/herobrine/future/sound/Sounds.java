@@ -20,6 +20,7 @@ public class Sounds {
     public static final SoundEvent CROSSBOW_FIRE = makeSoundEvent("crossbow_fire");
     public static final SoundEvent CROSSBOW_QUICK_CHARGE = makeSoundEvent("quick_charge");
     public static final SoundEvent CROSSBOW_LOAD = makeSoundEvent("crossbow_load");
+    public static final SoundEvent GRINDSTONE_USE = makeSoundEvent("grindstone_use");
     //public static final SoundEvent BELL_RING = makeSoundEvent("bell_ring");
 
     public static final SoundType BAMBOO = new SoundType(1.0F, 1.12F, SoundEvents.BLOCK_WOOD_BREAK, SoundEvents.BLOCK_WOOD_STEP, SoundEvents.BLOCK_WOOD_PLACE, SoundEvents.BLOCK_WOOD_HIT, SoundEvents.BLOCK_WOOD_FALL);

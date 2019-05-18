@@ -16,7 +16,6 @@ public class BlockBase extends Block {
         super(properties.material());
         setUnlocalizedName(Init.MODID + "." + properties.registryName());
         setRegistryName(properties.registryName());
-        setCreativeTab(Init.FUTURE_MC_TAB);
         setSoundType(properties.soundType());
         setHardness(3.0F);
     }

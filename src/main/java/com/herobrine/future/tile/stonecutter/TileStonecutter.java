@@ -4,7 +4,6 @@ import com.herobrine.future.MainFuture;
 import com.herobrine.future.blocks.BlockStonecutter;
 import com.herobrine.future.config.FutureConfig;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ITickable;
 import org.apache.logging.log4j.Level;
 
 import java.util.ConcurrentModificationException;

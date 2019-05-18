@@ -15,6 +15,7 @@ public class BlockRotatable extends BlockBase {
     public BlockRotatable(BlockProperties properties) {
         super(properties);
         setHardness(2.0F);
+        setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
     }
 
     @Override
