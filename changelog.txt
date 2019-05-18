@@ -1,3 +1,10 @@
+Version 0.1.5 - Composter! New things:
+ *Composter* - Block from 1.14 that allows you to compost things into bonemeal.
+ *Vanilla Tabs* - New Config option! If enabled, Future MC items go into Vanilla Creative tabs instead of the Future MC tab.
+ Berry Bush - Tweaked the bush damage.
+ Stonecutter - Removed a GUI that was not supposed to be there.
+ Loom - Fixed a crash with FoamFix.
+
 Version 0.1.4 - Patch update:
  Grindstone - Now works properly and Curses persist. Got rid of ghost client EXP orbs.
  Berry Bush - Now does damage when it has berries.
