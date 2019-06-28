@@ -1,5 +1,8 @@
 Version 0.1.6 - Patch update:
- Composter - Adjusted the default list of valid items. CraftTweaker compatibility!
+ Composter - Adjusted the default list of valid items.
+ Composter - CraftTweaker compatibility!
+ Composter - Fixed NullPointerException with composter sounds.
+ Bamboo - Adjusted behavior to be more like 1.14.
 
 Version 0.1.5 - Composter! New things:
  *Composter* - Block from 1.14 that allows you to compost things into bonemeal.
