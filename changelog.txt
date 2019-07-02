@@ -3,11 +3,18 @@ Version 0.1.6 - Patch update:
  Composter - CraftTweaker compatibility!
  Composter - Fixed NullPointerException with composter sounds.
  Bamboo - Adjusted behavior to be more like 1.14.
+ Bamboo - Now regrows if destroyed.
+ Bamboo - Now shows in creative tab.
+ Bamboo - No longer tries to grow through blocks.
+ Bamboo - Now generates in Jungles instead of my old biome.
  Grindstone - Items now keep other NBT data, such as names.
+ Grindstone - Items can now be individually disenchanted.
+ Grindstone - Enchanted Books can now be disenchanted.
  Smoker & Blast Furnace - Fixed buckets being consumed when using lava.
  Smoker & Blast Furnace - Fixed fuel left icon.
  Smoker & Blast Furnace - Fixed XP not given when smelting items.
- Bamboo Forest - Removed. Bamboo now spawns in Jungle biomes, and a Bamboo Forest biome will be coming next update.
+ Bamboo Forest - Removed. Bamboo will be found in Jungles, like in 1.14.
+ Bamboo Forest - Will be re-added in the future to be more like 1.14 Bamboo Forest.
 
 Version 0.1.5 - Composter! New things:
  *Composter* - Block from 1.14 that allows you to compost things into bonemeal.
