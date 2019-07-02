@@ -4,6 +4,10 @@ Version 0.1.6 - Patch update:
  Composter - Fixed NullPointerException with composter sounds.
  Bamboo - Adjusted behavior to be more like 1.14.
  Grindstone - Items now keep other NBT data, such as names.
+ Smoker & Blast Furnace - Fixed buckets being consumed when using lava.
+ Smoker & Blast Furnace - Fixed fuel left icon.
+ Smoker & Blast Furnace - Fixed XP not given when smelting items.
+ Bamboo Forest - Removed. Bamboo now spawns in Jungle biomes, and a Bamboo Forest biome will be coming next update.
 
 Version 0.1.5 - Composter! New things:
  *Composter* - Block from 1.14 that allows you to compost things into bonemeal.
