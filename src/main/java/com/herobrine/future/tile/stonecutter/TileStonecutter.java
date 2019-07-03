@@ -1,6 +1,6 @@
 package com.herobrine.future.tile.stonecutter;
 
-import com.herobrine.future.MainFuture;
+import com.herobrine.future.FutureMC;
 import com.herobrine.future.blocks.BlockStonecutter;
 import com.herobrine.future.config.FutureConfig;
 import net.minecraft.tileentity.TileEntity;
@@ -37,14 +37,14 @@ public class TileStonecutter extends TileEntity {// implements ITickable {
             try {
                 world.setBlockState(pos, block.getStateFromMeta(meta + 4));
             } catch (ConcurrentModificationException e) {
-                MainFuture.logger.log(Level.ERROR, "Failed to modify old state");
+                FutureMC.LOGGER.log(Level.ERROR, "Failed to modify old state");
             }
         }
         if(!FutureConfig.general.stonecutterOld && 3 < meta) {
             try {
                 world.setBlockState(pos, block.getStateFromMeta(meta - 4));
             } catch (ConcurrentModificationException e) {
-                MainFuture.logger.log(Level.ERROR, "Failed to modify old state");
+                FutureMC.LOGGER.log(Level.ERROR, "Failed to modify old state");
             }
         }
     }

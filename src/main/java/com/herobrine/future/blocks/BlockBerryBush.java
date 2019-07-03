@@ -1,5 +1,6 @@
 package com.herobrine.future.blocks;
 
+import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -151,5 +152,10 @@ public class BlockBerryBush extends BlockFlower implements IGrowable {
     public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
         int age = state.getValue(AGE);
         worldIn.setBlockState(pos, this.blockState.getBaseState().withProperty(AGE, age + 1));
+    }
+
+    @Override
+    public int getFlowerChance() {
+        return FutureConfig.general.berryBushChance;
     }
 }

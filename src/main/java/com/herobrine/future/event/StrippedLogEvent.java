@@ -1,6 +1,6 @@
 package com.herobrine.future.event;
 
-import com.herobrine.future.MainFuture;
+import com.herobrine.future.FutureMC;
 import com.herobrine.future.blocks.BlockStrippedLog;
 import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
@@ -91,7 +91,7 @@ public class StrippedLogEvent {
                     return Init.STRIPPED_DARK_OAK_LOG.getDefaultState();//.withProperty(BlockRotatedPillar.AXIS, state.getValue(BlockRotatedPillar.AXIS));
             }
         }
-        MainFuture.logger.log(Level.ERROR, "Failed to find stripped log for event");
+        FutureMC.LOGGER.log(Level.ERROR, "Failed to find stripped log for event");
         return state;
     }
 }

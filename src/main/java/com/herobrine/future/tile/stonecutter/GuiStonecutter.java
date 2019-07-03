@@ -154,6 +154,4 @@ public class GuiStonecutter extends GuiContainer {
         this.zLevel = 0.0F;
         this.itemRender.zLevel = 0.0F;
     }
-
-
 }

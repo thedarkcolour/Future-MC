@@ -1,7 +1,6 @@
 package com.herobrine.future.blocks;
 
 import com.herobrine.future.config.FutureConfig;
-import com.herobrine.future.init.Init;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -45,5 +44,10 @@ public class BlockWitherRose extends BlockFlower { //Adds black flower
     @Override
     public boolean isBiomeValid(Biome biome) {
         return false;
+    }
+
+    @Override
+    public int getFlowerChance() {
+        return 0;
     }
 }

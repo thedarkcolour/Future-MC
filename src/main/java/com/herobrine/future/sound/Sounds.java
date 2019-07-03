@@ -21,7 +21,10 @@ public class Sounds {
     public static final SoundEvent CROSSBOW_QUICK_CHARGE = makeSoundEvent("quick_charge");
     public static final SoundEvent CROSSBOW_LOAD = makeSoundEvent("crossbow_load");
     public static final SoundEvent GRINDSTONE_USE = makeSoundEvent("grindstone_use");
-    //public static final SoundEvent BELL_RING = makeSoundEvent("bell_ring");
+    public static final SoundEvent COMPOSTER_EMPTY = makeSoundEvent("composter_empty");
+    public static final SoundEvent COMPOSTER_FILL = makeSoundEvent("composter_fill");
+    public static final SoundEvent COMPOSTER_FILL_SUCCESS = makeSoundEvent("composter_fill_success");
+    public static final SoundEvent COMPOSTER_READY = makeSoundEvent("composter_ready");
 
     public static final SoundType BAMBOO = new SoundType(1.0F, 1.12F, SoundEvents.BLOCK_WOOD_BREAK, SoundEvents.BLOCK_WOOD_STEP, SoundEvents.BLOCK_WOOD_PLACE, SoundEvents.BLOCK_WOOD_HIT, SoundEvents.BLOCK_WOOD_FALL);
 
@@ -34,6 +37,7 @@ public class Sounds {
     @SubscribeEvent
     public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
         event.getRegistry().registerAll(TRIDENT_THROW, TRIDENT_PIERCE, TRIDENT_IMPACT, TRIDENT_CHANNELING,
-                TRIDENT_LOYALTY, CROSSBOW_CHARGE, CROSSBOW_FIRE, CROSSBOW_QUICK_CHARGE, CROSSBOW_LOAD);//, TRIDENT_RIPTIDE_I, TRIDENT_RIPTIDE_II, TRIDENT_RIPTIDE_III);
+                TRIDENT_LOYALTY, CROSSBOW_CHARGE, CROSSBOW_FIRE, CROSSBOW_QUICK_CHARGE, CROSSBOW_LOAD,
+                COMPOSTER_EMPTY, COMPOSTER_FILL, COMPOSTER_FILL_SUCCESS, COMPOSTER_READY);
     }
 }

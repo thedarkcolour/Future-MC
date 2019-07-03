@@ -34,4 +34,6 @@ public abstract class BlockFlower extends BlockBush {
     }
 
     public abstract boolean isBiomeValid(Biome biome);
+
+    public abstract int getFlowerChance();
 }

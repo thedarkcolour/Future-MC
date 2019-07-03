@@ -33,6 +33,7 @@ public class ItemTrident extends Item {
         setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.COMBAT : Init.FUTURE_MC_TAB);
         setMaxDamage(250);
         setMaxStackSize(1);
+        setTileEntityItemStackRenderer(null);
     }
 
     @SideOnly(Side.CLIENT)

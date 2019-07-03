@@ -26,7 +26,7 @@ public class InitModels {
         if(modFlowers.cornflower) CORNFLOWER.model();
         if(modFlowers.witherRose) WITHER_ROSE.model();
         if(general.berryBush) SWEET_BERRY.model();
-        if(general.bamboo) BAMBOO_STALK.model();
+        if(general.bamboo) BAMBOO_ITEM.model();
         if(general.campfire) CAMPFIRE.model();
 
         if(general.strippedLogs) {

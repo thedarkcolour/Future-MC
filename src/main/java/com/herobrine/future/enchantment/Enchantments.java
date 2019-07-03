@@ -1,5 +1,6 @@
 package com.herobrine.future.enchantment;
 
+import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.items.ItemCrossBow;
 import com.herobrine.future.items.ItemTrident;
 import net.minecraft.enchantment.Enchantment;
@@ -20,11 +21,12 @@ public class Enchantments {
     public static final Enchantment IMPALING = new EnchantImpaling();
 
     public static final Enchantment QUICK_CHARGE = new EnchantQuickCharge();
-    //public static final Enchantment MULTISHOT = new EnchantMultishot(); TODO - Multishot enchantment
-    //public static final Enchantment PIERCING = new EnchantPiercing(); TODO - Piercing enchantment
+    public static final Enchantment MULTISHOT = new EnchantMultishot();
+    public static final Enchantment PIERCING = new EnchantPiercing();
 
     @SubscribeEvent
     public static void registerEnchantments(RegistryEvent.Register<Enchantment> event) {
-        event.getRegistry().registerAll(CHANNELING, IMPALING, LOYALTY);//, QUICK_CHARGE);
+        if(FutureConfig.general.trident) event.getRegistry().registerAll(CHANNELING, IMPALING, LOYALTY);
+        //if(FutureConfig.general.crossbow) event.getRegistry().registerAll(QUICK_CHARGE, MULTISHOT);
     }
 }

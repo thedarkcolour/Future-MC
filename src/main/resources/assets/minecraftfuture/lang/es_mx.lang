@@ -13,8 +13,6 @@ tile.minecraftfuture.FlowerWhite.name=Lirio de valle
 tile.minecraftfuture.FlowerBlack.name=Rosa del Wither
 tile.minecraftfuture.FlowerBlue.name=Aciano
 tile.minecraftfuture.BerryBush.name=Arbusto de bayas dulces
-item.minecraftfuture.SweetBerry.name=Bayas dulces
-tile.minecraftfuture.Bamboo.name=Bambú
 tile.minecraftfuture.Campfire.name=Hoguera
 tile.minecraftfuture.stripped_oak_log.name=Tronco de roble sin corteza
 tile.minecraftfuture.stripped_spruce_log.name=Tronco de abeto sin corteza
@@ -56,6 +54,7 @@ tile.minecraftfuture.mossy_stone_slab.name=Losa de piedra musgosa
 tile.minecraftfuture.smooth_quartz_slab.name=Losa de cuarzo liso
 tile.minecraftfuture.red_nether_brick_slab.name=Losa de ladrillos del Nether rojos
 tile.minecraftfuture.end_stone_brick_slab.name=Losa de ladrillos de piedra del End
+tile.minecraftfuture.Bamboo.name=Bambú
 
 # Bloques decorativos
 tile.minecraftfuture.SmoothStone.name=Piedra lisa
@@ -74,6 +73,8 @@ item.minecraftfuture.Trident.name=Tridente
 item.minecraftfuture.Crossbow.name=Ballesta
 item.minecraftfuture.Crossbow_Loaded.name=Ballesta con flecha
 item.minecraftfuture.SuspiciousStew.name=Sopa sospechosa
+item.minecraftfuture.SweetBerry.name=Bayas dulces
+item.minecraftfuture.Bamboo.name=Bambú
 
 # GUI
 container.Barrel=Barril

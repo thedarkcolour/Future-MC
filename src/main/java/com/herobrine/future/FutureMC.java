@@ -7,7 +7,8 @@ import com.herobrine.future.init.Init;
 import com.herobrine.future.items.OreDict;
 import com.herobrine.future.proxy.IProxy;
 import com.herobrine.future.tile.GuiHandler;
-import com.herobrine.future.worldgen.NewWorldGenFlower;
+import com.herobrine.future.worldgen.WorldGenBamboo;
+import com.herobrine.future.worldgen.WorldGenFlower;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
@@ -28,26 +29,27 @@ import org.apache.logging.log4j.Logger;
 
 @Mod(
         modid = Init.MODID,
-        name = MainFuture.MODNAME,
-        version = MainFuture.VERSION,
+        name = FutureMC.MODNAME,
+        version = FutureMC.VERSION,
         dependencies = "required-after:forge@[14.23.5.2776,)", useMetadata = true
 )
-public class MainFuture {
+public class FutureMC {
     public static final String MODNAME = "Future MC";
-    public static final String VERSION = "0.1.5";
-    public static Logger logger;
+    public static final String VERSION = "0.1.6";
+    public static Logger LOGGER;
 
     @SidedProxy(clientSide = "com.herobrine.future.proxy.ClientProxy", serverSide = "com.herobrine.future.proxy.ServerProxy")
     public static IProxy proxy;
 
     @Mod.Instance
-    public static MainFuture instance;
+    public static FutureMC instance;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
         MinecraftForge.EVENT_BUS.register(FutureConfig.class);
         Entities.init();
         proxy.preInit(e);
+        LOGGER = e.getModLog();
     }
 
     @Mod.EventHandler
@@ -75,15 +77,19 @@ public class MainFuture {
 
     public void registerGenerators() {
         if(FutureConfig.modFlowers.lily && FutureConfig.modFlowers.lilyGen) {
-            GameRegistry.registerWorldGenerator(new NewWorldGenFlower(Init.LILY_OF_VALLEY), 0);
+            GameRegistry.registerWorldGenerator(new WorldGenFlower(Init.LILY_OF_VALLEY), 0);
         }
 
         if(FutureConfig.modFlowers.cornflower && FutureConfig.modFlowers.cornflowerGen) {
-            GameRegistry.registerWorldGenerator(new NewWorldGenFlower(Init.CORNFLOWER), 0);
+            GameRegistry.registerWorldGenerator(new WorldGenFlower(Init.CORNFLOWER), 0);
         }
 
         if(FutureConfig.general.berryBush && FutureConfig.general.berryBushGen) {
-            GameRegistry.registerWorldGenerator(new NewWorldGenFlower(Init.BERRY_BUSH), 0);
+            GameRegistry.registerWorldGenerator(new WorldGenFlower(Init.BERRY_BUSH), 0);
+        }
+
+        if(FutureConfig.general.bamboo && FutureConfig.general.bambooSpawnsInJungles) {
+            GameRegistry.registerWorldGenerator(new WorldGenBamboo(), 0);
         }
     }
 }

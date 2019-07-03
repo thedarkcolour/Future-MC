@@ -3,7 +3,7 @@
         "modid": "minecraftfuture",
         "name": "Future MC",
         "description": "Adds features from future updates.",
-        "version": "0.1.5",
+        "version": "0.1.6",
         "mcversion": "1.12",
         "url": "",
         "updateUrl": "",

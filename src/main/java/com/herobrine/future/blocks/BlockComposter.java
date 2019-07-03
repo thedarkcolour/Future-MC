@@ -2,6 +2,8 @@ package com.herobrine.future.blocks;
 
 import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
+import com.herobrine.future.sound.Sounds;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -14,20 +16,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
+
 
 public class BlockComposter extends BlockBase {
     public static final PropertyInteger LEVEL = PropertyInteger.create("level", 0, 8);
@@ -40,7 +42,7 @@ public class BlockComposter extends BlockBase {
     public BlockComposter() {
         super(new BlockProperties("Composter", Material.WOOD));
         setSoundType(SoundType.WOOD);
-        setDefaultState(getBlockState().getBaseState().withProperty(LEVEL, 0));
+        setDefaultState(getDefaultState().withProperty(LEVEL, 0));
         setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.MISC : Init.FUTURE_MC_TAB);
     }
 
@@ -50,7 +52,7 @@ public class BlockComposter extends BlockBase {
     }
 
     @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean isActualState) {
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
@@ -69,6 +71,7 @@ public class BlockComposter extends BlockBase {
 
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+        if(worldIn.isRemote) return;
         if(worldIn.getBlockState(pos).getValue(LEVEL) == 8) {
             EntityItem item = new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.6D, pos.getZ() + 0.5D);
             item.setItem(new ItemStack(Items.DYE, 1, 15));
@@ -85,150 +88,57 @@ public class BlockComposter extends BlockBase {
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = playerIn.getHeldItem(hand);
 
-        if(itemComposted(stack.getItem(), state)) { // Composts when the check succeeds.
-            if (worldIn.isRemote) {
+        if(!worldIn.isRemote) {
+            if(canCompost(stack, state)) {
+                if (worldIn.rand.nextInt(100) <= ItemsForComposter.getChance(stack)) {
+                    fill(worldIn, pos, stack, playerIn);
+
+                    if(worldIn.getBlockState(pos).getValue(LEVEL) == 7) {
+                        worldIn.scheduleBlockUpdate(pos, this, 30, 1);
+                    }
+                } else {
+                    worldIn.playSound(null, pos, Sounds.COMPOSTER_FILL, SoundCategory.BLOCKS, 1F, 1F);
+                }
                 return true;
             }
-            fill(worldIn, pos, stack, ItemsForComposter.getChance(stack.getItem().getRegistryName()));
-            if(worldIn.getBlockState(pos).getValue(LEVEL) == 7) {
-                worldIn.scheduleBlockUpdate(pos, this, 30, 1);
+            if(state.getValue(LEVEL) == 8) {
+                EntityItem item = new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.6D, pos.getZ() + 0.5D);
+                item.setItem(new ItemStack(Items.DYE, 1, 15));
+                worldIn.spawnEntity(item);
+                worldIn.setBlockState(pos, getDefaultState());
+                worldIn.playSound(null, pos, Sounds.COMPOSTER_EMPTY, SoundCategory.BLOCKS, 1F, 1F);
             }
         }
-        if(state.getValue(LEVEL) == 8) {
-            if(worldIn.isRemote) return true;
-            EntityItem item = new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.6D, pos.getZ() + 0.5D);
-            item.setItem(new ItemStack(Items.DYE, 1, 15));
-
-            worldIn.setBlockState(pos, getDefaultState());
-            worldIn.spawnEntity(item);
-        }
-        return false;
+        return true;
     }
 
     /**
      * Tries to fill the composter and consumes the player's item.
      */
-    public void fill(World world, BlockPos pos, ItemStack stack, int chance) {
-        int level = world.getBlockState(pos).getValue(LEVEL);
-        if(world.rand.nextInt(100) <= chance) {
-            world.setBlockState(pos, getDefaultState().withProperty(LEVEL, level + 1));
-        }
-        stack.shrink(1);
+    public void fill(World worldIn, BlockPos pos, ItemStack stack, EntityPlayer player) {
+        int level = worldIn.getBlockState(pos).getValue(LEVEL);
+        worldIn.playSound(null, pos, Sounds.COMPOSTER_FILL_SUCCESS, SoundCategory.BLOCKS, 1F, 1F);
+        worldIn.setBlockState(pos, getDefaultState().withProperty(LEVEL, level + 1));
+        ItemDye.spawnBonemealParticles(worldIn, pos, 0);
+
+        if(!player.isCreative()) stack.shrink(1);
     }
 
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-        if(worldIn.getBlockState(pos).getValue(LEVEL) == 7) {
-            worldIn.setBlockState(pos, getDefaultState().withProperty(LEVEL, 8));
+        if(!worldIn.isRemote) {
+            if(worldIn.getBlockState(pos).getValue(LEVEL) == 7) {
+                worldIn.setBlockState(pos, getDefaultState().withProperty(LEVEL, 8));
+                worldIn.playSound(null, pos, Sounds.COMPOSTER_READY, SoundCategory.BLOCKS, 1F, 1F);
+            }
         }
     }
 
     /**
      * Tries to compost item and returns true if it can.
      */
-    public boolean itemComposted(Item item, IBlockState state) {
-        ResourceLocation resourceLocation = item.getRegistryName();
-
-        return ItemsForComposter.VALID_ITEMS.containsKey(resourceLocation) && state.getValue(LEVEL) < 7;
-    }
-
-    public static final class ItemsForComposter {
-        private static Map<ResourceLocation, Rarity> VALID_ITEMS = new HashMap<>();
-
-        public static void init() {
-            // COMMON
-            VALID_ITEMS.put(Items.WHEAT_SEEDS.getRegistryName(), Rarity.COMMON);
-            VALID_ITEMS.put(Items.MELON_SEEDS.getRegistryName(), Rarity.COMMON);
-            VALID_ITEMS.put(Items.PUMPKIN_SEEDS.getRegistryName(), Rarity.COMMON);
-            VALID_ITEMS.put(Items.BEETROOT_SEEDS.getRegistryName(), Rarity.COMMON);
-            VALID_ITEMS.put(Blocks.TALLGRASS.getRegistryName(), Rarity.COMMON);
-            VALID_ITEMS.put(Blocks.LEAVES.getRegistryName(), Rarity.COMMON);
-            VALID_ITEMS.put(Blocks.LEAVES2.getRegistryName(), Rarity.COMMON);
-            VALID_ITEMS.put(Blocks.SAPLING.getRegistryName(), Rarity.COMMON);
-            VALID_ITEMS.put(Init.SWEET_BERRY.getRegistryName(), Rarity.COMMON);
-
-            // UNCOMMON
-            VALID_ITEMS.put(Items.MELON.getRegistryName(), Rarity.UNCOMMON);
-            VALID_ITEMS.put(Items.REEDS.getRegistryName(), Rarity.UNCOMMON);
-            VALID_ITEMS.put(Blocks.CACTUS.getRegistryName(), Rarity.UNCOMMON);
-            VALID_ITEMS.put(Blocks.VINE.getRegistryName(), Rarity.UNCOMMON);
-            VALID_ITEMS.put(Blocks.DOUBLE_PLANT.getRegistryName(), Rarity.UNCOMMON);
-
-            // RARE
-            VALID_ITEMS.put(Items.APPLE.getRegistryName(), Rarity.RARE);
-            VALID_ITEMS.put(Items.BEETROOT.getRegistryName(), Rarity.RARE);
-            VALID_ITEMS.put(Items.CARROT.getRegistryName(), Rarity.RARE);
-            VALID_ITEMS.put(Blocks.RED_FLOWER.getRegistryName(), Rarity.RARE);
-            VALID_ITEMS.put(Blocks.YELLOW_FLOWER.getRegistryName(), Rarity.RARE);
-            VALID_ITEMS.put(Blocks.WATERLILY.getRegistryName(), Rarity.RARE);
-            VALID_ITEMS.put(Blocks.MELON_BLOCK.getRegistryName(), Rarity.RARE);
-            VALID_ITEMS.put(Blocks.BROWN_MUSHROOM.getRegistryName(), Rarity.RARE);
-            VALID_ITEMS.put(Blocks.RED_MUSHROOM.getRegistryName(), Rarity.RARE);
-            VALID_ITEMS.put(Blocks.PUMPKIN.getRegistryName(), Rarity.RARE);
-            VALID_ITEMS.put(Items.WHEAT.getRegistryName(), Rarity.RARE);
-
-            // EPIC
-            VALID_ITEMS.put(Items.BAKED_POTATO.getRegistryName(), Rarity.EPIC);
-            VALID_ITEMS.put(Items.BREAD.getRegistryName(), Rarity.EPIC);
-            VALID_ITEMS.put(Items.COOKIE.getRegistryName(), Rarity.EPIC);
-            VALID_ITEMS.put(Blocks.HAY_BLOCK.getRegistryName(), Rarity.EPIC);
-            VALID_ITEMS.put(Blocks.BROWN_MUSHROOM_BLOCK.getRegistryName(), Rarity.EPIC);
-            VALID_ITEMS.put(Blocks.RED_MUSHROOM_BLOCK.getRegistryName(), Rarity.EPIC);
-
-            // LEGENDARY
-            VALID_ITEMS.put(Items.CAKE.getRegistryName(), Rarity.LEGENDARY);
-            VALID_ITEMS.put(Items.PUMPKIN_PIE.getRegistryName(), Rarity.LEGENDARY);
-        }
-
-        public static boolean isItemValid(ResourceLocation loc) {
-            return VALID_ITEMS.containsKey(loc);
-        }
-
-        public static int getChance(ResourceLocation location) {
-            if(isItemValid(location)) {
-                Rarity rarity = VALID_ITEMS.get(location);
-
-                switch (rarity) {
-                    case COMMON: return 30;
-                    case UNCOMMON: return 50;
-                    case RARE: return 65;
-                    case EPIC: return 85;
-                    case LEGENDARY: return 100;
-                }
-            }
-            return -1;
-        }
-
-        /**
-         * Planned CraftTweaker function
-         */
-        @SuppressWarnings("unused")
-        public static void remove(ResourceLocation loc) {
-            VALID_ITEMS.remove(loc);
-        }
-
-        /**
-         * Planned CraftTweaker function
-         */
-        public static void add(ResourceLocation loc, String rarity) {
-            Rarity rare = Rarity.COMMON;
-            switch (rarity) {
-                case "uncommon": rare = Rarity.UNCOMMON; break;
-                case "rare": rare = Rarity.RARE; break;
-                case "epic": rare = Rarity.EPIC; break;
-                case "legendary": rare = Rarity.LEGENDARY;
-            }
-
-            VALID_ITEMS.put(loc, rare);
-        }
-
-        static {
-            init();
-        }
-
-        public enum Rarity {
-            COMMON, UNCOMMON, RARE, EPIC, LEGENDARY
-        }
+    public boolean canCompost(ItemStack stack, IBlockState state) {
+        return ItemsForComposter.getChance(stack) != -1 && state.getValue(LEVEL) < 7;
     }
 
     @Override
@@ -249,5 +159,115 @@ public class BlockComposter extends BlockBase {
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;
+    }
+
+    public static final class ItemsForComposter {
+        private static HashMap<ItemStack, Integer> VALID_ITEMS = new HashMap<>();
+
+        static  {
+            if(FutureConfig.general.composter) init(); // Adds only if Composter is enabled. Should save a bit of RAM.
+        }
+
+        private static void init() {
+            // COMMON
+            add(Items.BEETROOT_SEEDS, Rarity.COMMON);
+            add(new ItemStack(Blocks.TALLGRASS, 1,1), Rarity.COMMON);
+            add(new ItemStack(Blocks.LEAVES, 1, 0), Rarity.COMMON);
+            add(new ItemStack(Blocks.LEAVES, 1, 1), Rarity.COMMON);
+            add(new ItemStack(Blocks.LEAVES, 1, 2), Rarity.COMMON);
+            add(new ItemStack(Blocks.LEAVES, 1, 3), Rarity.COMMON);
+            add(new ItemStack(Blocks.LEAVES2, 1, 0), Rarity.COMMON);
+            add(new ItemStack(Blocks.LEAVES2, 1, 1), Rarity.COMMON);
+            add(Items.MELON_SEEDS, Rarity.COMMON);
+            add(Items.PUMPKIN_SEEDS, Rarity.COMMON);
+            add(new ItemStack(Blocks.SAPLING, 1, 0), Rarity.COMMON);
+            add(new ItemStack(Blocks.SAPLING, 1, 1), Rarity.COMMON);
+            add(new ItemStack(Blocks.SAPLING, 1, 2), Rarity.COMMON);
+            add(new ItemStack(Blocks.SAPLING, 1, 3), Rarity.COMMON);
+            add(new ItemStack(Blocks.SAPLING, 1, 4), Rarity.COMMON);
+            add(new ItemStack(Blocks.SAPLING, 1, 5), Rarity.COMMON);
+            add(Init.SWEET_BERRY, Rarity.COMMON);
+            add(Items.WHEAT_SEEDS, Rarity.COMMON);
+
+            // UNCOMMON
+            add(Items.MELON, Rarity.UNCOMMON);
+            add(Items.REEDS, Rarity.UNCOMMON);
+            add(Blocks.CACTUS, Rarity.UNCOMMON);
+            add(Blocks.VINE, Rarity.UNCOMMON);
+            add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 2), Rarity.UNCOMMON);
+
+            // RARE
+            add(Items.APPLE, Rarity.RARE);
+            add(Items.BEETROOT, Rarity.RARE);
+            add(Items.CARROT, Rarity.RARE);
+            add(new ItemStack(Items.DYE, 1, 3), Rarity.RARE);
+            add(new ItemStack(Blocks.TALLGRASS, 1,2), Rarity.RARE);
+            add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 3), Rarity.RARE);
+            add(Blocks.RED_FLOWER, Rarity.RARE);
+            add(Blocks.YELLOW_FLOWER, Rarity.RARE);
+            add(Init.LILY_OF_VALLEY, Rarity.RARE);
+            add(Init.CORNFLOWER, Rarity.RARE);
+            add(Init.WITHER_ROSE, Rarity.RARE);
+            add(Blocks.DOUBLE_PLANT, Rarity.RARE);
+            add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 1), Rarity.RARE);
+            add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 4), Rarity.RARE);
+            add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 5), Rarity.RARE);
+            add(Blocks.WATERLILY, Rarity.RARE);
+            add(Blocks.MELON_BLOCK, Rarity.RARE);
+            add(Blocks.BROWN_MUSHROOM, Rarity.RARE);
+            add(Blocks.RED_MUSHROOM, Rarity.RARE);
+            add(Items.POTATO, Rarity.RARE);
+            add(Blocks.PUMPKIN, Rarity.RARE);
+            add(Items.WHEAT, Rarity.RARE);
+
+            // EPIC
+            add(Items.BAKED_POTATO, Rarity.EPIC);
+            add(Items.BREAD, Rarity.EPIC);
+            add(Items.COOKIE, Rarity.EPIC);
+            add(Blocks.HAY_BLOCK, Rarity.EPIC);
+
+            // LEGENDARY
+            add(Items.CAKE, Rarity.LEGENDARY);
+            add(Items.PUMPKIN_PIE, Rarity.LEGENDARY);
+        }
+
+        private static void add(IForgeRegistryEntry.Impl<?> registryObject, Rarity rarity) {
+            if(registryObject instanceof Block) add(new ItemStack((Block) registryObject), rarity);
+            else add(new ItemStack((Item) registryObject), rarity);
+        }
+
+        public static void add(ItemStack stack, Rarity rarity) {
+            add(stack, rarity.getChance());
+        }
+
+        public static void add(ItemStack stack, int rarity) {
+            VALID_ITEMS.put(stack, rarity);
+        }
+
+        public static int getChance(ItemStack stack) {
+            if(stack.isEmpty()) return -1;
+            for (ItemStack itemStack : VALID_ITEMS.keySet()) {
+                if(itemStack.isItemEqual(stack))
+                    return VALID_ITEMS.get(itemStack);
+            }
+            return -1;
+        }
+
+        public static void remove(ItemStack stack) {
+            VALID_ITEMS.remove(stack);
+        }
+
+        public enum Rarity {
+            COMMON(30), UNCOMMON(50), RARE(65), EPIC(85), LEGENDARY(100);
+            final int chance;
+
+            Rarity(int chance) {
+                this.chance = chance;
+            }
+
+            public int getChance() {
+                return this.chance;
+            }
+        }
     }
 }

@@ -67,6 +67,11 @@ public class FutureConfig {
         @RequiresMcRestart
         public boolean berryBushGen = true;
 
+        @Name("Berry Bush Spawn Percent")
+        @Comment("Lower means that less bushing patches spawn.")
+        @Config.RangeInt(min = 0, max = 100)
+        public int berryBushChance = 50;
+
         @Name("Campfire")
         @Comment("Whether the Campfire block is added to the game.")
         @RequiresMcRestart
@@ -124,13 +129,6 @@ public class FutureConfig {
         @RequiresMcRestart
         public boolean smithingTable = true;
 
-        @Name("Smoker and Blast Furnace use more fuel")
-        @Comment("Whether the Smoker and Blast Furnace consume fuel as fast as they smelt items. " +
-                "False means a piece of coal will smelt sixteen items, and True means a piece of" +
-                " coal only smelts eight items.")
-        @RequiresMcRestart
-        public boolean furnaceDoubleFuel = false;
-
         @Name("Grindstone")
         @Comment("Whether the Grindstone block is added to the game.")
         @RequiresMcRestart
@@ -146,10 +144,10 @@ public class FutureConfig {
         @RequiresMcRestart
         public boolean bamboo = true;
 
-        @Name("Bamboo Jungle")
-        @Comment("Whether the Bamboo Jungles are added to the game. WARNING: BREAKS WORLDS THAT ALREADY HAVE BAMBOO BIOMES!!!")
+        @Name("Bamboo spawns in Jungles")
+        @Comment("Whether Bamboo can be found in normal Jungle biomes.")
         @RequiresMcRestart
-        public boolean bambooForest = true;
+        public boolean bambooSpawnsInJungles = true;
 
         @Name("Use Vanilla Creative Tabs")
         @Comment("Whether this mod will use Vanilla tabs or its own creative tab.")
@@ -173,6 +171,11 @@ public class FutureConfig {
         @RequiresMcRestart
         public boolean lilyGen = true;
 
+        @Name("Lily of the Valley Spawn Percent")
+        @Comment("Lower means that less flower patches spawn.")
+        @Config.RangeInt(min = 0, max = 100)
+        public int lilyChance = 50;
+
         @Name("Cornflower")
         @Comment("Whether the Cornflower flower is added to the game.")
         @RequiresMcRestart
@@ -182,6 +185,11 @@ public class FutureConfig {
         @Comment("Whether the Cornflower flower naturally generates in the world.")
         @RequiresMcRestart
         public boolean cornflowerGen = true;
+
+        @Name("Cornflower Spawn Percent")
+        @Comment("Lower means that less flower patches spawn.")
+        @Config.RangeInt(min = 0, max = 100)
+        public int cornflowerChance = 50;
 
         @Name("Wither Rose")
         @Comment("Whether the Wither Rose flower is added to the game.")

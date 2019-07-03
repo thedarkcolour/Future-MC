@@ -38,5 +38,29 @@
     "grindstone_use": {
         "subtitle": "minecraftfuture.subtitle.grindstone_use",
         "sounds": [ "minecraftfuture:grindstone/use_0", "minecraftfuture:grindstone/use_1", "minecraftfuture:grindstone/use_2"]
+    },
+    "composter_empty": {
+        "subtitle": "minecraftfuture.subtitle.composter_empty",
+        "sounds": [ "minecraftfuture:composter/empty_0", "minecraftfuture:composter/empty_1", "minecraftfuture:composter/empty_2"]
+    },
+    "composter_fill": {
+        "subtitle": "minecraftfuture.subtitle.composter_fill",
+        "sounds": [ "minecraftfuture:composter/fill_0", "minecraftfuture:composter/fill_1", "minecraftfuture:composter/fill_2", "minecraftfuture:composter/fill_3"]
+    },
+    "composter_fill_success": {
+        "subtitle": "minecraftfuture.subtitle.composter_fill_success",
+        "sounds": [ "minecraftfuture:composter/fill_success_0", "minecraftfuture:composter/fill_success_1", "minecraftfuture:composter/fill_success_2", "minecraftfuture:composter/fill_success_3"]
+    },
+    "composter_ready": {
+        "subtitle": "minecraftfuture.subtitle.composter_ready",
+        "sounds": [ "minecraftfuture:composter/ready_0", "minecraftfuture:composter/ready_1", "minecraftfuture:composter/ready_2", "minecraftfuture:composter/ready_3"]
+    },
+    "barrel_open": {
+        "subtitle": "minecraftfuture.subtitle.barrel_open",
+        "sounds": [ "minecraftfuture:barrel/open_0", "minecraftfuture:barrel/open_1"]
+    },
+    "barrel_close": {
+        "subtitle": "minecraftfuture.subtitles.barrel_close",
+        "sounds": [ "minecraftfuture:barrel/close"]
     }
 }

@@ -2,26 +2,19 @@ package com.herobrine.future.tile.advancedfurnace;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
-public class    ContainerAdvancedFurnace extends Container {
-    public final TileAdvancedFurnace te;
+public class ContainerFurnaceAdvanced extends Container {
+    public final TileFurnaceAdvanced te;
     public final InventoryPlayer playerInventory;
-    protected int fuelLeft, progress;
-    private ItemStack clientFuel = ItemStack.EMPTY;
+    protected int fuelLeft, progress, currentItemBurnTime;
 
-    public ContainerAdvancedFurnace(InventoryPlayer playerInv, TileAdvancedFurnace te) {
+    public ContainerFurnaceAdvanced(InventoryPlayer playerInv, TileFurnaceAdvanced te) {
         this.te = te;
         this.playerInventory = playerInv;
         addOwnSlots();
@@ -29,10 +22,9 @@ public class    ContainerAdvancedFurnace extends Container {
     }
 
     private void addOwnSlots() {
-        IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        addSlotToContainer(new SlotItemHandler(handler, 0, 56, 17));
-        addSlotToContainer(new SlotItemHandler(handler, 1, 56, 53));
-        addSlotToContainer(new SlotItemHandler(handler, 2, 116, 35));
+        this.addSlotToContainer(new Slot(te, 0, 56, 17));
+        this.addSlotToContainer(new SlotFurnaceFuel(te, 1, 56, 53));
+        this.addSlotToContainer(new SlotFurnaceOutput(playerInventory.player, te, 2, 116, 35));
     }
 
     private void addPlayerSlots(IInventory playerInv) {
@@ -44,16 +36,16 @@ public class    ContainerAdvancedFurnace extends Container {
             }
         }
 
-        for (int row = 0; row < 9; ++row) { // Hotbar
-            int x = 9 + row * 18 - 1;
+        for (int col = 0; col < 9; ++col) { // Hotbar
+            int x = 9 + col * 18 - 1;
             int y = 58 + 70 + 14;
-            this.addSlotToContainer(new Slot(playerInv, row, x, y));
+            this.addSlotToContainer(new Slot(playerInv, col, x, y));
         }
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        return te.canInteractWith(playerIn);
+        return playerIn.getDistanceSq(te.getPos().add(0.5D, 0.5D, 0.5D)) <= 64D;
     }
 
     @Override
@@ -61,62 +53,20 @@ public class    ContainerAdvancedFurnace extends Container {
         super.detectAndSendChanges();
 
         for (IContainerListener listener : listeners) {
-            listener.sendWindowProperty(this, 0, te.fuelLeft);
-            listener.sendWindowProperty(this, 2, te.progress);
+            listener.sendWindowProperty(this, 0, te.getField(0));
+            listener.sendWindowProperty(this, 1, te.getField(1));
+            listener.sendWindowProperty(this, 2, te.getField(2));
         }
 
-        this.fuelLeft = te.fuelLeft;
-        this.progress = te.progress;
+        this.fuelLeft = te.getField(0);
+        this.currentItemBurnTime = te.getField(1);
+        this.progress = te.getField(2);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void updateProgressBar(int id, int data) {
-        switch (id) {
-            case 0: {
-                te.fuelLeft = data;
-            }
-            case 2: {
-                te.progress = data;
-            }
-        }
-    }
-
-    protected int getScaledFire() {
-        int progress = te.fuelLeft;
-        updateClientFuel();
-
-        int maxProgress = TileEntityFurnace.getItemBurnTime(clientFuel);
-        if(maxProgress == 0) {
-            maxProgress = progress;
-        }
-        int i = maxProgress != progress && progress != 0 ? progress * 13 / maxProgress : 0;
-        if(i > 13) {
-            return 13;
-        }
-        return i;
-    }
-
-    protected int getScaledArrow() {
-        int progress = te.progress;
-        int maxProgress = 100;
-        int i = maxProgress != progress && progress != 0 ? progress * 24 / maxProgress : 0;
-        if(i > 24) {
-            return 24;
-        }
-        return i;
-    }
-
-    protected boolean isBurning() {
-        return te.fuelLeft > 0;
-    }
-
-    protected void updateClientFuel() {
-        if(te.fuelStack() != clientFuel) {
-            if(te.fuelStack() != ItemStack.EMPTY && te.fuelStack() != null) {
-                clientFuel = te.fuelStack();
-            }
-        }
+        te.setField(id, data);
     }
 
     @Override

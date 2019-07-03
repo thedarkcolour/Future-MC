@@ -1,66 +1,54 @@
 package com.herobrine.future.worldgen;
 
 import com.herobrine.future.init.Init;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockOldLeaf;
-import net.minecraft.block.BlockOldLog;
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.init.Biomes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeJungle;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenMegaJungle;
-import net.minecraft.world.gen.feature.WorldGenShrub;
-import net.minecraft.world.gen.feature.WorldGenTrees;
+import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.fml.common.IWorldGenerator;
 
 import java.util.Random;
 
-public class WorldGenBamboo extends WorldGenAbstractTree {
-
-    public static final IBlockState JUNGLE_LOG = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE);
-    public static final IBlockState JUNGLE_LEAF = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-    public static final IBlockState OAK_LEAF = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-
-    public WorldGenBamboo(boolean notify) {
-        super(notify);
-    }
-
-    @Override
-    public boolean generate(World world, Random rand, BlockPos pos) {
-        if(world.getBlockState(pos).getBlock().isReplaceable(world, pos) && Init.BAMBOO_STALK.canPlaceBlockAt(world, pos)) {
-            world.setBlockState(pos, Init.BAMBOO_STALK.getDefaultState());
+public class WorldGenBamboo implements IWorldGenerator {
+    public void generate(World worldIn, Random random, BlockPos pos) {
+        if (worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos) && Init.BAMBOO_STALK.canPlaceBlockAt(worldIn, pos)) {
+            worldIn.setBlockState(pos, Init.BAMBOO_STALK.getDefaultState());
         }
-        for (int i = 0; i < 10 - rand.nextInt(3); i++) {
-            if(world.getBlockState(pos).getBlock() == Init.BAMBOO_STALK && Init.BAMBOO_STALK.canGrow(world, pos, world.getBlockState(pos), false)) {
-                Init.BAMBOO_STALK.grow(world, rand, pos, true);
+        for (int j = 0; j < 10; j++) {
+            if (worldIn.getBlockState(pos).getBlock() == Init.BAMBOO_STALK && Init.BAMBOO_STALK.canGrow(worldIn, pos, worldIn.getBlockState(pos), false)) {
+                Init.BAMBOO_STALK.grow(worldIn, random, pos, null);
             }
         }
-        return true;
     }
 
-    public static WorldGenAbstractTree getTree(Random rand) {
-        if (rand.nextInt(3) == 0) {
-            return Init.BAMBOO_FEATURE;
-        }
-        else if (rand.nextInt(2) == 0) {
-            return new WorldGenShrub(JUNGLE_LOG, OAK_LEAF);
-        }
-        else if (rand.nextBoolean()) {
-            return new WorldGenTrees(false);
-        }
-        else {
-            return rand.nextInt(3) == 0 ? new WorldGenMegaJungle(false, 10, 20, JUNGLE_LOG, JUNGLE_LEAF) : new WorldGenTrees(false, 4 + rand.nextInt(7), JUNGLE_LOG, JUNGLE_LEAF, true);
+    public static final WorldGenBamboo BAMBOO_FEATURE = new WorldGenBamboo();
+
+    @Override
+    public void generate(Random random, int chunkX, int chunkZ, World worldIn, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+        int x = chunkX * 16 + 8;
+        int z = chunkZ * 16 + 8;
+
+        Biome biome = worldIn.getBiomeForCoordsBody(new BlockPos(x, 0, z));
+        ChunkPos chunkPos = worldIn.getChunkFromChunkCoords(chunkX, chunkZ).getPos();
+
+        if(isBiomeValid(biome) && worldIn.getWorldType() != WorldType.FLAT) {
+            for (int i = 0; i < 13; i++) {
+                int xPos = random.nextInt(16) + 8;
+                int zPos = random.nextInt(16) + 8;
+                int yPos = random.nextInt(worldIn.getHeight(chunkPos.getBlock(0, 0, 0).add(xPos, 0, zPos)).getY() + 32);
+
+                BlockPos pos = chunkPos.getBlock(0, 0, 0).add(xPos, yPos, zPos);
+                generate(worldIn, random, pos);
+            }
         }
     }
 
-    public static final Biome BIOME_BAMBOO_JUNGLE = new BiomeJungle(false, new Biome.BiomeProperties("Bamboo Jungle").setTemperature(0.95F).setRainfall(0.9F)) {
-        @Override
-        public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-            return WorldGenBamboo.getTree(rand);
-        }
-    };
-    public static final WorldGenBamboo BAMBOO_FEATURE = new WorldGenBamboo(false);
+    private boolean isBiomeValid(Biome biome) {
+        return biome == Biomes.JUNGLE || biome == Biomes.JUNGLE_EDGE || biome == Biomes.JUNGLE_HILLS || biome == Biomes.MUTATED_JUNGLE
+                || biome == Biomes.MUTATED_JUNGLE_EDGE;
+    }
 }

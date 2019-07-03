@@ -11,8 +11,6 @@ tile.minecraftfuture.FlowerWhite.name=Maiglöckchen
 tile.minecraftfuture.FlowerBlack.name=Witherrose
 tile.minecraftfuture.FlowerBlue.name=Kornblume
 tile.minecraftfuture.BerryBush.name=Süßbeerenbusch
-item.minecraftfuture.SweetBerry.name=Süßbeeren
-tile.minecraftfuture.Bamboo.name=Bambus
 tile.minecraftfuture.Campfire.name=Lagerfeuer
 tile.minecraftfuture.stripped_oak_log.name=Entrindeter Eichenstamm
 tile.minecraftfuture.stripped_spruce_log.name=Entrindeter Fichtenstamm
@@ -53,6 +51,7 @@ tile.minecraftfuture.mossy_stone_slab.name=Mossy Stone Slab
 tile.minecraftfuture.smooth_quartz_slab.name=Smooth Quartz Slab
 tile.minecraftfuture.red_nether_brick_slab.name=Red Nether Brick Slab
 tile.minecraftfuture.end_stone_brick_slab.name=End Stone Brick Slab
+tile.minecraftfuture.Bamboo.name=Bambus
 
 tile.minecraftfuture.SmoothStone.name=Glatter Stein
 tile.minecraftfuture.SmoothQuartz.name=Smooth Quartz
@@ -69,6 +68,8 @@ item.minecraftfuture.Trident.name=Dreizack
 item.minecraftfuture.Crossbow.name=Armbrust
 item.minecraftfuture.Crossbow_Loaded.name=Armbrust mit Pfeil
 item.minecraftfuture.SuspiciousStew.name=Seltsame Suppe
+item.minecraftfuture.SweetBerry.name=Süßbeeren
+item.minecraftfuture.Bamboo.name=Bambus
 
 container.Barrel=Fass
 container.BlastFurnace=Schmelzofen

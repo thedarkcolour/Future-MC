@@ -13,8 +13,6 @@ tile.minecraftfuture.FlowerWhite.name=Lily of the Valley
 tile.minecraftfuture.FlowerBlack.name=Wither Rose
 tile.minecraftfuture.FlowerBlue.name=Cornflower
 tile.minecraftfuture.BerryBush.name=Sweet Berry Bush
-item.minecraftfuture.SweetBerry.name=Sweet Berries
-tile.minecraftfuture.Bamboo.name=Bamboo
 tile.minecraftfuture.Campfire.name=Campfire
 tile.minecraftfuture.stripped_oak_log.name=Stripped Oak Log
 tile.minecraftfuture.stripped_spruce_log.name=Stripped Spruce Log
@@ -56,6 +54,7 @@ tile.minecraftfuture.mossy_stone_slab.name=Mossy Stone Slab
 tile.minecraftfuture.smooth_quartz_slab.name=Smooth Quartz Slab
 tile.minecraftfuture.red_nether_brick_slab.name=Red Nether Brick Slab
 tile.minecraftfuture.end_stone_brick_slab.name=End Stone Brick Slab
+tile.minecraftfuture.Bamboo.name=Bamboo
 
 # Decorative Blocks
 tile.minecraftfuture.SmoothStone.name=Smooth Stone
@@ -75,6 +74,8 @@ item.minecraftfuture.Trident.name=Trident
 item.minecraftfuture.Crossbow.name=Crossbow
 item.minecraftfuture.Crossbow_Loaded.name=Arrow Loaded Crossbow
 item.minecraftfuture.SuspiciousStew.name=Suspicious Stew
+item.minecraftfuture.SweetBerry.name=Sweet Berries
+item.minecraftfuture.Bamboo.name=Bamboo
 
 # GUI
 container.Barrel=Barrel

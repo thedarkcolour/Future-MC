@@ -1,12 +1,10 @@
 package com.herobrine.future.blocks;
 
-import com.herobrine.future.MainFuture;
+import com.herobrine.future.FutureMC;
 import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
 import com.herobrine.future.tile.GuiHandler;
-import com.herobrine.future.tile.advancedfurnace.TileAdvancedFurnace;
-import com.herobrine.future.tile.advancedfurnace.TileBlastFurnace;
-import com.herobrine.future.tile.advancedfurnace.TileSmoker;
+import com.herobrine.future.tile.advancedfurnace.TileFurnaceAdvanced;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
@@ -18,6 +16,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -29,8 +28,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Level;
 
@@ -52,10 +49,10 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         if(type == FurnaceType.SMOKER) {
-            return new TileSmoker();
+            return new TileFurnaceAdvanced.TileSmoker();
         }
         if(type == FurnaceType.BLAST_FURNACE) {
-            return new TileBlastFurnace();
+            return new TileFurnaceAdvanced.TileBlastFurnace();
         }
         return null;
     }
@@ -71,23 +68,23 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
             return true;
         }
         TileEntity te = worldIn.getTileEntity(pos);
-        if(!(te instanceof TileAdvancedFurnace)) {
+        if(!(te instanceof TileFurnaceAdvanced)) {
             return false;
         }
         Block block = worldIn.getBlockState(pos).getBlock();
 
         if(block == Init.BLAST_FURNACE) {
-            if (!(te instanceof TileBlastFurnace)) {
+            if (!(te instanceof TileFurnaceAdvanced.TileBlastFurnace)) {
                 return false;
             }
         }
         if(block == Init.SMOKER) {
-            if (!(te instanceof TileSmoker)) {
+            if (!(te instanceof TileFurnaceAdvanced.TileSmoker)) {
                 return false;
             }
         }
 
-        playerIn.openGui(MainFuture.instance, GuiHandler.GUI_FURNACE, worldIn, pos.getX(), pos.getY(), pos.getZ());
+        playerIn.openGui(FutureMC.instance, GuiHandler.GUI_FURNACE, worldIn, pos.getX(), pos.getY(), pos.getZ());
         return true;
     }
 
@@ -170,7 +167,7 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
     public static void setState(boolean active, World world, BlockPos pos) {
         BlockFurnaceAdvanced furnace = (BlockFurnaceAdvanced) world.getBlockState(pos).getBlock();
 
-        if(world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileAdvancedFurnace) {
+        if(world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileFurnaceAdvanced) {
             EnumFacing facing = world.getBlockState(pos).getValue(BlockFurnaceAdvanced.FACING);
 
             world.setBlockState(pos, furnace.getDefaultState().withProperty(BlockFurnaceAdvanced.FACING, facing).withProperty(BlockFurnaceAdvanced.LIT, active));
@@ -178,24 +175,13 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state) {
-        TileEntity tile = world.getTileEntity(pos);
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity tile = worldIn.getTileEntity(pos);
 
-        if (tile instanceof TileAdvancedFurnace) {
-            IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-            if(itemHandler != null) {
-                for(int slot = 0; slot < 3; slot++) {
-                    ItemStack stack = itemHandler.getStackInSlot(slot);
-
-                    if (!stack.isEmpty()) {
-                        spawnAsEntity(world, pos, stack);
-                    }
-                }
-            }
+        if (tile instanceof TileFurnaceAdvanced) {
+            InventoryHelper.dropInventoryItems(worldIn, pos, (TileFurnaceAdvanced) tile);
         }
-        super.breakBlock(world, pos, state);
-
-        world.removeTileEntity(pos); // Fixes TEs staying in the world
+        worldIn.removeTileEntity(pos);
     }
 
     public IBlockState shortState(EnumFacing facing, boolean isLit) {
@@ -256,14 +242,14 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
         }
 
         public boolean canCraft(ItemStack stack) {
+            if(stack.isEmpty()) return false;
+
             if(this == BLAST_FURNACE) {
                 return isOre(stack);
-            }
-            else if(this == SMOKER) {
+            } else if(this == SMOKER) {
                 return isFood(stack);
-            }
-            else {
-                MainFuture.logger.log(Level.ERROR, "Error: cannot craft because type is not valid");
+            } else {
+                FutureMC.LOGGER.log(Level.ERROR, "Error: cannot craft because type is not valid");
                 return false;
             }
         }
@@ -281,7 +267,7 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
                 return "";
             }
             int[] ids = OreDictionary.getOreIDs(stack);
-            if (ids.length >= 1) {//ids != null &&
+            if (ids.length >= 1) {
                 return OreDictionary.getOreName(ids[0]);
             }
             return "";

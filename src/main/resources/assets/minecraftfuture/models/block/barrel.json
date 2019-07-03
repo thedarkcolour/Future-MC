@@ -1,12 +1,12 @@
 {
-  "parent": "block/cube",
-  "textures": {
-    "particle": "minecraftfuture:blocks/barrel_top",
-    "down": "minecraftfuture:blocks/barrel_side_4",
-    "up": "minecraftfuture:blocks/barrel_side",
-    "east": "minecraftfuture:blocks/barrel_side_2",
-    "west": "minecraftfuture:blocks/barrel_side_3",
-    "north": "minecraftfuture:blocks/barrel_top",
-    "south": "minecraftfuture:blocks/barrel_bottom"
-  }
+    "parent": "block/cube",
+    "textures": {
+        "particle": "minecraftfuture:blocks/barrel_top",
+        "down": "minecraftfuture:blocks/barrel_side_4",
+        "up": "minecraftfuture:blocks/barrel_side",
+        "east": "minecraftfuture:blocks/barrel_side_2",
+        "west": "minecraftfuture:blocks/barrel_side_3",
+        "north": "minecraftfuture:blocks/barrel_top",
+        "south": "minecraftfuture:blocks/barrel_bottom"
+    }
 }

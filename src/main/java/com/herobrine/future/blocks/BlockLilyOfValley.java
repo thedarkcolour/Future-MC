@@ -1,5 +1,6 @@
 package com.herobrine.future.blocks;
 
+import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
 import net.minecraft.block.SoundType;
 import net.minecraft.init.Biomes;
@@ -13,6 +14,11 @@ public class BlockLilyOfValley extends BlockFlower { //Adds white flower
 
     @Override
     public boolean isBiomeValid(Biome biome) {
-        return biome == Biomes.FOREST || biome == Biomes.MUTATED_FOREST || biome == Init.BIOME_BAMBOO_JUNGLE;
+        return biome == Biomes.FOREST || biome == Biomes.MUTATED_FOREST;
+    }
+
+    @Override
+    public int getFlowerChance() {
+        return FutureConfig.modFlowers.lilyChance;
     }
 }

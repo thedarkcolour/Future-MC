@@ -1,7 +1,7 @@
 package com.herobrine.future.init;
 
-import com.herobrine.future.tile.advancedfurnace.TileBlastFurnace;
-import com.herobrine.future.tile.advancedfurnace.TileSmoker;
+import com.herobrine.future.items.ItemBamboo;
+import com.herobrine.future.tile.advancedfurnace.TileFurnaceAdvanced;
 import com.herobrine.future.tile.barrel.TileBarrel;
 import com.herobrine.future.tile.stonecutter.TileStonecutter;
 import net.minecraft.block.Block;
@@ -55,6 +55,7 @@ public class InitElements {
         //if(general.newSlabVariants) r.registerAll(ItemNewSlab.Slabs.SLAB_DOUBLES.toArray(new BlockNewSlab.Double[0]));
         if(general.smoothStone) r.register(SMOOTH_STONE);
         if(general.smoothQuartz) r.register(SMOOTH_QUARTZ);
+        //if(general.waterColumns) r.registerAll(BUBBLE_COLUMN, SOULSAND_OVERRIDE);
         if(general.bamboo) r.register(BAMBOO_STALK);
     }
 
@@ -71,7 +72,6 @@ public class InitElements {
         if(general.fletchingTable) r.register(makeItemBlock(FLETCHING_TABLE));
         if(general.smithingTable) r.register(makeItemBlock(SMITHING_TABLE));
         if(general.grindstone) r.register(makeItemBlock(GRINDSTONE));
-        //if(general.lectern) r.register(makeItemBlock(LECTERN));
         if(general.composter) r.register(makeItemBlock(COMPOSTER));
 
         if(general.trident) r.register(TRIDENT);
@@ -82,7 +82,7 @@ public class InitElements {
         if(modFlowers.witherRose) r.register(makeItemBlock(WITHER_ROSE));
         if(modFlowers.suspiciousStew) r.register(SUSPICIOUS_STEW);
         if(modFlowers.dyes) r.register(DYES);
-        if(general.bamboo) r.register(makeItemBlock(BAMBOO_STALK));
+        if(general.bamboo) r.register(BAMBOO_ITEM);
         if(general.berryBush) r.register(SWEET_BERRY);
         if(general.campfire) r.register(makeItemBlock(CAMPFIRE));
 
@@ -98,22 +98,20 @@ public class InitElements {
     public static void registerTileEntities() {
         if(general.stonecutter) GameRegistry.registerTileEntity(TileStonecutter.class, new ResourceLocation(MODID + ":containerStonecutter"));
         if(general.barrel) GameRegistry.registerTileEntity(TileBarrel.class, new ResourceLocation(MODID + ":containerBarrel"));
-        if(general.blastFurnace) GameRegistry.registerTileEntity(TileBlastFurnace.class, new ResourceLocation(MODID + ":containerBlastFurnace"));
-        if(general.smoker) GameRegistry.registerTileEntity(TileSmoker.class, new ResourceLocation(MODID + ":containerSmoker"));
-        //if(general.lectern) GameRegistry.registerTileEntity(TileLectern.class, new ResourceLocation(MODID + ":containerLectern"));
-        //if(general.campfire) GameRegistry.registerTileEntity(TileCampfire.class, new ResourceLocation(MODID + ":containerCampfire"));
+        if(general.blastFurnace) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileBlastFurnace.class, new ResourceLocation(MODID + ":containerBlastFurnace"));
+        if(general.smoker) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileSmoker.class, new ResourceLocation(MODID + ":containerSmoker"));
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public static void registerBiomes(RegistryEvent.Register<Biome> event) {
-        if(general.bamboo && general.bambooForest) registerBiome(event, BIOME_BAMBOO_JUNGLE, "bamboo_forest", BiomeManager.BiomeType.WARM, Type.JUNGLE, Type.HOT, Type.WET, Type.DENSE, Type.RARE, Type.FOREST);
+
     }
 
     public static void registerBiome(RegistryEvent.Register<Biome> event, Biome biome, String name, BiomeManager.BiomeType type, Type... types) {
         biome.setRegistryName(name);
         event.getRegistry().register(biome);
         BiomeDictionary.addTypes(biome, types);
-        BiomeManager.addBiome(type, new BiomeManager.BiomeEntry(biome, 10));
+        BiomeManager.addBiome(type, new BiomeManager.BiomeEntry(biome, 50));
         BiomeManager.addSpawnBiome(biome);
     }
 

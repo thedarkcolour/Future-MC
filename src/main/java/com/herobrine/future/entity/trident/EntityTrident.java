@@ -2,7 +2,7 @@ package com.herobrine.future.entity.trident;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.herobrine.future.MainFuture;
+import com.herobrine.future.FutureMC;
 import com.herobrine.future.enchantment.EnchantHelper;
 import com.herobrine.future.enchantment.Enchantments;
 import com.herobrine.future.sound.Sounds;
@@ -245,7 +245,7 @@ public class EntityTrident extends EntityArrow {
         try {
             return new ItemStack(compound);
         } catch (RuntimeException runtimeexception) {
-            MainFuture.logger.debug("Tried to load invalid item: {}", compound, runtimeexception);
+            FutureMC.LOGGER.debug("Tried to load invalid item: {}", compound, runtimeexception);
             return ItemStack.EMPTY;
         }
     }

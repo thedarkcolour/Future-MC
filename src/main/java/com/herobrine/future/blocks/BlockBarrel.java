@@ -1,6 +1,6 @@
 package com.herobrine.future.blocks;
 
-import com.herobrine.future.MainFuture;
+import com.herobrine.future.FutureMC;
 import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
 import com.herobrine.future.tile.GuiHandler;
@@ -43,7 +43,7 @@ public class BlockBarrel extends BlockBase implements ITileEntityProvider {
         if (!(te instanceof TileBarrel)) {
             return false;
         }
-        player.openGui(MainFuture.instance, GuiHandler.GUI_BARREL, world, pos.getX(), pos.getY(), pos.getZ());
+        player.openGui(FutureMC.instance, GuiHandler.GUI_BARREL, world, pos.getX(), pos.getY(), pos.getZ());
         return true;
     }
 

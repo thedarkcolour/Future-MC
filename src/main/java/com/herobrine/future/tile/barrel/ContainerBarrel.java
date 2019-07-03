@@ -41,13 +41,13 @@ public class ContainerBarrel extends Container {
 
     private void addOwnSlots() {
         IItemHandler itemHandler = this.te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        int slotIndex = 26;
+        int slotIndex = 0;
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
                 int x = 8 + col * 18;
                 int y = 18 + row * 18;
                 addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, x, y));
-                slotIndex--;
+                slotIndex++;
             }
         }
     }
@@ -57,17 +57,18 @@ public class ContainerBarrel extends Container {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
-        if (slot != null && slot.getHasStack()) { // If the slot is valid and has a stack
-            ItemStack itemStack1 = slot.getStack(); // Get that stack
-            itemstack = itemStack1.copy(); // Old stack in slot
+        if (slot != null && slot.getHasStack()) {
+            ItemStack itemStack1 = slot.getStack();
+            itemstack = itemStack1.copy();
 
-            if(index < 27) {
-                if(!this.mergeItemStack(itemStack1, 27, this.inventorySlots.size(), true)) {
+            if (index < 27) {
+                if (!this.mergeItemStack(itemStack1, 27, this.inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if(!this.mergeItemStack(itemStack1, 0, 27, false)) {
+            } else if (!this.mergeItemStack(itemStack1, 0, 27, false)) {
                 return ItemStack.EMPTY;
             }
+
             if (itemStack1.isEmpty()) {
                 slot.putStack(ItemStack.EMPTY);
             } else {

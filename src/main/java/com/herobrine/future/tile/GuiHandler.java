@@ -1,8 +1,8 @@
 package com.herobrine.future.tile;
 
-import com.herobrine.future.tile.advancedfurnace.ContainerAdvancedFurnace;
-import com.herobrine.future.tile.advancedfurnace.GuiAdvancedFurnace;
-import com.herobrine.future.tile.advancedfurnace.TileAdvancedFurnace;
+import com.herobrine.future.tile.advancedfurnace.ContainerFurnaceAdvanced;
+import com.herobrine.future.tile.advancedfurnace.GuiFurnaceAdvanced;
+import com.herobrine.future.tile.advancedfurnace.TileFurnaceAdvanced;
 import com.herobrine.future.tile.barrel.ContainerBarrel;
 import com.herobrine.future.tile.barrel.GuiBarrel;
 import com.herobrine.future.tile.barrel.TileBarrel;
@@ -31,7 +31,7 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerBarrel(player.inventory, (TileBarrel) te);
             }
             case GUI_FURNACE: {
-                return new ContainerAdvancedFurnace(player.inventory, (TileAdvancedFurnace) te);
+                return new ContainerFurnaceAdvanced(player.inventory, (TileFurnaceAdvanced) te);
             }
             case GUI_GRINDSTONE: {
                 return new ContainerGrindstone(player.inventory, world, pos);
@@ -53,7 +53,7 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiBarrel(new ContainerBarrel(player.inventory, (TileBarrel) te));
             }
             case GUI_FURNACE: {
-                return new GuiAdvancedFurnace(new ContainerAdvancedFurnace(player.inventory, (TileAdvancedFurnace) te));
+                return new GuiFurnaceAdvanced(player.inventory, (TileFurnaceAdvanced) te);
             }
             case GUI_GRINDSTONE: {
                 return new GuiGrindstone(new ContainerGrindstone(player.inventory, world, pos));

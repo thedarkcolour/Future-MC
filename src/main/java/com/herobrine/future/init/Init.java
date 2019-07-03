@@ -7,10 +7,11 @@ import com.herobrine.future.worldgen.WorldGenBamboo;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.fml.common.Mod;
 
+@Mod.EventBusSubscriber // TODO - Re-organize to match HardcoreDungeons
 public final class Init {
     public static CreativeTabs FUTURE_MC_TAB = FutureConfig.general.useVanillaTabs ? null : new CreativeTabs("Future") {
         @Override    //New creative tab
@@ -23,14 +24,13 @@ public final class Init {
 
     public static final BlockLantern LANTERN;
     public static final BlockStonecutter STONECUTTER; // TODO - Stonecutter functionality
-    //public static final BlockLectern LECTERN; // TODO - Lectern
     public static final BlockBarrel BARREL;
     public static final BlockFurnaceAdvanced SMOKER, BLAST_FURNACE; // TODO - JEI compat
     public static final BlockRotatable LOOM; // TODO - Loom functionality
     public static final BlockRotatable FLETCHING_TABLE;
     public static final BlockRotatable SMITHING_TABLE;
     public static final BlockGrindstone GRINDSTONE;
-    public static final BlockComposter COMPOSTER; // TODO - CraftTweaker compat
+    public static final BlockComposter COMPOSTER;
 
     public static final BlockFlower LILY_OF_VALLEY;
     public static final BlockFlower CORNFLOWER;
@@ -59,6 +59,7 @@ public final class Init {
     public static final BlockWall RED_NETHER_BRICK_WALL;
     public static final BlockWall END_STONE_WALL;
     public static final BlockWall PRISMARINE_WALL;
+
     public static final BlockBase SMOOTH_STONE;
     public static final BlockBase SMOOTH_QUARTZ;
 
@@ -68,8 +69,10 @@ public final class Init {
     public static final ItemSuspiciousStew SUSPICIOUS_STEW;
     public static final ItemBerry SWEET_BERRY;
 
-    public static final Biome BIOME_BAMBOO_JUNGLE;
+    //public static final Biome BIOME_BAMBOO_JUNGLE; TODO - Bamboo Forest
     public static final WorldGenBamboo BAMBOO_FEATURE;
+    public static final ItemBamboo BAMBOO_ITEM;
+
 
     static {  // references
         LANTERN = new BlockLantern();
@@ -90,6 +93,7 @@ public final class Init {
         BERRY_BUSH = new BlockBerryBush();
         CAMPFIRE = new BlockCampfire();
         BAMBOO_STALK = new BlockBamboo();
+        BAMBOO_ITEM = new ItemBamboo();
 
         DYES = new ItemDye();
         TRIDENT = new ItemTrident();
@@ -117,12 +121,14 @@ public final class Init {
         END_STONE_WALL = new BlockWall("end_stone");
         PRISMARINE_WALL = new BlockWall("prismarine");
 
-        ItemNewSlab.Slabs.initSlab();
+        //ItemNewSlab.Slabs.initSlab();
+
+        //BUBBLE_COLUMN = new BlockBubbleColumn();
+        //SOULSAND_OVERRIDE = new BlockBubbleColumn.BlockSoulsandOverride();
 
         SMOOTH_STONE = (BlockBase) new BlockBase(new BlockProperties("SmoothStone")).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : Init.FUTURE_MC_TAB);
         SMOOTH_QUARTZ = (BlockBase) new BlockBase(new BlockProperties("SmoothQuartz")).setHardness(2.0F).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : Init.FUTURE_MC_TAB);
 
-        BIOME_BAMBOO_JUNGLE = WorldGenBamboo.BIOME_BAMBOO_JUNGLE;
         BAMBOO_FEATURE = WorldGenBamboo.BAMBOO_FEATURE;
     }
 }

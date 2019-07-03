@@ -1,6 +1,6 @@
 package com.herobrine.future.entity;
 
-import com.herobrine.future.MainFuture;
+import com.herobrine.future.FutureMC;
 import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.entity.drowned.EntityDrowned;
 import com.herobrine.future.entity.trident.EntityTrident;
@@ -16,9 +16,9 @@ public class Entities {
     public static void init() {
         int id = 1;
 
-        if(FutureConfig.general.trident) EntityRegistry.registerModEntity(new ResourceLocation(Init.MODID,"trident"), EntityTrident.class, "trident", id++, MainFuture.instance, 32, 1, true);
+        if(FutureConfig.general.trident) EntityRegistry.registerModEntity(new ResourceLocation(Init.MODID,"trident"), EntityTrident.class, "trident", id++, FutureMC.instance, 32, 1, true);
         //noinspection ConstantConditions
-        if(false) EntityRegistry.registerModEntity(new ResourceLocation(Init.MODID, "drowned"), EntityDrowned.class, "drowned", id, MainFuture.instance, 36, 1, true);
+        if(false) EntityRegistry.registerModEntity(new ResourceLocation(Init.MODID, "drowned"), EntityDrowned.class, "drowned", id, FutureMC.instance, 36, 1, true);
     }
 
     @SideOnly(Side.CLIENT)

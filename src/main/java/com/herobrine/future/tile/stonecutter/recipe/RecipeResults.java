@@ -1,7 +1,7 @@
 package com.herobrine.future.tile.stonecutter.recipe;
 
 import com.google.common.collect.Maps;
-import com.herobrine.future.MainFuture;
+import com.herobrine.future.FutureMC;
 import com.herobrine.future.init.Init;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -32,14 +32,14 @@ public class RecipeResults {
      * Allows the item to have slots in the Stonecutter's gui, to allow crafting.
      * @param input Item on the left side of GUI that displays slots.
      * @param output Adds general valid output to the input entry in the recipeMap.
-     * @param index Which place on the index to add the @output to @input.
+     * @param index Which place on the index to addItem the @output to @input.
      */
     private static void addStackResult(ItemStack input, ItemStack output, int index) {
         /*
-            If a given ItemStack does not exist, do not add it.
+            If a given ItemStack does not exist, do not addItem it.
          */
         if(input == null || output == null) {
-            MainFuture.logger.log(Level.ERROR, "Failed to add stonecutter recipe: { input: " + input + " output: "+ output + " index: " + index + " }");
+            FutureMC.LOGGER.log(Level.ERROR, "Failed to addItem stonecutter recipe: { input: " + input + " output: "+ output + " index: " + index + " }");
             return;
         }
         /*
@@ -53,7 +53,7 @@ public class RecipeResults {
         if (recipeMap.containsKey(makeStackString(input))) {
                 /*
                  * Navigates to the checked @input entry string, then adds the valid
-                 * @output stack to @input entry's list. Does not add if the @index value is invalid.
+                 * @output stack to @input entry's list. Does not addItem if the @index value is invalid.
                  */
             recipeMap.get(makeStackString(input)).add(index, makeStackString(output));
         }

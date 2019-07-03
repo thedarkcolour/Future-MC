@@ -13,11 +13,11 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 
 import java.util.Random;
 
-public class NewWorldGenFlower implements IWorldGenerator {
+public class WorldGenFlower implements IWorldGenerator {
     private BlockFlower flower;
     private IBlockState state;
 
-    public NewWorldGenFlower(BlockFlower flower) {
+    public WorldGenFlower(BlockFlower flower) {
         this.flower = flower;
         this.state = flower.getDefaultState();
     }
@@ -40,14 +40,16 @@ public class NewWorldGenFlower implements IWorldGenerator {
         Biome biome = world.getBiomeForCoordsBody(new BlockPos(x, 0, z));
         ChunkPos chunkPos = world.getChunkFromChunkCoords(chunkX, chunkZ).getPos();
 
-        if(flower.isBiomeValid(biome) && world.getWorldType() != WorldType.FLAT) {
-            for (int i = 0; i < 5; i++) {
-                int xPos = rand.nextInt(16) + 8;
-                int zPos = rand.nextInt(16) + 8;
-                int yPos = rand.nextInt(world.getHeight(chunkPos.getBlock(0, 0, 0).add(xPos, 0, zPos)).getY() + 32);
-                BlockPos pos = chunkPos.getBlock(0, 0, 0).add(xPos, yPos, zPos);
+        if(rand.nextInt(100) <= flower.getFlowerChance()) {
+            if(flower.isBiomeValid(biome) && world.getWorldType() != WorldType.FLAT) {
+                for (int i = 0; i < 5; i++) {
+                    int xPos = rand.nextInt(16) + 8;
+                    int zPos = rand.nextInt(16) + 8;
+                    int yPos = rand.nextInt(world.getHeight(chunkPos.getBlock(0, 0, 0).add(xPos, 0, zPos)).getY() + 32);
+                    BlockPos pos = chunkPos.getBlock(0, 0, 0).add(xPos, yPos, zPos);
 
-                generate(world, rand, pos);
+                    generate(world, rand, pos);
+                }
             }
         }
     }

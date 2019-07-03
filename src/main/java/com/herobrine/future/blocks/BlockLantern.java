@@ -82,10 +82,7 @@ public class BlockLantern extends BlockBase {
             worldIn.setBlockToAir(pos);
         }
         else if (isBlockInvalid(worldIn, pos.down())) {
-            if(worldIn.getBlockState(pos.up()).getBlock() == this) {
-
-            }
-            else {
+            if(worldIn.getBlockState(pos.up()).getBlock() != this) {
                 worldIn.setBlockState(pos, state.withProperty(HANGING, true));
             }
         }
