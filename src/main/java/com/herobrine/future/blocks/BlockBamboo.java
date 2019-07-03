@@ -101,7 +101,7 @@ public class BlockBamboo extends BlockBase implements IPlantable, IGrowable {
             if(meta > 2) {
                 return getDefaultState().withProperty(LEAVES, EnumLeaves.values()[meta - 3]).withProperty(MATURE, false).withProperty(THICK, true);
             } else {
-                return getDefaultState().withProperty(LEAVES, EnumLeaves.values()[meta - 3]).withProperty(MATURE, false).withProperty(THICK, false);}
+                return getDefaultState().withProperty(LEAVES, EnumLeaves.values()[meta]).withProperty(MATURE, false).withProperty(THICK, false);}
         }
     }
 
