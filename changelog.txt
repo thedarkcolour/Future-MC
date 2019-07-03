@@ -15,6 +15,7 @@ Version 0.1.6 - Patch update:
  Smoker & Blast Furnace - Fixed XP not given when smelting items.
  Bamboo Forest - Removed. Bamboo will be found in Jungles, like in 1.14.
  Bamboo Forest - Will be re-added in the future to be more like 1.14 Bamboo Forest.
+ Barrel - Fixed an issue with the order of slots.
 
 Version 0.1.5 - Composter! New things:
  *Composter* - Block from 1.14 that allows you to compost things into bonemeal.
