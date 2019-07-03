@@ -26,7 +26,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
-import scala.actors.threadpool.Arrays;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -94,15 +93,15 @@ public class BlockBamboo extends BlockBase implements IPlantable, IGrowable {
     public IBlockState getStateFromMeta(int meta) {
         if(meta > 5) {
             if(meta > 8) {
-                return getDefaultState().withProperty(LEAVES, (EnumLeaves) Arrays.asList(EnumLeaves.values()).get(meta - 9)).withProperty(MATURE, true).withProperty(THICK, true);
+                return getDefaultState().withProperty(LEAVES, EnumLeaves.values()[meta - 9]).withProperty(MATURE, true).withProperty(THICK, true);
             } else {
-                return getDefaultState().withProperty(LEAVES, (EnumLeaves) Arrays.asList(EnumLeaves.values()).get(meta - 6)).withProperty(MATURE, true).withProperty(THICK, false);
+                return getDefaultState().withProperty(LEAVES, EnumLeaves.values()[meta - 6]).withProperty(MATURE, true).withProperty(THICK, false);
             }
         } else {
             if(meta > 2) {
-                return getDefaultState().withProperty(LEAVES, (EnumLeaves) Arrays.asList(EnumLeaves.values()).get(meta - 3)).withProperty(MATURE, false).withProperty(THICK, true);
+                return getDefaultState().withProperty(LEAVES, EnumLeaves.values()[meta - 3]).withProperty(MATURE, false).withProperty(THICK, true);
             } else {
-                return getDefaultState().withProperty(LEAVES, (EnumLeaves) Arrays.asList(EnumLeaves.values()).get(meta)).withProperty(MATURE, false).withProperty(THICK, false);}
+                return getDefaultState().withProperty(LEAVES, EnumLeaves.values()[meta - 3]).withProperty(MATURE, false).withProperty(THICK, false);}
         }
     }
 
