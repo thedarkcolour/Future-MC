@@ -1,3 +1,10 @@
+Version 0.1.7 - Pandas! New things:
+ *Pandas* - Rare animal from 1.14 whose favorite food is bamboo.
+ *Riptide* - Added the riptide enchantment to the Trident.
+ Trident Enchantments - Now only work when the user is wet, just like in 1.13.
+ Blast Furnace and Smoker - CraftTweaker compatibility!
+ Composter - Items can now be inserted through automation, and bonemeal can also be collected through automation.
+
 Version 0.1.6 - Patch update:
  Composter - Adjusted the default list of valid items.
  Composter - CraftTweaker compatibility!
