@@ -1,3 +1,6 @@
+Version 0.1.8 - Scaffolding? New things:
+ Campfire - Now has crackling sounds.
+
 Version 0.1.7 - Pandas! New things:
  *Pandas* - Rare animal from 1.14 whose favorite food is bamboo.
  *Riptide* - Added the riptide enchantment to the Trident.
