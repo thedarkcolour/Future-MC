@@ -1,4 +1,4 @@
-Version 0.1.8 - Scaffolding? New things:
+Version 0.1.8 - Patch Update:
  Campfire - Now has crackling sounds.
 
 Version 0.1.7 - Pandas! New things:
