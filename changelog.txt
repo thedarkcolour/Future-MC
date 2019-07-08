@@ -147,8 +147,6 @@ Version 0.0.2 - An update! New things:
                     Planned to be crafted into Black Dye.
     *Black Dye* - A substitute for Ink Sacs in recipes that require a black dye.
 
-
-
 Version 0.0.1 - First version! Blocks added:
     *Lantern* - An upgraded light source that can hang on the ceiling or sit on the floor.
     *Stonecutter* - A decorative block. Recipe not yet implemented.
