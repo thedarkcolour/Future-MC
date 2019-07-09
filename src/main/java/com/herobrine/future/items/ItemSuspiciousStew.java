@@ -78,7 +78,7 @@ public class ItemSuspiciousStew extends ItemFood {
                         player.addPotionEffect(new PotionEffect(MobEffects.SATURATION, 100, 1));
                     } break;
                     case 8: {
-                        player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 100, 1));
+                        player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 100, 1));
                     }
                 }
             }
@@ -111,7 +111,7 @@ public class ItemSuspiciousStew extends ItemFood {
                         player.addPotionEffect(new PotionEffect(MobEffects.SATURATION, 100, 1));
                     } break;
                     case "SPEED": {
-                        player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 100, 1));
+                        player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 100, 1));
                     } break;
                     case "NULL": {
 

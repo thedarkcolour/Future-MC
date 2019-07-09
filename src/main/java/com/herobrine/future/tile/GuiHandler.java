@@ -9,6 +9,7 @@ import com.herobrine.future.tile.barrel.TileBarrel;
 import com.herobrine.future.tile.grindstone.ContainerGrindstone;
 import com.herobrine.future.tile.grindstone.GuiGrindstone;
 import com.herobrine.future.tile.stonecutter.ContainerStonecutter;
+import com.herobrine.future.tile.stonecutter.GuiStonecutter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -58,9 +59,9 @@ public class GuiHandler implements IGuiHandler {
             case GUI_GRINDSTONE: {
                 return new GuiGrindstone(new ContainerGrindstone(player.inventory, world, pos));
             }
-            /*case GUI_STONECUTTER: {
+            case GUI_STONECUTTER: {
                 return new GuiStonecutter(new ContainerStonecutter(player.inventory, world, pos));
-            }*/
+            }
             default: return null;
         }
     }

@@ -47,13 +47,18 @@ public class RecipeStack {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RecipeStack that = (RecipeStack) o;
-        return meta == that.meta &&
-                amount == that.amount &&
-                item.equals(that.item);
+    public boolean equals(Object object) {
+        if(this == object) {
+            return true;
+        } else if(object instanceof RecipeStack) {
+            RecipeStack rStack = (RecipeStack) object;
+            return meta == rStack.meta && item.equals(rStack.item);
+        } else if(object instanceof ItemStack) {
+            ItemStack stack = (ItemStack) object;
+            return meta == stack.getMetadata() && item.equals(stack.getItem());
+        } else {
+            return false;
+        }
     }
 
     @Override

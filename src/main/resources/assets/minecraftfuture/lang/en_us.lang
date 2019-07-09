@@ -86,6 +86,7 @@ container.Stonecutter=Stonecutter
 
 # Entity
 entity.trident.name=Trident
+entity.panda.name=Panda
 
 # Enchantments
 enchantment.loyalty=Loyalty

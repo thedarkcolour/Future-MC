@@ -2,20 +2,5 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "minecraftfuture:items/trident"
-  },
-
-  "overrides": [
-    {
-      "predicate": {
-        "throwing": 1
-      },
-      "model": "minecraftfuture:item/throw_trident"
-    },
-      {
-      "predicate": {
-          "holding": 1
-      },
-          "model": "minecraftfuture:item/hold_trident"
-      }
-  ]
+  }
 }

@@ -17,16 +17,11 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiStonecutter extends GuiContainer {
     private final ContainerStonecutter container;
-    private static final int WIDTH = 176;
-    private static final int HEIGHT = 166;
     private static final ResourceLocation background = new ResourceLocation(Init.MODID,"textures/gui/stonecutter.png");
 
     public GuiStonecutter(ContainerStonecutter container) {
         super(container);
         this.container = container;
-
-        xSize = WIDTH;
-        ySize = HEIGHT;
     }
 
     @Override

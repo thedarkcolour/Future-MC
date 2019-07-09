@@ -3,6 +3,7 @@ package com.herobrine.future.blocks;
 import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
 import com.herobrine.future.sound.Sounds;
+import com.herobrine.future.tile.composter.TileComposter;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -16,10 +17,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -28,6 +30,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 
@@ -88,41 +91,39 @@ public class BlockComposter extends BlockBase {
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = playerIn.getHeldItem(hand);
 
-        if(!worldIn.isRemote) {
+        if(worldIn.getTileEntity(pos) instanceof TileComposter) {
+            TileComposter te = (TileComposter) worldIn.getTileEntity(pos);
             if(canCompost(stack, state)) {
-                if (worldIn.rand.nextInt(100) <= ItemsForComposter.getChance(stack)) {
-                    fill(worldIn, pos, stack, playerIn);
-
-                    if(worldIn.getBlockState(pos).getValue(LEVEL) == 7) {
-                        worldIn.scheduleBlockUpdate(pos, this, 30, 1);
-                    }
-                } else {
-                    worldIn.playSound(null, pos, Sounds.COMPOSTER_FILL, SoundCategory.BLOCKS, 1F, 1F);
+                spawnBonemealParticles(worldIn, pos);
+                if(!worldIn.isRemote) {
+                    te.addItem(stack, !playerIn.isCreative());
+                    return true;
                 }
-                return true;
             }
-            if(state.getValue(LEVEL) == 8) {
-                EntityItem item = new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.6D, pos.getZ() + 0.5D);
-                item.setItem(new ItemStack(Items.DYE, 1, 15));
-                worldIn.spawnEntity(item);
-                worldIn.setBlockState(pos, getDefaultState());
-                worldIn.playSound(null, pos, Sounds.COMPOSTER_EMPTY, SoundCategory.BLOCKS, 1F, 1F);
+            if(!worldIn.isRemote) {
+                if(state.getValue(LEVEL) == 8) {
+                    te.extractBoneMeal();
+                }
             }
         }
         return true;
     }
 
-    /**
-     * Tries to fill the composter and consumes the player's item.
-     */
-    public void fill(World worldIn, BlockPos pos, ItemStack stack, EntityPlayer player) {
-        int level = worldIn.getBlockState(pos).getValue(LEVEL);
-        worldIn.playSound(null, pos, Sounds.COMPOSTER_FILL_SUCCESS, SoundCategory.BLOCKS, 1F, 1F);
-        worldIn.setBlockState(pos, getDefaultState().withProperty(LEVEL, level + 1));
-        ItemDye.spawnBonemealParticles(worldIn, pos, 0);
+    public void spawnBonemealParticles(World worldIn, BlockPos pos) {
+        IBlockState state = worldIn.getBlockState(pos);
+        Random random = worldIn.rand;
+        double d0 = 0.53125D;
+        double d1 =(double)0.13125F;
+        double d2 =(double)0.7375F;
 
-        if(!player.isCreative()) stack.shrink(1);
+        for(int i = 0; i < 10; ++i) {
+            double d3 = random.nextGaussian() * 0.02D;
+            double d4 = random.nextGaussian() * 0.02D;
+            double d5 = random.nextGaussian() * 0.02D;
+            worldIn.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() + d1 + d2 * (double)random.nextFloat(), (double)pos.getY() + d0 + (double)random.nextFloat() * (1.0D - d0), (double)pos.getZ() + d1 + d2 * (double)random.nextFloat(), d3, d4, d5);
+        }
     }
+
 
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
@@ -130,13 +131,11 @@ public class BlockComposter extends BlockBase {
             if(worldIn.getBlockState(pos).getValue(LEVEL) == 7) {
                 worldIn.setBlockState(pos, getDefaultState().withProperty(LEVEL, 8));
                 worldIn.playSound(null, pos, Sounds.COMPOSTER_READY, SoundCategory.BLOCKS, 1F, 1F);
+                ((TileComposter)worldIn.getTileEntity(pos)).getBuffer().setStackInSlot(0, new ItemStack(Items.DYE, 1, 15));
             }
         }
     }
 
-    /**
-     * Tries to compost item and returns true if it can.
-     */
     public boolean canCompost(ItemStack stack, IBlockState state) {
         return ItemsForComposter.getChance(stack) != -1 && state.getValue(LEVEL) < 7;
     }
@@ -159,6 +158,16 @@ public class BlockComposter extends BlockBase {
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public TileEntity createTileEntity(World worldIn, IBlockState state) {
+        return new TileComposter();
     }
 
     public static final class ItemsForComposter {
@@ -232,8 +241,11 @@ public class BlockComposter extends BlockBase {
         }
 
         private static void add(IForgeRegistryEntry.Impl<?> registryObject, Rarity rarity) {
-            if(registryObject instanceof Block) add(new ItemStack((Block) registryObject), rarity);
-            else add(new ItemStack((Item) registryObject), rarity);
+            if(registryObject instanceof Block) {
+                add(new ItemStack((Block) registryObject), rarity);
+            } else {
+                add(new ItemStack((Item) registryObject), rarity);
+            }
         }
 
         public static void add(ItemStack stack, Rarity rarity) {
@@ -246,11 +258,8 @@ public class BlockComposter extends BlockBase {
 
         public static int getChance(ItemStack stack) {
             if(stack.isEmpty()) return -1;
-            for (ItemStack itemStack : VALID_ITEMS.keySet()) {
-                if(itemStack.isItemEqual(stack))
-                    return VALID_ITEMS.get(itemStack);
-            }
-            return -1;
+            Optional<ItemStack> item = VALID_ITEMS.keySet().stream().filter((itemStack) -> itemStack.isItemEqual(stack)).findFirst();
+            return item.isPresent() ? VALID_ITEMS.get(item.get()) : -1;
         }
 
         public static void remove(ItemStack stack) {

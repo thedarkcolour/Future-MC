@@ -6,7 +6,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -336,12 +339,15 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
     @Override @SuppressWarnings("unchecked")
     public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, net.minecraft.util.EnumFacing facing) {
         if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            if (facing == EnumFacing.DOWN)
+            if (facing == EnumFacing.DOWN) {
                 return (T) handlerBottom;
-            else if (facing == EnumFacing.UP)
+            }
+            else if (facing == EnumFacing.UP) {
                 return (T) handlerTop;
-            else
+            }
+            else{
                 return (T) handlerSide;
+            }
         return super.getCapability(capability, facing);
     }
 

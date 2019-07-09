@@ -1,6 +1,5 @@
 package com.herobrine.future.tile.stonecutter.recipe;
 
-import com.google.common.collect.Maps;
 import com.herobrine.future.FutureMC;
 import com.herobrine.future.init.Init;
 import net.minecraft.init.Blocks;
@@ -8,14 +7,13 @@ import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.HashMap;
 
 public class RecipeResults {
     /**
      * This map holds every ItemStack as a RecipeStack, and is the main list of this class.
      */
-    private static Map<String, List<String>> recipeMap = Maps.newHashMap();
+    private static HashMap<String, ArrayList<String>> recipeMap = new HashMap<>();
     /**
      * Registers the results for each valid input.
      * Adds general result one at general time.
@@ -32,14 +30,13 @@ public class RecipeResults {
      * Allows the item to have slots in the Stonecutter's gui, to allow crafting.
      * @param input Item on the left side of GUI that displays slots.
      * @param output Adds general valid output to the input entry in the recipeMap.
-     * @param index Which place on the index to addItem the @output to @input.
      */
-    private static void addStackResult(ItemStack input, ItemStack output, int index) {
+    private static void addStackResult(ItemStack input, ItemStack output) {
         /*
             If a given ItemStack does not exist, do not addItem it.
          */
         if(input == null || output == null) {
-            FutureMC.LOGGER.log(Level.ERROR, "Failed to addItem stonecutter recipe: { input: " + input + " output: "+ output + " index: " + index + " }");
+            FutureMC.LOGGER.log(Level.ERROR, "Failed to addItem stonecutter recipe: { input: " + input + " output: "+ output + " }");
             return;
         }
         /*
@@ -55,14 +52,13 @@ public class RecipeResults {
                  * Navigates to the checked @input entry string, then adds the valid
                  * @output stack to @input entry's list. Does not addItem if the @index value is invalid.
                  */
-            recipeMap.get(makeStackString(input)).add(index, makeStackString(output));
+            recipeMap.get(makeStackString(input)).add(makeStackString(output));
         }
     }
 
     public static void addStackResults(ItemStack input, ItemStack... outputs) {
-        int index = 0;
         for(ItemStack output : outputs) {
-            addStackResult(input, output, index++);
+            addStackResult(input, output);
         }
     }
 

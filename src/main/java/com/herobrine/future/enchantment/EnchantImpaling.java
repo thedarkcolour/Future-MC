@@ -14,7 +14,7 @@ public class EnchantImpaling extends EnchantmentTridentBase {
 
     @Override
     public int getMaxEnchantability(int enchantmentLevel) {
-        return this.getMinEnchantability(enchantmentLevel) + 20;
+        return getMinEnchantability(enchantmentLevel) + 20;
     }
 
     @Override
@@ -24,15 +24,6 @@ public class EnchantImpaling extends EnchantmentTridentBase {
 
     @Override
     public float calcDamageByCreature(int level, EnumCreatureAttribute creatureType) {
-        return 1.25F * level;
-    }
-
-    public static float getDamageForTrident(int level) {
-        if(level > 0) {
-            return Enchantments.IMPALING.calcDamageByCreature(level, null);
-        }
-        else {
-            return 3.25F;
-        }
+        return level * 2.5F;
     }
 }

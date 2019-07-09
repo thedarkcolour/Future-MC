@@ -1,11 +1,9 @@
 package com.herobrine.future.enchantment;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 
-import java.util.Iterator;
 import java.util.Map;
 
 public final class EnchantHelper {
@@ -13,21 +11,28 @@ public final class EnchantHelper {
         if(stack == null) {
             return false;
         }
-        return EnchantmentHelper.getEnchantmentLevel(Enchantments.CHANNELING, stack) > 0;
+        return EnchantmentHelper.getEnchantmentLevel(Enchantments.CONDUCTIVIDAD, stack) > 0;
     }
 
     public static int getImpaling(ItemStack stack) {
         if(stack == null) {
             return 0;
         }
-        return EnchantmentHelper.getEnchantmentLevel(Enchantments.IMPALING, stack);
+        return EnchantmentHelper.getEnchantmentLevel(Enchantments.EMPALAMIENTO, stack);
     }
 
     public static int getLoyalty(ItemStack stack) {
         if(stack == null) {
             return 0;
         }
-        return EnchantmentHelper.getEnchantmentLevel(Enchantments.LOYALTY, stack);
+        return EnchantmentHelper.getEnchantmentLevel(Enchantments.LEALTAD, stack);
+    }
+
+    public static int getRiptide(ItemStack stack) {
+        if(stack == null) {
+            return 0;
+        }
+        return EnchantmentHelper.getEnchantmentLevel(Enchantments.RIPTIDE, stack);
     }
 
     public static int getQuickCharge(ItemStack stack) {

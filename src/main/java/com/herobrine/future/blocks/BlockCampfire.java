@@ -2,6 +2,7 @@ package com.herobrine.future.blocks;
 
 import com.herobrine.future.config.FutureConfig;
 import com.herobrine.future.init.Init;
+import com.herobrine.future.sound.Sounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.SoundType;
@@ -32,7 +33,6 @@ import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.Random;
 
@@ -55,19 +55,23 @@ public class BlockCampfire extends BlockBase {
 
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        double d0 = (double)pos.getX() + rand.nextDouble() * 0.5D + 0.2D;
-        double d1 = (double)pos.getY() + rand.nextDouble() * 0.35D + 0.2D;
-        double d2 = (double)pos.getZ() + rand.nextDouble() * 0.5D + 0.2D;
-        if(worldIn.getBlockState(pos) == this.getDefaultState()){
-            worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
-            if(rand.nextInt(20) == 0) {
-                worldIn.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+        if (stateIn.getValue(LIT)) {
+            if (rand.nextInt(10) == 0) {
+                worldIn.playSound((double)((float)pos.getX() + 0.5F), (double)((float)pos.getY() + 0.5F), (double)((float)pos.getZ() + 0.5F), Sounds.CAMPFIRE_CRACKLE, SoundCategory.BLOCKS, 0.5F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.6F, false);
             }
+
+            if (rand.nextInt(5) == 0) {
+                for(int i = 0; i < rand.nextInt(1) + 1; ++i) {
+                    worldIn.spawnParticle(EnumParticleTypes.LAVA, (double)((float)pos.getX() + 0.5F), (double)((float)pos.getY() + 0.5F), (double)((float)pos.getZ() + 0.5F), (double)(rand.nextFloat() / 2.0F), 5.0E-5D, (double)(rand.nextFloat() / 2.0F));
+                }
+            }
+
+            //smoke(worldIn, pos, worldIn.getBlockState(pos.down()) == Blocks.HAY_BLOCK.getDefaultState(), false); // Make it cook?
         }
     }
 
     @Override
-    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack stack) {
         player.addStat(Objects.requireNonNull(StatList.getBlockStats(this)));
         player.addExhaustion(0.005F);
 
@@ -175,4 +179,15 @@ public class BlockCampfire extends BlockBase {
     @Override public boolean isOpaqueCube(IBlockState state) { return false; }
     @Override public boolean canPlaceTorchOnTop(IBlockState state, IBlockAccess world, BlockPos pos) { return false; }
     @Override public boolean isTopSolid(IBlockState state) { return false; }
+/*
+    public static void smoke(World worldIn, BlockPos pos, boolean hasHayBale, boolean isCooking) {
+        Random random = worldIn.rand;
+        EnumParticleType type = hasHayBale ? EnumParticleType.CAMPFIRE_SIGNAL_SMOKE : EnumParticleType.CAMPFIRE_COZY_SMOKE;
+
+        ParticleSpawner.spawnParticle(type, worldIn, (double)pos.getX() + 0.5D + random.nextDouble() / 3.0D * (double)(random.nextBoolean() ? 1 : -1), (double)pos.getY() + random.nextDouble() + random.nextDouble(), (double)pos.getZ() + 0.5D + random.nextDouble() / 3.0D * (double)(random.nextBoolean() ? 1 : -1), 0.0D, 0.07D, 0.0D);
+        //if (false) { // is cooking? add in tile entity
+        //    worldIn.addParticle(ParticleTypes.SMOKE, (double)pos.getX() + 0.25D + random.nextDouble() / 2.0D * (double)(random.nextBoolean() ? 1 : -1), (double)pos.getY() + 0.4D, (double)pos.getZ() + 0.25D + random.nextDouble() / 2.0D * (double)(random.nextBoolean() ? 1 : -1), 0.0D, 0.005D, 0.0D);
+        //}
+
+    }*/
 }

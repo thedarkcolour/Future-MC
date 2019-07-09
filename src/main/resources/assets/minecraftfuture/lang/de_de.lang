@@ -78,6 +78,7 @@ container.Grindstone=Reparieren und entzaubern
 container.Stonecutter=Steinsäge
 
 entity.trident.name=Dreizack
+entity.panda.name=Panda
 
 enchantment.loyalty=Treue
 enchantment.channeling=Entladung

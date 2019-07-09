@@ -86,6 +86,7 @@ container.Stonecutter=Каменотес
 
 # Сущности
 entity.trident.name=Трезубец
+entity.panda.name=Panda
 
 # Чары
 enchantment.loyalty=Лояльность

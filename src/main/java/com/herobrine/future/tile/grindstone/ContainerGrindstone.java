@@ -125,6 +125,7 @@ public class ContainerGrindstone extends Container {
         // Handles two incompatible items
         if(!input.getStackInSlot(0).isItemEqualIgnoreDurability(input.getStackInSlot(1)) && !(input.getStackInSlot(0).isEmpty() || input.getStackInSlot(1).isEmpty())) {
             isRecipeInvalid = true;
+            output.setStackInSlot(0, ItemStack.EMPTY);
         }
 
         // Handles two compatible items
@@ -150,8 +151,12 @@ public class ContainerGrindstone extends Container {
             }
             map = EnchantmentHelper.getEnchantments(input.getStackInSlot(1));
             for(Enchantment e : map.keySet()) {
-                if(e.isCurse()) {
-                    outItem.addEnchantment(e, 1);
+                try {
+                    if(e.isCurse()) {
+                        outItem.addEnchantment(e, 1);
+                    }
+                } catch (NullPointerException ignored) {
+                    //  😈 😈 😈
                 }
             }
 
@@ -212,6 +217,8 @@ public class ContainerGrindstone extends Container {
             isRecipeInvalid = false;
             output.setStackInSlot(0, ItemStack.EMPTY);
         }
+
+        this.detectAndSendChanges();
     }
 
     public void handleOutput() {
@@ -242,20 +249,7 @@ public class ContainerGrindstone extends Container {
     }
 
     public static int getEnchantmentEXP(Enchantment enchantment, int enchantLevel) {
-        float exp;
-        switch (enchantment.getRarity()) {
-            default: exp =+ 2F; break;
-            case UNCOMMON: exp =+ 12F; break;
-            case RARE: exp =+ 18F; break;
-            case VERY_RARE: exp =+ 36F;
-        }
-        switch (enchantLevel) {
-            case 2: exp *= 1.4F;
-            case 3: exp *= 1.7F;
-            case 4: exp *= 1.9F;
-            case 5: exp *= 2.2F;
-        }
-        return (int) exp * 3;
+        return enchantment.getMinEnchantability(enchantLevel);
     }
 
     @Override

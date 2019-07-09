@@ -1,7 +1,6 @@
 package com.herobrine.future.entity.trident;
 
 import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import com.herobrine.future.FutureMC;
 import com.herobrine.future.enchantment.EnchantHelper;
 import com.herobrine.future.enchantment.Enchantments;
@@ -19,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketChangeGameState;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
@@ -30,14 +30,12 @@ import java.util.List;
 import java.util.Map;
 
 public class EntityTrident extends EntityArrow {
-    @SuppressWarnings({"unchecked", "Guava"})
-    private static final Predicate<Entity> ARROW_TARGETS = Predicates.and(EntitySelectors.NOT_SPECTATING, EntitySelectors.IS_ALIVE, Entity::canBeCollidedWith);
+    private static final Predicate<Entity> ARROW_TARGETS = entity -> EntitySelectors.NOT_SPECTATING.test(entity) && EntitySelectors.IS_ALIVE.test(entity) && entity.canBeCollidedWith();
     private ItemStack thrownStack;
     private boolean hasChanneled;
     private int ticksInGround = 0;
     private boolean isReturning;
 
-    @SuppressWarnings("unused")
     public EntityTrident(World world) {
         super(world);
     }
@@ -109,17 +107,17 @@ public class EntityTrident extends EntityArrow {
     }
 
     @Override
-    protected void onHit(RayTraceResult raytraceResultIn) {
-        Entity entity = raytraceResultIn.entityHit;
+    protected void onHit(RayTraceResult result) {
+        Entity entity = result.entityHit;
 
         if(entity != null) {
             DamageSource source;
 
             if(!(this.shootingEntity instanceof EntityPlayer)) {
-                source = DamageSource.causeArrowDamage(this, this);
+                source = causeTridentDamage(this, this);
             }
             else {
-                source = DamageSource.causeArrowDamage(this, shootingEntity);
+                source = causeTridentDamage(this, shootingEntity);
             }
 
             if(entity.attackEntityFrom(source, getDamageForTrident())) {
@@ -149,9 +147,9 @@ public class EntityTrident extends EntityArrow {
                         Map enchants = EnchantmentHelper.getEnchantments(thrownStack);
 
                         if(!enchants.isEmpty()) {
-                            if (enchants.get(Enchantments.CHANNELING) != null) {
+                            if (enchants.get(Enchantments.CONDUCTIVIDAD) != null) {
                                 shootingEntity.world.addWeatherEffect(new EntityLightningBolt(shootingEntity.world, this.posX, this.posY, this.posZ, false));
-                                this.playSound(Sounds.TRIDENT_CHANNELING, 5.0F, 1.0F);
+                                this.playSound(Sounds.TRIDENT_CONDUCTIVIDAD, 5.0F, 1.0F);
                                 this.hasChanneled = true;
                             }
                         }
@@ -170,9 +168,9 @@ public class EntityTrident extends EntityArrow {
         }
 
         else {
-            this.motionX = (double)((float)(raytraceResultIn.hitVec.x - this.posX));
-            this.motionY = (double)((float)(raytraceResultIn.hitVec.y - this.posY));
-            this.motionZ = (double)((float)(raytraceResultIn.hitVec.z - this.posZ));
+            this.motionX = (double)((float)(result.hitVec.x - this.posX));
+            this.motionY = (double)((float)(result.hitVec.y - this.posY));
+            this.motionZ = (double)((float)(result.hitVec.z - this.posZ));
             float f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
             this.posX -= this.motionX / (double)f2 * 0.05000000074505806D;
             this.posY -= this.motionY / (double)f2 * 0.05000000074505806D;
@@ -185,7 +183,7 @@ public class EntityTrident extends EntityArrow {
             if(!this.hasChanneled && EnchantHelper.hasChanneling(thrownStack)) { // Enchantment handling
                 Entity living = shootingEntity == null ? this : shootingEntity;
                 living.world.addWeatherEffect(new EntityLightningBolt(living.world, this.posX, this.posY, this.posZ, false));
-                this.playSound(Sounds.TRIDENT_CHANNELING, 5.0F, 1.0F);
+                this.playSound(Sounds.TRIDENT_CONDUCTIVIDAD, 5.0F, 1.0F);
                 this.hasChanneled = true;
             }
         }
@@ -211,7 +209,6 @@ public class EntityTrident extends EntityArrow {
                     double d0 = 0.02D * (double) loyalty;
                     Vec3d vec3d = new Vec3d(shootingEntity.posX - this.posX, shootingEntity.posY
                             + (double) shootingEntity.getEyeHeight() - this.posY, shootingEntity.posZ - this.posZ);
-                    //vec3d = vec3d.normalize();
                     this.motionX += vec3d.x * d0 - this.motionX * 0.05D;
                     this.motionY += vec3d.y * d0 - this.motionY * 0.05D;
                     this.motionZ += vec3d.z * d0 - this.motionZ * 0.05D;
@@ -223,7 +220,7 @@ public class EntityTrident extends EntityArrow {
 
         if(this.world.getClosestPlayerToEntity(this, 1.5D) == this.shootingEntity && isReturning) {
             if(this.pickupStatus == PickupStatus.ALLOWED) {
-                dropTridentStack(0.1F);
+                dropTridentStack();
             }
             this.setDead();
         }
@@ -250,10 +247,6 @@ public class EntityTrident extends EntityArrow {
         }
     }
 
-    public ItemStack getThrownStack() {
-        return thrownStack;
-    }
-
     private float getDamageForTrident() {
         float level = EnchantHelper.getImpaling(this.thrownStack);
         float damage = 8F;
@@ -264,11 +257,9 @@ public class EntityTrident extends EntityArrow {
         return damage;
     }
 
-    private void dropTridentStack(float offsetY) {
-        if(thrownStack == null || thrownStack.isEmpty()) {
-        }
-        else {
-            EntityItem entityitem = new EntityItem(this.world, this.posX, this.posY + (double)offsetY, this.posZ, thrownStack);
+    private void dropTridentStack() {
+        if(thrownStack != null && !thrownStack.isEmpty()) {
+            EntityItem entityitem = new EntityItem(this.world, this.posX, this.posY + (double) (float) 0.1, this.posZ, thrownStack);
             entityitem.setNoPickupDelay();
 
             if (captureDrops) {
@@ -278,5 +269,9 @@ public class EntityTrident extends EntityArrow {
                 this.world.spawnEntity(entityitem);
             }
         }
+    }
+
+    private static DamageSource causeTridentDamage(Entity trident, Entity indirectEntityIn) {
+        return (new EntityDamageSourceIndirect("trident", trident, indirectEntityIn)).setProjectile();
     }
 }

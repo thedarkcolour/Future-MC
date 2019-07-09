@@ -2,7 +2,6 @@ package com.herobrine.future.sound;
 
 import com.herobrine.future.init.Init;
 import net.minecraft.block.SoundType;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -14,19 +13,42 @@ public class Sounds {
     public static final SoundEvent TRIDENT_THROW = makeSoundEvent("throw_trident");
     public static final SoundEvent TRIDENT_PIERCE = makeSoundEvent("pierce_trident");
     public static final SoundEvent TRIDENT_IMPACT = makeSoundEvent("impact_trident");
-    public static final SoundEvent TRIDENT_CHANNELING = makeSoundEvent("channeling_trident");
+    public static final SoundEvent TRIDENT_CONDUCTIVIDAD = makeSoundEvent("channeling_trident");
     public static final SoundEvent TRIDENT_LOYALTY = makeSoundEvent("loyalty");
+    public static final SoundEvent TRIDENT_RIPTIDE_0 = makeSoundEvent("riptide_0");
+    public static final SoundEvent TRIDENT_RIPTIDE_1 = makeSoundEvent("riptide_1");
+    public static final SoundEvent TRIDENT_RIPTIDE_2 = makeSoundEvent("riptide_2");
     public static final SoundEvent CROSSBOW_CHARGE = makeSoundEvent("charge");
     public static final SoundEvent CROSSBOW_FIRE = makeSoundEvent("crossbow_fire");
     public static final SoundEvent CROSSBOW_QUICK_CHARGE = makeSoundEvent("quick_charge");
     public static final SoundEvent CROSSBOW_LOAD = makeSoundEvent("crossbow_load");
+    public static final SoundEvent CAMPFIRE_CRACKLE = makeSoundEvent("campfire_crackle");
     public static final SoundEvent GRINDSTONE_USE = makeSoundEvent("grindstone_use");
     public static final SoundEvent COMPOSTER_EMPTY = makeSoundEvent("composter_empty");
     public static final SoundEvent COMPOSTER_FILL = makeSoundEvent("composter_fill");
     public static final SoundEvent COMPOSTER_FILL_SUCCESS = makeSoundEvent("composter_fill_success");
     public static final SoundEvent COMPOSTER_READY = makeSoundEvent("composter_ready");
+    public static final SoundEvent PANDA_PRE_SNEEZE = makeSoundEvent("panda_pre_sneeze");
+    public static final SoundEvent PANDA_SNEEZE = makeSoundEvent("panda_sneeze");
+    public static final SoundEvent PANDA_AMBIENT = makeSoundEvent("panda_ambient");
+    public static final SoundEvent PANDA_DEATH = makeSoundEvent("panda_death");
+    public static final SoundEvent PANDA_EAT = makeSoundEvent("panda_eat");
+    public static final SoundEvent PANDA_STEP = makeSoundEvent("panda_step");
+    public static final SoundEvent PANDA_CANNOT_BREED = makeSoundEvent("panda_cannot_breed");
+    public static final SoundEvent PANDA_AGGRESSIVE_AMBIENT = makeSoundEvent("panda_aggressive_ambient");
+    public static final SoundEvent PANDA_WORRIED_AMBIENT = makeSoundEvent("panda_worried_ambient");
+    public static final SoundEvent PANDA_HURT = makeSoundEvent("panda_hurt");
+    public static final SoundEvent PANDA_BITE = makeSoundEvent("panda_bite");
+    public static final SoundEvent BAMBOO_STEP = makeSoundEvent("bamboo_step");
+    public static final SoundEvent BAMBOO_PLACE = makeSoundEvent("bamboo_place");
+    //public static final SoundEvent SCAFFOLD_BREAK = makeSoundEvent("scaffold_break");
+    //public static final SoundEvent SCAFFOLD_STEP = makeSoundEvent("scaffold_step");
+    //public static final SoundEvent SCAFFOLD_PLACE = makeSoundEvent("scaffold_place");
+    //public static final SoundEvent SCAFFOLD_FALL = makeSoundEvent("scaffold_fall");
+    //public static final SoundEvent SCAFFOLD_HIT = makeSoundEvent("scaffold_hit");
 
-    public static final SoundType BAMBOO = new SoundType(1.0F, 1.12F, SoundEvents.BLOCK_WOOD_BREAK, SoundEvents.BLOCK_WOOD_STEP, SoundEvents.BLOCK_WOOD_PLACE, SoundEvents.BLOCK_WOOD_HIT, SoundEvents.BLOCK_WOOD_FALL);
+    public static final SoundType BAMBOO = new SoundType(1.0F, 1.0F, BAMBOO_PLACE, BAMBOO_STEP, BAMBOO_PLACE, BAMBOO_PLACE, BAMBOO_STEP);
+    //public static final SoundType SCAFFOLDING = new SoundType(1.0F, 1.0F, SCAFFOLD_BREAK, SCAFFOLD_STEP, SCAFFOLD_PLACE, SCAFFOLD_HIT, SCAFFOLD_FALL);
 
 
     private static SoundEvent makeSoundEvent(String name) {
@@ -36,8 +58,12 @@ public class Sounds {
 
     @SubscribeEvent
     public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
-        event.getRegistry().registerAll(TRIDENT_THROW, TRIDENT_PIERCE, TRIDENT_IMPACT, TRIDENT_CHANNELING,
-                TRIDENT_LOYALTY, CROSSBOW_CHARGE, CROSSBOW_FIRE, CROSSBOW_QUICK_CHARGE, CROSSBOW_LOAD,
-                COMPOSTER_EMPTY, COMPOSTER_FILL, COMPOSTER_FILL_SUCCESS, COMPOSTER_READY);
+        event.getRegistry().registerAll(
+                TRIDENT_THROW, TRIDENT_PIERCE, TRIDENT_IMPACT, TRIDENT_CONDUCTIVIDAD, TRIDENT_LOYALTY, TRIDENT_RIPTIDE_0, TRIDENT_RIPTIDE_1, TRIDENT_RIPTIDE_2,
+                CROSSBOW_CHARGE, CROSSBOW_FIRE, CROSSBOW_QUICK_CHARGE, CROSSBOW_LOAD,
+                COMPOSTER_EMPTY, COMPOSTER_FILL, COMPOSTER_FILL_SUCCESS, COMPOSTER_READY,
+                PANDA_AGGRESSIVE_AMBIENT, PANDA_AMBIENT, PANDA_BITE, PANDA_CANNOT_BREED, PANDA_EAT, PANDA_HURT, PANDA_PRE_SNEEZE, PANDA_SNEEZE, PANDA_STEP, PANDA_WORRIED_AMBIENT,
+                CAMPFIRE_CRACKLE,
+                BAMBOO_PLACE, BAMBOO_STEP);
     }
 }

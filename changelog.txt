@@ -1,4 +1,5 @@
 Version 0.1.8 - Patch Update:
+ Bamboo - Now has its sounds from 1.14.
  Campfire - Now has crackling sounds.
  Composter - Now works on servers.
  Composter - Now has particle effects.

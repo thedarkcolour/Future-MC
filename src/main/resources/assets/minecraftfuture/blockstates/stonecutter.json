@@ -5,13 +5,9 @@
     },
     "variants": {
         "inventory": [{}],
-        "facing=north,old=false": { "model": "minecraftfuture:stonecutter" },
-        "facing=south,old=false": { "model": "minecraftfuture:stonecutter", "y": 180 },
-        "facing=west,old=false":  { "model": "minecraftfuture:stonecutter", "y": 270 },
-        "facing=east,old=false":  { "model": "minecraftfuture:stonecutter", "y": 90 },
-        "facing=north,old=true": { "model": "minecraftfuture:stonecutter_old" },
-        "facing=south,old=true": { "model": "minecraftfuture:stonecutter_old", "y": 180 },
-        "facing=west,old=true":  { "model": "minecraftfuture:stonecutter_old", "y": 270 },
-        "facing=east,old=true":  { "model": "minecraftfuture:stonecutter_old", "y": 90 }
+        "facing=north": { "model": "minecraftfuture:stonecutter" },
+        "facing=south": { "model": "minecraftfuture:stonecutter", "y": 180 },
+        "facing=west":  { "model": "minecraftfuture:stonecutter", "y": 270 },
+        "facing=east":  { "model": "minecraftfuture:stonecutter", "y": 90 }
     }
 }

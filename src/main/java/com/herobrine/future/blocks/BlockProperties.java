@@ -13,13 +13,12 @@ public class BlockProperties {
     }
 
     public BlockProperties(String registryName, Material material) {
-        this.registryName = registryName;
+        this(registryName);
         this.material = material;
     }
 
     public BlockProperties(String registryName, Material material, SoundType soundType) {
-        this.registryName = registryName;
-        this.material = material;
+        this(registryName, material);
         this.soundType = soundType;
     }
 

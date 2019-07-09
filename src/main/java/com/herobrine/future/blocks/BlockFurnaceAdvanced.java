@@ -31,6 +31,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Level;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvider {
@@ -241,6 +242,7 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
             return regName;
         }
 
+        @SuppressWarnings("BooleanMethodIsAlwaysInverted")
         public boolean canCraft(ItemStack stack) {
             if(stack.isEmpty()) return false;
 
@@ -255,11 +257,17 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
         }
 
         public boolean isFood(ItemStack stack) {
-            return stack.getItem() instanceof ItemFood;
+            if(stack.getItem() instanceof ItemFood) {
+                return !ValidItemExceptionsForSmoker.isBlacklisted(stack);
+            }
+            return ValidItemExceptionsForSmoker.isItemValid(stack);
         }
 
         public boolean isOre(ItemStack stack) {
-            return getOreName(stack).startsWith("ore");
+            if(getOreName(stack).startsWith("ore")) {
+                return !ValidItemExceptionsForBlastFurnace.isBlacklisted(stack);
+            }
+            return ValidItemExceptionsForBlastFurnace.isItemValid(stack);
         }
 
         private String getOreName(ItemStack stack) {
@@ -271,6 +279,67 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
                 return OreDictionary.getOreName(ids[0]);
             }
             return "";
+        }
+    }
+
+    public static class ValidItemExceptionsForSmoker {
+        private static final ArrayList<ItemStack> VALID_ITEMS = new ArrayList<>();
+        private static final ArrayList<ItemStack> BLACKLIST = new ArrayList<>();
+
+        public static boolean isItemValid(ItemStack stack) {
+            if(stack.isEmpty() || VALID_ITEMS.isEmpty()) {
+                return false;
+            }
+            return VALID_ITEMS.stream().anyMatch(stack1 -> stack1.isItemEqualIgnoreDurability(stack));
+        }
+
+        public static boolean isBlacklisted(ItemStack stack) {
+            return BLACKLIST.stream().anyMatch(stack1 -> stack1.isItemEqualIgnoreDurability(stack));
+        }
+
+        public static void addSmeltableItem(ItemStack stack) {
+            if(isBlacklisted(stack)) {
+                FutureMC.LOGGER.log(Level.WARN, "Tried to add valid Smoker input that was removed by ZenScript " + stack.getItem().getRegistryName());
+            }
+            VALID_ITEMS.add(stack);
+        }
+
+        public static void removeSmeltableItem(ItemStack stack) {
+            if(isItemValid(stack)) {
+                FutureMC.LOGGER.log(Level.WARN, "Tried to remove valid Smoker input that was added by ZenScript " + stack.getItem().getRegistryName());
+            }
+            BLACKLIST.add(stack);
+        }
+    }
+
+    public static class ValidItemExceptionsForBlastFurnace {
+        private static final ArrayList<ItemStack> VALID_ITEMS = new ArrayList<>();
+        private static final ArrayList<ItemStack> BLACKLIST = new ArrayList<>();
+
+        public static boolean isItemValid(ItemStack stack) {
+            if(stack.isEmpty() || VALID_ITEMS.isEmpty()) {
+                return false;
+            }
+            return VALID_ITEMS.stream().anyMatch(stack1 -> stack1.isItemEqualIgnoreDurability(stack));
+        }
+
+        public static boolean isBlacklisted(ItemStack stack) {
+            return BLACKLIST.stream().anyMatch(stack1 -> stack1.isItemEqualIgnoreDurability(stack));
+        }
+
+        public static void addSmeltableItem(ItemStack stack) {
+            if(isBlacklisted(stack)) {
+                FutureMC.LOGGER.log(Level.WARN, "Tried to add valid BlastFurnace input that was removed by ZenScript " + stack.getItem().getRegistryName());
+            }
+
+            VALID_ITEMS.add(stack);
+        }
+
+        public static void removeSmeltableItem(ItemStack stack) {
+            if(isItemValid(stack)) {
+                FutureMC.LOGGER.log(Level.WARN, "Tried to remove valid BlastFurnace input that was added by ZenScript " + stack.getItem().getRegistryName());
+            }
+            BLACKLIST.add(stack);
         }
     }
 }

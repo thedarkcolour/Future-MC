@@ -61,12 +61,10 @@ public class BlockBamboo extends BlockBase implements IPlantable, IGrowable {
         }
         if(worldIn.getBlockState(pos.up()).getBlock() == Init.BAMBOO_STALK) {
             if(worldIn.getBlockState(pos.up()).getValue(THICK) && !worldIn.getBlockState(pos).getValue(THICK)) {
-                if(worldIn instanceof World) {
-                    worldIn.setBlockState(pos, getDefaultState()
-                            .withProperty(THICK, true)
-                            .withProperty(MATURE, worldIn.getBlockState(pos).getValue(MATURE))
-                            .withProperty(LEAVES, worldIn.getBlockState(pos).getValue(LEAVES)));
-                }
+                worldIn.setBlockState(pos, getDefaultState()
+                        .withProperty(THICK, true)
+                        .withProperty(MATURE, worldIn.getBlockState(pos).getValue(MATURE))
+                        .withProperty(LEAVES, worldIn.getBlockState(pos).getValue(LEAVES)));
             }
         }
     }

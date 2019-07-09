@@ -1,7 +1,6 @@
 package com.herobrine.future.blocks;
 
 import com.herobrine.future.config.FutureConfig;
-import com.herobrine.future.init.Init;
 import net.minecraft.block.SoundType;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;

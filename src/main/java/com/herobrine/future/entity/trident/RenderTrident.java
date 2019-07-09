@@ -7,14 +7,11 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class RenderTrident extends Render<EntityTrident> {
     private final ModelTrident modelTrident = new ModelTrident();
 
-    public static final Factory FACTORY = new Factory();
-
-    private RenderTrident(RenderManager renderManager) {
+    public RenderTrident(RenderManager renderManager) {
         super(renderManager);
     }
 
@@ -66,12 +63,5 @@ public class RenderTrident extends Render<EntityTrident> {
     @Override
     protected ResourceLocation getEntityTexture(EntityTrident entity) {
         return ModelTrident.TEXTURE_LOCATION;
-    }
-
-    public static class Factory implements IRenderFactory<EntityTrident> {
-        @Override
-        public Render<? super EntityTrident> createRenderFor(RenderManager manager) {
-            return new RenderTrident(manager);
-        }
     }
 }

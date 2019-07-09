@@ -5,7 +5,7 @@ import com.herobrine.future.entity.Entities;
 import com.herobrine.future.entity.trident.EntityTrident;
 import com.herobrine.future.init.Init;
 import com.herobrine.future.items.OreDict;
-import com.herobrine.future.proxy.IProxy;
+import com.herobrine.future.proxy.CommonProxy;
 import com.herobrine.future.tile.GuiHandler;
 import com.herobrine.future.worldgen.WorldGenBamboo;
 import com.herobrine.future.worldgen.WorldGenFlower;
@@ -35,11 +35,11 @@ import org.apache.logging.log4j.Logger;
 )
 public class FutureMC {
     public static final String MODNAME = "Future MC";
-    public static final String VERSION = "0.1.6";
+    public static final String VERSION = "0.1.8";
     public static Logger LOGGER;
 
-    @SidedProxy(clientSide = "com.herobrine.future.proxy.ClientProxy", serverSide = "com.herobrine.future.proxy.ServerProxy")
-    public static IProxy proxy;
+    @SidedProxy(clientSide = "com.herobrine.future.proxy.ClientProxy", serverSide = "com.herobrine.future.proxy.CommonProxy")
+    public static CommonProxy proxy;
 
     @Mod.Instance
     public static FutureMC instance;
@@ -57,8 +57,6 @@ public class FutureMC {
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
         GameRegistry.addSmelting(new ItemStack(Blocks.STONE), new ItemStack(Init.SMOOTH_STONE), 0.1F);
         GameRegistry.addSmelting(new ItemStack(Blocks.QUARTZ_BLOCK), new ItemStack(Init.SMOOTH_QUARTZ), 0.1F);
-        OreDict.registerOres();
-        registerGenerators();
         if(FutureConfig.general.trident) BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Init.TRIDENT, new BehaviorProjectileDispense() {
             @Override
             protected IProjectile getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
@@ -67,6 +65,8 @@ public class FutureMC {
                 return trident;
             }
         });
+        OreDict.registerOres();
+        registerGenerators();
         proxy.init(e);
     }
 

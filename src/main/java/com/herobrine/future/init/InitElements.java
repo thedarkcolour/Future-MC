@@ -1,8 +1,8 @@
 package com.herobrine.future.init;
 
-import com.herobrine.future.items.ItemBamboo;
 import com.herobrine.future.tile.advancedfurnace.TileFurnaceAdvanced;
 import com.herobrine.future.tile.barrel.TileBarrel;
+import com.herobrine.future.tile.composter.TileComposter;
 import com.herobrine.future.tile.stonecutter.TileStonecutter;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -42,6 +42,7 @@ public class InitElements {
         if(general.grindstone) r.register(GRINDSTONE);
         //if(general.lectern) r.register(LECTERN);
         if(general.composter) r.register(COMPOSTER);
+        //if(general.scaffold) r.register(SCAFFOLDING);
 
         if(modFlowers.cornflower) r.register(CORNFLOWER);
         if(modFlowers.lily) r.register(LILY_OF_VALLEY);
@@ -73,6 +74,7 @@ public class InitElements {
         if(general.smithingTable) r.register(makeItemBlock(SMITHING_TABLE));
         if(general.grindstone) r.register(makeItemBlock(GRINDSTONE));
         if(general.composter) r.register(makeItemBlock(COMPOSTER));
+        // if(general.scaffold) r.register(makeItemBlock(SCAFFOLDING));
 
         if(general.trident) r.register(TRIDENT);
         //if(general.crossbow) r.register(CROSSBOW);
@@ -96,10 +98,11 @@ public class InitElements {
     }
 
     public static void registerTileEntities() {
-        if(general.stonecutter) GameRegistry.registerTileEntity(TileStonecutter.class, new ResourceLocation(MODID + ":containerStonecutter"));
-        if(general.barrel) GameRegistry.registerTileEntity(TileBarrel.class, new ResourceLocation(MODID + ":containerBarrel"));
-        if(general.blastFurnace) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileBlastFurnace.class, new ResourceLocation(MODID + ":containerBlastFurnace"));
-        if(general.smoker) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileSmoker.class, new ResourceLocation(MODID + ":containerSmoker"));
+        if(general.stonecutter) GameRegistry.registerTileEntity(TileStonecutter.class, new ResourceLocation(MODID, "containerStonecutter"));
+        if(general.barrel) GameRegistry.registerTileEntity(TileBarrel.class, new ResourceLocation(MODID, "containerBarrel"));
+        if(general.blastFurnace) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileBlastFurnace.class, new ResourceLocation(MODID, "containerBlastFurnace"));
+        if(general.smoker) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileSmoker.class, new ResourceLocation(MODID, "containerSmoker"));
+        if(general.composter) GameRegistry.registerTileEntity(TileComposter.class, new ResourceLocation(MODID, "composter"));
     }
 
     //@SubscribeEvent

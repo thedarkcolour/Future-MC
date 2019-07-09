@@ -83,7 +83,9 @@ container.Smoker=Ahumador
 container.Grindstone=Reparar y desencantar
 container.Stonecutter=Cortapiedras
 
+# Entidad
 entity.trident.name=Tridente
+entity.panda.name=Panda
 
 # Encantamientos
 enchantment.loyalty=Lealtad

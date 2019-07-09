@@ -19,6 +19,18 @@
         "subtitle": "minecraftfuture.subtitle.loyalty_trident",
         "sounds": [ "minecraftfuture:trident/loyalty" ]
     },
+    "riptide_0": {
+        "subtitle": "minecraftfuture.subtitle.riptide_0_trident",
+        "sounds": [ "minecraftfuture:trident/riptide_0" ]
+    },
+    "riptide_1": {
+        "subtitle": "minecraftfuture.subtitle.riptide_1_trident",
+        "sounds": [ "minecraftfuture:trident/riptide_1" ]
+    },
+    "riptide_2": {
+        "subtitle": "minecraftfuture.subtitle.riptide_2_trident",
+        "sounds": [ "minecraftfuture:trident/riptide_2" ]
+    },
     "charge": {
         "subtitle": "minecraftfuture.subtitle.crossbow_charge",
         "sounds": [ "minecraftfuture:crossbow/charge_success"]
@@ -62,5 +74,65 @@
     "barrel_close": {
         "subtitle": "minecraftfuture.subtitles.barrel_close",
         "sounds": [ "minecraftfuture:barrel/close"]
+    },
+    "panda_aggressive_ambient": {
+        "subtitle": "minecraftfuture.subtitles.panda_aggressive_ambient",
+        "sounds": [ "minecraftfuture:panda/aggressive_ambient_0", "minecraftfuture:panda/aggressive_ambient_1", "minecraftfuture:panda/aggressive_ambient_2", "minecraftfuture:panda/aggressive_ambient_3"]
+    },
+    "panda_ambient": {
+        "subtitle": "minecraftfuture.subtitles.panda_ambient",
+        "sounds": [ "minecraftfuture:panda/ambient_0", "minecraftfuture:panda/ambient_1", "minecraftfuture:panda/ambient_2", "minecraftfuture:panda/ambient_3"]
+    },
+    "panda_bite": {
+        "subtitle": "minecraftfuture.subtitles.panda_bite",
+        "sounds": [ "minecraftfuture:panda/bite_0", "minecraftfuture:panda/bite_1", "minecraftfuture:panda/bite_2"]
+    },
+    "panda_cannot_breed": {
+        "subtitle": "minecraftfuture.subtitles.panda_cannot_breed",
+        "sounds": [ "minecraftfuture:panda/cannot_breed_0", "minecraftfuture:panda/cannot_breed_1", "minecraftfuture:panda/cannot_breed_2", "minecraftfuture:panda/cannot_breed_3", "minecraftfuture:panda/cannot_breed_4"]
+    },
+    "panda_death": {
+        "subtitle": "minecraftfuture.subtitles.panda_death",
+        "sounds": [ "minecraftfuture:panda/death_0", "minecraftfuture:panda/death_1", "minecraftfuture:panda/death_2", "minecraftfuture:panda/death_3"]
+    },
+    "panda_eat": {
+        "subtitle": "minecraftfuture.subtitles.panda_eat",
+        "sounds": [ "minecraftfuture:panda/eat_0", "minecraftfuture:panda/eat_1", "minecraftfuture:panda/eat_2", "minecraftfuture:panda/eat_3", "minecraftfuture:panda/eat_4", "minecraftfuture:panda/eat_5", "minecraftfuture:panda/eat_6", "minecraftfuture:panda/eat_7", "minecraftfuture:panda/eat_8", "minecraftfuture:panda/eat_9", "minecraftfuture:panda/eat_10", "minecraftfuture:panda/eat_11"]
+    },
+    "panda_hurt": {
+        "subtitle": "minecraftfuture.subtitles.panda_hurt",
+        "sounds": [ "minecraftfuture:panda/hurt_0", "minecraftfuture:panda/hurt_1", "minecraftfuture:panda/hurt_2", "minecraftfuture:panda/hurt_3", "minecraftfuture:panda/hurt_4", "minecraftfuture:panda/hurt_5"]
+    },
+    "panda_pre_sneeze": {
+        "subtitle": "minecraftfuture.subtitles.panda_pre_sneeze",
+        "sounds": [ "minecraftfuture:panda/pre_sneeze"]
+    },
+    "panda_sneeze": {
+        "subtitle": "minecraftfuture.subtitles.panda_sneeze",
+        "sounds": [ "minecraftfuture:panda/sneeze_0", "minecraftfuture:panda/sneeze_1", "minecraftfuture:panda/sneeze_2"]
+    },
+    "panda_step": {
+        "subtitle": "minecraftfuture.subtitles.panda_step",
+        "sounds": [ "minecraftfuture:panda/step_0", "minecraftfuture:panda/step_1", "minecraftfuture:panda/step_2", "minecraftfuture:panda/step_3", "minecraftfuture:panda/step_4"]
+    },
+    "panda_worried_ambient": {
+        "subtitle": "minecraftfuture.subtitles.panda_worried_ambient",
+        "sounds": [ "minecraftfuture:panda/worried_ambient_0", "minecraftfuture:panda/worried_ambient_1", "minecraftfuture:panda/worried_ambient_2", "minecraftfuture:panda/worried_ambient_3", "minecraftfuture:panda/worried_ambient_4", "minecraftfuture:panda/worried_ambient_5"]
+    },
+    "campfire_crackle": {
+        "subtitle": "minecraftfuture.subtitles.campfire_crackle",
+        "sounds": [ "minecraftfuture:campfire/crackle_0", "minecraftfuture:campfire/crackle_1", "minecraftfuture:campfire/crackle_2", "minecraftfuture:campfire/crackle_3", "minecraftfuture:campfire/crackle_4", "minecraftfuture:campfire/crackle_5"]
+    },
+    "bamboo_step": {
+        "subtitle": "minecraftfuture.subtitles.bamboo_step",
+        "sounds": [
+            "minecraftfuture:bamboo/step_0", "minecraftfuture:bamboo/step_1", "minecraftfuture:bamboo/step_2", "minecraftfuture:bamboo/step_3", "minecraftfuture:bamboo/step_4", "minecraftfuture:bamboo/step_5"
+        ]
+    },
+    "bamboo_place": {
+        "subtitle": "minecraftfuture.subtitles.bamboo_place",
+        "sounds": [
+            "minecraftfuture:bamboo/place_0", "minecraftfuture:bamboo/place_1", "minecraftfuture:bamboo/place_2", "minecraftfuture:bamboo/place_3", "minecraftfuture:bamboo/place_4", "minecraftfuture:bamboo/place_5"
+        ]
     }
 }

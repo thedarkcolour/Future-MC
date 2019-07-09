@@ -40,11 +40,6 @@ public class FutureConfig {
         @RequiresMcRestart
         public boolean stonecutter = true;
 
-        @Name("Old Stonecutter Model")
-        @Comment("Whether the Stonecutter block uses the old model from Minecraft PE.")
-        @RequiresMcRestart
-        public boolean stonecutterOld = false;
-
         @Name("Loom")
         @Comment({"Whether the Loom block is added to the game.",
                 "This block is decorative only."})
@@ -140,7 +135,7 @@ public class FutureConfig {
         //public boolean crossbow = true;
 
         @Name("Bamboo")
-        @Comment("Whether the Bamboo plant is added to the game.")
+        @Comment("Whether the Bamboo plant is added to the game. If false, Pandas are also disabled.")
         @RequiresMcRestart
         public boolean bamboo = true;
 
@@ -158,6 +153,16 @@ public class FutureConfig {
         @Comment("Whether the Composter block is added to the game.")
         @RequiresMcRestart
         public boolean composter = true;
+
+        @Name("Panda")
+        @Comment("Whether the Panda animal is added to the game.")
+        @RequiresMcRestart
+        public boolean panda = true;
+
+        //@Name("Scaffolding")
+        //@Comment("Whether the Scaffolding block is added to the game.")
+        //@RequiresMcRestart
+        //public boolean scaffold = true;
     }
 
     public static class Flowers {

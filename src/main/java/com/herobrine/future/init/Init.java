@@ -8,7 +8,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber // TODO - Re-organize to match HardcoreDungeons
@@ -29,8 +28,10 @@ public final class Init {
     public static final BlockRotatable LOOM; // TODO - Loom functionality
     public static final BlockRotatable FLETCHING_TABLE;
     public static final BlockRotatable SMITHING_TABLE;
+    public static final BlockRotatable CARTOGRAPHY_TABLE;
     public static final BlockGrindstone GRINDSTONE;
     public static final BlockComposter COMPOSTER;
+    public static final BlockScaffold SCAFFOLDING;
 
     public static final BlockFlower LILY_OF_VALLEY;
     public static final BlockFlower CORNFLOWER;
@@ -84,8 +85,10 @@ public final class Init {
         LOOM = (BlockRotatable) new BlockRotatable(new BlockProperties("Loom", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FUTURE_MC_TAB);
         FLETCHING_TABLE = (BlockRotatable) new BlockRotatable(new BlockProperties("FletchingTable", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FUTURE_MC_TAB);
         SMITHING_TABLE = (BlockRotatable) new BlockRotatable(new BlockProperties("SmithingTable", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FUTURE_MC_TAB);
+        CARTOGRAPHY_TABLE = (BlockRotatable) new BlockRotatable(new BlockProperties("CartographyTable", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FUTURE_MC_TAB);
         GRINDSTONE = new BlockGrindstone();
         COMPOSTER = new BlockComposter();
+        SCAFFOLDING = new BlockScaffold();
 
         LILY_OF_VALLEY = new BlockLilyOfValley();
         CORNFLOWER = new BlockCornflower();
