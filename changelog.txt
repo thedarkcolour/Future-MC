@@ -1,5 +1,11 @@
 Version 0.1.8 - Patch Update:
  Campfire - Now has crackling sounds.
+ Composter - Now works on servers.
+ Composter - Now has particle effects.
+ Grindstone - No longer causes clientside crash when using on server.
+ Grindstone - Now works on servers.
+ Grindstone - Awards the correct amount of xp for enchantments, like in 1.14.
+ Pandas - Now properly attacks.
 
 Version 0.1.7 - Pandas! New things:
  *Pandas* - Rare animal from 1.14 whose favorite food is bamboo.
