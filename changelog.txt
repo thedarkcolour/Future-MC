@@ -1,3 +1,6 @@
+Version 0.1.8b - Quick Patch:
+ Bamboo Jungle - Added config option to re-enable the old Bamboo Jungles.
+
 Version 0.1.8 - Patch Update:
  Bamboo - Now has its sounds from 1.14.
  Campfire - Now has crackling sounds.
