@@ -1,5 +1,6 @@
 package com.herobrine.future.event;
 
+import com.herobrine.future.init.FutureConfig;
 import com.herobrine.future.init.Init;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityWither;
@@ -11,14 +12,16 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber
-public class WitherRoseEvent {
+public final class WitherRoseEvent {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onMobDeath(LivingDeathEvent event) {
-        Entity entity = event.getEntity();
-        Entity attacker = event.getSource().getTrueSource();
+        if(FutureConfig.modFlowers.witherRose) {
+            Entity entity = event.getEntity();
+            Entity attacker = event.getSource().getTrueSource();
 
-        if(attacker instanceof EntityWither) {
-            entity.getEntityWorld().spawnEntity(new EntityItem(entity.getEntityWorld(), entity.posX, entity.posY, entity.posZ, new ItemStack(Init.WITHER_ROSE, 1)));
+            if(attacker instanceof EntityWither) {
+                entity.getEntityWorld().spawnEntity(new EntityItem(entity.getEntityWorld(), entity.posX, entity.posY, entity.posZ, new ItemStack(Init.WITHER_ROSE, 1)));
+            }
         }
     }
 }

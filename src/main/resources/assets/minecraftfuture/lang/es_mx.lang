@@ -63,10 +63,10 @@ tile.minecraftfuture.FletchingTable.name=Mesa de flechas
 tile.minecraftfuture.SmithingTable.name=Mesa de herrería
 entity.ItemFrame.name=Marco
 
-item.minecraftfuture.DyeBlue.name=Tinte azul
-item.minecraftfuture.DyeWhite.name=Tinte blanco
-item.minecraftfuture.DyeBrown.name=Tinte café
-item.minecraftfuture.DyeBlack.name=Tinte negro
+item.minecraftfuture.dye.0.name=Tinte azul
+item.minecraftfuture.dye.1.name=Tinte blanco
+item.minecraftfuture.dye.2.name=Tinte café
+item.minecraftfuture.dye.3.name=Tinte negro
 
 # Ítems
 item.minecraftfuture.Trident.name=Tridente
@@ -82,6 +82,7 @@ container.BlastFurnace=Alto horno
 container.Smoker=Ahumador
 container.Grindstone=Reparar y desencantar
 container.Stonecutter=Cortapiedras
+container.Loom=Telar
 
 # Entidad
 entity.trident.name=Tridente

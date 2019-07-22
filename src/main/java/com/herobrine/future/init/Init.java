@@ -1,31 +1,32 @@
 package com.herobrine.future.init;
 
-import com.herobrine.future.blocks.*;
-import com.herobrine.future.config.FutureConfig;
-import com.herobrine.future.items.*;
-import com.herobrine.future.worldgen.WorldGenBamboo;
+import com.herobrine.future.FutureMC;
+import com.herobrine.future.world.biome.BiomeBambooJungle;
+import com.herobrine.future.block.*;
+import com.herobrine.future.item.*;
+import com.herobrine.future.world.gen.feature.FeatureBambooStalk;
+import com.herobrine.future.world.gen.feature.WorldGenBamboo;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 @Mod.EventBusSubscriber // TODO - Re-organize to match HardcoreDungeons
 public final class Init {
-    public static CreativeTabs FUTURE_MC_TAB = FutureConfig.general.useVanillaTabs ? null : new CreativeTabs("Future") {
-        @Override    //New creative tab
-        public ItemStack getTabIconItem() {
-            return new ItemStack(Init.LANTERN);
-        }
-    };
 
-    public static final String MODID = "minecraftfuture";
-
+    // BLOCK
     public static final BlockLantern LANTERN;
     public static final BlockStonecutter STONECUTTER; // TODO - Stonecutter functionality
     public static final BlockBarrel BARREL;
     public static final BlockFurnaceAdvanced SMOKER, BLAST_FURNACE; // TODO - JEI compat
-    public static final BlockRotatable LOOM; // TODO - Loom functionality
+    public static final BlockLoom LOOM;
     public static final BlockRotatable FLETCHING_TABLE;
     public static final BlockRotatable SMITHING_TABLE;
     public static final BlockRotatable CARTOGRAPHY_TABLE;
@@ -65,15 +66,17 @@ public final class Init {
     public static final BlockBase SMOOTH_QUARTZ;
 
     public static final ItemDye DYES;
+    public static final ItemBannerPattern PATTERNS;
     public static final ItemTrident TRIDENT;
     public static final ItemCrossBow CROSSBOW; // TODO - Crossbow shooting
     public static final ItemSuspiciousStew SUSPICIOUS_STEW;
     public static final ItemBerry SWEET_BERRY;
 
-    //public static final Biome BIOME_BAMBOO_JUNGLE; TODO - Bamboo Forest
-    public static final WorldGenBamboo BAMBOO_FEATURE;
+    public static final Biome BIOME_BAMBOO_JUNGLE; // TODO - Bamboo Forest
+    public static final FeatureBambooStalk BAMBOO_FEATURE;
     public static final ItemBamboo BAMBOO_ITEM;
 
+    public static final boolean isDebug;
 
     static {  // references
         LANTERN = new BlockLantern();
@@ -82,10 +85,10 @@ public final class Init {
         BARREL = new BlockBarrel();
         SMOKER = new BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.SMOKER);
         BLAST_FURNACE = new BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE);
-        LOOM = (BlockRotatable) new BlockRotatable(new BlockProperties("Loom", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FUTURE_MC_TAB);
-        FLETCHING_TABLE = (BlockRotatable) new BlockRotatable(new BlockProperties("FletchingTable", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FUTURE_MC_TAB);
-        SMITHING_TABLE = (BlockRotatable) new BlockRotatable(new BlockProperties("SmithingTable", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FUTURE_MC_TAB);
-        CARTOGRAPHY_TABLE = (BlockRotatable) new BlockRotatable(new BlockProperties("CartographyTable", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FUTURE_MC_TAB);
+        LOOM = new BlockLoom();
+        FLETCHING_TABLE = (BlockRotatable) new BlockRotatable(new BlockProperties("FletchingTable", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.CREATIVE_TAB);
+        SMITHING_TABLE = (BlockRotatable) new BlockRotatable(new BlockProperties("SmithingTable", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.CREATIVE_TAB);
+        CARTOGRAPHY_TABLE = (BlockRotatable) new BlockRotatable(new BlockProperties("CartographyTable", Material.WOOD, SoundType.WOOD)).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.CREATIVE_TAB);
         GRINDSTONE = new BlockGrindstone();
         COMPOSTER = new BlockComposter();
         SCAFFOLDING = new BlockScaffold();
@@ -99,6 +102,7 @@ public final class Init {
         BAMBOO_ITEM = new ItemBamboo();
 
         DYES = new ItemDye();
+        PATTERNS = new ItemBannerPattern();
         TRIDENT = new ItemTrident();
         CROSSBOW = new ItemCrossBow("Crossbow");
         SUSPICIOUS_STEW = new ItemSuspiciousStew();
@@ -126,12 +130,24 @@ public final class Init {
 
         //ItemNewSlab.Slabs.initSlab();
 
-        //BUBBLE_COLUMN = new BlockBubbleColumn();
-        //SOULSAND_OVERRIDE = new BlockBubbleColumn.BlockSoulsandOverride();
-
-        SMOOTH_STONE = (BlockBase) new BlockBase(new BlockProperties("SmoothStone")).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : Init.FUTURE_MC_TAB);
-        SMOOTH_QUARTZ = (BlockBase) new BlockBase(new BlockProperties("SmoothQuartz")).setHardness(2.0F).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : Init.FUTURE_MC_TAB);
+        SMOOTH_STONE = (BlockBase) new BlockBase(new BlockProperties("SmoothStone")).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : FutureMC.CREATIVE_TAB);
+        SMOOTH_QUARTZ = (BlockBase) new BlockBase(new BlockProperties("SmoothQuartz")).setHardness(2.0F).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : FutureMC.CREATIVE_TAB);
 
         BAMBOO_FEATURE = WorldGenBamboo.BAMBOO_FEATURE;
+        BIOME_BAMBOO_JUNGLE = new BiomeBambooJungle(false);
+
+        boolean thrown = false;
+
+        try {
+            new FileReader("debug_future_mc.txt");
+        } catch (FileNotFoundException e) {
+            thrown = true;
+        }
+
+        isDebug = !thrown;
+    }
+
+    public static boolean isCharmItemLoaded(String registryName) {
+        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation("charm:" + registryName)) != Blocks.AIR;
     }
 }

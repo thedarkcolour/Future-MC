@@ -1,8 +1,8 @@
 package com.herobrine.future.compat.crafttweaker;
 
 import com.herobrine.future.FutureMC;
-import com.herobrine.future.blocks.BlockComposter;
-import com.herobrine.future.tile.composter.TileComposter;
+import com.herobrine.future.block.BlockComposter;
+import com.herobrine.future.tile.TileComposter;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;

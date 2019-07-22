@@ -1,7 +1,7 @@
 package com.herobrine.future.compat.crafttweaker;
 
 import com.herobrine.future.FutureMC;
-import com.herobrine.future.blocks.BlockFurnaceAdvanced;
+import com.herobrine.future.block.BlockFurnaceAdvanced;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;

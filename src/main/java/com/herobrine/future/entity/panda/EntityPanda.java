@@ -324,7 +324,11 @@ public class EntityPanda extends EntityAnimal {
         }
 
         if (this.func_213564_eh()) {
-            this.func_213535_ey();
+            try {
+                this.func_213535_ey();
+            } catch (NoSuchMethodError ignored) {
+                //  😈 😈 😈
+            }
         } else {
             this.field_213608_bz = 0;
         }

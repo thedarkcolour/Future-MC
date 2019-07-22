@@ -1,8 +1,8 @@
 package com.herobrine.future.enchantment;
 
-import com.herobrine.future.config.FutureConfig;
-import com.herobrine.future.items.ItemCrossBow;
-import com.herobrine.future.items.ItemTrident;
+import com.herobrine.future.init.FutureConfig;
+import com.herobrine.future.item.ItemCrossBow;
+import com.herobrine.future.item.ItemTrident;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraftforge.common.util.EnumHelper;

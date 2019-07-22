@@ -148,9 +148,11 @@ public class EntityTrident extends EntityArrow {
 
                         if(!enchants.isEmpty()) {
                             if (enchants.get(Enchantments.CONDUCTIVIDAD) != null) {
-                                shootingEntity.world.addWeatherEffect(new EntityLightningBolt(shootingEntity.world, this.posX, this.posY, this.posZ, false));
-                                this.playSound(Sounds.TRIDENT_CONDUCTIVIDAD, 5.0F, 1.0F);
-                                this.hasChanneled = true;
+                                if(world.isThundering()) {
+                                    shootingEntity.world.addWeatherEffect(new EntityLightningBolt(shootingEntity.world, this.posX, this.posY, this.posZ, false));
+                                    this.playSound(Sounds.TRIDENT_CONDUCTIVIDAD, 5.0F, 1.0F);
+                                    this.hasChanneled = true;
+                                }
                             }
                         }
                     }

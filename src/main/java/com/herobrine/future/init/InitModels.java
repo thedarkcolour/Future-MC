@@ -1,15 +1,26 @@
 package com.herobrine.future.init;
 
+import com.herobrine.future.client.Modeled;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.herobrine.future.config.FutureConfig.general;
-import static com.herobrine.future.config.FutureConfig.modFlowers;
-import static com.herobrine.future.init.Init.*;
-
 @SideOnly(Side.CLIENT)
-public class InitModels {
+public final class InitModels {
     public static void initModel() {
+        for(Modeled modeled : InitElements.MODELED) {
+            if(modeled instanceof Item) {
+                if(ForgeRegistries.ITEMS.getValue(((Item) modeled).getRegistryName()) != null) {
+                    modeled.model();
+                }
+            } else {
+                if(ForgeRegistries.BLOCKS.getValue(((Block) modeled).getRegistryName()) != null) {
+                    modeled.model();
+                }
+            }
+        }/*
         if(general.lantern) LANTERN.model(); // Blocks
         if(general.barrel) BARREL.model();
         if(general.stonecutter) STONECUTTER.model();
@@ -62,7 +73,8 @@ public class InitModels {
 
         if(modFlowers.dyes) DYES.model();    // Items
         if(general.trident) TRIDENT.model();
+        if(general.loom) PATTERNS.model();
         //if(general.crossbow) CROSSBOW.model();
-        if(modFlowers.suspiciousStew) SUSPICIOUS_STEW.model();
+        if(modFlowers.suspiciousStew) SUSPICIOUS_STEW.model();*/
     }
 }

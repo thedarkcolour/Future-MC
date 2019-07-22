@@ -1,8 +1,8 @@
 package com.herobrine.future.event;
 
 import com.herobrine.future.FutureMC;
-import com.herobrine.future.blocks.BlockStrippedLog;
-import com.herobrine.future.config.FutureConfig;
+import com.herobrine.future.block.BlockStrippedLog;
+import com.herobrine.future.init.FutureConfig;
 import com.herobrine.future.init.Init;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNewLog;

@@ -64,10 +64,10 @@ tile.minecraftfuture.SmithingTable.name=Smithing Table
 entity.ItemFrame.name=Item Frame
 
 # Crafting Materials
-item.minecraftfuture.DyeBlue.name=Blue Dye
-item.minecraftfuture.DyeWhite.name=White Dye
-item.minecraftfuture.DyeBrown.name=Brown Dye
-item.minecraftfuture.DyeBlack.name=Black Dye
+item.minecraftfuture.dye.0.name=Blue Dye
+item.minecraftfuture.dye.1.name=White Dye
+item.minecraftfuture.dye.2.name=Brown Dye
+item.minecraftfuture.dye.3.name=Black Dye
 
 # Items
 item.minecraftfuture.Trident.name=Trident
@@ -76,6 +76,12 @@ item.minecraftfuture.Crossbow_Loaded.name=Arrow Loaded Crossbow
 item.minecraftfuture.SuspiciousStew.name=Suspicious Stew
 item.minecraftfuture.SweetBerry.name=Sweet Berries
 item.minecraftfuture.Bamboo.name=Bamboo
+item.minecraftfuture.banner_pattern.name=Banner Pattern
+item.minecraftfuture.banner_pattern.flower=Flower Charge
+item.minecraftfuture.banner_pattern.creeper=Creeper Charge
+item.minecraftfuture.banner_pattern.skull=Skull Charge
+item.minecraftfuture.banner_pattern.thing=Thing
+item.minecraftfuture.banner_pattern.globe=Globe
 
 # GUI
 container.Barrel=Barrel
@@ -83,6 +89,7 @@ container.BlastFurnace=Blast Furnace
 container.Smoker=Smoker
 container.Grindstone=Repair & Disenchant
 container.Stonecutter=Stonecutter
+container.Loom=Loom
 
 # Entity
 entity.trident.name=Trident

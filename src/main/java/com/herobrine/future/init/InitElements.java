@@ -1,9 +1,13 @@
 package com.herobrine.future.init;
 
-import com.herobrine.future.tile.advancedfurnace.TileFurnaceAdvanced;
-import com.herobrine.future.tile.barrel.TileBarrel;
-import com.herobrine.future.tile.composter.TileComposter;
-import com.herobrine.future.tile.stonecutter.TileStonecutter;
+import com.herobrine.future.FutureMC;
+import com.herobrine.future.client.Modeled;
+import com.herobrine.future.tile.TileBarrel;
+import com.herobrine.future.tile.TileComposter;
+import com.herobrine.future.tile.TileFurnaceAdvanced;
+import com.herobrine.future.tile.TileStonecutter;
+import com.herobrine.future.world.gen.feature.WorldGenBamboo;
+import com.herobrine.future.world.gen.feature.WorldGenFlower;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -20,14 +24,16 @@ import net.minecraftforge.registries.IForgeRegistry;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.herobrine.future.config.FutureConfig.general;
-import static com.herobrine.future.config.FutureConfig.modFlowers;
+import static com.herobrine.future.init.FutureConfig.general;
+import static com.herobrine.future.init.FutureConfig.modFlowers;
 import static com.herobrine.future.init.Init.*;
 import static net.minecraftforge.common.BiomeDictionary.Type;
 
 @SuppressWarnings("ConstantConditions")
 @Mod.EventBusSubscriber
-public class InitElements {
+public final class InitElements {
+    public static ArrayList<Modeled> MODELED = new ArrayList<>();
+
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         IForgeRegistry<Block> r = event.getRegistry();
@@ -42,7 +48,7 @@ public class InitElements {
         if(general.grindstone) r.register(GRINDSTONE);
         //if(general.lectern) r.register(LECTERN);
         if(general.composter) r.register(COMPOSTER);
-        //if(general.scaffold) r.register(SCAFFOLDING);
+        if(isDebug) r.register(SCAFFOLDING);
 
         if(modFlowers.cornflower) r.register(CORNFLOWER);
         if(modFlowers.lily) r.register(LILY_OF_VALLEY);
@@ -66,7 +72,7 @@ public class InitElements {
 
         if(general.lantern) r.register(makeItemBlock(LANTERN));
         if(general.stonecutter) r.register(makeItemBlock(STONECUTTER));
-        if(general.barrel && !InitHelper.isCharmItemLoaded("barrel")) r.register(makeItemBlock(BARREL));
+        if(general.barrel && !Init.isCharmItemLoaded("barrel")) r.register(makeItemBlock(BARREL));
         if(general.blastFurnace) r.register(makeItemBlock(BLAST_FURNACE));
         if(general.smoker) r.register(makeItemBlock(SMOKER));
         if(general.loom) r.register(makeItemBlock(LOOM));
@@ -74,7 +80,7 @@ public class InitElements {
         if(general.smithingTable) r.register(makeItemBlock(SMITHING_TABLE));
         if(general.grindstone) r.register(makeItemBlock(GRINDSTONE));
         if(general.composter) r.register(makeItemBlock(COMPOSTER));
-        // if(general.scaffold) r.register(makeItemBlock(SCAFFOLDING));
+        if(isDebug) r.register(makeItemBlock(SCAFFOLDING));
 
         if(general.trident) r.register(TRIDENT);
         //if(general.crossbow) r.register(CROSSBOW);
@@ -83,6 +89,7 @@ public class InitElements {
         if(modFlowers.cornflower) r.register(makeItemBlock(CORNFLOWER));
         if(modFlowers.witherRose) r.register(makeItemBlock(WITHER_ROSE));
         if(modFlowers.suspiciousStew) r.register(SUSPICIOUS_STEW);
+        if(general.loom && isDebug) r.register(PATTERNS);
         if(modFlowers.dyes) r.register(DYES);
         if(general.bamboo) r.register(BAMBOO_ITEM);
         if(general.berryBush) r.register(SWEET_BERRY);
@@ -98,16 +105,16 @@ public class InitElements {
     }
 
     public static void registerTileEntities() {
-        if(general.stonecutter) GameRegistry.registerTileEntity(TileStonecutter.class, new ResourceLocation(MODID, "containerStonecutter"));
-        if(general.barrel) GameRegistry.registerTileEntity(TileBarrel.class, new ResourceLocation(MODID, "containerBarrel"));
-        if(general.blastFurnace) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileBlastFurnace.class, new ResourceLocation(MODID, "containerBlastFurnace"));
-        if(general.smoker) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileSmoker.class, new ResourceLocation(MODID, "containerSmoker"));
-        if(general.composter) GameRegistry.registerTileEntity(TileComposter.class, new ResourceLocation(MODID, "composter"));
+        if(general.stonecutter) GameRegistry.registerTileEntity(TileStonecutter.class, new ResourceLocation(FutureMC.MODID, "containerStonecutter"));
+        if(general.barrel) GameRegistry.registerTileEntity(TileBarrel.class, new ResourceLocation(FutureMC.MODID, "containerBarrel"));
+        if(general.blastFurnace) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileBlastFurnace.class, new ResourceLocation(FutureMC.MODID, "containerBlastFurnace"));
+        if(general.smoker) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileSmoker.class, new ResourceLocation(FutureMC.MODID, "containerSmoker"));
+        if(general.composter) GameRegistry.registerTileEntity(TileComposter.class, new ResourceLocation(FutureMC.MODID, "composter"));
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public static void registerBiomes(RegistryEvent.Register<Biome> event) {
-
+        if(general.addLegacyBambooJungle) registerBiome(event, BIOME_BAMBOO_JUNGLE, "bamboo_forest", BiomeManager.BiomeType.WARM, Type.JUNGLE, Type.HOT, Type.WET, Type.DENSE, Type.RARE, Type.FOREST);
     }
 
     public static void registerBiome(RegistryEvent.Register<Biome> event, Biome biome, String name, BiomeManager.BiomeType type, Type... types) {
@@ -119,7 +126,7 @@ public class InitElements {
     }
 
     public static Item makeItemBlock(Block block) {
-        return new ItemBlock(block).setRegistryName(block.getRegistryName());
+        return new ItemModeledBlock(block).setRegistryName(block.getRegistryName());
     }
 
     public static Item[] makeItemBlocks(Block... blocks) {
@@ -129,5 +136,30 @@ public class InitElements {
             list.add(makeItemBlock(block));
         }
         return list.toArray(new Item[0]);
+    }
+
+    public static void registerGenerators() {
+        if(modFlowers.lily && modFlowers.lilyGen) {
+            GameRegistry.registerWorldGenerator(new WorldGenFlower(LILY_OF_VALLEY), 0);
+        }
+
+        if(modFlowers.cornflower && modFlowers.cornflowerGen) {
+            GameRegistry.registerWorldGenerator(new WorldGenFlower(CORNFLOWER), 0);
+        }
+
+        if(general.berryBush && general.berryBushGen) {
+            GameRegistry.registerWorldGenerator(new WorldGenFlower(BERRY_BUSH), 0);
+        }
+
+        if(general.bamboo && general.bambooSpawnsInJungles) {
+            GameRegistry.registerWorldGenerator(new WorldGenBamboo(), 0);
+        }
+    }
+
+    public static class ItemModeledBlock extends ItemBlock implements Modeled {
+        public ItemModeledBlock(Block block) {
+            super(block);
+            addModel();
+        }
     }
 }

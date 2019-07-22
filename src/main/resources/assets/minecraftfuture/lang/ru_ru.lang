@@ -64,10 +64,10 @@ tile.minecraftfuture.SmithingTable.name=Кузнечный стол
 entity.ItemFrame.name=Предметная рамка
 
 # Материалы крафта
-item.minecraftfuture.DyeBlue.name=Синий краситель
-item.minecraftfuture.DyeWhite.name=Белая краска
-item.minecraftfuture.DyeBrown.name=Коричневая краска
-item.minecraftfuture.DyeBlack.name=Черный краситель
+item.minecraftfuture.dye.0.name=Синий краситель
+item.minecraftfuture.dye.1.name=Белая краска
+item.minecraftfuture.dye.2.name=Коричневая краска
+item.minecraftfuture.dye.3.name=Черный краситель
 
 # Итемы
 item.minecraftfuture.Trident.name=Трезубец
