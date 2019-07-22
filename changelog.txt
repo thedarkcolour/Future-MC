@@ -1,8 +1,9 @@
-Version 0.1.9 - Loom?:
- *Globe Banner Pattern* - Added the globe banner pattern from 1.14.
- *Loom* - Loom functionality is being worked on.
- Containers - Moved methods to base classes.
- Added a way to show incomplete features of the mod, such as the Scaffolding block and Loom gui.
+Version 0.1.9 - Patch Update:
+ Grindstone - Fixed dupe glitch.
+ Grindstone - Fixed durability issue with enchanted items.
+ Trident - Fixed NPE when disabled.
+ Trident - Tweaked Channeling enchantment to behave like in 1.13.
+ Added a way to show incomplete features of the mod, such as the Scaffolding block and Loom gui. Check the README on GitHub!
 
 Version 0.1.8b - Quick Patch:
  Bamboo Jungle - Added config option to re-enable the old Bamboo Jungles.
