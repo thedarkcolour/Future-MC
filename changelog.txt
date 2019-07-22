@@ -1,3 +1,8 @@
+Version 0.1.9 - Loom?:
+ *Globe Banner Pattern* - Added the globe banner pattern from 1.14.
+ *Loom* - Loom functionality is being worked on.
+ Containers - Moved methods to base classes.
+
 Version 0.1.8b - Quick Patch:
  Bamboo Jungle - Added config option to re-enable the old Bamboo Jungles.
 
