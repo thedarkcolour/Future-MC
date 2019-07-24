@@ -1,3 +1,7 @@
+Version 0.1.9b - Patch Update:
+ Grindstone - Actually fixed the dupe glitch this time.
+ Panda - Now retaliates like in 1.14.
+
 Version 0.1.9 - Patch Update:
  Grindstone - Fixed dupe glitch.
  Grindstone - Fixed durability issue with enchanted items.
