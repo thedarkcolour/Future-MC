@@ -1,3 +1,8 @@
+Version 0.1.10 - It's been a while:
+ *Blue Ice* - Most slippery type of ice in the game.
+ Dyes - Fixed names being switched between blue dye and white dye.
+ Composter - CraftTweaker now uses IIngredients instead of IItemStacks.
+
 Version 0.1.9b - Patch Update:
  Grindstone - Actually fixed the dupe glitch this time.
  Panda - Now retaliates like in 1.14.
