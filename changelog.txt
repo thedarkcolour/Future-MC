@@ -1,3 +1,7 @@
+Version 0.1.11 - Campfire functionality? New things:
+ Trident - Now properly travels through water.
+ Trident - No longer "bounces" in place when hitting certain blocks like snow layers.
+
 Version 0.1.10 - It's been a while:
  *Blue Ice* - Most slippery type of ice in the game.
  Dyes - Fixed names being switched between blue dye and white dye.
