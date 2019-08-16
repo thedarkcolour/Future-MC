@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class BlockFlower extends BlockBush {
     public BlockFlower(String regName) {
-        setUnlocalizedName(FutureMC.MODID + "." + regName);
+        setUnlocalizedName(FutureMC.ID + "." + regName);
         setRegistryName(regName);
         setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.CREATIVE_TAB);
     }

@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 public class ItemBerry extends ItemFood implements Modeled {
     public ItemBerry() {
         super(2, 0.2F, false);
-        setUnlocalizedName(FutureMC.MODID + ".SweetBerry");
+        setUnlocalizedName(FutureMC.ID + ".SweetBerry");
         setRegistryName("SweetBerry");
         setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.FOOD : FutureMC.CREATIVE_TAB);
         addModel();

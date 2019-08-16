@@ -125,14 +125,14 @@
     },
     "bamboo_step": {
         "subtitle": "minecraftfuture.subtitles.bamboo_step",
-        "sounds": [
-            "minecraftfuture:bamboo/step_0", "minecraftfuture:bamboo/step_1", "minecraftfuture:bamboo/step_2", "minecraftfuture:bamboo/step_3", "minecraftfuture:bamboo/step_4", "minecraftfuture:bamboo/step_5"
-        ]
+        "sounds": [ "minecraftfuture:bamboo/step_0", "minecraftfuture:bamboo/step_1", "minecraftfuture:bamboo/step_2", "minecraftfuture:bamboo/step_3", "minecraftfuture:bamboo/step_4", "minecraftfuture:bamboo/step_5"]
     },
     "bamboo_place": {
         "subtitle": "minecraftfuture.subtitles.bamboo_place",
-        "sounds": [
-            "minecraftfuture:bamboo/place_0", "minecraftfuture:bamboo/place_1", "minecraftfuture:bamboo/place_2", "minecraftfuture:bamboo/place_3", "minecraftfuture:bamboo/place_4", "minecraftfuture:bamboo/place_5"
-        ]
+        "sounds": [ "minecraftfuture:bamboo/place_0", "minecraftfuture:bamboo/place_1", "minecraftfuture:bamboo/place_2", "minecraftfuture:bamboo/place_3", "minecraftfuture:bamboo/place_4", "minecraftfuture:bamboo/place_5"]
+    },
+    "bell_ring": {
+        "subtitle": "minecraftfuture.subtitles.bell_ring",
+        "sounds": [ "minecraftfuture:bell/ring_0", "minecraftfuture:bell/ring_1"]
     }
 }

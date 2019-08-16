@@ -31,7 +31,7 @@ import net.minecraft.world.World;
 public class ItemTrident extends Item implements Modeled {
     public ItemTrident() {
         setRegistryName("Trident");
-        setUnlocalizedName(FutureMC.MODID + ".Trident");
+        setUnlocalizedName(FutureMC.ID + ".Trident");
         setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.COMBAT : FutureMC.CREATIVE_TAB);
         setMaxDamage(250);
         setMaxStackSize(1);
@@ -95,7 +95,7 @@ public class ItemTrident extends Item implements Modeled {
                         f2 = f2 * (f6 / f5);
                         f3 = f3 * (f6 / f5);
                         f4 = f4 * (f6 / f5);
-                        entityPlayer.addVelocity((double)f2, (double)f3, (double)f4);
+                        entityPlayer.addVelocity(f2, f3, f4);
                         if (j >= 3) {
                             soundevent = Sounds.TRIDENT_RIPTIDE_2;
                         } else if (j == 2) {

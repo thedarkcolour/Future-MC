@@ -21,7 +21,7 @@ public class ItemDye extends Item implements Modeled {
     public ItemDye() {
         setHasSubtypes(true);
         setMaxDamage(0);
-        setUnlocalizedName(FutureMC.MODID + "." + "dye");
+        setUnlocalizedName(FutureMC.ID + "." + "dye");
         setRegistryName("dye");
         setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.MISC : FutureMC.CREATIVE_TAB);
         addModel();

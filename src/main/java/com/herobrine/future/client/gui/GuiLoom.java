@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class GuiLoom extends GuiContainer {
-    private static final ResourceLocation background = new ResourceLocation(FutureMC.MODID,"textures/gui/loom.png");
+    private static final ResourceLocation background = new ResourceLocation(FutureMC.ID,"textures/gui/loom.png");
     private static final int field_214114_l = (BannerPattern.values().length - 5 - 1 + 4 - 1) / 4;
     private final ResourceLocation[] DESIGNS = new ResourceLocation[BannerPattern.values().length];
     private final ContainerLoom container;

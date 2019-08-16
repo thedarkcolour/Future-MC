@@ -98,9 +98,7 @@ public class ContainerGrindstone extends Container {
 
     @Override
     public void onContainerClosed(EntityPlayer playerIn) {
-        if(!playerInv.getItemStack().isEmpty()) {
-            playerIn.entityDropItem(playerInv.getItemStack(), 0.5F);
-        }
+        super.onContainerClosed(playerIn);
         if(!world.isRemote) { // Mostly copied from Container#clearContainer
             if(!playerIn.isEntityAlive() || playerIn instanceof EntityPlayerMP && ((EntityPlayerMP)playerIn).hasDisconnected()) {
                 for(int i = 0; i < input.getSlots(); i++) {

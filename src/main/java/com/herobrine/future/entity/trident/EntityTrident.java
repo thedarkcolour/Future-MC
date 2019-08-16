@@ -1,6 +1,5 @@
 package com.herobrine.future.entity.trident;
 
-import com.google.common.base.Predicate;
 import com.herobrine.future.FutureMC;
 import com.herobrine.future.enchantment.EnchantHelper;
 import com.herobrine.future.enchantment.Enchantments;
@@ -13,7 +12,6 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketChangeGameState;
@@ -28,8 +26,9 @@ import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
-public class EntityTrident extends EntityArrow {
+public class EntityTrident extends EntityModArrow {
     private static final Predicate<Entity> ARROW_TARGETS = entity -> EntitySelectors.NOT_SPECTATING.test(entity) && EntitySelectors.IS_ALIVE.test(entity) && entity.canBeCollidedWith();
     private ItemStack thrownStack;
     private boolean hasChanneled;
@@ -71,7 +70,7 @@ public class EntityTrident extends EntityArrow {
             return null;
         }
         Entity entity = null;
-        List<Entity> list = this.world.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox().expand(this.motionX, this.motionY, this.motionZ).grow(1.0D), ARROW_TARGETS::test );
+        List<Entity> list = this.world.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox().expand(this.motionX, this.motionY, this.motionZ).grow(1.0D), ARROW_TARGETS::test);
         double d0 = 0.0D;
 
         for (Entity entity1 : list) {
@@ -110,18 +109,17 @@ public class EntityTrident extends EntityArrow {
     protected void onHit(RayTraceResult result) {
         Entity entity = result.entityHit;
 
-        if(entity != null) {
+        if (entity != null) {
             DamageSource source;
 
-            if(!(this.shootingEntity instanceof EntityPlayer)) {
+            if (!(this.shootingEntity instanceof EntityPlayer)) {
                 source = causeTridentDamage(this, this);
-            }
-            else {
+            } else {
                 source = causeTridentDamage(this, shootingEntity);
             }
 
-            if(entity.attackEntityFrom(source, getDamageForTrident())) {
-                if(entity instanceof EntityLivingBase) {
+            if (entity.attackEntityFrom(source, getDamageForTrident())) {
+                if (entity instanceof EntityLivingBase) {
                     EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
 
                     if(this.shootingEntity instanceof EntityLivingBase) {
@@ -157,22 +155,18 @@ public class EntityTrident extends EntityArrow {
                         }
                     }
                 }
-            }
-            else {
-
+            } else {
                 if (!this.world.isRemote && this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ < 0.0010000000474974513D) {
-                    if (this.pickupStatus == EntityArrow.PickupStatus.ALLOWED) {
+                    if (this.pickupStatus == EntityModArrow.PickupStatus.ALLOWED) {
                         this.entityDropItem(this.getArrowStack(), 0.1F);
                     }
                     this.setDead();
                 }
             }
-        }
-
-        else {
-            this.motionX = (double)((float)(result.hitVec.x - this.posX));
-            this.motionY = (double)((float)(result.hitVec.y - this.posY));
-            this.motionZ = (double)((float)(result.hitVec.z - this.posZ));
+        } else {
+            this.motionX = (float)(result.hitVec.x - this.posX);
+            this.motionY = (float)(result.hitVec.y - this.posY);
+            this.motionZ = (float)(result.hitVec.z - this.posZ);
             float f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
             this.posX -= this.motionX / (double)f2 * 0.05000000074505806D;
             this.posY -= this.motionY / (double)f2 * 0.05000000074505806D;
@@ -240,9 +234,15 @@ public class EntityTrident extends EntityArrow {
         return false;
     }
 
+    @Override
+    public void setFire(int seconds) {
+        // Fireproof
+    }
+
     private static ItemStack read(NBTTagCompound compound) {
         try {
             return new ItemStack(compound);
+            // Not sure if i need a try-catch, im scared to delete this
         } catch (RuntimeException runtimeexception) {
             FutureMC.LOGGER.debug("Tried to load invalid item: {}", compound, runtimeexception);
             return ItemStack.EMPTY;
@@ -275,5 +275,10 @@ public class EntityTrident extends EntityArrow {
 
     private static DamageSource causeTridentDamage(Entity trident, Entity indirectEntityIn) {
         return (new EntityDamageSourceIndirect("trident", trident, indirectEntityIn)).setProjectile();
+    }
+
+    @Override
+    protected float getWaterDrag() {
+        return 0.99F;
     }
 }

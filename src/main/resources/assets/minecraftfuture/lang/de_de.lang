@@ -59,8 +59,8 @@ tile.minecraftfuture.FletchingTable.name=Bognertisch
 tile.minecraftfuture.SmithingTable.name=Schmeidetisch
 entity.ItemFrame.name=Rahmen
 
-item.minecraftfuture.dye.0.name=Blauer Farbstoff
-item.minecraftfuture.dye.1.name=Weißer Farbstoff
+item.minecraftfuture.dye.0.name=Weißer Farbstoff
+item.minecraftfuture.dye.1.name=Blauer Farbstoff
 item.minecraftfuture.dye.2.name=Brauner Farbstoff
 item.minecraftfuture.dye.3.name=Schwarzer Farbstoff
 

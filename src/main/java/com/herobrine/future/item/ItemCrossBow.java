@@ -33,7 +33,7 @@ import java.util.Random;
 
 public class ItemCrossBow extends Item implements Modeled {
     public ItemCrossBow(String registryName) {
-        setUnlocalizedName(FutureMC.MODID + "." + registryName);
+        setUnlocalizedName(FutureMC.ID + "." + registryName);
         setRegistryName(registryName);
         setMaxStackSize(1);
         setMaxDamage(326);

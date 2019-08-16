@@ -165,29 +165,44 @@ public class BlockCampfire extends BlockBase {
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
     }
-    @Override public BlockRenderLayer getBlockLayer() {
+
+    @Override
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 
-    @Override public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+    @Override
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
         this.neighborChanged(state, worldIn, pos, worldIn.getBlockState(pos).getBlock(), pos);
     }
 
-    @Override public boolean isBlockNormalCube(IBlockState state) { return false; }
-    @Override public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) { return false; }
-    @Override public boolean isFullBlock(IBlockState state) { return false; }
-    @Override public boolean isOpaqueCube(IBlockState state) { return false; }
-    @Override public boolean canPlaceTorchOnTop(IBlockState state, IBlockAccess world, BlockPos pos) { return false; }
-    @Override public boolean isTopSolid(IBlockState state) { return false; }
-/*
-    public static void smoke(World worldIn, BlockPos pos, boolean hasHayBale, boolean isCooking) {
-        Random random = worldIn.rand;
-        EnumParticleType type = hasHayBale ? EnumParticleType.CAMPFIRE_SIGNAL_SMOKE : EnumParticleType.CAMPFIRE_COZY_SMOKE;
+    @Override
+    public boolean isBlockNormalCube(IBlockState state) {
+        return false;
+    }
 
-        ParticleSpawner.spawnParticle(type, worldIn, (double)pos.getX() + 0.5D + random.nextDouble() / 3.0D * (double)(random.nextBoolean() ? 1 : -1), (double)pos.getY() + random.nextDouble() + random.nextDouble(), (double)pos.getZ() + 0.5D + random.nextDouble() / 3.0D * (double)(random.nextBoolean() ? 1 : -1), 0.0D, 0.07D, 0.0D);
-        //if (false) { // is cooking? add in tile entity
-        //    worldIn.addParticle(ParticleTypes.SMOKE, (double)pos.getX() + 0.25D + random.nextDouble() / 2.0D * (double)(random.nextBoolean() ? 1 : -1), (double)pos.getY() + 0.4D, (double)pos.getZ() + 0.25D + random.nextDouble() / 2.0D * (double)(random.nextBoolean() ? 1 : -1), 0.0D, 0.005D, 0.0D);
-        //}
+    @Override
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return false;
+    }
 
-    }*/
+    @Override
+    public boolean isFullBlock(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean canPlaceTorchOnTop(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return false;
+    }
+
+    @Override
+    public boolean isTopSolid(IBlockState state) {
+        return false;
+    }
 }

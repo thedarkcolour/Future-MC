@@ -47,13 +47,14 @@ public final class Sounds {
     public static final SoundEvent SCAFFOLD_PLACE = makeSoundEvent("scaffold_place");
     public static final SoundEvent SCAFFOLD_FALL = makeSoundEvent("scaffold_fall");
     public static final SoundEvent SCAFFOLD_HIT = makeSoundEvent("scaffold_hit");
+    public static final SoundEvent BELL_RING = makeSoundEvent("bell_ring");
 
     public static final SoundType BAMBOO = new SoundType(1.0F, 1.0F, BAMBOO_PLACE, BAMBOO_STEP, BAMBOO_PLACE, BAMBOO_PLACE, BAMBOO_STEP);
     public static final SoundType SCAFFOLDING = new SoundType(1.0F, 1.0F, SCAFFOLD_BREAK, SCAFFOLD_STEP, SCAFFOLD_PLACE, SCAFFOLD_HIT, SCAFFOLD_FALL);
 
 
     private static SoundEvent makeSoundEvent(String name) {
-        ResourceLocation loc = new ResourceLocation(FutureMC.MODID, name);
+        ResourceLocation loc = new ResourceLocation(FutureMC.ID, name);
         return new SoundEvent(loc).setRegistryName(loc);
     }
 
@@ -64,7 +65,8 @@ public final class Sounds {
                 CROSSBOW_CHARGE, CROSSBOW_FIRE, CROSSBOW_QUICK_CHARGE, CROSSBOW_LOAD,
                 COMPOSTER_EMPTY, COMPOSTER_FILL, COMPOSTER_FILL_SUCCESS, COMPOSTER_READY,
                 PANDA_AGGRESSIVE_AMBIENT, PANDA_AMBIENT, PANDA_BITE, PANDA_CANNOT_BREED, PANDA_EAT, PANDA_HURT, PANDA_PRE_SNEEZE, PANDA_SNEEZE, PANDA_STEP, PANDA_WORRIED_AMBIENT,
-                CAMPFIRE_CRACKLE);
+                CAMPFIRE_CRACKLE,
+                BELL_RING);
         if(Init.isDebug) {
             event.getRegistry().registerAll(BAMBOO_PLACE, BAMBOO_STEP);
         }

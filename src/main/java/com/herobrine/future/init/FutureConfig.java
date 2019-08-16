@@ -11,7 +11,7 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Config(modid = FutureMC.MODID, name = FutureConfig.CONFIG_NAME)
+@Config(modid = FutureMC.ID, name = FutureConfig.CONFIG_NAME)
 public final class FutureConfig {
     private static final String MODID = "future-mc";
     static final String CONFIG_NAME = MODID + "/" + MODID;
@@ -164,10 +164,20 @@ public final class FutureConfig {
         @RequiresMcRestart
         public boolean panda = true;
 
+        //@Name("Bell")
+        //@Comment("Whether the Bell block is added to the game.")
+        //@RequiresMcRestart
+        //public boolean bell = true;
+
         //@Name("Scaffolding")
         //@Comment("Whether the Scaffolding block is added to the game.")
         //@RequiresMcRestart
         //public boolean scaffold = true;
+
+        @Name("Blue Ice")
+        @Comment("Whether the Blue Ice block is added to the game.")
+        @RequiresMcRestart
+        public boolean blueIce = true;
     }
 
     public static class Flowers {
@@ -229,12 +239,12 @@ public final class FutureConfig {
         public boolean isSuspiciousStewRandom = true;
     }
 
-    @Mod.EventBusSubscriber(modid = FutureMC.MODID)
+    @Mod.EventBusSubscriber(modid = FutureMC.ID)
     protected static final class ChangeHandler {
         @SubscribeEvent
         public static void onConfigChangedEvent(final ConfigChangedEvent.OnConfigChangedEvent event) {
-            if(event.getModID().equals(FutureMC.MODID)) {
-                ConfigManager.sync(FutureMC.MODID, Type.INSTANCE);
+            if(event.getModID().equals(FutureMC.ID)) {
+                ConfigManager.sync(FutureMC.ID, Type.INSTANCE);
             }
         }
     }

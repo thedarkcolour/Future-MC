@@ -18,7 +18,7 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiStonecutter extends GuiContainer {
     private final ContainerStonecutter container;
-    private static final ResourceLocation background = new ResourceLocation(FutureMC.MODID,"textures/gui/stonecutter.png");
+    private static final ResourceLocation background = new ResourceLocation(FutureMC.ID,"textures/gui/stonecutter.png");
 
     public GuiStonecutter(ContainerStonecutter container) {
         super(container);

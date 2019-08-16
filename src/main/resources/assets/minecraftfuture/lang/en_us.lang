@@ -61,11 +61,12 @@ tile.minecraftfuture.SmoothStone.name=Smooth Stone
 tile.minecraftfuture.SmoothQuartz.name=Smooth Quartz
 tile.minecraftfuture.FletchingTable.name=Fletching Table
 tile.minecraftfuture.SmithingTable.name=Smithing Table
+tile.minecraftfuture.BlueIce.name=Blue Ice
 entity.ItemFrame.name=Item Frame
 
 # Crafting Materials
-item.minecraftfuture.dye.0.name=Blue Dye
-item.minecraftfuture.dye.1.name=White Dye
+item.minecraftfuture.dye.0.name=White Dye
+item.minecraftfuture.dye.1.name=Blue Dye
 item.minecraftfuture.dye.2.name=Brown Dye
 item.minecraftfuture.dye.3.name=Black Dye
 

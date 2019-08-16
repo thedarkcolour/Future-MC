@@ -7,16 +7,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 public class BlockBase extends Block {
     public BlockBase(BlockProperties properties) {
         super(properties.material());
-        setUnlocalizedName(FutureMC.MODID + "." + properties.registryName());
+        setUnlocalizedName(FutureMC.ID + "." + properties.registryName());
         setRegistryName(properties.registryName());
         setSoundType(properties.soundType());
         setHardness(3.0F);
     }
-/*
-    @SideOnly(Side.CLIENT)
-    public void model() {
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    }*/
 
     /**
      * Method that returns a proper AABB from block pixel coordinates. Makes AABBs much easier

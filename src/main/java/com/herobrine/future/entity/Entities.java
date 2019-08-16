@@ -21,15 +21,15 @@ public final class Entities {
         int id = 1;
 
         if(FutureConfig.general.trident) {
-            EntityRegistry.registerModEntity(new ResourceLocation(FutureMC.MODID,"trident"), EntityTrident.class,
+            EntityRegistry.registerModEntity(new ResourceLocation(FutureMC.ID,"trident"), EntityTrident.class,
                     "trident", id++, FutureMC.instance, 32, 1, true);
         }
         if(false) {
-            EntityRegistry.registerModEntity(new ResourceLocation(FutureMC.MODID, "drowned"), EntityDrowned.class,
+            EntityRegistry.registerModEntity(new ResourceLocation(FutureMC.ID, "drowned"), EntityDrowned.class,
                     "drowned", id++, FutureMC.instance, 36, 1, true);
         }
         if(FutureConfig.general.panda && FutureConfig.general.bamboo) {
-            EntityRegistry.registerModEntity(new ResourceLocation(FutureMC.MODID, "panda"), EntityPanda.class,
+            EntityRegistry.registerModEntity(new ResourceLocation(FutureMC.ID, "panda"), EntityPanda.class,
                     "panda", id++, FutureMC.instance, 36, 1, true, 15198183, 1776418);
             EntityRegistry.addSpawn(EntityPanda.class, 1, 1, 2, EnumCreatureType.CREATURE, Biomes.JUNGLE, Biomes.JUNGLE_HILLS, Biomes.MUTATED_JUNGLE);
         }

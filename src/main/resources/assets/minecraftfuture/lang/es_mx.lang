@@ -63,8 +63,8 @@ tile.minecraftfuture.FletchingTable.name=Mesa de flechas
 tile.minecraftfuture.SmithingTable.name=Mesa de herrería
 entity.ItemFrame.name=Marco
 
-item.minecraftfuture.dye.0.name=Tinte azul
-item.minecraftfuture.dye.1.name=Tinte blanco
+item.minecraftfuture.dye.0.name=Tinte blanco
+item.minecraftfuture.dye.1.name=Tinte azul
 item.minecraftfuture.dye.2.name=Tinte café
 item.minecraftfuture.dye.3.name=Tinte negro
 

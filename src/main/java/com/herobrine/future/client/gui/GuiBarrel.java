@@ -15,7 +15,7 @@ public class GuiBarrel extends GuiContainer {
     private static final int WIDTH = 176;
     private static final int HEIGHT = 167;
 
-    private static final ResourceLocation background = new ResourceLocation(FutureMC.MODID, "textures/gui/gui.png");
+    private static final ResourceLocation background = new ResourceLocation(FutureMC.ID, "textures/gui/gui.png");
 
     public GuiBarrel(ContainerBarrel container) {
         super(container);

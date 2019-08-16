@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 public class ItemBamboo extends ItemBlock implements Modeled {
     public ItemBamboo() {
         super(Init.BAMBOO_STALK);
-        setUnlocalizedName(FutureMC.MODID + ".Bamboo");
+        setUnlocalizedName(FutureMC.ID + ".Bamboo");
         setRegistryName("Bamboo");
         addModel();
     }

@@ -6,6 +6,7 @@ import com.herobrine.future.block.*;
 import com.herobrine.future.item.*;
 import com.herobrine.future.world.gen.feature.FeatureBambooStalk;
 import com.herobrine.future.world.gen.feature.WorldGenBamboo;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -33,6 +34,7 @@ public final class Init {
     public static final BlockGrindstone GRINDSTONE;
     public static final BlockComposter COMPOSTER;
     public static final BlockScaffold SCAFFOLDING;
+    public static final BlockBell BELL;
 
     public static final BlockFlower LILY_OF_VALLEY;
     public static final BlockFlower CORNFLOWER;
@@ -77,8 +79,9 @@ public final class Init {
     public static final ItemBamboo BAMBOO_ITEM;
 
     public static final boolean isDebug;
+    public static final Block BLUE_ICE;
 
-    static {  // references
+    static {
         LANTERN = new BlockLantern();
         STONECUTTER = new BlockStonecutter();
         //LECTERN = new BlockLectern();
@@ -92,6 +95,8 @@ public final class Init {
         GRINDSTONE = new BlockGrindstone();
         COMPOSTER = new BlockComposter();
         SCAFFOLDING = new BlockScaffold();
+        BLUE_ICE = new BlockBlueIce();
+        BELL = new BlockBell();
 
         LILY_OF_VALLEY = new BlockLilyOfValley();
         CORNFLOWER = new BlockCornflower();

@@ -29,7 +29,6 @@ import static com.herobrine.future.init.FutureConfig.modFlowers;
 import static com.herobrine.future.init.Init.*;
 import static net.minecraftforge.common.BiomeDictionary.Type;
 
-@SuppressWarnings("ConstantConditions")
 @Mod.EventBusSubscriber
 public final class InitElements {
     public static ArrayList<Modeled> MODELED = new ArrayList<>();
@@ -49,6 +48,7 @@ public final class InitElements {
         //if(general.lectern) r.register(LECTERN);
         if(general.composter) r.register(COMPOSTER);
         if(isDebug) r.register(SCAFFOLDING);
+        if(general.blueIce) r.register(BLUE_ICE);
 
         if(modFlowers.cornflower) r.register(CORNFLOWER);
         if(modFlowers.lily) r.register(LILY_OF_VALLEY);
@@ -62,7 +62,6 @@ public final class InitElements {
         //if(general.newSlabVariants) r.registerAll(ItemNewSlab.Slabs.SLAB_DOUBLES.toArray(new BlockNewSlab.Double[0]));
         if(general.smoothStone) r.register(SMOOTH_STONE);
         if(general.smoothQuartz) r.register(SMOOTH_QUARTZ);
-        //if(general.waterColumns) r.registerAll(BUBBLE_COLUMN, SOULSAND_OVERRIDE);
         if(general.bamboo) r.register(BAMBOO_STALK);
     }
 
@@ -81,6 +80,7 @@ public final class InitElements {
         if(general.grindstone) r.register(makeItemBlock(GRINDSTONE));
         if(general.composter) r.register(makeItemBlock(COMPOSTER));
         if(isDebug) r.register(makeItemBlock(SCAFFOLDING));
+        if(general.blueIce) r.register(makeItemBlock(BLUE_ICE));
 
         if(general.trident) r.register(TRIDENT);
         //if(general.crossbow) r.register(CROSSBOW);
@@ -105,11 +105,12 @@ public final class InitElements {
     }
 
     public static void registerTileEntities() {
-        if(general.stonecutter) GameRegistry.registerTileEntity(TileStonecutter.class, new ResourceLocation(FutureMC.MODID, "containerStonecutter"));
-        if(general.barrel) GameRegistry.registerTileEntity(TileBarrel.class, new ResourceLocation(FutureMC.MODID, "containerBarrel"));
-        if(general.blastFurnace) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileBlastFurnace.class, new ResourceLocation(FutureMC.MODID, "containerBlastFurnace"));
-        if(general.smoker) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileSmoker.class, new ResourceLocation(FutureMC.MODID, "containerSmoker"));
-        if(general.composter) GameRegistry.registerTileEntity(TileComposter.class, new ResourceLocation(FutureMC.MODID, "composter"));
+        if(general.stonecutter) GameRegistry.registerTileEntity(TileStonecutter.class, new ResourceLocation(FutureMC.ID, "containerStonecutter"));
+        if(general.barrel) GameRegistry.registerTileEntity(TileBarrel.class, new ResourceLocation(FutureMC.ID, "containerBarrel"));
+        if(general.blastFurnace) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileBlastFurnace.class, new ResourceLocation(FutureMC.ID, "containerBlastFurnace"));
+        if(general.smoker) GameRegistry.registerTileEntity(TileFurnaceAdvanced.TileSmoker.class, new ResourceLocation(FutureMC.ID, "containerSmoker"));
+        if(general.composter) GameRegistry.registerTileEntity(TileComposter.class, new ResourceLocation(FutureMC.ID, "composter"));
+        //if(general.bell) GameRegistry.registerTileEntity(TileBell.class, new ResourceLocation(FutureMC.ID, "bell"));
     }
 
     @SubscribeEvent

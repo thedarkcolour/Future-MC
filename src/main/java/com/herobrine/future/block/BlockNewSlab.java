@@ -65,7 +65,7 @@ public abstract class BlockNewSlab extends BlockSlab {
 
     public static class Half extends BlockNewSlab {
         public Half(String variant) {
-            setUnlocalizedName(FutureMC.MODID + "." + variant + "_slab");
+            setUnlocalizedName(FutureMC.ID + "." + variant + "_slab");
             setRegistryName(variant + "_slab");
             setLightOpacity(0);
         }
@@ -88,7 +88,7 @@ public abstract class BlockNewSlab extends BlockSlab {
 
     public static class Double extends BlockNewSlab {
         public Double(String variant) {
-            setUnlocalizedName(FutureMC.MODID + "." + variant + "_double_slab");
+            setUnlocalizedName(FutureMC.ID + "." + variant + "_double_slab");
             setRegistryName(variant + "_double_slab");
             this.variant = variant;
         }
@@ -102,7 +102,7 @@ public abstract class BlockNewSlab extends BlockSlab {
 
         @Override
         protected Item getSlab() {
-            return ForgeRegistries.ITEMS.getValue(new ResourceLocation(FutureMC.MODID + ":" + variant + "_slab"));
+            return ForgeRegistries.ITEMS.getValue(new ResourceLocation(FutureMC.ID + ":" + variant + "_slab"));
         }
 
         @Override

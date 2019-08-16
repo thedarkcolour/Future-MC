@@ -214,7 +214,7 @@ public class EntityPanda extends EntityAnimal {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(2, new PanicGoal(this, 2.0D));
         this.tasks.addTask(2, new MateGoal(this, 1.0D));
-        this.targetTasks.addTask(3, new EntityAIAttack(this, (double)1.2F, true));
+        this.tasks.addTask(3, new EntityAIAttack(this, (double)1.2F, true));
         this.tasks.addTask(4, new EntityAITempt(this, 1.0D, Init.BAMBOO_ITEM, false));
         this.tasks.addTask(6, new EntityAIAvoid<>(this, EntityPlayer.class, 8.0F, 2.0D, 2.0D));
         this.tasks.addTask(6, new EntityAIAvoid<>(this, EntityMob.class, 4.0F, 2.0D, 2.0D));

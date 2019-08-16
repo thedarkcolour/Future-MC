@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "aaa",
+        "aaa",
+        "aaa"
+    ],
+    "key": {
+        "a": {
+            "item": "minecraft:packed_ice"
+        }
+    },
+    "result": {
+        "item": "blue_ice"
+    }
+}

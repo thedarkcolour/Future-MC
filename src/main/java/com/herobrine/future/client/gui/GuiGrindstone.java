@@ -12,7 +12,7 @@ public class GuiGrindstone extends GuiContainer {
     private static final int WIDTH = 176;
     private static final int HEIGHT = 166;
 
-    private static final ResourceLocation background = new ResourceLocation(FutureMC.MODID,"textures/gui/grindstone.png");
+    private static final ResourceLocation background = new ResourceLocation(FutureMC.ID,"textures/gui/grindstone.png");
 
     public GuiGrindstone(ContainerGrindstone container) {
         super(container);

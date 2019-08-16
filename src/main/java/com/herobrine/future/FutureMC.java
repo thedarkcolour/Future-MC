@@ -8,6 +8,7 @@ import com.herobrine.future.init.FutureConfig;
 import com.herobrine.future.init.Init;
 import com.herobrine.future.init.InitElements;
 import com.herobrine.future.init.proxy.CommonProxy;
+import com.herobrine.future.item.ItemGroup;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
@@ -28,13 +29,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
 
 @Mod(
-        modid = FutureMC.MODID,
+        modid = FutureMC.ID,
         name = "Future MC",
         version = "0.1.9",
         dependencies = "required-after:forge@[14.23.5.2776,)", useMetadata = true
 )
 public class FutureMC {
-    public static final String MODID = "minecraftfuture";
+    public static final String ID = "minecraftfuture";
     public static Logger LOGGER;
 
     @SidedProxy(clientSide = "com.herobrine.future.init.proxy.ClientProxy", serverSide = "com.herobrine.future.init.proxy.CommonProxy")
@@ -73,10 +74,5 @@ public class FutureMC {
         proxy.postInit(e);
     }
 
-    public static CreativeTabs CREATIVE_TAB = FutureConfig.general.useVanillaTabs ? null : new CreativeTabs("Future") {
-        @Override
-        public ItemStack getTabIconItem() {
-            return new ItemStack(Init.LANTERN);
-        }
-    };
+    public static CreativeTabs CREATIVE_TAB = FutureConfig.general.useVanillaTabs ? null : new ItemGroup();
 }

@@ -20,7 +20,7 @@ public class ItemSuspiciousStew extends ItemFood implements Modeled {
         super(6, 0.6F, false);
         setMaxStackSize(1);
         setRegistryName("SuspiciousStew");
-        setUnlocalizedName(FutureMC.MODID + ".SuspiciousStew");
+        setUnlocalizedName(FutureMC.ID + ".SuspiciousStew");
         if(!FutureConfig.general.useVanillaTabs) setCreativeTab(FutureMC.CREATIVE_TAB);
         addModel();
     }
