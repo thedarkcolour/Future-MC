@@ -1,4 +1,5 @@
 Version 0.1.11 - Campfire functionality? New things:
+ Now requires Forgelin.
  Trident - Now properly travels through water.
  Trident - No longer "bounces" in place when hitting certain blocks like snow layers.
 
