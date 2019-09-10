@@ -1,5 +1,5 @@
 Version 0.1.11 - Bees? New things:
- *Bees* - Cute flying insects from 1.15 snapshots that help pollinate crops.
+ *Bees* - Cute flying insects from 1.15 snapshots that pollinate crops.
  *Honeycomb* - Resource from 1.15 snapshot obtained from beehives.
  *Bee Hive and Bee House* - Blocks from 1.15 where bees come to make honey.
  *Honey Bottle* - New food from 1.15 snapshot collected from beehives.
