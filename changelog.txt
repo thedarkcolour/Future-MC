@@ -8,6 +8,7 @@ Version 0.1.11 - Bees? New things:
  Trident - Now only applies impaling enchantment to mobs that are wet.
  Dyes, Bamboo, Sweet Berries - No longer show up in the dye oredictionary when not enabled.
  Blue Ice - Fixed sounds and hardness.
+ Added more language support.
 
 Version 0.1.10 - It's been a while:
  *Blue Ice* - Most slippery type of ice in the game.
