@@ -12,10 +12,10 @@ public class LayerPandaHeldItem implements LayerRenderer<EntityPanda> {
     @Override
     public void doRenderLayer(EntityPanda entityPanda, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         ItemStack itemstack = entityPanda.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-        if (entityPanda.func_213556_dX() && !itemstack.isEmpty() && !entityPanda.func_213566_eo()) {
+        if (entityPanda.isSitting() && !itemstack.isEmpty() && !entityPanda.func_bruh()) {
             float f = -0.6F;
             float f1 = 1.4F;
-            if (entityPanda.func_213578_dZ()) {
+            if (entityPanda.isEating()) {
                 f -= 0.2F * MathHelper.sin(ageInTicks * 0.6F) + 0.2F;
                 f1 -= 0.09F * MathHelper.sin(ageInTicks * 0.6F);
             }

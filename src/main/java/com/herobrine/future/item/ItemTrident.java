@@ -32,7 +32,7 @@ public class ItemTrident extends Item implements Modeled {
     public ItemTrident() {
         setRegistryName("Trident");
         setUnlocalizedName(FutureMC.ID + ".Trident");
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.COMBAT : FutureMC.CREATIVE_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.COMBAT : FutureMC.TAB);
         setMaxDamage(250);
         setMaxStackSize(1);
         addModel();
@@ -55,6 +55,11 @@ public class ItemTrident extends Item implements Modeled {
 
     @Override
     public boolean hasEffect(ItemStack stack) {
+        return false;
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
         return false;
     }
 
@@ -105,7 +110,7 @@ public class ItemTrident extends Item implements Modeled {
                         }
 
                         if (entityPlayer.onGround) {
-                            entityPlayer.move(MoverType.SELF, 0.0D, (double)1.1999999F, 0.0D);
+                            entityPlayer.move(MoverType.SELF, 0.0D, 1.1999999F, 0.0D);
                         }
                     }
 
@@ -153,7 +158,7 @@ public class ItemTrident extends Item implements Modeled {
 
         if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 8.0D, 0));
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)-2.9F, 0));
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.9F, 0));
         }
 
         return multimap;

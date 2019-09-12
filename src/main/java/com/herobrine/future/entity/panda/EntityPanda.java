@@ -5,8 +5,24 @@ import com.herobrine.future.sound.Sounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIAvoidEntity;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.EntityAIFollowParent;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMate;
+import net.minecraft.entity.ai.EntityAIPanic;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITempt;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -40,18 +56,18 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 public class EntityPanda extends EntityAnimal {
-    private static final DataParameter<Integer> field_213609_bA = EntityDataManager.createKey(EntityPanda.class, DataSerializers.VARINT);
-    private static final DataParameter<Integer> field_213593_bB = EntityDataManager.createKey(EntityPanda.class, DataSerializers.VARINT);
-    private static final DataParameter<Integer> field_213594_bD = EntityDataManager.createKey(EntityPanda.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> HUNGRY_TICKS = EntityDataManager.createKey(EntityPanda.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> SNEEZE_TICKS = EntityDataManager.createKey(EntityPanda.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> EATING_TICKS = EntityDataManager.createKey(EntityPanda.class, DataSerializers.VARINT);
     private static final DataParameter<Byte> MAIN_GENE = EntityDataManager.createKey(EntityPanda.class, DataSerializers.BYTE);
     private static final DataParameter<Byte> HIDDEN_GENE = EntityDataManager.createKey(EntityPanda.class, DataSerializers.BYTE);
     private static final DataParameter<Byte> PANDA_FLAGS = EntityDataManager.createKey(EntityPanda.class, DataSerializers.BYTE);
-    private boolean field_213598_bH;
-    private boolean field_213599_bI;
+    private boolean revenge;
+    private boolean attacked;
     public int field_213608_bz;
     private Vec3d field_213600_bJ;
-    private float field_213601_bK;
-    private float field_213602_bL;
+    private float scaredAnimationProgress;
+    private float lastScaredAnimationProgress;
     private float field_213603_bM;
     private float field_213604_bN;
     private float field_213605_bO;
@@ -67,24 +83,24 @@ public class EntityPanda extends EntityAnimal {
         this.moveHelper = new EntityPanda.MoveHelperController(this);
     }
 
-    public int func_213544_dV() {
-        return this.dataManager.get(field_213609_bA);
+    public int getHungryTicks() {
+        return this.dataManager.get(HUNGRY_TICKS);
     }
 
-    public void func_213588_r(int p_213588_1_) {
-        this.dataManager.set(field_213609_bA, p_213588_1_);
+    public void setHungryTicks(int p_213588_1_) {
+        this.dataManager.set(HUNGRY_TICKS, p_213588_1_);
     }
 
-    public boolean func_213539_dW() {
+    public boolean isSneezing() {
         return this.func_213547_u(2);
     }
 
-    public boolean func_213556_dX() {
+    public boolean isSitting() {
         return this.func_213547_u(8);
     }
 
-    public void func_213553_r(boolean p_213553_1_) {
-        this.func_213587_d(8, p_213553_1_);
+    public void setIsScared(boolean flag) {
+        this.setPandaFlag(8, flag);
     }
 
     public boolean func_213567_dY() {
@@ -92,39 +108,39 @@ public class EntityPanda extends EntityAnimal {
     }
 
     public void func_213542_s(boolean p_213542_1_) {
-        this.func_213587_d(16, p_213542_1_);
+        this.setPandaFlag(16, p_213542_1_);
     }
 
-    public boolean func_213578_dZ() {
-        return this.dataManager.get(field_213594_bD) > 0;
+    public boolean isEating() {
+        return this.dataManager.get(EATING_TICKS) > 0;
     }
 
-    public void func_213534_t(boolean p_213534_1_) {
-        this.dataManager.set(field_213594_bD, p_213534_1_ ? 1 : 0);
+    public void setIsEating(boolean p_213534_1_) {
+        this.dataManager.set(EATING_TICKS, p_213534_1_ ? 1 : 0);
     }
 
-    private int func_213559_es() {
-        return this.dataManager.get(field_213594_bD);
+    private int getEatingTicks() {
+        return this.dataManager.get(EATING_TICKS);
     }
 
-    private void setField_213594_bD(int p_213571_1_) {
-        this.dataManager.set(field_213594_bD, p_213571_1_);
+    private void setEatingTicks(int p_213571_1_) {
+        this.dataManager.set(EATING_TICKS, p_213571_1_);
     }
 
-    public void func_213581_u(boolean p_213581_1_) {
-        this.func_213587_d(2, p_213581_1_);
-        if (!p_213581_1_) {
+    public void func_213581_u(boolean flag) {
+        this.setPandaFlag(2, flag);
+        if (!flag) {
             this.func_213562_s(0);
         }
 
     }
 
     public int func_213585_ee() {
-        return this.dataManager.get(field_213593_bB);
+        return this.dataManager.get(SNEEZE_TICKS);
     }
 
     public void func_213562_s(int p_213562_1_) {
-        this.dataManager.set(field_213593_bB, p_213562_1_);
+        this.dataManager.set(SNEEZE_TICKS, p_213562_1_);
     }
 
     public EntityPanda.Type getMainGene() {
@@ -156,30 +172,30 @@ public class EntityPanda extends EntityAnimal {
     }
 
     public void func_213576_v(boolean p_213576_1_) {
-        this.func_213587_d(4, p_213576_1_);
+        this.setPandaFlag(4, p_213576_1_);
     }
 
     @Override
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(field_213609_bA, 0);
-        this.dataManager.register(field_213593_bB, 0);
+        this.dataManager.register(HUNGRY_TICKS, 0);
+        this.dataManager.register(SNEEZE_TICKS, 0);
         this.dataManager.register(MAIN_GENE, (byte)0);
         this.dataManager.register(HIDDEN_GENE, (byte)0);
         this.dataManager.register(PANDA_FLAGS, (byte)0);
-        this.dataManager.register(field_213594_bD, 0);
+        this.dataManager.register(EATING_TICKS, 0);
     }
 
-    private boolean func_213547_u(int p_213547_1_) {
-        return (this.dataManager.get(PANDA_FLAGS) & p_213547_1_) != 0;
+    private boolean func_213547_u(int i) {
+        return (this.dataManager.get(PANDA_FLAGS) & i) != 0;
     }
 
-    private void func_213587_d(int p_213587_1_, boolean p_213587_2_) {
+    private void setPandaFlag(int bit, boolean flag) {
         byte b = this.dataManager.get(PANDA_FLAGS);
-        if (p_213587_2_) {
-            this.dataManager.set(PANDA_FLAGS, (byte)(b | p_213587_1_));
+        if (flag) {
+            this.dataManager.set(PANDA_FLAGS, (byte)(b | bit));
         } else {
-            this.dataManager.set(PANDA_FLAGS, (byte)(b & ~p_213587_1_));
+            this.dataManager.set(PANDA_FLAGS, (byte)(b & ~bit));
         }
 
     }
@@ -213,8 +229,8 @@ public class EntityPanda extends EntityAnimal {
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(2, new PanicGoal(this, 2.0D));
-        this.tasks.addTask(2, new MateGoal(this, 1.0D));
-        this.tasks.addTask(3, new EntityAIAttack(this, (double)1.2F, true));
+        this.tasks.addTask(2, new AIMate(this, 1.0D));
+        this.tasks.addTask(3, new EntityAIAttack(this, 1.2F, true));
         this.tasks.addTask(4, new EntityAITempt(this, 1.0D, Init.BAMBOO_ITEM, false));
         this.tasks.addTask(6, new EntityAIAvoid<>(this, EntityPlayer.class, 8.0F, 2.0D, 2.0D));
         this.tasks.addTask(6, new EntityAIAvoid<>(this, EntityMob.class, 4.0F, 2.0D, 2.0D));
@@ -223,10 +239,10 @@ public class EntityPanda extends EntityAnimal {
         this.tasks.addTask(8, new EntityAIChildPlay(this));
         this.tasks.addTask(9, new EntityAIWatch(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(10, new EntityAILookIdle(this));
-        this.tasks.addTask(12, new EntityAIRoll(this));
+        this.tasks.addTask(12, new AIRoll(this));
         this.tasks.addTask(13, new EntityAIFollowParent(this, 1.25D));
         this.tasks.addTask(14, new EntityAIWanderAvoidWater(this, 1.0D));
-        this.targetTasks.addTask(1, new EntityAIRevenge(this));
+        this.targetTasks.addTask(1, new AIRevenge(this));
     }
 
     @Override
@@ -268,7 +284,7 @@ public class EntityPanda extends EntityAnimal {
     public boolean attackEntityAsMob(Entity entityIn) {
         this.playSound(Sounds.PANDA_BITE, 1.0F, 1.0F);
         if (!this.isAggressive()) {
-            this.field_213599_bI = true;
+            this.attacked = true;
         }
         boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
 
@@ -289,31 +305,31 @@ public class EntityPanda extends EntityAnimal {
 
         if (this.isWorried()) {
             if (this.world.isThundering() && !this.isInWater()) {
-                this.func_213553_r(true);
-                this.func_213534_t(false);
-            } else if (!this.func_213578_dZ()) {
-                this.func_213553_r(false);
+                this.setIsScared(true);
+                this.setIsEating(false);
+            } else if (!this.isEating()) {
+                this.setIsScared(false);
             }
         }
 
         if (this.getAttackTarget() == null) {
-            this.field_213598_bH = false;
-            this.field_213599_bI = false;
+            this.revenge = false;
+            this.attacked = false;
         }
 
-        if (this.func_213544_dV() > 0) {
+        if (this.getHungryTicks() > 0) {
             if (this.getAttackTarget() != null) {
                 this.faceEntity(this.getAttackTarget(), 90.0F, 90.0F);
             }
 
-            if (this.func_213544_dV() == 29 || this.func_213544_dV() == 14) {
+            if (this.getHungryTicks() == 29 || this.getHungryTicks() == 14) {
                 this.playSound(Sounds.PANDA_CANNOT_BREED, 1.0F, 1.0F);
             }
 
-            this.func_213588_r(this.func_213544_dV() - 1);
+            this.setHungryTicks(this.getHungryTicks() - 1);
         }
 
-        if (this.func_213539_dW()) {
+        if (this.isSneezing()) {
             this.func_213562_s(this.func_213585_ee() + 1);
             if (this.func_213585_ee() > 20) {
                 this.func_213581_u(false);
@@ -333,77 +349,77 @@ public class EntityPanda extends EntityAnimal {
             this.field_213608_bz = 0;
         }
 
-        if (this.func_213556_dX()) {
+        if (this.isSitting()) {
             this.rotationPitch = 0.0F;
         }
 
-        this.func_213574_ev();
-        this.func_213546_et();
-        this.func_213563_ew();
-        this.func_213550_ex();
+        this.updateScaredAnimation();
+        this.updateEatingAnimation();
+        this.updateLazyAnimation();
+        this.updateRollingAnimation();
     }
 
-    public boolean func_213566_eo() {
+    public boolean func_bruh() {
         return this.isWorried() && this.world.isThundering();
     }
 
-    private void func_213546_et() {
-        if (!this.func_213578_dZ() && this.func_213556_dX() && !this.func_213566_eo() && !this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isEmpty() && this.rand.nextInt(80) == 1) {
-            this.func_213534_t(true);
-        } else if (this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isEmpty() || !this.func_213556_dX()) {
-            this.func_213534_t(false);
+    private void updateEatingAnimation() {
+        if (!isEating() && isSitting() && !func_bruh() && !getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isEmpty() && rand.nextInt(80) == 1) {
+            setIsEating(true);
+        } else if (getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isEmpty() || !isSitting()) {
+            setIsEating(false);
         }
 
-        if (this.func_213578_dZ()) {
-            this.func_213533_eu();
-            if (!this.world.isRemote && this.func_213559_es() > 80 && this.rand.nextInt(20) == 1) {
-                if (this.func_213559_es() > 100 && this.func_213548_j(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND))) {
-                    if (!this.world.isRemote) {
-                        this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        if (isEating()) {
+            playEatingAnimation();
+            if (!world.isRemote && getEatingTicks() > 80 && rand.nextInt(20) == 1) {
+                if (getEatingTicks() > 100 && func_213548_j(getItemStackFromSlot(EntityEquipmentSlot.MAINHAND))) {
+                    if (!world.isRemote) {
+                        setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
                     }
 
-                    this.func_213553_r(false);
+                    setIsScared(false);
                 }
 
-                this.func_213534_t(false);
+                setIsEating(false);
                 return;
             }
 
-            this.setField_213594_bD(this.func_213559_es() + 1);
+            setEatingTicks(getEatingTicks() + 1);
         }
 
     }
 
-    private void func_213533_eu() {
-        if (this.func_213559_es() % 5 == 0) {
-            this.playSound(Sounds.PANDA_EAT, 0.5F + 0.5F * (float)this.rand.nextInt(2), (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+    private void playEatingAnimation() {
+        if (getEatingTicks() % 5 == 0) {
+            playSound(Sounds.PANDA_EAT, 0.5F + 0.5F * (float)rand.nextInt(2), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
 
             for(int i = 0; i < 6; ++i) {
-                Vec3d vec3d = new Vec3d(((double)this.rand.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, ((double)this.rand.nextFloat() - 0.5D) * 0.1D);
-                vec3d = vec3d.rotatePitch(-this.rotationPitch * ((float)Math.PI / 180F));
-                vec3d = vec3d.rotateYaw(-this.rotationYaw * ((float)Math.PI / 180F));
-                double d0 = (double)(-this.rand.nextFloat()) * 0.6D - 0.3D;
-                Vec3d vec3d1 = new Vec3d(((double)this.rand.nextFloat() - 0.5D) * 0.8D, d0, 1.0D + ((double)this.rand.nextFloat() - 0.5D) * 0.4D);
-                vec3d1 = vec3d1.rotateYaw(-this.renderYawOffset * ((float)Math.PI / 180F));
-                vec3d1 = vec3d1.addVector(this.posX, this.posY + (double)this.getEyeHeight() + 1.0D, this.posZ);
+                Vec3d vec3d = new Vec3d(((double)rand.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, ((double)rand.nextFloat() - 0.5D) * 0.1D);
+                vec3d = vec3d.rotatePitch(-rotationPitch * ((float)Math.PI / 180F));
+                vec3d = vec3d.rotateYaw(-rotationYaw * ((float)Math.PI / 180F));
+                double d0 = (double)(-rand.nextFloat()) * 0.6D - 0.3D;
+                Vec3d vec3d1 = new Vec3d(((double)rand.nextFloat() - 0.5D) * 0.8D, d0, 1.0D + ((double)rand.nextFloat() - 0.5D) * 0.4D);
+                vec3d1 = vec3d1.rotateYaw(-renderYawOffset * ((float)Math.PI / 180F));
+                vec3d1 = vec3d1.addVector(posX, posY + (double)getEyeHeight() + 1.0D, posZ);
                 world.spawnParticle(EnumParticleTypes.ITEM_CRACK, vec3d1.x, vec3d1.y, vec3d1.z, vec3d.x, vec3d.y + 0.05D, vec3d.z, Item.getIdFromItem(getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).getItem()));
             }
         }
 
     }
 
-    private void func_213574_ev() {
-        this.field_213602_bL = this.field_213601_bK;
-        if (this.func_213556_dX()) {
-            this.field_213601_bK = Math.min(1.0F, this.field_213601_bK + 0.15F);
+    private void updateScaredAnimation() {
+        lastScaredAnimationProgress = scaredAnimationProgress;
+        if (isSitting()) {
+            scaredAnimationProgress = Math.min(1.0F, scaredAnimationProgress + 0.15F);
         } else {
-            this.field_213601_bK = Math.max(0.0F, this.field_213601_bK - 0.19F);
+            scaredAnimationProgress = Math.max(0.0F, scaredAnimationProgress - 0.19F);
         }
 
     }
 
-    private void func_213563_ew() {
-        this.field_213604_bN = this.field_213603_bM;
+    private void updateLazyAnimation() {
+        field_213604_bN = field_213603_bM;
         if (this.func_213567_dY()) {
             this.field_213603_bM = Math.min(1.0F, this.field_213603_bM + 0.15F);
         } else {
@@ -412,7 +428,7 @@ public class EntityPanda extends EntityAnimal {
 
     }
 
-    private void func_213550_ex() {
+    private void updateRollingAnimation() {
         this.field_213606_bP = this.field_213605_bO;
         if (this.func_213564_eh()) {
             this.field_213605_bO = Math.min(1.0F, this.field_213605_bO + 0.15F);
@@ -424,7 +440,7 @@ public class EntityPanda extends EntityAnimal {
 
     @SideOnly(Side.CLIENT)
     public float func_213561_v(float p_213561_1_) {
-        return func_219799_g(p_213561_1_, this.field_213602_bL, this.field_213601_bK);
+        return func_219799_g(p_213561_1_, this.lastScaredAnimationProgress, this.scaredAnimationProgress);
     }
 
     @SideOnly(Side.CLIENT)
@@ -489,7 +505,7 @@ public class EntityPanda extends EntityAnimal {
 
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        this.func_213553_r(false);
+        this.setIsScared(false);
         return super.attackEntityFrom(source, amount);
     }
 
@@ -498,7 +514,7 @@ public class EntityPanda extends EntityAnimal {
         data = super.onInitialSpawn(difficulty, data);
         this.setMainGene(EntityPanda.Type.getRandomType(this.rand));
         this.setHiddenGene(EntityPanda.Type.getRandomType(this.rand));
-        this.func_213554_ep();
+        this.modifyAttributes();
         if (data instanceof EntityPanda.PandaData) {
             if (this.rand.nextInt(5) == 0) {
                 this.setGrowingAge(-24000);
@@ -513,18 +529,18 @@ public class EntityPanda extends EntityAnimal {
     private void func_213545_a(EntityPanda entityPanda, EntityPanda ageable) {
         if (ageable == null) {
             if (this.rand.nextBoolean()) {
-                this.setMainGene(entityPanda.func_213568_eA());
+                this.setMainGene(entityPanda.pickMainOrHiddenGene());
                 this.setHiddenGene(EntityPanda.Type.getRandomType(this.rand));
             } else {
                 this.setMainGene(EntityPanda.Type.getRandomType(this.rand));
-                this.setHiddenGene(entityPanda.func_213568_eA());
+                this.setHiddenGene(entityPanda.pickMainOrHiddenGene());
             }
         } else if (this.rand.nextBoolean()) {
-            this.setMainGene(entityPanda.func_213568_eA());
-            this.setHiddenGene(ageable.func_213568_eA());
+            this.setMainGene(entityPanda.pickMainOrHiddenGene());
+            this.setHiddenGene(ageable.pickMainOrHiddenGene());
         } else {
-            this.setMainGene(ageable.func_213568_eA());
-            this.setHiddenGene(entityPanda.func_213568_eA());
+            this.setMainGene(ageable.pickMainOrHiddenGene());
+            this.setHiddenGene(entityPanda.pickMainOrHiddenGene());
         }
 
         if (this.rand.nextInt(32) == 0) {
@@ -536,17 +552,17 @@ public class EntityPanda extends EntityAnimal {
         }
     }
 
-    private EntityPanda.Type func_213568_eA() {
+    private EntityPanda.Type pickMainOrHiddenGene() {
         return this.rand.nextBoolean() ? this.getMainGene() : this.getHiddenGene();
     }
 
-    public void func_213554_ep() {
+    public void modifyAttributes() {
         if (this.isWeak()) {
             this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
         }
 
         if (this.isLazy()) {
-            this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.07F);
+            this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.07F);
         }
 
     }
@@ -555,7 +571,7 @@ public class EntityPanda extends EntityAnimal {
         if (!this.isInWater()) {
             this.setMoveForward(0.0F);
             this.getNavigator().clearPath();
-            this.func_213553_r(true);
+            this.setIsScared(true);
         }
 
     }
@@ -565,32 +581,32 @@ public class EntityPanda extends EntityAnimal {
         ItemStack itemstack = player.getHeldItem(hand);
         if (itemstack.getItem() instanceof ItemMonsterPlacer) {
             return super.processInteract(player, hand);
-        } else if (this.func_213566_eo()) {
+        } else if (this.func_bruh()) {
             return false;
         } else if (this.func_213567_dY()) {
-            this.func_213542_s(false);
+            func_213542_s(false);
             return true;
         } else if (this.isBreedingItem(itemstack)) {
-            if (this.getAttackTarget() != null) {
-                this.field_213598_bH = true;
+            if (getAttackTarget() != null) {
+                revenge = true;
             }
 
             if (this.isChild()) {
-                this.consumeItemFromStack(player, itemstack);
-                this.ageUp((int)((float)(-this.getGrowingAge() / 20) * 0.1F), true);
-            } else if (!this.world.isRemote && this.getGrowingAge() == 0 && canBreed()) {
-                this.consumeItemFromStack(player, itemstack);
-                this.setInLove(player);
+                consumeItemFromStack(player, itemstack);
+                ageUp((int)((float)(-getGrowingAge() / 20) * 0.1F), true);
+            } else if (!world.isRemote && getGrowingAge() == 0 && canBreed()) {
+                consumeItemFromStack(player, itemstack);
+                setInLove(player);
             } else {
-                if (this.world.isRemote || this.func_213556_dX() || this.isInWater()) {
+                if (world.isRemote || isSitting() || isInWater()) {
                     return false;
                 }
 
                 this.func_213586_eB();
-                this.func_213534_t(true);
-                ItemStack itemstack1 = this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-                if (!itemstack1.isEmpty() && !player.isCreative()) {
-                    this.entityDropItem(itemstack1, 0);
+                this.setIsEating(true);
+                ItemStack stack = getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+                if (!stack.isEmpty() && !player.isCreative()) {
+                    this.entityDropItem(stack, 0);
                 }
 
                 this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(itemstack.getItem(), 1));
@@ -641,13 +657,13 @@ public class EntityPanda extends EntityAnimal {
     }
 
     public boolean func_213537_eq() {
-        return !this.func_213567_dY() && !this.func_213566_eo() && !this.func_213578_dZ() && !this.func_213564_eh() && !this.func_213556_dX();
+        return !this.func_213567_dY() && !this.func_bruh() && !this.isEating() && !this.func_213564_eh() && !this.isSitting();
     }
 
     static class EntityAIAttack extends EntityAIAttackMelee {
         private final EntityPanda entityPanda;
 
-        public EntityAIAttack(EntityPanda entityPanda, double speedIn, boolean useLongMemory) {
+        EntityAIAttack(EntityPanda entityPanda, double speedIn, boolean useLongMemory) {
             super(entityPanda, speedIn, useLongMemory);
             this.entityPanda = entityPanda;
         }
@@ -660,7 +676,7 @@ public class EntityPanda extends EntityAnimal {
     static class EntityAIAvoid<T extends EntityLivingBase> extends EntityAIAvoidEntity<T> {
         private final EntityPanda field_220875_i;
 
-        public EntityAIAvoid(EntityPanda entityPanda, Class<T> entityToAvoid, float avoidDistance, double farSpeedIn, double nearSpeedIn) {
+        EntityAIAvoid(EntityPanda entityPanda, Class<T> entityToAvoid, float avoidDistance, double farSpeedIn, double nearSpeedIn) {
             super(entityPanda, entityToAvoid, (Entity entity) -> {
                 if(entity instanceof EntityPlayer) {
                     return !((EntityPlayer) entity).isSpectator();
@@ -678,7 +694,7 @@ public class EntityPanda extends EntityAnimal {
     static class EntityAIChildPlay extends EntityAIBase {
         private final EntityPanda entityPanda;
 
-        public EntityAIChildPlay(EntityPanda p_i51448_1_) {
+        EntityAIChildPlay(EntityPanda p_i51448_1_) {
             this.entityPanda = p_i51448_1_;
         }
 
@@ -707,7 +723,7 @@ public class EntityPanda extends EntityAnimal {
         private final EntityPanda field_220828_a;
         private int field_220829_b;
 
-        public EntityAILieDown(EntityPanda p_i51460_1_) {
+        EntityAILieDown(EntityPanda p_i51460_1_) {
             this.field_220828_a = p_i51460_1_;
         }
 
@@ -728,39 +744,33 @@ public class EntityPanda extends EntityAnimal {
             this.field_220829_b = 0;
         }
 
-        /**
-         * Reset the task's internal state. Called when this task is interrupted by another one
-         */
         public void resetTask() {
             this.field_220828_a.func_213542_s(false);
             this.field_220829_b = this.field_220828_a.ticksExisted + 200;
         }
     }
 
-    static class MateGoal extends EntityAIMate {
-        private final EntityPanda field_220693_e;
+    static class AIMate extends EntityAIMate {
+        private final EntityPanda panda;
         private int field_220694_f;
 
-        public MateGoal(EntityPanda entityPanda, double speedIn) {
+        AIMate(EntityPanda entityPanda, double speedIn) {
             super(entityPanda, speedIn);
-            this.field_220693_e = entityPanda;
+            this.panda = entityPanda;
         }
 
-        /**
-         * Returns whether the EntityAIBase should begin execution.
-         */
         public boolean shouldExecute() {
-            if (super.shouldExecute() && this.field_220693_e.func_213544_dV() == 0) {
+            if (super.shouldExecute() && this.panda.getHungryTicks() == 0) {
                 if (!this.func_220691_h()) {
-                    if (this.field_220694_f <= this.field_220693_e.ticksExisted) {
-                        this.field_220693_e.func_213588_r(32);
-                        this.field_220694_f = this.field_220693_e.ticksExisted + 600;
-                        if (this.field_220693_e.isServerWorld()) {
-                            EntityPlayer playerentity = this.field_220693_e.world.getClosestPlayerToEntity(field_220693_e, 8);
-                            this.field_220693_e.setAttackTarget(playerentity);
+                    if (this.field_220694_f <= this.panda.ticksExisted) {
+                        this.panda.setHungryTicks(32);
+                        this.field_220694_f = this.panda.ticksExisted + 600;
+
+                        if (this.panda.isServerWorld()) {
+                            EntityPlayer playerIn = this.panda.world.getClosestPlayerToEntity(panda, 8);
+                            this.panda.setAttackTarget(playerIn);
                         }
                     }
-
                     return false;
                 } else {
                     return true;
@@ -771,7 +781,7 @@ public class EntityPanda extends EntityAnimal {
         }
 
         private boolean func_220691_h() {
-            BlockPos pos = new BlockPos(this.field_220693_e);
+            BlockPos pos = new BlockPos(this.panda);
             BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
             for(int i = 0; i < 3; ++i) {
@@ -779,7 +789,7 @@ public class EntityPanda extends EntityAnimal {
                     for(int k = 0; k <= j; k = k > 0 ? -k : 1 - k) {
                         for(int l = k < j && k > -j ? j : 0; l <= j; l = l > 0 ? -l : 1 - l) {
                             mutablePos.setPos(pos).add(k, i, l);
-                            if (this.field_220693_e.world.getBlockState(mutablePos).getBlock() == Init.BAMBOO_STALK) {
+                            if (this.panda.world.getBlockState(mutablePos).getBlock() == Init.BAMBOO_STALK) {
                                 return true;
                             }
                         }
@@ -793,7 +803,7 @@ public class EntityPanda extends EntityAnimal {
     static class MoveHelperController extends EntityMoveHelper {
         private final EntityPanda field_220672_i;
 
-        public MoveHelperController(EntityPanda entityPanda) {
+        MoveHelperController(EntityPanda entityPanda) {
             super(entityPanda);
             this.field_220672_i = entityPanda;
         }
@@ -814,7 +824,7 @@ public class EntityPanda extends EntityAnimal {
     static class PanicGoal extends EntityAIPanic {
         private final EntityPanda field_220740_f;
 
-        public PanicGoal(EntityPanda entityPanda, double speedIn) {
+        PanicGoal(EntityPanda entityPanda, double speedIn) {
             super(entityPanda, speedIn);
             this.field_220740_f = entityPanda;
         }
@@ -828,9 +838,9 @@ public class EntityPanda extends EntityAnimal {
             } else {
                 BlockPos blockpos = getRandomPos(this.field_220740_f.world, this.field_220740_f);
                 if (blockpos != null) {
-                    this.randPosX = (double)blockpos.getX();
-                    this.randPosY = (double)blockpos.getY();
-                    this.randPosZ = (double)blockpos.getZ();
+                    this.randPosX = blockpos.getX();
+                    this.randPosY = blockpos.getY();
+                    this.randPosZ = blockpos.getZ();
                     return true;
                 } else {
                     return this.findRandomPosition();
@@ -840,7 +850,7 @@ public class EntityPanda extends EntityAnimal {
 
         @Override
         public boolean shouldContinueExecuting() {
-            if (this.field_220740_f.func_213556_dX()) {
+            if (this.field_220740_f.isSitting()) {
                 this.field_220740_f.getNavigator().clearPath();
                 return false;
             } else {
@@ -879,29 +889,29 @@ public class EntityPanda extends EntityAnimal {
         }
     }
 
-    static class EntityAIRevenge extends EntityAIHurtByTarget {
-        private final EntityPanda field_220798_a;
+    private static class AIRevenge extends EntityAIHurtByTarget {
+        private final EntityPanda panda;
 
-        public EntityAIRevenge(EntityPanda entityPanda) {
+        private AIRevenge(EntityPanda entityPanda) {
             super(entityPanda, true);
-            this.field_220798_a = entityPanda;
+            this.panda = entityPanda;
         }
 
         @Override
         public boolean shouldContinueExecuting() {
-            if (!this.field_220798_a.field_213598_bH && !this.field_220798_a.field_213599_bI) {
+            if (!this.panda.revenge && !this.panda.attacked) {
                 return super.shouldContinueExecuting();
             } else {
-                this.field_220798_a.setAttackTarget(null);
+                this.panda.setAttackTarget(null);
                 return false;
             }
         }
     }
 
-    static class EntityAIRoll extends EntityAIBase {
+    private static class AIRoll extends EntityAIBase {
         private final EntityPanda panda;
 
-        public EntityAIRoll(EntityPanda p_i51452_1_) {
+        private AIRoll(EntityPanda p_i51452_1_) {
             this.panda = p_i51452_1_;
             setMutexBits(7);
         }
@@ -953,18 +963,18 @@ public class EntityPanda extends EntityAnimal {
         }
     }
 
-    static class EntityAISit extends EntityAIBase {
+    private static class EntityAISit extends EntityAIBase {
         private final EntityPanda panda;
         private int field_220832_b;
 
-        public EntityAISit(EntityPanda panda) {
+        private EntityAISit(EntityPanda panda) {
             this.setMutexBits(1);
             this.panda = panda;
         }
 
         @Override
         public boolean shouldExecute() {
-            if (this.field_220832_b <= panda.ticksExisted && !panda.isChild() && !panda.isInWater() && panda.func_213537_eq() && panda.func_213544_dV() <= 0) {
+            if (this.field_220832_b <= panda.ticksExisted && !panda.isChild() && !panda.isInWater() && panda.func_213537_eq() && panda.getHungryTicks() <= 0) {
                 List<EntityItem> list = panda.world
                         .getEntitiesWithinAABB(EntityItem.class, panda.getEntityBoundingBox().grow(6.0D, 6.0D, 6.0D), EntityPanda.BREEDING_ITEM::test);
                 return !list.isEmpty() || !panda.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isEmpty();
@@ -984,7 +994,7 @@ public class EntityPanda extends EntityAnimal {
 
         @Override
         public void updateTask() {
-            if (!panda.func_213556_dX() && !panda.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isEmpty()) {
+            if (!panda.isSitting() && !panda.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isEmpty()) {
                 panda.func_213586_eB();
             }
         }
@@ -993,7 +1003,7 @@ public class EntityPanda extends EntityAnimal {
         public void startExecuting() {
             List<EntityItem> list = panda.world.getEntitiesWithinAABB(EntityItem.class, panda.getEntityBoundingBox().grow(8.0D, 8.0D, 8.0D), EntityPanda.BREEDING_ITEM::test);
             if (!list.isEmpty() && panda.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isEmpty()) {
-                panda.getNavigator().tryMoveToEntityLiving(list.get(0), (double)1.2F);
+                panda.getNavigator().tryMoveToEntityLiving(list.get(0), 1.2F);
             } else if (!panda.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isEmpty()) {
                 panda.func_213586_eB();
             }
@@ -1011,7 +1021,7 @@ public class EntityPanda extends EntityAnimal {
                 this.field_220832_b = panda.ticksExisted + i * 20;
             }
 
-            panda.func_213553_r(false);
+            panda.setIsScared(false);
         }
     }
 
@@ -1021,7 +1031,7 @@ public class EntityPanda extends EntityAnimal {
         }
 
         if (this.isLazy()) {
-            this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.07F);
+            this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.07F);
         }
     }
 
@@ -1037,12 +1047,12 @@ public class EntityPanda extends EntityAnimal {
         private static final EntityPanda.Type[] orderedTypes = Arrays.stream(values()).sorted(Comparator.comparingInt(EntityPanda.Type::getID)).toArray(Type[]::new);
         private final int id;
         private final String name;
-        private final boolean field_221112_k;
+        private final boolean isRare;
 
         Type(int id, String name, boolean p_i51468_5_) {
             this.id = id;
             this.name = name;
-            this.field_221112_k = p_i51468_5_;
+            this.isRare = p_i51468_5_;
         }
 
         public int getID() {
@@ -1053,15 +1063,15 @@ public class EntityPanda extends EntityAnimal {
             return this.name;
         }
 
-        public boolean func_221107_c() {
-            return this.field_221112_k;
+        public boolean isRare() {
+            return this.isRare;
         }
 
-        private static EntityPanda.Type func_221101_b(EntityPanda.Type p_221101_0_, EntityPanda.Type p_221101_1_) {
-            if (p_221101_0_.func_221107_c()) {
-                return p_221101_0_ == p_221101_1_ ? p_221101_0_ : NORMAL;
+        private static EntityPanda.Type func_221101_b(EntityPanda.Type main, EntityPanda.Type hidden) {
+            if (main.isRare()) {
+                return main == hidden ? main : NORMAL;
             } else {
-                return p_221101_0_;
+                return main;
             }
         }
 
@@ -1104,7 +1114,7 @@ public class EntityPanda extends EntityAnimal {
     static class EntityAIWatch extends EntityAIWatchClosest {
         private final EntityPanda panda;
 
-        public EntityAIWatch(EntityPanda entityPanda, Class<? extends EntityLivingBase> targetEntity, float maxDistance) {
+        EntityAIWatch(EntityPanda entityPanda, Class<? extends EntityLivingBase> targetEntity, float maxDistance) {
             super(entityPanda, targetEntity, maxDistance);
             this.panda = entityPanda;
         }

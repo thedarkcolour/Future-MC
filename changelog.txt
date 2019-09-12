@@ -1,6 +1,14 @@
-Version 0.1.11 - Campfire functionality? New things:
+Version 0.1.11 - Bees? New things:
+ *Bees* - Cute flying insects from 1.15 snapshots that pollinate crops.
+ *Honeycomb* - Resource from 1.15 snapshot obtained from beehives.
+ *Bee Hive and Bee House* - Blocks from 1.15 where bees come to make honey.
+ *Honey Bottle* - New food from 1.15 snapshot collected from beehives.
  Trident - Now properly travels through water.
  Trident - No longer "bounces" in place when hitting certain blocks like snow layers.
+ Trident - Now only applies impaling enchantment to mobs that are wet.
+ Dyes, Bamboo, Sweet Berries - No longer show up in the dye oredictionary when not enabled.
+ Blue Ice - Fixed sounds and hardness.
+ Added more language support.
 
 Version 0.1.10 - It's been a while:
  *Blue Ice* - Most slippery type of ice in the game.

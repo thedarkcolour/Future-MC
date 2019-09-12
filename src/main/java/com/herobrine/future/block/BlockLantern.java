@@ -20,6 +20,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import thedarkcolour.core.block.BlockBase;
 
 public class BlockLantern extends BlockBase {
     private static final PropertyBool HANGING = PropertyBool.create("hanging");
@@ -27,13 +28,13 @@ public class BlockLantern extends BlockBase {
     private static final AxisAlignedBB HANGING_AABB = makeAABB(5,1,5,11,10,11);
 
     public BlockLantern() {
-        super(new BlockProperties("Lantern", Material.IRON));
+        super("Lantern", Material.IRON);
         setLightLevel(1);
         setHardness(5);
         setSoundType(SoundType.METAL);
         setHarvestLevel("pickaxe", 0);
         setDefaultState(this.blockState.getBaseState().withProperty(HANGING, false));
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.CREATIVE_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.TAB);
     }
 
     @Override

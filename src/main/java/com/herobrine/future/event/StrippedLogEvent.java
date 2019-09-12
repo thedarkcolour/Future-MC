@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Level;
 
 @Mod.EventBusSubscriber
-public class StrippedLogEvent {
+public final class StrippedLogEvent {
     @SuppressWarnings("unchecked")
     @SubscribeEvent
     public static void stripLogEvent(PlayerInteractEvent.RightClickBlock event) {
@@ -78,17 +78,17 @@ public class StrippedLogEvent {
         if (variant != null) {
             switch (variant) {
                 case "acacia":
-                    return Init.STRIPPED_ACACIA_LOG.getDefaultState();//.withProperty(BlockRotatedPillar.AXIS, state.getValue(BlockRotatedPillar.AXIS));
+                    return Init.STRIPPED_ACACIA_LOG.getDefaultState();
                 case "jungle":
-                    return Init.STRIPPED_JUNGLE_LOG.getDefaultState();//.withProperty(BlockRotatedPillar.AXIS, state.getValue(BlockRotatedPillar.AXIS));
+                    return Init.STRIPPED_JUNGLE_LOG.getDefaultState();
                 case "birch":
-                    return Init.STRIPPED_BIRCH_LOG.getDefaultState();//.withProperty(BlockRotatedPillar.AXIS, state.getValue(BlockRotatedPillar.AXIS));
+                    return Init.STRIPPED_BIRCH_LOG.getDefaultState();
                 case "oak":
-                    return Init.STRIPPED_OAK_LOG.getDefaultState();//.withProperty(BlockRotatedPillar.AXIS, parseAxis(state.getProperties().get(BlockRotatedPillar.AXIS).toString()));
+                    return Init.STRIPPED_OAK_LOG.getDefaultState();
                 case "spruce":
-                    return Init.STRIPPED_SPRUCE_LOG.getDefaultState();//.withProperty(BlockRotatedPillar.AXIS, state.getValue(BlockRotatedPillar.AXIS));
+                    return Init.STRIPPED_SPRUCE_LOG.getDefaultState();
                 case "dark_oak":
-                    return Init.STRIPPED_DARK_OAK_LOG.getDefaultState();//.withProperty(BlockRotatedPillar.AXIS, state.getValue(BlockRotatedPillar.AXIS));
+                    return Init.STRIPPED_DARK_OAK_LOG.getDefaultState();
             }
         }
         FutureMC.LOGGER.log(Level.ERROR, "Failed to find stripped log for event");

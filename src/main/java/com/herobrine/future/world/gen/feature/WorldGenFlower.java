@@ -42,7 +42,7 @@ public class WorldGenFlower implements IWorldGenerator {
 
         if(rand.nextInt(100) <= flower.getFlowerChance()) {
             if(flower.isBiomeValid(biome) && world.getWorldType() != WorldType.FLAT) {
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < 5; ++i) {
                     int xPos = rand.nextInt(16) + 8;
                     int zPos = rand.nextInt(16) + 8;
                     int yPos = rand.nextInt(world.getHeight(chunkPos.getBlock(0, 0, 0).add(xPos, 0, zPos)).getY() + 32);

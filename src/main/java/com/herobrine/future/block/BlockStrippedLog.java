@@ -20,11 +20,11 @@ import java.util.List;
 
 public class BlockStrippedLog extends BlockLog {
     public static List<String> variants = Arrays.asList("acacia", "jungle", "birch", "oak", "spruce", "dark_oak");
+
     public BlockStrippedLog(String variant) {
-        super();
         setUnlocalizedName(FutureMC.ID + ".stripped_" + variant + "_log");
         setRegistryName("stripped_" + variant + "_log");
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : FutureMC.CREATIVE_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : FutureMC.TAB);
         this.setDefaultState(getBlockState().getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
     }
 

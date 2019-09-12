@@ -37,7 +37,7 @@ public class ItemCrossBow extends Item implements Modeled {
         setRegistryName(registryName);
         setMaxStackSize(1);
         setMaxDamage(326);
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.COMBAT : FutureMC.CREATIVE_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.COMBAT : FutureMC.TAB);
         this.addPropertyOverride(new ResourceLocation("pull"), ((stack, worldIn, entityIn) -> entityIn == null || entityIn.getActiveItemStack().getItem() != Init.CROSSBOW || isLoaded(stack) ? 0.0F : (float)(stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F));
         this.addPropertyOverride(new ResourceLocation("pulling"), (stack, worldIn, entityIn) -> !isLoaded(stack) && entityIn != null && entityIn.isHandActive() && entityIn.getActiveItemStack() == stack ? 1.0F : 0.0F);
         this.addPropertyOverride(new ResourceLocation("loaded"), (stack, worldIn, entityIn) -> isLoaded(stack) ? 1.0F : 0.0F);

@@ -7,6 +7,9 @@ import net.minecraft.item.ItemStack;
 import java.util.Map;
 
 public final class EnchantHelper {
+    public EnchantHelper() {
+    }
+
     public static boolean hasChanneling(ItemStack stack) {
         if(stack == null) {
             return false;

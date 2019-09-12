@@ -1,6 +1,8 @@
 package com.herobrine.future.block;
 
 import com.herobrine.future.FutureMC;
+import com.herobrine.future.client.particle.EnumParticleType;
+import com.herobrine.future.client.particle.ParticleSpawner;
 import com.herobrine.future.init.FutureConfig;
 import com.herobrine.future.sound.Sounds;
 import net.minecraft.block.Block;
@@ -16,22 +18,30 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import thedarkcolour.core.block.BlockBase;
 
 import java.util.Objects;
 import java.util.Random;
@@ -41,11 +51,11 @@ public class BlockCampfire extends BlockBase {
     public static final PropertyBool LIT = PropertyBool.create("lit");
 
     public BlockCampfire() {
-        super(new BlockProperties("Campfire", Material.WOOD));
+        super("Campfire", Material.WOOD);
         setSoundType(SoundType.WOOD);
         setHardness(2.0F);
         this.setDefaultState(getBlockState().getBaseState().withProperty(LIT, true));
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.CREATIVE_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.TAB);
     }
 
     @Override
@@ -57,16 +67,26 @@ public class BlockCampfire extends BlockBase {
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         if (stateIn.getValue(LIT)) {
             if (rand.nextInt(10) == 0) {
-                worldIn.playSound((double)((float)pos.getX() + 0.5F), (double)((float)pos.getY() + 0.5F), (double)((float)pos.getZ() + 0.5F), Sounds.CAMPFIRE_CRACKLE, SoundCategory.BLOCKS, 0.5F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.6F, false);
+                worldIn.playSound((float)pos.getX() + 0.5F, (float)pos.getY() + 0.5F, (float)pos.getZ() + 0.5F, Sounds.CAMPFIRE_CRACKLE, SoundCategory.BLOCKS, 0.5F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.6F, false);
             }
+
+            //smoke(worldIn, pos, rand);
 
             if (rand.nextInt(5) == 0) {
                 for(int i = 0; i < rand.nextInt(1) + 1; ++i) {
-                    worldIn.spawnParticle(EnumParticleTypes.LAVA, (double)((float)pos.getX() + 0.5F), (double)((float)pos.getY() + 0.5F), (double)((float)pos.getZ() + 0.5F), (double)(rand.nextFloat() / 2.0F), 5.0E-5D, (double)(rand.nextFloat() / 2.0F));
+                    worldIn.spawnParticle(EnumParticleTypes.LAVA, (float)pos.getX() + 0.5F, (float)pos.getY() + 0.5F, (float)pos.getZ() + 0.5F, rand.nextFloat() / 2.0F, 5.0E-5D, rand.nextFloat() / 2.0F);
                 }
             }
 
             //smoke(worldIn, pos, worldIn.getBlockState(pos.down()) == Blocks.HAY_BLOCK.getDefaultState(), false); // Make it cook?
+        }
+    }
+
+    private void smoke(World worldIn, BlockPos pos, Random rand) {
+        if (rand.nextFloat() < 0.11F) {
+            for (int i = 0; i < rand.nextInt(2) + 2; ++i) {
+                ParticleSpawner.spawnParticle(worldIn.getBlockState(pos.down()) == Blocks.HAY_BLOCK ? EnumParticleType.CAMPFIRE_SIGNAL_SMOKE : EnumParticleType.CAMPFIRE_COZY_SMOKE, worldIn, pos, new Vec3d(0.0D, 0.07D, 0.0D));
+            }
         }
     }
 

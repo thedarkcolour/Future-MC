@@ -1,9 +1,9 @@
 package com.herobrine.future.block;
 
 import com.herobrine.future.FutureMC;
+import com.herobrine.future.client.gui.GuiHandler;
 import com.herobrine.future.init.FutureConfig;
 import com.herobrine.future.init.Init;
-import com.herobrine.future.client.gui.GuiHandler;
 import com.herobrine.future.tile.TileStonecutter;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
@@ -22,16 +22,17 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import thedarkcolour.core.block.BlockBase;
 
 public class BlockStonecutter extends BlockBase implements ITileEntityProvider {
     protected static final PropertyDirection FACING = BlockHorizontal.FACING;
     private static final AxisAlignedBB boundingBox = new AxisAlignedBB(0D,0D,0D,1D,0.5625D,1D);
 
     public BlockStonecutter() {
-        super(new BlockProperties("Stonecutter"));
+        super("Stonecutter");
         setHardness(3.0F);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.CREATIVE_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.TAB);
     }
 
     @Override

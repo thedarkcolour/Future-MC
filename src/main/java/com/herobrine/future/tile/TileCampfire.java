@@ -1,8 +1,6 @@
 package com.herobrine.future.tile;
 
-import net.minecraft.tileentity.TileEntity;
-
-public class TileCampfire extends TileEntity {
+public class TileCampfire extends thedarkcolour.core.tile.InteractionTile {
     public TileCampfire() {
     }
 }

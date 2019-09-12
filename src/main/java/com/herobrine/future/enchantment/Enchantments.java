@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber
-public class Enchantments {
+public final class Enchantments {
     public static final EnumEnchantmentType TRIDENT = EnumHelper.addEnchantmentType("weapons", (item) -> (item instanceof ItemTrident));
     public static final EnumEnchantmentType CROSSBOW = EnumHelper.addEnchantmentType("weapons", (item) -> (item instanceof ItemCrossBow));
 

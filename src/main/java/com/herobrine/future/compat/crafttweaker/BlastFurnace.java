@@ -14,7 +14,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenRegister
 @ZenClass("mods.minecraftfuture.BlastFurnace")
-public class BlastFurnace {
+public final class BlastFurnace {
     @ZenMethod
     public static void addValidInput(IItemStack input) {
         if (!BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE.canCraft(CraftTweakerMC.getItemStack(input))) {
@@ -27,7 +27,7 @@ public class BlastFurnace {
     private static class AddRecipe implements IAction {
         private ItemStack input;
 
-        public AddRecipe(IItemStack input) {
+        private AddRecipe(IItemStack input) {
             this.input = CraftTweakerMC.getItemStack(input);
         }
 
@@ -54,7 +54,7 @@ public class BlastFurnace {
     private static class RemoveRecipe implements IAction {
         private ItemStack input;
 
-        public RemoveRecipe(IItemStack input) {
+        private RemoveRecipe(IItemStack input) {
             this.input = CraftTweakerMC.getItemStack(input);
         }
 

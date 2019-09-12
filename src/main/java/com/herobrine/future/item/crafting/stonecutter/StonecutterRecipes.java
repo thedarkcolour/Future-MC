@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class StonecutterRecipes {
+public final class StonecutterRecipes {
     private static final StonecutterRecipes STONECUTTER_RECIPES = new StonecutterRecipes(); // Access to class
     private static List<String> validItems = new ArrayList<>(); // Valid items list with RecipeStack Strings
     private static Map<String, Integer> resultInts = Maps.newHashMap(); // Contains the list of RecipeStack Strings that have general result count greater than one.

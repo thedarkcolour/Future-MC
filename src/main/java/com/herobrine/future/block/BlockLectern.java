@@ -26,8 +26,8 @@ import net.minecraft.world.World;
 
 public class BlockLectern extends BlockRotatable implements ITileEntityProvider {
     public BlockLectern() {
-        super(new BlockProperties("Lectern", Material.WOOD));
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.REDSTONE : FutureMC.CREATIVE_TAB);
+        super("Lectern", Material.WOOD);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.REDSTONE : FutureMC.TAB);
     }
 
     @Override

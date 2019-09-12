@@ -2,6 +2,7 @@ package com.herobrine.future.init;
 
 import com.herobrine.future.FutureMC;
 import com.herobrine.future.client.Modeled;
+import com.herobrine.future.item.ItemGroup;
 import com.herobrine.future.tile.TileBarrel;
 import com.herobrine.future.tile.TileComposter;
 import com.herobrine.future.tile.TileFurnaceAdvanced;
@@ -35,6 +36,8 @@ public final class InitElements {
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
+        FutureMC.TAB = FutureConfig.general.useVanillaTabs ? null : new ItemGroup();
+
         IForgeRegistry<Block> r = event.getRegistry();
         if(general.lantern) r.register(LANTERN);
         if(general.stonecutter) r.register(STONECUTTER);

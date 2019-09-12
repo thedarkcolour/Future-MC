@@ -59,11 +59,11 @@ public class ModelPanda extends ModelQuadruped {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
         EntityPanda entityPanda = (EntityPanda) entityIn;
 
-        boolean flag = entityPanda.func_213544_dV() > 0;
-        boolean flag1 = entityPanda.func_213539_dW();
+        boolean flag = entityPanda.getHungryTicks() > 0;
+        boolean flag1 = entityPanda.isSneezing();
         int i = entityPanda.func_213585_ee();
-        boolean flag2 = entityPanda.func_213578_dZ();
-        boolean flag3 = entityPanda.func_213566_eo();
+        boolean flag2 = entityPanda.isEating();
+        boolean flag3 = entityPanda.func_bruh();
         if (flag) {
             this.head.rotateAngleY = 0.35F * MathHelper.sin(0.6F * ageInTicks);
             this.head.rotateAngleZ = 0.35F * MathHelper.sin(0.6F * ageInTicks);

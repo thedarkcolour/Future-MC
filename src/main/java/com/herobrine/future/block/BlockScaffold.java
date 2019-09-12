@@ -18,6 +18,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import thedarkcolour.core.block.BlockBase;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -30,7 +31,7 @@ public class BlockScaffold extends BlockBase {
     private AxisAlignedBB BOTTOM_AABB = makeAABB(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 
     public BlockScaffold() {
-        super(new BlockProperties("scaffolding", Material.CIRCUITS, Sounds.SCAFFOLDING));
+        super("scaffolding", Material.CIRCUITS, Sounds.SCAFFOLDING);
     }
 
     @Override
@@ -108,7 +109,7 @@ public class BlockScaffold extends BlockBase {
         IBlockState blockstate = state.withProperty(DISTANCE, i).withProperty(BOTTOM, this.func_220116_a(worldIn, pos, i));
         if (blockstate.getValue(DISTANCE) == 7) {
             if (state.getValue(DISTANCE) == 7) {
-                worldIn.spawnEntity(new EntityFallingBlock(worldIn, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, state));
+                worldIn.spawnEntity(new EntityFallingBlock(worldIn, (double)pos.getX() + 0.5D, pos.getY(), (double)pos.getZ() + 0.5D, state));
             } else {
                 worldIn.destroyBlock(pos, true);
             }

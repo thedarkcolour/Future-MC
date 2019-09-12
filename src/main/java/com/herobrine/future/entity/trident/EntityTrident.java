@@ -4,6 +4,7 @@ import com.herobrine.future.FutureMC;
 import com.herobrine.future.enchantment.EnchantHelper;
 import com.herobrine.future.enchantment.Enchantments;
 import com.herobrine.future.sound.Sounds;
+import net.minecraft.dispenser.IPosition;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -39,24 +40,15 @@ public class EntityTrident extends EntityModArrow {
         super(world);
     }
 
-    public EntityTrident(World world, double x, double y, double z, ItemStack stack) {
-        super(world, x, y, z);
+    public EntityTrident(World world, IPosition pos, ItemStack stack) {
+        super(world, pos.getX(), pos.getY(), pos.getZ());
         this.thrownStack = stack;
+        this.pickupStatus = PickupStatus.ALLOWED;
     }
 
     public EntityTrident(World world, EntityLivingBase shooter, ItemStack stack) {
         super(world, shooter);
         this.thrownStack = stack;
-    }
-
-    @Override
-    protected void entityInit() {
-        super.entityInit();
-    }
-
-    @Override
-    public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-        super.shoot(x, y, z, velocity, inaccuracy);
     }
 
     @Override
@@ -118,7 +110,7 @@ public class EntityTrident extends EntityModArrow {
                 source = causeTridentDamage(this, shootingEntity);
             }
 
-            if (entity.attackEntityFrom(source, getDamageForTrident())) {
+            if (entity.attackEntityFrom(source, getDamageForTrident(entity))) {
                 if (entity instanceof EntityLivingBase) {
                     EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
 
@@ -249,11 +241,11 @@ public class EntityTrident extends EntityModArrow {
         }
     }
 
-    private float getDamageForTrident() {
+    private float getDamageForTrident(Entity target) {
         float level = EnchantHelper.getImpaling(this.thrownStack);
         float damage = 8F;
 
-        if(level > 0) {
+        if(level > 0 && target.isWet()) {
             damage += (level * 1.25);
         }
         return damage;

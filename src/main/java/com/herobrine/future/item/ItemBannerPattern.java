@@ -23,7 +23,7 @@ public class ItemBannerPattern extends Item implements Modeled {
         setMaxDamage(0);
         setUnlocalizedName(FutureMC.ID + "." + "banner_pattern");
         setRegistryName("banner_pattern");
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.MISC : FutureMC.CREATIVE_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.MISC : FutureMC.TAB);
         addModel();
     }
 

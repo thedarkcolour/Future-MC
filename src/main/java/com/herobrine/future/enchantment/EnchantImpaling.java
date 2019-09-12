@@ -1,7 +1,5 @@
 package com.herobrine.future.enchantment;
 
-import net.minecraft.entity.EnumCreatureAttribute;
-
 public class EnchantImpaling extends EnchantmentTridentBase {
     public EnchantImpaling() {
         super(Rarity.RARE, "impaling");
@@ -20,10 +18,5 @@ public class EnchantImpaling extends EnchantmentTridentBase {
     @Override
     public int getMaxLevel() {
         return 5;
-    }
-
-    @Override
-    public float calcDamageByCreature(int level, EnumCreatureAttribute creatureType) {
-        return level * 2.5F;
     }
 }

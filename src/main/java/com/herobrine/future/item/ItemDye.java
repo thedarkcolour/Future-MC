@@ -23,7 +23,7 @@ public class ItemDye extends Item implements Modeled {
         setMaxDamage(0);
         setUnlocalizedName(FutureMC.ID + "." + "dye");
         setRegistryName("dye");
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.MISC : FutureMC.CREATIVE_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.MISC : FutureMC.TAB);
         addModel();
     }
 

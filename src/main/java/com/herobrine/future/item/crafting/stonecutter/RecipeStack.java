@@ -89,7 +89,7 @@ public class RecipeStack {
     /**
      * Parses RecipeStacks from strings to ItemStacks.
      */
-    public static class RecipeStackParser {
+    public static final class RecipeStackParser {
         public static RecipeStack getRStackFromString(String string) {
             List<String> list = new ArrayList<>(Arrays.asList(parseString(string)));
 

@@ -78,7 +78,7 @@ public class EntityDrowned extends EntityZombie implements IRangedAttackMob {
         double d0 = target.posX - this.posX;
         double d1 = target.getEntityBoundingBox().minY + (double)(target.height / 3.0F) - entitytrident.posY;
         double d2 = target.posZ - this.posZ;
-        double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
+        double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
         entitytrident.shoot(d0, d1 + d3 * (double)0.2F, d2, 1.6F, (float)(14 - this.world.getDifficulty().getDifficultyId() * 4));
         this.playSound(Sounds.TRIDENT_THROW, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
         this.world.spawnEntity(entitytrident);
@@ -93,7 +93,7 @@ public class EntityDrowned extends EntityZombie implements IRangedAttackMob {
         Path path = this.getNavigator().getPath();
         if (path != null) {
             PathPoint pathpoint = path.getTarget();
-            double d0 = this.getDistanceSq((double)pathpoint.x, (double)pathpoint.y, (double)pathpoint.z);
+            double d0 = this.getDistanceSq(pathpoint.x, pathpoint.y, pathpoint.z);
             return d0 < 4.0D;
         }
         return false;
@@ -155,7 +155,7 @@ public class EntityDrowned extends EntityZombie implements IRangedAttackMob {
             for(int i = 0; i < 10; ++i) {
                 BlockPos pos1 = pos.add(random.nextInt(20) - 10, 2 - random.nextInt(8), random.nextInt(20) - 10);
                 if (this.world.getBlockState(pos1).getBlock() == Blocks.WATER) {
-                    return new Vec3d((double)pos1.getX(), (double)pos1.getY(), (double)pos1.getZ());
+                    return new Vec3d(pos1.getX(), pos1.getY(), pos1.getZ());
                 }
             }
 
@@ -185,7 +185,7 @@ public class EntityDrowned extends EntityZombie implements IRangedAttackMob {
 
         public void updateTask() {
             if (this.drowned.posY < (double)(this.targetY - 1) && (this.drowned.getNavigator().noPath() || this.drowned.isCloseToPathTarget())) {
-                Vec3d vec3d = RandomPositionGenerator.findRandomTargetBlockTowards(this.drowned, 4, 8, new Vec3d(this.drowned.posX, (double)(this.targetY - 1), this.drowned.posZ));
+                Vec3d vec3d = RandomPositionGenerator.findRandomTargetBlockTowards(this.drowned, 4, 8, new Vec3d(this.drowned.posX, this.targetY - 1, this.drowned.posZ));
                 if (vec3d == null) {
                     this.obstructed = true;
                     return;
@@ -249,7 +249,7 @@ public class EntityDrowned extends EntityZombie implements IRangedAttackMob {
     static class AIGoToBeach extends EntityAIMoveToBlock {
         private final EntityDrowned drowned;
 
-        public AIGoToBeach(EntityDrowned drowned, double p_i48911_2_) {
+        AIGoToBeach(EntityDrowned drowned, double p_i48911_2_) {
             super(drowned, p_i48911_2_, 8);
             this.drowned = drowned;
         }
@@ -294,7 +294,7 @@ public class EntityDrowned extends EntityZombie implements IRangedAttackMob {
     static class MoveHelper extends EntityMoveHelper {
         private final EntityDrowned drowned;
 
-        public MoveHelper(EntityDrowned entity) {
+        MoveHelper(EntityDrowned entity) {
             super(entity);
             this.drowned = entity;
         }
@@ -314,7 +314,7 @@ public class EntityDrowned extends EntityZombie implements IRangedAttackMob {
                 double d0 = this.posX - this.drowned.posX;
                 double d1 = this.posY - this.drowned.posY;
                 double d2 = this.posZ - this.drowned.posZ;
-                double d3 = (double) MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+                double d3 = MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
                 d1 = d1 / d3;
                 float f = (float)(MathHelper.atan2(d2, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
                 this.drowned.rotationYaw = this.limitAngle(this.drowned.rotationYaw, f, 90.0F);

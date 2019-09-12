@@ -1,8 +1,8 @@
 package com.herobrine.future.block;
 
 import com.herobrine.future.FutureMC;
-import com.herobrine.future.init.FutureConfig;
 import com.herobrine.future.client.gui.GuiHandler;
+import com.herobrine.future.init.FutureConfig;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
@@ -19,15 +19,16 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import thedarkcolour.core.block.BlockBase;
 
 public class BlockGrindstone extends BlockBase {
     private static final PropertyEnum<BlockGrindstone.EnumAttachment> ATTACHMENT = PropertyEnum.create("face", BlockGrindstone.EnumAttachment.class);
     private static final PropertyDirection FACING = BlockHorizontal.FACING;
 
     public BlockGrindstone() {
-        super(new BlockProperties("Grindstone"));
+        super("Grindstone");
         setHardness(3.5F);
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.CREATIVE_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.TAB);
     }
 
     @Override

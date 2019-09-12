@@ -18,7 +18,7 @@ public abstract class BlockFlower extends BlockBush {
     public BlockFlower(String regName) {
         setUnlocalizedName(FutureMC.ID + "." + regName);
         setRegistryName(regName);
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.CREATIVE_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.TAB);
     }
 
     @SideOnly(Side.CLIENT)

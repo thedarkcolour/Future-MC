@@ -27,6 +27,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+import thedarkcolour.core.block.BlockBase;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -37,15 +38,12 @@ public class BlockBamboo extends BlockBase implements IPlantable, IGrowable {
     public static final PropertyBool MATURE = PropertyBool.create("mature");
     private static final AxisAlignedBB THICK_AABB = makeAABB(6.5, 0, 6.5, 9.5, 16, 9.5);
     private static final AxisAlignedBB THIN_AABB = makeAABB(7, 0, 7, 9, 16, 9);
-    //private static final AxisAlignedBB LARGE_AABB = makeAABB(5, 0, 5, 11, 16, 11);
-    //private static final AxisAlignedBB SMALL_AABB = makeAABB(5.5, 0, 5.5, 10.5, 16, 10.5);
-
 
     public BlockBamboo() {
-        super(new BlockProperties("Bamboo", Material.PLANTS, Sounds.BAMBOO));
+        super("Bamboo", Material.PLANTS, Sounds.BAMBOO);
         setDefaultState(getBlockState().getBaseState().withProperty(THICK, false).withProperty(LEAVES, EnumLeaves.NO_LEAVES).withProperty(MATURE, false));
         setTickRandomly(true);
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.MISC : FutureMC.CREATIVE_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.MISC : FutureMC.TAB);
         setHardness(1.0F);
     }
 

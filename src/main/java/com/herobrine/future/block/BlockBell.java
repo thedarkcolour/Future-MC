@@ -22,7 +22,7 @@ public class BlockBell extends BlockRotatable {
     public static final PropertyEnum<BellAttachment> ATTACHMENT = PropertyEnum.create("attachment", BellAttachment.class);
 
     public BlockBell() {
-        super(new BlockProperties("bell", Material.IRON, SoundType.ANVIL));
+        super("bell", Material.IRON, SoundType.ANVIL);
         setHardness(5.0F);
     }
 

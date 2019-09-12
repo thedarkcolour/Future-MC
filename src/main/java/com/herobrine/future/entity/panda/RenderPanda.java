@@ -84,7 +84,7 @@ public class RenderPanda extends RenderLiving<EntityPanda> {
             GlStateManager.translate(0.0F, 0.8F * f6, 0.0F);
             GlStateManager.rotate(EntityPanda.func_219799_g(f6, entityLiving.rotationPitch, entityLiving.rotationPitch + 90.0F), 1.0F, 0.0F, 0.0F);
             GlStateManager.translate(0.0F, -1.0F * f6, 0.0F);
-            if (entityLiving.func_213566_eo()) {
+            if (entityLiving.func_bruh()) {
                 float f7 = (float)(Math.cos((double)entityLiving.ticksExisted * 1.25D) * Math.PI * (double)0.05F);
                 GlStateManager.rotate(f7, 0.0F, 1.0F, 0.0F);
                 if (entityLiving.isChild()) {

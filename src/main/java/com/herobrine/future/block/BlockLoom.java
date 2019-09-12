@@ -16,8 +16,8 @@ import net.minecraft.world.World;
 
 public class BlockLoom extends BlockRotatable {
     public BlockLoom() {
-        super(new BlockProperties("Loom", Material.WOOD, SoundType.WOOD));
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.CREATIVE_TAB);
+        super("Loom", Material.WOOD, SoundType.WOOD);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.TAB);
     }
 
     @Override

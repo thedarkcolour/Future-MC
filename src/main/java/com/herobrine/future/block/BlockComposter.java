@@ -28,6 +28,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+import thedarkcolour.core.block.BlockBase;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,10 +45,10 @@ public class BlockComposter extends BlockBase {
     protected static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
 
     public BlockComposter() {
-        super(new BlockProperties("Composter", Material.WOOD));
+        super("Composter", Material.WOOD);
         setSoundType(SoundType.WOOD);
         setDefaultState(getDefaultState().withProperty(LEVEL, 0));
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.MISC : FutureMC.CREATIVE_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.MISC : FutureMC.TAB);
     }
 
     @Override
@@ -114,8 +115,8 @@ public class BlockComposter extends BlockBase {
         IBlockState state = worldIn.getBlockState(pos);
         Random random = worldIn.rand;
         double d0 = 0.53125D;
-        double d1 =(double)0.13125F;
-        double d2 =(double)0.7375F;
+        double d1 = 0.13125F;
+        double d2 = 0.7375F;
 
         for(int i = 0; i < 10; ++i) {
             double d3 = random.nextGaussian() * 0.02D;

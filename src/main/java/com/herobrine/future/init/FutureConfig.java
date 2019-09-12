@@ -178,6 +178,11 @@ public final class FutureConfig {
         @Comment("Whether the Blue Ice block is added to the game.")
         @RequiresMcRestart
         public boolean blueIce = true;
+
+        @Name("Bee")
+        @Comment("Whether the 1.15 creature and its related content should be added to the game.")
+        @RequiresMcRestart
+        public boolean bee = true;
     }
 
     public static class Flowers {

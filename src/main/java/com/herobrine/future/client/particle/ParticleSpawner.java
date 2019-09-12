@@ -9,14 +9,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ParticleSpawner {
+public final class ParticleSpawner {
     private static Minecraft mc = Minecraft.getMinecraft();
 
-    public static Particle spawnParticle(EnumParticleType type, World worldIn, BlockPos pos, Vec3d motion) {
-        return spawnParticle(type, worldIn, pos.getX(), pos.getY(), pos.getZ(), motion.x, motion.y, motion.z);
+    public static void spawnParticle(EnumParticleType type, World worldIn, BlockPos pos, Vec3d motion) {
+        spawnParticle(type, worldIn, pos.getX(), pos.getY(), pos.getZ(), motion.x, motion.y, motion.z);
     }
 
-    public static Particle spawnParticle(EnumParticleType type, World worldIn, double x, double y, double z, double mX, double mY, double mZ) {
+    public static void spawnParticle(EnumParticleType type, World worldIn, double x, double y, double z, double mX, double mY, double mZ) {
         if (mc != null && mc.getRenderViewEntity() != null && mc.effectRenderer != null) {
             int var14 = mc.gameSettings.particleSetting;
 
@@ -31,20 +31,20 @@ public class ParticleSpawner {
             double var22 = 16.0D;
 
             if (var15 * var15 + var17 * var17 + var19 * var19 > var22 * var22) {
-                return null;
             } else if (var14 > 1) {
-                return null;
             } else {
                 var21 = type.create(worldIn, x, y, z, mX, mY, mZ);
 
                 mc.effectRenderer.addEffect(var21);
-                return var21;
             }
         }
-        return null;
+    }
+/*
+    public static void spawnNectarParticle(World worldIn, double x, double y, double z, double mX, double mY, double mZ) {
+        spawnParticle(EnumParticleType.FALLING_NECTAR, worldIn, x, y, z, mX, mY, mZ);
     }
 
     interface ParticleSupplier {
         Particle get(World worldIn, double par2, double par4, double par6, double par8, double par10, double par12);
-    }
+    }*/
 }

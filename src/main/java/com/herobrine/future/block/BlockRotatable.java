@@ -1,6 +1,8 @@
 package com.herobrine.future.block;
 
 import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -8,12 +10,21 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import thedarkcolour.core.block.BlockBase;
 
 public class BlockRotatable extends BlockBase {
     protected static final PropertyDirection FACING = BlockHorizontal.FACING;
 
-    public BlockRotatable(BlockProperties properties) {
-        super(properties);
+    public BlockRotatable(String regName) {
+        this(regName, Material.ROCK);
+    }
+
+    public BlockRotatable(String regName, Material material) {
+        this(regName, material, SoundType.STONE);
+    }
+
+    public BlockRotatable(String regName, Material material, SoundType soundType) {
+        super(regName, material, soundType);
         setHardness(2.0F);
         setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
     }

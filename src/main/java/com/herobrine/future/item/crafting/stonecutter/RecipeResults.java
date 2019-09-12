@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Level;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RecipeResults {
+public final class RecipeResults {
     /**
      * This map holds every ItemStack as a RecipeStack, and is the main list of this class.
      */

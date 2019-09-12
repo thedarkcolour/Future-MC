@@ -1,7 +1,6 @@
 package com.herobrine.future.sound;
 
 import com.herobrine.future.FutureMC;
-import com.herobrine.future.init.Init;
 import net.minecraft.block.SoundType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -48,6 +47,14 @@ public final class Sounds {
     public static final SoundEvent SCAFFOLD_FALL = makeSoundEvent("scaffold_fall");
     public static final SoundEvent SCAFFOLD_HIT = makeSoundEvent("scaffold_hit");
     public static final SoundEvent BELL_RING = makeSoundEvent("bell_ring");
+    public static final SoundEvent BEE_ENTER_HIVE = makeSoundEvent("bee_enter_hive");
+    public static final SoundEvent BEE_EXIT_HIVE = makeSoundEvent("bee_exit_hive");
+    public static final SoundEvent BEE_STING = makeSoundEvent("bee_sting");
+    public static final SoundEvent BEE_DEATH = makeSoundEvent("bee_death");
+    public static final SoundEvent BEE_HURT = makeSoundEvent("bee_hurt");
+    public static final SoundEvent BEE_POLLINATE = makeSoundEvent("bee_pollinate");
+    public static final SoundEvent HONEY_BOTTLE_DRINK = makeSoundEvent("honey_bottle_drink");
+    public static final SoundEvent BEEHIVE_SHEAR = makeSoundEvent("shear_hive");
 
     public static final SoundType BAMBOO = new SoundType(1.0F, 1.0F, BAMBOO_PLACE, BAMBOO_STEP, BAMBOO_PLACE, BAMBOO_PLACE, BAMBOO_STEP);
     public static final SoundType SCAFFOLDING = new SoundType(1.0F, 1.0F, SCAFFOLD_BREAK, SCAFFOLD_STEP, SCAFFOLD_PLACE, SCAFFOLD_HIT, SCAFFOLD_FALL);
@@ -66,9 +73,11 @@ public final class Sounds {
                 COMPOSTER_EMPTY, COMPOSTER_FILL, COMPOSTER_FILL_SUCCESS, COMPOSTER_READY,
                 PANDA_AGGRESSIVE_AMBIENT, PANDA_AMBIENT, PANDA_BITE, PANDA_CANNOT_BREED, PANDA_EAT, PANDA_HURT, PANDA_PRE_SNEEZE, PANDA_SNEEZE, PANDA_STEP, PANDA_WORRIED_AMBIENT,
                 CAMPFIRE_CRACKLE,
-                BELL_RING);
-        if(Init.isDebug) {
-            event.getRegistry().registerAll(BAMBOO_PLACE, BAMBOO_STEP);
-        }
+                BELL_RING,
+                BAMBOO_PLACE, BAMBOO_STEP,
+                BEE_ENTER_HIVE, BEE_EXIT_HIVE, BEE_STING, BEE_DEATH, BEE_HURT, BEE_POLLINATE, HONEY_BOTTLE_DRINK, BEEHIVE_SHEAR);
+        //if(Init.isDebug) {
+        //
+        //}
     }
 }

@@ -15,7 +15,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenRegister
 @ZenClass("mods.minecraftfuture.Composter")
-public class Composter {
+public final class Composter {
     @ZenMethod
     public static void addValidItem(IIngredient stack, int rarity) {
         if(BlockComposter.ItemsForComposter.getChance(CraftTweakerMC.getItemStack(stack)) == -1)  {

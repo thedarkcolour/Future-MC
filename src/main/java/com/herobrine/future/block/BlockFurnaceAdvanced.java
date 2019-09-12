@@ -1,10 +1,10 @@
 package com.herobrine.future.block;
 
 import com.herobrine.future.FutureMC;
+import com.herobrine.future.client.gui.GuiHandler;
+import com.herobrine.future.compat.oredict.OreDict;
 import com.herobrine.future.init.FutureConfig;
 import com.herobrine.future.init.Init;
-import com.herobrine.future.compat.oredict.OreDict;
-import com.herobrine.future.client.gui.GuiHandler;
 import com.herobrine.future.tile.TileFurnaceAdvanced;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -30,6 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Level;
+import thedarkcolour.core.block.BlockBase;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -40,9 +41,9 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
     private FurnaceType type;
 
     public BlockFurnaceAdvanced(FurnaceType type) {
-        super(new BlockProperties(type.getRegName()));
+        super(type.getRegName());
         setHardness(3.5F);
-        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.CREATIVE_TAB);
+        setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.TAB);
 
         this.type = type;
     }
@@ -199,7 +200,7 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
             double d3 = rand.nextDouble() * 0.6D - 0.3D;
 
             if (rand.nextDouble() < 0.1D) {
-                worldIn.playSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+                worldIn.playSound((double)pos.getX() + 0.5D, pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
             }
 
             if(worldIn.getBlockState(pos).getBlock() == Init.SMOKER) {
@@ -271,7 +272,7 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
         }
     }
 
-    public static class ValidItemExceptionsForSmoker {
+    public static final class ValidItemExceptionsForSmoker {
         private static final ArrayList<ItemStack> VALID_ITEMS = new ArrayList<>();
         private static final ArrayList<ItemStack> BLACKLIST = new ArrayList<>();
 
@@ -301,7 +302,7 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
         }
     }
 
-    public static class ValidItemExceptionsForBlastFurnace {
+    public static final class ValidItemExceptionsForBlastFurnace {
         private static final ArrayList<ItemStack> VALID_ITEMS = new ArrayList<>();
         private static final ArrayList<ItemStack> BLACKLIST = new ArrayList<>();
 
