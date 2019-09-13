@@ -3,3 +3,5 @@ Adds blocks from previous versions. This mod is very incomplete, I will add more
 
 If you would like to see incomplete features of the mod, create a file called "debug_future_mc.txt" in your .minecraft folder.
 Incomplete features are Scaffolding, Loom functionality, and Globe banners.
+
+Just a quick reminder that this project is under an All Rights Reserved license.
