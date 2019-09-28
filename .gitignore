@@ -21,4 +21,4 @@ build
 eclipse
 run
 *.jar
-*.zip
+mcp_stable-12-1.7.10.zip
