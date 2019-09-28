@@ -21,6 +21,9 @@ tile.minecraftfuture.stripped_jungle_log.name=Stripped Jungle Log
 tile.minecraftfuture.stripped_acacia_log.name=Stripped Acacia Log
 tile.minecraftfuture.stripped_dark_oak_log.name=Stripped Dark Oak Log
 death.attack.berryBush=%1$s was poked to death by a sweet berry bush
+death.attack.sting=%1$s was stung to death
+death.attack.trident=%1$s was impaled by %2$s
+death.attack.trident.item=%1$s was impaled by %2$s with %3$s
 
 # Walls
 tile.minecraftfuture.brick_wall.name=Brick Wall
@@ -55,6 +58,8 @@ tile.minecraftfuture.smooth_quartz_slab.name=Smooth Quartz Slab
 tile.minecraftfuture.red_nether_brick_slab.name=Red Nether Brick Slab
 tile.minecraftfuture.end_stone_brick_slab.name=End Stone Brick Slab
 tile.minecraftfuture.Bamboo.name=Bamboo
+tile.minecraftfuture.bee_nest.name=Bee Nest
+tile.minecraftfuture.bee_hive.name=Bee Hive
 
 # Decorative Blocks
 tile.minecraftfuture.SmoothStone.name=Smooth Stone
@@ -83,6 +88,8 @@ item.minecraftfuture.banner_pattern.creeper=Creeper Charge
 item.minecraftfuture.banner_pattern.skull=Skull Charge
 item.minecraftfuture.banner_pattern.thing=Thing
 item.minecraftfuture.banner_pattern.globe=Globe
+item.minecraftfuture.honey_bottle.name=Honey Bottle
+item.minecraftfuture.honeycomb.name=Honeycomb
 
 # GUI
 container.Barrel=Barrel
@@ -95,6 +102,7 @@ container.Loom=Loom
 # Entity
 entity.trident.name=Trident
 entity.panda.name=Panda
+entity.bee.name=Bee
 
 # Enchantments
 enchantment.loyalty=Loyalty

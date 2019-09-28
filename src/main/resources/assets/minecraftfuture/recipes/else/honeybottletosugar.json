@@ -1,0 +1,12 @@
+{
+    "result": {
+        "item": "minecraft:sugar",
+        "amount": 3
+    },
+    "ingredients": [
+        {
+            "item": "honey_bottle"
+        }
+    ],
+    "type": "minecraft:crafting_shapeless"
+}

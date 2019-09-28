@@ -134,5 +134,49 @@
     "bell_ring": {
         "subtitle": "minecraftfuture.subtitles.bell_ring",
         "sounds": [ "minecraftfuture:bell/ring_0", "minecraftfuture:bell/ring_1"]
+    },
+    "bee_enter_hive": {
+        "subtitle": "minecraftfuture.subtitles.bee_enter_hive",
+        "sounds": [ "minecraftfuture:bee/enter"]
+    },
+    "bee_exit_hive": {
+        "subtitle": "minecraftfuture.subtitles.bee_exit_hive",
+        "sounds": [ "minecraftfuture:bee/exit"]
+    },
+    "bee_sting": {
+        "subtitle": "minecraftfuture.subtitles.bee_sting",
+        "sounds": [ "minecraftfuture:bee/sting"]
+    },
+    "bee_death": {
+        "subtitle": "minecraftfuture.subtitles.bee_death",
+        "sounds": [ "minecraftfuture:bee/death_0", "minecraftfuture:bee/death_1"]
+    },
+    "bee_hurt": {
+        "subtitle": "minecraftfuture.subtitles.bee_hurt",
+        "sounds": [ "minecraftfuture:bee/hurt_0", "minecraftfuture:bee/hurt_1", "minecraftfuture:bee/hurt_2"]
+    },
+    "bee_pollinate": {
+        "subtitle": "minecraftfuture.subtitles.bee_pollinate",
+        "sounds": [ "minecraftfuture:bee/pollinate_0", "minecraftfuture:bee/pollinate_1", "minecraftfuture:bee/pollinate_2", "minecraftfuture:bee/pollinate_3"]
+    },
+    "bee_work": {
+        "subtitle": "minecraftfuture.subtitles.bee_work",
+        "sounds": [ "minecraftfuture:bee/work_0", "minecraftfuture:bee/work_1", "minecraftfuture:bee/work_2", "minecraftfuture:bee/work_3"]
+    },
+    "bee_aggressive": {
+        "subtitle": "minecraftfuture.subtitles.bee_aggressive",
+        "sounds": [ "minecraftfuture:bee/aggressive_0", "minecraftfuture:bee/aggressive_1", "minecraftfuture:bee/aggressive_2"]
+    },
+    "bee_passive": {
+        "subtitle": "minecraftfuture.subtitles.bee_passive",
+        "sounds": [ "minecraftfuture:bee/passive_0", "minecraftfuture:bee/passive_1", "minecraftfuture:bee/passive_2", "minecraftfuture:bee/passive_3", "minecraftfuture:bee/passive_3"]
+    },
+    "honey_bottle_drink": {
+        "subtitle": "minecraftfuture.subtitles.honey_bottle_drink",
+        "sounds": [ "minecraftfuture:bee/drink_honey_0", "minecraftfuture:bee/drink_honey_1", "minecraftfuture:bee/drink_honey_2"]
+    },
+    "shear_hive": {
+        "subtitle": "minecraftfuture.subtitles.shear_hive",
+        "sounds": [ "minecraftfuture:bee/shear"]
     }
 }

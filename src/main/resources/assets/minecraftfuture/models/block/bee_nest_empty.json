@@ -1,0 +1,12 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "particle": "minecraftfuture:blocks/bee_nest_side",
+        "down": "minecraftfuture:blocks/bee_nest_bottom",
+        "up": "minecraftfuture:blocks/bee_nest_top",
+        "north": "minecraftfuture:blocks/bee_nest_empty",
+        "east": "minecraftfuture:blocks/bee_nest_side",
+        "south": "minecraftfuture:blocks/bee_nest_side",
+        "west": "minecraftfuture:blocks/bee_nest_side"
+    }
+}

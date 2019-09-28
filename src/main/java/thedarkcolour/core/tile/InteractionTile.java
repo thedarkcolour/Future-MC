@@ -10,4 +10,7 @@ public class InteractionTile extends TileEntity {
     public boolean activated(IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         return false;
     }
+
+    public void broken(IBlockState state, EntityPlayer playerIn) {
+    }
 }

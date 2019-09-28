@@ -28,7 +28,7 @@ public interface IProjectileDispenserBehaviour extends IBehaviorDispenseItem {
     }
 
     default int getWorldEventDataFrom(EnumFacing facingIn) {
-        return facingIn.getFrontOffsetX() + 1 + (facingIn.getFrontOffsetZ() + 1) * 3;
+        return facingIn.getXOffset() + 1 + (facingIn.getZOffset() + 1) * 3;
     }
 
     default ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
@@ -36,7 +36,7 @@ public interface IProjectileDispenserBehaviour extends IBehaviorDispenseItem {
         IPosition iposition = BlockDispenser.getDispensePosition(source);
         EnumFacing enumfacing = source.getBlockState().getValue(BlockDispenser.FACING);
         IProjectile iprojectile = this.getProjectileEntity(worldIn, iposition, stack);
-        iprojectile.shoot(enumfacing.getFrontOffsetX(), (float)enumfacing.getFrontOffsetY() + 0.1F, enumfacing.getFrontOffsetZ(), this.getProjectileVelocity(), this.getProjectileInaccuracy());
+        iprojectile.shoot(enumfacing.getXOffset(), (float)enumfacing.getYOffset() + 0.1F, enumfacing.getZOffset(), this.getProjectileVelocity(), this.getProjectileInaccuracy());
         worldIn.spawnEntity((Entity)iprojectile);
         stack.shrink(1);
         return stack;
