@@ -15,7 +15,7 @@ public class GuiFurnaceAdvanced extends GuiContainer {
     private final InventoryPlayer playerInv;
     private final TileFurnaceAdvanced te;
 
-    public GuiFurnaceAdvanced(ContainerFurnaceAdvanced containerFurnaceAdvanced) {
+    private GuiFurnaceAdvanced(ContainerFurnaceAdvanced containerFurnaceAdvanced) {
         super(containerFurnaceAdvanced);
         this.playerInv = containerFurnaceAdvanced.playerInventory;
         this.te = containerFurnaceAdvanced.te;
@@ -68,5 +68,17 @@ public class GuiFurnaceAdvanced extends GuiContainer {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    public static class Smoker extends GuiFurnaceAdvanced {
+        public Smoker(ContainerFurnaceAdvanced container) {
+            super(container);
+        }
+    }
+
+    public static class BlastFurnace extends GuiFurnaceAdvanced {
+        public BlastFurnace(ContainerFurnaceAdvanced container) {
+            super(container);
+        }
     }
 }

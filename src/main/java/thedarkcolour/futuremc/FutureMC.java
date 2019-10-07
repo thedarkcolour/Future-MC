@@ -12,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 import thedarkcolour.core.gui.Gui;
 import thedarkcolour.core.proxy.CommonProxy;
 import thedarkcolour.core.util.RegistryHelper;
-import thedarkcolour.futuremc.compat.oredict.OreDict;
 import thedarkcolour.futuremc.entity.Entities;
 import thedarkcolour.futuremc.entity.trident.EntityTrident;
 import thedarkcolour.futuremc.init.FutureConfig;
@@ -24,12 +23,12 @@ import thedarkcolour.futuremc.tile.TileCampfire;
 @Mod(
         modid = FutureMC.ID,
         name = "Future MC",
-        version = "0.1.11",
+        version = "0.1.12",
         dependencies = "required-after:forge@[14.23.5.2776,)", useMetadata = true
 )
 public class FutureMC {
     public static final String ID = "minecraftfuture";
-    public static Logger LOGGER;
+    public static Logger logger;
 
     @SidedProxy(clientSide = "thedarkcolour.core.proxy.ClientProxy", serverSide = "thedarkcolour.core.proxy.CommonProxy")
     public static CommonProxy proxy;
@@ -42,7 +41,7 @@ public class FutureMC {
         MinecraftForge.EVENT_BUS.register(FutureConfig.class);
         Entities.init();
         proxy.preInit(e);
-        LOGGER = e.getModLog();
+        logger = e.getModLog();
     }
 
     @Mod.EventHandler
@@ -56,7 +55,6 @@ public class FutureMC {
             RegistryHelper.registerDispenserBehaviour(Init.TRIDENT, EntityTrident::new);
         }
 
-        OreDict.registerOres();
         InitElements.registerGenerators();
         proxy.init(e);
     }

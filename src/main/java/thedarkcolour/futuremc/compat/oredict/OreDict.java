@@ -7,7 +7,7 @@ import thedarkcolour.futuremc.init.Init;
 
 public final class OreDict {
     public static void registerOres() {
-        if(FutureConfig.modFlowers.dyes) {
+        if (FutureConfig.modFlowers.dyes) {
             OreDictionary.registerOre("dyeWhite", new ItemStack(Init.DYES, 1,0));
             OreDictionary.registerOre("dyeBlue", new ItemStack(Init.DYES, 1,1));
             OreDictionary.registerOre("dyeBrown", new ItemStack(Init.DYES, 1,2));

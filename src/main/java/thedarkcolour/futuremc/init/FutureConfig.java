@@ -187,6 +187,11 @@ public final class FutureConfig {
         @Comment("Whether the 1.15 creature and its related content should be added to the game.")
         @RequiresMcRestart
         public boolean bee = true;
+
+        @Name("Bee Nest Spawn Percent")
+        @Comment("The chance a bee nest will spawn on a tree.")
+        @Config.RangeDouble(min = 0, max = 1)
+        public double beeNestChance = 0.05;
     }
 
     public static class Flowers {

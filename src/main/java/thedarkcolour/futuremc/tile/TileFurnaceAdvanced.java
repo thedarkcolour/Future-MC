@@ -44,20 +44,20 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        this.furnaceItemStacks = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.furnaceItemStacks);
-        this.furnaceBurnTime = compound.getInteger("BurnTime");
-        this.cookTime = compound.getInteger("CookTime");
-        this.currentItemBurnTime = compound.getInteger("CurrentItemBurnTime");
+        furnaceItemStacks = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(compound, furnaceItemStacks);
+        furnaceBurnTime = compound.getInteger("BurnTime");
+        cookTime = compound.getInteger("CookTime");
+        currentItemBurnTime = compound.getInteger("CurrentItemBurnTime");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        compound.setInteger("BurnTime", (short)this.furnaceBurnTime);
-        compound.setInteger("CookTime", (short)this.cookTime);
-        compound.setInteger("CurrentItemBurnTime", this.currentItemBurnTime);
-        ItemStackHelper.saveAllItems(compound, this.furnaceItemStacks);
+        compound.setInteger("BurnTime", (short)furnaceBurnTime);
+        compound.setInteger("CookTime", (short)cookTime);
+        compound.setInteger("CurrentItemBurnTime", currentItemBurnTime);
+        ItemStackHelper.saveAllItems(compound, furnaceItemStacks);
 
         return compound;
     }
@@ -76,10 +76,10 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
             ItemStack itemstack = this.furnaceItemStacks.get(1);
 
             int totalCookTime = 100;
-            if (this.isBurning() || !itemstack.isEmpty() && !this.furnaceItemStacks.get(0).isEmpty()) {
-                if (!this.isBurning() && this.canSmelt()) {
-                    this.furnaceBurnTime = TileEntityFurnace.getItemBurnTime(itemstack);
-                    this.currentItemBurnTime = this.furnaceBurnTime;
+            if (isBurning() || !itemstack.isEmpty() && !furnaceItemStacks.get(0).isEmpty()) {
+                if (!isBurning() && canSmelt()) {
+                    furnaceBurnTime = TileEntityFurnace.getItemBurnTime(itemstack);
+                    currentItemBurnTime = furnaceBurnTime;
 
                     if (this.isBurning()) {
                         flag1 = true;
@@ -96,46 +96,46 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
                     }
                 }
 
-                if (this.isBurning() && this.canSmelt()) {
-                    ++this.cookTime;
+                if (isBurning() && canSmelt()) {
+                    ++cookTime;
 
-                    if (this.cookTime == totalCookTime) {
-                        this.cookTime = 0;
-                        this.smeltItem();
+                    if (cookTime == totalCookTime) {
+                        cookTime = 0;
+                        smeltItem();
                         flag1 = true;
                     }
                 } else {
-                    this.cookTime = 0;
+                    cookTime = 0;
                 }
-            } else if (!this.isBurning() && this.cookTime > 0) {
-                this.cookTime = MathHelper.clamp(this.cookTime - 2, 0, totalCookTime);
+            } else if (!isBurning() && cookTime > 0) {
+                cookTime = MathHelper.clamp(cookTime - 2, 0, totalCookTime);
             }
 
-            if (flag != this.isBurning())  {
+            if (flag != isBurning())  {
                 flag1 = true;
                 BlockFurnaceAdvanced.setState(isBurning(), world, pos);
             }
         }
 
         if (flag1) {
-            this.markDirty();
+            markDirty();
         }
     }
 
     public void smeltItem() {
-        if (this.canSmelt()) {
-            ItemStack itemstack = this.furnaceItemStacks.get(0);
+        if (canSmelt()) {
+            ItemStack itemstack = furnaceItemStacks.get(0);
             ItemStack itemstack1 = FurnaceRecipes.instance().getSmeltingResult(itemstack);
-            ItemStack itemstack2 = this.furnaceItemStacks.get(2);
+            ItemStack itemstack2 = furnaceItemStacks.get(2);
 
             if (itemstack2.isEmpty()) {
-                this.furnaceItemStacks.set(2, itemstack1.copy());
+                furnaceItemStacks.set(2, itemstack1.copy());
             } else if (itemstack2.getItem() == itemstack1.getItem()) {
                 itemstack2.grow(itemstack1.getCount());
             }
             if ((itemstack.getItem() == Item.getItemFromBlock(Blocks.SPONGE)) && (itemstack.getMetadata() == 1) &&
-                    !this.furnaceItemStacks.get(1).isEmpty() && (this.furnaceItemStacks.get(1).getItem() == Items.BUCKET)) {
-                this.furnaceItemStacks.set(1, new ItemStack(Items.WATER_BUCKET));
+                    !furnaceItemStacks.get(1).isEmpty() && (furnaceItemStacks.get(1).getItem() == Items.BUCKET)) {
+                furnaceItemStacks.set(1, new ItemStack(Items.WATER_BUCKET));
             }
 
             itemstack.shrink(1);
@@ -143,7 +143,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
     }
 
     public boolean isBurning() {
-        return this.furnaceBurnTime > 0;
+        return furnaceBurnTime > 0;
     }
 
     @Override
@@ -157,23 +157,21 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
         } else if (index != 1) {
             return true;
         } else {
-            ItemStack itemstack = this.furnaceItemStacks.get(1);
+            ItemStack itemstack = furnaceItemStacks.get(1);
             return TileEntityFurnace.isItemFuel(stack) || SlotFurnaceFuel.isBucket(stack) && itemstack.getItem() != Items.BUCKET;
         }
     }
 
     private boolean canSmelt() {
-        if (!getType().canCraft(this.furnaceItemStacks.get(0))) {
+        if (!getType().canCraft(furnaceItemStacks.get(0))) {
             return false;
-        }
-        else
-        {
-            ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(this.furnaceItemStacks.get(0));
+        } else {
+            ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(furnaceItemStacks.get(0));
 
             if (itemstack.isEmpty()) {
                 return false;
             } else {
-                ItemStack itemstack1 = this.furnaceItemStacks.get(2);
+                ItemStack itemstack1 = furnaceItemStacks.get(2);
 
                 if (itemstack1.isEmpty()) {
                     return true;
@@ -191,11 +189,11 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
     public int getField(int id) {
         switch (id) {
             case 0:
-                return this.furnaceBurnTime;
+                return furnaceBurnTime;
             case 1:
-                return this.currentItemBurnTime;
+                return currentItemBurnTime;
             case 2:
-                return this.cookTime;
+                return cookTime;
             default:
                 return 0;
         }
@@ -204,13 +202,13 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
     public void setField(int id, int value) {
         switch (id) {
             case 0:
-                this.furnaceBurnTime = value;
+                furnaceBurnTime = value;
                 break;
             case 1:
-                this.currentItemBurnTime = value;
+                currentItemBurnTime = value;
                 break;
             case 2:
-                this.cookTime = value;
+                cookTime = value;
         }
     }
 
@@ -301,12 +299,9 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
 
     @Override
     public boolean isUsableByPlayer(EntityPlayer player) {
-        if (this.world.getTileEntity(this.pos) != this)
-        {
+        if (this.world.getTileEntity(this.pos) != this) {
             return false;
-        }
-        else
-        {
+        } else {
             return player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
         }
     }

@@ -477,9 +477,7 @@ public class EntityPanda extends EntityAnimal {
     }
 
     private void sneeze() {
-        //Vec3d vec3d = new Vec3d(motionX, motionY, motionZ); // TODO Sneeze
-        //this.world.addParticle(ParticleTypes.field_218421_R, this.posX - (double)(this.getWidth() + 1.0F) * 0.5D * (double)MathHelper.sin(this.renderYawOffset * ((float)Math.PI / 180F)), this.posY + (double)this.getEyeHeight() - (double)0.1F, this.posZ + (double)(this.getWidth() + 1.0F) * 0.5D * (double)MathHelper.cos(this.renderYawOffset * ((float)Math.PI / 180F)), vec3d.x, 0.0D, vec3d.z);
-        this.playSound(Sounds.PANDA_SNEEZE, 1.0F, 1.0F);
+        playSound(Sounds.PANDA_SNEEZE, 1.0F, 1.0F);
 
         for(EntityPanda entityPanda : this.world.getEntitiesWithinAABB(EntityPanda.class, this.getEntityBoundingBox().grow(10.0D))) {
             if (!entityPanda.isChild() && entityPanda.onGround && !entityPanda.isInWater() && entityPanda.func_213537_eq()) {

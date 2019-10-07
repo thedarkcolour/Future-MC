@@ -19,7 +19,7 @@ public final class Campfire {
         if (TileCampfire.Recipes.getRecipe(CraftTweakerMC.getItemStack(input)) == null) {
             CraftTweakerAPI.apply(new AddRecipe(input, output, duration, experience));
         } else {
-            FutureMC.LOGGER.log(Level.WARN, "Failed to add duplicate recipe for " + input.getDefinition().getId());
+            FutureMC.logger.log(Level.WARN, "Failed to add duplicate recipe for " + input.getDefinition().getId());
         }
     }
 
@@ -46,7 +46,33 @@ public final class Campfire {
             return "Added recipe for" + input.getDefinition().getId();
         }
     }
-/*
+
     @ZenMethod
-    public static void removeRecipe(IItemStack stack)*/
+    public static void removeRecipe(IItemStack stack) {
+
+    }
+
+    private static class RemoveRecipe implements IAction {
+        private final IItemStack input;
+        private final IItemStack output;
+        private final int duration;
+        private final int experience;
+
+        private RemoveRecipe(IItemStack input, IItemStack output, int duration, int experience) {
+            this.input = input;
+            this.output = output;
+            this.duration = duration;
+            this.experience = experience;
+        }
+
+        @Override
+        public void apply() {
+            TileCampfire.Recipes.remove(CraftTweakerMC.getItemStack(input));
+        }
+
+        @Override
+        public String describe() {
+            return "Added recipe for" + input.getDefinition().getId();
+        }
+    }
 }

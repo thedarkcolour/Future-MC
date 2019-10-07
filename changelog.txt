@@ -1,3 +1,13 @@
+Version 0.1.12 - Campfire Functionality! New things:
+ Campfire - Can now cook items.
+ Campfire - Can now be rotated.
+ Campfire - Can now be put out with a shovel.
+ Campfire - JEI compatibility!
+ Campfire - CraftTweaker compatibility, view on Wiki.
+ Blast Furnace and Smoker - JEI compatibility!
+ Bees - Added CraftTweaker functions on the Wiki.
+ Bees - No longer freeze without hive.
+
 Version 0.1.11 - Bees? New things:
  *Bees* - Cute flying insects from 1.15 snapshots that pollinate crops. Possible flower targets can be added and removed with CraftTweaker scripts.
  *Honeycomb* - Resource from 1.15 snapshot obtained from beehives.

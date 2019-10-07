@@ -2,6 +2,7 @@ package thedarkcolour.futuremc.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.BlockOre;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
@@ -14,6 +15,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -238,10 +240,7 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
             return name;
         }
 
-        @SuppressWarnings("BooleanMethodIsAlwaysInverted")
         public boolean canCraft(ItemStack stack) {
-            if (stack.isEmpty()) return false;
-
             if (this == BLAST_FURNACE) {
                 return isOre(stack);
             } else if (this == SMOKER) {
@@ -252,14 +251,14 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
         }
 
         public boolean isFood(ItemStack stack) {
-            if(stack.getItem() instanceof ItemFood) {
+            if (stack.getItem() instanceof ItemFood || FurnaceRecipes.instance().getSmeltingResult(stack).getItem() instanceof ItemFood) {
                 return !ValidItemExceptionsForSmoker.isBlacklisted(stack);
             }
             return ValidItemExceptionsForSmoker.isItemValid(stack);
         }
 
         public boolean isOre(ItemStack stack) {
-            if(OreDict.getOreName(stack).startsWith("ore")) {
+            if (OreDict.getOreName(stack).startsWith("ore") || OreDict.getOreName(FurnaceRecipes.instance().getSmeltingResult(stack)).startsWith("ingot") || Block.getBlockFromItem(stack.getItem()) instanceof BlockOre) {
                 return !ValidItemExceptionsForBlastFurnace.isBlacklisted(stack);
             }
             return ValidItemExceptionsForBlastFurnace.isItemValid(stack);
@@ -283,14 +282,14 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
 
         public static void addSmeltableItem(ItemStack stack) {
             if(isBlacklisted(stack)) {
-                FutureMC.LOGGER.log(Level.WARN, "Tried to add valid Smoker input that was removed by ZenScript " + stack.getItem().getRegistryName());
+                FutureMC.logger.log(Level.WARN, "Tried to add valid Smoker input that was removed by ZenScript " + stack.getItem().getRegistryName());
             }
             VALID_ITEMS.add(stack);
         }
 
         public static void removeSmeltableItem(ItemStack stack) {
             if(isItemValid(stack)) {
-                FutureMC.LOGGER.log(Level.WARN, "Tried to remove valid Smoker input that was added by ZenScript " + stack.getItem().getRegistryName());
+                FutureMC.logger.log(Level.WARN, "Tried to remove valid Smoker input that was added by ZenScript " + stack.getItem().getRegistryName());
             }
             BLACKLIST.add(stack);
         }
@@ -313,7 +312,7 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
 
         public static void addSmeltableItem(ItemStack stack) {
             if(isBlacklisted(stack)) {
-                FutureMC.LOGGER.log(Level.WARN, "Tried to add valid BlastFurnace input that was removed by ZenScript " + stack.getItem().getRegistryName());
+                FutureMC.logger.log(Level.WARN, "Tried to add valid BlastFurnace input that was removed by ZenScript " + stack.getItem().getRegistryName());
             }
 
             VALID_ITEMS.add(stack);
@@ -321,7 +320,7 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
 
         public static void removeSmeltableItem(ItemStack stack) {
             if(isItemValid(stack)) {
-                FutureMC.LOGGER.log(Level.WARN, "Tried to remove valid BlastFurnace input that was added by ZenScript " + stack.getItem().getRegistryName());
+                FutureMC.logger.log(Level.WARN, "Tried to remove valid BlastFurnace input that was added by ZenScript " + stack.getItem().getRegistryName());
             }
             BLACKLIST.add(stack);
         }

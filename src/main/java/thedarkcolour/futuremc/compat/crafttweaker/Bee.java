@@ -37,7 +37,7 @@ public final class Bee {
         if(!FLOWERS.containsEquivalent(block)) {
             CraftTweakerAPI.apply((AddFlower)() -> FLOWERS.add(block));
         } else {
-            FutureMC.LOGGER.log(Level.ERROR, "Tried to add duplicate flower block to bee " + block.getDefinition().getId() + ":" + block.getMeta());
+            FutureMC.logger.log(Level.ERROR, "Tried to add duplicate flower block to bee " + block.getDefinition().getId() + ":" + block.getMeta());
         }
     }
 
@@ -56,7 +56,7 @@ public final class Bee {
         if(FLOWERS.containsEquivalent(block)) {
             CraftTweakerAPI.apply((RemoveFlower)() -> FLOWERS.add(block));
         } else {
-            FutureMC.LOGGER.log(Level.ERROR, "Tried to remove non pollinate-able flower block to bee " + block.getDefinition().getId() + ":" + block.getMeta());
+            FutureMC.logger.log(Level.ERROR, "Tried to remove non pollinate-able flower block to bee " + block.getDefinition().getId() + ":" + block.getMeta());
         }
     }
 

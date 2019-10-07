@@ -46,6 +46,16 @@ public class BlockBeeHive extends InteractionBlock {
     }
 
     @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return getDefaultState().withProperty(IS_FULL, (meta & 4) != 0).withProperty(FACING, EnumFacing.byHorizontalIndex(meta & -5));
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return (state.getValue(IS_FULL) ? 4 : 0) | state.getValue(FACING).getHorizontalIndex();
+    }
+
+    @Override
     public boolean hasComparatorInputOverride(IBlockState state) {
         return true;
     }
@@ -81,16 +91,6 @@ public class BlockBeeHive extends InteractionBlock {
         }
 
         return super.removedByPlayer(state, worldIn, pos, player, willHarvest);
-    }
-
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(IS_FULL, (meta & 4) != 0).withProperty(FACING, EnumFacing.byHorizontalIndex(meta & -5));
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return (state.getValue(IS_FULL) ? 4 : 0) | state.getValue(FACING).getHorizontalIndex();
     }
 
     @Override

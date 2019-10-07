@@ -4,15 +4,18 @@
         "model": "minecraftfuture:barrel"
     },
     "variants": {
-        "normal": [{}],
         "inventory": [{}],
-        "facing": {
-            "north": {},
-            "south": {"y": 180},
-            "west": {"y": 270},
-            "east": {"y": 90},
-            "up": {"x": -90},
-            "down": {"x": 90}
-        }
+        "facing=north,open=false": { "model": "minecraftfuture:barrel"},
+        "facing=south,open=false": { "model": "minecraftfuture:barrel"},
+        "facing=west,open=false": { "model": "minecraftfuture:barrel"},
+        "facing=east,open=false": { "model": "minecraftfuture:barrel"},
+        "facing=up,open=false": { "model": "minecraftfuture:barrel"},
+        "facing=down,open=false": { "model": "minecraftfuture:barrel"},
+        "facing=north,open=true": { "model": "minecraftfuture:barrel_open"},
+        "facing=south,open=true": { "model": "minecraftfuture:barrel_open"},
+        "facing=west,open=true": { "model": "minecraftfuture:barrel_open"},
+        "facing=east,open=true": { "model": "minecraftfuture:barrel_open"},
+        "facing=up,open=true": { "model": "minecraftfuture:barrel_open"},
+        "facing=down,open=true": { "model": "minecraftfuture:barrel_open"}
     }
 }

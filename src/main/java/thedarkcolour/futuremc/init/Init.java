@@ -22,8 +22,6 @@ import thedarkcolour.futuremc.item.ItemHoneyBottle;
 import thedarkcolour.futuremc.item.ItemSuspiciousStew;
 import thedarkcolour.futuremc.item.ItemTrident;
 import thedarkcolour.futuremc.world.biome.BiomeBambooJungle;
-import thedarkcolour.futuremc.world.biome.BiomeFlowerForestWithNests;
-import thedarkcolour.futuremc.world.biome.BiomePlainsWithNests;
 import thedarkcolour.futuremc.world.gen.feature.FeatureBambooStalk;
 import thedarkcolour.futuremc.world.gen.feature.WorldGenBamboo;
 
@@ -38,7 +36,7 @@ public final class Init {
     public static final BlockLantern LANTERN;
     public static final BlockStonecutter STONECUTTER; // TODO - Stonecutter functionality
     public static final BlockBarrel BARREL;
-    public static final BlockFurnaceAdvanced SMOKER, BLAST_FURNACE; // TODO - JEI compat
+    public static final BlockFurnaceAdvanced SMOKER, BLAST_FURNACE;
     public static final BlockLoom LOOM;
     public static final BlockRotatable FLETCHING_TABLE;
     public static final BlockRotatable SMITHING_TABLE;
@@ -52,7 +50,7 @@ public final class Init {
     public static final BlockFlower CORNFLOWER;
     public static final BlockFlower WITHER_ROSE;
     public static final BlockFlower SWEET_BERRY_BUSH;
-    public static final BlockCampfire CAMPFIRE; // TODO - Campfire Functionality
+    public static final BlockCampfire CAMPFIRE;
     public static final BlockBamboo BAMBOO_STALK;
     public static final BlockBeeHive BEE_NEST;
     public static final BlockBeeHive BEE_HIVE;
@@ -85,16 +83,13 @@ public final class Init {
     public static final ItemDye DYES;
     public static final ItemBannerPattern PATTERNS;
     public static final ItemTrident TRIDENT;
-    public static final ItemCrossBow CROSSBOW; // TODO - Crossbow
+    public static final ItemCrossBow CROSSBOW;
     public static final ItemSuspiciousStew SUSPICIOUS_STEW;
     public static final ItemBerry SWEET_BERRY;
     public static final Item HONEY_COMB;
     public static final Item HONEY_BOTTLE;
 
     public static final Biome BIOME_BAMBOO_JUNGLE; // TODO - Bamboo Forest
-    public static final BiomePlainsWithNests BIOME_PLAINS_WITH_NESTS;
-    public static final BiomePlainsWithNests BIOME_SUNFLOWER_PLAINS_WITH_NESTS;
-    public static final BiomeFlowerForestWithNests BIOME_FLOWER_FOREST_WITH_NESTS;
     public static final FeatureBambooStalk BAMBOO_FEATURE;
     public static final ItemBamboo BAMBOO_ITEM;
 
@@ -163,9 +158,6 @@ public final class Init {
 
         BAMBOO_FEATURE = WorldGenBamboo.BAMBOO_FEATURE;
         BIOME_BAMBOO_JUNGLE = new BiomeBambooJungle(false);
-        BIOME_PLAINS_WITH_NESTS = new BiomePlainsWithNests(false, (new Biome.BiomeProperties("Plains")).setBaseHeight(0.125F).setHeightVariation(0.05F).setTemperature(0.8F).setRainfall(0.4F));
-        BIOME_SUNFLOWER_PLAINS_WITH_NESTS = new BiomePlainsWithNests(true, (new Biome.BiomeProperties("Sunflower Plains")).setBaseBiome("plains").setBaseHeight(0.125F).setHeightVariation(0.05F).setTemperature(0.8F).setRainfall(0.4F));
-        BIOME_FLOWER_FOREST_WITH_NESTS = new BiomeFlowerForestWithNests();
 
         boolean thrown = false;
 

@@ -8,14 +8,13 @@ import thedarkcolour.futuremc.block.BlockNewSlab;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ItemNewSlab extends ItemSlab implements Modeled {
     private final BlockSlab singleSlab;
 
     public ItemNewSlab(BlockNewSlab.Half singleSlab, BlockNewSlab.Double doubleSlab) {
         super(singleSlab, singleSlab, doubleSlab);
-        setRegistryName(Objects.requireNonNull(singleSlab.getRegistryName()));
+        setRegistryName(singleSlab.getRegistryName());
         setTranslationKey(singleSlab.getTranslationKey());
         //setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.BUILDING_BLOCKS : Init.CREATIVE_TAB);
 
@@ -37,18 +36,24 @@ public class ItemNewSlab extends ItemSlab implements Modeled {
                 "mossy_stone","smooth_quartz","red_nether_brick","end_stone_brick"
         };
 
-        public static final List<BlockNewSlab.Half> SLAB_HALVES = new ArrayList<>();
-        public static final List<BlockNewSlab.Double> SLAB_DOUBLES = new ArrayList<>();
-        public static final List<ItemNewSlab> SLAB_ITEMS = new ArrayList<>();
+        public static List<BlockNewSlab.Half> slabHalves = new ArrayList<>();
+        public static List<BlockNewSlab.Double> slabDoubles = new ArrayList<>();
+        public static List<ItemNewSlab> slabItems = new ArrayList<>();
 
         public static void initSlab() {
             for (String variant : VARIANTS) {
                 BlockNewSlab.Half half = new BlockNewSlab.Half(variant);
                 BlockNewSlab.Double full = new BlockNewSlab.Double(variant);
-                SLAB_HALVES.add(half);
-                SLAB_DOUBLES.add(full);
-                SLAB_ITEMS.add(new ItemNewSlab(half, full));
+                slabHalves.add(half);
+                slabDoubles.add(full);
+                slabItems.add(new ItemNewSlab(half, full));
             }
+        }
+
+        public static void clean() {
+            slabDoubles = null;
+            slabHalves = null;
+            slabItems = null;
         }
     }
 }

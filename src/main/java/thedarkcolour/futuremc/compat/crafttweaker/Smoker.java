@@ -20,7 +20,7 @@ public final class Smoker {
         if (!BlockFurnaceAdvanced.FurnaceType.SMOKER.canCraft(CraftTweakerMC.getItemStack(input))) {
             CraftTweakerAPI.apply(new AddRecipe(input));
         } else {
-            FutureMC.LOGGER.log(Level.WARN, "Failed to add duplicate valid Smoker input for " + input.getDefinition().getId());
+            FutureMC.logger.log(Level.WARN, "Failed to add duplicate valid Smoker input for " + input.getDefinition().getId());
         }
     }
 
@@ -47,7 +47,7 @@ public final class Smoker {
         if (!BlockFurnaceAdvanced.ValidItemExceptionsForSmoker.isBlacklisted(CraftTweakerMC.getItemStack(input))) {
             CraftTweakerAPI.apply(new RemoveRecipe(input));
         } else {
-            FutureMC.LOGGER.log(Level.WARN, "Failed to remove Smoker input for " + input.getDefinition().getId());
+            FutureMC.logger.log(Level.WARN, "Failed to remove Smoker input for " + input.getDefinition().getId());
         }
     }
 

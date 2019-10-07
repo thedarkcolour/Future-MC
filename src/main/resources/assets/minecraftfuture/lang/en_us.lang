@@ -1,4 +1,4 @@
-# Functional Blocks
+# Functional Block
 tile.minecraftfuture.Lantern.name=Lantern
 tile.minecraftfuture.Barrel.name=Barrel
 tile.minecraftfuture.Loom.name=Loom
@@ -8,7 +8,7 @@ tile.minecraftfuture.Smoker.name=Smoker
 tile.minecraftfuture.Grindstone.name=Grindstone
 tile.minecraftfuture.Composter.name=Composter
 
-# Plants
+# Plant
 tile.minecraftfuture.FlowerWhite.name=Lily of the Valley
 tile.minecraftfuture.FlowerBlack.name=Wither Rose
 tile.minecraftfuture.FlowerBlue.name=Cornflower
@@ -25,7 +25,7 @@ death.attack.sting=%1$s was stung to death
 death.attack.trident=%1$s was impaled by %2$s
 death.attack.trident.item=%1$s was impaled by %2$s with %3$s
 
-# Walls
+# Wall
 tile.minecraftfuture.brick_wall.name=Brick Wall
 tile.minecraftfuture.andesite_wall.name=Andesite Wall
 tile.minecraftfuture.diorite_wall.name=Diorite Wall
@@ -39,7 +39,7 @@ tile.minecraftfuture.sandstone_wall.name=Sandstone Wall
 tile.minecraftfuture.red_sandstone_wall.name=Red Sandstone Wall
 tile.minecraftfuture.nether_brick_red_wall.name=Red Nether Brick Wall
 
-# Slabs
+# Slab
 tile.minecraftfuture.granite_slab.name=Granite Slab
 tile.minecraftfuture.andesite_slab.name=Andesite Slab
 tile.minecraftfuture.diorite_slab.name=Diorite Slab
@@ -61,7 +61,7 @@ tile.minecraftfuture.Bamboo.name=Bamboo
 tile.minecraftfuture.bee_nest.name=Bee Nest
 tile.minecraftfuture.bee_hive.name=Bee Hive
 
-# Decorative Blocks
+# Decorative Block
 tile.minecraftfuture.SmoothStone.name=Smooth Stone
 tile.minecraftfuture.SmoothQuartz.name=Smooth Quartz
 tile.minecraftfuture.FletchingTable.name=Fletching Table
@@ -75,7 +75,7 @@ item.minecraftfuture.dye.1.name=Blue Dye
 item.minecraftfuture.dye.2.name=Brown Dye
 item.minecraftfuture.dye.3.name=Black Dye
 
-# Items
+# Item
 item.minecraftfuture.Trident.name=Trident
 item.minecraftfuture.Crossbow.name=Crossbow
 item.minecraftfuture.Crossbow_Loaded.name=Arrow Loaded Crossbow
@@ -104,7 +104,7 @@ entity.trident.name=Trident
 entity.panda.name=Panda
 entity.bee.name=Bee
 
-# Enchantments
+# Enchantment
 enchantment.loyalty=Loyalty
 enchantment.channeling=Channeling
 enchantment.riptide=Riptide
@@ -113,3 +113,8 @@ enchantment.quick_charge=Quick Charge
 
 # Creative Tab
 itemGroup.Future=Future MC
+
+# JEI
+container.jei.minecraftfuture.campfire.name=Campfire
+container.jei.minecraftfuture.blast_furnace.name=Campfire
+container.jei.minecraftfuture.campfire.duration=Duration

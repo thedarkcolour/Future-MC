@@ -23,8 +23,6 @@ import thedarkcolour.futuremc.tile.TileBeeHive;
 import thedarkcolour.futuremc.tile.TileCampfire;
 import thedarkcolour.futuremc.tile.TileComposter;
 
-import java.util.Arrays;
-
 public class ItemDebugger extends ItemModeled {
     public ItemDebugger() {
         super("debugger");
@@ -51,11 +49,12 @@ public class ItemDebugger extends ItemModeled {
             if (!worldIn.isRemote) {
                 if (player.isSneaking()) {
                     for (int i = 0; i < 4; ++i) {
-                        player.sendMessage(new TextComponentString(campfire.getBuffer().getStackInSlot(i).toString()));
+                        player.sendMessage(new TextComponentString("Current: " + campfire.getBuffer().getStackInSlot(i).toString() + ", Result: " + TileCampfire.Recipes.getRecipe(campfire.getBuffer().getStackInSlot(i)).output.toString()));
                     }
                 } else {
-                    player.sendMessage(new TextComponentString(Arrays.toString(campfire.getCookingTimes())));
-                    player.sendMessage(new TextComponentString(Arrays.toString(campfire.getCookingTotalTimes())));
+                    for (int i = 0; i < 4; ++i) {
+                        player.sendMessage(new TextComponentString("Progress: " + campfire.getCookingTimes()[i] + ", Total: " + campfire.getCookingTotalTimes()[i]));
+                    }
                 }
             }
         } else if (block == Init.COMPOSTER) {

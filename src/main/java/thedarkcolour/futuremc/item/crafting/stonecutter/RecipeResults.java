@@ -36,7 +36,7 @@ public final class RecipeResults {
             If a given ItemStack does not exist, do not addItem it.
          */
         if(input == null || output == null) {
-            FutureMC.LOGGER.log(Level.ERROR, "Failed to addItem stonecutter recipe: { input: " + input + " output: "+ output + " }");
+            FutureMC.logger.log(Level.ERROR, "Failed to addItem stonecutter recipe: { input: " + input + " output: "+ output + " }");
             return;
         }
         /*

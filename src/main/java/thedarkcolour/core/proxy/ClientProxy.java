@@ -7,10 +7,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thedarkcolour.futuremc.client.tesr.bell.TESRBell;
+import thedarkcolour.futuremc.client.tesr.campfire.TESRCampfire;
 import thedarkcolour.futuremc.entity.Entities;
 import thedarkcolour.futuremc.init.InitModels;
-import thedarkcolour.futuremc.tile.TileBell;
+import thedarkcolour.futuremc.tile.TileCampfire;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
@@ -23,7 +23,8 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent e) {
         MinecraftForge.EVENT_BUS.register(ClientProxy.class);
         Entities.initModels();
-        ClientRegistry.bindTileEntitySpecialRenderer(TileBell.class, new TESRBell());
+        //ClientRegistry.bindTileEntitySpecialRenderer(TileBell.class, new TESRBell());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCampfire.class, new TESRCampfire());
     }
 /*
     @Override

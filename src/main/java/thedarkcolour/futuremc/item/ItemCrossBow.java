@@ -250,12 +250,7 @@ public class ItemCrossBow extends ItemModeled {
     }
 
     public static ItemStack read(NBTTagCompound compound) {
-        try {
-            return new ItemStack(compound);
-        } catch (RuntimeException runtimeexception) {
-            FutureMC.LOGGER.debug("Tried to load invalid item: {}", compound, runtimeexception);
-            return ItemStack.EMPTY;
-        }
+        return new ItemStack(compound);
     }
 
     public static ItemStack findAmmo(EntityLivingBase entity) { // From ItemBow

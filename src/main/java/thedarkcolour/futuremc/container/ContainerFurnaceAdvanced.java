@@ -15,6 +15,7 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thedarkcolour.core.gui.Container;
+import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
 import thedarkcolour.futuremc.client.gui.GuiFurnaceAdvanced;
 import thedarkcolour.futuremc.tile.TileFurnaceAdvanced;
 
@@ -135,6 +136,8 @@ public class ContainerFurnaceAdvanced extends Container {
 
     @SideOnly(Side.CLIENT)
     public GuiContainer getGuiContainer() {
-        return new GuiFurnaceAdvanced(new ContainerFurnaceAdvanced(playerInventory, te));
+        return te.getType() == BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE ?
+                new GuiFurnaceAdvanced.BlastFurnace(new ContainerFurnaceAdvanced(playerInventory, te)) :
+                new GuiFurnaceAdvanced.Smoker(new ContainerFurnaceAdvanced(playerInventory, te));
     }
 }

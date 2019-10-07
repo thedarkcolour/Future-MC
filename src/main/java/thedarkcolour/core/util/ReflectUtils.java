@@ -1,11 +1,23 @@
 package thedarkcolour.core.util;
 
+import java.lang.reflect.Method;
+
 /**
  * Has a bunch of {@link java.lang.reflect} related methods that save me from eyesore try-catches.
  * I guess re-usability too.
- * Currently used in {@link thedarkcolour.futuremc.entity.bee.EntityBee}
  */
 public final class ReflectUtils {
+    /*
+     * Returns an accessible method with the given name.
+     */
+    public static Method getAccessibleMethod(Class<?> clazz, String name, Class<?>... args) {
+        try {
+            return Util.make(clazz.getDeclaredMethod(name, args), m -> m.setAccessible(true));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     /*
      * Returns an accessible field with the given name from the given class.
      *

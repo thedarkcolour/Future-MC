@@ -236,7 +236,7 @@ public class EntityTrident extends EntityModArrow {
             return new ItemStack(compound);
             // Not sure if i need a try-catch, im scared to delete this
         } catch (RuntimeException runtimeexception) {
-            FutureMC.LOGGER.debug("Tried to load invalid item: {}", compound, runtimeexception);
+            FutureMC.logger.debug("Tried to load invalid item: {}", compound, runtimeexception);
             return ItemStack.EMPTY;
         }
     }

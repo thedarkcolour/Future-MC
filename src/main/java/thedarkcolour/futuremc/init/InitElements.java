@@ -1,12 +1,10 @@
 package thedarkcolour.futuremc.init;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Biomes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeProvider;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.event.RegistryEvent;
@@ -17,6 +15,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import thedarkcolour.core.item.ItemDebugger;
 import thedarkcolour.core.item.Modeled;
 import thedarkcolour.futuremc.FutureMC;
+import thedarkcolour.futuremc.compat.oredict.OreDict;
 import thedarkcolour.futuremc.item.ItemGroup;
 import thedarkcolour.futuremc.tile.TileBarrel;
 import thedarkcolour.futuremc.tile.TileBeeHive;
@@ -117,6 +116,7 @@ public final class InitElements {
         if (isDebug) r.register(new ItemDebugger());
 
         registerTileEntities();
+        OreDict.registerOres();
     }
 
     public static void registerTileEntities() {
@@ -133,18 +133,18 @@ public final class InitElements {
     @SubscribeEvent
     public static void registerBiomes(RegistryEvent.Register<Biome> event) {
         if (general.addLegacyBambooJungle) registerBiome(event, BIOME_BAMBOO_JUNGLE, "bamboo_forest", BiomeManager.BiomeType.WARM, Type.JUNGLE, Type.HOT, Type.WET, Type.DENSE, Type.RARE, Type.FOREST);
-        if (general.bee) {
-            event.getRegistry().register(BIOME_PLAINS_WITH_NESTS.setRegistryName("minecraft:plains"));
-            event.getRegistry().register(BIOME_SUNFLOWER_PLAINS_WITH_NESTS.setRegistryName("minecraft:mutated_plains"));
+        /*if (general.bee) {
+            //event.getRegistry().register(BIOME_PLAINS_WITH_NESTS.setRegistryName("minecraft:plains"));
+            //event.getRegistry().register(BIOME_SUNFLOWER_PLAINS_WITH_NESTS.setRegistryName("minecraft:mutated_plains"));
             event.getRegistry().register(BIOME_FLOWER_FOREST_WITH_NESTS.setRegistryName("minecraft:mutated_forest"));
 
-            BiomeProvider.allowedBiomes.remove(Biomes.PLAINS);
-            BiomeProvider.allowedBiomes.add(BIOME_PLAINS_WITH_NESTS);
+            //BiomeProvider.allowedBiomes.remove(Biomes.PLAINS);
+            //BiomeProvider.allowedBiomes.add(BIOME_PLAINS_WITH_NESTS);
 
             //BiomeDictionary.addTypes(BIOME_PLAINS_WITH_NESTS, Type.PLAINS);
             //BiomeDictionary.addTypes(BIOME_SUNFLOWER_PLAINS_WITH_NESTS, Type.PLAINS, Type.RARE);
             //BiomeDictionary.addTypes(BIOME_FLOWER_FOREST_WITH_NESTS, Type.FOREST, Type.HILLS, Type.RARE);
-        }
+        }*/
         //if (general.bee) registerBiome(event, BIOME_PLAINS_WITH_NESTS, "minecraft:plains", new BiomeManager.BiomeType[]{BiomeManager.BiomeType.WARM, BiomeManager.BiomeType.COOL}, Type.PLAINS);
         //if (general.bee) registerBiome(event, BIOME_SUNFLOWER_PLAINS_WITH_NESTS, "minecraft:mutated_plains", new BiomeManager.BiomeType[]{BiomeManager.BiomeType.WARM, BiomeManager.BiomeType.COOL}, Type.PLAINS);
         //if (general.bee) registerBiome(event, BIOME_FLOWER_FOREST_WITH_NESTS, "minecraft:mutated_forest", new BiomeManager.BiomeType[]{BiomeManager.BiomeType.WARM, BiomeManager.BiomeType.COOL}, Type.PLAINS);

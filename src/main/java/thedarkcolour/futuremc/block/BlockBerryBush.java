@@ -37,8 +37,8 @@ public class BlockBerryBush extends BlockFlower implements IGrowable {
     public BlockBerryBush() {
         super("BerryBush");
         setSoundType(SoundType.PLANT);
-        this.setDefaultState(getBlockState().getBaseState().withProperty(AGE, 1));
-        this.setTickRandomly(true);
+        setDefaultState(getBlockState().getBaseState().withProperty(AGE, 1));
+        setTickRandomly(true);
     }
 
     @Override

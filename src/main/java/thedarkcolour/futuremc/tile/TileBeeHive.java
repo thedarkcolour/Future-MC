@@ -133,7 +133,7 @@ public class TileBeeHive extends InteractionTile implements ITickable {
             if (!optionalPos.isPresent()) {
                 for (EnumFacing f : new EnumFacing[] {EnumFacing.UP, EnumFacing.DOWN}) {
                     blockPos = pos.add(f.getXOffset() << 1, f.getYOffset(), f.getZOffset() << 1);
-                    if (world.getBlockState(blockPos).getCollisionBoundingBox(world, blockPos).equals(Block.NULL_AABB)) {
+                    if (world.getBlockState(blockPos).getCollisionBoundingBox(world, blockPos) == Block.NULL_AABB) {
                         optionalPos = Optional.of(blockPos);
                     }
                 }

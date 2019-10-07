@@ -60,6 +60,8 @@ import thedarkcolour.futuremc.sound.Sounds;
 import thedarkcolour.futuremc.tile.TileBeeHive;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
@@ -68,6 +70,7 @@ import java.util.function.ToDoubleFunction;
 
 public class EntityBee extends EntityAnimal implements EntityFlying {
     private static final Field LOOK_HELPER_FIELD = ReflectionHelper.findField(EntityLiving.class, "lookHelper", "field_70749_g");
+    private static final Method GET_AGE_PROPERTY = ReflectionHelper.findMethod(BlockCrops.class, "getAgeProperty", "func_185524_e");
     private static final DataParameter<Byte> BEE_FLAGS = EntityDataManager.createKey(EntityBee.class, DataSerializers.BYTE);
     private static final DataParameter<Integer> ANGER = EntityDataManager.createKey(EntityBee.class, DataSerializers.VARINT);
     private UUID targetPlayer;
@@ -111,7 +114,7 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
     }
 
     public static boolean canGrowBlock(Block block) {
-        return block instanceof BlockCrops || block instanceof BlockStem || block instanceof BlockBerryBush;
+        return block == Blocks.WHEAT || block == Blocks.CARROTS || block == Blocks.POTATOES || block == Blocks.BEETROOTS || block == Blocks.MELON_STEM || block == Blocks.PUMPKIN_STEM || block == Init.SWEET_BERRY_BUSH;
     }
 
     @Override
@@ -618,7 +621,12 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
                                 if (block instanceof BlockBeetroot) {
                                     ageProperty = BlockBeetroot.BEETROOT_AGE;
                                 } else {
-                                    ageProperty = BlockCrops.AGE;
+                                    try {
+                                        ageProperty = (PropertyInteger) GET_AGE_PROPERTY.invoke(crops);
+                                    } catch (IllegalAccessException | InvocationTargetException e) {
+                                        e.printStackTrace();
+                                        return;
+                                    }
                                 }
                             }
                         } else {
@@ -638,7 +646,7 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
                             }
                         }
 
-                        if (canGrow) {
+                        if (ageProperty != null && canGrow) {
                             bee.world.playEvent(2005, pos, 0);
                             bee.world.setBlockState(pos, state.withProperty(ageProperty, state.getValue(ageProperty) + 1));
                             bee.addCropCounter();
@@ -871,12 +879,12 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
 
         @Override
         public boolean shouldExecute() {
-            return bee.navigator.getPath() == null && bee.rand.nextInt(10) == 0;
+            return (bee.navigator.noPath() && bee.rand.nextInt(10) == 0) || !bee.hasHive();
         }
 
         @Override
         public boolean shouldContinueExecuting() {
-            return !bee.getNavigator().noPath();
+            return !bee.navigator.noPath();
         }
 
         @Override

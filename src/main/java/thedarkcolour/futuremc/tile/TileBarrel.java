@@ -40,4 +40,8 @@ public class TileBarrel extends TileEntity {
         }
         return super.getCapability(capability, facing);
     }
+
+    public ItemStackHandler getStorage() {
+        return storage;
+    }
 }

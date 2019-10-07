@@ -20,7 +20,7 @@ public final class BlastFurnace {
         if (!BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE.canCraft(CraftTweakerMC.getItemStack(input))) {
             CraftTweakerAPI.apply(new BlastFurnace.AddRecipe(input));
         } else {
-            FutureMC.LOGGER.log(Level.WARN, "Failed to add duplicate valid BlastFurnace input for " + input.getDefinition().getId());
+            FutureMC.logger.log(Level.WARN, "Failed to add duplicate valid BlastFurnace input for " + input.getDefinition().getId());
         }
     }
 
@@ -47,7 +47,7 @@ public final class BlastFurnace {
         if (!BlockFurnaceAdvanced.ValidItemExceptionsForBlastFurnace.isBlacklisted(CraftTweakerMC.getItemStack(input))) {
             CraftTweakerAPI.apply(new BlastFurnace.RemoveRecipe(input));
         } else {
-            FutureMC.LOGGER.log(Level.WARN, "Failed to remove BlastFurnace input for " + input.getDefinition().getId());
+            FutureMC.logger.log(Level.WARN, "Failed to remove BlastFurnace input for " + input.getDefinition().getId());
         }
     }
 
