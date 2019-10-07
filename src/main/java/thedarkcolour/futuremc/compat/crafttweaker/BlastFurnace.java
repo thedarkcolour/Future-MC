@@ -16,24 +16,26 @@ import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
 @ZenClass("mods.minecraftfuture.BlastFurnace")
 public final class BlastFurnace {
     @ZenMethod
-    public static void addValidInput(IItemStack input) {
+    public static void addRecipe(IItemStack input, IItemStack output) {
         if (!BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE.canCraft(CraftTweakerMC.getItemStack(input))) {
-            CraftTweakerAPI.apply(new BlastFurnace.AddRecipe(input));
+            CraftTweakerAPI.apply(new BlastFurnace.AddRecipe(input, output));
         } else {
-            FutureMC.logger.log(Level.WARN, "Failed to add duplicate valid BlastFurnace input for " + input.getDefinition().getId());
+            FutureMC.logger.log(Level.WARN, "Tried to add duplicate valid BlastFurnace input for " + input.getDefinition().getId());
         }
     }
 
     private static class AddRecipe implements IAction {
         private ItemStack input;
+        private ItemStack output;
 
-        private AddRecipe(IItemStack input) {
+        private AddRecipe(IItemStack input, IItemStack output) {
             this.input = CraftTweakerMC.getItemStack(input);
+            this.output = CraftTweakerMC.getItemStack(output);
         }
 
         @Override
         public void apply() {
-            BlockFurnaceAdvanced.ValidItemExceptionsForBlastFurnace.addSmeltableItem(input);
+            BlockFurnaceAdvanced.Recipes.blastFurnaceRecipe(input, output);
         }
 
         @Override
@@ -43,12 +45,8 @@ public final class BlastFurnace {
     }
 
     @ZenMethod
-    public static void removeValidInput(IItemStack input) {
-        if (!BlockFurnaceAdvanced.ValidItemExceptionsForBlastFurnace.isBlacklisted(CraftTweakerMC.getItemStack(input))) {
-            CraftTweakerAPI.apply(new BlastFurnace.RemoveRecipe(input));
-        } else {
-            FutureMC.logger.log(Level.WARN, "Failed to remove BlastFurnace input for " + input.getDefinition().getId());
-        }
+    public static void removeRecipe(IItemStack input) {
+        CraftTweakerAPI.apply(new RemoveRecipe(input));
     }
 
     private static class RemoveRecipe implements IAction {
@@ -60,7 +58,7 @@ public final class BlastFurnace {
 
         @Override
         public void apply() {
-            BlockFurnaceAdvanced.ValidItemExceptionsForBlastFurnace.removeSmeltableItem(input);
+            BlockFurnaceAdvanced.Recipes.removeBlastFurnaceRecipe(input);
         }
 
         @Override

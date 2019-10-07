@@ -25,6 +25,6 @@ public class CampfireRecipeWrapper implements IRecipeWrapper {
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
         minecraft.fontRenderer.drawString(I18n.format("container.jei.minecraftfuture.campfire.duration") + ": " + recipe.duration, 2, 2, Color.gray.getRGB());
-        minecraft.fontRenderer.drawString(I18n.format("gui.jei.category.smelting.experience", recipe.experience), 2, 35, Color.gray.getRGB());
+        //minecraft.fontRenderer.drawString(I18n.format("gui.jei.category.smelting.experience", recipe.experience), 2, 35, Color.gray.getRGB());
     }
 }

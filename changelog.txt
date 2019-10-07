@@ -7,6 +7,8 @@ Version 0.1.12 - Campfire Functionality! New things:
  Blast Furnace and Smoker - JEI compatibility!
  Bees - Added CraftTweaker functions on the Wiki.
  Bees - No longer freeze without hive.
+ Bee Hive - No longer causes issues with mods like CubicChunks.
+ Bee Hive - Can now spawn on big trees.
 
 Version 0.1.11 - Bees? New things:
  *Bees* - Cute flying insects from 1.15 snapshots that pollinate crops. Possible flower targets can be added and removed with CraftTweaker scripts.

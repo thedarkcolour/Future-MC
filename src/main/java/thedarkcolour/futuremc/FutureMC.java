@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import thedarkcolour.core.gui.Gui;
 import thedarkcolour.core.proxy.CommonProxy;
 import thedarkcolour.core.util.RegistryHelper;
+import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
 import thedarkcolour.futuremc.entity.Entities;
 import thedarkcolour.futuremc.entity.trident.EntityTrident;
 import thedarkcolour.futuremc.init.FutureConfig;
@@ -49,8 +50,8 @@ public class FutureMC {
         Gui.setup();
         GameRegistry.addSmelting(new ItemStack(Blocks.STONE), new ItemStack(Init.SMOOTH_STONE), 0.1F);
         GameRegistry.addSmelting(new ItemStack(Blocks.QUARTZ_BLOCK), new ItemStack(Init.SMOOTH_QUARTZ), 0.1F);
-        TileCampfire.Recipes.registerDefaults();
-
+        BlockFurnaceAdvanced.Recipes.init();
+        TileCampfire.Recipes.init();
         if (FutureConfig.general.trident) {
             RegistryHelper.registerDispenserBehaviour(Init.TRIDENT, EntityTrident::new);
         }

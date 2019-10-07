@@ -4,16 +4,15 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
-
-import java.util.Map;
+import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
 
 public class BlastFurnaceRecipeWrapper implements IRecipeWrapper {
     private final ItemStack input;
     private final ItemStack output;
 
-    public BlastFurnaceRecipeWrapper(Map.Entry<ItemStack, ItemStack> entry) {
-        this.input = entry.getKey();
-        this.output = entry.getValue();
+    public BlastFurnaceRecipeWrapper(BlockFurnaceAdvanced.Recipe recipe) {
+        this.input = recipe.input;
+        this.output = recipe.output;
     }
 
     @Override

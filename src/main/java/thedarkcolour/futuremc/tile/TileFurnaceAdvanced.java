@@ -90,7 +90,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
 
                             if (itemstack.isEmpty()) {
                                 ItemStack item1 = item.getContainerItem(itemstack);
-                                this.furnaceItemStacks.set(1, item1);
+                                furnaceItemStacks.set(1, item1);
                             }
                         }
                     }

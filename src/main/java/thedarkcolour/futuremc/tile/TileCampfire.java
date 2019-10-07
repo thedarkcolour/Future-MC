@@ -209,19 +209,19 @@ public class TileCampfire extends InteractionTile implements ITickable {
     public static final class Recipes {
         private static final ArrayList<Recipe> RECIPES = Lists.newArrayListWithExpectedSize(8);
 
-        public static void registerDefaults() {
-            recipe(new ItemStack(Items.FISH), new ItemStack(Items.COOKED_FISH), 600, 0.35F);
-            recipe(new ItemStack(Items.CHICKEN), new ItemStack(Items.COOKED_CHICKEN), 600, 0.35F);
-            recipe(new ItemStack(Items.PORKCHOP), new ItemStack(Items.COOKED_PORKCHOP), 600, 0.35F);
-            recipe(new ItemStack(Items.FISH, 1, 1), new ItemStack(Items.COOKED_FISH, 1, 1), 600, 0.35F);
-            recipe(new ItemStack(Items.BEEF), new ItemStack(Items.COOKED_BEEF), 600, 0.35F);
-            recipe(new ItemStack(Items.MUTTON), new ItemStack(Items.COOKED_MUTTON), 600, 0.35F);
-            recipe(new ItemStack(Items.RABBIT), new ItemStack(Items.COOKED_RABBIT), 600, 0.35F);
-            recipe(new ItemStack(Items.POTATO), new ItemStack(Items.BAKED_POTATO), 600, 0.35F);
+        public static void init() {
+            recipe(new ItemStack(Items.FISH), new ItemStack(Items.COOKED_FISH), 600);
+            recipe(new ItemStack(Items.CHICKEN), new ItemStack(Items.COOKED_CHICKEN), 600);
+            recipe(new ItemStack(Items.PORKCHOP), new ItemStack(Items.COOKED_PORKCHOP), 600);
+            recipe(new ItemStack(Items.FISH, 1, 1), new ItemStack(Items.COOKED_FISH, 1, 1), 600);
+            recipe(new ItemStack(Items.BEEF), new ItemStack(Items.COOKED_BEEF), 600);
+            recipe(new ItemStack(Items.MUTTON), new ItemStack(Items.COOKED_MUTTON), 600);
+            recipe(new ItemStack(Items.RABBIT), new ItemStack(Items.COOKED_RABBIT), 600);
+            recipe(new ItemStack(Items.POTATO), new ItemStack(Items.BAKED_POTATO), 600);
         }
 
-        public static void recipe(ItemStack input, ItemStack output, int duration, float experience) {
-            RECIPES.add(new Recipe(input, output, duration, experience));
+        public static void recipe(ItemStack input, ItemStack output, int duration) {
+            RECIPES.add(new Recipe(input, output, duration));
         }
 
         public static void remove(ItemStack input) {
@@ -247,13 +247,11 @@ public class TileCampfire extends InteractionTile implements ITickable {
         public final ItemStack input;
         public final ItemStack output;
         public final int duration;
-        public final float experience;
 
-        private Recipe(ItemStack input, ItemStack output, int duration, float experience) {
+        private Recipe(ItemStack input, ItemStack output, int duration) {
             this.input = input;
             this.output = output;
             this.duration = duration;
-            this.experience = experience;
         }
     }
 }

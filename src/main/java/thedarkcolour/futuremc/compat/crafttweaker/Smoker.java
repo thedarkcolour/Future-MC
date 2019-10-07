@@ -16,24 +16,26 @@ import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
 @ZenClass("mods.minecraftfuture.Smoker")
 public final class Smoker {
     @ZenMethod
-    public static void addValidInput(IItemStack input) {
+    public static void addRecipe(IItemStack input, IItemStack output) {
         if (!BlockFurnaceAdvanced.FurnaceType.SMOKER.canCraft(CraftTweakerMC.getItemStack(input))) {
-            CraftTweakerAPI.apply(new AddRecipe(input));
+            CraftTweakerAPI.apply(new AddRecipe(input, output));
         } else {
-            FutureMC.logger.log(Level.WARN, "Failed to add duplicate valid Smoker input for " + input.getDefinition().getId());
+            FutureMC.logger.log(Level.WARN, "Tried to add duplicate valid Smoker input for " + input.getDefinition().getId());
         }
     }
 
     private static class AddRecipe implements IAction {
-        private ItemStack input;
+        private final ItemStack input;
+        private final ItemStack output;
 
-        private AddRecipe(IItemStack input) {
+        private AddRecipe(IItemStack input, IItemStack output) {
             this.input = CraftTweakerMC.getItemStack(input);
+            this.output = CraftTweakerMC.getItemStack(output);
         }
 
         @Override
         public void apply() {
-            BlockFurnaceAdvanced.ValidItemExceptionsForSmoker.addSmeltableItem(input);
+            BlockFurnaceAdvanced.Recipes.smokerRecipe(input, output);
         }
 
         @Override
@@ -43,12 +45,8 @@ public final class Smoker {
     }
 
     @ZenMethod
-    public static void removeValidInput(IItemStack input) {
-        if (!BlockFurnaceAdvanced.ValidItemExceptionsForSmoker.isBlacklisted(CraftTweakerMC.getItemStack(input))) {
-            CraftTweakerAPI.apply(new RemoveRecipe(input));
-        } else {
-            FutureMC.logger.log(Level.WARN, "Failed to remove Smoker input for " + input.getDefinition().getId());
-        }
+    public static void removeRecipe(IItemStack input) {
+        CraftTweakerAPI.apply(new RemoveRecipe(input));
     }
 
     private static class RemoveRecipe implements IAction {
@@ -60,7 +58,7 @@ public final class Smoker {
 
         @Override
         public void apply() {
-            BlockFurnaceAdvanced.ValidItemExceptionsForSmoker.removeSmeltableItem(input);
+            BlockFurnaceAdvanced.Recipes.removeSmokerRecipe(input);
         }
 
         @Override
