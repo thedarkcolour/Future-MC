@@ -18,12 +18,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import thedarkcolour.futuremc.block.BlockStrippedLog;
 import thedarkcolour.futuremc.init.FutureConfig;
@@ -43,7 +44,7 @@ public final class Events {
     }
 
     @SubscribeEvent
-    public static void stripLogEvent(PlayerInteractEvent.RightClickBlock event) {
+    public static void stripLogEvent(final PlayerInteractEvent.RightClickBlock event) {
         World world = event.getWorld();
         BlockPos pos = event.getPos();
         EntityPlayer player = event.getEntityPlayer();
@@ -85,13 +86,26 @@ public final class Events {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onMobDeath(LivingDeathEvent event) {
-        if(FutureConfig.general.trident) {
+    @SubscribeEvent
+    public static void onMobDeath(final LivingDeathEvent event) {
+        if (FutureConfig.general.trident) {
             Entity entity = event.getEntity();
-            if(entity instanceof EntityElderGuardian) {
+            if (entity instanceof EntityElderGuardian) {
                 entity.getEntityWorld().spawnEntity(new EntityItem(entity.getEntityWorld(), entity.posX, entity.posY, entity.posZ, new ItemStack(Init.TRIDENT, 1)));
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityJump(final LivingEvent.LivingJumpEvent event) {
+        EntityLivingBase entity = event.getEntityLiving();
+        int x = MathHelper.floor(entity.posX);
+        int y = MathHelper.floor(entity.posY - 0.20000000298023224D);
+        int z = MathHelper.floor(entity.posZ);
+        BlockPos pos = new BlockPos(x, y, z);
+        IBlockState state = entity.world.getBlockState(pos);
+        if (state.getBlock() == Init.HONEY_BLOCK) {
+            entity.motionY *= 0.5D;
         }
     }
 

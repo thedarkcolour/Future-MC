@@ -25,6 +25,7 @@ public class ItemHoneyBottle extends ItemModeled {
         super("honey_bottle");
         setMaxStackSize(1);
         setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.FOOD : FutureMC.TAB);
+        setContainerItem(Items.GLASS_BOTTLE);
     }
 
     @Override

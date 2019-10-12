@@ -3,10 +3,12 @@ package thedarkcolour.futuremc.tile;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -77,7 +79,7 @@ public class TileBeeHive extends InteractionTile implements ITickable {
 
     private List<Entity> tryReleaseBee(TileBeeHive.BeeState state) {
         List<Entity> list = Lists.newArrayList();
-        this.bees.removeIf(entry -> releaseBee(entry.data, list, state));
+        bees.removeIf(entry -> releaseBee(entry.data, list, state));
         return list;
     }
 
@@ -92,9 +94,9 @@ public class TileBeeHive extends InteractionTile implements ITickable {
             bees.add(new TileBeeHive.Bee(tag, i, isDelivering ? 2400 : 600));
             if (world != null) {
                 if (entityIn instanceof EntityBee) {
-                    EntityBee beeEntity_1 = (EntityBee)entityIn;
-                    if (!hasFlowerPos() || beeEntity_1.hasFlower() && world.rand.nextBoolean()) {
-                        flowerPos = beeEntity_1.getFlowerPos();
+                    EntityBee bee = (EntityBee)entityIn;
+                    if (!hasFlowerPos() || bee.hasFlower() && world.rand.nextBoolean()) {
+                        flowerPos = bee.getFlowerPos();
                     }
                 }
 
@@ -109,7 +111,8 @@ public class TileBeeHive extends InteractionTile implements ITickable {
         if (world.isDaytime() && !world.isRainingAt(pos)) {
             data.removeTag("Passengers");
             data.removeTag("Leash");
-            data.removeTag("UUID");
+            data.removeTag("UUIDLeast");
+            data.removeTag("UUIDMost");
             Optional<BlockPos> optionalPos = Optional.empty();
             IBlockState state = world.getBlockState(pos);
             EnumFacing facing = state.getValue(BlockBeeHive.FACING);
@@ -265,21 +268,24 @@ public class TileBeeHive extends InteractionTile implements ITickable {
 
     @Override
     public void broken(IBlockState state, EntityPlayer playerIn) {
-        if (!world.isRemote && playerIn.isCreative()) {
-            ItemStack stack = new ItemStack(world.getBlockState(pos).getBlock());
-            NBTTagCompound tag = new NBTTagCompound();
-
-            if (!bees.isEmpty()) {
-                tag.setTag("Bees", getBees());
-            }
-
-            tag.setInteger("HoneyLevel", getHoneyLevel());
-            stack.setTagInfo("BlockEntityTag", tag);
-
-            EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+        if (!world.isRemote && (playerIn.isCreative() || EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, playerIn.getHeldItemMainhand()) == 1)) {
+            EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), getItemWithBees());
             item.setDefaultPickupDelay();
             world.spawnEntity(item);
         }
+    }
+
+    public ItemStack getItemWithBees() {
+        ItemStack stack = new ItemStack(world.getBlockState(pos).getBlock());
+        NBTTagCompound tag = new NBTTagCompound();
+
+        if (!bees.isEmpty()) {
+            tag.setTag("Bees", getBees());
+        }
+
+        tag.setInteger("HoneyLevel", getHoneyLevel());
+        stack.setTagInfo("BlockEntityTag", tag);
+        return stack;
     }
 
     @Override
@@ -351,6 +357,7 @@ public class TileBeeHive extends InteractionTile implements ITickable {
         private final int minOccupationTicks;
 
         Bee(NBTTagCompound data, int ticksInHive, int minOccupationTicks) {
+            data.setBoolean("Leashed", false);
             this.data = data;
             this.ticksInHive = ticksInHive;
             this.minOccupationTicks = minOccupationTicks;

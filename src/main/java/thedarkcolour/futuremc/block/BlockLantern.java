@@ -10,7 +10,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -33,61 +32,47 @@ public class BlockLantern extends BlockBase {
         setHardness(5);
         setSoundType(SoundType.METAL);
         setHarvestLevel("pickaxe", 0);
-        setDefaultState(this.blockState.getBaseState().withProperty(HANGING, false));
+        setDefaultState(getDefaultState().withProperty(HANGING, false));
         setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.TAB);
     }
 
     @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        if (!isBlockInvalid(worldIn, pos.down()) && !isBlockInvalid(worldIn, pos.up())) { // don't touch
-            if (facing == EnumFacing.DOWN) {
-                return this.getDefaultState().withProperty(HANGING, true);
-            }
-            else {
-                return this.getDefaultState().withProperty(HANGING, false);
-            }
+        if (canBlockStay(worldIn, pos)) {
+            return getDefaultState().withProperty(HANGING, facing == EnumFacing.DOWN);
         }
-
-        if (isBlockInvalid(worldIn, pos.down())) {
-            return this.getDefaultState().withProperty(HANGING, true);
-        }
-        else {
-            return this.getDefaultState().withProperty(HANGING, false);
-        }
+        return getDefaultState().withProperty(HANGING, isBlockInvalid(worldIn, pos.down()));
     }
 
     private boolean isBlockInvalid(World world, BlockPos blockPos) {
         IBlockState state = world.getBlockState(blockPos);
         Block block = state.getBlock();
-        return (block instanceof BlockBush) || world.isAirBlock(blockPos) || isPiston(block);
+        return block instanceof BlockBush || world.isAirBlock(blockPos) || isPiston(block);
     }
 
     private boolean isPiston(Block block) {
-        return (block == Blocks.PISTON || block == Blocks.PISTON_EXTENSION || block == Blocks.PISTON_HEAD || block == Blocks.STICKY_PISTON);
+        return block.getMaterial(null) == Material.PISTON;
     }
 
     @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        return super.canPlaceBlockAt(worldIn, pos) && this.canBlockStay(worldIn, pos);
+        return super.canPlaceBlockAt(worldIn, pos) && canBlockStay(worldIn, pos);
     }
 
     private boolean canBlockStay(World worldIn, BlockPos pos) {
-        return (!isBlockInvalid(worldIn, pos.down())
-                || (!isBlockInvalid(worldIn, pos.up())));
+        return !(isBlockInvalid(worldIn, pos.down()) && isBlockInvalid(worldIn, pos.up()));
     }
 
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         if (!canBlockStay(worldIn, pos)) {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
+            dropBlockAsItem(worldIn, pos, state, 0);
             worldIn.setBlockToAir(pos);
-        }
-        else if (isBlockInvalid(worldIn, pos.down())) {
-            if(worldIn.getBlockState(pos.up()).getBlock() != this) {
+        } else if (isBlockInvalid(worldIn, pos.down())) {
+            if (worldIn.getBlockState(pos.up()).getBlock() != this) {
                 worldIn.setBlockState(pos, state.withProperty(HANGING, true));
             }
-        }
-        else if (isBlockInvalid(worldIn, pos.up())) {
+        } else if (isBlockInvalid(worldIn, pos.up())) {
             worldIn.setBlockState(pos, state.withProperty(HANGING, false));
         }
     }
@@ -99,7 +84,7 @@ public class BlockLantern extends BlockBase {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(HANGING, meta != 1);
+        return getDefaultState().withProperty(HANGING, meta != 1);
     }
 
     @Override
@@ -132,9 +117,28 @@ public class BlockLantern extends BlockBase {
         return BlockFaceShape.UNDEFINED;
     }
 
-    @Override public boolean isFullBlock(IBlockState state) { return false; }
-    @Override public boolean isNormalCube(IBlockState state, IBlockAccess source, BlockPos pos) { return false; }
-    @Override public boolean isFullCube(IBlockState state) { return false; }
-    @Override public boolean isOpaqueCube(IBlockState state) { return false; }
-    @Override public boolean isTopSolid(IBlockState state) { return false; }
+    @Override
+    public boolean isFullBlock(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isNormalCube(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isTopSolid(IBlockState state) {
+        return false;
+    }
 }

@@ -149,7 +149,7 @@ public class BlockCampfire extends InteractionBlock {
     @Override
     public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
         if (FutureConfig.general.campfireDMG) {
-            if (entityIn.isImmuneToFire() && state.getValue(LIT)) {
+            if (!entityIn.isImmuneToFire() && state.getValue(LIT)) {
                 entityIn.attackEntityFrom(DamageSource.IN_FIRE, 1.0F);
             }
         }

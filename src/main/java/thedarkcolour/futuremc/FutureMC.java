@@ -7,8 +7,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
+import thedarkcolour.core.command.CommandHeal;
 import thedarkcolour.core.gui.Gui;
 import thedarkcolour.core.proxy.CommonProxy;
 import thedarkcolour.core.util.RegistryHelper;
@@ -58,6 +60,13 @@ public class FutureMC {
 
         InitElements.registerGenerators();
         proxy.init(e);
+    }
+
+    @Mod.EventHandler
+    public static void onServerStart(final FMLServerStartingEvent event) {
+        if (Init.DEBUG) {
+            event.registerServerCommand(new CommandHeal());
+        }
     }
 
     public static ItemGroup TAB;

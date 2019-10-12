@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.init;
 
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -21,6 +22,7 @@ import thedarkcolour.futuremc.item.ItemDye;
 import thedarkcolour.futuremc.item.ItemHoneyBottle;
 import thedarkcolour.futuremc.item.ItemSuspiciousStew;
 import thedarkcolour.futuremc.item.ItemTrident;
+import thedarkcolour.futuremc.sound.Sounds;
 import thedarkcolour.futuremc.world.biome.BiomeBambooJungle;
 import thedarkcolour.futuremc.world.gen.feature.FeatureBambooStalk;
 import thedarkcolour.futuremc.world.gen.feature.WorldGenBamboo;
@@ -45,6 +47,8 @@ public final class Init {
     public static final BlockComposter COMPOSTER;
     public static final BlockScaffold SCAFFOLDING;
     public static final BlockBell BELL;
+    public static final BlockHoneyBlock HONEY_BLOCK;
+    public static final BlockBase HONEYCOMB_BLOCK;
 
     public static final BlockFlower LILY_OF_VALLEY;
     public static final BlockFlower CORNFLOWER;
@@ -93,12 +97,12 @@ public final class Init {
     public static final FeatureBambooStalk BAMBOO_FEATURE;
     public static final ItemBamboo BAMBOO_ITEM;
 
-    public static final boolean isDebug;
+    public static final boolean DEBUG;
 
     static {
         LANTERN = new BlockLantern();
         STONECUTTER = new BlockStonecutter();
-        //LECTERN = new BlockLectern(); TODO Lectern
+        // LECTERN = new BlockLectern(); TODO Lectern
         BARREL = new BlockBarrel();
         SMOKER = new BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.SMOKER);
         BLAST_FURNACE = new BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE);
@@ -111,6 +115,8 @@ public final class Init {
         SCAFFOLDING = new BlockScaffold();
         BLUE_ICE = new BlockBlueIce();
         BELL = new BlockBell();
+        HONEY_BLOCK = new BlockHoneyBlock();
+        HONEYCOMB_BLOCK = new BlockBase("honeycomb_block", Material.CLAY, MapColor.ADOBE, Sounds.CORAL).setHardness(0.6F).setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.TAB);
 
         LILY_OF_VALLEY = new BlockLilyOfValley();
         CORNFLOWER = new BlockCornflower();
@@ -167,7 +173,7 @@ public final class Init {
             thrown = true;
         }
 
-        isDebug = !thrown;
+        DEBUG = !thrown;
     }
 
     public static boolean isCharmItemLoaded(String registryName) {

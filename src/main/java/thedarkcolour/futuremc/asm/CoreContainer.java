@@ -17,6 +17,7 @@ public class CoreContainer extends DummyModContainer {
         md.description = "Coremod for Future MC. Patches trees.";
         md.authorList = ImmutableList.of("TheDarkColour");
         md.version = "0.1.12";
+        md.credits = "Herobrine sees all.";
     });
 
     public CoreContainer() {

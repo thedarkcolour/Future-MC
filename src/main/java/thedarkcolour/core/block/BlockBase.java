@@ -2,6 +2,7 @@ package thedarkcolour.core.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -14,6 +15,14 @@ public class BlockBase extends Block {
 
     public BlockBase(String regName, Material material) {
         this(regName, material, SoundType.STONE);
+    }
+
+    public BlockBase(String regName, Material material, MapColor color, SoundType soundType) {
+        super(material, color);
+        setTranslationKey(FutureMC.ID + "." + regName);
+        setRegistryName(regName);
+        setSoundType(soundType);
+        setHardness(3.0F);
     }
 
     public BlockBase(String regName, Material material, SoundType soundType) {

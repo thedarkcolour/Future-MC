@@ -1,14 +1,21 @@
-Version 0.1.12 - Campfire Functionality! New things:
+Version 0.1.12 - Campfire Functionality and Honey Blocks! New things:
+ *Honey Block* - A super sticky block from 1.15 that limits movement. You can also slide down the sides of it!
+ *Honeycomb Block* - A decorative/storage block for Honeycombs.
  Campfire - Can now cook items.
  Campfire - Can now be rotated.
  Campfire - Can now be put out with a shovel.
  Campfire - JEI compatibility!
  Campfire - CraftTweaker compatibility, view on Wiki.
+ Campfire - Now properly damages entities that stand on it.
  Blast Furnace and Smoker - JEI compatibility!
  Bees - Added CraftTweaker functions on the Wiki.
  Bees - No longer freeze without hive.
- Bee Hive - No longer causes issues with mods like CubicChunks.
+ Bee Hive - No longer causes issues with mods like CubicChunks or Biome Bundle.
  Bee Hive - Can now spawn on big trees.
+ Bee Hive & Bee Nest - Can now be silk touch harvested with bees and honey still inside.
+ Honey Bottle - Glass bottle stays in crafting table after use in recipes.
+
+ Future MC now uses a coremod. It places hives on trees.
 
 Version 0.1.11 - Bees? New things:
  *Bees* - Cute flying insects from 1.15 snapshots that pollinate crops. Possible flower targets can be added and removed with CraftTweaker scripts.

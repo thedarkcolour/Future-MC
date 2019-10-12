@@ -44,8 +44,13 @@ public final class Sounds {
     public static final SoundEvent SCAFFOLD_BREAK = makeSoundEvent("scaffold_break");
     public static final SoundEvent SCAFFOLD_STEP = makeSoundEvent("scaffold_step");
     public static final SoundEvent SCAFFOLD_PLACE = makeSoundEvent("scaffold_place");
-    public static final SoundEvent SCAFFOLD_FALL = makeSoundEvent("scaffold_fall");
     public static final SoundEvent SCAFFOLD_HIT = makeSoundEvent("scaffold_hit");
+    public static final SoundEvent SCAFFOLD_FALL = makeSoundEvent("scaffold_fall");
+    public static final SoundEvent HONEY_BLOCK_BREAK = makeSoundEvent("honey_block_break");
+    public static final SoundEvent HONEY_BLOCK_STEP = makeSoundEvent("honey_block_step");
+    public static final SoundEvent HONEY_BLOCK_SLIDE = makeSoundEvent("honey_block_slide");
+    private static final SoundEvent CORAL_DIG = makeSoundEvent("coral_dig");
+    private static final SoundEvent CORAL_STEP = makeSoundEvent("coral_step");
     public static final SoundEvent BELL_RING = makeSoundEvent("bell_ring");
     public static final SoundEvent BEE_ENTER_HIVE = makeSoundEvent("bee_enter_hive");
     public static final SoundEvent BEE_EXIT_HIVE = makeSoundEvent("bee_exit_hive");
@@ -61,7 +66,8 @@ public final class Sounds {
 
     public static final SoundType BAMBOO = new SoundType(1.0F, 1.0F, BAMBOO_PLACE, BAMBOO_STEP, BAMBOO_PLACE, BAMBOO_PLACE, BAMBOO_STEP);
     public static final SoundType SCAFFOLDING = new SoundType(1.0F, 1.0F, SCAFFOLD_BREAK, SCAFFOLD_STEP, SCAFFOLD_PLACE, SCAFFOLD_HIT, SCAFFOLD_FALL);
-
+    public static final SoundType HONEY_BLOCK = new SoundType(1.0F, 1.0F, HONEY_BLOCK_BREAK, HONEY_BLOCK_STEP, HONEY_BLOCK_BREAK, HONEY_BLOCK_BREAK, HONEY_BLOCK_STEP);
+    public static final SoundType CORAL = new SoundType(1.0F, 1.0F, CORAL_DIG, CORAL_STEP, CORAL_DIG, CORAL_DIG, CORAL_STEP);
 
     private static SoundEvent makeSoundEvent(String name) {
         ResourceLocation loc = new ResourceLocation(FutureMC.ID, name);
@@ -78,6 +84,7 @@ public final class Sounds {
                 CAMPFIRE_CRACKLE,
                 BELL_RING,
                 BAMBOO_PLACE, BAMBOO_STEP,
-                BEE_ENTER_HIVE, BEE_EXIT_HIVE, BEE_STING, BEE_DEATH, BEE_HURT, BEE_POLLINATE, BEE_WORK, BEE_AGGRESSIVE, BEE_PASSIVE, HONEY_BOTTLE_DRINK, BEEHIVE_SHEAR);
+                BEE_ENTER_HIVE, BEE_EXIT_HIVE, BEE_STING, BEE_DEATH, BEE_HURT, BEE_POLLINATE, BEE_WORK, BEE_AGGRESSIVE, BEE_PASSIVE, HONEY_BOTTLE_DRINK, BEEHIVE_SHEAR,
+                HONEY_BLOCK_BREAK, HONEY_BLOCK_STEP, HONEY_BLOCK_SLIDE);
     }
 }

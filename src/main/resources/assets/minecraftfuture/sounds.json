@@ -178,5 +178,25 @@
     "shear_hive": {
         "subtitle": "minecraftfuture.subtitles.shear_hive",
         "sounds": [ "minecraftfuture:bee/shear"]
+    },
+    "honey_block_break": {
+        "subtitle": "minecraftfuture.subtitles.honey_block_break",
+        "sounds": [ "minecraftfuture:honey_block/break_0", "minecraftfuture:honey_block/break_1", "minecraftfuture:honey_block/break_2", "minecraftfuture:honey_block/break_3", "minecraftfuture:honey_block/break_4"]
+    },
+    "honey_block_step": {
+        "subtitle": "minecraftfuture.subtitles.honey_block_step",
+        "sounds": [ "minecraftfuture:honey_block/step_0", "minecraftfuture:honey_block/step_1", "minecraftfuture:honey_block/step_2", "minecraftfuture:honey_block/step_3", "minecraftfuture:honey_block/step_4"]
+    },
+    "coral_dig": {
+        "subtitle": "minecraftfuture.subtitles.honey_block_dig",
+        "sounds": [ "minecraftfuture:coral/dig_0", "minecraftfuture:coral/dig_1", "minecraftfuture:coral/dig_2", "minecraftfuture:coral/dig_3"]
+    },
+    "coral_step": {
+        "subtitle": "minecraftfuture.subtitles.honey_block_step",
+        "sounds": [ "minecraftfuture:coral/step_0", "minecraftfuture:coral/step_1", "minecraftfuture:coral/step_2", "minecraftfuture:coral/step_3", "minecraftfuture:coral/step_4"]
+    },
+    "honey_block_slide": {
+        "subtitle": "minecraftfuture.subtitles.honey_block_slide",
+        "sounds": [ "minecraftfuture:honey_block/slide_0", "minecraftfuture:honey_block/slide_1", "minecraftfuture:honey_block/slide_2", "minecraftfuture:honey_block/slide_3"]
     }
 }

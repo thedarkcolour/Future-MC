@@ -22,7 +22,7 @@ public class BlockLoom extends BlockRotatable {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (Init.isDebug) {
+        if (Init.DEBUG) {
             if(!worldIn.isRemote) {
                 Gui.LOOM.open(playerIn, worldIn, pos);
             }

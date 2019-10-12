@@ -53,10 +53,9 @@ public final class InitElements {
         if (general.grindstone) r.register(GRINDSTONE);
         //if (general.lectern) r.register(LECTERN);
         if (general.composter) r.register(COMPOSTER);
-        if (isDebug) r.register(SCAFFOLDING);
+        if (DEBUG) r.register(SCAFFOLDING);
         if (general.blueIce) r.register(BLUE_ICE);
-        if (general.bee) r.register(BEE_NEST);
-        if (general.bee) r.register(BEE_HIVE);
+        if (general.bee) r.registerAll(BEE_NEST, BEE_HIVE, HONEY_BLOCK, HONEYCOMB_BLOCK);
 
         if (modFlowers.cornflower) r.register(CORNFLOWER);
         if (modFlowers.lily) r.register(LILY_OF_VALLEY);
@@ -87,12 +86,9 @@ public final class InitElements {
         if (general.smithingTable) r.register(makeItemBlock(SMITHING_TABLE));
         if (general.grindstone) r.register(makeItemBlock(GRINDSTONE));
         if (general.composter) r.register(makeItemBlock(COMPOSTER));
-        if (isDebug) r.register(makeItemBlock(SCAFFOLDING));
+        if (DEBUG) r.register(makeItemBlock(SCAFFOLDING));
         if (general.blueIce) r.register(makeItemBlock(BLUE_ICE));
-        if (general.bee) r.register(makeItemBlock(BEE_NEST));
-        if (general.bee) r.register(makeItemBlock(BEE_HIVE));
-        if (general.bee) r.register(HONEY_BOTTLE);
-        if (general.bee) r.register(HONEY_COMB);
+        if (general.bee) r.registerAll(makeItemBlock(BEE_NEST), makeItemBlock(BEE_HIVE), makeItemBlock(HONEY_BLOCK), makeItemBlock(HONEYCOMB_BLOCK), HONEY_BOTTLE, HONEY_COMB);
 
         if (general.trident) r.register(TRIDENT);
         //if (general.crossbow) r.register(CROSSBOW);
@@ -101,7 +97,7 @@ public final class InitElements {
         if (modFlowers.cornflower) r.register(makeItemBlock(CORNFLOWER));
         if (modFlowers.witherRose) r.register(makeItemBlock(WITHER_ROSE));
         if (modFlowers.suspiciousStew) r.register(SUSPICIOUS_STEW);
-        if (general.loom && isDebug) r.register(PATTERNS);
+        if (general.loom && DEBUG) r.register(PATTERNS);
         if (modFlowers.dyes) r.register(DYES);
         if (general.bamboo) r.register(BAMBOO_ITEM);
         if (general.berryBush) r.register(SWEET_BERRY);
@@ -113,7 +109,7 @@ public final class InitElements {
         if (general.newWallVariants) r.registerAll(makeItemBlocks(BRICK_WALL, GRANITE_WALL, ANDESITE_WALL, DIORITE_WALL, SANDSTONE_WALL, RED_SANDSTONE_WALL, STONE_BRICK_WALL, MOSSY_STONE_WALL, NETHER_BRICK_WALL, RED_NETHER_BRICK_WALL, END_STONE_WALL, PRISMARINE_WALL));
         //if (general.newSlabVariants) r.registerAll(ItemNewSlab.Slabs.SLAB_ITEMS.toArray(new ItemNewSlab[0]));
 
-        if (isDebug) r.register(new ItemDebugger());
+        if (DEBUG) r.register(new ItemDebugger());
 
         registerTileEntities();
         OreDict.registerOres();

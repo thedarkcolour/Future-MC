@@ -60,6 +60,8 @@ tile.minecraftfuture.end_stone_brick_slab.name=End Stone Brick Slab
 tile.minecraftfuture.Bamboo.name=Bamboo
 tile.minecraftfuture.bee_nest.name=Bee Nest
 tile.minecraftfuture.bee_hive.name=Bee Hive
+tile.minecraftfuture.honey_block.name=Honey Block
+tile.minecraftfuture.honeycomb_block.name=Honeycomb Block
 
 # Decorative Block
 tile.minecraftfuture.SmoothStone.name=Smooth Stone

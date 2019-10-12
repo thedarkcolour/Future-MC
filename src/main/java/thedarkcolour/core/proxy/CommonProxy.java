@@ -11,7 +11,7 @@ public class CommonProxy {
     public void preInit(FMLPreInitializationEvent e) {}
 
     public void init(FMLInitializationEvent e) {
-        if (FutureConfig.general.loom && Init.isDebug) {
+        if (FutureConfig.general.loom && Init.DEBUG) {
             Class<?>[] params = {String.class, String.class};
             EnumHelper.addEnum(BannerPattern.class, "GLOBE", params, "globe", "glo");
         }

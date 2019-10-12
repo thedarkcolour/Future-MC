@@ -11,7 +11,10 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -21,9 +24,11 @@ import thedarkcolour.core.block.InteractionBlock;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.entity.bee.EntityBee;
 import thedarkcolour.futuremc.init.FutureConfig;
+import thedarkcolour.futuremc.init.Init;
 import thedarkcolour.futuremc.tile.TileBeeHive;
 
 import java.util.List;
+import java.util.Random;
 
 public class BlockBeeHive extends InteractionBlock {
     public static final PropertyBool IS_FULL = PropertyBool.create("full");
@@ -33,6 +38,26 @@ public class BlockBeeHive extends InteractionBlock {
         super(regName, Material.WOOD, SoundType.WOOD);
         setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(IS_FULL, false));
         setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.DECORATIONS : FutureMC.TAB);
+    }
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return state.getBlock() == Init.BEE_HIVE ? super.getItemDropped(state, rand, fortune) : Item.getItemFromBlock(Blocks.AIR);
+    }
+
+    @Override
+    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+        return true;
+    }
+
+    @Override
+    protected ItemStack getSilkTouchDrop(IBlockState state) {
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public String getHarvestTool(IBlockState state) {
+        return "axe";
     }
 
     @Override
@@ -71,20 +96,21 @@ public class BlockBeeHive extends InteractionBlock {
 
     @Override
     public boolean removedByPlayer(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-        if (!worldIn.isRemote) {
-            if (worldIn.getTileEntity(pos) instanceof TileBeeHive && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) == 0) {
-                ((TileBeeHive)worldIn.getTileEntity(pos)).angerBees(player, TileBeeHive.BeeState.DELIVERED);
+        if (!worldIn.isRemote && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) == 0) {
+            if (worldIn.getTileEntity(pos) instanceof TileBeeHive) {
+                ((TileBeeHive) worldIn.getTileEntity(pos)).angerBees(player, TileBeeHive.BeeState.DELIVERED);
                 worldIn.updateComparatorOutputLevel(pos, this);
             }
 
-            List<EntityBee> nearbyBees = worldIn.getEntitiesWithinAABB(EntityBee.class, (new AxisAlignedBB(pos)).expand(8.0D, 6.0D, 8.0D));
+            List<EntityBee> nearbyBees = worldIn.getEntitiesWithinAABB(EntityBee.class, new AxisAlignedBB(pos).expand(8.0D, 6.0D, 8.0D));
             if (!nearbyBees.isEmpty()) {
-                List<EntityPlayer> nearbyPlayers = worldIn.getEntitiesWithinAABB(EntityPlayer.class, (new AxisAlignedBB(pos)).expand(8.0D, 6.0D, 8.0D));
-                int int_1 = nearbyPlayers.size();
-
-                for (EntityBee bee : nearbyBees) {
-                    if (bee.getAttackTarget() == null) {
-                        bee.setBeeAttacker(nearbyPlayers.get(worldIn.rand.nextInt(int_1)));
+                List<EntityPlayer> nearbyPlayers = worldIn.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(pos).expand(8.0D, 6.0D, 8.0D));
+                int players = nearbyPlayers.size();
+                if (players > 0) {
+                    for (EntityBee bee : nearbyBees) {
+                        if (bee.getAttackTarget() == null) {
+                            bee.setBeeAttacker(nearbyPlayers.get(worldIn.rand.nextInt(players)));
+                        }
                     }
                 }
             }
