@@ -1,0 +1,12 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "particle": "futuremc:block/beehive_side",
+        "down": "futuremc:block/beehive_end",
+        "up": "futuremc:block/beehive_end",
+        "north": "futuremc:block/beehive_front",
+        "east": "futuremc:block/beehive_side",
+        "south": "futuremc:block/beehive_side",
+        "west": "futuremc:block/beehive_side"
+    }
+}

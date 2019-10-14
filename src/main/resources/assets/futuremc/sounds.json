@@ -1,0 +1,58 @@
+{
+    "bee_enter_hive": {
+        "subtitle": "futuremc.subtitles.bee_enter_hive",
+        "sounds": [ "futuremc:bee/enter"]
+    },
+    "bee_exit_hive": {
+        "subtitle": "futuremc.subtitles.bee_exit_hive",
+        "sounds": [ "futuremc:bee/exit"]
+    },
+    "bee_sting": {
+        "subtitle": "futuremc.subtitles.bee_sting",
+        "sounds": [ "futuremc:bee/sting"]
+    },
+    "bee_death": {
+        "subtitle": "futuremc.subtitles.bee_death",
+        "sounds": [ "futuremc:bee/death_0", "futuremc:bee/death_1"]
+    },
+    "bee_hurt": {
+        "subtitle": "futuremc.subtitles.bee_hurt",
+        "sounds": [ "futuremc:bee/hurt_0", "futuremc:bee/hurt_1", "futuremc:bee/hurt_2"]
+    },
+    "bee_pollinate": {
+        "subtitle": "futuremc.subtitles.bee_pollinate",
+        "sounds": [ "futuremc:bee/pollinate_0", "futuremc:bee/pollinate_1", "futuremc:bee/pollinate_2", "futuremc:bee/pollinate_3"]
+    },
+    "bee_work": {
+        "subtitle": "futuremc.subtitles.bee_work",
+        "sounds": [ "futuremc:bee/work_0", "futuremc:bee/work_1", "futuremc:bee/work_2", "futuremc:bee/work_3"]
+    },
+    "bee_aggressive": {
+        "subtitle": "futuremc.subtitles.bee_aggressive",
+        "sounds": [ "futuremc:bee/aggressive_0", "futuremc:bee/aggressive_1", "futuremc:bee/aggressive_2"]
+    },
+    "bee_passive": {
+        "subtitle": "futuremc.subtitles.bee_passive",
+        "sounds": [ "futuremc:bee/passive_0", "futuremc:bee/passive_1", "futuremc:bee/passive_2", "futuremc:bee/passive_3", "futuremc:bee/passive_3"]
+    },
+    "honey_bottle_drink": {
+        "subtitle": "futuremc.subtitles.honey_bottle_drink",
+        "sounds": [ "futuremc:bee/drink_honey_0", "futuremc:bee/drink_honey_1", "futuremc:bee/drink_honey_2"]
+    },
+    "beehive_shear": {
+        "subtitle": "futuremc.subtitles.beehive_shear",
+        "sounds": [ "futuremc:bee/shear"]
+    },
+    "honey_block_break": {
+        "subtitle": "futuremc.subtitles.honey_block_break",
+        "sounds": [ "futuremc:honey_block/break_0", "futuremc:honey_block/break_1", "futuremc:honey_block/break_2", "futuremc:honey_block/break_3", "futuremc:honey_block/break_4"]
+    },
+    "honey_block_step": {
+        "subtitle": "futuremc.subtitles.honey_block_step",
+        "sounds": [ "futuremc:honey_block/step_0", "futuremc:honey_block/step_1", "futuremc:honey_block/step_2", "futuremc:honey_block/step_3", "futuremc:honey_block/step_4"]
+    },
+    "honey_block_slide": {
+        "subtitle": "futuremc.subtitles.honey_block_slide",
+        "sounds": [ "futuremc:honey_block/slide_0", "futuremc:honey_block/slide_1", "futuremc:honey_block/slide_2", "futuremc:honey_block/slide_3"]
+    }
+}

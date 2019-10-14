@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "futuremc:block/honeycomb_block" }
+    }
+}

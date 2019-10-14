@@ -1,0 +1,7 @@
+Version 0.1.13: Initial 1.14 Release:
+ *Bees* - Cute flying insects from 1.15 snapshots that pollinate crops.
+ *Honeycomb* - Resource from 1.15 snapshot obtained from beehives.
+ *Bee Hive and Bee House* - Blocks from 1.15 where bees come to make honey.
+ *Honey Bottle* - New food from 1.15 snapshot collected from beehives.
+ *Honey Block* - A super sticky block from 1.15 that limits movement. You can also slide down the sides of it!
+ *Honeycomb Block* - A decorative/storage block for Honeycombs.

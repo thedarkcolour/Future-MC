@@ -1,0 +1,28 @@
+{
+    "variants": {
+        "facing=north,honey_level=0": { "model": "futuremc:block/bee_nest" },
+        "facing=south,honey_level=0": { "model": "futuremc:block/bee_nest", "y": 180 },
+        "facing=east,honey_level=0": { "model": "futuremc:block/bee_nest", "y": 90 },
+        "facing=west,honey_level=0": { "model": "futuremc:block/bee_nest", "y": 270 },
+        "facing=north,honey_level=1": { "model": "futuremc:block/bee_nest" },
+        "facing=south,honey_level=1": { "model": "futuremc:block/bee_nest", "y": 180 },
+        "facing=east,honey_level=1": { "model": "futuremc:block/bee_nest", "y": 90 },
+        "facing=west,honey_level=1": { "model": "futuremc:block/bee_nest", "y": 270 },
+        "facing=north,honey_level=2": { "model": "futuremc:block/bee_nest" },
+        "facing=south,honey_level=2": { "model": "futuremc:block/bee_nest", "y": 180 },
+        "facing=east,honey_level=2": { "model": "futuremc:block/bee_nest", "y": 90 },
+        "facing=west,honey_level=2": { "model": "futuremc:block/bee_nest", "y": 270 },
+        "facing=north,honey_level=3": { "model": "futuremc:block/bee_nest" },
+        "facing=south,honey_level=3": { "model": "futuremc:block/bee_nest", "y": 180 },
+        "facing=east,honey_level=3": { "model": "futuremc:block/bee_nest", "y": 90 },
+        "facing=west,honey_level=3": { "model": "futuremc:block/bee_nest", "y": 270 },
+        "facing=north,honey_level=4": { "model": "futuremc:block/bee_nest" },
+        "facing=south,honey_level=4": { "model": "futuremc:block/bee_nest", "y": 180 },
+        "facing=east,honey_level=4": { "model": "futuremc:block/bee_nest", "y": 90 },
+        "facing=west,honey_level=4": { "model": "futuremc:block/bee_nest", "y": 270 },
+        "facing=north,honey_level=5": { "model": "futuremc:block/bee_nest_full" },
+        "facing=south,honey_level=5": { "model": "futuremc:block/bee_nest_full", "y": 180 },
+        "facing=east,honey_level=5": { "model": "futuremc:block/bee_nest_full", "y": 90 },
+        "facing=west,honey_level=5": { "model": "futuremc:block/bee_nest_full", "y": 270 }
+    }
+}
