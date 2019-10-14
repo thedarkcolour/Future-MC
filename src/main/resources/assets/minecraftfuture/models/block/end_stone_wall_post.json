@@ -1,6 +1,0 @@
-{
-    "parent": "minecraftfuture:block/template_wall_post",
-    "textures": {
-        "wall": "blocks/end_bricks"
-    }
-}

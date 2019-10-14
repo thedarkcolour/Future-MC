@@ -1,6 +1,0 @@
-{
-    "parent": "minecraftfuture:block/slab_bottom",
-    "textures": {
-        "tex": "blocks/stonebrick_mossy"
-    }
-}

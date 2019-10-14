@@ -1,9 +1,0 @@
-{
-    "forge_marker": 1,
-    "variants": {
-        "axis=y":  { "model": "minecraftfuture:stripped_spruce_log" },
-        "axis=z":   { "model": "minecraftfuture:stripped_spruce_log", "x": 90 },
-        "axis=x":   { "model": "minecraftfuture:stripped_spruce_log", "x": 90, "y": 90 },
-        "axis=none": { "model": "minecraftfuture:stripped_spruce_log" }
-    }
-}
