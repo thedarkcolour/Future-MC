@@ -12,11 +12,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import thedarkcolour.core.block.BlockRotatable;
 import thedarkcolour.futuremc.block.BlockBamboo;
 import thedarkcolour.futuremc.block.BlockBerryBush;
 import thedarkcolour.futuremc.block.BlockCampfire;
 import thedarkcolour.futuremc.block.BlockComposter;
-import thedarkcolour.futuremc.block.BlockRotatable;
 import thedarkcolour.futuremc.entity.bee.EntityBee;
 import thedarkcolour.futuremc.init.Init;
 import thedarkcolour.futuremc.tile.TileBeeHive;
@@ -113,7 +113,6 @@ public class ItemDebugger extends ItemModeled {
             EntityBee bee = (EntityBee) target;
 
             playerIn.sendMessage(new TextComponentString("Hive: " + bee.getHivePos() + ", Flower: " + bee.getFlowerPos()));
-            playerIn.sendMessage(new TextComponentString("UUID: " + bee.getUniqueID()));
         }
 
         return false;

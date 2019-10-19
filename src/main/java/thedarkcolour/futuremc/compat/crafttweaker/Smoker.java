@@ -66,4 +66,9 @@ public final class Smoker {
             return "Removed " + input.getItem().getRegistryName() + " from smeltable items Smoker";
         }
     }
+
+    @ZenMethod
+    public static void clearRecipes() {
+        BlockFurnaceAdvanced.Recipes.clearSmoker();
+    }
 }

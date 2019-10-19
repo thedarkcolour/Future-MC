@@ -6,11 +6,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.BannerPattern;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import thedarkcolour.core.block.BlockBase;
+import thedarkcolour.core.block.BlockRotatable;
 import thedarkcolour.core.item.ItemModeled;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.block.*;
@@ -27,15 +28,10 @@ import thedarkcolour.futuremc.world.biome.BiomeBambooJungle;
 import thedarkcolour.futuremc.world.gen.feature.FeatureBambooStalk;
 import thedarkcolour.futuremc.world.gen.feature.WorldGenBamboo;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-
-// Not sure if this should be here, i'll test once it compiles
-@Mod.EventBusSubscriber
 public final class Init {
-
     // BLOCK
     public static final BlockLantern LANTERN;
+    //public static final BlockLectern LECTERN; // TODO Lectern
     public static final BlockStonecutter STONECUTTER; // TODO - Stonecutter functionality
     public static final BlockBarrel BARREL;
     public static final BlockFurnaceAdvanced SMOKER, BLAST_FURNACE;
@@ -97,12 +93,12 @@ public final class Init {
     public static final FeatureBambooStalk BAMBOO_FEATURE;
     public static final ItemBamboo BAMBOO_ITEM;
 
-    public static final boolean DEBUG;
+    public static BannerPattern globeBannerPattern;
 
     static {
         LANTERN = new BlockLantern();
         STONECUTTER = new BlockStonecutter();
-        // LECTERN = new BlockLectern(); TODO Lectern
+        // LECTERN = new BlockLectern();
         BARREL = new BlockBarrel();
         SMOKER = new BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.SMOKER);
         BLAST_FURNACE = new BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE);
@@ -164,16 +160,6 @@ public final class Init {
 
         BAMBOO_FEATURE = WorldGenBamboo.BAMBOO_FEATURE;
         BIOME_BAMBOO_JUNGLE = new BiomeBambooJungle(false);
-
-        boolean thrown = false;
-
-        try {
-            new FileReader("debug_future_mc.txt");
-        } catch (FileNotFoundException e) {
-            thrown = true;
-        }
-
-        DEBUG = !thrown;
     }
 
     public static boolean isCharmItemLoaded(String registryName) {

@@ -246,16 +246,16 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
 
     @SideOnly(Side.CLIENT)
     public float getBodyPitch(float partialTickTime) {
-        return this.lastPitch + partialTickTime * (this.currentPitch - this.lastPitch);
+        return lastPitch + partialTickTime * (currentPitch - lastPitch);
     }
 
     private void updateBodyPitch() {
-        this.lastPitch = this.currentPitch;
+        lastPitch = currentPitch;
 
         if (this.isNearTarget()) {
-            this.currentPitch = Math.min(1.0F, this.currentPitch + 0.2F);
+            currentPitch = Math.min(1.0F, currentPitch + 0.2F);
         } else {
-            this.currentPitch = Math.max(0.0F, this.currentPitch - 0.24F);
+            currentPitch = Math.max(0.0F, currentPitch - 0.24F);
         }
     }
 
@@ -474,6 +474,11 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
 
     @Override
     protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos) {}
+
+    @Override
+    protected boolean makeFlySound() {
+        return true;
+    }
 
     public void onHoneyDelivered() {
         setHasNectar(false);

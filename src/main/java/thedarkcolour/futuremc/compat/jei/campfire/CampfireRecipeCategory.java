@@ -6,15 +6,15 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.ResourceLocation;
 import thedarkcolour.futuremc.FutureMC;
+import thedarkcolour.futuremc.compat.jei.FutureMCJEIPlugin;
 
 public class CampfireRecipeCategory implements IRecipeCategory<CampfireRecipeWrapper> {
     public static final String NAME = "container.jei.minecraftfuture.campfire.name";
     private final IDrawable background;
 
     public CampfireRecipeCategory(IGuiHelper helper) {
-        background = helper.createDrawable(new ResourceLocation(FutureMC.ID, "textures/gui/recipes.png"), 0, 0, 73, 44);
+        background = helper.createDrawable(FutureMCJEIPlugin.RECIPE_BACKGROUNDS, 0, 0, 73, 44);
     }
 
     @Override

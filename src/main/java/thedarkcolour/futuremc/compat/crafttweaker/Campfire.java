@@ -71,4 +71,9 @@ public final class Campfire {
             return "Added recipe for" + input.getDefinition().getId();
         }
     }
+
+    @ZenMethod
+    public static void clearRecipes() {
+        TileCampfire.Recipes.clear();
+    }
 }

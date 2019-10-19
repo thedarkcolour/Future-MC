@@ -186,7 +186,7 @@ public class BlockCampfire extends InteractionBlock {
 
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-        this.neighborChanged(state, worldIn, pos, worldIn.getBlockState(pos).getBlock(), pos);
+        neighborChanged(state, worldIn, pos, worldIn.getBlockState(pos).getBlock(), pos);
     }
 
     @Override

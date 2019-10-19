@@ -7,12 +7,14 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.BannerPattern;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import thedarkcolour.core.item.Modeled;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.init.FutureConfig;
+import thedarkcolour.futuremc.init.Init;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -25,6 +27,21 @@ public class ItemBannerPattern extends Item implements Modeled {
         setRegistryName("banner_pattern");
         setCreativeTab(FutureConfig.general.useVanillaTabs ? CreativeTabs.MISC : FutureMC.TAB);
         addModel();
+    }
+
+    public static BannerPattern getBannerPattern(ItemStack stack) {
+        switch (stack.getItemDamage()) {
+            case 1:
+                return BannerPattern.CREEPER;
+            case 2:
+                return BannerPattern.SKULL;
+            case 3:
+                return BannerPattern.MOJANG;
+            case 4:
+                return Init.globeBannerPattern;
+            default:
+                return BannerPattern.FLOWER;
+        }
     }
 
     @Override

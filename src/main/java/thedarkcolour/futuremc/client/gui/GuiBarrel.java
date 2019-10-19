@@ -28,6 +28,7 @@ public class GuiBarrel extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+        drawDefaultBackground();
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         mc.getTextureManager().bindTexture(background);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
@@ -35,14 +36,13 @@ public class GuiBarrel extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.fontRenderer.drawString(I18n.format("container.Barrel"), 8, 6, 4210752);
-        this.fontRenderer.drawString(playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 92, 4210752);
+        fontRenderer.drawString(I18n.format("container.Barrel"), 8, 6, 4210752);
+        fontRenderer.drawString(playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 92, 4210752);
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+        renderHoveredToolTip(mouseX, mouseY);
     }
 }

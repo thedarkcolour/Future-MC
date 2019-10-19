@@ -49,8 +49,9 @@ public final class Sounds {
     public static final SoundEvent HONEY_BLOCK_BREAK = makeSoundEvent("honey_block_break");
     public static final SoundEvent HONEY_BLOCK_STEP = makeSoundEvent("honey_block_step");
     public static final SoundEvent HONEY_BLOCK_SLIDE = makeSoundEvent("honey_block_slide");
-    private static final SoundEvent CORAL_DIG = makeSoundEvent("coral_dig");
-    private static final SoundEvent CORAL_STEP = makeSoundEvent("coral_step");
+    public static final SoundEvent STONECUTTER_CARVE = makeSoundEvent("stonecutter_carve");
+    public static final SoundEvent CORAL_DIG = makeSoundEvent("coral_dig");
+    public static final SoundEvent CORAL_STEP = makeSoundEvent("coral_step");
     public static final SoundEvent BELL_RING = makeSoundEvent("bell_ring");
     public static final SoundEvent BEE_ENTER_HIVE = makeSoundEvent("bee_enter_hive");
     public static final SoundEvent BEE_EXIT_HIVE = makeSoundEvent("bee_exit_hive");
@@ -85,6 +86,7 @@ public final class Sounds {
                 BELL_RING,
                 BAMBOO_PLACE, BAMBOO_STEP,
                 BEE_ENTER_HIVE, BEE_EXIT_HIVE, BEE_STING, BEE_DEATH, BEE_HURT, BEE_POLLINATE, BEE_WORK, BEE_AGGRESSIVE, BEE_PASSIVE, HONEY_BOTTLE_DRINK, BEEHIVE_SHEAR,
-                HONEY_BLOCK_BREAK, HONEY_BLOCK_STEP, HONEY_BLOCK_SLIDE);
+                HONEY_BLOCK_BREAK, HONEY_BLOCK_STEP, HONEY_BLOCK_SLIDE,
+                STONECUTTER_CARVE);
     }
 }

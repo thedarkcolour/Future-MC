@@ -17,8 +17,8 @@ public class GuiFurnaceAdvanced extends GuiContainer {
 
     private GuiFurnaceAdvanced(ContainerFurnaceAdvanced containerFurnaceAdvanced) {
         super(containerFurnaceAdvanced);
-        this.playerInv = containerFurnaceAdvanced.playerInventory;
-        this.te = containerFurnaceAdvanced.te;
+        playerInv = containerFurnaceAdvanced.playerInventory;
+        te = containerFurnaceAdvanced.te;
     }
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

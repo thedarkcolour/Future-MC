@@ -8,7 +8,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -22,6 +21,7 @@ import thedarkcolour.futuremc.tile.TileBeeHive;
 import thedarkcolour.futuremc.tile.TileCampfire;
 import thedarkcolour.futuremc.tile.TileComposter;
 import thedarkcolour.futuremc.tile.TileFurnaceAdvanced;
+import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator;
 import thedarkcolour.futuremc.world.gen.feature.WorldGenBamboo;
 import thedarkcolour.futuremc.world.gen.feature.WorldGenFlower;
 
@@ -33,7 +33,6 @@ import static thedarkcolour.futuremc.init.FutureConfig.general;
 import static thedarkcolour.futuremc.init.FutureConfig.modFlowers;
 import static thedarkcolour.futuremc.init.Init.*;
 
-@Mod.EventBusSubscriber
 public final class InitElements {
     public static ArrayList<Modeled> MODELED = new ArrayList<>();
 
@@ -53,7 +52,7 @@ public final class InitElements {
         if (general.grindstone) r.register(GRINDSTONE);
         //if (general.lectern) r.register(LECTERN);
         if (general.composter) r.register(COMPOSTER);
-        if (DEBUG) r.register(SCAFFOLDING);
+        if (FutureMC.DEBUG) r.register(SCAFFOLDING);
         if (general.blueIce) r.register(BLUE_ICE);
         if (general.bee) r.registerAll(BEE_NEST, BEE_HIVE, HONEY_BLOCK, HONEYCOMB_BLOCK);
 
@@ -86,7 +85,7 @@ public final class InitElements {
         if (general.smithingTable) r.register(makeItemBlock(SMITHING_TABLE));
         if (general.grindstone) r.register(makeItemBlock(GRINDSTONE));
         if (general.composter) r.register(makeItemBlock(COMPOSTER));
-        if (DEBUG) r.register(makeItemBlock(SCAFFOLDING));
+        if (FutureMC.DEBUG) r.register(makeItemBlock(SCAFFOLDING));
         if (general.blueIce) r.register(makeItemBlock(BLUE_ICE));
         if (general.bee) r.registerAll(makeItemBlock(BEE_NEST), makeItemBlock(BEE_HIVE), makeItemBlock(HONEY_BLOCK), makeItemBlock(HONEYCOMB_BLOCK), HONEY_BOTTLE, HONEY_COMB);
 
@@ -97,7 +96,7 @@ public final class InitElements {
         if (modFlowers.cornflower) r.register(makeItemBlock(CORNFLOWER));
         if (modFlowers.witherRose) r.register(makeItemBlock(WITHER_ROSE));
         if (modFlowers.suspiciousStew) r.register(SUSPICIOUS_STEW);
-        if (general.loom && DEBUG) r.register(PATTERNS);
+        if (general.loom && FutureMC.DEBUG) r.register(PATTERNS);
         if (modFlowers.dyes) r.register(DYES);
         if (general.bamboo) r.register(BAMBOO_ITEM);
         if (general.berryBush) r.register(SWEET_BERRY);
@@ -109,7 +108,7 @@ public final class InitElements {
         if (general.newWallVariants) r.registerAll(makeItemBlocks(BRICK_WALL, GRANITE_WALL, ANDESITE_WALL, DIORITE_WALL, SANDSTONE_WALL, RED_SANDSTONE_WALL, STONE_BRICK_WALL, MOSSY_STONE_WALL, NETHER_BRICK_WALL, RED_NETHER_BRICK_WALL, END_STONE_WALL, PRISMARINE_WALL));
         //if (general.newSlabVariants) r.registerAll(ItemNewSlab.Slabs.SLAB_ITEMS.toArray(new ItemNewSlab[0]));
 
-        if (DEBUG) r.register(new ItemDebugger());
+        if (FutureMC.DEBUG) r.register(new ItemDebugger());
 
         registerTileEntities();
         OreDict.registerOres();
@@ -182,6 +181,10 @@ public final class InitElements {
 
         if (general.bamboo && general.bambooSpawnsInJungles) {
             GameRegistry.registerWorldGenerator(new WorldGenBamboo(), 0);
+        }
+
+        if (general.bee) {
+            BeeNestGenerator.init();
         }
     }
 

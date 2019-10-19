@@ -232,6 +232,14 @@ public class BlockFurnaceAdvanced extends BlockBase implements ITileEntityProvid
         public static void removeBlastFurnaceRecipe(ItemStack input) {
             BLAST_FURNACE_RECIPES.removeIf(recipe -> recipe.input.isItemEqual(input));
         }
+
+        public static void clearSmoker() {
+            SMOKER_RECIPES.clear();
+        }
+
+        public static void clearBlastFurnace() {
+            BLAST_FURNACE_RECIPES.clear();
+        }
     }
 
     public static class Recipe {

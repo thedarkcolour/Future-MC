@@ -210,11 +210,6 @@ public class TileBeeHive extends InteractionTile implements ITickable {
         }
     }
 
-    @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
-        return oldState.getBlock() != newState.getBlock();
-    }
-
     public int getHoneyLevel() {
         return honeyLevel;
     }
@@ -300,11 +295,6 @@ public class TileBeeHive extends InteractionTile implements ITickable {
             TileBeeHive.Bee bee = new TileBeeHive.Bee((NBTTagCompound) tag.getTag("EntityData"), tag.getInteger("TicksInHive"), tag.getInteger("MinOccupationTicks"));
             bees.add(bee);
         }
-    }
-
-    @Override
-    protected void setWorldCreate(World worldIn) {
-        super.setWorldCreate(worldIn);
     }
 
     @Override

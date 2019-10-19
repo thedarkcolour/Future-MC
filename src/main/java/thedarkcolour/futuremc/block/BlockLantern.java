@@ -47,11 +47,11 @@ public class BlockLantern extends BlockBase {
     private boolean isBlockInvalid(World world, BlockPos blockPos) {
         IBlockState state = world.getBlockState(blockPos);
         Block block = state.getBlock();
-        return block instanceof BlockBush || world.isAirBlock(blockPos) || isPiston(block);
+        return block instanceof BlockBush || world.isAirBlock(blockPos) || isPiston(state);
     }
 
-    private boolean isPiston(Block block) {
-        return block.getMaterial(null) == Material.PISTON;
+    private boolean isPiston(IBlockState state) {
+        return state.getMaterial() == Material.PISTON;
     }
 
     @Override
@@ -68,10 +68,8 @@ public class BlockLantern extends BlockBase {
         if (!canBlockStay(worldIn, pos)) {
             dropBlockAsItem(worldIn, pos, state, 0);
             worldIn.setBlockToAir(pos);
-        } else if (isBlockInvalid(worldIn, pos.down())) {
-            if (worldIn.getBlockState(pos.up()).getBlock() != this) {
-                worldIn.setBlockState(pos, state.withProperty(HANGING, true));
-            }
+        } else if (isBlockInvalid(worldIn, pos.down()) && worldIn.getBlockState(pos.up()).getBlock() != this) {
+            worldIn.setBlockState(pos, state.withProperty(HANGING, true));
         } else if (isBlockInvalid(worldIn, pos.up())) {
             worldIn.setBlockState(pos, state.withProperty(HANGING, false));
         }

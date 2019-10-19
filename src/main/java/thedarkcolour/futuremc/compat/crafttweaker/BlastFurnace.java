@@ -66,4 +66,9 @@ public final class BlastFurnace {
             return "Removed " + input.getItem().getRegistryName() + " from smeltable items BlastFurnace";
         }
     }
+
+    @ZenMethod
+    public static void clearRecipes() {
+        BlockFurnaceAdvanced.Recipes.clearBlastFurnace();
+    }
 }

@@ -34,7 +34,7 @@ public final class Bee {
 
     @ZenMethod
     public static void addFlower(IBlock block) {
-        if(!FLOWERS.containsEquivalent(block)) {
+        if (!FLOWERS.containsEquivalent(block)) {
             CraftTweakerAPI.apply((AddFlower)() -> FLOWERS.add(block));
         } else {
             FutureMC.logger.log(Level.ERROR, "Tried to add duplicate flower block to bee " + block.getDefinition().getId() + ":" + block.getMeta());
@@ -68,5 +68,10 @@ public final class Bee {
         default String describe() {
             return "Removed a valid flower for bee pollination";
         }
+    }
+
+    @ZenMethod
+    public static void clearValidFlowers() {
+        FLOWERS.clear();
     }
 }

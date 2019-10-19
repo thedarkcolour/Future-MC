@@ -1,3 +1,11 @@
+Version 0.1.13 - Patch update:
+ Barrel - Fixed placement rotation that I messed up around 0.1.11.
+ Bees, Blast Furnace, Campfire, Composter, Smoker, Stonecutter - Added removeAll functions. They aren't all called removeAll, so check the Wiki for the names.
+ Bee Nests - Added config option to allow the nests to spawn in more biomes.
+ Stonecutter - Now has functionality!
+ Stonecutter - CraftTweaker compatibility!
+ Stonecutter - JEI compatibility!
+
 Version 0.1.12 - Campfire Functionality and Honey Blocks! New things:
  *Honey Block* - A super sticky block from 1.15 that limits movement. You can also slide down the sides of it!
  *Honeycomb Block* - A decorative/storage block for Honeycombs.

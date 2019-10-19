@@ -8,7 +8,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -23,7 +22,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import thedarkcolour.core.block.BlockBase;
+import thedarkcolour.core.block.InteractionBlock;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.init.FutureConfig;
 import thedarkcolour.futuremc.init.Init;
@@ -36,7 +35,7 @@ import java.util.Optional;
 import java.util.Random;
 
 
-public class BlockComposter extends BlockBase {
+public class BlockComposter extends InteractionBlock {
     public static final PropertyInteger LEVEL = PropertyInteger.create("level", 0, 8);
     protected static final AxisAlignedBB AABB_LEGS = makeAABB(0D, 0D, 0D, 16D, 2D, 16D);
     protected static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.125D);
@@ -63,7 +62,7 @@ public class BlockComposter extends BlockBase {
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_EAST);
         addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH);
-        if(state.getValue(LEVEL) > 0) {
+        if (state.getValue(LEVEL) > 0) {
             double level = state.getValue(LEVEL) == 8D ? 6D : state.getValue(LEVEL) - 1D;
             addCollisionBoxToList(pos, entityBox, collidingBoxes, makeAABB(2D,2D,2D, 14D, 3D + (2D * level), 14D));
         }
@@ -72,16 +71,6 @@ public class BlockComposter extends BlockBase {
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(LEVEL, meta);
-    }
-
-    @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
-        if(worldIn.isRemote) return;
-        if(worldIn.getBlockState(pos).getValue(LEVEL) == 8) {
-            EntityItem item = new EntityItem(worldIn, pos.getX() + 0.5D, pos.getY() + 0.6D, pos.getZ() + 0.5D);
-            item.setItem(new ItemStack(Items.DYE, 1, 15));
-            worldIn.spawnEntity(item);
-        }
     }
 
     @Override
@@ -179,73 +168,71 @@ public class BlockComposter extends BlockBase {
         private static HashMap<ItemStack, Integer> VALID_ITEMS = new HashMap<>();
 
         static  {
-            if(FutureConfig.general.composter) init(); // Adds only if Composter is enabled. Should save a bit of RAM.
+            if (FutureConfig.general.composter) {
+                // COMMON
+                add(Items.BEETROOT_SEEDS, Rarity.COMMON);
+                add(new ItemStack(Blocks.TALLGRASS, 1, 1), Rarity.COMMON);
+                add(new ItemStack(Blocks.LEAVES, 1, 0), Rarity.COMMON);
+                add(new ItemStack(Blocks.LEAVES, 1, 1), Rarity.COMMON);
+                add(new ItemStack(Blocks.LEAVES, 1, 2), Rarity.COMMON);
+                add(new ItemStack(Blocks.LEAVES, 1, 3), Rarity.COMMON);
+                add(new ItemStack(Blocks.LEAVES2, 1, 0), Rarity.COMMON);
+                add(new ItemStack(Blocks.LEAVES2, 1, 1), Rarity.COMMON);
+                add(Items.MELON_SEEDS, Rarity.COMMON);
+                add(Items.PUMPKIN_SEEDS, Rarity.COMMON);
+                add(new ItemStack(Blocks.SAPLING, 1, 0), Rarity.COMMON);
+                add(new ItemStack(Blocks.SAPLING, 1, 1), Rarity.COMMON);
+                add(new ItemStack(Blocks.SAPLING, 1, 2), Rarity.COMMON);
+                add(new ItemStack(Blocks.SAPLING, 1, 3), Rarity.COMMON);
+                add(new ItemStack(Blocks.SAPLING, 1, 4), Rarity.COMMON);
+                add(new ItemStack(Blocks.SAPLING, 1, 5), Rarity.COMMON);
+                add(Init.SWEET_BERRY, Rarity.COMMON);
+                add(Items.WHEAT_SEEDS, Rarity.COMMON);
+
+                // UNCOMMON
+                add(Items.MELON, Rarity.UNCOMMON);
+                add(Items.REEDS, Rarity.UNCOMMON);
+                add(Blocks.CACTUS, Rarity.UNCOMMON);
+                add(Blocks.VINE, Rarity.UNCOMMON);
+                add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 2), Rarity.UNCOMMON);
+
+                // RARE
+                add(Items.APPLE, Rarity.RARE);
+                add(Items.BEETROOT, Rarity.RARE);
+                add(Items.CARROT, Rarity.RARE);
+                add(new ItemStack(Items.DYE, 1, 3), Rarity.RARE);
+                add(new ItemStack(Blocks.TALLGRASS, 1, 2), Rarity.RARE);
+                add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 3), Rarity.RARE);
+                add(Blocks.RED_FLOWER, Rarity.RARE);
+                add(Blocks.YELLOW_FLOWER, Rarity.RARE);
+                add(Init.LILY_OF_VALLEY, Rarity.RARE);
+                add(Init.CORNFLOWER, Rarity.RARE);
+                add(Init.WITHER_ROSE, Rarity.RARE);
+                add(Blocks.DOUBLE_PLANT, Rarity.RARE);
+                add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 1), Rarity.RARE);
+                add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 4), Rarity.RARE);
+                add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 5), Rarity.RARE);
+                add(Blocks.WATERLILY, Rarity.RARE);
+                add(Blocks.MELON_BLOCK, Rarity.RARE);
+                add(Blocks.BROWN_MUSHROOM, Rarity.RARE);
+                add(Blocks.RED_MUSHROOM, Rarity.RARE);
+                add(Items.POTATO, Rarity.RARE);
+                add(Blocks.PUMPKIN, Rarity.RARE);
+                add(Items.WHEAT, Rarity.RARE);
+
+                // EPIC
+                add(Items.BAKED_POTATO, Rarity.EPIC);
+                add(Items.BREAD, Rarity.EPIC);
+                add(Items.COOKIE, Rarity.EPIC);
+                add(Blocks.HAY_BLOCK, Rarity.EPIC);
+
+                // LEGENDARY
+                add(Items.CAKE, Rarity.LEGENDARY);
+                add(Items.PUMPKIN_PIE, Rarity.LEGENDARY);
+            }
         }
 
-        private static void init() {
-            // COMMON
-            add(Items.BEETROOT_SEEDS, Rarity.COMMON);
-            add(new ItemStack(Blocks.TALLGRASS, 1,1), Rarity.COMMON);
-            add(new ItemStack(Blocks.LEAVES, 1, 0), Rarity.COMMON);
-            add(new ItemStack(Blocks.LEAVES, 1, 1), Rarity.COMMON);
-            add(new ItemStack(Blocks.LEAVES, 1, 2), Rarity.COMMON);
-            add(new ItemStack(Blocks.LEAVES, 1, 3), Rarity.COMMON);
-            add(new ItemStack(Blocks.LEAVES2, 1, 0), Rarity.COMMON);
-            add(new ItemStack(Blocks.LEAVES2, 1, 1), Rarity.COMMON);
-            add(Items.MELON_SEEDS, Rarity.COMMON);
-            add(Items.PUMPKIN_SEEDS, Rarity.COMMON);
-            add(new ItemStack(Blocks.SAPLING, 1, 0), Rarity.COMMON);
-            add(new ItemStack(Blocks.SAPLING, 1, 1), Rarity.COMMON);
-            add(new ItemStack(Blocks.SAPLING, 1, 2), Rarity.COMMON);
-            add(new ItemStack(Blocks.SAPLING, 1, 3), Rarity.COMMON);
-            add(new ItemStack(Blocks.SAPLING, 1, 4), Rarity.COMMON);
-            add(new ItemStack(Blocks.SAPLING, 1, 5), Rarity.COMMON);
-            add(Init.SWEET_BERRY, Rarity.COMMON);
-            add(Items.WHEAT_SEEDS, Rarity.COMMON);
-
-            // UNCOMMON
-            add(Items.MELON, Rarity.UNCOMMON);
-            add(Items.REEDS, Rarity.UNCOMMON);
-            add(Blocks.CACTUS, Rarity.UNCOMMON);
-            add(Blocks.VINE, Rarity.UNCOMMON);
-            add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 2), Rarity.UNCOMMON);
-
-            // RARE
-            add(Items.APPLE, Rarity.RARE);
-            add(Items.BEETROOT, Rarity.RARE);
-            add(Items.CARROT, Rarity.RARE);
-            add(new ItemStack(Items.DYE, 1, 3), Rarity.RARE);
-            add(new ItemStack(Blocks.TALLGRASS, 1,2), Rarity.RARE);
-            add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 3), Rarity.RARE);
-            add(Blocks.RED_FLOWER, Rarity.RARE);
-            add(Blocks.YELLOW_FLOWER, Rarity.RARE);
-            add(Init.LILY_OF_VALLEY, Rarity.RARE);
-            add(Init.CORNFLOWER, Rarity.RARE);
-            add(Init.WITHER_ROSE, Rarity.RARE);
-            add(Blocks.DOUBLE_PLANT, Rarity.RARE);
-            add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 1), Rarity.RARE);
-            add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 4), Rarity.RARE);
-            add(new ItemStack(Blocks.DOUBLE_PLANT, 1, 5), Rarity.RARE);
-            add(Blocks.WATERLILY, Rarity.RARE);
-            add(Blocks.MELON_BLOCK, Rarity.RARE);
-            add(Blocks.BROWN_MUSHROOM, Rarity.RARE);
-            add(Blocks.RED_MUSHROOM, Rarity.RARE);
-            add(Items.POTATO, Rarity.RARE);
-            add(Blocks.PUMPKIN, Rarity.RARE);
-            add(Items.WHEAT, Rarity.RARE);
-
-            // EPIC
-            add(Items.BAKED_POTATO, Rarity.EPIC);
-            add(Items.BREAD, Rarity.EPIC);
-            add(Items.COOKIE, Rarity.EPIC);
-            add(Blocks.HAY_BLOCK, Rarity.EPIC);
-
-            // LEGENDARY
-            add(Items.CAKE, Rarity.LEGENDARY);
-            add(Items.PUMPKIN_PIE, Rarity.LEGENDARY);
-        }
-
-        private static void add(IForgeRegistryEntry.Impl<?> registryObject, Rarity rarity) {
+        private static void add(IForgeRegistryEntry<?> registryObject, Rarity rarity) {
             if(registryObject instanceof Block) {
                 add(new ItemStack((Block) registryObject), rarity);
             } else {
@@ -271,9 +258,13 @@ public class BlockComposter extends BlockBase {
             VALID_ITEMS.remove(stack);
         }
 
-        public enum Rarity {
+        public static void clear() {
+            VALID_ITEMS.clear();
+        }
+
+        enum Rarity {
             COMMON(30), UNCOMMON(50), RARE(65), EPIC(85), LEGENDARY(100);
-            final int chance;
+            private final int chance;
 
             Rarity(int chance) {
                 this.chance = chance;

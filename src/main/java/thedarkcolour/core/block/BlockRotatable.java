@@ -1,4 +1,4 @@
-package thedarkcolour.futuremc.block;
+package thedarkcolour.core.block;
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
@@ -11,7 +11,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import thedarkcolour.core.block.BlockBase;
 
 public class BlockRotatable extends BlockBase {
     protected static final PropertyDirection FACING = BlockHorizontal.FACING;

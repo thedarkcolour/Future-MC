@@ -198,5 +198,9 @@
     "honey_block_slide": {
         "subtitle": "minecraftfuture.subtitles.honey_block_slide",
         "sounds": [ "minecraftfuture:honey_block/slide_0", "minecraftfuture:honey_block/slide_1", "minecraftfuture:honey_block/slide_2", "minecraftfuture:honey_block/slide_3"]
+    },
+    "stonecutter_carve": {
+        "subtitle": "minecraftfuture.subtitles.stonecutter_carve",
+        "sounds": [ "minecraftfuture:stonecutter/carve_0", "minecraftfuture:stonecutter/carve_1"]
     }
 }

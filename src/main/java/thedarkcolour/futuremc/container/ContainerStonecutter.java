@@ -1,52 +1,47 @@
 package thedarkcolour.futuremc.container;
 
+import com.google.common.base.Objects;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import thedarkcolour.core.gui.Container;
 import thedarkcolour.futuremc.client.gui.GuiStonecutter;
 import thedarkcolour.futuremc.init.Init;
-import thedarkcolour.futuremc.item.crafting.stonecutter.RecipeResults;
-
-import javax.annotation.Nonnull;
+import thedarkcolour.futuremc.recipe.StonecutterRecipe;
+import thedarkcolour.futuremc.recipe.StonecutterRecipes;
+import thedarkcolour.futuremc.sound.Sounds;
 
 public class ContainerStonecutter extends Container {
-    protected InventoryPlayer playerInv;
-    protected World world;
-    protected BlockPos pos;
-    protected int selectedID;
-
-    public ItemStackHandler input = new ItemStackHandler() {
+    private final World world;
+    private final BlockPos pos;
+    private final InventoryPlayer playerInv;
+    private StonecutterRecipe currentRecipe;
+    private long lastOnTake = 0L;
+    private int selectedIndex;
+    private Runnable inventoryUpdateListener = () -> {};
+    public ItemStackHandler handler = new ItemStackHandler(2) {
         @Override
         protected void onContentsChanged(int slot) {
-            if (getStackInSlot(0).isEmpty()) {
-                setSelectedID(0);
+            if (slot == 0) {
+                handleCrafting();
             }
-        }
-    };
-    public ItemStackHandler output = new ItemStackHandler() {
-        @Override
-        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-            return false;
+            inventoryUpdateListener.run();
         }
     };
 
-    public CombinedInvWrapper wrapper = new CombinedInvWrapper(input, output);
-    private ItemStack oldOutput = output.getStackInSlot(0);
-
-    public ContainerStonecutter(InventoryPlayer playerInventory, World worldIn, BlockPos posIn) {
-        this.playerInv = playerInventory;
-        this.world = worldIn;
+    public ContainerStonecutter(InventoryPlayer playerInv, World world, BlockPos posIn) {
+        this.playerInv = playerInv;
+        this.world = world;
         this.pos = posIn;
 
         addOwnSlots();
@@ -54,122 +49,195 @@ public class ContainerStonecutter extends Container {
     }
 
     private void addOwnSlots() {
-        addSlotToContainer(new SlotItemHandler(input, 0, 20, 33));
-        addSlotToContainer(new SlotItemHandler(output, 0, 143, 33));
+        addSlotToContainer(new SlotItemHandler(handler, 0, 20, 33) {
+            @Override
+            public void onSlotChanged() {
+                if (getStack().isEmpty()) {
+                    handler.setStackInSlot(1, ItemStack.EMPTY);
+                }
+            }
+        });
+        addSlotToContainer(new SlotItemHandler(handler, 1, 143, 33) {
+            @Override
+            public boolean isItemValid(ItemStack stack) {
+                return false;
+            }
+
+            @Override
+            public ItemStack onTake(EntityPlayer playerIn, ItemStack stack) {
+                handler.getStackInSlot(0).shrink(1);
+                if (!handler.getStackInSlot(0).isEmpty()) {
+                    updateRecipeResultSlot();
+                } else {
+                    currentRecipe = null;
+                    selectedIndex = -1;
+                }
+
+                stack.getItem().onCreated(stack, playerIn.world, playerIn);
+                long l = world.getTotalWorldTime();
+                if (lastOnTake != l) {
+                    world.playSound(null, pos, Sounds.STONECUTTER_CARVE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    lastOnTake = l;
+                }
+                return super.onTake(playerIn, stack);
+            }
+        });
     }
 
     private void addPlayerSlots() {
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
-                int x = 9 + col * 18 - 1;
-                int y = row * 18 + 70 + 14;
-                this.addSlotToContainer(new Slot(this.playerInv, col + row * 9 + 9, x, y));
+                int x = col * 18 + 8;
+                int y = row * 18 + 84;
+                addSlotToContainer(new Slot(playerInv, col + row * 9 + 9, x, y));
             }
         }
 
         // Slots for the hotBar
         for (int row = 0; row < 9; ++row) {
             int x = 9 + row * 18 - 1;
-            int y = 58 + 70 + 14;
-            this.addSlotToContainer(new Slot(this.playerInv, row, x, y));
+            addSlotToContainer(new Slot(playerInv, row, x, 142));
         }
+    }
+
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
+
+    public StonecutterRecipe getCurrentRecipe() {
+        return currentRecipe;
+    }
+
+    public int getRecipeListSize() {
+        return currentRecipe.getTotalOutputs();
+    }
+
+    public boolean hasRecipe() {
+        return currentRecipe != null;
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        if (this.world.getBlockState(this.pos).getBlock() != Init.STONECUTTER) {
+        if (world.getBlockState(pos).getBlock() != Init.STONECUTTER) {
             return false;
-        }
-        else {
-            return playerIn.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
-        }
-    }
-
-    public void setSelectedID(int selectedID) {
-        this.selectedID = selectedID;
-        onSelectedIDChanged(selectedID);
-    }
-
-    public void onSelectedIDChanged(int selectedID) {
-        if(selectedID > 0) {
-            output.setStackInSlot(0, RecipeResults.getStackResult(input.getStackInSlot(0), selectedID - 1));
+        } else {
+            return playerIn.getDistanceSq((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
         }
     }
 
-    public void handleOutput() {
-        ItemStack newStack = output.getStackInSlot(0);
-
-        if(newStack.isEmpty()) {
-            input.getStackInSlot(0).shrink(1);
+    @Override
+    public boolean enchantItem(EntityPlayer playerIn, int id) {
+        if (id >= 0 && id < currentRecipe.getTotalOutputs()) {
+            selectedIndex = id;
+            updateRecipeResultSlot();
+            return true;
         }
 
-        if(oldOutput != newStack) { // Finishes method
-            oldOutput = newStack;
+        return false;
+    }
+
+    private void handleCrafting() {
+        if (StonecutterRecipes.getRecipe(handler.getStackInSlot(0)).isPresent()) {
+            StonecutterRecipe recipe = StonecutterRecipes.getRecipe(handler.getStackInSlot(0)).get();
+            if (!Objects.equal(currentRecipe, recipe)) {
+                currentRecipe = recipe;
+                selectedIndex = -1;
+            }
+        } else {
+            currentRecipe = null;
         }
     }
 
-    public void handleMaxCrafting() {
+    private void updateRecipeResultSlot() {
+        if (currentRecipe != null) {
+            handler.setStackInSlot(1, currentRecipe.getOutput(selectedIndex));
+        } else {
+            handler.setStackInSlot(1, ItemStack.EMPTY);
+        }
+
+        detectAndSendChanges();
+    }
+
+    public void setInventoryUpdateListener(Runnable listenerIn) {
+        inventoryUpdateListener = listenerIn;
+    }
+
+    @Override
+    public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
+        return false;
+    }
+
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = inventorySlots.get(index);
+        if (slot != null && slot.getHasStack()) {
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
+            if (index == 1) {
+                itemstack1.getItem().onCreated(itemstack1, playerIn.world, playerIn);
+                if (!mergeItemStack(itemstack1, 2, 38, true)) {
+                    return ItemStack.EMPTY;
+                }
+
+                slot.onSlotChange(itemstack1, itemstack);
+            } else if (index == 0) {
+                if (!mergeItemStack(itemstack1, 2, 38, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (StonecutterRecipes.getRecipe(itemstack1).isPresent()) {
+                if (!mergeItemStack(itemstack1, 0, 1, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (index >= 2 && index < 29) {
+                if (!mergeItemStack(itemstack1, 29, 38, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (index >= 29 && index < 38 && !mergeItemStack(itemstack1, 2, 29, false)) {
+                return ItemStack.EMPTY;
+            }
+
+            if (itemstack1.isEmpty()) {
+                slot.putStack(ItemStack.EMPTY);
+            }
+
+            slot.onSlotChanged();
+            if (itemstack1.getCount() == itemstack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+
+            slot.onTake(playerIn, itemstack1);
+            detectAndSendChanges();
+        }
+
+        return itemstack;
+    }
+
+    @Override
+    public void onContainerClosed(EntityPlayer playerIn) {
+        super.onContainerClosed(playerIn);
+        ItemStack stack = handler.getStackInSlot(0);
+        if (!playerIn.isEntityAlive() || playerIn instanceof EntityPlayerMP && ((EntityPlayerMP) playerIn).hasDisconnected()) {
+            if (!stack.isEmpty()) {
+                playerIn.entityDropItem(stack, 0.5F);
+            }
+        } else {
+            if (!stack.isEmpty()) {
+                playerInv.placeItemBackInInventory(world, stack);
+            }
+        }
     }
 
     public InventoryPlayer getPlayerInv() {
         return playerInv;
     }
 
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        if(index == 1) {
-            handleMaxCrafting();
-        }
-
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemStack1 = slot.getStack();
-            itemstack = itemStack1.copy();
-
-            if (index < 2) {
-                if (!this.mergeItemStack(itemStack1, 2, this.inventorySlots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.mergeItemStack(itemStack1, 0, 2, false)) {
-                return ItemStack.EMPTY;
-            }
-            if (itemStack1.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
-            } else {
-                slot.onSlotChanged();
-            }
-        }
-        return itemstack;
-    }
-
-    @Override
-    public void onContainerClosed(EntityPlayer playerIn) {
-        if(!playerInv.getItemStack().isEmpty()) {
-            playerIn.entityDropItem(playerInv.getItemStack(), 0.5F);
-        }
-        if(!world.isRemote) { // Mostly copied from Container#clearContainer
-            if(!playerIn.isEntityAlive() || playerIn instanceof EntityPlayerMP && ((EntityPlayerMP)playerIn).hasDisconnected()) {
-                for(int i = 0; i < input.getSlots(); i++) {
-                    ItemStack stack = input.getStackInSlot(i);
-                    if(!stack.isEmpty()) {
-                        playerIn.entityDropItem(stack, 0.5F);
-                    }
-                }
-            }
-            else {
-                for(int i = 0; i < input.getSlots(); i++) {
-                    if(!input.getStackInSlot(i).isEmpty()) {
-                        playerInv.placeItemBackInInventory(world, input.getStackInSlot(i));
-                    }
-                }
-            }
-        }
-    }
-
     @SideOnly(Side.CLIENT)
     public GuiContainer getGuiContainer() {
         return new GuiStonecutter(new ContainerStonecutter(playerInv, world, pos));
+    }
+
+    public void setCurrentRecipe(StonecutterRecipe recipe) {
+        currentRecipe = recipe;
     }
 }

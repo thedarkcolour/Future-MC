@@ -21,7 +21,6 @@ public class ModelBee extends ModelBase {
     private float bodyPitch;
 
     public ModelBee() {
-        textureWidth = 64;
         textureHeight = 64;
         body = new ModelRenderer(this);
         body.setRotationPoint(0.0F, 19.0F, 0.0F);

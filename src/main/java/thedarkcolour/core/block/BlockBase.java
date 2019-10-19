@@ -17,16 +17,16 @@ public class BlockBase extends Block {
         this(regName, material, SoundType.STONE);
     }
 
-    public BlockBase(String regName, Material material, MapColor color, SoundType soundType) {
-        super(material, color);
+    public BlockBase(String regName, Material material, SoundType soundType) {
+        super(material);
         setTranslationKey(FutureMC.ID + "." + regName);
         setRegistryName(regName);
         setSoundType(soundType);
         setHardness(3.0F);
     }
 
-    public BlockBase(String regName, Material material, SoundType soundType) {
-        super(material);
+    public BlockBase(String regName, Material material, MapColor color, SoundType soundType) {
+        super(material, color);
         setTranslationKey(FutureMC.ID + "." + regName);
         setRegistryName(regName);
         setSoundType(soundType);

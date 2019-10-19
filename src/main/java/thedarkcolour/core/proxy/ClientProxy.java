@@ -28,7 +28,7 @@ public class ClientProxy extends CommonProxy {
     }
 /*
     @Override
-    public void init(FMLInitializationEvent e) {
+    public void generate(FMLInitializationEvent e) {
         try {
             Field field = ParticleManager.class.getDeclaredField("particleTypes");
             field.setAccessible(true);

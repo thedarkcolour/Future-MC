@@ -15,6 +15,7 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import thedarkcolour.core.block.BlockRotatable;
 import thedarkcolour.futuremc.sound.Sounds;
 import thedarkcolour.futuremc.tile.TileBell;
 

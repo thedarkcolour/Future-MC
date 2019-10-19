@@ -1,6 +1,7 @@
 package thedarkcolour.core.block;
 
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,6 +25,10 @@ public abstract class InteractionBlock extends BlockBase {
         super(regName, material, soundType);
     }
 
+    public InteractionBlock(String regName, Material material, MapColor color, SoundType soundType) {
+        super(regName, material, color, soundType);
+    }
+
     @Override
     public boolean hasTileEntity(IBlockState state) {
         return true;
@@ -34,16 +39,16 @@ public abstract class InteractionBlock extends BlockBase {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if(worldIn.getTileEntity(pos) instanceof InteractionTile) {
-            return ((InteractionTile)worldIn.getTileEntity(pos)).activated(state, playerIn, hand, facing, hitX, hitY, hitZ);
+        if (worldIn.getTileEntity(pos) instanceof InteractionTile) {
+            return ((InteractionTile) worldIn.getTileEntity(pos)).activated(state, playerIn, hand, facing, hitX, hitY, hitZ);
         }
         return false;
     }
 
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
-        if(worldIn.getTileEntity(pos) instanceof InteractionTile) {
-            ((InteractionTile)worldIn.getTileEntity(pos)).broken(state, player);
+        if (worldIn.getTileEntity(pos) instanceof InteractionTile) {
+            ((InteractionTile) worldIn.getTileEntity(pos)).broken(state, player);
         }
     }
 

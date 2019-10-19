@@ -196,7 +196,9 @@ public class ContainerGrindstoneNew extends Container {
         }
 
         itemstack.setCount(count);
-        Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter((entry) -> entry.getKey().isCurse()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack).entrySet().stream()
+                .filter((entry) -> entry.getKey().isCurse())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         EnchantmentHelper.setEnchantments(map, itemstack);
         itemstack.setRepairCost(0);

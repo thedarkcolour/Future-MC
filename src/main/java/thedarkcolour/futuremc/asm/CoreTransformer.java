@@ -15,7 +15,8 @@ import java.util.Arrays;
 
 import static org.objectweb.asm.Opcodes.*;
 
-public class CoreTransformer implements IClassTransformer {
+public class
+CoreTransformer implements IClassTransformer {
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
         if (transformedName.equals("net.minecraft.world.gen.feature.WorldGenTrees")) {

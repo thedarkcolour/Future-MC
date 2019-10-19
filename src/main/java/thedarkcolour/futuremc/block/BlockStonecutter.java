@@ -19,9 +19,8 @@ import thedarkcolour.core.block.BlockBase;
 import thedarkcolour.core.gui.Gui;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.init.FutureConfig;
-import thedarkcolour.futuremc.init.Init;
 
-public class BlockStonecutter extends BlockBase {//implements ITileEntityProvider {
+public class BlockStonecutter extends BlockBase {
     protected static final PropertyDirection FACING = BlockHorizontal.FACING;
     private static final AxisAlignedBB boundingBox = new AxisAlignedBB(0D,0D,0D,1D,0.5625D,1D);
 
@@ -96,22 +95,12 @@ public class BlockStonecutter extends BlockBase {//implements ITileEntityProvide
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
     }
-/*
-    @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileStonecutter();
-    }
-*/
+
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if(Init.DEBUG) {
-            if(worldIn.isRemote) {
-                return true;
-            }
-            else {
-                Gui.STONECUTTER.open(playerIn, worldIn, pos);
-                return true;
-            }
+        if (!worldIn.isRemote) {
+            Gui.STONECUTTER.open(playerIn, worldIn, pos);
+            return true;
         } else {
             return false;
         }

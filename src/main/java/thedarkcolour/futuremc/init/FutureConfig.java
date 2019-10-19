@@ -44,6 +44,13 @@ public final class FutureConfig {
         @RequiresMcRestart
         public boolean stonecutter = true;
 
+        @Name("Stonecutter Recipe Button")
+        @Comment("When JEI is installed, a recipes button is added to the Stonecutter gui. " +
+                "Set this to false if you don't want it to appear. " +
+                "If false, there is no other place in the Stonecutter gui to find all the recipes. " +
+                "Although this option doesn't require a restart, the clickable area will remain until you restart.")
+        public boolean stonecutterRecipeButton = true;
+
         @Name("Loom")
         @Comment({"Whether the Loom block is added to the game.",
                 "This block is decorative only."})
@@ -189,9 +196,18 @@ public final class FutureConfig {
         public boolean bee = true;
 
         @Name("Bee Nest Spawn Percent")
-        @Comment("The chance a bee nest will spawn on a tree.")
+        @Comment("The base chance a bee nest will spawn on a tree.")
         @Config.RangeDouble(min = 0, max = 1)
         public double beeNestChance = 0.05;
+
+        @Name("Bee Nest Biome Whitelist")
+        @Comment("The list of biomes that the Bee Nests will spawn in." +
+                " List the registry name of the biome, followed by a colon and the chance multiplier for that biome." +
+                " Separate entries with a comma followed by a space." +
+                " Example: 'minecraft:taiga:2' allows bee nests to spawn in the Taiga biome and the nests spawn twice as often than in the plains biome." +
+                " You will want to lower the chance multiplier in biomes where there are lots of trees.")
+        @RequiresMcRestart
+        public String validBiomesForBeeNest = "minecraft:plains:1, minecraft:sunflower_plains:1, minecraft:mutated_forest:0.2";
     }
 
     public static class Flowers {

@@ -2,17 +2,17 @@ package thedarkcolour.futuremc.tile;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import thedarkcolour.core.tile.InteractionTile;
 import thedarkcolour.futuremc.block.BlockComposter;
 import thedarkcolour.futuremc.init.Init;
 import thedarkcolour.futuremc.sound.Sounds;
@@ -20,7 +20,7 @@ import thedarkcolour.futuremc.sound.Sounds;
 import javax.annotation.Nonnull;
 
 // TODO Replace with InteractionTile
-public class TileComposter extends TileEntity {
+public class TileComposter extends InteractionTile {
     private final ItemStackHandler buffer = new ItemStackHandler() {
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
@@ -86,8 +86,17 @@ public class TileComposter extends TileEntity {
     }
 
     @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
-        return oldState.getBlock() != newState.getBlock();
+    public boolean activated(IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        return super.activated(state, playerIn, hand, facing, hitX, hitY, hitZ);
+    }
+
+    @Override
+    public void broken(IBlockState state, EntityPlayer playerIn) {
+        if (!world.isRemote && world.getBlockState(pos).getValue(BlockComposter.LEVEL) == 8) {
+            EntityItem item = new EntityItem(world, pos.getX() + 0.5D, pos.getY() + 0.6D, pos.getZ() + 0.5D);
+            item.setItem(new ItemStack(Items.DYE, 1, 15));
+            world.spawnEntity(item);
+        }
     }
 
     public static boolean isBoneMeal(ItemStack stack) {

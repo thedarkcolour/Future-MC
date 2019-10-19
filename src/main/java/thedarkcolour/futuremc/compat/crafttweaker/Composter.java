@@ -107,4 +107,9 @@ public final class Composter {
             return "Changed Composter value for item " + stack.getItem().getRegistryName() + " from " + oldRarity + " to " + newRarity;
         }
     }
+
+    @ZenMethod
+    public static void clearValidItems(){
+        BlockComposter.ItemsForComposter.clear();
+    }
 }

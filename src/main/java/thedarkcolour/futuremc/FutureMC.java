@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
 import thedarkcolour.core.command.CommandHeal;
+import thedarkcolour.core.command.CommandModeToggle;
 import thedarkcolour.core.gui.Gui;
 import thedarkcolour.core.proxy.CommonProxy;
 import thedarkcolour.core.util.RegistryHelper;
@@ -21,12 +22,16 @@ import thedarkcolour.futuremc.init.FutureConfig;
 import thedarkcolour.futuremc.init.Init;
 import thedarkcolour.futuremc.init.InitElements;
 import thedarkcolour.futuremc.item.ItemGroup;
+import thedarkcolour.futuremc.recipe.StonecutterRecipes;
 import thedarkcolour.futuremc.tile.TileCampfire;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 @Mod(
         modid = FutureMC.ID,
         name = "Future MC",
-        version = "0.1.12",
+        version = "0.1.13",
         dependencies = "required-after:forge@[14.23.5.2776,)", useMetadata = true
 )
 public class FutureMC {
@@ -42,6 +47,7 @@ public class FutureMC {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
         MinecraftForge.EVENT_BUS.register(FutureConfig.class);
+        MinecraftForge.EVENT_BUS.register(InitElements.class);
         Entities.init();
         proxy.preInit(e);
         logger = e.getModLog();
@@ -54,6 +60,7 @@ public class FutureMC {
         GameRegistry.addSmelting(new ItemStack(Blocks.QUARTZ_BLOCK), new ItemStack(Init.SMOOTH_QUARTZ), 0.1F);
         BlockFurnaceAdvanced.Recipes.init();
         TileCampfire.Recipes.init();
+        StonecutterRecipes.addDefaults();
         if (FutureConfig.general.trident) {
             RegistryHelper.registerDispenserBehaviour(Init.TRIDENT, EntityTrident::new);
         }
@@ -63,11 +70,33 @@ public class FutureMC {
     }
 
     @Mod.EventHandler
-    public static void onServerStart(final FMLServerStartingEvent event) {
-        if (Init.DEBUG) {
+    public void onServerStart(final FMLServerStartingEvent event) {
+        if (DEBUG) {
             event.registerServerCommand(new CommandHeal());
+            event.registerServerCommand(new CommandModeToggle());
         }
     }
 
+    public static final boolean DEBUG;
+    public static final boolean CLIENT;
     public static ItemGroup TAB;
+
+    static {
+        boolean temp = false;
+
+        try {
+            new FileReader("debug_future_mc.txt");
+        } catch (FileNotFoundException e) {
+            temp = true;
+        }
+        DEBUG = !temp;
+
+        try {
+            Class.forName("net.minecraft.client.Minecraft");
+            temp = true;
+        } catch (ClassNotFoundException ignored) {
+            temp = false;
+        }
+        CLIENT = temp;
+    }
 }

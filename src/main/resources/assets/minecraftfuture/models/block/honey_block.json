@@ -1,4 +1,5 @@
-{   "parent": "block/block",
+{
+    "parent": "block/block",
     "textures": {
         "particle": "minecraftfuture:blocks/honey_block_top",
         "down": "minecraftfuture:blocks/honey_block_bottom",

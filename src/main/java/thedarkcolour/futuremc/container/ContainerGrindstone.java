@@ -70,8 +70,8 @@ public class ContainerGrindstone extends Container {
     private void addPlayerSlots() {
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
-                int x = 9 + col * 18 - 1;
-                int y = row * 18 + 70 + 14;
+                int x = col * 18 + 8;
+                int y = row * 18 + 84;
                 this.addSlotToContainer(new Slot(this.playerInv, col + row * 9 + 9, x, y));
             }
         }
@@ -85,26 +85,25 @@ public class ContainerGrindstone extends Container {
     }
 
     public void clearInput() {
-        for(int i = 0; i < input.getSlots(); i++) {
-            input.setStackInSlot(i, ItemStack.EMPTY);
+        for (int i = 0; i < input.getSlots(); i++) {
+            input.getStackInSlot(i).shrink(1);
         }
     }
 
     @Override
     public void onContainerClosed(EntityPlayer playerIn) {
         super.onContainerClosed(playerIn);
-        if(!world.isRemote) { // Mostly copied from Container#clearContainer
-            if(!playerIn.isEntityAlive() || playerIn instanceof EntityPlayerMP && ((EntityPlayerMP)playerIn).hasDisconnected()) {
-                for(int i = 0; i < input.getSlots(); i++) {
+        if (!world.isRemote) { // Mostly copied from Container#clearContainer
+            if (!playerIn.isEntityAlive() || playerIn instanceof EntityPlayerMP && ((EntityPlayerMP)playerIn).hasDisconnected()) {
+                for (int i = 0; i < input.getSlots(); i++) {
                     ItemStack stack = input.getStackInSlot(i);
-                    if(!stack.isEmpty()) {
+                    if (!stack.isEmpty()) {
                         playerIn.entityDropItem(stack, 0.5F);
                     }
                 }
-            }
-            else {
-                for(int i = 0; i < input.getSlots(); i++) {
-                    if(!input.getStackInSlot(i).isEmpty()) {
+            } else {
+                for (int i = 0; i < input.getSlots(); i++) {
+                    if (!input.getStackInSlot(i).isEmpty()) {
                         playerInv.placeItemBackInInventory(world, input.getStackInSlot(i));
                     }
                 }
@@ -114,18 +113,17 @@ public class ContainerGrindstone extends Container {
 
     public void handleCrafting() {
         // Handles two incompatible items
-        if(!input.getStackInSlot(0).isItemEqualIgnoreDurability(input.getStackInSlot(1)) && !(input.getStackInSlot(0).isEmpty() || input.getStackInSlot(1).isEmpty())) {
+        if (!input.getStackInSlot(0).isItemEqualIgnoreDurability(input.getStackInSlot(1)) && !(input.getStackInSlot(0).isEmpty() || input.getStackInSlot(1).isEmpty())) {
             output.setStackInSlot(0, ItemStack.EMPTY);
-            //if(Init.isDebug) System.out.println("Incompatible");
         }
 
         // Handles two compatible items
-        else if(input.getStackInSlot(0).isItemEqualIgnoreDurability(input.getStackInSlot(1)) && input.getStackInSlot(0).isItemEnchantable()) {
+        else if (input.getStackInSlot(0).isItemEqualIgnoreDurability(input.getStackInSlot(1)) && input.getStackInSlot(0).isItemEnchantable()) {
             ItemStack stack = input.getStackInSlot(0);
             int sum = (stack.getMaxDamage() - stack.getItemDamage()) + (stack.getMaxDamage() - input.getStackInSlot(1).getItemDamage());
 
             sum += Math.floor(sum * 0.2);
-            if(sum > stack.getMaxDamage()) {
+            if (sum > stack.getMaxDamage()) {
                 sum = stack.getMaxDamage();
             }
 
@@ -134,15 +132,15 @@ public class ContainerGrindstone extends Container {
             outItem.setTagInfo("Enchantments", new NBTTagList());
 
             Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
-            for(Enchantment e : map.keySet()) {
-                if(e.isCurse()) {
+            for (Enchantment e : map.keySet()) {
+                if (e.isCurse()) {
                     outItem.addEnchantment(e, 1);
                 }
             }
             map = EnchantmentHelper.getEnchantments(input.getStackInSlot(1));
-            for(Enchantment e : map.keySet()) {
+            for (Enchantment e : map.keySet()) {
                 try {
-                    if(e.isCurse()) {
+                    if (e.isCurse()) {
                         outItem.addEnchantment(e, 1);
                     }
                 } catch (NullPointerException ignored) {
@@ -151,57 +149,55 @@ public class ContainerGrindstone extends Container {
             }
 
             output.setStackInSlot(0, outItem);
-            //if(Init.isDebug) System.out.println("Both are enchantable");
         }
 
         // Disenchants an item
-        else if((input.getStackInSlot(0).isItemEnchanted()) || (input.getStackInSlot(1).isItemEnchanted())) {
+        else if ((input.getStackInSlot(0).isItemEnchanted()) || (input.getStackInSlot(1).isItemEnchanted())) {
             int slot = input.getStackInSlot(0).isEmpty() ? 1 : 0;
             ItemStack stack = input.getStackInSlot(slot);
 
             ItemStack outItem = stack.copy();
             outItem.setTagInfo("ench", new NBTTagList());
-            if(stack.isItemEqual(input.getStackInSlot(input.getStackInSlot(0).isEmpty() ? 0 : 1))) {
+            if (stack.isItemEqual(input.getStackInSlot(input.getStackInSlot(0).isEmpty() ? 0 : 1))) {
                 int sum = (stack.getMaxDamage() - stack.getItemDamage()) + (stack.getMaxDamage() - input.getStackInSlot(1).getItemDamage());
 
                 sum += Math.floor(sum * 0.2);
-                if(sum > stack.getMaxDamage()) {
+                if (sum > stack.getMaxDamage()) {
                     sum = stack.getMaxDamage();
                 }
                 outItem.setItemDamage(stack.getMaxDamage() - sum);
             }
 
             Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
-            for(Enchantment e : map.keySet()) {
-                if(e.isCurse()) {
+            for (Enchantment e : map.keySet()) {
+                if (e.isCurse()) {
                     outItem.addEnchantment(e, 1);
                 }
             }
 
             output.setStackInSlot(0, outItem);
-            //if(Init.isDebug) System.out.println("At least one is enchantable");
         }
 
         // Converts enchanted books to EXP
-        else if((input.getStackInSlot(0).getItem() == Items.ENCHANTED_BOOK) || (input.getStackInSlot(1).getItem() == Items.ENCHANTED_BOOK)) {
+        else if (((input.getStackInSlot(0).getItem() == Items.ENCHANTED_BOOK) || (input.getStackInSlot(1).getItem() == Items.ENCHANTED_BOOK)) && !input.getStackInSlot(0).isItemEqual(input.getStackInSlot(1))) {
             int slot = input.getStackInSlot(0).isEmpty() ? 1 : 0;
             ItemStack book = input.getStackInSlot(slot);
             boolean isCursed = EnchantHelper.isCursed(input.getStackInSlot(0)) || EnchantHelper.isCursed(input.getStackInSlot(1));
 
             ItemStack outBook;
-            if(isCursed) {
+            if (isCursed) {
                 outBook = book.copy();
                 outBook.setTagInfo("StoredEnchantments", new NBTTagList());
                 Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(book);
 
-                for(Enchantment e : enchantments.keySet()) {
-                    if(e.isCurse()) {
+                for (Enchantment e : enchantments.keySet()) {
+                    if (e.isCurse()) {
                         ItemEnchantedBook.addEnchantment(outBook, new EnchantmentData(e, 1));
                     }
                 }
                 enchantments = EnchantmentHelper.getEnchantments(input.getStackInSlot(slot == 1 ? 0 : 1));
-                for(Enchantment e : enchantments.keySet()) {
-                    if(e.isCurse()) {
+                for (Enchantment e : enchantments.keySet()) {
+                    if (e.isCurse()) {
                         ItemEnchantedBook.addEnchantment(outBook, new EnchantmentData(e, 1));
                     }
                 }
@@ -209,56 +205,43 @@ public class ContainerGrindstone extends Container {
                 outBook = new ItemStack(Items.BOOK);
             }
             output.setStackInSlot(0, outBook);
-            //if(Init.isDebug) System.out.println("Books");
         }
 
         // Resets grid
         else {
             output.setStackInSlot(0, ItemStack.EMPTY);
-            //if(Init.isDebug) System.out.println("Empty");
         }
 
-        this.detectAndSendChanges();
+        detectAndSendChanges();
     }
 
     public void handleOutput() {
         awardEXP(input.getStackInSlot(0), input.getStackInSlot(1));
-        world.playSound(this.pos.getX(), this.pos.getY(), this.pos.getZ(), Sounds.GRINDSTONE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+        world.playSound(pos.getX(), pos.getY(), pos.getZ(), Sounds.GRINDSTONE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
         clearInput(); // Clear it last, otherwise XP doesn't work
     }
 
     public void awardEXP(ItemStack... input) {
         int exp = 0;
-        for(ItemStack stack : input) {
-            if(stack.isEmpty()) continue;
+        for (ItemStack stack : input) {
+            if (stack.isEmpty()) continue;
 
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 
-            for(Enchantment enchantment : enchantments.keySet()) {
-                if(!enchantment.isCurse()) {
+            for (Enchantment enchantment : enchantments.keySet()) {
+                if (!enchantment.isCurse()) {
                     exp += getEnchantmentEXP(enchantment, enchantments.get(enchantment));
                 }
             }
         }
-        if(exp > 0) {
+        if (exp > 0) {
             EntityXPOrb orb = new EntityXPOrb(world, pos.getX(), pos.getY(), pos.getZ(), 0);
             orb.delayBeforeCanPickup = 5;
             orb.xpValue = exp;
-            if(!world.isRemote) world.spawnEntity(orb);
+            if (!world.isRemote) {
+                world.spawnEntity(orb);
+            }
         }
-    }
-
-    public static int combineDurability(ItemStack a, ItemStack b) {
-        if(a.isItemEqualIgnoreDurability(b)) return -1;
-
-        int sum = (a.getMaxDamage() - a.getItemDamage()) + (a.getMaxDamage() - b.getItemDamage());
-
-        sum += Math.floor(sum * 0.2);
-        //if(sum > a.getMaxDamage()) {
-        //    sum = a.getMaxDamage();
-        //}
-        sum = Math.min(sum, a.getMaxDamage());
-        return sum;
     }
 
     public static int getEnchantmentEXP(Enchantment enchantment, int enchantLevel) {
@@ -298,15 +281,14 @@ public class ContainerGrindstone extends Container {
     }
 
     public boolean isRecipeInvalid() {
-        return (!input.getStackInSlot(0).isEmpty() || !input.getStackInSlot(1).isEmpty()) && output.getStackInSlot(0).isEmpty();
+        return !(input.getStackInSlot(0).isEmpty() && input.getStackInSlot(1).isEmpty()) && output.getStackInSlot(0).isEmpty();
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        if (this.world.getBlockState(this.pos).getBlock() != Init.GRINDSTONE) {
+        if (world.getBlockState(this.pos).getBlock() != Init.GRINDSTONE) {
             return false;
-        }
-        else {
+        } else {
             return playerIn.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
         }
     }

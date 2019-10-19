@@ -9,10 +9,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import thedarkcolour.core.block.BlockRotatable;
 import thedarkcolour.core.gui.Gui;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.init.FutureConfig;
-import thedarkcolour.futuremc.init.Init;
 
 public class BlockLoom extends BlockRotatable {
     public BlockLoom() {
@@ -22,10 +22,8 @@ public class BlockLoom extends BlockRotatable {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (Init.DEBUG) {
-            if(!worldIn.isRemote) {
-                Gui.LOOM.open(playerIn, worldIn, pos);
-            }
+        if (FutureMC.DEBUG && !worldIn.isRemote) {
+            Gui.LOOM.open(playerIn, worldIn, pos);
             return true;
         }
         return false;
