@@ -20,7 +20,10 @@ tile.minecraftfuture.stripped_birch_log.name=Tronco de abedul sin corteza
 tile.minecraftfuture.stripped_jungle_log.name=Tronco de jungla sin corteza
 tile.minecraftfuture.stripped_acacia_log.name=Tronco de acacia sin corteza
 tile.minecraftfuture.stripped_dark_oak_log.name=Tronco de roble oscuro sin corteza
-death.attack.berryBush=%1$s fue cagado a muerte por arbusto de bayas dulces
+death.attack.berryBush=%1$s se pinchó con un arbusto de bayas dulces hasta morir
+death.attack.sting=%1$s fue picado hasta la muerte
+death.attack.trident=%1$s ha sido empalado por %2$s
+death.attack.trident.item=%1$s ha sido empalado por %2$s con %3$s
 
 # Paredes
 tile.minecraftfuture.brick_wall.name=Pared de ladrillos
@@ -36,7 +39,7 @@ tile.minecraftfuture.sandstone_wall.name=Pared de arenisca
 tile.minecraftfuture.red_sandstone_wall.name=Pared de arenisca roja
 tile.minecraftfuture.nether_brick_red_wall.name=Pared de ladrillos del Nether rojos
 
-# Losas
+# Slab
 tile.minecraftfuture.granite_slab.name=Losa de granito
 tile.minecraftfuture.andesite_slab.name=Losa de andesita
 tile.minecraftfuture.diorite_slab.name=Losa de diorita
@@ -55,26 +58,40 @@ tile.minecraftfuture.smooth_quartz_slab.name=Losa de cuarzo liso
 tile.minecraftfuture.red_nether_brick_slab.name=Losa de ladrillos del Nether rojos
 tile.minecraftfuture.end_stone_brick_slab.name=Losa de ladrillos de piedra del End
 tile.minecraftfuture.Bamboo.name=Bambú
+tile.minecraftfuture.bee_nest.name=Nido de Abejas
+tile.minecraftfuture.bee_hive.name=Colmena de Abejas
+tile.minecraftfuture.honey_block.name=Bloque de Miel
+tile.minecraftfuture.honeycomb_block.name=Bloque de Cera de abeja
 
-# Bloques decorativos
+# Decorative Block
 tile.minecraftfuture.SmoothStone.name=Piedra lisa
 tile.minecraftfuture.SmoothQuartz.name=Cuarzo liso
 tile.minecraftfuture.FletchingTable.name=Mesa de flechas
 tile.minecraftfuture.SmithingTable.name=Mesa de herrería
+tile.minecraftfuture.BlueIce.name=Hielo Azul
 entity.ItemFrame.name=Marco
 
+# Crafting Materials
 item.minecraftfuture.dye.0.name=Tinte blanco
 item.minecraftfuture.dye.1.name=Tinte azul
 item.minecraftfuture.dye.2.name=Tinte café
 item.minecraftfuture.dye.3.name=Tinte negro
 
-# Ítems
+# Item
 item.minecraftfuture.Trident.name=Tridente
 item.minecraftfuture.Crossbow.name=Ballesta
 item.minecraftfuture.Crossbow_Loaded.name=Ballesta con flecha
 item.minecraftfuture.SuspiciousStew.name=Sopa sospechosa
-item.minecraftfuture.SweetBerry.name=Bayas dulces
+item.minecraftfuture.SweetBerry.name=Bayas Dulces
 item.minecraftfuture.Bamboo.name=Bambú
+item.minecraftfuture.banner_pattern.name=Patrón del banner
+item.minecraftfuture.banner_pattern.flower=Escusón de flor
+item.minecraftfuture.banner_pattern.creeper=Escusón de creeper
+item.minecraftfuture.banner_pattern.skull=Escusón de cráneo
+item.minecraftfuture.banner_pattern.thing=Escusón de Mojang
+item.minecraftfuture.banner_pattern.globe=Escusón de planeta
+item.minecraftfuture.honey_bottle.name=Frasco con Miel
+item.minecraftfuture.honeycomb.name=Cera de abeja
 
 # GUI
 container.Barrel=Barril
@@ -84,15 +101,24 @@ container.Grindstone=Reparar y desencantar
 container.Stonecutter=Cortapiedras
 container.Loom=Telar
 
-# Entidad
+# Entity
 entity.trident.name=Tridente
 entity.panda.name=Panda
+entity.bee.name=Abeja
 
-# Encantamientos
+# Enchantment
 enchantment.loyalty=Lealtad
 enchantment.channeling=Conductividad
 enchantment.riptide=Propulsión acutica
 enchantment.impaling=Empalamiento
 enchantment.quick_charge=Carga rápida
 
+# Creative Tab
 itemGroup.Future=Future MC
+
+# JEI
+container.jei.minecraftfuture.campfire.name=Hoguera
+container.jei.minecraftfuture.blast_furnace.name=Alto horno
+container.jei.minecraftfuture.smoker.name=Ahumador
+container.jei.minecraftfuture.stonecutter.name=Cortapiedras
+container.jei.minecraftfuture.campfire.duration=Duración
