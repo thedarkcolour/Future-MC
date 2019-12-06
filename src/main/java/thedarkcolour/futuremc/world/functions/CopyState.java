@@ -19,17 +19,14 @@ import net.minecraft.world.storage.loot.LootFunction;
 import net.minecraft.world.storage.loot.LootParameter;
 import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.conditions.ILootCondition;
-import net.minecraft.world.storage.loot.functions.ILootFunction;
 
 import java.util.Set;
 
 public class CopyState extends LootFunction {
-    private final Block block;
     private final Set<IProperty<?>> properties;
 
-    public CopyState(ILootCondition[] conditionsIn, Block block, Set<IProperty<?>> properties) {
+    public CopyState(ILootCondition[] conditionsIn, Set<IProperty<?>> properties) {
         super(conditionsIn);
-        this.block = block;
         this.properties = properties;
     }
 
@@ -79,27 +76,7 @@ public class CopyState extends LootFunction {
                 array.forEach((jsonElement_1) -> set.add(container.getProperty(JSONUtils.getString(jsonElement_1, "property"))));
             }
 
-            return new CopyState(conditionsIn, block, set);
-        }
-    }
-
-    public static class Builder extends LootFunction.Builder<CopyState.Builder> {
-        private final Block block;
-        private final Set<IProperty<?>> properties;
-
-        public Builder(Block block) {
-            this.block = block;
-            this.properties = Sets.newHashSet();
-        }
-
-        @Override
-        public ILootFunction build() {
-            return new CopyState(getConditions(), block, properties);
-        }
-
-        @Override
-        protected Builder doCast() {
-            return this;
+            return new CopyState(conditionsIn, set);
         }
     }
 }

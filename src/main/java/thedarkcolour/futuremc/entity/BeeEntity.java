@@ -82,7 +82,8 @@ public class BeeEntity extends AnimalEntity implements IFlyingAnimal {
     }
 
     public static boolean canGrowBlock(Block block) {
-        return block == Blocks.WHEAT || block == Blocks.CARROTS || block == Blocks.POTATOES || block == Blocks.BEETROOTS || block == Blocks.MELON_STEM || block == Blocks.PUMPKIN_STEM || block == Blocks.SWEET_BERRY_BUSH;
+        return block == Blocks.WHEAT || block == Blocks.CARROTS || block == Blocks.POTATOES || block == Blocks.BEETROOTS
+                || block == Blocks.MELON_STEM || block == Blocks.PUMPKIN_STEM || block == Blocks.SWEET_BERRY_BUSH;
     }
 
     @Override
@@ -428,7 +429,7 @@ public class BeeEntity extends AnimalEntity implements IFlyingAnimal {
 
     @Override
     public AgeableEntity createChild(AgeableEntity ageable) {
-        return EntityTypes.BEE.create(world);
+        return (AgeableEntity) EntityTypes.BEE.create(world);
     }
 
     @Override
@@ -642,7 +643,7 @@ public class BeeEntity extends AnimalEntity implements IFlyingAnimal {
 
         @Override
         public void startExecuting() {
-            Optional<BlockPos> optionalPos = bee.getBlockInRange(pos -> bee.world.getTileEntity(pos) instanceof BeeHiveTileEntity && ((BeeHiveTileEntity) bee.world.getTileEntity(pos)).canEnter(), 5);
+            Optional<BlockPos> optionalPos = bee.getBlockInRange(pos -> bee.world.getTileEntity(pos) instanceof BeeHiveTileEntity && ((BeeHiveTileEntity) bee.world.getTileEntity(pos)).canEnter(), 10);
             if (optionalPos.isPresent()) {
                 BlockPos pos = optionalPos.get();
                 TileEntity tile = bee.world.getTileEntity(pos);

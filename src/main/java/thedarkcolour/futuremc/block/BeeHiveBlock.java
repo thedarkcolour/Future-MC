@@ -9,7 +9,10 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -19,14 +22,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import thedarkcolour.futuremc.entity.BeeEntity;
 import thedarkcolour.futuremc.tile.BeeHiveTileEntity;
-import thedarkcolour.futuremc.tile.Tile;
+import thedarkcolour.futuremc.tile.TileEntityTypes;
 
 import java.util.List;
 
-import static thedarkcolour.futuremc.block.Props.FACING;
-import static thedarkcolour.futuremc.block.Props.HONEY_LEVEL;
-
 public class BeeHiveBlock extends InteractionBlock {
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final IntegerProperty HONEY_LEVEL = IntegerProperty.create("honey_level", 0, 5);
+
     public BeeHiveBlock(boolean isNest) {
         super(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(isNest ? 0.3F : 0.6F));
         setRegistryName(isNest ? "bee_nest" : "beehive");
@@ -40,7 +43,7 @@ public class BeeHiveBlock extends InteractionBlock {
 
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return Tile.BEEHIVE.create();
+        return TileEntityTypes.BEEHIVE.create();
     }
 
     @Override

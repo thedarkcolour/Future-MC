@@ -11,6 +11,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import thedarkcolour.futuremc.tile.InteractionTileEntity;
 
+import javax.annotation.Nonnull;
+
 public abstract class InteractionBlock extends Block {
     public InteractionBlock(Properties properties) {
         super(properties);
@@ -22,6 +24,7 @@ public abstract class InteractionBlock extends Block {
     }
 
     @Override
+    @Nonnull
     public abstract TileEntity createTileEntity(BlockState state, IBlockReader world);
 
     @Override

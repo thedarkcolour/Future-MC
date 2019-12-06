@@ -17,7 +17,6 @@ import net.minecraft.world.World;
 public class TargetBlock extends Block {
     public TargetBlock() {
         super(Properties.create(Material.WOOL, DyeColor.WHITE).hardnessAndResistance(0.8F).sound(SoundType.CLOTH));
-        setRegistryName("target");
     }
 
     @Override

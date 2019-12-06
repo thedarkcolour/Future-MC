@@ -2,7 +2,6 @@ package thedarkcolour.futuremc.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -11,49 +10,19 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import thedarkcolour.futuremc.sound.Sounds;
 
 public class HoneyBlockBlock extends Block {
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(1, 0, 1, 15, 15, 15);
-    private static SoundType HONEY_BLOCK = new SoundType(1.0F, 1.0F, null, null, null, null, null) {
-        @Override
-        public SoundEvent getBreakSound() {
-            return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("honey_block_break"));
-        }
-
-        @Override
-        public SoundEvent getStepSound() {
-            return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("honey_block_step"));
-        }
-
-        @Override
-        public SoundEvent getPlaceSound() {
-            return getBreakSound();
-        }
-
-        @Override
-        public SoundEvent getHitSound() {
-            return getBreakSound();
-        }
-
-        @Override
-        public SoundEvent getFallSound() {
-            return getStepSound();
-        }
-    };
-
+    private static final VoxelShape SHAPE = makeCuboidShape(1.0, 0.0, 1.0, 15.0, 15.0, 15.0);
     public HoneyBlockBlock() {
-        super(Block.Properties.create(Material.CLAY, DyeColor.ORANGE).sound(HONEY_BLOCK));
+        super(Properties.create(Material.CLAY, DyeColor.ORANGE).sound(Sounds.HONEY_BLOCK));
         setRegistryName("honey_block");
     }
 
@@ -63,51 +32,52 @@ public class HoneyBlockBlock extends Block {
     }
 
     @Override
-    public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
-        fallParticles(worldIn, pos, entityIn);
-        entityIn.fall(fallDistance, 1.0F);
+    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
+        if (canSlide(pos, entity)) {
+            if (entity.getMotion().y < -0.05) {
+                entity.setMotion(entity.getMotion().x, -0.05, entity.getMotion().z);
+            }
+
+            entity.fallDistance = 0F;
+            spawnSlideParticles(worldIn, pos, entity);
+
+            if (worldIn.getGameTime() % 10L == 0L) {
+                entity.playSound(Sounds.HONEY_BLOCK_SLIDE, 1F, 1F);
+            }
+        }
+
+        super.onEntityCollision(state, worldIn, pos, entity);
+    }
+
+    private boolean canSlide(BlockPos pos, Entity entity) {
+        if (entity.onGround) {
+            return false;
+        } else if (entity.posY > pos.getY() + 0.9375 - 1.0E-7) {
+            return false;
+        } else if (entity.getMotion().y >= 0) {
+            return false;
+        } else {
+            double x = Math.abs(pos.getX() + 0.5 - entity.posX);
+            double z = Math.abs(pos.getX() + 0.5 - entity.posZ);
+            double d = 0.4375 + entity.getSize(Pose.STANDING).width / 2F;
+            return x + 1.0E-7 > d || z + 1.0E-7 > d;
+        }
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (slide(pos, entityIn)) {
-            if (entityIn.getMotion().y < -0.05D) {
-                entityIn.setMotion(entityIn.getMotion().x, -0.05D, entityIn.getMotion().x);
-            }
-
-            entityIn.fallDistance = 0.0F;
-            slideParticles(worldIn, pos, entityIn);
-            if (worldIn.getGameTime() % 10L == 0L) {
-                entityIn.playSound(Sounds.HONEY_BLOCK_SLIDE, 1.0F, 1.0F);
-            }
-        }
-
-        super.onEntityCollision(state, worldIn, pos, entityIn);
+    public void onFallenUpon(World worldIn, BlockPos pos, Entity entity, float fallDistance) {
+        spawnFallParticles(worldIn, pos, entity);
+        entity.fall(fallDistance, 1F);
     }
 
-    private boolean slide(BlockPos pos, Entity entity) {
-        if (entity.onGround) {
-            return false;
-        } else if (entity.posY > pos.getY() + 0.9375D - 1.0E-7D) {
-            return false;
-        } else if (entity.getMotion().y >= 0.0D) {
-            return false;
-        } else {
-            double x = Math.abs(pos.getX() + 0.5D - entity.posX);
-            double y = Math.abs(pos.getZ() + 0.5D - entity.posZ);
-            double double_3 = 0.4375D + entity.getSize(Pose.STANDING).width / 2.0F;
-            return x + 1.0E-7D > double_3 || y + 1.0E-7D > double_3;
-        }
+    private void spawnSlideParticles(World worldIn, BlockPos pos, Entity entity) {
+        float width = entity.getSize(Pose.STANDING).width;
+        spawnParticles(entity, worldIn, pos, 1, (worldIn.rand.nextFloat() - 0.5) * width, worldIn.rand.nextFloat() / 2F, (worldIn.rand.nextFloat() - 0.5) * width, worldIn.rand.nextFloat() - 0.5, worldIn.rand.nextFloat() - 1F, worldIn.rand.nextFloat() - 0.5);
     }
 
-    private void slideParticles(World worldIn, BlockPos pos, Entity entityIn) {
-        float width = entityIn.getSize(Pose.STANDING).width;
-        spawnParticles(entityIn, worldIn, pos, 1, (worldIn.rand.nextFloat() - 0.5D) * width, worldIn.rand.nextFloat() / 2.0F, (worldIn.rand.nextFloat() - 0.5D) * width, worldIn.rand.nextFloat() - 0.5D, (worldIn.rand.nextFloat() - 1.0F), worldIn.rand.nextFloat() - 0.5D);
-    }
-
-    private void fallParticles(World worldIn, BlockPos pos, Entity entityIn) {
-        float width = entityIn.getSize(Pose.STANDING).width;
-        spawnParticles(entityIn, worldIn, pos, 10, (worldIn.rand.nextFloat() - 0.5D) * width, 0.0D, (worldIn.rand.nextFloat() - 0.5D) * width, worldIn.rand.nextFloat() - 0.5D, 0.5D, worldIn.rand.nextFloat() - 0.5D);
+    private void spawnFallParticles(World worldIn, BlockPos pos, Entity entity) {
+        float width = entity.getSize(Pose.STANDING).width;
+        spawnParticles(entity, worldIn, pos, 10, (worldIn.rand.nextFloat() - 0.5) * width, 0, (worldIn.rand.nextFloat() - 0.5) * width, worldIn.rand.nextFloat() - 0.5, 0.5, worldIn.rand.nextFloat() - 0.5);
     }
 
     private void spawnParticles(Entity entity, World worldIn, BlockPos pos, int numOfParticles, double x, double y, double z, double motionX, double motionY, double motionZ) {
@@ -116,20 +86,20 @@ public class HoneyBlockBlock extends Block {
         }
     }
 
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.TRANSLUCENT;
-    }
-
-    public static void onEntityJump(final LivingEvent.LivingJumpEvent event) {
+    public static void onEntityJump(final LivingJumpEvent event) {
         LivingEntity entity = event.getEntityLiving();
         int x = MathHelper.floor(entity.posX);
-        int y = MathHelper.floor(entity.posY - 0.20000000298023224D);
+        int y = MathHelper.floor(entity.posY - 0.20000000298023224);
         int z = MathHelper.floor(entity.posZ);
         BlockPos pos = new BlockPos(x, y, z);
         BlockState state = entity.world.getBlockState(pos);
         if (state.getBlock() == Blocks.HONEY_BLOCK) {
             entity.setMotion(entity.getMotion().mul(0, 0.5D, 0));
         }
+    }
+
+    @Override
+    public BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.TRANSLUCENT;
     }
 }

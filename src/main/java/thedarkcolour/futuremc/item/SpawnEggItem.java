@@ -23,17 +23,17 @@ import thedarkcolour.futuremc.block.Blocks;
 
 import java.util.Objects;
 
-public class SummonEggItem<T extends Entity> extends Item {
+public class SpawnEggItem<T extends Entity> extends Item {
     private final EntityType<T> type;
     private final int primary;
     private final int secondary;
 
-    public SummonEggItem(EntityType<T> type, int primary, int secondary) {
+    public SpawnEggItem(EntityType<T> type, int primary, int secondary) {
         super(FutureMC.DEFAULT_ITEM_PROPERTIES);
         this.type = type;
         this.primary = primary;
         this.secondary = secondary;
-        this.setRegistryName(type.getRegistryName().getPath() + "_spawn_egg");
+        setRegistryName(type.getRegistryName().getPath() + "_spawn_egg");
     }
 
     @Override

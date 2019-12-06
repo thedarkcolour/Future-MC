@@ -18,8 +18,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import thedarkcolour.futuremc.block.BeeHiveBlock;
 import thedarkcolour.futuremc.block.Blocks;
-import thedarkcolour.futuremc.block.Props;
 import thedarkcolour.futuremc.entity.BeeEntity;
 import thedarkcolour.futuremc.entity.EntityTypes;
 import thedarkcolour.futuremc.item.Items;
@@ -34,14 +34,14 @@ public class BeeHiveTileEntity extends InteractionTileEntity implements ITickabl
     private BlockPos flowerPos;
 
     public BeeHiveTileEntity() {
-        super(Tile.BEEHIVE);
+        super(TileEntityTypes.BEEHIVE);
         flowerPos = BlockPos.ZERO;
     }
 
     public boolean canEnter() {
         return bees.size() >= 3;
     }
-    
+
     public void angerBees(PlayerEntity playerIn, BeeHiveTileEntity.BeeState state) {
         List<Entity> list = tryReleaseBee(state);
 
@@ -110,7 +110,7 @@ public class BeeHiveTileEntity extends InteractionTileEntity implements ITickabl
             data.remove("UUIDMost");
             Optional<BlockPos> optionalPos = Optional.empty();
             BlockState state = world.getBlockState(pos);
-            Direction facing = state.get(Props.FACING);
+            Direction facing = state.get(BeeHiveBlock.FACING);
             BlockPos pos1 = pos.offset(facing, 2);
 
             if (world.getBlockState(pos1).isAir()) {
@@ -139,7 +139,7 @@ public class BeeHiveTileEntity extends InteractionTileEntity implements ITickabl
 
             if (optionalPos.isPresent()) {
                 blockPos = optionalPos.get();
-                BeeEntity entity = EntityTypes.BEE.create(world);
+                BeeEntity entity = (BeeEntity) EntityTypes.BEE.create(world);
                 entity.read(data);
                 entity.setPositionAndRotation(blockPos.getX(), blockPos.getY(), blockPos.getZ(), entity.rotationYaw, entity.rotationPitch);
 
@@ -206,7 +206,7 @@ public class BeeHiveTileEntity extends InteractionTileEntity implements ITickabl
     }
 
     public int getHoneyLevel() {
-        return getBlockState().get(Props.HONEY_LEVEL);
+        return getBlockState().get(BeeHiveBlock.HONEY_LEVEL);
     }
 
     public void setHoneyLevel(int level) {
@@ -214,7 +214,7 @@ public class BeeHiveTileEntity extends InteractionTileEntity implements ITickabl
             level = 5;
         }
 
-        world.setBlockState(pos, world.getBlockState(pos).with(Props.HONEY_LEVEL, level).with(Props.FACING, world.getBlockState(pos).get(Props.FACING)));
+        world.setBlockState(pos, world.getBlockState(pos).with(BeeHiveBlock.HONEY_LEVEL, level).with(BeeHiveBlock.FACING, world.getBlockState(pos).get(BeeHiveBlock.FACING)));
     }
 
     public boolean isFull() {
@@ -315,7 +315,7 @@ public class BeeHiveTileEntity extends InteractionTileEntity implements ITickabl
     }
 
     public static void emptyHoney(World worldIn, BlockState state, BlockPos pos, PlayerEntity playerIn) {
-        worldIn.setBlockState(pos, state.with(Props.HONEY_LEVEL, 0));
+        worldIn.setBlockState(pos, state.with(BeeHiveBlock.HONEY_LEVEL, 0));
         TileEntity tile = worldIn.getTileEntity(pos);
 
         if (tile instanceof BeeHiveTileEntity) {

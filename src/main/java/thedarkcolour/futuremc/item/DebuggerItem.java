@@ -10,13 +10,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
-import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.entity.BeeEntity;
 import thedarkcolour.futuremc.tile.BeeHiveTileEntity;
 
 public class DebuggerItem extends Item {
-    public DebuggerItem() {
-        super(new Item.Properties().maxStackSize(1).group(FutureMC.TAB));
+    public DebuggerItem() {// TODO
+        super(new Item.Properties().maxStackSize(1).group(null));
         setRegistryName("debugger");
     }
 
