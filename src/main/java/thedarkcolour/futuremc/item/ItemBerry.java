@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.item;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -12,14 +13,17 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.common.IPlantable;
 import thedarkcolour.core.item.Modeled;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.block.BlockBerryBush;
 import thedarkcolour.futuremc.init.FutureConfig;
 import thedarkcolour.futuremc.init.Init;
 
-public class ItemBerry extends ItemFood implements Modeled {
+public class ItemBerry extends ItemFood implements Modeled, IPlantable {
     public ItemBerry() {
         super(2, 0.2F, false);
         setTranslationKey(FutureMC.ID + ".SweetBerry");
@@ -52,4 +56,15 @@ public class ItemBerry extends ItemFood implements Modeled {
 
         return EnumActionResult.FAIL;
     }
+
+    @Override
+    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
+        return ((BlockBerryBush)Init.SWEET_BERRY_BUSH).getPlantType(world, pos);
+    }
+
+    @Override
+    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
+        return ((BlockBerryBush)Init.SWEET_BERRY_BUSH).getPlant(world, pos);
+    }
+
 }

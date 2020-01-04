@@ -21,14 +21,16 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.IPlantable;
 import thedarkcolour.futuremc.entity.bee.EntityBee;
 import thedarkcolour.futuremc.init.FutureConfig;
 import thedarkcolour.futuremc.init.Init;
 
 import java.util.Random;
 
-public class BlockBerryBush extends BlockFlower implements IGrowable {
+public class BlockBerryBush extends BlockFlower implements IGrowable, IPlantable {
     public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 3);
     private static final AxisAlignedBB YOUNG = new AxisAlignedBB(0.3D, 0.0D, 0.3D, 0.7D, 0.5D, 0.7D);
     private static final AxisAlignedBB MATURE = new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.975D,0.9D);
@@ -167,4 +169,15 @@ public class BlockBerryBush extends BlockFlower implements IGrowable {
     public int getFlowerChance() {
         return FutureConfig.general.berryBushChance;
     }
+
+    @Override
+    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
+        return EnumPlantType.Plains;
+    }
+
+    @Override
+    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
+        return getBlockState().getBaseState().withProperty(AGE, 0);
+    }
+
 }
