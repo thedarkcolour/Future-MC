@@ -2,6 +2,7 @@ package thedarkcolour.futuremc.item
 
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.block.Block
+import net.minecraft.block.state.IBlockState
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
@@ -12,14 +13,24 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
+import net.minecraftforge.common.EnumPlantType
+import net.minecraftforge.common.IPlantable
 import thedarkcolour.core.item.Modeled
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.BlockSweetBerryBush
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.init.FBlocks
 
-class ItemSweetBerries : ItemFood(2, 0.2f, false), Modeled {
+class ItemSweetBerries : ItemFood(2, 0.2f, false), Modeled, IPlantable {
+    init {
+        translationKey = FutureMC.ID + ".sweet_berries"
+        setRegistryName("sweet_berries")
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.FOOD else FutureMC.TAB
+        addModel()
+    }
+
     override fun onItemUse(player: EntityPlayer, worldIn: World, position: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult {
         var pos = position
         pos = pos.offset(facing)
@@ -42,10 +53,9 @@ class ItemSweetBerries : ItemFood(2, 0.2f, false), Modeled {
         return EnumActionResult.FAIL
     }
 
-    init {
-        translationKey = FutureMC.ID + ".sweet_berries"
-        setRegistryName("sweet_berries")
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.FOOD else FutureMC.TAB
-        addModel()
+    override fun getPlantType(world: IBlockAccess, pos: BlockPos) = EnumPlantType.Plains
+
+    override fun getPlant(world: IBlockAccess, pos: BlockPos): IBlockState {
+        return FBlocks.SWEET_BERRY_BUSH.defaultState
     }
 }
