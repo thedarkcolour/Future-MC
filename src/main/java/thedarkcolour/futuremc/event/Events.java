@@ -7,10 +7,9 @@ import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityElderGuardian;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -20,6 +19,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -27,18 +27,21 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import thedarkcolour.futuremc.block.BlockStrippedLog;
-import thedarkcolour.futuremc.init.FutureConfig;
-import thedarkcolour.futuremc.init.Init;
-import thedarkcolour.futuremc.sound.Sounds;
+import thedarkcolour.futuremc.block.BlockWitherRose;
+import thedarkcolour.futuremc.config.FConfig;
+import thedarkcolour.futuremc.init.FBlocks;
+import thedarkcolour.futuremc.init.FItems;
+import thedarkcolour.futuremc.init.Sounds;
 
+// TODO use Util#addListener
 @Mod.EventBusSubscriber
 public final class Events {
     @SubscribeEvent
     public static void eatHoneyBottleEvent(final PlaySoundAtEntityEvent event) {
         if (event.getEntity() instanceof EntityLivingBase) {
             EntityLivingBase e = (EntityLivingBase) event.getEntity();
-            if (e.getActiveItemStack().getItem() == Init.HONEY_BOTTLE) {
-                event.setSound(Sounds.HONEY_BOTTLE_DRINK);
+            if (e.getActiveItemStack().getItem() == FItems.INSTANCE.getHONEY_BOTTLE()) {
+                event.setSound(Sounds.INSTANCE.getHONEY_BOTTLE_DRINK());
             }
         }
     }
@@ -50,7 +53,7 @@ public final class Events {
         EntityPlayer player = event.getEntityPlayer();
         ItemStack stack = event.getItemStack();
 
-        if (FutureConfig.general.strippedLogs) {
+        if (FConfig.INSTANCE.getUpdateAquatic().strippedLogs.rightClickToStrip) {
             if (stack.getItem() instanceof ItemTool) {
                 ItemTool tool = (ItemTool) stack.getItem();
                 if (tool.getToolClasses(stack).contains("axe")) {
@@ -88,10 +91,22 @@ public final class Events {
 
     @SubscribeEvent
     public static void onMobDeath(final LivingDeathEvent event) {
-        if (FutureConfig.general.trident) {
-            Entity entity = event.getEntity();
-            if (entity instanceof EntityElderGuardian) {
-                entity.getEntityWorld().spawnEntity(new EntityItem(entity.getEntityWorld(), entity.posX, entity.posY, entity.posZ, new ItemStack(Init.TRIDENT, 1)));
+        EntityLivingBase entityIn = event.getEntityLiving();
+        World worldIn = entityIn.world;
+        if (!entityIn.isDead) {
+            if (!worldIn.isRemote) {
+                if (ForgeEventFactory.getMobGriefingEvent(worldIn, entityIn)) {
+                    if (event.getSource().getTrueSource() instanceof EntityWither) {
+                        BlockPos pos = new BlockPos(entityIn.posX, entityIn.posY, entityIn.posZ);
+                        IBlockState state = worldIn.getBlockState(pos);
+                        if (state.getBlock().isAir(state, worldIn, pos) && ((BlockWitherRose) FBlocks.INSTANCE.getWITHER_ROSE()).canBlockStay(worldIn, pos, state)) {
+                            worldIn.setBlockState(pos, FBlocks.INSTANCE.getWITHER_ROSE().getDefaultState(), 3);
+                        }
+                    }
+                } else {
+                    EntityItem item = new EntityItem(worldIn, entityIn.posX, entityIn.posY, entityIn.posZ);
+                    worldIn.spawnEntity(item);
+                }
             }
         }
     }
@@ -104,7 +119,7 @@ public final class Events {
         int z = MathHelper.floor(entity.posZ);
         BlockPos pos = new BlockPos(x, y, z);
         IBlockState state = entity.world.getBlockState(pos);
-        if (state.getBlock() == Init.HONEY_BLOCK) {
+        if (state.getBlock() == FBlocks.INSTANCE.getHONEY_BLOCK()) {
             entity.motionY *= 0.5D;
         }
     }
@@ -121,17 +136,17 @@ public final class Events {
         if (variant != null) {
             switch (variant) {
                 case "acacia":
-                    return Init.STRIPPED_ACACIA_LOG.getDefaultState();
+                    return FBlocks.INSTANCE.getSTRIPPED_ACACIA_LOG().getDefaultState();
                 case "jungle":
-                    return Init.STRIPPED_JUNGLE_LOG.getDefaultState();
+                    return FBlocks.INSTANCE.getSTRIPPED_JUNGLE_LOG().getDefaultState();
                 case "birch":
-                    return Init.STRIPPED_BIRCH_LOG.getDefaultState();
+                    return FBlocks.INSTANCE.getSTRIPPED_BIRCH_LOG().getDefaultState();
                 case "oak":
-                    return Init.STRIPPED_OAK_LOG.getDefaultState();
+                    return FBlocks.INSTANCE.getSTRIPPED_OAK_LOG().getDefaultState();
                 case "spruce":
-                    return Init.STRIPPED_SPRUCE_LOG.getDefaultState();
+                    return FBlocks.INSTANCE.getSTRIPPED_SPRUCE_LOG().getDefaultState();
                 case "dark_oak":
-                    return Init.STRIPPED_DARK_OAK_LOG.getDefaultState();
+                    return FBlocks.INSTANCE.getSTRIPPED_DARK_OAK_LOG().getDefaultState();
             }
         }
         throw new IllegalStateException("Invalid log");

@@ -15,12 +15,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import thedarkcolour.core.gui.Container;
+import thedarkcolour.core.inventory.DarkInventory;
+import thedarkcolour.core.util.Util;
 import thedarkcolour.futuremc.client.gui.GuiLoom;
-import thedarkcolour.futuremc.compat.oredict.OreDict;
-import thedarkcolour.futuremc.init.Init;
+import thedarkcolour.futuremc.init.FBlocks;
 import thedarkcolour.futuremc.item.ItemBannerPattern;
 
 import javax.annotation.Nonnull;
@@ -31,9 +31,9 @@ public class ContainerLoom extends Container {
     private BlockPos pos;
     private int selectedIndex;
     private Runnable inventoryUpdateListener = () -> {};
-    private ItemStackHandler handler = new ItemStackHandler(4) {
+    private DarkInventory handler = new DarkInventory(4) {
         @Override
-        protected void onContentsChanged(int slot) {
+        public void onContentsChanged(int slot) {
             if (slot != 3) {
                 handleCrafting();
             }
@@ -60,7 +60,7 @@ public class ContainerLoom extends Container {
         addSlotToContainer(new SlotItemHandler(handler, 1, 33, 26) {
             @Override
             public boolean isItemValid(@Nonnull ItemStack stack) {
-                return OreDict.getOreName(stack).startsWith("dye");
+                return Util.getOreName(stack).startsWith("dye");
             }
         });
         addSlotToContainer(new SlotItemHandler(handler, 2, 23, 45) {
@@ -138,7 +138,7 @@ public class ContainerLoom extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        if (world.getBlockState(pos).getBlock() != Init.LOOM) {
+        if (world.getBlockState(pos).getBlock() != FBlocks.INSTANCE.getLOOM()) {
             return false;
         } else {
             return playerIn.getDistanceSq((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
@@ -166,7 +166,7 @@ public class ContainerLoom extends Container {
                 if (flag) {
                     selectedIndex = 0;
                 } else {
-                    selectedIndex = ItemBannerPattern.getBannerPattern(pattern).ordinal();
+                    selectedIndex = ItemBannerPattern.Companion.getBannerPattern(pattern).ordinal();
                 }
             }
         } else {
@@ -230,7 +230,7 @@ public class ContainerLoom extends Container {
                     if (!mergeItemStack(itemstack1, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (OreDict.getOreName(itemstack1).startsWith("dye")) {
+                } else if (Util.getOreName(itemstack1).startsWith("dye")) {
                     if (!mergeItemStack(itemstack1, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -289,7 +289,7 @@ public class ContainerLoom extends Container {
     }
 
     public static EnumDyeColor getColorForStack(ItemStack stack) {
-        String s = OreDict.getOreName(stack);
+        String s = Util.getOreName(stack);
 
         if(s.startsWith("dye")) {
             s = s.replaceFirst("dye", "");

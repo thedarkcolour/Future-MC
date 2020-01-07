@@ -18,13 +18,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import thedarkcolour.core.gui.Container;
+import thedarkcolour.core.inventory.DarkInventory;
 import thedarkcolour.futuremc.client.gui.GuiGrindstone;
 import thedarkcolour.futuremc.enchantment.EnchantHelper;
-import thedarkcolour.futuremc.init.Init;
-import thedarkcolour.futuremc.sound.Sounds;
+import thedarkcolour.futuremc.init.FBlocks;
+import thedarkcolour.futuremc.init.Sounds;
 
 import java.util.Map;
 
@@ -33,21 +33,21 @@ public class ContainerGrindstone extends Container {
     protected World world;
     protected BlockPos pos;
 
-    public ItemStackHandler input = new ItemStackHandler(2) {
+    public DarkInventory input = new DarkInventory(2) {
         @Override
-        protected void onContentsChanged(int slot) {
+        public void onContentsChanged(int slot) {
             handleCrafting();
         }
     };
-    public ItemStackHandler output = new ItemStackHandler(1) {
+    public DarkInventory output = new DarkInventory(1) {
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
             return false;
         }
     };
 
-    public ContainerGrindstone(InventoryPlayer playerInventory, World worldIn, BlockPos posIn) {
-        this.playerInv = playerInventory;
+    public ContainerGrindstone(InventoryPlayer playerInv, World worldIn, BlockPos posIn) {
+        this.playerInv = playerInv;
         this.world = worldIn;
         this.pos = posIn;
 
@@ -217,7 +217,7 @@ public class ContainerGrindstone extends Container {
 
     public void handleOutput() {
         awardEXP(input.getStackInSlot(0), input.getStackInSlot(1));
-        world.playSound(pos.getX(), pos.getY(), pos.getZ(), Sounds.GRINDSTONE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+        world.playSound(pos.getX(), pos.getY(), pos.getZ(), Sounds.INSTANCE.getGRINDSTONE_USE(), SoundCategory.BLOCKS, 1.0F, 1.0F, false);
         clearInput(); // Clear it last, otherwise XP doesn't work
     }
 
@@ -286,7 +286,7 @@ public class ContainerGrindstone extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        if (world.getBlockState(this.pos).getBlock() != Init.GRINDSTONE) {
+        if (world.getBlockState(this.pos).getBlock() != FBlocks.INSTANCE.getGRINDSTONE()) {
             return false;
         } else {
             return playerIn.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;

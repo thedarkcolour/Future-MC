@@ -1,25 +1,14 @@
 package thedarkcolour.core.util;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 /**
- * Allows one to compare an outside object to an inside object using a predicate.
- * Helpful with things like ItemStacks.
+ * Extremely sophisticated list.
  */
 public final class PredicateArrayList<E> extends ArrayList<E> {
     private final BiPredicate<E, E> isEquivalent;
-
-    public PredicateArrayList(BiPredicate<E, E> isEquivalent, int initialCapacity) {
-        super(initialCapacity);
-        this.isEquivalent = isEquivalent;
-    }
-
-    public PredicateArrayList(BiPredicate<E, E> isEquivalent, Collection<? extends E> c) {
-        super(c);
-        this.isEquivalent = isEquivalent;
-    }
 
     public PredicateArrayList(BiPredicate<E, E> isEquivalent) {
         this.isEquivalent = isEquivalent;
@@ -27,7 +16,7 @@ public final class PredicateArrayList<E> extends ArrayList<E> {
 
     public boolean containsEquivalent(E obj) {
         for (E o: this) {
-            if(isEquivalent.test(o, obj)) {
+            if (isEquivalent.test(o, obj)) {
                 return true;
             }
         }
@@ -42,16 +31,14 @@ public final class PredicateArrayList<E> extends ArrayList<E> {
         }
     }
 
-    public PredicateArrayList<E> bAdd(E o) {
+    public PredicateArrayList<E> insert(E o) {
         add(o);
         return this;
     }
 
     @SafeVarargs
-    public final PredicateArrayList<E> addAll(E... obj) {
-        for (E o: obj) {
-            add(o);
-        }
+    public final PredicateArrayList<E> insertAll(E... obj) {
+        addAll(Arrays.asList(obj));
         return this;
     }
 }

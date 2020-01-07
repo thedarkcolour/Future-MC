@@ -11,16 +11,17 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
+import thedarkcolour.futuremc.recipe.furnace.SmokerRecipes;
 
 @ZenRegister
-@ZenClass("mods.minecraftfuture.Smoker")
+@ZenClass("mods.futuremc.Smoker")
 public final class Smoker {
     @ZenMethod
     public static void addRecipe(IItemStack input, IItemStack output) {
         if (!BlockFurnaceAdvanced.FurnaceType.SMOKER.canCraft(CraftTweakerMC.getItemStack(input))) {
             CraftTweakerAPI.apply(new AddRecipe(input, output));
         } else {
-            FutureMC.logger.log(Level.WARN, "Tried to add duplicate valid Smoker input for " + input.getDefinition().getId());
+            FutureMC.INSTANCE.getLOGGER().log(Level.WARN, "Tried to add duplicate valid Smoker input for " + input.getDefinition().getId());
         }
     }
 
@@ -35,7 +36,7 @@ public final class Smoker {
 
         @Override
         public void apply() {
-            BlockFurnaceAdvanced.Recipes.smokerRecipe(input, output);
+            SmokerRecipes.addRecipe(input, output);
         }
 
         @Override
@@ -58,7 +59,7 @@ public final class Smoker {
 
         @Override
         public void apply() {
-            BlockFurnaceAdvanced.Recipes.removeSmokerRecipe(input);
+            SmokerRecipes.removeRecipe(input);
         }
 
         @Override
@@ -69,6 +70,6 @@ public final class Smoker {
 
     @ZenMethod
     public static void clearRecipes() {
-        BlockFurnaceAdvanced.Recipes.clearSmoker();
+        SmokerRecipes.clearAllRecipes();
     }
 }

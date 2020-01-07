@@ -11,10 +11,10 @@ import java.util.List;
 
 @SuppressWarnings({"UnstableApiUsage", "unused"})
 public class CoreContainer extends DummyModContainer {
-    private static final ModMetadata meta = Util.make(new ModMetadata(), md -> {
+    private static final ModMetadata meta = Util.jmake(new ModMetadata(), md -> {
         md.modId = "futuremccore";
         md.name = "FutureMCCore";
-        md.description = "Coremod for Future MC. Patches trees.";
+        md.description = "Coremod for Future MC. Patches trees and pistons.";
         md.authorList = ImmutableList.of("TheDarkColour");
         md.version = "0.1.12";
         md.credits = "Herobrine sees all.";

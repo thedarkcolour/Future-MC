@@ -1,0 +1,6 @@
+{
+    "parent": "futuremc:item/slab_inv",
+    "textures": {
+        "tex": "blocks/prismarine_rough"
+    }
+}

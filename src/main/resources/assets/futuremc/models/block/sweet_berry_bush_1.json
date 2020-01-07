@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "futuremc:blocks/berrybush1"
+  }
+}

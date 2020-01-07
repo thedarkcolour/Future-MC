@@ -11,30 +11,29 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import thedarkcolour.core.inventory.DarkInventory;
 import thedarkcolour.core.tile.InteractionTile;
 import thedarkcolour.futuremc.block.BlockComposter;
-import thedarkcolour.futuremc.init.Init;
-import thedarkcolour.futuremc.sound.Sounds;
+import thedarkcolour.futuremc.init.FBlocks;
+import thedarkcolour.futuremc.init.Sounds;
 
 import javax.annotation.Nonnull;
 
-// TODO Replace with InteractionTile
 public class TileComposter extends InteractionTile {
-    private final ItemStackHandler buffer = new ItemStackHandler() {
+    private final DarkInventory inventory = new DarkInventory(1) {
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            return BlockComposter.canCompost(stack, world.getBlockState(pos));
+            return BlockComposter.Companion.canCompost(stack, world.getBlockState(pos));
         }
 
         @Override
-        protected int getStackLimit(int slot, ItemStack stack) {
+        public int getSlotLimit(int slot) {
             return 1;
         }
 
         @Override
-        protected void onContentsChanged(int slot) {
-            TileComposter.this.handleStack(stacks.get(slot));
+        public void onContentsChanged(int slot) {
+            TileComposter.this.handleStack(get(slot));
         }
 
         @Override
@@ -47,8 +46,8 @@ public class TileComposter extends InteractionTile {
 
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if(isBoneMeal(stacks.get(0)) && !simulate) {
-                world.setBlockState(pos, Init.COMPOSTER.getDefaultState());
+            if(isBoneMeal(get(0)) && !simulate) {
+                world.setBlockState(pos, FBlocks.INSTANCE.getCOMPOSTER().getDefaultState());
             }
             return super.extractItem(0, amount, simulate);
         }
@@ -58,14 +57,14 @@ public class TileComposter extends InteractionTile {
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         if(compound.hasKey("buffer")) {
-            buffer.deserializeNBT(compound);
+            inventory.deserializeNBT(compound);
         }
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        compound.setTag("buffer", buffer.serializeNBT());
+        compound.setTag("buffer", inventory.serializeNBT());
         return compound;
     }
 
@@ -80,7 +79,7 @@ public class TileComposter extends InteractionTile {
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(buffer);
+            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
         }
         return super.getCapability(capability, facing);
     }
@@ -92,7 +91,7 @@ public class TileComposter extends InteractionTile {
 
     @Override
     public void broken(IBlockState state, EntityPlayer playerIn) {
-        if (!world.isRemote && world.getBlockState(pos).getValue(BlockComposter.LEVEL) == 8) {
+        if (!world.isRemote && world.getBlockState(pos).getValue(BlockComposter.Companion.getLEVEL()) == 8) {
             EntityItem item = new EntityItem(world, pos.getX() + 0.5D, pos.getY() + 0.6D, pos.getZ() + 0.5D);
             item.setItem(new ItemStack(Items.DYE, 1, 15));
             world.spawnEntity(item);
@@ -104,7 +103,7 @@ public class TileComposter extends InteractionTile {
     }
 
     public void addItem(ItemStack stack, boolean shrink) {
-        buffer.insertItem(0, stack, false);
+        inventory.insertItem(0, stack, false);
 
         if(shrink) {
             stack.shrink(1);
@@ -112,12 +111,12 @@ public class TileComposter extends InteractionTile {
     }
 
     private void handleStack(ItemStack stack) {
-        if (BlockComposter.canCompost(stack, world.getBlockState(pos))) {
+        if (BlockComposter.Companion.canCompost(stack, world.getBlockState(pos))) {
             if (!stack.isEmpty() && !isBoneMeal(stack)) {
                 if (world.rand.nextInt(100) <= BlockComposter.ItemsForComposter.getChance(stack)) {
                     addLayer();
                 } else {
-                    world.playSound(null, pos, Sounds.COMPOSTER_FILL, SoundCategory.BLOCKS, 1F, 1F);
+                    world.playSound(null, pos, Sounds.INSTANCE.getCOMPOSTER_FILL(), SoundCategory.BLOCKS, 1F, 1F);
                 }
                 consume();
             }
@@ -125,28 +124,28 @@ public class TileComposter extends InteractionTile {
     }
 
     public void addLayer() {
-        world.setBlockState(pos, Init.COMPOSTER.getDefaultState().withProperty(BlockComposter.LEVEL, world.getBlockState(pos).getValue(BlockComposter.LEVEL) + 1));
-        world.playSound(null, pos, Sounds.COMPOSTER_FILL_SUCCESS, SoundCategory.BLOCKS, 1F, 1F);
+        world.setBlockState(pos, FBlocks.INSTANCE.getCOMPOSTER().getDefaultState().withProperty(BlockComposter.Companion.getLEVEL(), world.getBlockState(pos).getValue(BlockComposter.Companion.getLEVEL()) + 1));
+        world.playSound(null, pos, Sounds.INSTANCE.getCOMPOSTER_FILL_SUCCESS(), SoundCategory.BLOCKS, 1F, 1F);
 
-        if (world.getBlockState(pos).getValue(BlockComposter.LEVEL) >= 7) {
-            world.scheduleBlockUpdate(pos, Init.COMPOSTER, 30, 1);
+        if (world.getBlockState(pos).getValue(BlockComposter.Companion.getLEVEL()) >= 7) {
+            world.scheduleBlockUpdate(pos, FBlocks.INSTANCE.getCOMPOSTER(), 30, 1);
         }
     }
 
     public void consume() {
-        buffer.setStackInSlot(0, ItemStack.EMPTY);
+        inventory.setStackInSlot(0, ItemStack.EMPTY);
     }
 
     public void extractBoneMeal() {
         EntityItem item = new EntityItem(world, pos.getX() + 0.5D, pos.getY() + 0.6D, pos.getZ() + 0.5D);
         item.setItem(new ItemStack(Items.DYE, 1, 15));
         world.spawnEntity(item);
-        world.setBlockState(pos, Init.COMPOSTER.getDefaultState());
-        buffer.setStackInSlot(0, ItemStack.EMPTY);
-        world.playSound(null, pos, Sounds.COMPOSTER_EMPTY, SoundCategory.BLOCKS, 1F, 1F);
+        world.setBlockState(pos, FBlocks.INSTANCE.getCOMPOSTER().getDefaultState());
+        inventory.setStackInSlot(0, ItemStack.EMPTY);
+        world.playSound(null, pos, Sounds.INSTANCE.getCOMPOSTER_EMPTY(), SoundCategory.BLOCKS, 1F, 1F);
     }
 
-    public ItemStackHandler getBuffer() {
-        return buffer;
+    public DarkInventory getInventory() {
+        return inventory;
     }
 }

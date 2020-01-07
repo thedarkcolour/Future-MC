@@ -1,0 +1,6 @@
+{
+    "parent": "futuremc:block/wall_inventory",
+    "textures": {
+        "wall": "blocks/stonebrick_mossy"
+    }
+}

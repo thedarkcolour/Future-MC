@@ -1,0 +1,98 @@
+# Bloques funcionales
+tile.futuremc.Lantern.name=Farol
+tile.futuremc.Barrel.name=Barril
+tile.futuremc.Loom.name=Telar
+tile.futuremc.Stonecutter.name=Cortapiedras
+tile.futuremc.Blast_Furnace.name=Alto horno
+tile.futuremc.Smoker.name=Ahumador
+tile.futuremc.Grindstone.name=Afiladora
+tile.futuremc.Composter.name=Compostador
+
+# Plantas
+tile.futuremc.lily_of_the_valley.name=Lirio de valle
+tile.futuremc.wither_rose.name=Rosa del Wither
+tile.futuremc.cornflower.name=Aciano
+tile.futuremc.sweet_berry_bush.name=Arbusto de bayas dulces
+tile.futuremc.Campfire.name=Hoguera
+tile.futuremc.stripped_oak_log.name=Tronco de roble sin corteza
+tile.futuremc.stripped_spruce_log.name=Tronco de abeto sin corteza
+tile.futuremc.stripped_birch_log.name=Tronco de abedul sin corteza
+tile.futuremc.stripped_jungle_log.name=Tronco de jungla sin corteza
+tile.futuremc.stripped_acacia_log.name=Tronco de acacia sin corteza
+tile.futuremc.stripped_dark_oak_log.name=Tronco de roble oscuro sin corteza
+death.attack.sweet_berry_bush=%1$s fue cagado a muerte por arbusto de bayas dulces
+
+# Paredes
+tile.futuremc.brick_wall.name=Pared de ladrillos
+tile.futuremc.andesite_wall.name=Pared de andesita
+tile.futuremc.diorite_wall.name=Pared de diorita
+tile.futuremc.granite_wall.name=Pared de granito
+tile.futuremc.prismarine_wall.name=Pared de prismarina
+tile.futuremc.stone_brick_wall.name=Pared de ladrillos de piedra
+tile.futuremc.mossy_stone_wall.name=Pared de ladrillos de piedra musgosa
+tile.futuremc.end_stone_wall.name=Pared de piedra del End
+tile.futuremc.nether_brick_wall.name=Pared de ladrillos del Nether
+tile.futuremc.sandstone_wall.name=Pared de arenisca
+tile.futuremc.red_sandstone_wall.name=Pared de arenisca roja
+tile.futuremc.nether_brick_red_wall.name=Pared de ladrillos del Nether rojos
+
+# Losas
+tile.futuremc.granite_slab.name=Losa de granito
+tile.futuremc.andesite_slab.name=Losa de andesita
+tile.futuremc.diorite_slab.name=Losa de diorita
+tile.futuremc.polished_granite_slab.name=Losa de granito pulido
+tile.futuremc.polished_andesite_slab.name=Losa de andesita pulida
+tile.futuremc.polished_diorite_slab.name=Losa de diorita pulida
+tile.futuremc.stone_slab.name=Losa de piedra
+tile.futuremc.prismarine_slab.name=Losa de prismarina
+tile.futuremc.dark_prismarine_slab.name=Losa de prismarina oscuro
+tile.futuremc.prismarine_brick_slab.name=Losa de ladrillos de prismarinas
+tile.futuremc.smooth_red_sandstone_slab.name=Losa de arenisca roja lisa
+tile.futuremc.smooth_sandstone_slab.name=Losa de arenisca lisa
+tile.futuremc.mossy_stone_brick_slab.name=Losa de ladrillos de piedra musgosa
+tile.futuremc.mossy_stone_slab.name=Losa de piedra musgosa
+tile.futuremc.smooth_quartz_slab.name=Losa de cuarzo liso
+tile.futuremc.red_nether_brick_slab.name=Losa de ladrillos del Nether rojos
+tile.futuremc.end_stone_brick_slab.name=Losa de ladrillos de piedra del End
+tile.futuremc.Bamboo.name=Bambú
+
+# Bloques decorativos
+tile.futuremc.smooth_stone.name=Piedra lisa
+tile.futuremc.smooth_quartz.name=Cuarzo liso
+tile.futuremc.fletching_table.name=Mesa de flechas
+tile.futuremc.smithing_table.name=Mesa de herrería
+entity.ItemFrame.name=Marco
+
+item.futuremc.dye.0.name=Tinte blanco
+item.futuremc.dye.1.name=Tinte azul
+item.futuremc.dye.2.name=Tinte café
+item.futuremc.dye.3.name=Tinte negro
+
+# Ítems
+item.futuremc.Trident.name=Tridente
+item.futuremc.Crossbow.name=Ballesta
+item.futuremc.Crossbow_Loaded.name=Ballesta con flecha
+item.futuremc.suspicious_stew.name=Sopa sospechosa
+item.futuremc.SweetBerry.name=Bayas dulces
+item.futuremc.Bamboo.name=Bambú
+
+# GUI
+container.Barrel=Barril
+container.BlastFurnace=Alto horno
+container.Smoker=Ahumador
+container.Grindstone=Reparar y desencantar
+container.Stonecutter=Cortapiedras
+container.Loom=Telar
+
+# Entidad
+entity.trident.name=Tridente
+entity.panda.name=Panda
+
+# Encantamientos
+enchantment.loyalty=Lealtad
+enchantment.channeling=Conductividad
+enchantment.riptide=Propulsión acutica
+enchantment.impaling=Empalamiento
+enchantment.quick_charge=Carga rápida
+
+itemGroup.futuremc=Future MC

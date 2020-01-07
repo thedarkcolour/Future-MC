@@ -36,9 +36,14 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
     private int currentItemBurnTime;
     private int cookTime;
 
-    // Borrows from TileEntityFurnace to reduce headaches
     public TileFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType type) {
         this.type = type;
+    }
+
+    public static void setState(boolean active, World world, BlockPos pos) {
+        if(world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileFurnaceAdvanced) {
+            world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockFurnaceAdvanced.Companion.getLIT(), active));
+        }
     }
 
     @Override
@@ -54,8 +59,8 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        compound.setInteger("BurnTime", (short)furnaceBurnTime);
-        compound.setInteger("CookTime", (short)cookTime);
+        compound.setInteger("BurnTime", furnaceBurnTime);
+        compound.setInteger("CookTime", cookTime);
         compound.setInteger("CurrentItemBurnTime", currentItemBurnTime);
         ItemStackHelper.saveAllItems(compound, furnaceItemStacks);
 
@@ -64,16 +69,16 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
 
     @Override
     public void update() {
-        boolean flag = this.isBurning();
+        boolean flag = isBurning();
         boolean flag1 = false;
 
         if (isBurning()) {
-            this.furnaceBurnTime -= 2;
+            furnaceBurnTime -= 2;
             if(furnaceBurnTime < 0) furnaceBurnTime = 0;
         }
 
         if (!world.isRemote) {
-            ItemStack itemstack = this.furnaceItemStacks.get(1);
+            ItemStack itemstack = furnaceItemStacks.get(1);
 
             int totalCookTime = 100;
             if (isBurning() || !itemstack.isEmpty() && !furnaceItemStacks.get(0).isEmpty()) {
@@ -81,7 +86,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
                     furnaceBurnTime = TileEntityFurnace.getItemBurnTime(itemstack);
                     currentItemBurnTime = furnaceBurnTime;
 
-                    if (this.isBurning()) {
+                    if (isBurning()) {
                         flag1 = true;
 
                         if (!itemstack.isEmpty()) {
@@ -113,7 +118,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
 
             if (flag != isBurning())  {
                 flag1 = true;
-                BlockFurnaceAdvanced.setState(isBurning(), world, pos);
+                setState(isBurning(), world, pos);
             }
         }
 
@@ -177,7 +182,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
                     return true;
                 } else if (!itemstack1.isItemEqual(itemstack)) {
                     return false;
-                } else if (itemstack1.getCount() + itemstack.getCount() <= this.getInventoryStackLimit() && itemstack1.getCount() + itemstack.getCount() <= itemstack1.getMaxStackSize()) {
+                } else if (itemstack1.getCount() + itemstack.getCount() <= getInventoryStackLimit() && itemstack1.getCount() + itemstack.getCount() <= itemstack1.getMaxStackSize()) {
                     return true;
                 } else {
                     return itemstack1.getCount() + itemstack.getCount() <= itemstack.getMaxStackSize(); // Forge fix: make furnace respect stack sizes in furnace recipes
@@ -217,7 +222,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
     }
 
     public void clear() {
-        this.furnaceItemStacks.clear();
+        furnaceItemStacks.clear();
     }
 
     @Override
@@ -231,7 +236,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
 
     @Override
     public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        return this.isItemValidForSlot(index, itemStackIn);
+        return isItemValidForSlot(index, itemStackIn);
     }
 
     @Override
@@ -252,7 +257,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
 
     @Override
     public boolean isEmpty() {
-        for (ItemStack itemstack : this.furnaceItemStacks) {
+        for (ItemStack itemstack : furnaceItemStacks) {
             if (!itemstack.isEmpty()) {
                 return false;
             }
@@ -263,32 +268,32 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
 
     @Override
     public ItemStack getStackInSlot(int index) {
-        return this.furnaceItemStacks.get(index);
+        return furnaceItemStacks.get(index);
     }
 
     @Override
     public ItemStack decrStackSize(int index, int count) {
-        return ItemStackHelper.getAndSplit(this.furnaceItemStacks, index, count);
+        return ItemStackHelper.getAndSplit(furnaceItemStacks, index, count);
     }
 
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.furnaceItemStacks, index);
+        return ItemStackHelper.getAndRemove(furnaceItemStacks, index);
     }
 
     @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
-        ItemStack itemstack = this.furnaceItemStacks.get(index);
+        ItemStack itemstack = furnaceItemStacks.get(index);
         boolean flag = !stack.isEmpty() && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack);
-        this.furnaceItemStacks.set(index, stack);
+        furnaceItemStacks.set(index, stack);
 
-        if (stack.getCount() > this.getInventoryStackLimit()) {
-            stack.setCount(this.getInventoryStackLimit());
+        if (stack.getCount() > getInventoryStackLimit()) {
+            stack.setCount(getInventoryStackLimit());
         }
 
         if (index == 0 && !flag) {
-            this.cookTime = 0;
-            this.markDirty();
+            cookTime = 0;
+            markDirty();
         }
     }
 
@@ -299,10 +304,10 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
 
     @Override
     public boolean isUsableByPlayer(EntityPlayer player) {
-        if (this.world.getTileEntity(this.pos) != this) {
+        if (world.getTileEntity(pos) != this) {
             return false;
         } else {
-            return player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
+            return player.getDistanceSq((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
         }
     }
 
@@ -321,7 +326,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
 
     @Override
     public String getGuiID() {
-        return FutureMC.ID + ":" + getType().getName().toLowerCase();
+        return FutureMC.ID + ":" + getType().getType().toLowerCase();
     }
 
     @Override

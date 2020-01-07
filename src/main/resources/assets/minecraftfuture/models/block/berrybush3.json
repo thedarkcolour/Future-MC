@@ -1,6 +1,0 @@
-{
-  "parent": "block/cross",
-  "textures": {
-    "cross": "minecraftfuture:blocks/berrybush3"
-  }
-}

@@ -1,0 +1,12 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "particle": "futuremc:blocks/smoker_front",
+        "down": "futuremc:blocks/smoker_bottom",
+        "up": "futuremc:blocks/smoker_top",
+        "north": "futuremc:blocks/smoker_front",
+        "east": "futuremc:blocks/smoker_side",
+        "south": "futuremc:blocks/smoker_side",
+        "west": "futuremc:blocks/smoker_side"
+    }
+}

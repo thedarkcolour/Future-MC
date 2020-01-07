@@ -11,11 +11,9 @@ import static net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.TransformerExc
 
 @Name("FutureMC")
 @MCVersion("1.12.2")
-@SortingIndex(1004)
+@SortingIndex(4)
 @TransformerExclusions("thedarkcolour.futuremc.asm")
 public class CoreLoader implements IFMLLoadingPlugin {
-    protected static boolean isObfuscated;
-
     @Override
     public String[] getASMTransformerClass() {
         return new String[] {
@@ -35,7 +33,7 @@ public class CoreLoader implements IFMLLoadingPlugin {
 
     @Override
     public void injectData(Map<String, Object> data) {
-        isObfuscated = (boolean) data.get("runtimeDeobfuscationEnabled");
+        CoreTransformer.isObfuscated = (boolean) data.get("runtimeDeobfuscationEnabled");
     }
 
     @Override

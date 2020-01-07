@@ -10,7 +10,7 @@ import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.compat.jei.FutureMCJEIPlugin;
 
 public class CampfireRecipeCategory implements IRecipeCategory<CampfireRecipeWrapper> {
-    public static final String NAME = "container.jei.minecraftfuture.campfire.name";
+    public static final String NAME = "container.jei.futuremc.campfire.name";
     private final IDrawable background;
 
     public CampfireRecipeCategory(IGuiHelper helper) {

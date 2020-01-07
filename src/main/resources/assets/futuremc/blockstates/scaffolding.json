@@ -1,0 +1,12 @@
+{
+    "multipart": [
+        {
+            "when": {"bottom": "true"},
+            "apply": { "model": "futuremc:scaffolding_unstable" }
+        },
+        {
+            "when": {"bottom": "false"},
+            "apply": { "model": "futuremc:scaffolding_stable" }
+        }
+    ]
+}

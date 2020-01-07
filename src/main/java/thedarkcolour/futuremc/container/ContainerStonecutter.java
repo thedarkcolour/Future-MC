@@ -16,10 +16,10 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import thedarkcolour.core.gui.Container;
 import thedarkcolour.futuremc.client.gui.GuiStonecutter;
-import thedarkcolour.futuremc.init.Init;
-import thedarkcolour.futuremc.recipe.StonecutterRecipe;
-import thedarkcolour.futuremc.recipe.StonecutterRecipes;
-import thedarkcolour.futuremc.sound.Sounds;
+import thedarkcolour.futuremc.init.FBlocks;
+import thedarkcolour.futuremc.init.Sounds;
+import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipe;
+import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes;
 
 public class ContainerStonecutter extends Container {
     private final World world;
@@ -76,7 +76,7 @@ public class ContainerStonecutter extends Container {
                 stack.getItem().onCreated(stack, playerIn.world, playerIn);
                 long l = world.getTotalWorldTime();
                 if (lastOnTake != l) {
-                    world.playSound(null, pos, Sounds.STONECUTTER_CARVE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    world.playSound(null, pos, Sounds.INSTANCE.getSTONECUTTER_CARVE(), SoundCategory.BLOCKS, 1.0F, 1.0F);
                     lastOnTake = l;
                 }
                 return super.onTake(playerIn, stack);
@@ -118,7 +118,7 @@ public class ContainerStonecutter extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        if (world.getBlockState(pos).getBlock() != Init.STONECUTTER) {
+        if (world.getBlockState(pos).getBlock() != FBlocks.INSTANCE.getSTONECUTTER()) {
             return false;
         } else {
             return playerIn.getDistanceSq((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
@@ -137,8 +137,8 @@ public class ContainerStonecutter extends Container {
     }
 
     private void handleCrafting() {
-        if (StonecutterRecipes.getRecipe(handler.getStackInSlot(0)).isPresent()) {
-            StonecutterRecipe recipe = StonecutterRecipes.getRecipe(handler.getStackInSlot(0)).get();
+        if (StonecutterRecipes.INSTANCE.getRecipe(handler.getStackInSlot(0)).isPresent()) {
+            StonecutterRecipe recipe = StonecutterRecipes.INSTANCE.getRecipe(handler.getStackInSlot(0)).get();
             if (!Objects.equal(currentRecipe, recipe)) {
                 currentRecipe = recipe;
                 selectedIndex = -1;
@@ -149,7 +149,7 @@ public class ContainerStonecutter extends Container {
     }
 
     private void updateRecipeResultSlot() {
-        if (currentRecipe != null) {
+        if (currentRecipe != null && selectedIndex > -1) {
             handler.setStackInSlot(1, currentRecipe.getOutput(selectedIndex));
         } else {
             handler.setStackInSlot(1, ItemStack.EMPTY);
@@ -185,7 +185,7 @@ public class ContainerStonecutter extends Container {
                 if (!mergeItemStack(itemstack1, 2, 38, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (StonecutterRecipes.getRecipe(itemstack1).isPresent()) {
+            } else if (StonecutterRecipes.INSTANCE.getRecipe(itemstack1).isPresent()) {
                 if (!mergeItemStack(itemstack1, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 }

@@ -63,7 +63,7 @@ public class ModelPanda extends ModelQuadruped {
         boolean flag1 = entityPanda.isSneezing();
         int i = entityPanda.getSneezeTicks();
         boolean flag2 = entityPanda.isEating();
-        boolean flag3 = entityPanda.func_bruh();
+        boolean flag3 = entityPanda.isFrightened();
         if (flag) {
             this.head.rotateAngleY = 0.35F * MathHelper.sin(0.6F * ageInTicks);
             this.head.rotateAngleZ = 0.35F * MathHelper.sin(0.6F * ageInTicks);

@@ -14,7 +14,7 @@ import thedarkcolour.futuremc.block.BlockComposter;
 import thedarkcolour.futuremc.tile.TileComposter;
 
 @ZenRegister
-@ZenClass("mods.minecraftfuture.Composter")
+@ZenClass("mods.futuremc.Composter")
 public final class Composter {
     @ZenMethod
     public static void addValidItem(IIngredient stack, int rarity) {
@@ -22,10 +22,10 @@ public final class Composter {
             if(!TileComposter.isBoneMeal(CraftTweakerMC.getItemStack(stack))) {
                 CraftTweakerAPI.apply(new Add(stack, rarity));
             } else {
-                FutureMC.logger.log(Level.ERROR, "Cannot add bone meal to compostable items!");
+                FutureMC.INSTANCE.getLOGGER().log(Level.ERROR, "Cannot add bone meal to compostable items!");
             }
         } else {
-            FutureMC.logger.log(Level.WARN, "Failed to add duplicate recipe for item " + stack.toCommandString());
+            FutureMC.INSTANCE.getLOGGER().log(Level.WARN, "Failed to add duplicate recipe for item " + stack.toCommandString());
         }
     }
 
@@ -54,7 +54,7 @@ public final class Composter {
         if(BlockComposter.ItemsForComposter.getChance(CraftTweakerMC.getItemStack(stack)) != -1) {
             CraftTweakerAPI.apply(new Remove(CraftTweakerMC.getItemStack(stack)));
         } else {
-            FutureMC.logger.log(Level.WARN, "Cannot remove non-existent item from valid composter items " + stack.toCommandString());
+            FutureMC.INSTANCE.getLOGGER().log(Level.WARN, "Cannot remove non-existent item from valid composter items " + stack.toCommandString());
         }
     }
 
@@ -81,8 +81,8 @@ public final class Composter {
         if(BlockComposter.ItemsForComposter.getChance(CraftTweakerMC.getItemStack(stack)) != -1) {
             CraftTweakerAPI.apply(new ReplaceItemChance(CraftTweakerMC.getItemStack(stack), newRarity));
         } else {
-            FutureMC.logger.log(Level.WARN, "Cannot change chance for invalid item " + stack.toCommandString() +
-                    " If you wish to make the item valid, use mods.minecraftfuture.Composter.addValidItem");
+            FutureMC.INSTANCE.getLOGGER().log(Level.WARN, "Cannot change chance for invalid item " + stack.toCommandString() +
+                    " If you wish to make the item valid, use mods.futuremc.Composter.addValidItem");
         }
     }
 

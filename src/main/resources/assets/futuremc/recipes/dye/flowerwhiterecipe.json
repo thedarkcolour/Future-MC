@@ -1,0 +1,12 @@
+{
+    "result": {
+        "item": "dye",
+        "data": 0
+    },
+    "ingredients": [
+        {
+            "item": "lily_of_the_valley"
+        }
+    ],
+    "type": "minecraft:crafting_shapeless"
+}

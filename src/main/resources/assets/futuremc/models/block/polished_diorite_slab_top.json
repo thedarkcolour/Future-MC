@@ -1,0 +1,6 @@
+{
+    "parent": "futuremc:block/slab_top",
+    "textures": {
+        "tex": "blocks/stone_diorite_smooth"
+    }
+}

@@ -1,6 +1,6 @@
 [
     {
-        "modid": "minecraftfuture",
+        "modid": "futuremc",
         "name": "Future MC",
         "description": "Adds features from future updates.",
         "version": "${version}",

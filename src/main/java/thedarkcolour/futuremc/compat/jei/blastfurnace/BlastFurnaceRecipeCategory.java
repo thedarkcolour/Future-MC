@@ -13,10 +13,10 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import thedarkcolour.futuremc.FutureMC;
-import thedarkcolour.futuremc.init.Init;
+import thedarkcolour.futuremc.init.FBlocks;
 
 public class BlastFurnaceRecipeCategory implements IRecipeCategory<BlastFurnaceRecipeWrapper> {
-    public static final String NAME = "container.jei.minecraftfuture.blast_furnace.name";
+    public static final String NAME = "container.jei.futuremc.blast_furnace.name";
     private final IDrawable background;
     private final IDrawableAnimated animatedFlame;
     private final IDrawableAnimated arrow;
@@ -29,7 +29,7 @@ public class BlastFurnaceRecipeCategory implements IRecipeCategory<BlastFurnaceR
         animatedFlame = helper.createAnimatedDrawable(staticFlame, 300, IDrawableAnimated.StartDirection.TOP, true);
 
         arrow = helper.drawableBuilder(new ResourceLocation("jei", "textures/gui/gui_vanilla.png"), 82, 128, 24, 17).buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
-        icon = helper.createDrawableIngredient(new ItemStack(Init.BLAST_FURNACE));
+        icon = helper.createDrawableIngredient(new ItemStack(FBlocks.INSTANCE.getBLAST_FURNACE()));
         localizedName = I18n.format("gui.jei.category.smelting");
     }
 

@@ -1,0 +1,24 @@
+{
+    "result": {
+        "item": "suspicious_stew",
+        "nbt": {
+            "effect": "SATURATION"
+        }
+    },
+    "ingredients": [
+        {
+            "item": "minecraft:red_mushroom"
+        },
+        {
+            "item": "minecraft:brown_mushroom"
+        },
+        {
+            "item": "minecraft:bowl"
+        },
+        {
+            "item": "minecraft:yellow_flower",
+            "data": 0
+        }
+    ],
+    "type": "minecraft:crafting_shapeless"
+}

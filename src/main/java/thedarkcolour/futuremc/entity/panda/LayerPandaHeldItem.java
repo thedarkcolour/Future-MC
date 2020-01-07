@@ -12,7 +12,7 @@ public class LayerPandaHeldItem implements LayerRenderer<EntityPanda> {
     @Override
     public void doRenderLayer(EntityPanda entityPanda, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         ItemStack itemstack = entityPanda.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-        if (entityPanda.isSitting() && !itemstack.isEmpty() && !entityPanda.func_bruh()) {
+        if (entityPanda.isSitting() && !itemstack.isEmpty() && !entityPanda.isFrightened()) {
             float f = -0.6F;
             float f1 = 1.4F;
             if (entityPanda.isEating()) {

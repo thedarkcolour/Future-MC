@@ -1,0 +1,9 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "axis=y":  { "model": "futuremc:stripped_jungle_log" },
+        "axis=z":   { "model": "futuremc:stripped_jungle_log", "x": 90 },
+        "axis=x":   { "model": "futuremc:stripped_jungle_log", "x": 90, "y": 90 },
+        "axis=none": { "model": "futuremc:stripped_jungle_log" }
+    }
+}

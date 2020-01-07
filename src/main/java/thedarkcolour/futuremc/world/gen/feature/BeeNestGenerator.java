@@ -13,22 +13,18 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import sun.reflect.Reflection;
 import thedarkcolour.futuremc.block.BlockBeeHive;
+import thedarkcolour.futuremc.config.FConfig;
 import thedarkcolour.futuremc.entity.bee.EntityBee;
-import thedarkcolour.futuremc.init.FutureConfig;
-import thedarkcolour.futuremc.init.Init;
+import thedarkcolour.futuremc.init.FBlocks;
 import thedarkcolour.futuremc.tile.TileBeeHive;
 
 import java.util.Map;
 import java.util.Random;
 
 public final class BeeNestGenerator {
-    protected static final IBlockState BEE_NEST = Init.BEE_NEST.getDefaultState().withProperty(BlockBeeHive.FACING, EnumFacing.SOUTH);
+    protected static final IBlockState BEE_NEST = FBlocks.INSTANCE.getBEE_NEST().getDefaultState().withProperty(BlockBeeHive.FACING, EnumFacing.SOUTH);
     protected static final EnumFacing[] VALID_OFFSETS = new EnumFacing[]{EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST};
     public static final Map<Biome, Double> BIOMES_AND_CHANCES = Maps.newHashMap();
-
-    public static double getBeeNestChance() {
-        return FutureConfig.general.beeNestChance;
-    }
 
     /**
      * Called with ASM.
@@ -36,13 +32,13 @@ public final class BeeNestGenerator {
      */
     @SuppressWarnings("unused")
     public static void generateBeeNestsForSmallTrees(World worldIn, Random rand, final BlockPos position, int height, WorldGenAbstractTree trees) {
-        if (!FutureConfig.general.bee || (Reflection.getCallerClass(3) != BiomeDecorator.class)) {
+        if (!FConfig.INSTANCE.getBuzzyBees().bee || (Reflection.getCallerClass(3) != BiomeDecorator.class)) {
             return;
         }
         Biome biome = worldIn.getBiome(position);
 
         if (BIOMES_AND_CHANCES.containsKey(biome)) {
-            if (!(rand.nextFloat() < FutureConfig.general.beeNestChance * BIOMES_AND_CHANCES.get(biome))) {
+            if (!(rand.nextFloat() < FConfig.INSTANCE.getBuzzyBees().beeNestChance * BIOMES_AND_CHANCES.get(biome))) {
                 return;
             }
         } else {
@@ -70,13 +66,13 @@ public final class BeeNestGenerator {
      */
     @SuppressWarnings("unused")
     public static void generateBeeNestsForBigTrees(World worldIn, Random rand, BlockPos position, final int height, WorldGenAbstractTree tree) {
-        if (!FutureConfig.general.bee || (Reflection.getCallerClass(3) != BiomeDecorator.class)) {
+        if (!FConfig.INSTANCE.getBuzzyBees().bee || (Reflection.getCallerClass(3) != BiomeDecorator.class)) {
             return;
         }
         Biome biome = worldIn.getBiome(position);
 
         if (BIOMES_AND_CHANCES.containsKey(biome)) {
-            if (!(rand.nextFloat() < FutureConfig.general.beeNestChance * BIOMES_AND_CHANCES.get(biome))) {
+            if (!(rand.nextFloat() < FConfig.INSTANCE.getBuzzyBees().beeNestChance * BIOMES_AND_CHANCES.get(biome))) {
                 return;
             }
         } else {
@@ -105,12 +101,11 @@ public final class BeeNestGenerator {
     }
 
     public static void init() {
-        String[] entries = FutureConfig.general.validBiomesForBeeNest.split(", ");
-        for (String entry : entries) {
+        for (String entry : FConfig.INSTANCE.getBuzzyBees().validBiomesForBeeNest) {
             String[] parts = entry.split(":");
             ResourceLocation loc = new ResourceLocation(parts[0], parts[1]);
             Biome biome = ForgeRegistries.BIOMES.getValue(loc);
-            Double chance = Double.parseDouble(parts[2]);
+            double chance = Double.parseDouble(parts[2]);
             BIOMES_AND_CHANCES.put(biome, chance);
         }
     }

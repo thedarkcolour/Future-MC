@@ -1,0 +1,12 @@
+{
+    "result": {
+        "item": "dye",
+        "data": 1
+    },
+    "ingredients": [
+        {
+            "item": "cornflower"
+        }
+    ],
+    "type": "minecraft:crafting_shapeless"
+}

@@ -1,0 +1,12 @@
+{
+    "result": {
+        "item": "dye",
+        "data": 3
+    },
+    "ingredients": [
+        {
+            "item": "wither_rose"
+        }
+    ],
+    "type": "minecraft:crafting_shapeless"
+}

@@ -9,17 +9,17 @@ import org.apache.logging.log4j.Level;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.futuremc.FutureMC;
-import thedarkcolour.futuremc.tile.TileCampfire;
+import thedarkcolour.futuremc.recipe.campfire.CampfireRecipes;
 
 @ZenRegister
-@ZenClass("mods.minecraftfuture.Campfire")
+@ZenClass("mods.futuremc.Campfire")
 public final class Campfire {
     @ZenMethod
     public static void addRecipe(IItemStack input, IItemStack output, int duration) {
-        if (TileCampfire.Recipes.getRecipe(CraftTweakerMC.getItemStack(input)) == null) {
+        if (!CampfireRecipes.INSTANCE.getRecipe(CraftTweakerMC.getItemStack(input)).isPresent()) {
             CraftTweakerAPI.apply(new AddRecipe(input, output, duration));
         } else {
-            FutureMC.logger.log(Level.WARN, "Failed to add duplicate recipe for " + input.getDefinition().getId());
+            FutureMC.INSTANCE.getLOGGER().log(Level.WARN, "Failed to add duplicate recipe for " + input.getDefinition().getId());
         }
     }
 
@@ -33,12 +33,11 @@ public final class Campfire {
             this.input = input;
             this.output = output;
             this.duration = duration;
-            //this.experience = experience;
         }
 
         @Override
         public void apply() {
-            TileCampfire.Recipes.recipe(CraftTweakerMC.getItemStack(input), CraftTweakerMC.getItemStack(output), duration);
+            CampfireRecipes.INSTANCE.addRecipe(CraftTweakerMC.getItemStack(input), CraftTweakerMC.getItemStack(output), duration);
         }
 
         @Override
@@ -49,7 +48,7 @@ public final class Campfire {
 
     @ZenMethod
     public static void removeRecipe(IItemStack stack) {
-        if (TileCampfire.Recipes.getRecipe(CraftTweakerMC.getItemStack(stack)) != null) {
+        if (CampfireRecipes.INSTANCE.getRecipe(CraftTweakerMC.getItemStack(stack)).isPresent()) {
             CraftTweakerAPI.apply(new RemoveRecipe(stack));
         }
     }
@@ -63,7 +62,7 @@ public final class Campfire {
 
         @Override
         public void apply() {
-            TileCampfire.Recipes.remove(CraftTweakerMC.getItemStack(input));
+            CampfireRecipes.INSTANCE.removeRecipe(CraftTweakerMC.getItemStack(input));
         }
 
         @Override
@@ -74,6 +73,6 @@ public final class Campfire {
 
     @ZenMethod
     public static void clearRecipes() {
-        TileCampfire.Recipes.clear();
+        CampfireRecipes.INSTANCE.clear();
     }
 }

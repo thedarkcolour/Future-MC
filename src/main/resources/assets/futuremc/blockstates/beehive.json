@@ -1,0 +1,18 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "futuremc:beehive_empty"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}],
+        "facing=north,full=false": { "model": "futuremc:beehive_empty" },
+        "facing=south,full=false": { "model": "futuremc:beehive_empty", "y": 180 },
+        "facing=east,full=false": { "model": "futuremc:beehive_empty", "y": 90 },
+        "facing=west,full=false": { "model": "futuremc:beehive_empty", "y": 270 },
+        "facing=north,full=true": { "model": "futuremc:beehive_full" },
+        "facing=south,full=true": { "model": "futuremc:beehive_full", "y": 180 },
+        "facing=east,full=true": { "model": "futuremc:beehive_full", "y": 90 },
+        "facing=west,full=true": { "model": "futuremc:beehive_full", "y": 270 }
+    }
+}

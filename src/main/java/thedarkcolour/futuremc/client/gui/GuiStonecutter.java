@@ -12,9 +12,9 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import thedarkcolour.core.gui.GuiContainer;
 import thedarkcolour.futuremc.FutureMC;
+import thedarkcolour.futuremc.config.FConfig;
 import thedarkcolour.futuremc.container.ContainerStonecutter;
-import thedarkcolour.futuremc.init.FutureConfig;
-import thedarkcolour.futuremc.recipe.StonecutterRecipe;
+import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipe;
 
 import java.io.IOException;
 
@@ -54,7 +54,7 @@ public class GuiStonecutter extends GuiContainer<ContainerStonecutter> {
         drawTexturedModalRect(i, j, 0, 0, xSize, ySize);
         int scrollY = (int) (41.0F * sliderProgress);
         drawTexturedModalRect(i + 119, j + 15 + scrollY, 176 + (canScroll() ? 0 : 12), 0, 12, 15);
-        if (jeiLoaded && FutureConfig.general.stonecutterRecipeButton) {
+        if (jeiLoaded && FConfig.INSTANCE.getVillageAndPillage().stonecutter.recipeButton) {
             drawRecipeButton(mouseX, mouseY, i, j);
         }
         if (container.getCurrentRecipe() != null) {

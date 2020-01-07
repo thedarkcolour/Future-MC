@@ -1,0 +1,11 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "futuremc:granite_slab_bottom"
+    },
+    "variants": {
+        "inventory": {"model": "futuremc:item/granite_slab"},
+        "half=bottom,variant=default": [{}],
+        "half=top,variant=default": {"model": "futuremc:granite_slab_top"}
+    }
+}

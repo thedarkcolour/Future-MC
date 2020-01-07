@@ -1,0 +1,7 @@
+Version 0.2.0:
+ Barrels - Opening sounds and texture change
+ Trident - Drops from drowned
+ Drowned - Exists
+ Frozen Ocean Glaciers
+ Trapdoors
+ Buttons

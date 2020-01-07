@@ -5,10 +5,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import thedarkcolour.core.inventory.DarkInventory;
 
 public class TileBarrel extends TileEntity {
-    private final ItemStackHandler storage = new ItemStackHandler(27);
+    private final DarkInventory storage = new DarkInventory(27);
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
@@ -41,7 +41,7 @@ public class TileBarrel extends TileEntity {
         return super.getCapability(capability, facing);
     }
 
-    public ItemStackHandler getStorage() {
+    public DarkInventory getInventory() {
         return storage;
     }
 }

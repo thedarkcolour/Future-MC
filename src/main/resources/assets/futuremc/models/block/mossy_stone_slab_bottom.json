@@ -1,0 +1,6 @@
+{
+    "parent": "futuremc:block/slab_bottom",
+    "textures": {
+        "tex": "blocks/cobblestone_mossy"
+    }
+}

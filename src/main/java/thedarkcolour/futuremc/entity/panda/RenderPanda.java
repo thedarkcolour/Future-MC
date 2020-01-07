@@ -5,22 +5,19 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Map;
 import java.util.function.Consumer;
 
-@SideOnly(Side.CLIENT)
 public class RenderPanda extends RenderLiving<EntityPanda> {
     private static final Map<EntityPanda.Type, ResourceLocation> textures = make(Maps.newEnumMap(EntityPanda.Type.class), (map) -> {
-        map.put(EntityPanda.Type.NORMAL, new ResourceLocation("minecraftfuture:textures/entity/panda/panda.png"));
-        map.put(EntityPanda.Type.LAZY, new ResourceLocation("minecraftfuture:textures/entity/panda/lazy_panda.png"));
-        map.put(EntityPanda.Type.WORRIED, new ResourceLocation("minecraftfuture:textures/entity/panda/worried_panda.png"));
-        map.put(EntityPanda.Type.PLAYFUL, new ResourceLocation("minecraftfuture:textures/entity/panda/playful_panda.png"));
-        map.put(EntityPanda.Type.BROWN, new ResourceLocation("minecraftfuture:textures/entity/panda/brown_panda.png"));
-        map.put(EntityPanda.Type.WEAK, new ResourceLocation("minecraftfuture:textures/entity/panda/weak_panda.png"));
-        map.put(EntityPanda.Type.AGGRESSIVE, new ResourceLocation("minecraftfuture:textures/entity/panda/aggressive_panda.png"));
+        map.put(EntityPanda.Type.NORMAL, new ResourceLocation("futuremc:textures/entity/panda/panda.png"));
+        map.put(EntityPanda.Type.LAZY, new ResourceLocation("futuremc:textures/entity/panda/lazy_panda.png"));
+        map.put(EntityPanda.Type.WORRIED, new ResourceLocation("futuremc:textures/entity/panda/worried_panda.png"));
+        map.put(EntityPanda.Type.PLAYFUL, new ResourceLocation("futuremc:textures/entity/panda/playful_panda.png"));
+        map.put(EntityPanda.Type.BROWN, new ResourceLocation("futuremc:textures/entity/panda/brown_panda.png"));
+        map.put(EntityPanda.Type.WEAK, new ResourceLocation("futuremc:textures/entity/panda/weak_panda.png"));
+        map.put(EntityPanda.Type.AGGRESSIVE, new ResourceLocation("futuremc:textures/entity/panda/aggressive_panda.png"));
     });
 
     private static <T> T make(T clazz, Consumer<T> consumer) {
@@ -84,7 +81,7 @@ public class RenderPanda extends RenderLiving<EntityPanda> {
             GlStateManager.translate(0.0F, 0.8F * f6, 0.0F);
             GlStateManager.rotate(EntityPanda.func_219799_g(f6, entityLiving.rotationPitch, entityLiving.rotationPitch + 90.0F), 1.0F, 0.0F, 0.0F);
             GlStateManager.translate(0.0F, -1.0F * f6, 0.0F);
-            if (entityLiving.func_bruh()) {
+            if (entityLiving.isFrightened()) {
                 float f7 = (float)(Math.cos((double)entityLiving.ticksExisted * 1.25D) * Math.PI * (double)0.05F);
                 GlStateManager.rotate(f7, 0.0F, 1.0F, 0.0F);
                 if (entityLiving.isChild()) {

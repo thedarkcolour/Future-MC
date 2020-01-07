@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "futuremc:smooth_quartz"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}]
+    }
+}

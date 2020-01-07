@@ -11,16 +11,17 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
+import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes;
 
 @ZenRegister
-@ZenClass("mods.minecraftfuture.BlastFurnace")
+@ZenClass("mods.futuremc.BlastFurnace")
 public final class BlastFurnace {
     @ZenMethod
     public static void addRecipe(IItemStack input, IItemStack output) {
         if (!BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE.canCraft(CraftTweakerMC.getItemStack(input))) {
             CraftTweakerAPI.apply(new BlastFurnace.AddRecipe(input, output));
         } else {
-            FutureMC.logger.log(Level.WARN, "Tried to add duplicate valid BlastFurnace input for " + input.getDefinition().getId());
+            FutureMC.INSTANCE.getLOGGER().log(Level.WARN, "Tried to add duplicate valid BlastFurnace input for " + input.getDefinition().getId());
         }
     }
 
@@ -35,7 +36,7 @@ public final class BlastFurnace {
 
         @Override
         public void apply() {
-            BlockFurnaceAdvanced.Recipes.blastFurnaceRecipe(input, output);
+            BlastFurnaceRecipes.addRecipe(input, output);
         }
 
         @Override
@@ -58,7 +59,7 @@ public final class BlastFurnace {
 
         @Override
         public void apply() {
-            BlockFurnaceAdvanced.Recipes.removeBlastFurnaceRecipe(input);
+            BlastFurnaceRecipes.removeRecipe(input);
         }
 
         @Override
@@ -69,6 +70,6 @@ public final class BlastFurnace {
 
     @ZenMethod
     public static void clearRecipes() {
-        BlockFurnaceAdvanced.Recipes.clearBlastFurnace();
+        BlastFurnaceRecipes.clearAllRecipes();
     }
 }

@@ -35,7 +35,7 @@ public interface IProjectileDispenserBehaviour extends IBehaviorDispenseItem {
         World worldIn = source.getWorld();
         IPosition iposition = BlockDispenser.getDispensePosition(source);
         EnumFacing enumfacing = source.getBlockState().getValue(BlockDispenser.FACING);
-        IProjectile iprojectile = this.getProjectileEntity(worldIn, iposition, stack);
+        IProjectile iprojectile = getProjectileEntity(worldIn, iposition, stack);
         iprojectile.shoot(enumfacing.getXOffset(), (float)enumfacing.getYOffset() + 0.1F, enumfacing.getZOffset(), this.getProjectileVelocity(), this.getProjectileInaccuracy());
         worldIn.spawnEntity((Entity)iprojectile);
         stack.shrink(1);

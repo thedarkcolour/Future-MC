@@ -1,0 +1,12 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "particle": "futuremc:blocks/blast_furnace_front",
+        "down": "futuremc:blocks/blast_furnace_top",
+        "up": "futuremc:blocks/blast_furnace_top",
+        "north": "futuremc:blocks/blast_furnace_front_on",
+        "east": "futuremc:blocks/blast_furnace_side",
+        "south": "futuremc:blocks/blast_furnace_side",
+        "west": "futuremc:blocks/blast_furnace_side"
+    }
+}

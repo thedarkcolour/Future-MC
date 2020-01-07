@@ -8,8 +8,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.container.ContainerBarrel;
 import thedarkcolour.futuremc.container.ContainerFurnaceAdvanced;
@@ -44,12 +42,10 @@ public enum Gui {
         this.container = container;
     }
 
-    @SideOnly(Side.CLIENT)
     public GuiContainer getGui(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
         return getContainer(playerInv, worldIn, pos).getGuiContainer();
     }
 
-    @SideOnly(Side.CLIENT)
     public GuiContainer getGui(InventoryPlayer playerInv, TileEntity te) {
         return getContainer(playerInv, te).getGuiContainer();
     }
@@ -67,7 +63,7 @@ public enum Gui {
     }
 
     public void open(EntityPlayer playerIn, World worldIn, BlockPos pos) {
-        playerIn.openGui(FutureMC.instance, ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+        playerIn.openGui(FutureMC.INSTANCE, ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());
     }
 
     private static class Handler implements IGuiHandler {
@@ -97,7 +93,7 @@ public enum Gui {
     }
 
     public static void setup() {
-        NetworkRegistry.INSTANCE.registerGuiHandler(FutureMC.instance, new Handler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(FutureMC.INSTANCE, new Handler());
     }
 
     @FunctionalInterface

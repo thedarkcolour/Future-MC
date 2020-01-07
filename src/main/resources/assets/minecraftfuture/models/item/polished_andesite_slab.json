@@ -1,6 +1,0 @@
-{
-    "parent": "minecraftfuture:item/slab_inv",
-    "textures": {
-        "tex": "blocks/stone_andesite_smooth"
-    }
-}

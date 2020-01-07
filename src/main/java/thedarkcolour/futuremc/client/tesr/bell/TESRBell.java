@@ -11,7 +11,7 @@ import thedarkcolour.futuremc.tile.TileBell;
 
 @SideOnly(Side.CLIENT)
 public class TESRBell extends TileEntitySpecialRenderer<TileBell> {
-    private static ResourceLocation textures = new ResourceLocation("minecraftfuture:textures/entity/bell/bell_body.png");
+    private static ResourceLocation textures = new ResourceLocation("futuremc:textures/entity/bell/bell_body.png");
     private final ModelBell model = new ModelBell();
 
     @Override

@@ -5,14 +5,14 @@ import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import thedarkcolour.futuremc.tile.TileCampfire;
+import thedarkcolour.futuremc.recipe.campfire.CampfireRecipe;
 
 import java.awt.Color;
 
 public class CampfireRecipeWrapper implements IRecipeWrapper {
-    public final TileCampfire.Recipe recipe;
+    public final CampfireRecipe recipe;
 
-    public CampfireRecipeWrapper(TileCampfire.Recipe recipe) {
+    public CampfireRecipeWrapper(CampfireRecipe recipe) {
         this.recipe = recipe;
     }
 
@@ -24,6 +24,6 @@ public class CampfireRecipeWrapper implements IRecipeWrapper {
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-        minecraft.fontRenderer.drawString(I18n.format("container.jei.minecraftfuture.campfire.duration") + ": " + recipe.duration, 2, 2, Color.gray.getRGB());
+        minecraft.fontRenderer.drawString(I18n.format("container.jei.futuremc.campfire.duration") + ": " + recipe.duration, 2, 2, Color.gray.getRGB());
     }
 }

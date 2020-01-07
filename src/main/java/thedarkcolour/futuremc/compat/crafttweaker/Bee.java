@@ -11,33 +11,34 @@ import org.apache.logging.log4j.Level;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.core.util.PredicateArrayList;
+import thedarkcolour.core.util.Util;
 import thedarkcolour.futuremc.FutureMC;
-import thedarkcolour.futuremc.init.Init;
+import thedarkcolour.futuremc.init.FBlocks;
 
 @ZenRegister
-@ZenClass("mods.minecraftfuture.Bee")
+@ZenClass("mods.futuremc.Bee")
 public final class Bee {
-    public static final PredicateArrayList<IBlock> FLOWERS = new PredicateArrayList<>(IBlockPattern::matches).addAll(
-            CraftTweakerMC.getBlock(Blocks.YELLOW_FLOWER, 0),
-            CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 0),
-            CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 1),
-            CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 2),
-            CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 3),
-            CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 4),
-            CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 5),
-            CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 6),
-            CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 7),
-            CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 8),
-            CraftTweakerMC.getBlock(Init.CORNFLOWER, 0),
-            CraftTweakerMC.getBlock(Init.LILY_OF_VALLEY, 0)
-    );
+    public static final PredicateArrayList<IBlock> FLOWERS = Util.predicateArrayListOf(IBlockPattern::matches, list -> {
+            list.add(CraftTweakerMC.getBlock(Blocks.YELLOW_FLOWER, 0));
+            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 0));
+            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 1));
+            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 2));
+            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 3));
+            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 4));
+            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 5));
+            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 6));
+            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 7));
+            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 8));
+            list.add(CraftTweakerMC.getBlock(FBlocks.INSTANCE.getCORNFLOWER(), 0));
+            list.add(CraftTweakerMC.getBlock(FBlocks.INSTANCE.getLILY_OF_THE_VALLEY(), 0));
+    });
 
     @ZenMethod
     public static void addFlower(IBlock block) {
         if (!FLOWERS.containsEquivalent(block)) {
             CraftTweakerAPI.apply((AddFlower)() -> FLOWERS.add(block));
         } else {
-            FutureMC.logger.log(Level.ERROR, "Tried to add duplicate flower block to bee " + block.getDefinition().getId() + ":" + block.getMeta());
+            FutureMC.INSTANCE.getLOGGER().log(Level.ERROR, "Tried to add duplicate flower block to bee " + block.getDefinition().getId() + ":" + block.getMeta());
         }
     }
 
@@ -53,10 +54,10 @@ public final class Bee {
 
     @ZenMethod
     public static void removeFlower(IBlock block) {
-        if(FLOWERS.containsEquivalent(block)) {
+        if (FLOWERS.containsEquivalent(block)) {
             CraftTweakerAPI.apply((RemoveFlower)() -> FLOWERS.add(block));
         } else {
-            FutureMC.logger.log(Level.ERROR, "Tried to remove non pollinate-able flower block to bee " + block.getDefinition().getId() + ":" + block.getMeta());
+            FutureMC.INSTANCE.getLOGGER().log(Level.ERROR, "Tried to remove non pollinate-able flower block to bee " + block.getDefinition().getId() + ":" + block.getMeta());
         }
     }
 

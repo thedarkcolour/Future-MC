@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "futuremc:wither_rose"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": {"model": "futuremc:item/wither_rose"}
+  }
+}

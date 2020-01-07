@@ -1,33 +1,47 @@
 package thedarkcolour.futuremc.client.gui;
 
-import com.google.common.collect.Lists;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.BannerTextures;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.BannerPattern;
-import net.minecraft.tileentity.TileEntityBanner;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.container.ContainerLoom;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
+// TODO
 public class GuiLoom extends GuiContainer {
-    private static final ResourceLocation background = new ResourceLocation(FutureMC.ID,"textures/gui/loom.png");
+    private static final ResourceLocation BACKGROUND = new ResourceLocation(FutureMC.ID,"textures/gui/loom.png");
+    private final ContainerLoom container;
+
+    public GuiLoom(ContainerLoom container) {
+        super(container);
+        this.container = container;
+        container.setInventoryUpdateListener(this::onInventoryUpdate);
+    }
+
+    private void onInventoryUpdate() {
+
+    }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        String s = I18n.format("container.Loom");
+        fontRenderer.drawString(s, 8, 4, 4210752);
+        fontRenderer.drawString(container.getPlayerInv().getDisplayName().getFormattedText(), 8, ySize - 94, 4210752);
+    }
+
+    @Override
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+
+    }
+}
+/*
+public class GuiLoom extends GuiContainer {
+    private static final ResourceLocation BACKGROUND = new ResourceLocation(FutureMC.ID,"textures/gui/loom.png");
     private static final int NUM_BANNER_RECIPES = (BannerPattern.values().length - 5 - 1 + 4 - 1) / 4;
     private static final List<EnumDyeColor> color = Lists.newArrayList(EnumDyeColor.GRAY, EnumDyeColor.WHITE);
     private static final ResourceLocation[] designs = Arrays.stream(BannerPattern.values())
@@ -38,7 +52,7 @@ public class GuiLoom extends GuiContainer {
     private ResourceLocation bannerLocation;
     private boolean canScroll;
     private boolean field_214124_v;
-    private boolean field_214125_w;
+    private boolean isBlank;
     private boolean clickedOnScroll;
     private ItemStack bannerStack = ItemStack.EMPTY;
     private ItemStack colorStack = ItemStack.EMPTY;
@@ -74,7 +88,7 @@ public class GuiLoom extends GuiContainer {
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         drawDefaultBackground();
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-        mc.getTextureManager().bindTexture(background);
+        mc.getTextureManager().bindTexture(BACKGROUND);
         int i = (width - xSize) / 2;
         int j = (height - ySize) / 2;
         drawTexturedModalRect(i, j, 0, 0, xSize, ySize);
@@ -83,12 +97,18 @@ public class GuiLoom extends GuiContainer {
         drawSlotBackgrounds(i, j);
         int scrollY = (int)(41.0F * sliderProgress);
         drawTexturedModalRect(i + 119, j + 13 + scrollY, 232 + (canScroll ? 0 : 12), 0, 12, 15);
-        if (bannerLocation != null && !field_214125_w) {
+
+        // Code for the output preview
+        if (bannerLocation != null && !isBlank) {
+            GlStateManager.pushMatrix();
+            GlStateManager.translate(i + 139, j + 52, 0);
+            //GlStateManager.scale(24.0f, -24.0f, 1.0f);
             mc.getTextureManager().bindTexture(bannerLocation);
             zLevel = 20;
             drawTexturedModalRect(i + 141, j + 8, 20, 40, 20, 40);
             zLevel = 0;
-        } else if (field_214125_w) {
+            GlStateManager.popMatrix();
+        } else if (!isBlank) {
             drawTexturedModalRect(i + output.xPos - 2, j + output.yPos - 2, xSize, 17, 17, 16);
         }
 
@@ -101,7 +121,7 @@ public class GuiLoom extends GuiContainer {
                 int l1 = k1 - recipeIndexOffset;
                 int i2 = l + l1 % 4 * 14;
                 int j2 = i1 + l1 / 4 * 14;
-                mc.getTextureManager().bindTexture(background);
+                mc.getTextureManager().bindTexture(BACKGROUND);
                 int k2 = ySize;
                 if (k1 == container.getSelectedIndex()) {
                     k2 += 14;
@@ -109,16 +129,21 @@ public class GuiLoom extends GuiContainer {
                     k2 += 28;
                 }
 
+                //GlStateManager.pushMatrix();
+                //GlStateManager.scale(0.85f, 0.85f, 1.0f);
+
                 drawTexturedModalRect(i2, j2, 0, k2, 14, 14);
                 if (designs[k1] != null) {
                     mc.getTextureManager().bindTexture(designs[k1]);
                     drawTexturedModalRect(i2 + 4, j2 + 2, 5, 10, 20, 40);
                 }
+
+                //GlStateManager.popMatrix();
             }
         } else if (field_214124_v) {
             int l2 = i + 60;
             int i3 = j + 13;
-            mc.getTextureManager().bindTexture(background);
+            mc.getTextureManager().bindTexture(BACKGROUND);
             drawTexturedModalRect(l2, i3, 0, ySize, 14, 14);
             int j3 = container.getSelectedIndex();
             if (designs[j3] != null) {
@@ -223,14 +248,14 @@ public class GuiLoom extends GuiContainer {
         ItemStack stack1 = container.getColor();
         ItemStack stack2 = container.getPattern();
         NBTTagCompound tag = stack.getOrCreateSubCompound("BlockEntityTag");
-        field_214125_w = tag.hasKey("Patterns", 9) && !stack.isEmpty() && canFitPatterns(tag.getTagList("Patterns", 10));
-        if (field_214125_w) {
+        isBlank = tag.hasKey("Patterns", 9) && !stack.isEmpty() && canFitPatterns(tag.getTagList("Patterns", 10));
+        if (isBlank) {
             bannerLocation = null;
         }
 
         if (!ItemStack.areItemStacksEqual(stack, bannerStack) || !ItemStack.areItemStacksEqual(stack1, this.colorStack) || !ItemStack.areItemStacksEqual(stack2, this.patternStack)) {
-            canScroll = !stack.isEmpty() && !stack1.isEmpty() && stack2.isEmpty() && !field_214125_w;
-            field_214124_v = !field_214125_w && !stack2.isEmpty() && !stack.isEmpty() && !stack1.isEmpty();
+            canScroll = !stack.isEmpty() && !stack1.isEmpty() && stack2.isEmpty() && !isBlank;
+            field_214124_v = !isBlank && !stack2.isEmpty() && !stack.isEmpty() && !stack1.isEmpty();
         }
 
         bannerStack = stack.copy();
@@ -247,3 +272,4 @@ public class GuiLoom extends GuiContainer {
         return i <= 6;
     }
 }
+*/

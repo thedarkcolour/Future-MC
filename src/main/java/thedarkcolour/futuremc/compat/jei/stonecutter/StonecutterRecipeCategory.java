@@ -11,13 +11,13 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.compat.jei.FutureMCJEIPlugin;
-import thedarkcolour.futuremc.recipe.StonecutterRecipe;
-import thedarkcolour.futuremc.recipe.StonecutterRecipes;
+import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipe;
+import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes;
 
 import java.util.List;
 
 public class StonecutterRecipeCategory implements IRecipeCategory<StonecutterRecipeWrapper> {
-    public static final String NAME = "container.jei.minecraftfuture.stonecutter.name";
+    public static final String NAME = "container.jei.futuremc.stonecutter.name";
     private final IDrawable background;
 
     public StonecutterRecipeCategory(IGuiHelper helper) {
@@ -27,9 +27,8 @@ public class StonecutterRecipeCategory implements IRecipeCategory<StonecutterRec
     public static List<StonecutterRecipeWrapper> getAllRecipeWrappers() {
         List<StonecutterRecipeWrapper> wrappers = Lists.newArrayList();
 
-        ItemStack input;
-        for (StonecutterRecipe recipe : StonecutterRecipes.allRecipes()) {
-            input = recipe.getInput();
+        for (StonecutterRecipe recipe : StonecutterRecipes.INSTANCE.getRecipes()) {
+            ItemStack input = recipe.getInput();
             for (int i = 0; i < recipe.getTotalOutputs(); ++i) {
                 wrappers.add(new StonecutterRecipeWrapper(input, recipe.getOutput(i), i));
             }

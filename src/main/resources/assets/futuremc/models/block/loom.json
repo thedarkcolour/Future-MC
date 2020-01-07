@@ -1,0 +1,12 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "particle": "futuremc:blocks/loom_front",
+        "down": "futuremc:blocks/loom_bottom",
+        "up": "futuremc:blocks/loom_top",
+        "north": "futuremc:blocks/loom_front",
+        "east": "futuremc:blocks/loom_side",
+        "south": "futuremc:blocks/loom_side",
+        "west": "futuremc:blocks/loom_side"
+    }
+}

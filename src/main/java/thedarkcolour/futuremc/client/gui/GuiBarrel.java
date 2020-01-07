@@ -1,7 +1,6 @@
 package thedarkcolour.futuremc.client.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -36,7 +35,7 @@ public class GuiBarrel extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        fontRenderer.drawString(I18n.format("container.Barrel"), 8, 6, 4210752);
+        fontRenderer.drawString(te.getInventory().getDisplayName().getUnformattedText(), 8, 6, 4210752);
         fontRenderer.drawString(playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 92, 4210752);
     }
 

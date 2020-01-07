@@ -1,0 +1,11 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "futuremc:mossy_stone_slab_bottom"
+    },
+    "variants": {
+        "inventory": {"model": "futuremc:item/mossy_stone_slab"},
+        "half=bottom,variant=default": [{}],
+        "half=top,variant=default": {"model": "futuremc:mossy_stone_slab_top"}
+    }
+}
