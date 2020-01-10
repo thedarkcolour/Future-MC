@@ -2,39 +2,42 @@
 tile.futuremc.Lantern.name=Фонарь
 tile.futuremc.Barrel.name=Бочка
 tile.futuremc.Loom.name=Ткацкий станок
-tile.futuremc.Stonecutter.name=Каменотес
-tile.futuremc.Blast_Furnace.name=Доменная печь
-tile.futuremc.Smoker.name=Курильщик
-tile.futuremc.Grindstone.name=точильный камень
-tile.futuremc.Composter.name=Компостера
+tile.futuremc.Stonecutter.name=Камнерез
+tile.futuremc.Blast_Furnace.name=Плавильная печь
+tile.futuremc.Smoker.name=Коптильня
+tile.futuremc.Grindstone.name=Точило
+tile.futuremc.Composter.name=Компостница
 
 # Растения
 tile.futuremc.lily_of_the_valley.name=Ландыш
-tile.futuremc.wither_rose.name=Увядшая роза
+tile.futuremc.wither_rose.name=Роза визера
 tile.futuremc.cornflower.name=Василек
-tile.futuremc.sweet_berry_bush.name=Сладкая ягода буш
+tile.futuremc.sweet_berry_bush.name=Куст сладких ягод
 tile.futuremc.Campfire.name=Костер
-tile.futuremc.stripped_oak_log.name=Бревенчатый дуб
-tile.futuremc.stripped_spruce_log.name=Бревенчатая ель
-tile.futuremc.stripped_birch_log.name=Бревенчатая береза
-tile.futuremc.stripped_jungle_log.name=Бревенчатое тропическое дерево
-tile.futuremc.stripped_acacia_log.name=Бревенчатая акация
-tile.futuremc.stripped_dark_oak_log.name=Бревенчатый темный дуб
-death.attack.sweet_berry_bush=%1$s was poked to death by a sweet berry bush
+tile.futuremc.stripped_oak_log.name=Обтёсанное дубовое бревно
+tile.futuremc.stripped_spruce_log.name=Обтёсанное еловое бревно
+tile.futuremc.stripped_birch_log.name=Обтёсанное берёзовое бревно
+tile.futuremc.stripped_jungle_log.name=Обтёсанное бревно тропического дерева
+tile.futuremc.stripped_acacia_log.name=Обтёсанное акациевое бревно
+tile.futuremc.stripped_dark_oak_log.name=Обтёсанное бревно тёмного дуба
+death.attack.sweet_berry_bush=%1$s искололся до смерти в кустах сладких ягод
+death.attack.sting=%1$s был ужален до смерти
+death.attack.trident=%1$s был пронзён %2$s
+death.attack.trident.item=%1$s был пронзён %2$s с помощью %3$s
 
 # Стены
-tile.futuremc.brick_wall.name=Кирпичная стена
-tile.futuremc.andesite_wall.name=Андезитовая стена
-tile.futuremc.diorite_wall.name=Диоритовая стена
-tile.futuremc.granite_wall.name=Гранитная стена
-tile.futuremc.prismarine_wall.name=Призмариновая стена
-tile.futuremc.stone_brick_wall.name=Каменная кирпичная стена
-tile.futuremc.mossy_stone_wall.name=Мшистая каменная кирпичная стена
-tile.futuremc.end_stone_wall.name=Стена из камня края
-tile.futuremc.nether_brick_wall.name=Стена из незеритовых кирпичей
-tile.futuremc.sandstone_wall.name=Песчаниковая стена
-tile.futuremc.red_sandstone_wall.name=Красная песчаниковая стена
-tile.futuremc.nether_brick_red_wall.name=Стена из красных незеритовых кирпичей
+tile.futuremc.brick_wall.name=Кирпичная ограда
+tile.futuremc.andesite_wall.name=Андезитовая ограда
+tile.futuremc.diorite_wall.name=Диоритовая ограда
+tile.futuremc.granite_wall.name=Гранитная ограда
+tile.futuremc.prismarine_wall.name=Призмариновая ограда
+tile.futuremc.stone_brick_wall.name=Ограда из каменного кирпича
+tile.futuremc.mossy_stone_wall.name=Ограда из замшелого каменного кирпича
+tile.futuremc.end_stone_wall.name=Ограда из камня края
+tile.futuremc.nether_brick_wall.name=Ограда из незеритового кирпича
+tile.futuremc.sandstone_wall.name=Песчаниковая ограда
+tile.futuremc.red_sandstone_wall.name=Ограда из красного песчанника
+tile.futuremc.nether_brick_red_wall.name=Ограда из красного незеритового кирпича
 
 # Плиты
 tile.futuremc.granite_slab.name=Гранитная плита
@@ -54,13 +57,18 @@ tile.futuremc.mossy_stone_slab.name=Плита из мшистого камня
 tile.futuremc.smooth_quartz_slab.name=Плита из полированного кварца
 tile.futuremc.red_nether_brick_slab.name=Плита из красного незеритового кирпича
 tile.futuremc.end_stone_brick_slab.name=Плита из кирпича края
-tile.futuremc.Bamboo.name=бамбуковый
+tile.futuremc.Bamboo.name=Бамбук
+tile.futuremc.bee_nest.name=Пчелиное гнездо
+tile.futuremc.beehive.name=Улей
+tile.futuremc.honey_block.name=Блок мёда
+tile.futuremc.honeycomb_block.name=Блок пчелиных сот
 
 # Декоративные блоки
 tile.futuremc.smooth_stone.name=Гладкий камень
 tile.futuremc.smooth_quartz.name=Гладкий кварц
-tile.futuremc.fletching_table.name=Струговой стол
-tile.futuremc.smithing_table.name=Кузнечный стол
+tile.futuremc.fletching_table.name=Стол лучника
+tile.futuremc.smithing_table.name=Стол кузнеца
+tile.futuremc.BlueIce.name=Синий лёд
 entity.ItemFrame.name=Предметная рамка
 
 # Материалы крафта
@@ -75,25 +83,42 @@ item.futuremc.Crossbow.name=Арбалет
 item.futuremc.Crossbow_Loaded.name=Арбалет со стрелой
 item.futuremc.suspicious_stew.name=Подозрительное рагу
 item.futuremc.SweetBerry.name=Сладкие ягоды
-item.futuremc.Bamboo.name=бамбуковый
+item.futuremc.Bamboo.name=Бамбук
+item.futuremc.banner_pattern.name=Узор флага
+item.futuremc.banner_pattern.flower=Цветок
+item.futuremc.banner_pattern.creeper=Крипер
+item.futuremc.banner_pattern.skull=Череп
+item.futuremc.banner_pattern.thing=Нечто
+item.futuremc.banner_pattern.globe=Глобус
+item.futuremc.honey_bottle.name=Бутылочка мёда
+item.futuremc.honeycomb.name=Пчелиные соты
 
 # GUI
 container.Barrel=Бочка
-container.BlastFurnace=Доменная печь
-container.Smoker=Курильщик
-container.Grindstone=Точильный камень
-container.Stonecutter=Каменотес
+container.BlastFurnace=Плавильная печь
+container.Smoker=Коптильня
+container.Grindstone=Починка и снятие чар
+container.Stonecutter=Камнерез
+container.Loom=Ткацкий станок
 
 # Сущности
 entity.trident.name=Трезубец
-entity.panda.name=Panda
+entity.panda.name=Панда
+entity.bee.name=Пчела
 
 # Чары
-enchantment.loyalty=Лояльность
-enchantment.channeling=Направление
-enchantment.riptide=Быстрина
-enchantment.impaling=Пронзание
-enchantment.quick_charge=Быстрая зарядка
+enchantment.loyalty=Верность
+enchantment.channeling=Проводник
+enchantment.riptide=Тягун
+enchantment.impaling=Пронзатель
+enchantment.quick_charge=Быстрая перезарядка
 
 # Вкладка креатива
 itemGroup.Future=Future MC
+
+# JEI
+container.jei.futuremc.campfire.name=Костёр
+container.jei.futuremc.blast_furnace.name=Плавильная печь
+container.jei.futuremc.smoker.name=Коптильня
+container.jei.futuremc.stonecutter.name=Камнерез
+container.jei.futuremc.campfire.duration=Длительность
