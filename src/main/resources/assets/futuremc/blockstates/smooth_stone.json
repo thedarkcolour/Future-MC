@@ -4,7 +4,11 @@
         "model": "futuremc:smooth_stone"
     },
     "variants": {
-        "normal": [{}],
-        "inventory": [{}]
+        "normal": [
+            {}
+        ],
+        "inventory": [
+            {}
+        ]
     }
 }

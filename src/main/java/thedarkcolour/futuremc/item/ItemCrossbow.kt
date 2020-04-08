@@ -27,8 +27,8 @@ import thedarkcolour.futuremc.enchantment.Enchantments
 import thedarkcolour.futuremc.entity.horizontal_firework.EntityHorizontalFireworksRocket
 import thedarkcolour.futuremc.entity.trident.EntityModArrow
 import thedarkcolour.futuremc.entity.trident.EntityPiercingArrow
-import thedarkcolour.futuremc.init.FItems
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FItems
+import thedarkcolour.futuremc.registry.FSounds
 import java.util.*
 import kotlin.math.PI
 import kotlin.math.cos
@@ -96,7 +96,16 @@ class ItemCrossbow : ItemModeled("crossbow") {
         if (f >= 1.0f && !isCharged(stack) && hasAmmo(entityLiving, stack)) {
             setCharged(stack, true)
             val soundcategory = if (entityLiving is EntityPlayer) SoundCategory.PLAYERS else SoundCategory.HOSTILE
-            worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, Sounds.CROSSBOW_LOADING_END, soundcategory, 1.0f, 1.0f / (itemRand.nextFloat() * 0.5f + 1.0f) + 0.2f)
+            worldIn.playSound(
+                null,
+                entityLiving.posX,
+                entityLiving.posY,
+                entityLiving.posZ,
+                FSounds.CROSSBOW_LOADING_END,
+                soundcategory,
+                1.0f,
+                1.0f / (itemRand.nextFloat() * 0.5f + 1.0f) + 0.2f
+            )
         }
     }
 
@@ -125,7 +134,13 @@ class ItemCrossbow : ItemModeled("crossbow") {
         return true
     }
 
-    private fun consumeAmmo(entity: EntityLivingBase, crossbow: ItemStack, ammo: ItemStack, isMultishot: Boolean, isCreative: Boolean): Boolean {
+    private fun consumeAmmo(
+        entity: EntityLivingBase,
+        crossbow: ItemStack,
+        ammo: ItemStack,
+        isMultishot: Boolean,
+        isCreative: Boolean
+    ): Boolean {
         if (ammo.isEmpty) {
             return false
         } else {
@@ -199,12 +214,29 @@ class ItemCrossbow : ItemModeled("crossbow") {
         return getChargedProjectiles(stack).stream().anyMatch { item -> item.item == Items.FIREWORKS }
     }
 
-    private fun fireProjectile(worldIn: World, shooter: EntityLivingBase, hand: EnumHand, crossbow: ItemStack, projectile: ItemStack, soundPitch: Float, isCreative: Boolean, velocity: Float, inaccuracy: Float, projectileAngle: Float) {
+    private fun fireProjectile(
+        worldIn: World,
+        shooter: EntityLivingBase,
+        hand: EnumHand,
+        crossbow: ItemStack,
+        projectile: ItemStack,
+        soundPitch: Float,
+        isCreative: Boolean,
+        velocity: Float,
+        inaccuracy: Float,
+        projectileAngle: Float
+    ) {
         if (!worldIn.isRemote) {
             val isFireworks = projectile.item == Items.FIREWORKS
             val a: IProjectile
             if (isFireworks) {
-                a = EntityHorizontalFireworksRocket(worldIn, projectile, shooter.posX, shooter.posY + shooter.eyeHeight.toDouble() - 0.15f.toDouble(), shooter.posZ)
+                a = EntityHorizontalFireworksRocket(
+                    worldIn,
+                    projectile,
+                    shooter.posX,
+                    shooter.posY + shooter.eyeHeight.toDouble() - 0.15f.toDouble(),
+                    shooter.posZ
+                )
             } else {
                 a = createArrow(worldIn, shooter, crossbow, projectile)
                 if (isCreative || projectileAngle != 0.0F) {
@@ -226,11 +258,25 @@ class ItemCrossbow : ItemModeled("crossbow") {
 
             crossbow.damageItem(if (isFireworks) 3 else 1, shooter)
             worldIn.spawnEntity(a as Entity)
-            worldIn.playSound(null, shooter.posX, shooter.posY, shooter.posZ, Sounds.CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0f, soundPitch)
+            worldIn.playSound(
+                null,
+                shooter.posX,
+                shooter.posY,
+                shooter.posZ,
+                FSounds.CROSSBOW_SHOOT,
+                SoundCategory.PLAYERS,
+                1.0f,
+                soundPitch
+            )
         }
     }
 
-    private fun createArrow(worldIn: World, shooter: EntityLivingBase, crossbow: ItemStack, ammo: ItemStack): EntityModArrow {
+    private fun createArrow(
+        worldIn: World,
+        shooter: EntityLivingBase,
+        crossbow: ItemStack,
+        ammo: ItemStack
+    ): EntityModArrow {
         val modArrow = EntityPiercingArrow(worldIn, ammo, shooter)
         if (shooter is EntityPlayer) {
             modArrow.isCritical = true
@@ -245,7 +291,14 @@ class ItemCrossbow : ItemModeled("crossbow") {
         return modArrow
     }
 
-    private fun fireProjectiles(worldIn: World, shooter: EntityLivingBase, handIn: EnumHand, stack: ItemStack, velocityIn: Float, inaccuracyIn: Float) {
+    private fun fireProjectiles(
+        worldIn: World,
+        shooter: EntityLivingBase,
+        handIn: EnumHand,
+        stack: ItemStack,
+        velocityIn: Float,
+        inaccuracyIn: Float
+    ) {
         val list = getChargedProjectiles(stack)
         val afloat = getRandomSoundPitches(shooter.rng)
 
@@ -254,9 +307,42 @@ class ItemCrossbow : ItemModeled("crossbow") {
             val flag = shooter is EntityPlayer && shooter.capabilities.isCreativeMode
             if (!itemstack.isEmpty) {
                 when (i) {
-                    0 -> fireProjectile(worldIn, shooter, handIn, stack, itemstack, afloat[i], flag, velocityIn, inaccuracyIn, 0.0f)
-                    1 -> fireProjectile(worldIn, shooter, handIn, stack, itemstack, afloat[i], flag, velocityIn, inaccuracyIn, -10.0f)
-                    2 -> fireProjectile(worldIn, shooter, handIn, stack, itemstack, afloat[i], flag, velocityIn, inaccuracyIn, 10.0f)
+                    0 -> fireProjectile(
+                        worldIn,
+                        shooter,
+                        handIn,
+                        stack,
+                        itemstack,
+                        afloat[i],
+                        flag,
+                        velocityIn,
+                        inaccuracyIn,
+                        0.0f
+                    )
+                    1 -> fireProjectile(
+                        worldIn,
+                        shooter,
+                        handIn,
+                        stack,
+                        itemstack,
+                        afloat[i],
+                        flag,
+                        velocityIn,
+                        inaccuracyIn,
+                        -10.0f
+                    )
+                    2 -> fireProjectile(
+                        worldIn,
+                        shooter,
+                        handIn,
+                        stack,
+                        itemstack,
+                        afloat[i],
+                        flag,
+                        velocityIn,
+                        inaccuracyIn,
+                        10.0f
+                    )
                 }
             }
         }
@@ -284,7 +370,7 @@ class ItemCrossbow : ItemModeled("crossbow") {
             val level = EnchantHelper.getQuickCharge(stack)
             val sound = getSoundEvent(level)
             val sound1 = if (level == 0) {
-                Sounds.CROSSBOW_LOADING_MIDDLE
+                FSounds.CROSSBOW_LOADING_MIDDLE
             } else {
                 null
             }
@@ -325,10 +411,10 @@ class ItemCrossbow : ItemModeled("crossbow") {
 
     private fun getSoundEvent(level: Int): SoundEvent {
         return when (level) {
-            1 -> Sounds.CROSSBOW_QUICK_CHARGE_I
-            2 -> Sounds.CROSSBOW_QUICK_CHARGE_II
-            3 -> Sounds.CROSSBOW_QUICK_CHARGE_III
-            else -> Sounds.CROSSBOW_LOADING_START
+            1 -> FSounds.CROSSBOW_QUICK_CHARGE_I
+            2 -> FSounds.CROSSBOW_QUICK_CHARGE_II
+            3 -> FSounds.CROSSBOW_QUICK_CHARGE_III
+            else -> FSounds.CROSSBOW_LOADING_START
         }
     }
 
@@ -377,12 +463,12 @@ class ItemCrossbow : ItemModeled("crossbow") {
     }
 
     companion object {
-        private val ARROWS: (ItemStack) -> Boolean = {
-            stack -> stack.item is ItemArrow
+        private val ARROWS: (ItemStack) -> Boolean = { stack ->
+            stack.item is ItemArrow
         }
 
-        private val ARROWS_AND_FIREWORKS: (ItemStack) -> Boolean = {
-            stack -> ARROWS(stack) || stack.item == Items.FIREWORKS
+        private val ARROWS_AND_FIREWORKS: (ItemStack) -> Boolean = { stack ->
+            ARROWS(stack) || stack.item == Items.FIREWORKS
         }
     }
 }

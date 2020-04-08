@@ -1,0 +1,20 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "futuremc:soul_fire_lantern"
+    },
+    "variants": {
+        "normal": [
+            {}
+        ],
+        "inventory": {
+            "model": "futuremc:item/soul_fire_lantern"
+        },
+        "hanging=false": {
+            "model": "futuremc:soul_fire_lantern"
+        },
+        "hanging=true": {
+            "model": "futuremc:hanging_soul_fire_lantern"
+        }
+    }
+}

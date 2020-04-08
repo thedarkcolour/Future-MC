@@ -11,14 +11,31 @@ import thedarkcolour.futuremc.FutureMC
 class RenderTrident(renderManager: RenderManager) : Render<EntityTrident>(renderManager) {
     private val modelTrident = ModelTrident()
 
-    override fun doRender(entity: EntityTrident, x: Double, y: Double, z: Double, entityYaw: Float, partialTicks: Float) {
+    override fun doRender(
+        entity: EntityTrident,
+        x: Double,
+        y: Double,
+        z: Double,
+        entityYaw: Float,
+        partialTicks: Float
+    ) {
         this.bindEntityTexture(entity)
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f)
         GlStateManager.pushMatrix()
         GlStateManager.disableLighting()
         GlStateManager.translate(x.toFloat(), y.toFloat(), z.toFloat())
-        GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks - 90.0f, 0.0f, 1.0f, 0.0f)
-        GlStateManager.rotate(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks + 90.0f, 0.0f, 0.0f, 1.0f)
+        GlStateManager.rotate(
+            entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks - 90.0f,
+            0.0f,
+            1.0f,
+            0.0f
+        )
+        GlStateManager.rotate(
+            entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks + 90.0f,
+            0.0f,
+            0.0f,
+            1.0f
+        )
         modelTrident.renderer()
         GlStateManager.popMatrix()
 
@@ -32,8 +49,18 @@ class RenderTrident(renderManager: RenderManager) : Render<EntityTrident>(render
         bindEntityTexture(entity)
         GlStateManager.pushMatrix()
         GlStateManager.translate(x.toFloat(), y.toFloat(), z.toFloat())
-        GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks - 90.0f, 0.0f, 1.0f, 0.0f)
-        GlStateManager.rotate(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks, 0.0f, 0.0f, 1.0f)
+        GlStateManager.rotate(
+            entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks - 90.0f,
+            0.0f,
+            1.0f,
+            0.0f
+        )
+        GlStateManager.rotate(
+            entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks,
+            0.0f,
+            0.0f,
+            1.0f
+        )
 
         val f10 = 0.05625f
         GlStateManager.enableRescaleNormal()

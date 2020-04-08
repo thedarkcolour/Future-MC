@@ -3,24 +3,8 @@ package thedarkcolour.futuremc.entity.panda;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIAvoidEntity;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAIFollowParent;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
-import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITempt;
-import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.EntityMoveHelper;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -35,19 +19,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import thedarkcolour.futuremc.init.FBlocks;
-import thedarkcolour.futuremc.init.FItems;
-import thedarkcolour.futuremc.init.Sounds;
+import thedarkcolour.futuremc.registry.FBlocks;
+import thedarkcolour.futuremc.registry.FItems;
+import thedarkcolour.futuremc.registry.FSounds;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -146,13 +126,13 @@ public class EntityPanda extends EntityAnimal {
     public EntityPanda.Type getMainGene() {
         return EntityPanda.Type.fromID(dataManager.get(MAIN_GENE));
     }
-    
+
     public void setMainGene(EntityPanda.Type type) {
         if (type.getID() > 6) {
             type = EntityPanda.Type.getRandomType(rand);
         }
 
-        dataManager.set(MAIN_GENE, (byte)type.getID());
+        dataManager.set(MAIN_GENE, (byte) type.getID());
     }
 
     public EntityPanda.Type getHiddenGene() {
@@ -164,7 +144,7 @@ public class EntityPanda extends EntityAnimal {
             type = EntityPanda.Type.getRandomType(rand);
         }
 
-        dataManager.set(HIDDEN_GENE, (byte)type.getID());
+        dataManager.set(HIDDEN_GENE, (byte) type.getID());
     }
 
     public boolean isRolling() {
@@ -180,9 +160,9 @@ public class EntityPanda extends EntityAnimal {
         super.entityInit();
         dataManager.register(HUNGRY_TICKS, 0);
         dataManager.register(SNEEZE_TICKS, 0);
-        dataManager.register(MAIN_GENE, (byte)0);
-        dataManager.register(HIDDEN_GENE, (byte)0);
-        dataManager.register(PANDA_FLAGS, (byte)0);
+        dataManager.register(MAIN_GENE, (byte) 0);
+        dataManager.register(HIDDEN_GENE, (byte) 0);
+        dataManager.register(PANDA_FLAGS, (byte) 0);
         dataManager.register(EATING_TICKS, 0);
     }
 
@@ -193,9 +173,9 @@ public class EntityPanda extends EntityAnimal {
     private void setPandaFlag(int bit, boolean flag) {
         byte b = dataManager.get(PANDA_FLAGS);
         if (flag) {
-            dataManager.set(PANDA_FLAGS, (byte)(b | bit));
+            dataManager.set(PANDA_FLAGS, (byte) (b | bit));
         } else {
-            dataManager.set(PANDA_FLAGS, (byte)(b & ~bit));
+            dataManager.set(PANDA_FLAGS, (byte) (b & ~bit));
         }
 
     }
@@ -217,8 +197,8 @@ public class EntityPanda extends EntityAnimal {
     @Override
     public EntityAgeable createChild(EntityAgeable ageable) {
         EntityPanda EntityPanda = new EntityPanda(world);
-        if(ageable instanceof EntityPanda) {
-            EntityPanda.func_213545_a(this, (EntityPanda)ageable);
+        if (ageable instanceof EntityPanda) {
+            EntityPanda.func_213545_a(this, (EntityPanda) ageable);
         }
 
         EntityPanda.adjustTraits();
@@ -255,7 +235,7 @@ public class EntityPanda extends EntityAnimal {
     public EntityPanda.Type getPandaType() {
         return EntityPanda.Type.func_221101_b(getMainGene(), getHiddenGene());
     }
-    
+
     public boolean isLazy() {
         return getPandaType() == EntityPanda.Type.LAZY;
     }
@@ -282,13 +262,13 @@ public class EntityPanda extends EntityAnimal {
 
     @Override
     public boolean attackEntityAsMob(Entity entityIn) {
-        playSound(Sounds.INSTANCE.getPANDA_BITE(), 1.0F, 1.0F);
+        playSound(FSounds.INSTANCE.getPANDA_BITE(), 1.0F, 1.0F);
         if (!isAggressive()) {
             attacked = true;
         }
-        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
+        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float) getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
 
-        if(flag) {
+        if (flag) {
             applyEnchantments(this, entityIn);
         }
 
@@ -323,7 +303,7 @@ public class EntityPanda extends EntityAnimal {
             }
 
             if (getHungryTicks() == 29 || getHungryTicks() == 14) {
-                playSound(Sounds.INSTANCE.getPANDA_CANNOT_BREED(), 1.0F, 1.0F);
+                playSound(FSounds.INSTANCE.getPANDA_CANNOT_BREED(), 1.0F, 1.0F);
             }
 
             setHungryTicks(getHungryTicks() - 1);
@@ -335,7 +315,7 @@ public class EntityPanda extends EntityAnimal {
                 func_213581_u(false);
                 sneeze();
             } else if (getSneezeTicks() == 1) {
-                playSound(Sounds.INSTANCE.getPANDA_PRE_SNEEZE(), 1.0F, 1.0F);
+                playSound(FSounds.INSTANCE.getPANDA_PRE_SNEEZE(), 1.0F, 1.0F);
             }
         }
 
@@ -392,16 +372,16 @@ public class EntityPanda extends EntityAnimal {
 
     private void playEatingAnimation() {
         if (getEatingTicks() % 5 == 0) {
-            playSound(Sounds.INSTANCE.getPANDA_EAT(), 0.5F + 0.5F * (float)rand.nextInt(2), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
+            playSound(FSounds.INSTANCE.getPANDA_EAT(), 0.5F + 0.5F * (float) rand.nextInt(2), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
 
-            for(int i = 0; i < 6; ++i) {
-                Vec3d vec3d = new Vec3d(((double)rand.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, ((double)rand.nextFloat() - 0.5D) * 0.1D);
-                vec3d = vec3d.rotatePitch(-rotationPitch * ((float)Math.PI / 180F));
-                vec3d = vec3d.rotateYaw(-rotationYaw * ((float)Math.PI / 180F));
-                double d0 = (double)(-rand.nextFloat()) * 0.6D - 0.3D;
-                Vec3d vec3d1 = new Vec3d(((double)rand.nextFloat() - 0.5D) * 0.8D, d0, 1.0D + ((double)rand.nextFloat() - 0.5D) * 0.4D);
-                vec3d1 = vec3d1.rotateYaw(-renderYawOffset * ((float)Math.PI / 180F));
-                vec3d1 = vec3d1.add(posX, posY + (double)getEyeHeight() + 1.0D, posZ);
+            for (int i = 0; i < 6; ++i) {
+                Vec3d vec3d = new Vec3d(((double) rand.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, ((double) rand.nextFloat() - 0.5D) * 0.1D);
+                vec3d = vec3d.rotatePitch(-rotationPitch * ((float) Math.PI / 180F));
+                vec3d = vec3d.rotateYaw(-rotationYaw * ((float) Math.PI / 180F));
+                double d0 = (double) (-rand.nextFloat()) * 0.6D - 0.3D;
+                Vec3d vec3d1 = new Vec3d(((double) rand.nextFloat() - 0.5D) * 0.8D, d0, 1.0D + ((double) rand.nextFloat() - 0.5D) * 0.4D);
+                vec3d1 = vec3d1.rotateYaw(-renderYawOffset * ((float) Math.PI / 180F));
+                vec3d1 = vec3d1.add(posX, posY + (double) getEyeHeight() + 1.0D, posZ);
                 world.spawnParticle(EnumParticleTypes.ITEM_CRACK, vec3d1.x, vec3d1.y, vec3d1.z, vec3d.x, vec3d.y + 0.05D, vec3d.z, Item.getIdFromItem(getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).getItem()));
             }
         }
@@ -458,12 +438,12 @@ public class EntityPanda extends EntityAnimal {
             if (!world.isRemote) {
                 Vec3d vec3d = new Vec3d(motionX, motionY, motionZ);
                 if (field_213608_bz == 1) {
-                    float f = rotationYaw * ((float)Math.PI / 180F);
+                    float f = rotationYaw * ((float) Math.PI / 180F);
                     float f1 = isChild() ? 0.1F : 0.2F;
-                    field_213600_bJ = new Vec3d(vec3d.x + (double)(-MathHelper.sin(f) * f1), 0.0D, vec3d.z + (double)(MathHelper.cos(f) * f1));
+                    field_213600_bJ = new Vec3d(vec3d.x + (double) (-MathHelper.sin(f) * f1), 0.0D, vec3d.z + (double) (MathHelper.cos(f) * f1));
                     Vec3d vec = field_213600_bJ.add(0.0D, 0.27D, 0.0D);
                     setVelocity(vec.x, vec.y, vec.z);
-                } else if ((float)field_213608_bz != 7.0F && (float)field_213608_bz != 15.0F && (float)field_213608_bz != 23.0F) {
+                } else if ((float) field_213608_bz != 7.0F && (float) field_213608_bz != 15.0F && (float) field_213608_bz != 23.0F) {
                     setVelocity(field_213600_bJ.x, vec3d.y, field_213600_bJ.z);
                 } else {
                     setVelocity(0.0D, onGround ? 0.27D : vec3d.y, 0.0D);
@@ -474,9 +454,9 @@ public class EntityPanda extends EntityAnimal {
     }
 
     private void sneeze() {
-        playSound(Sounds.INSTANCE.getPANDA_SNEEZE(), 1.0F, 1.0F);
+        playSound(FSounds.INSTANCE.getPANDA_SNEEZE(), 1.0F, 1.0F);
 
-        for(EntityPanda entityPanda : world.getEntitiesWithinAABB(EntityPanda.class, getEntityBoundingBox().grow(10.0D))) {
+        for (EntityPanda entityPanda : world.getEntitiesWithinAABB(EntityPanda.class, getEntityBoundingBox().grow(10.0D))) {
             if (!entityPanda.isChild() && entityPanda.onGround && !entityPanda.isInWater() && entityPanda.isOccupied()) {
                 entityPanda.jump();
             }
@@ -588,7 +568,7 @@ public class EntityPanda extends EntityAnimal {
 
             if (isChild()) {
                 consumeItemFromStack(player, itemstack);
-                ageUp((int)((float)(-getGrowingAge() / 20) * 0.1F), true);
+                ageUp((int) ((float) (-getGrowingAge() / 20) * 0.1F), true);
             } else if (!world.isRemote && getGrowingAge() == 0 && canBreed()) {
                 consumeItemFromStack(player, itemstack);
                 setInLove(player);
@@ -621,15 +601,15 @@ public class EntityPanda extends EntityAnimal {
     @Override
     protected SoundEvent getAmbientSound() {
         if (isAggressive()) {
-            return Sounds.INSTANCE.getPANDA_AGGRESSIVE_AMBIENT();
+            return FSounds.INSTANCE.getPANDA_AGGRESSIVE_AMBIENT();
         } else {
-            return isWorried() ? Sounds.INSTANCE.getPANDA_WORRIED_AMBIENT() : Sounds.INSTANCE.getPANDA_AMBIENT();
+            return isWorried() ? FSounds.INSTANCE.getPANDA_WORRIED_AMBIENT() : FSounds.INSTANCE.getPANDA_AMBIENT();
         }
     }
 
     @Override
     protected void playStepSound(BlockPos pos, Block blockIn) {
-        playSound(Sounds.INSTANCE.getPANDA_STEP(), 0.15F, 1.0F);
+        playSound(FSounds.INSTANCE.getPANDA_STEP(), 0.15F, 1.0F);
     }
 
     @Override
@@ -643,12 +623,12 @@ public class EntityPanda extends EntityAnimal {
 
     @Override
     protected SoundEvent getDeathSound() {
-        return Sounds.INSTANCE.getPANDA_DEATH();
+        return FSounds.INSTANCE.getPANDA_DEATH();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return Sounds.INSTANCE.getPANDA_HURT();
+        return FSounds.INSTANCE.getPANDA_HURT();
     }
 
     public boolean isOccupied() {
@@ -673,7 +653,7 @@ public class EntityPanda extends EntityAnimal {
 
         private EntityAIAvoid(EntityPanda entityPanda, Class<T> entityToAvoid, float avoidDistance, double farSpeedIn, double nearSpeedIn) {
             super(entityPanda, entityToAvoid, (Entity entity) -> {
-                if(entity instanceof EntityPlayer) {
+                if (entity instanceof EntityPlayer) {
                     return !((EntityPlayer) entity).isSpectator();
                 }
                 return true;
@@ -811,7 +791,8 @@ public class EntityPanda extends EntityAnimal {
         }
     }
 
-    private static class PandaData implements IEntityLivingData { }
+    private static class PandaData implements IEntityLivingData {
+    }
 
     static class PanicGoal extends EntityAIPanic {
         private final EntityPanda field_220740_f;
@@ -913,20 +894,23 @@ public class EntityPanda extends EntityAnimal {
                 if (!panda.isOccupied()) {
                     return false;
                 } else {
-                    float f = panda.rotationYaw * ((float)Math.PI / 180F);
+                    float f = panda.rotationYaw * ((float) Math.PI / 180F);
                     int i = 0;
                     int j = 0;
                     float f1 = -MathHelper.sin(f);
                     float f2 = MathHelper.cos(f);
-                    if ((double)Math.abs(f1) > 0.5D) {
-                        i = (int)((float)i + f1 / Math.abs(f1));
+                    if ((double) Math.abs(f1) > 0.5D) {
+                        i = (int) ((float) i + f1 / Math.abs(f1));
                     }
 
-                    if ((double)Math.abs(f2) > 0.5D) {
-                        j = (int)((float)j + f2 / Math.abs(f2));
+                    if ((double) Math.abs(f2) > 0.5D) {
+                        j = (int) ((float) j + f2 / Math.abs(f2));
                     }
 
-                    if (panda.world.getBlockState((new BlockPos(panda)).add(i, -1, j)).getBlock().getMaterial(null) == Material.AIR) {
+                    BlockPos pos = new BlockPos(panda.posX + i, panda.posY - 1, panda.posZ + j);
+                    IBlockState state = panda.world.getBlockState(pos);
+
+                    if (state.getMaterial() == Material.AIR) {
                         return true;
                     } else if (panda.isPlayful() && panda.rand.nextInt(60) == 1) {
                         return true;
@@ -1076,7 +1060,7 @@ public class EntityPanda extends EntityAnimal {
         }
 
         public static EntityPanda.Type fromName(String name) {
-            for(EntityPanda.Type pandaType : values()) {
+            for (EntityPanda.Type pandaType : values()) {
                 if (pandaType.name.equals(name)) {
                     return pandaType;
                 }

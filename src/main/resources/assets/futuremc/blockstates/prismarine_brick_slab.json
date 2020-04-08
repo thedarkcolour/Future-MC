@@ -4,8 +4,14 @@
         "model": "futuremc:prismarine_brick_slab_bottom"
     },
     "variants": {
-        "inventory": {"model": "futuremc:item/prismarine_brick_slab"},
-        "half=bottom,variant=default": [{}],
-        "half=top,variant=default": {"model": "futuremc:prismarine_brick_slab_top"}
+        "inventory": {
+            "model": "futuremc:item/prismarine_brick_slab"
+        },
+        "half=bottom,variant=default": [
+            {}
+        ],
+        "half=top,variant=default": {
+            "model": "futuremc:prismarine_brick_slab_top"
+        }
     }
 }

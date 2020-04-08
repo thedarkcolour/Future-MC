@@ -8,19 +8,29 @@ abstract class Recipes<T : Recipe> {
 
     abstract fun addDefaults()
 
+    /**
+     * Removes a recipe with the given input
+     * Ignores if the recipe doesn't exist.
+     */
     open fun removeRecipe(input: ItemStack) {
         recipes.removeIf { it.matches(input) }
     }
 
-    open fun getRecipe(input: ItemStack): Optional<T> {
+    /**
+     * Gets a recipe for the given input.
+     */
+    open fun getRecipe(input: ItemStack): T? {
         for (recipe in recipes) {
             if (recipe.matches(input)) {
-                return Optional.of(recipe)
+                return recipe
             }
         }
-        return Optional.empty()
+        return null
     }
 
+    /**
+     * Removes default recipes.
+     */
     open fun clear() {
         recipes.clear()
     }
@@ -28,7 +38,7 @@ abstract class Recipes<T : Recipe> {
     /**
      * Used to check for any missing items in recipes before adding to JEI.
      */
-    open fun verify() {
+    open fun validate() {
 
     }
 }

@@ -1,25 +1,20 @@
 {
     "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
+    "pattern": [
         " x ",
         "xax",
         " x "
     ],
-    "key":
-    {
-        "x":
-        {
+    "key": {
+        "x": {
             "type": "forge:ore_dict",
             "ore": "logWood"
         },
-        "a":
-        {
+        "a": {
             "item": "minecraft:furnace"
         }
     },
-    "result":
-    {
+    "result": {
         "item": "smoker"
     }
 }

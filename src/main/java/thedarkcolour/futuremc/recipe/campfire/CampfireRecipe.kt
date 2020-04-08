@@ -1,6 +1,6 @@
 package thedarkcolour.futuremc.recipe.campfire
 
 import net.minecraft.item.ItemStack
-import thedarkcolour.futuremc.recipe.furnace.FurnaceRecipe
+import thedarkcolour.futuremc.recipe.Recipe
 
-class CampfireRecipe(input: ItemStack, output: ItemStack, val duration: Int) : FurnaceRecipe(input, output)
+class CampfireRecipe(override val input: ItemStack, val output: ItemStack, val duration: Int) : Recipe()

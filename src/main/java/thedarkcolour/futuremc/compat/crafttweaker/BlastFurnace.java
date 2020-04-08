@@ -19,15 +19,15 @@ public final class BlastFurnace {
     @ZenMethod
     public static void addRecipe(IItemStack input, IItemStack output) {
         if (!BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE.canCraft(CraftTweakerMC.getItemStack(input))) {
-            CraftTweakerAPI.apply(new BlastFurnace.AddRecipe(input, output));
+            CraftTweakerAPI.apply(new AddRecipe(input, output));
         } else {
-            FutureMC.INSTANCE.getLOGGER().log(Level.WARN, "Tried to add duplicate valid BlastFurnace input for " + input.getDefinition().getId());
+            FutureMC.LOGGER.log(Level.WARN, "Tried to add duplicate valid BlastFurnace input for " + input.getDefinition().getId());
         }
     }
 
     private static class AddRecipe implements IAction {
-        private ItemStack input;
-        private ItemStack output;
+        private final ItemStack input;
+        private final ItemStack output;
 
         private AddRecipe(IItemStack input, IItemStack output) {
             this.input = CraftTweakerMC.getItemStack(input);
@@ -36,7 +36,7 @@ public final class BlastFurnace {
 
         @Override
         public void apply() {
-            BlastFurnaceRecipes.addRecipe(input, output);
+            BlastFurnaceRecipes.INSTANCE.addRecipe(input, output);
         }
 
         @Override
@@ -59,7 +59,7 @@ public final class BlastFurnace {
 
         @Override
         public void apply() {
-            BlastFurnaceRecipes.removeRecipe(input);
+            BlastFurnaceRecipes.INSTANCE.removeRecipe(input);
         }
 
         @Override
@@ -70,6 +70,6 @@ public final class BlastFurnace {
 
     @ZenMethod
     public static void clearRecipes() {
-        BlastFurnaceRecipes.clearAllRecipes();
+        BlastFurnaceRecipes.INSTANCE.clear();
     }
 }

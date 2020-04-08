@@ -16,10 +16,16 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import thedarkcolour.core.block.BlockBase
 import thedarkcolour.core.gui.Gui
-import thedarkcolour.futuremc.FutureMC.TAB
+import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
 
-class BlockStonecutter : BlockBase("Stonecutter") {
+class BlockStonecutter : BlockBase("stonecutter") {
+    init {
+        setHardness(3.0f)
+        defaultState = defaultState.withProperty(FACING, EnumFacing.NORTH)
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.DECORATIONS else FutureMC.TAB
+    }
+
     override fun createBlockState(): BlockStateContainer {
         return BlockStateContainer(this, FACING)
     }
@@ -32,7 +38,16 @@ class BlockStonecutter : BlockBase("Stonecutter") {
         return state.getValue(FACING).horizontalIndex
     }
 
-    override fun getStateForPlacement(worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState {
+    override fun getStateForPlacement(
+        worldIn: World,
+        pos: BlockPos,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float,
+        meta: Int,
+        placer: EntityLivingBase
+    ): IBlockState {
         return defaultState.withProperty(FACING, placer.horizontalFacing.opposite)
     }
 
@@ -68,11 +83,26 @@ class BlockStonecutter : BlockBase("Stonecutter") {
         return true
     }
 
-    override fun getBlockFaceShape(worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing): BlockFaceShape {
+    override fun getBlockFaceShape(
+        worldIn: IBlockAccess,
+        state: IBlockState,
+        pos: BlockPos,
+        face: EnumFacing
+    ): BlockFaceShape {
         return BlockFaceShape.UNDEFINED
     }
 
-    override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+    override fun onBlockActivated(
+        worldIn: World,
+        pos: BlockPos,
+        state: IBlockState,
+        playerIn: EntityPlayer,
+        hand: EnumHand,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float
+    ): Boolean {
         return if (FConfig.villageAndPillage.stonecutter.functionality && !worldIn.isRemote) {
             Gui.STONECUTTER.open(playerIn, worldIn, pos)
             true
@@ -82,13 +112,7 @@ class BlockStonecutter : BlockBase("Stonecutter") {
     }
 
     companion object {
-        protected val FACING = BlockHorizontal.FACING
+        private val FACING = BlockHorizontal.FACING
         private val boundingBox = AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.5625, 1.0)
-    }
-
-    init {
-        setHardness(3.0f)
-        defaultState = defaultState.withProperty(FACING, EnumFacing.NORTH)
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.DECORATIONS else TAB
     }
 }

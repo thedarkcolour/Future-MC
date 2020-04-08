@@ -4,19 +4,64 @@
         "model": "futuremc:grindstone"
     },
     "variants": {
-        "normal": [{}],
-        "inventory": [{}],
-        "face=floor,facing=east":  { "model": "futuremc:grindstone", "y": 90 },
-        "face=floor,facing=west":  { "model": "futuremc:grindstone", "y": 270 },
-        "face=floor,facing=south": { "model": "futuremc:grindstone", "y": 180 },
-        "face=floor,facing=north": { "model": "futuremc:grindstone" },
-        "face=wall,facing=east":  { "model": "futuremc:grindstone", "x": 90, "y": 90 },
-        "face=wall,facing=west":  { "model": "futuremc:grindstone", "x": 90, "y": 270 },
-        "face=wall,facing=south": { "model": "futuremc:grindstone", "x": 90, "y": 180 },
-        "face=wall,facing=north": { "model": "futuremc:grindstone", "x": 90 },
-        "face=ceiling,facing=east":  { "model": "futuremc:grindstone", "x": 180, "y": 270 },
-        "face=ceiling,facing=west":  { "model": "futuremc:grindstone", "x": 180, "y": 90 },
-        "face=ceiling,facing=south": { "model": "futuremc:grindstone", "x": 180 },
-        "face=ceiling,facing=north": { "model": "futuremc:grindstone", "x": 180, "y": 180 }
+        "normal": [
+            {}
+        ],
+        "inventory": [
+            {}
+        ],
+        "face=floor,facing=east": {
+            "model": "futuremc:grindstone",
+            "y": 90
+        },
+        "face=floor,facing=west": {
+            "model": "futuremc:grindstone",
+            "y": 270
+        },
+        "face=floor,facing=south": {
+            "model": "futuremc:grindstone",
+            "y": 180
+        },
+        "face=floor,facing=north": {
+            "model": "futuremc:grindstone"
+        },
+        "face=wall,facing=east": {
+            "model": "futuremc:grindstone",
+            "x": 90,
+            "y": 90
+        },
+        "face=wall,facing=west": {
+            "model": "futuremc:grindstone",
+            "x": 90,
+            "y": 270
+        },
+        "face=wall,facing=south": {
+            "model": "futuremc:grindstone",
+            "x": 90,
+            "y": 180
+        },
+        "face=wall,facing=north": {
+            "model": "futuremc:grindstone",
+            "x": 90
+        },
+        "face=ceiling,facing=east": {
+            "model": "futuremc:grindstone",
+            "x": 180,
+            "y": 270
+        },
+        "face=ceiling,facing=west": {
+            "model": "futuremc:grindstone",
+            "x": 180,
+            "y": 90
+        },
+        "face=ceiling,facing=south": {
+            "model": "futuremc:grindstone",
+            "x": 180
+        },
+        "face=ceiling,facing=north": {
+            "model": "futuremc:grindstone",
+            "x": 180,
+            "y": 180
+        }
     }
 }

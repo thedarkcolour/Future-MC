@@ -1,25 +1,20 @@
 {
     "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
+    "pattern": [
         "aaa",
         "xxx",
         "aaa"
     ],
-    "key":
-    {
-        "x":
-        {
+    "key": {
+        "x": {
             "item": "futuremc:honeycomb"
         },
-        "a":
-        {
+        "a": {
             "type": "forge:ore_dict",
-            "ore":"plankWood"
+            "ore": "plankWood"
         }
     },
-    "result":
-    {
+    "result": {
         "item": "beehive"
     }
 }

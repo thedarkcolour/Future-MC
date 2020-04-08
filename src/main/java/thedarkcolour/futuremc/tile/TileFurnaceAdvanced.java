@@ -27,9 +27,9 @@ import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
 import thedarkcolour.futuremc.container.ContainerFurnaceAdvanced;
 
 public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable, ISidedInventory {
-    private static final int[] SLOTS_TOP = new int[] {0};
-    private static final int[] SLOTS_BOTTOM = new int[] {2, 1};
-    private static final int[] SLOTS_SIDES = new int[] {1};
+    private static final int[] SLOTS_TOP = new int[]{0};
+    private static final int[] SLOTS_BOTTOM = new int[]{2, 1};
+    private static final int[] SLOTS_SIDES = new int[]{1};
     private final BlockFurnaceAdvanced.FurnaceType type;
     private NonNullList<ItemStack> furnaceItemStacks = NonNullList.withSize(3, ItemStack.EMPTY);
     private int furnaceBurnTime;
@@ -41,7 +41,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
     }
 
     public static void setState(boolean active, World world, BlockPos pos) {
-        if(world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileFurnaceAdvanced) {
+        if (world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileFurnaceAdvanced) {
             world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockFurnaceAdvanced.Companion.getLIT(), active));
         }
     }
@@ -74,7 +74,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
 
         if (isBurning()) {
             furnaceBurnTime -= 2;
-            if(furnaceBurnTime < 0) furnaceBurnTime = 0;
+            if (furnaceBurnTime < 0) furnaceBurnTime = 0;
         }
 
         if (!world.isRemote) {
@@ -116,7 +116,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
                 cookTime = MathHelper.clamp(cookTime - 2, 0, totalCookTime);
             }
 
-            if (flag != isBurning())  {
+            if (flag != isBurning()) {
                 flag1 = true;
                 setState(isBurning(), world, pos);
             }
@@ -307,7 +307,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
         if (world.getTileEntity(pos) != this) {
             return false;
         } else {
-            return player.getDistanceSq((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
+            return player.getDistanceSq((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D) <= 64.0D;
         }
     }
 
@@ -343,16 +343,15 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
     private SidedInvWrapper handlerBottom = new SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
     private SidedInvWrapper handlerSide = new SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
 
-    @Override @SuppressWarnings("unchecked")
+    @Override
+    @SuppressWarnings("unchecked")
     public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, net.minecraft.util.EnumFacing facing) {
         if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             if (facing == EnumFacing.DOWN) {
                 return (T) handlerBottom;
-            }
-            else if (facing == EnumFacing.UP) {
+            } else if (facing == EnumFacing.UP) {
                 return (T) handlerTop;
-            }
-            else{
+            } else {
                 return (T) handlerSide;
             }
         return super.getCapability(capability, facing);

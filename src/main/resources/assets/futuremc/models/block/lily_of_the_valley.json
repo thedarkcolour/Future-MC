@@ -1,6 +1,6 @@
 {
-  "parent": "block/cross",
-  "textures": {
-    "cross": "futuremc:blocks/lily_of_the_valley"
-  }
+    "parent": "block/cross",
+    "textures": {
+        "cross": "futuremc:blocks/lily_of_the_valley"
+    }
 }

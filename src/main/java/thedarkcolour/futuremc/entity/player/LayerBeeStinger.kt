@@ -9,7 +9,16 @@ class LayerBeeStinger : LayerRenderer<EntityPlayer> {
         TODO("not implemented")
     }
 
-    override fun doRenderLayer(entitylivingbaseIn: EntityPlayer, limbSwing: Float, limbSwingAmount: Float, partialTicks: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float) {
+    override fun doRenderLayer(
+        entitylivingbaseIn: EntityPlayer,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        partialTicks: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float,
+        scale: Float
+    ) {
         TODO("not implemented")
     }
 

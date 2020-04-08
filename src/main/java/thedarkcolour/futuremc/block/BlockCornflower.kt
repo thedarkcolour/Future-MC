@@ -1,10 +1,9 @@
 package thedarkcolour.futuremc.block
 
-import net.minecraft.block.SoundType
 import net.minecraft.init.Biomes
 import net.minecraft.world.biome.Biome
+import thedarkcolour.core.util.matchesAny
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.init.matchesAny
 
 class BlockCornflower : BlockFlower("cornflower") {
     override fun isBiomeValid(biome: Biome): Boolean {
@@ -13,9 +12,4 @@ class BlockCornflower : BlockFlower("cornflower") {
 
     override val flowerChance: Double
         get() = FConfig.villageAndPillage.cornflower.spawnRate
-
-    //Adds blue flower
-    init {
-        soundType = SoundType.PLANT
-    }
 }

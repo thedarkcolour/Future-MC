@@ -4,7 +4,11 @@
         "model": "mossy_cobblestone"
     },
     "variants": {
-        "inventory": [{}],
-        "variant=default": [{}]
+        "inventory": [
+            {}
+        ],
+        "variant=default": [
+            {}
+        ]
     }
 }

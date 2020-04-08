@@ -49,7 +49,15 @@ class ModelSalmon : ModelBase() {
         finLeft.setRotationPoint(1.5f, 21.5f, 0.0f)
     }
 
-    override fun render(entityIn: Entity, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float) {
+    override fun render(
+        entityIn: Entity,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float,
+        scale: Float
+    ) {
         setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn)
         bodyFront.render(scale)
         bodyRear.render(scale)
@@ -58,7 +66,15 @@ class ModelSalmon : ModelBase() {
         finLeft.render(scale)
     }
 
-    override fun setRotationAngles(limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scaleFactor: Float, entityIn: Entity) {
+    override fun setRotationAngles(
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float,
+        scaleFactor: Float,
+        entityIn: Entity
+    ) {
         var i = 1F
         var j = 1F
 

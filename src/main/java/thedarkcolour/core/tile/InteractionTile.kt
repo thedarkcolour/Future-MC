@@ -9,9 +9,17 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 open class InteractionTile : TileEntity() {
-    open fun activated(state: IBlockState, player: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float) = false
+    open fun activated(
+        state: IBlockState,
+        playerIn: EntityPlayer,
+        hand: EnumHand,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float
+    ) = false
 
-    open fun broken(state: IBlockState, player: EntityPlayer) {}
+    open fun broken(state: IBlockState, playerIn: EntityPlayer) {}
 
     override fun shouldRefresh(world: World, pos: BlockPos, oldState: IBlockState, newSate: IBlockState): Boolean {
         return oldState.block != newSate.block

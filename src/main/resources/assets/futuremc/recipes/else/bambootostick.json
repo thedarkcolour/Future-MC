@@ -1,19 +1,15 @@
 {
     "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
+    "pattern": [
         "x",
         "x"
     ],
-    "key":
-    {
-        "x":
-        {
+    "key": {
+        "x": {
             "item": "futuremc:bamboo"
         }
     },
-    "result":
-    {
+    "result": {
         "item": "minecraft:stick"
     }
 }

@@ -8,7 +8,12 @@ import thedarkcolour.futuremc.FutureMC
 import kotlin.math.sin
 
 class RenderSalmon(manager: RenderManager) : RenderLiving<EntitySalmon>(manager, ModelSalmon(), 0.3f) {
-    override fun applyRotations(entityLiving: EntitySalmon, ageInTicks: Float, rotationYaw: Float, partialTicks: Float) {
+    override fun applyRotations(
+        entityLiving: EntitySalmon,
+        ageInTicks: Float,
+        rotationYaw: Float,
+        partialTicks: Float
+    ) {
         super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks)
         val i: Float
         val j: Float

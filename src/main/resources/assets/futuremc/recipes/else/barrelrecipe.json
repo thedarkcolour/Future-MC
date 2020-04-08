@@ -1,26 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern":
-  [
-    "xax",
-    "x x",
-    "xax"
-  ],
-  "key":
-  {
-    "x":
-    {
-      "type": "forge:ore_dict",
-      "ore":"plankWood"
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "xax",
+        "x x",
+        "xax"
+    ],
+    "key": {
+        "x": {
+            "type": "forge:ore_dict",
+            "ore": "plankWood"
+        },
+        "a": {
+            "type": "forge:ore_dict",
+            "ore": "slabWood"
+        }
     },
-    "a":
-    {
-      "type": "forge:ore_dict",
-      "ore":"slabWood"
+    "result": {
+        "item": "futuremc:barrel"
     }
-  },
-  "result":
-  {
-    "item": "futuremc:barrel"
-  }
 }

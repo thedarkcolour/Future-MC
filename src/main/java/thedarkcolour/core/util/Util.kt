@@ -2,11 +2,11 @@
 
 package thedarkcolour.core.util
 
-import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableMap
 import net.minecraft.block.BlockDispenser
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.entity.RenderManager
+import net.minecraft.dispenser.IBehaviorDispenseItem
 import net.minecraft.entity.Entity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -18,35 +18,21 @@ import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.eventhandler.*
 import net.minecraftforge.fml.common.registry.EntityRegistry
 import net.minecraftforge.oredict.OreDictionary
-import thedarkcolour.core.block.IProjectileDispenserBehaviour
 import thedarkcolour.futuremc.FutureMC
 import java.util.function.BiPredicate
 import java.util.function.Consumer
 
-/**
- * JVM [make] that does not get inlined
- */
-fun <T> jmake(obj: T, consumer: Consumer<T>): T {
+@Suppress("SpellCheckingInspection")
+fun <T> make(obj: T, consumer: Consumer<T>): T {
     consumer.accept(obj)
     return obj
 }
 
-inline fun <T> make(obj: T, consumer: (T) -> Unit): T {
-    consumer(obj)
-    return obj
-}
-
 /**
- * Gets the oredict name for the given stack.
+ * Gets the oredict names for the given stack.
  */
-fun getOreName(stack: ItemStack): String {
-    if (stack.isEmpty) {
-        return ""
-    }
-    val ids = OreDictionary.getOreIDs(stack)
-    return if (ids.isNotEmpty()) {
-        OreDictionary.getOreName(ids[0])
-    } else ""
+fun getOreNames(stack: ItemStack): List<String> {
+    return OreDictionary.getOreIDs(stack).map(OreDictionary::getOreName)
 }
 
 /**
@@ -59,19 +45,10 @@ inline fun runOnClient(runnable: () -> Unit) {
 }
 
 /**
- * Creates an immutable map and fills it using the provided [contents]
+ * Creates an immutable map and fills it using the [contents]
  */
-fun <K, V> immutableMapOf(contents: Consumer<ImmutableMap.Builder<K, V>>): ImmutableMap<K, V> {
-    return make(ImmutableMap.Builder(), contents::accept).build()
-}
-
-/**
- * Creates an immutable list from the contents of the given list.
- * @param contents the contents to be held in the new list
- * @return an [ImmutableList]  with the given contents.
- */
-fun <T> immutableListOf(contents: Iterable<T>): ImmutableList<T> {
-    return ImmutableList.Builder<T>().addAll(contents).build()
+fun <K, V> immutableMapOf(contents: (ImmutableMap.Builder<K, V>) -> Unit): ImmutableMap<K, V> {
+    return ImmutableMap.Builder<K, V>().also(contents::invoke).build()
 }
 
 /**
@@ -80,14 +57,12 @@ fun <T> immutableListOf(contents: Iterable<T>): ImmutableList<T> {
  * @param isEquivalent the test used to determine if two objects are equivalent
  * @param contents the initial contents to be contained in this list.
  */
-fun <T> predicateArrayListOf(isEquivalent: BiPredicate<T, T>, contents: Consumer<PredicateArrayList<T>>): PredicateArrayList<T> {
+fun <T> predicateArrayListOf(
+    isEquivalent: BiPredicate<T, T>,
+    contents: Consumer<PredicateArrayList<T>>
+): PredicateArrayList<T> {
     val list = PredicateArrayList(isEquivalent)
-    return make(list, contents::accept)
-}
-
-fun <T> predicateArrayListOf(isEquivalent: BiPredicate<T, T>, contents: Array<T>): PredicateArrayList<T> {
-    val list = PredicateArrayList(isEquivalent)
-    return list.insertAll(*contents)
+    return list.also(contents::accept)
 }
 
 fun <T> predicateArrayListOf(contents: Array<out T>, isEquivalent: (T, T) -> Boolean): PredicateArrayList<T> {
@@ -95,22 +70,49 @@ fun <T> predicateArrayListOf(contents: Array<out T>, isEquivalent: (T, T) -> Boo
     return list.insertAll(*contents)
 }
 
-fun registerDispenserBehaviour(item: Item, behaviour: IProjectileDispenserBehaviour) {
-    BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, behaviour)
+fun registerDispenserBehaviour(item: Item, behaviour: IBehaviorDispenseItem) {
+    if (BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.keys.contains(item)) {
+        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, IBehaviorDispenseItem { worldIn, stack ->
+            val stack1 = BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.getObject(item).dispense(worldIn, stack)
+            behaviour.dispense(worldIn, stack1)
+        })
+    } else {
+        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, behaviour)
+    }
 }
 
 /**
  * Helper method to reduce verbosity when registering entities.
  */
 fun registerEntity(name: String, entity: Class<out Entity>, trackingRange: Int, id: Int) {
-    EntityRegistry.registerModEntity(ResourceLocation(FutureMC.ID, name), entity, name, id, FutureMC, trackingRange, 1, true)
+    EntityRegistry.registerModEntity(
+        ResourceLocation(FutureMC.ID, name),
+        entity,
+        name,
+        id,
+        FutureMC,
+        trackingRange,
+        1,
+        true
+    )
 }
 
 /**
  * Helper method to reduce verbosity when registering entities.
  */
 fun registerEntity(name: String, entity: Class<out Entity>, trackingRange: Int, id: Int, primary: Int, secondary: Int) {
-    EntityRegistry.registerModEntity(ResourceLocation(FutureMC.ID, name), entity, "futuremc:$name", id, FutureMC, trackingRange, 1, true, primary, secondary)
+    EntityRegistry.registerModEntity(
+        ResourceLocation(FutureMC.ID, name),
+        entity,
+        "futuremc:$name",
+        id,
+        FutureMC,
+        trackingRange,
+        1,
+        true,
+        primary,
+        secondary
+    )
 }
 
 /**
@@ -121,14 +123,17 @@ inline fun <reified T : Entity> registerEntityModel(noinline factory: (RenderMan
     RenderingRegistry.registerEntityRenderingHandler(T::class.java, factory)
 }
 
+/**
+ * Subscribes [target] to event bus for game events.
+ */
 fun subscribe(target: Any) {
     MinecraftForge.EVENT_BUS.register(target)
 }
 
 /**
- * Registers a lambda to the event bus, much like in 1.13+.
+ * Registers a function to the event bus like in 1.13+.
  */
-inline fun <reified E : Event> addListener(crossinline consumer: (E) -> Unit) {
+inline fun <reified E : Event> addListener(crossinline consumer: (E) -> Unit, priority: EventPriority = EventPriority.NORMAL) {
     val constructor = E::class.java.getConstructor()
     constructor.isAccessible = true
     val event = constructor.newInstance()
@@ -148,9 +153,9 @@ inline fun <reified E : Event> addListener(crossinline consumer: (E) -> Unit) {
         loader.setActiveModContainer(old)
     }
 
-    event.listenerList.register(make(EventBus::class.java.getDeclaredField("busID")) {
+    event.listenerList.register(EventBus::class.java.getDeclaredField("busID").also {
         it.isAccessible = true
-    }.get(MinecraftForge.EVENT_BUS) as Int, EventPriority.NORMAL, listener)
+    }.get(MinecraftForge.EVENT_BUS) as Int, priority, listener)
 }
 
 fun ItemStack.getOrCreateTag(): NBTTagCompound {
@@ -159,9 +164,58 @@ fun ItemStack.getOrCreateTag(): NBTTagCompound {
 
 // linear interpolation
 fun lerp(a: Float, b: Float, c: Float): Float {
-    return a + c * (b - a)
+    return b + a * (c - b)
 }
 
 // for some reason #defaultInstance is client only
-val Item.stack : ItemStack
+val Item.stack: ItemStack
     get() = ItemStack(this)
+
+fun <T> T.matchesAny(vararg any: T): Boolean {
+    for (t in any) {
+        if (this == t) {
+            return true
+        }
+    }
+
+    return false
+}
+
+fun <T> Iterable<T>.anyMatch(test: (T) -> Boolean): Boolean {
+    forEach {
+        if (test(it)) {
+            return@anyMatch true
+        }
+    }
+
+    return false
+}
+
+fun <T> janyMatch(iterable: Iterable<T>, test: (T) -> Boolean): Boolean {
+    return iterable.anyMatch(test)
+}
+
+// needed before ModList is initialized
+val isQuarkLoaded: Boolean =
+    try {
+        Class.forName("vazkii.quark.base.handler.QuarkPistonStructureHelper")
+        true
+    } catch (e: ClassNotFoundException) {
+        false
+    }
+
+val models = ArrayList<Triple<Item, Int, String>>()
+
+fun setItemModel(item: Item, meta: Int, string: String = item.registryName!!.toString()) {
+    runOnClient {
+        models.add(Triple(item, meta, string))
+    }
+}
+
+fun setItemName(item: Item, registryName: String, translationKey: String = "${FutureMC.ID}.$registryName") {
+    item.translationKey = translationKey
+    item.registryName = ResourceLocation(FutureMC.ID, registryName)
+}
+
+@Suppress("FunctionName")
+fun TODO() = false

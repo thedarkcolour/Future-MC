@@ -1,31 +1,25 @@
 {
     "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
+    "pattern": [
         "   ",
         "xbx",
         "a a"
     ],
-    "key":
-    {
-        "x":
-        {
+    "key": {
+        "x": {
             "type": "forge:ore_dict",
             "ore": "stickWood"
         },
-        "a":
-        {
+        "a": {
             "type": "forge:ore_dict",
             "ore": "plankWood"
         },
-        "b":
-        {
+        "b": {
             "item": "minecraft:stone_slab",
             "data": 0
         }
     },
-    "result":
-    {
+    "result": {
         "item": "grindstone"
     }
 }

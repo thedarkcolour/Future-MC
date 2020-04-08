@@ -71,7 +71,15 @@ class ModelLargePufferfish : ModelBase() {
         field_203753_m.rotateAngleY = -0.7853982f
     }
 
-    override fun render(entityIn: Entity, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float) {
+    override fun render(
+        entityIn: Entity,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float,
+        scale: Float
+    ) {
         setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn)
         body.render(scale)
         rightFin.render(scale)
@@ -88,7 +96,15 @@ class ModelLargePufferfish : ModelBase() {
         field_203753_m.render(scale)
     }
 
-    override fun setRotationAngles(limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scaleFactor: Float, entityIn: Entity) {
+    override fun setRotationAngles(
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float,
+        scaleFactor: Float,
+        entityIn: Entity
+    ) {
         rightFin.rotateAngleZ = -0.2F + 0.4F * sin(ageInTicks * 0.2F)
         leftFin.rotateAngleZ = 0.2F - 0.4F * sin(ageInTicks * 0.2F)
     }

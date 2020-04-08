@@ -4,7 +4,11 @@
         "model": "prismarine_dark"
     },
     "variants": {
-        "inventory": [{}],
-        "variant=default": [{}]
+        "inventory": [
+            {}
+        ],
+        "variant=default": [
+            {}
+        ]
     }
 }

@@ -4,8 +4,14 @@
         "model": "futuremc:smooth_red_sandstone_slab_bottom"
     },
     "variants": {
-        "inventory": {"model": "futuremc:item/smooth_red_sandstone_slab"},
-        "half=bottom,variant=default": [{}],
-        "half=top,variant=default": {"model": "futuremc:smooth_red_sandstone_slab_top"}
+        "inventory": {
+            "model": "futuremc:item/smooth_red_sandstone_slab"
+        },
+        "half=bottom,variant=default": [
+            {}
+        ],
+        "half=top,variant=default": {
+            "model": "futuremc:smooth_red_sandstone_slab_top"
+        }
     }
 }

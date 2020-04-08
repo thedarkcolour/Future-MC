@@ -1,21 +1,17 @@
 {
     "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
+    "pattern": [
         "   ",
         "aaa",
         "aaa"
     ],
-    "key":
-    {
-        "a":
-        {
+    "key": {
+        "a": {
             "item": "minecraft:stonebrick",
             "data": 0
         }
     },
-    "result":
-    {
+    "result": {
         "item": "stone_brick_wall",
         "count": 6
     }

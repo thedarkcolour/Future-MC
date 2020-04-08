@@ -22,7 +22,7 @@ public class GuiFurnaceAdvanced extends GuiContainer {
     }
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String s = I18n.format(te.getType() == BlockFurnaceAdvanced.FurnaceType.SMOKER ? "container.Smoker" : "container.BlastFurnace");
+        String s = I18n.format(te.getType() == BlockFurnaceAdvanced.FurnaceType.SMOKER ? "container.smoker" : "container.blast_furnace");
         fontRenderer.drawString(s, xSize / 2 - fontRenderer.getStringWidth(s) / 2, 6, 4210752);
         fontRenderer.drawString(playerInv.getDisplayName().getUnformattedText(), 8, ySize - 96 + 2, 4210752);
     }
@@ -53,10 +53,10 @@ public class GuiFurnaceAdvanced extends GuiContainer {
     private int getBurnLeftScaled() {
         int j = te.getField(0);
         int i = te.getField(1);
-        if(i == 0) {
+        if (i == 0) {
             i = TileEntityFurnace.getItemBurnTime(te.getStackInSlot(1));
         }
-        if(i == 0) {
+        if (i == 0) {
             i = 200;
         }
 

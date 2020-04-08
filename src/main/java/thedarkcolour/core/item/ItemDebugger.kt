@@ -16,27 +16,43 @@ import thedarkcolour.futuremc.block.BlockBamboo.EnumLeaves
 import thedarkcolour.futuremc.block.BlockCampfire
 import thedarkcolour.futuremc.block.BlockComposter
 import thedarkcolour.futuremc.block.BlockSweetBerryBush
-import thedarkcolour.futuremc.entity.bee.EntityBee
-import thedarkcolour.futuremc.init.FBlocks.BAMBOO
-import thedarkcolour.futuremc.init.FBlocks.CAMPFIRE
-import thedarkcolour.futuremc.init.FBlocks.COMPOSTER
-import thedarkcolour.futuremc.init.FBlocks.SWEET_BERRY_BUSH
+import thedarkcolour.futuremc.entity.bee.BeeEntity
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipes
-import thedarkcolour.futuremc.tile.TileBeeHive
+import thedarkcolour.futuremc.registry.FBlocks.BAMBOO
+import thedarkcolour.futuremc.registry.FBlocks.CAMPFIRE
+import thedarkcolour.futuremc.registry.FBlocks.COMPOSTER
+import thedarkcolour.futuremc.registry.FBlocks.SWEET_BERRY_BUSH
+import thedarkcolour.futuremc.tile.BeeHiveTile
 import thedarkcolour.futuremc.tile.TileCampfire
 import thedarkcolour.futuremc.tile.TileComposter
 
 class ItemDebugger : ItemModeled("debugger") {
-    override fun onItemUse(player: EntityPlayer, worldIn: World, pos: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult {
+    init {
+        setMaxStackSize(1)
+    }
+
+    override fun onItemUse(
+        player: EntityPlayer,
+        worldIn: World,
+        pos: BlockPos,
+        hand: EnumHand,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float
+    ): EnumActionResult {
         val state = worldIn.getBlockState(pos)
         val block = state.block
-        if (worldIn.getTileEntity(pos) is TileBeeHive) {
-            val hive = worldIn.getTileEntity(pos) as TileBeeHive?
+        if (worldIn.getTileEntity(pos) != null) {
+            player.sendMessage(TextComponentString("Tile entity exists: ${worldIn.getTileEntity(pos)!!.serializeNBT()}"))
+        }
+        if (worldIn.getTileEntity(pos) is BeeHiveTile) {
+            val hive = worldIn.getTileEntity(pos) as BeeHiveTile
             if (!worldIn.isRemote) {
                 if (player.isSneaking) {
-                    hive!!.setHoneyLevel(5, true)
+                    hive.setHoneyLevel(5, true)
                 } else {
-                    player.sendMessage(TextComponentString("Bees: " + hive!!.getNumberOfBees() + ", HoneyLevel: " + hive.honeyLevel + ", " + pos))
+                    player.sendMessage(TextComponentString("Bees: ${hive.getBeeCount()}, HoneyLevel: ${hive.honeyLevel}, " + pos))
                 }
             }
         } else if (worldIn.getTileEntity(pos) is TileCampfire) {
@@ -44,7 +60,13 @@ class ItemDebugger : ItemModeled("debugger") {
             if (!worldIn.isRemote) {
                 if (player.isSneaking) {
                     for (i in 0..3) {
-                        player.sendMessage(TextComponentString("Current: " + campfire!!.inventory.getStackInSlot(i).toString() + ", Result: " + CampfireRecipes.getRecipe(campfire.inventory.getStackInSlot(i)).orElseThrow { IllegalStateException() }.output.toString()))
+                        player.sendMessage(
+                            TextComponentString(
+                                "Current: " + campfire!!.inventory.getStackInSlot(i).toString() + ", Result: " + CampfireRecipes.getRecipe(
+                                    campfire.inventory.getStackInSlot(i)
+                                )!!
+                            )
+                        )
                     }
                 } else {
                     for (i in 0..3) {
@@ -59,7 +81,13 @@ class ItemDebugger : ItemModeled("debugger") {
                 }
             } else {
                 if (!worldIn.isRemote) {
-                    player.sendStatusMessage(TextComponentString("Layers: " + worldIn.getBlockState(pos).getValue(BlockComposter.LEVEL)), true)
+                    player.sendStatusMessage(
+                        TextComponentString(
+                            "Layers: " + worldIn.getBlockState(pos).getValue(
+                                BlockComposter.LEVEL
+                            )
+                        ), true
+                    )
                 }
             }
         } else if (block is RotatableBlock || state.propertyKeys.contains(BlockHorizontal.FACING)) {
@@ -69,7 +97,10 @@ class ItemDebugger : ItemModeled("debugger") {
             } else {
                 ++i
             }
-            worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(i)))
+            worldIn.setBlockState(
+                pos,
+                worldIn.getBlockState(pos).withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(i))
+            )
         } else if (block == CAMPFIRE) {
             worldIn.setBlockState(pos, state.withProperty(BlockCampfire.LIT, !state.getValue(BlockCampfire.LIT)))
         } else if (block == BAMBOO) {
@@ -98,14 +129,15 @@ class ItemDebugger : ItemModeled("debugger") {
         return EnumActionResult.SUCCESS
     }
 
-    override fun itemInteractionForEntity(stack: ItemStack, playerIn: EntityPlayer, target: EntityLivingBase, hand: EnumHand): Boolean {
-        if (target is EntityBee && !playerIn.world.isRemote) {
+    override fun itemInteractionForEntity(
+        stack: ItemStack,
+        playerIn: EntityPlayer,
+        target: EntityLivingBase,
+        hand: EnumHand
+    ): Boolean {
+        if (target is BeeEntity && !playerIn.world.isRemote) {
             playerIn.sendMessage(TextComponentString("Hive: " + target.hivePos + ", Flower: " + target.flowerPos))
         }
         return false
-    }
-
-    init {
-        setMaxStackSize(1)
     }
 }

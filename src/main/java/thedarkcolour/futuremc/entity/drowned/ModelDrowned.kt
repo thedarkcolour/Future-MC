@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelRenderer
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.EnumHandSide
-import thedarkcolour.futuremc.init.FItems
+import thedarkcolour.futuremc.registry.FItems
 import kotlin.math.PI
 
 class ModelDrowned : ModelBiped() {
@@ -19,12 +19,33 @@ class ModelDrowned : ModelBiped() {
         bipedRightLeg.setRotationPoint(-1.9f, 12.0f, 0.0f)
     }
 
-    override fun setLivingAnimations(entityLiving: EntityLivingBase, limbSwing: Float, limbSwingAmount: Float, partialTickTime: Float) {
+    override fun setLivingAnimations(
+        entityLiving: EntityLivingBase,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        partialTickTime: Float
+    ) {
 
     }
 
-    override fun setRotationAngles(limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scaleFactor: Float, entityLiving: Entity) {
-        super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityLiving)
+    override fun setRotationAngles(
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float,
+        scaleFactor: Float,
+        entityLiving: Entity
+    ) {
+        super.setRotationAngles(
+            limbSwing,
+            limbSwingAmount,
+            ageInTicks,
+            netHeadYaw,
+            headPitch,
+            scaleFactor,
+            entityLiving
+        )
         entityLiving as EntityDrowned
         rightArmPose = ArmPose.EMPTY
         leftArmPose = ArmPose.EMPTY

@@ -24,9 +24,10 @@ import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish.Companion.
 import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish.Companion.getPatternDyeColor
 import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish.Companion.getTranslationPrefix
 import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish.Companion.getTranslationPrefixSpecial
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FSounds
 
-class ItemFishBucket<E : EntityFish>(private val regName: String, private val fishType: (World) -> E) : ItemModeled(regName) {
+class ItemFishBucket<E : EntityFish>(private val regName: String, private val fishType: (World) -> E) :
+    ItemModeled(regName) {
     @Suppress("NAME_SHADOWING")
     override fun onItemRightClick(worldIn: World, playerIn: EntityPlayer, handIn: EnumHand): ActionResult<ItemStack> {
         val stack = playerIn.getHeldItem(handIn)
@@ -46,7 +47,7 @@ class ItemFishBucket<E : EntityFish>(private val regName: String, private val fi
 
                 if (!worldIn.isBlockModifiable(playerIn, pos)) {
                     return ActionResult(EnumActionResult.FAIL, stack)
-                } else  {
+                } else {
                     val flag = worldIn.getBlockState(pos).block.isReplaceable(worldIn, pos)
                     val pos = if (flag && result.sideHit == EnumFacing.UP) pos else pos.offset(result.sideHit)
 
@@ -96,17 +97,32 @@ class ItemFishBucket<E : EntityFish>(private val regName: String, private val fi
                 val y = pos.y
                 val z = pos.z
 
-                worldIn.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F)
+                worldIn.playSound(
+                    player,
+                    pos,
+                    SoundEvents.BLOCK_FIRE_EXTINGUISH,
+                    SoundCategory.BLOCKS,
+                    0.5F,
+                    2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F
+                )
 
                 for (k in 0..7) {
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, x.toDouble() + Math.random(), y.toDouble() + Math.random(), z.toDouble() + Math.random(), 0.0, 0.0, 0.0)
+                    worldIn.spawnParticle(
+                        EnumParticleTypes.SMOKE_LARGE,
+                        x.toDouble() + Math.random(),
+                        y.toDouble() + Math.random(),
+                        z.toDouble() + Math.random(),
+                        0.0,
+                        0.0,
+                        0.0
+                    )
                 }
             } else {
                 if (!worldIn.isRemote && (flag || flag1) && !material.isLiquid) {
                     worldIn.destroyBlock(pos, true)
                 }
 
-                worldIn.playSound(player, pos, Sounds.BUCKET_EMPTY_FISH, SoundCategory.BLOCKS, 1F, 1F)
+                worldIn.playSound(player, pos, FSounds.BUCKET_EMPTY_FISH, SoundCategory.BLOCKS, 1F, 1F)
                 worldIn.setBlockState(pos, Blocks.FLOWING_WATER.defaultState, 11)
             }
 
@@ -126,7 +142,11 @@ class ItemFishBucket<E : EntityFish>(private val regName: String, private val fi
 
                     for (variant in EntityTropicalFish.SPECIAL_VARIANTS) {
                         if (i == variant) {
-                            tooltip.add(TextComponentTranslation(getTranslationPrefixSpecial(variant)).applyTextFormatting(*formatting).formattedText)
+                            tooltip.add(
+                                TextComponentTranslation(getTranslationPrefixSpecial(variant)).applyTextFormatting(
+                                    *formatting
+                                ).formattedText
+                            )
                             return
                         }
                     }

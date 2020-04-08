@@ -4,10 +4,23 @@
         "model": "futuremc:stonecutter"
     },
     "variants": {
-        "inventory": [{}],
-        "facing=north": { "model": "futuremc:stonecutter" },
-        "facing=south": { "model": "futuremc:stonecutter", "y": 180 },
-        "facing=west":  { "model": "futuremc:stonecutter", "y": 270 },
-        "facing=east":  { "model": "futuremc:stonecutter", "y": 90 }
+        "inventory": [
+            {}
+        ],
+        "facing=north": {
+            "model": "futuremc:stonecutter"
+        },
+        "facing=south": {
+            "model": "futuremc:stonecutter",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "futuremc:stonecutter",
+            "y": 270
+        },
+        "facing=east": {
+            "model": "futuremc:stonecutter",
+            "y": 90
+        }
     }
 }

@@ -1,25 +1,20 @@
 {
     "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
+    "pattern": [
         "xx",
         "aa"
     ],
-    "key":
-    {
-        "x":
-        {
+    "key": {
+        "x": {
             "type": "forge:ore_dict",
             "ore": "string"
         },
-        "a":
-        {
+        "a": {
             "type": "forge:ore_dict",
             "ore": "plankWood"
         }
     },
-    "result":
-    {
+    "result": {
         "item": "loom"
     }
 }

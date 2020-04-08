@@ -58,7 +58,12 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
         setPosition(x, y, z)
     }
 
-    protected constructor(worldIn: World, shooter: EntityLivingBase) : this(worldIn, shooter.posX, shooter.posY + shooter.eyeHeight.toDouble() - 0.10000000149011612, shooter.posZ) {
+    protected constructor(worldIn: World, shooter: EntityLivingBase) : this(
+        worldIn,
+        shooter.posX,
+        shooter.posY + shooter.eyeHeight.toDouble() - 0.10000000149011612,
+        shooter.posZ
+    ) {
         shootingEntity = shooter
 
         if (shooter is EntityPlayer) {
@@ -82,7 +87,14 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
         dataManager.register(PIERCE_LEVEL, 0.toByte())
     }
 
-    override fun shoot(shooter: Entity, pitch: Float, yaw: Float, p_184547_4_: Float, velocity: Float, inaccuracy: Float) {
+    override fun shoot(
+        shooter: Entity,
+        pitch: Float,
+        yaw: Float,
+        p_184547_4_: Float,
+        velocity: Float,
+        inaccuracy: Float
+    ) {
         val f = -sin(yaw * 0.017453292f) * cos(pitch * 0.017453292f)
         val f1 = -sin(pitch * 0.017453292f)
         val f2 = cos(yaw * 0.017453292f) * cos(pitch * 0.017453292f)
@@ -121,7 +133,15 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
         ticksInGround = 0
     }
 
-    override fun setPositionAndRotationDirect(x: Double, y: Double, z: Double, yaw: Float, pitch: Float, posRotationIncrements: Int, teleport: Boolean) {
+    override fun setPositionAndRotationDirect(
+        x: Double,
+        y: Double,
+        z: Double,
+        yaw: Float,
+        pitch: Float,
+        posRotationIncrements: Int,
+        teleport: Boolean
+    ) {
         setPosition(x, y, z)
         setRotation(yaw, pitch)
     }
@@ -164,7 +184,14 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
         if (iblockstate.material != Material.AIR) {
             val axisalignedbb = iblockstate.getCollisionBoundingBox(world, blockpos)
 
-            if (axisalignedbb != Block.NULL_AABB && axisalignedbb!!.offset(blockpos).contains(Vec3d(posX, posY, posZ))) {
+            if (axisalignedbb != Block.NULL_AABB && axisalignedbb!!.offset(blockpos).contains(
+                    Vec3d(
+                        posX,
+                        posY,
+                        posZ
+                    )
+                )
+            ) {
                 inGround = true
             }
         }
@@ -225,7 +252,15 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
 
             if (isCritical) {
                 for (k in 0..3) {
-                    world.spawnParticle(EnumParticleTypes.CRIT, posX + motionX * k.toDouble() / 4.0, posY + motionY * k.toDouble() / 4.0, posZ + motionZ * k.toDouble() / 4.0, -motionX, -motionY + 0.2, -motionZ)
+                    world.spawnParticle(
+                        EnumParticleTypes.CRIT,
+                        posX + motionX * k.toDouble() / 4.0,
+                        posY + motionY * k.toDouble() / 4.0,
+                        posZ + motionZ * k.toDouble() / 4.0,
+                        -motionX,
+                        -motionY + 0.2,
+                        -motionZ
+                    )
                 }
             }
 
@@ -258,7 +293,15 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
 
             if (isInWater) {
                 for (i in 0..3) {
-                    world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, posX - motionX * 0.25, posY - motionY * 0.25, posZ - motionZ * 0.25, motionX, motionY, motionZ)
+                    world.spawnParticle(
+                        EnumParticleTypes.WATER_BUBBLE,
+                        posX - motionX * 0.25,
+                        posY - motionY * 0.25,
+                        posZ - motionZ * 0.25,
+                        motionX,
+                        motionY,
+                        motionZ
+                    )
                 }
 
                 f1 = waterDrag
@@ -313,7 +356,11 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
                         val f1 = sqrt(motionX * motionX + motionZ * motionZ)
 
                         if (f1 > 0.0f) {
-                            entity.addVelocity(motionX * knockbackStrength.toDouble() * 0.6000000238418579 / f1.toDouble(), 0.1, motionZ * knockbackStrength.toDouble() * 0.6000000238418579 / f1.toDouble())
+                            entity.addVelocity(
+                                motionX * knockbackStrength.toDouble() * 0.6000000238418579 / f1.toDouble(),
+                                0.1,
+                                motionZ * knockbackStrength.toDouble() * 0.6000000238418579 / f1.toDouble()
+                            )
                         }
                     }
 
@@ -392,7 +439,11 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
             return null
         }
         var entity: Entity? = null
-        val list = world.getEntitiesInAABBexcluding(this, entityBoundingBox.expand(motionX, motionY, motionZ).grow(1.0), ARROW_TARGETS::invoke)
+        val list = world.getEntitiesInAABBexcluding(
+            this,
+            entityBoundingBox.expand(motionX, motionY, motionZ).grow(1.0),
+            ARROW_TARGETS::invoke
+        )
         var d0 = 0.0
 
         for (entity1 in list) {
@@ -465,17 +516,22 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
 
     override fun onCollideWithPlayer(entityIn: EntityPlayer) {
         if (!world.isRemote && inGround && arrowShake <= 0) {
-            var flag = pickupStatus == PickupStatus.ALLOWED || pickupStatus == PickupStatus.CREATIVE_ONLY && entityIn.capabilities.isCreativeMode
+            var flag =
+                pickupStatus == PickupStatus.ALLOWED || pickupStatus == PickupStatus.CREATIVE_ONLY && entityIn.capabilities.isCreativeMode
 
             if (pickupStatus == PickupStatus.ALLOWED && !entityIn.inventory.addItemStackToInventory(arrowStack)) {
                 flag = false
             }
 
-            if (flag) {
+            if (flag && canPickup(entityIn)) {
                 entityIn.onItemPickup(this, 1)
                 setDead()
             }
         }
+    }
+
+    open fun canPickup(entityIn: EntityPlayer): Boolean {
+        return true
     }
 
     abstract override fun getArrowStack(): ItemStack
@@ -551,9 +607,11 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
     companion object {
         private val CRITICAL = EntityDataManager.createKey(EntityModArrow::class.java, DataSerializers.BYTE)
         private val PIERCE_LEVEL = EntityDataManager.createKey(EntityModArrow::class.java, DataSerializers.BYTE)
-        val ARROW_TARGETS: (Entity?) -> Boolean = { it?.let {
-            (it is EntityPlayer && it.isSpectator) && it.isEntityAlive && it.canBeCollidedWith()
-        } ?: false }
+        val ARROW_TARGETS: (Entity?) -> Boolean = {
+            it?.let {
+                (it is EntityPlayer && it.isSpectator) && it.isEntityAlive && it.canBeCollidedWith()
+            } ?: false
+        }
 
         fun causeArrowDamage(arrow: EntityModArrow, indirectEntityIn: Entity?): DamageSource {
             return EntityDamageSourceIndirect("arrow", arrow, indirectEntityIn).setProjectile()

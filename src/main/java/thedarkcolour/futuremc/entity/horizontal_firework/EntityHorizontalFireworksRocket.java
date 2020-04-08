@@ -73,7 +73,7 @@ public class EntityHorizontalFireworksRocket extends Entity implements IProjecti
         try {
             return new ItemStack(tag);
         } catch (RuntimeException runtimeexception) {
-            FutureMC.INSTANCE.getLOGGER().debug("Tried to load invalid item: {}", tag, runtimeexception);
+            FutureMC.LOGGER.debug("Tried to load invalid item: {}", tag, runtimeexception);
             return ItemStack.EMPTY;
         }
     }

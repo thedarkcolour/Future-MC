@@ -34,7 +34,7 @@ tile.futuremc.end_stone_wall.name=Стена из камня края
 tile.futuremc.nether_brick_wall.name=Стена из незеритовых кирпичей
 tile.futuremc.sandstone_wall.name=Песчаниковая стена
 tile.futuremc.red_sandstone_wall.name=Красная песчаниковая стена
-tile.futuremc.nether_brick_red_wall.name=Стена из красных незеритовых кирпичей
+tile.futuremc.red_nether_brick_wall.name=Стена из красных незеритовых кирпичей
 
 # Плиты
 tile.futuremc.granite_slab.name=Гранитная плита

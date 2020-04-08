@@ -17,21 +17,30 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import net.minecraftforge.common.EnumPlantType
 import net.minecraftforge.common.IPlantable
-import thedarkcolour.core.item.Modeled
+import thedarkcolour.core.util.setItemModel
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.BlockSweetBerryBush
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.init.FBlocks
+import thedarkcolour.futuremc.registry.FBlocks
 
-class ItemSweetBerries : ItemFood(2, 0.2f, false), Modeled, IPlantable {
+class ItemSweetBerries : ItemFood(2, 0.2f, false), IPlantable {
     init {
         translationKey = FutureMC.ID + ".sweet_berries"
         setRegistryName("sweet_berries")
         creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.FOOD else FutureMC.TAB
-        addModel()
+        setItemModel(this, 0)
     }
 
-    override fun onItemUse(player: EntityPlayer, worldIn: World, position: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult {
+    override fun onItemUse(
+        player: EntityPlayer,
+        worldIn: World,
+        position: BlockPos,
+        hand: EnumHand,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float
+    ): EnumActionResult {
         var pos = position
         pos = pos.offset(facing)
         val itemstack = player.getHeldItem(hand)

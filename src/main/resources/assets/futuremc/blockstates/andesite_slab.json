@@ -4,8 +4,14 @@
         "model": "futuremc:andesite_slab_bottom"
     },
     "variants": {
-        "inventory": {"model": "futuremc:item/andesite_slab"},
-        "half=bottom,variant=default": [{}],
-        "half=top,variant=default": {"model": "futuremc:andesite_slab_top"}
+        "inventory": {
+            "model": "futuremc:item/andesite_slab"
+        },
+        "half=bottom,variant=default": [
+            {}
+        ],
+        "half=top,variant=default": {
+            "model": "futuremc:andesite_slab_top"
+        }
     }
 }

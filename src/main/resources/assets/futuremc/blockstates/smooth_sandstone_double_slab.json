@@ -4,7 +4,11 @@
         "model": "sandstone_smooth"
     },
     "variants": {
-        "inventory": [{}],
-        "variant=default": [{}]
+        "inventory": [
+            {}
+        ],
+        "variant=default": [
+            {}
+        ]
     }
 }

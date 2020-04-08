@@ -18,6 +18,7 @@ object SmokerRecipes : Recipes<FurnaceRecipe>() {
     }
 
     fun addRecipe(input: ItemStack, output: ItemStack) {
+        println("Added a recipe: $input, $output")
         recipes.add(FurnaceRecipe(input, output))
     }
 }

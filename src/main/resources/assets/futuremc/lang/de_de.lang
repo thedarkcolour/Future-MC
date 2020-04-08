@@ -31,7 +31,7 @@ tile.futuremc.end_stone_wall.name=Endsteinziegelmauer
 tile.futuremc.nether_brick_wall.name=Netherziegelmauer
 tile.futuremc.sandstone_wall.name=Sandsteinmauer
 tile.futuremc.red_sandstone_wall.name=Rote Sandsteinmauer
-tile.futuremc.nether_brick_red_wall.name=Rote Netherziegelmauer
+tile.futuremc.red_nether_brick_wall.name=Rote Netherziegelmauer
 
 # Slabs
 tile.futuremc.granite_slab.name=Granite Slab

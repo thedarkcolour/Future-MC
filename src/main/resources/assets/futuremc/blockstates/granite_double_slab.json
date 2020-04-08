@@ -4,7 +4,11 @@
         "model": "granite"
     },
     "variants": {
-        "inventory": [{}],
-        "variant=default": [{}]
+        "inventory": [
+            {}
+        ],
+        "variant=default": [
+            {}
+        ]
     }
 }

@@ -8,9 +8,9 @@ import net.minecraft.world.biome.Biome
 import net.minecraft.world.chunk.IChunkProvider
 import net.minecraft.world.gen.IChunkGenerator
 import net.minecraftforge.fml.common.IWorldGenerator
+import thedarkcolour.core.util.matchesAny
 import thedarkcolour.futuremc.block.BlockBamboo
-import thedarkcolour.futuremc.init.FBlocks
-import thedarkcolour.futuremc.init.matchesAny
+import thedarkcolour.futuremc.registry.FBlocks
 import java.util.*
 
 object WorldGenBamboo : IWorldGenerator {
@@ -20,17 +20,34 @@ object WorldGenBamboo : IWorldGenerator {
             worldIn.setBlockState(pos, bamboo.defaultState)
         }
         for (j in 0..9) {
-            if (worldIn.getBlockState(pos).block == bamboo && bamboo.canGrow(worldIn, pos, worldIn.getBlockState(pos), false)) {
+            if (worldIn.getBlockState(pos).block == bamboo && bamboo.canGrow(
+                    worldIn,
+                    pos,
+                    worldIn.getBlockState(pos),
+                    false
+                )
+            ) {
                 bamboo.grow(worldIn, random, pos, worldIn.getBlockState(pos))
             }
         }
     }
 
-    override fun generate(random: Random, chunkX: Int, chunkZ: Int, worldIn: World, chunkGenerator: IChunkGenerator, chunkProvider: IChunkProvider) {
-        val x = chunkX * 16 + 8
-        val z = chunkZ * 16 + 8
-        val biome = worldIn.getBiomeForCoordsBody(BlockPos(x, 0, z))
+    override fun generate(
+        random: Random,
+        chunkX: Int,
+        chunkZ: Int,
+        worldIn: World,
+        chunkGenerator: IChunkGenerator,
+        chunkProvider: IChunkProvider
+    ) {
+        val x = chunkX shl 4 + 8
+        val z = chunkZ shl 4 + 8
+        val position = BlockPos(x, 0, z)
+        if (!worldIn.isBlockLoaded(position))
+            return
+        val biome = worldIn.getBiomeForCoordsBody(position)
         val chunkPos = worldIn.getChunk(chunkX, chunkZ).pos
+        println("Here")
         if (isBiomeValid(biome) && worldIn.worldType != WorldType.FLAT) {
             for (i in 0..12) {
                 val xPos = random.nextInt(16) + 8
@@ -43,6 +60,12 @@ object WorldGenBamboo : IWorldGenerator {
     }
 
     private fun isBiomeValid(biome: Biome): Boolean {
-        return biome.matchesAny(Biomes.JUNGLE, Biomes.JUNGLE_EDGE, Biomes.JUNGLE_HILLS, Biomes.MUTATED_JUNGLE, Biomes.MUTATED_JUNGLE_EDGE)
+        return biome.matchesAny(
+            Biomes.JUNGLE,
+            Biomes.JUNGLE_EDGE,
+            Biomes.JUNGLE_HILLS,
+            Biomes.MUTATED_JUNGLE,
+            Biomes.MUTATED_JUNGLE_EDGE
+        )
     }
 }

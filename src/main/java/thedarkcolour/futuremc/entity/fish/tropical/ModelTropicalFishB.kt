@@ -38,7 +38,15 @@ class ModelTropicalFishB(scale: Float = 0F) : ModelBase() {
         finBottom.setRotationPoint(0.0F, 22.0F, -3.0F)
     }
 
-    override fun render(entityIn: Entity, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float) {
+    override fun render(
+        entityIn: Entity,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float,
+        scale: Float
+    ) {
         setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn)
         body.render(scale)
         tail.render(scale)
@@ -48,7 +56,15 @@ class ModelTropicalFishB(scale: Float = 0F) : ModelBase() {
         finBottom.render(scale)
     }
 
-    override fun setRotationAngles(limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float, entityIn: Entity) {
+    override fun setRotationAngles(
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float,
+        scale: Float,
+        entityIn: Entity
+    ) {
         val f = if (entityIn.isInWater) {
             1F
         } else {

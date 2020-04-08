@@ -6,8 +6,8 @@ import net.minecraft.util.SoundEvent
 import net.minecraft.world.World
 import thedarkcolour.core.util.stack
 import thedarkcolour.futuremc.entity.fish.EntityGroupFish
-import thedarkcolour.futuremc.init.FItems
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FItems
+import thedarkcolour.futuremc.registry.FSounds
 
 class EntitySalmon(worldIn: World) : EntityGroupFish(worldIn) {
     init {
@@ -19,12 +19,12 @@ class EntitySalmon(worldIn: World) : EntityGroupFish(worldIn) {
 
     override fun getFishBucket(): ItemStack = FItems.SALMON_BUCKET.stack
 
-    override fun getAmbientSound(): SoundEvent = Sounds.SALMON_AMBIENT
+    override fun getAmbientSound(): SoundEvent = FSounds.SALMON_AMBIENT
 
-    override fun getDeathSound(): SoundEvent = Sounds.SALMON_DEATH
+    override fun getDeathSound(): SoundEvent = FSounds.SALMON_DEATH
 
-    override fun getHurtSound(damageSourceIn: DamageSource?): SoundEvent = Sounds.SALMON_HURT
+    override fun getHurtSound(damageSourceIn: DamageSource?): SoundEvent = FSounds.SALMON_HURT
 
     override val flopSound: SoundEvent
-        get() = Sounds.SALMON_FLOP
+        get() = FSounds.SALMON_FLOP
 }

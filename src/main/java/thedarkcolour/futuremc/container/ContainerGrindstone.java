@@ -19,24 +19,25 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.SlotItemHandler;
-import thedarkcolour.core.gui.Container;
+import thedarkcolour.core.gui.ContainerBase;
 import thedarkcolour.core.inventory.DarkInventory;
 import thedarkcolour.futuremc.client.gui.GuiGrindstone;
 import thedarkcolour.futuremc.enchantment.EnchantHelper;
-import thedarkcolour.futuremc.init.FBlocks;
-import thedarkcolour.futuremc.init.Sounds;
+import thedarkcolour.futuremc.registry.FBlocks;
+import thedarkcolour.futuremc.registry.FSounds;
 
 import java.util.Map;
 
-public class ContainerGrindstone extends Container {
-    protected InventoryPlayer playerInv;
-    protected World world;
-    protected BlockPos pos;
+public class ContainerGrindstone extends ContainerBase {
+    private InventoryPlayer playerInv;
+    private World world;
+    private BlockPos pos;
 
     public DarkInventory input = new DarkInventory(2) {
         @Override
         public void onContentsChanged(int slot) {
             handleCrafting();
+            detectAndSendChanges();
         }
     };
     public DarkInventory output = new DarkInventory(1) {
@@ -84,36 +85,15 @@ public class ContainerGrindstone extends Container {
         }
     }
 
-    public void clearInput() {
+    private void clearInput() {
         for (int i = 0; i < input.getSlots(); i++) {
             input.getStackInSlot(i).shrink(1);
         }
     }
 
-    @Override
-    public void onContainerClosed(EntityPlayer playerIn) {
-        super.onContainerClosed(playerIn);
-        if (!world.isRemote) { // Mostly copied from Container#clearContainer
-            if (!playerIn.isEntityAlive() || playerIn instanceof EntityPlayerMP && ((EntityPlayerMP)playerIn).hasDisconnected()) {
-                for (int i = 0; i < input.getSlots(); i++) {
-                    ItemStack stack = input.getStackInSlot(i);
-                    if (!stack.isEmpty()) {
-                        playerIn.entityDropItem(stack, 0.5F);
-                    }
-                }
-            } else {
-                for (int i = 0; i < input.getSlots(); i++) {
-                    if (!input.getStackInSlot(i).isEmpty()) {
-                        playerInv.placeItemBackInInventory(world, input.getStackInSlot(i));
-                    }
-                }
-            }
-        }
-    }
-
-    public void handleCrafting() {
+    private void handleCrafting() {
         // Handles two incompatible items
-        if (!input.getStackInSlot(0).isItemEqualIgnoreDurability(input.getStackInSlot(1)) && !(input.getStackInSlot(0).isEmpty() || input.getStackInSlot(1).isEmpty())) {
+        if (!input.getStackInSlot(0).isItemEqualIgnoreDurability(input.getStackInSlot(1)) && !(input.anyMatch(ItemStack::isEmpty))) {
             output.setStackInSlot(0, ItemStack.EMPTY);
         }
 
@@ -152,7 +132,7 @@ public class ContainerGrindstone extends Container {
         }
 
         // Disenchants an item
-        else if ((input.getStackInSlot(0).isItemEnchanted()) || (input.getStackInSlot(1).isItemEnchanted())) {
+        else if (input.anyMatch(ItemStack::isItemEnchanted)) {
             int slot = input.getStackInSlot(0).isEmpty() ? 1 : 0;
             ItemStack stack = input.getStackInSlot(slot);
 
@@ -179,10 +159,10 @@ public class ContainerGrindstone extends Container {
         }
 
         // Converts enchanted books to EXP
-        else if (((input.getStackInSlot(0).getItem() == Items.ENCHANTED_BOOK) || (input.getStackInSlot(1).getItem() == Items.ENCHANTED_BOOK)) && !input.getStackInSlot(0).isItemEqual(input.getStackInSlot(1))) {
+        else if (((input.anyMatch(stack -> stack.getItem() == Items.ENCHANTED_BOOK))) && !input.getStackInSlot(0).isItemEqual(input.getStackInSlot(1))) {
             int slot = input.getStackInSlot(0).isEmpty() ? 1 : 0;
             ItemStack book = input.getStackInSlot(slot);
-            boolean isCursed = EnchantHelper.isCursed(input.getStackInSlot(0)) || EnchantHelper.isCursed(input.getStackInSlot(1));
+            boolean isCursed = input.anyMatch(EnchantHelper.INSTANCE::isCursed);
 
             ItemStack outBook;
             if (isCursed) {
@@ -211,19 +191,38 @@ public class ContainerGrindstone extends Container {
         else {
             output.setStackInSlot(0, ItemStack.EMPTY);
         }
-
-        detectAndSendChanges();
     }
 
-    public void handleOutput() {
-        awardEXP(input.getStackInSlot(0), input.getStackInSlot(1));
-        world.playSound(pos.getX(), pos.getY(), pos.getZ(), Sounds.INSTANCE.getGRINDSTONE_USE(), SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+    @Override
+    public void onContainerClosed(EntityPlayer playerIn) {
+        super.onContainerClosed(playerIn);
+        if (!world.isRemote) { // Mostly copied from ContainerBase#clearContainer
+            if (!playerIn.isEntityAlive() || playerIn instanceof EntityPlayerMP && ((EntityPlayerMP) playerIn).hasDisconnected()) {
+                for (int i = 0; i < input.getSlots(); i++) {
+                    ItemStack stack = input.getStackInSlot(i);
+                    if (!stack.isEmpty()) {
+                        playerIn.entityDropItem(stack, 0.5F);
+                    }
+                }
+            } else {
+                for (int i = 0; i < input.getSlots(); i++) {
+                    if (!input.getStackInSlot(i).isEmpty()) {
+                        playerInv.placeItemBackInInventory(world, input.getStackInSlot(i));
+                    }
+                }
+            }
+        }
+    }
+
+    private void handleOutput() {
+        awardEXP(input);
+        world.playSound(pos.getX(), pos.getY(), pos.getZ(), FSounds.INSTANCE.getGRINDSTONE_USE(), SoundCategory.BLOCKS, 1.0F, 1.0F, false);
         clearInput(); // Clear it last, otherwise XP doesn't work
     }
 
-    public void awardEXP(ItemStack... input) {
+    private void awardEXP(DarkInventory inventory) {
         int exp = 0;
-        for (ItemStack stack : input) {
+        for (ItemStack stack : inventory) {
             if (stack.isEmpty()) continue;
 
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
@@ -244,7 +243,7 @@ public class ContainerGrindstone extends Container {
         }
     }
 
-    public static int getEnchantmentEXP(Enchantment enchantment, int enchantLevel) {
+    private int getEnchantmentEXP(Enchantment enchantment, int enchantLevel) {
         return enchantment.getMinEnchantability(enchantLevel);
     }
 
@@ -286,11 +285,7 @@ public class ContainerGrindstone extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        if (world.getBlockState(this.pos).getBlock() != FBlocks.INSTANCE.getGRINDSTONE()) {
-            return false;
-        } else {
-            return playerIn.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
-        }
+        return isBlockInRange(FBlocks.INSTANCE.getGRINDSTONE(), world, pos, playerIn);
     }
 
     @SideOnly(Side.CLIENT)

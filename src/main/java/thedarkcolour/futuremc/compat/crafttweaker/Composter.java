@@ -18,14 +18,14 @@ import thedarkcolour.futuremc.tile.TileComposter;
 public final class Composter {
     @ZenMethod
     public static void addValidItem(IIngredient stack, int rarity) {
-        if(BlockComposter.ItemsForComposter.getChance(CraftTweakerMC.getItemStack(stack)) == -1)  {
-            if(!TileComposter.isBoneMeal(CraftTweakerMC.getItemStack(stack))) {
+        if (BlockComposter.ItemsForComposter.getChance(CraftTweakerMC.getItemStack(stack)) == -1) {
+            if (!TileComposter.isBoneMeal(CraftTweakerMC.getItemStack(stack))) {
                 CraftTweakerAPI.apply(new Add(stack, rarity));
             } else {
-                FutureMC.INSTANCE.getLOGGER().log(Level.ERROR, "Cannot add bone meal to compostable items!");
+                FutureMC.LOGGER.log(Level.ERROR, "Cannot add bone meal to compostable items!");
             }
         } else {
-            FutureMC.INSTANCE.getLOGGER().log(Level.WARN, "Failed to add duplicate recipe for item " + stack.toCommandString());
+            FutureMC.LOGGER.log(Level.WARN, "Failed to add duplicate recipe for item " + stack.toCommandString());
         }
     }
 
@@ -51,10 +51,10 @@ public final class Composter {
 
     @ZenMethod
     public static void removeValidItem(IIngredient stack) {
-        if(BlockComposter.ItemsForComposter.getChance(CraftTweakerMC.getItemStack(stack)) != -1) {
+        if (BlockComposter.ItemsForComposter.getChance(CraftTweakerMC.getItemStack(stack)) != -1) {
             CraftTweakerAPI.apply(new Remove(CraftTweakerMC.getItemStack(stack)));
         } else {
-            FutureMC.INSTANCE.getLOGGER().log(Level.WARN, "Cannot remove non-existent item from valid composter items " + stack.toCommandString());
+            FutureMC.LOGGER.log(Level.WARN, "Cannot remove non-existent item from valid composter items " + stack.toCommandString());
         }
     }
 
@@ -78,10 +78,10 @@ public final class Composter {
 
     @ZenMethod
     public static void replaceValidItemChance(IIngredient stack, int newRarity) {
-        if(BlockComposter.ItemsForComposter.getChance(CraftTweakerMC.getItemStack(stack)) != -1) {
+        if (BlockComposter.ItemsForComposter.getChance(CraftTweakerMC.getItemStack(stack)) != -1) {
             CraftTweakerAPI.apply(new ReplaceItemChance(CraftTweakerMC.getItemStack(stack), newRarity));
         } else {
-            FutureMC.INSTANCE.getLOGGER().log(Level.WARN, "Cannot change chance for invalid item " + stack.toCommandString() +
+            FutureMC.LOGGER.log(Level.WARN, "Cannot change chance for invalid item " + stack.toCommandString() +
                     " If you wish to make the item valid, use mods.futuremc.Composter.addValidItem");
         }
     }
@@ -109,7 +109,7 @@ public final class Composter {
     }
 
     @ZenMethod
-    public static void clearValidItems(){
+    public static void clearValidItems() {
         BlockComposter.ItemsForComposter.clear();
     }
 }

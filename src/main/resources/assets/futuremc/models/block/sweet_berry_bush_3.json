@@ -1,6 +1,6 @@
 {
-  "parent": "block/cross",
-  "textures": {
-    "cross": "futuremc:blocks/berrybush3"
-  }
+    "parent": "block/cross",
+    "textures": {
+        "cross": "futuremc:blocks/berrybush3"
+    }
 }

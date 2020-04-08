@@ -4,7 +4,11 @@
         "model": "prismarine_bricks"
     },
     "variants": {
-        "inventory": [{}],
-        "variant=default": [{}]
+        "inventory": [
+            {}
+        ],
+        "variant=default": [
+            {}
+        ]
     }
 }

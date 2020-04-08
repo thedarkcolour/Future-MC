@@ -1,29 +1,39 @@
 package thedarkcolour.futuremc.asm;
 
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
+import net.shadowfacts.forgelin.KotlinAdapter;
 
 import java.util.Map;
 
-import static net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
-import static net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.Name;
-import static net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
-import static net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.TransformerExclusions;
+import static net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.*;
 
 @Name("FutureMC")
 @MCVersion("1.12.2")
-@SortingIndex(4)
+@SortingIndex(1004)
 @TransformerExclusions("thedarkcolour.futuremc.asm")
 public class CoreLoader implements IFMLLoadingPlugin {
     @Override
     public String[] getASMTransformerClass() {
-        return new String[] {
+        //noinspection CatchMayIgnoreException
+        try {
+            KotlinAdapter.class.getName();
+        } catch (Throwable any) {
+            if (any instanceof ClassNotFoundException) {
+                System.out.println("***********************");
+                System.out.println(" Shadowfact's Forgelin ");
+                System.out.println("      is missing!      ");
+                System.out.println("***********************");
+                throw any;
+            }
+        }
+        return new String[]{
                 "thedarkcolour.futuremc.asm.CoreTransformer"
         };
     }
 
     @Override
     public String getModContainerClass() {
-        return "thedarkcolour.futuremc.asm.CoreContainer";
+        return null;
     }
 
     @Override

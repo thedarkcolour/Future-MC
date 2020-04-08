@@ -1,26 +1,21 @@
 {
     "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
+    "pattern": [
         "xx ",
         "aa ",
         "aa "
     ],
-    "key":
-    {
-        "x":
-        {
+    "key": {
+        "x": {
             "type": "forge:ore_dict",
-            "ore":"ingotIron"
+            "ore": "ingotIron"
         },
-        "a":
-        {
+        "a": {
             "type": "forge:ore_dict",
-            "ore":"plankWood"
+            "ore": "plankWood"
         }
     },
-    "result":
-    {
+    "result": {
         "item": "smithing_table"
     }
 }

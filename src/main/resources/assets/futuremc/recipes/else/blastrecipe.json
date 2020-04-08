@@ -1,29 +1,23 @@
 {
     "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
+    "pattern": [
         "xxx",
         "xax",
         "bbb"
     ],
-    "key":
-    {
-        "x":
-        {
+    "key": {
+        "x": {
             "type": "forge:ore_dict",
             "ore": "ingotIron"
         },
-        "a":
-        {
+        "a": {
             "item": "minecraft:furnace"
         },
-        "b":
-        {
+        "b": {
             "item": "smooth_stone"
         }
     },
-    "result":
-    {
+    "result": {
         "item": "blast_furnace"
     }
 }

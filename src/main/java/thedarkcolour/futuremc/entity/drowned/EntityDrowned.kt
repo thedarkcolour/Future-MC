@@ -29,8 +29,8 @@ import net.minecraft.world.World
 import thedarkcolour.core.util.lerp
 import thedarkcolour.core.util.stack
 import thedarkcolour.futuremc.entity.trident.EntityTrident
-import thedarkcolour.futuremc.init.FItems
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FItems
+import thedarkcolour.futuremc.registry.FSounds
 import kotlin.math.*
 
 class EntityDrowned(world: World) : EntityZombie(world), IRangedAttackMob {
@@ -85,7 +85,8 @@ class EntityDrowned(world: World) : EntityZombie(world), IRangedAttackMob {
     override fun getCanSpawnHere(): Boolean {
         val pos = position
         val biome = world.getBiome(pos)
-        val flag = world.difficulty != EnumDifficulty.PEACEFUL && isValidLightLevel && world.getBlockState(pos).material == Material.WATER
+        val flag =
+            world.difficulty != EnumDifficulty.PEACEFUL && isValidLightLevel && world.getBlockState(pos).material == Material.WATER
         return if (biome != Biomes.RIVER && biome != Biomes.FROZEN_RIVER) {
             rand.nextInt(40) == 0 && waterIsDeepEnough(world, pos) && flag
         } else {
@@ -107,15 +108,15 @@ class EntityDrowned(world: World) : EntityZombie(world), IRangedAttackMob {
         return pos.y < world.seaLevel - 5
     }
 
-    override fun getAmbientSound(): SoundEvent = Sounds.DROWNED_AMBIENT
+    override fun getAmbientSound(): SoundEvent = FSounds.DROWNED_AMBIENT
 
-    override fun getHurtSound(damageSourceIn: DamageSource): SoundEvent = Sounds.DROWNED_HURT
+    override fun getHurtSound(damageSourceIn: DamageSource): SoundEvent = FSounds.DROWNED_HURT
 
-    override fun getDeathSound(): SoundEvent = Sounds.DROWNED_DEATH
+    override fun getDeathSound(): SoundEvent = FSounds.DROWNED_DEATH
 
-    override fun getStepSound(): SoundEvent = Sounds.DROWNED_STEP
+    override fun getStepSound(): SoundEvent = FSounds.DROWNED_STEP
 
-    override fun getSwimSound(): SoundEvent = Sounds.DROWNED_SWIM
+    override fun getSwimSound(): SoundEvent = FSounds.DROWNED_SWIM
 
     override fun getSkullDrop(): ItemStack = ItemStack.EMPTY
 
@@ -160,7 +161,8 @@ class EntityDrowned(world: World) : EntityZombie(world), IRangedAttackMob {
             when (slot.slotType) {
                 EntityEquipmentSlot.Type.HAND -> inventoryHandsDropChances[slot.index] = 2.0f
                 EntityEquipmentSlot.Type.ARMOR -> inventoryArmorDropChances[slot.index] = 2.0f
-                else -> {}
+                else -> {
+                }
             }
             enablePersistence()
             onItemPickup(itemEntity, candidate.count)
@@ -246,9 +248,12 @@ class EntityDrowned(world: World) : EntityZombie(world), IRangedAttackMob {
         tasks.addTask(6, AISwimUp(this))
         tasks.addTask(7, EntityAIWander(this, 1.0))
         targetTasks.addTask(1, EntityAIHurtByTarget(this, true, EntityDrowned::class.java))
-        targetTasks.addTask(2, EntityAINearestAttackableTarget(this, EntityPlayer::class.java, 10, true, false, ::shouldAttack))
+        targetTasks.addTask(
+            2,
+            EntityAINearestAttackableTarget(this, EntityPlayer::class.java, 10, true, false, ::shouldAttack)
+        )
         targetTasks.addTask(3, EntityAINearestAttackableTarget(this, EntityVillager::class.java, false))
-        targetTasks.addTask(3, EntityAINearestAttackableTarget(this, EntityIronGolem::class.java, true  ))
+        targetTasks.addTask(3, EntityAINearestAttackableTarget(this, EntityIronGolem::class.java, true))
         //targetTasks.addTask(5, EntityAINearestAttackableTarget(this, EntityTurtle::class.java, 10, true, false, ::shouldAttack))
     }
 
@@ -332,7 +337,11 @@ class EntityDrowned(world: World) : EntityZombie(world), IRangedAttackMob {
     private class AIGoToBeach(val entity: EntityDrowned) : EntityAIMoveToBlock(entity, 1.0, 8) {
         override fun shouldMoveTo(worldIn: World, pos: BlockPos): Boolean {
             val up = pos.up()
-            return worldIn.isAirBlock(up) && worldIn.isAirBlock(up.up()) && worldIn.getBlockState(pos).isSideSolid(worldIn, pos, EnumFacing.UP)
+            return worldIn.isAirBlock(up) && worldIn.isAirBlock(up.up()) && worldIn.getBlockState(pos).isSideSolid(
+                worldIn,
+                pos,
+                EnumFacing.UP
+            )
         }
 
         override fun shouldExecute(): Boolean {
@@ -361,7 +370,12 @@ class EntityDrowned(world: World) : EntityZombie(world), IRangedAttackMob {
 
         override fun updateTask() {
             if (entity.posY < targetY - 1 && entity.navigator.noPath() || entity.isCloseToPathTarget()) {
-                val vec3d = RandomPositionGenerator.findRandomTargetBlockTowards(entity, 4, 8, Vec3d(entity.posX, (targetY - 1).toDouble(), entity.posZ))
+                val vec3d = RandomPositionGenerator.findRandomTargetBlockTowards(
+                    entity,
+                    4,
+                    8,
+                    Vec3d(entity.posX, (targetY - 1).toDouble(), entity.posZ)
+                )
                 if (vec3d == null) {
                     obstructed = true
                     return
@@ -410,7 +424,7 @@ class EntityDrowned(world: World) : EntityZombie(world), IRangedAttackMob {
         val z = target.posZ - posZ
         val v = sqrt(x * x + z * z)
         trident.shoot(x, y + v * 0.2f, z, 1.6f, 14 - (world.difficulty.id * 4).toFloat())
-        playSound(Sounds.TRIDENT_THROW, 1.0f, 1.0f / rand.nextFloat() * 0.4f + 0.8f)
+        playSound(FSounds.TRIDENT_THROW, 1.0f, 1.0f / rand.nextFloat() * 0.4f + 0.8f)
         world.spawnEntity(trident)
     }
 

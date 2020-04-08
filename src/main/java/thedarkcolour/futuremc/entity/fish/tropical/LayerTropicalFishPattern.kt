@@ -7,7 +7,16 @@ class LayerTropicalFishPattern(private val fishRenderer: RenderTropicalFish) : L
     private val modelA = ModelTropicalFishA(0.008F)
     private val modelB = ModelTropicalFishB(0.008F)
 
-    override fun doRenderLayer(entity: EntityTropicalFish, limbSwing: Float, limbSwingAmount: Float, partialTicks: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float) {
+    override fun doRenderLayer(
+        entity: EntityTropicalFish,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        partialTicks: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float,
+        scale: Float
+    ) {
         if (!entity.isInvisible) {
             val model = if (entity.getSize() == 0) modelA else modelB
             fishRenderer.bindTexture(entity.getPatternTexture())

@@ -29,6 +29,11 @@ public class RotatableBlock extends BlockBase {
         setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
     }
 
+    public RotatableBlock(Props properties) {
+        super(properties);
+        setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
+    }
+
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, FACING);

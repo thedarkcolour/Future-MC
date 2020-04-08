@@ -4,10 +4,22 @@
         "inside": "futuremc:blocks/composter_compost"
     },
     "elements": [
-        {   "from": [ 2, 0, 2 ],
-            "to": [ 14, 3, 14 ],
+        {
+            "from": [
+                2,
+                0,
+                2
+            ],
+            "to": [
+                14,
+                3,
+                14
+            ],
             "faces": {
-                "up": { "texture": "#inside", "cullface": "up" }
+                "up": {
+                    "texture": "#inside",
+                    "cullface": "up"
+                }
             }
         }
     ]

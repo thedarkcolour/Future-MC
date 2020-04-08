@@ -13,7 +13,7 @@ import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes;
 import java.util.Arrays;
 
 @ZenRegister
-@ZenClass("mods.minecraftfuture.Stonecutter")
+@ZenClass("mods.futuremc.Stonecutter")
 public final class Stonecutter {
     @ZenMethod
     public static void addOutputs(IItemStack input, IItemStack... outputs) {

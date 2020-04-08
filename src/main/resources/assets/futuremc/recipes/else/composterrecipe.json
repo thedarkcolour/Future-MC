@@ -1,26 +1,21 @@
 {
     "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
+    "pattern": [
         "x x",
         "x x",
         "aaa"
     ],
-    "key":
-    {
-        "x":
-        {
+    "key": {
+        "x": {
             "type": "forge:ore_dict",
-            "ore":"fenceWood"
+            "ore": "fenceWood"
         },
-        "a":
-        {
+        "a": {
             "type": "forge:ore_dict",
-            "ore":"plankWood"
+            "ore": "plankWood"
         }
     },
-    "result":
-    {
+    "result": {
         "item": "composter"
     }
 }

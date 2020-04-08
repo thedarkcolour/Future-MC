@@ -25,15 +25,16 @@ import net.minecraft.world.World
 import thedarkcolour.core.block.BlockBase
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.init.FBlocks.BAMBOO
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FBlocks.BAMBOO
+import thedarkcolour.futuremc.registry.FSounds
 import java.util.*
 
-open class BlockBamboo : BlockBase("Bamboo", Material.PLANTS, Sounds.BAMBOO), IGrowable {
+open class BlockBamboo : BlockBase("bamboo", Material.PLANTS, FSounds.BAMBOO), IGrowable {
     init {
-        defaultState = defaultState.withProperty(THICK, false).withProperty(LEAVES, EnumLeaves.NO_LEAVES).withProperty(MATURE, false)
-        tickRandomly = true
+        defaultState = defaultState.withProperty(THICK, false).withProperty(LEAVES, EnumLeaves.NO_LEAVES)
+            .withProperty(MATURE, false)
         creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else FutureMC.TAB
+        tickRandomly = true
         blockHardness = 1.0F
     }
 
@@ -49,18 +50,29 @@ open class BlockBamboo : BlockBase("Bamboo", Material.PLANTS, Sounds.BAMBOO), IG
         }
         if (worldIn.getBlockState(pos.up()).block == BAMBOO) {
             if (worldIn.getBlockState(pos.up()).getValue(THICK) && !worldIn.getBlockState(pos).getValue(THICK)) {
-                worldIn.setBlockState(pos, defaultState
+                worldIn.setBlockState(
+                    pos, defaultState
                         .withProperty(THICK, true)
                         .withProperty(MATURE, worldIn.getBlockState(pos).getValue(MATURE))
-                        .withProperty(LEAVES, worldIn.getBlockState(pos).getValue(LEAVES)))
+                        .withProperty(LEAVES, worldIn.getBlockState(pos).getValue(LEAVES))
+                )
             }
         }
     }
 
-    override fun getStateForPlacement(worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState {
+    override fun getStateForPlacement(
+        worldIn: World,
+        pos: BlockPos,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float,
+        meta: Int,
+        placer: EntityLivingBase
+    ): IBlockState {
         return if (worldIn.getBlockState(pos.offset(facing, -1)).block == BAMBOO) {
             val thick = worldIn.getBlockState(pos.offset(facing, -1)).getValue(THICK)
-            this.defaultState.withProperty(THICK, thick)
+            defaultState.withProperty(THICK, thick)
         } else {
             getStateFromMeta(meta)
         }
@@ -77,15 +89,19 @@ open class BlockBamboo : BlockBase("Bamboo", Material.PLANTS, Sounds.BAMBOO), IG
     override fun getStateFromMeta(meta: Int): IBlockState {
         return if (meta > 5) {
             if (meta > 8) {
-                defaultState.withProperty(LEAVES, EnumLeaves.values()[meta - 9]).withProperty(MATURE, true).withProperty(THICK, true)
+                defaultState.withProperty(LEAVES, EnumLeaves.values()[meta - 9]).withProperty(MATURE, true)
+                    .withProperty(THICK, true)
             } else {
-                defaultState.withProperty(LEAVES, EnumLeaves.values()[meta - 6]).withProperty(MATURE, true).withProperty(THICK, false)
+                defaultState.withProperty(LEAVES, EnumLeaves.values()[meta - 6]).withProperty(MATURE, true)
+                    .withProperty(THICK, false)
             }
         } else {
             if (meta > 2) {
-                defaultState.withProperty(LEAVES, EnumLeaves.values()[meta - 3]).withProperty(MATURE, false).withProperty(THICK, true)
+                defaultState.withProperty(LEAVES, EnumLeaves.values()[meta - 3]).withProperty(MATURE, false)
+                    .withProperty(THICK, true)
             } else {
-                defaultState.withProperty(LEAVES, EnumLeaves.values()[meta]).withProperty(MATURE, false).withProperty(THICK, false)
+                defaultState.withProperty(LEAVES, EnumLeaves.values()[meta]).withProperty(MATURE, false)
+                    .withProperty(THICK, false)
             }
         }
     }
@@ -96,10 +112,12 @@ open class BlockBamboo : BlockBase("Bamboo", Material.PLANTS, Sounds.BAMBOO), IG
             meta += 6
         }
         when (state.getValue(LEAVES)) {
-            EnumLeaves.NO_LEAVES -> {}
+            EnumLeaves.NO_LEAVES -> {
+            }
             EnumLeaves.SMALL_LEAVES -> meta += 1
             EnumLeaves.LARGE_LEAVES -> meta += 2
-            null -> {}
+            null -> {
+            }
         }
         if (state.getValue(THICK)) {
             meta += 3
@@ -115,11 +133,17 @@ open class BlockBamboo : BlockBase("Bamboo", Material.PLANTS, Sounds.BAMBOO), IG
 
     override fun canEntitySpawn(state: IBlockState, entityIn: Entity): Boolean = false
 
-    override fun isSideSolid(base_state: IBlockState, worldIn: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean = false
+    override fun isSideSolid(base_state: IBlockState, worldIn: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean =
+        false
 
     override fun isTopSolid(state: IBlockState): Boolean = false
 
-    override fun getBlockFaceShape(worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing): BlockFaceShape = BlockFaceShape.UNDEFINED
+    override fun getBlockFaceShape(
+        worldIn: IBlockAccess,
+        state: IBlockState,
+        pos: BlockPos,
+        face: EnumFacing
+    ): BlockFaceShape = BlockFaceShape.UNDEFINED
 
     override fun createBlockState(): BlockStateContainer {
         return BlockStateContainer(this, THICK, LEAVES, MATURE)
@@ -127,7 +151,12 @@ open class BlockBamboo : BlockBase("Bamboo", Material.PLANTS, Sounds.BAMBOO), IG
 
     override fun getRenderLayer(): BlockRenderLayer = BlockRenderLayer.CUTOUT
 
-    override fun canGrow(worldIn: World, pos: BlockPos, state: IBlockState, isClient: Boolean): Boolean { // Why is there an "isClient" param?
+    override fun canGrow(
+        worldIn: World,
+        pos: BlockPos,
+        state: IBlockState,
+        isClient: Boolean
+    ): Boolean { // Why is there an "isClient" param?
         val i = numOfAboveBamboo(worldIn, pos)
         val j = numOfBelowBamboo(worldIn, pos)
         return (i + j + 1 < 16 && !worldIn.getBlockState(pos.up(i)).getValue(MATURE)
@@ -177,7 +206,11 @@ open class BlockBamboo : BlockBase("Bamboo", Material.PLANTS, Sounds.BAMBOO), IG
             thick = numOfBelowBamboo(worldIn, pos) > 2 || down.getValue(THICK)
         }
         val mature = (blocks < 11 || random.nextFloat() >= 0.25f) && blocks != 15
-        worldIn.setBlockState(pos.up(), defaultState.withProperty(THICK, thick).withProperty(LEAVES, leaves).withProperty(MATURE, !mature), 3)
+        worldIn.setBlockState(
+            pos.up(),
+            defaultState.withProperty(THICK, thick).withProperty(LEAVES, leaves).withProperty(MATURE, !mature),
+            3
+        )
     }
 
     override fun updateTick(worldIn: World, pos: BlockPos, state: IBlockState, random: Random) {

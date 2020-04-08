@@ -3,23 +3,19 @@ package thedarkcolour.futuremc.container;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnaceFuel;
-import net.minecraft.inventory.SlotFurnaceOutput;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thedarkcolour.core.gui.Container;
+import thedarkcolour.core.gui.ContainerBase;
 import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
 import thedarkcolour.futuremc.client.gui.GuiFurnaceAdvanced;
 import thedarkcolour.futuremc.tile.TileFurnaceAdvanced;
 
-public class ContainerFurnaceAdvanced extends Container {
+public class ContainerFurnaceAdvanced extends ContainerBase {
     public final TileFurnaceAdvanced te;
     public final InventoryPlayer playerInventory;
     protected int fuelLeft, progress, currentItemBurnTime;
@@ -63,13 +59,12 @@ public class ContainerFurnaceAdvanced extends Container {
             listener.sendWindowProperty(this, 2, te.getField(2));
         }
 
-        this.fuelLeft = te.getField(0);
-        this.currentItemBurnTime = te.getField(1);
-        this.progress = te.getField(2);
+        fuelLeft = te.getField(0);
+        currentItemBurnTime = te.getField(1);
+        progress = te.getField(2);
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public void updateProgressBar(int id, int data) {
         te.setField(id, data);
     }
@@ -89,35 +84,29 @@ public class ContainerFurnaceAdvanced extends Container {
                 }
 
                 slot.onSlotChange(itemStack1, itemstack);
-            }
-            else if (index != 1 && index != 0) {
+            } else if (index != 1 && index != 0) {
                 if (!FurnaceRecipes.instance().getSmeltingResult(itemStack1).isEmpty()) {
                     if (!this.mergeItemStack(itemStack1, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (TileEntityFurnace.isItemFuel(itemStack1)) {
+                } else if (TileEntityFurnace.isItemFuel(itemStack1)) {
                     if (!this.mergeItemStack(itemStack1, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (index < 30) {
+                } else if (index < 30) {
                     if (!this.mergeItemStack(itemStack1, 30, 39, false)) {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (index < 39 && !this.mergeItemStack(itemStack1, 3, 30, false)) {
+                } else if (index < 39 && !this.mergeItemStack(itemStack1, 3, 30, false)) {
                     return ItemStack.EMPTY;
                 }
-            }
-            else if (!this.mergeItemStack(itemStack1, 3, 39, false)) {
+            } else if (!this.mergeItemStack(itemStack1, 3, 39, false)) {
                 return ItemStack.EMPTY;
             }
 
             if (itemStack1.isEmpty()) {
                 slot.putStack(ItemStack.EMPTY);
-            }
-            else {
+            } else {
                 slot.onSlotChanged();
             }
 
@@ -131,7 +120,7 @@ public class ContainerFurnaceAdvanced extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        return playerIn.getDistanceSq(te.getPos().add(0.5D, 0.5D, 0.5D)) <= 64D;
+        return isTileInRange(te, playerIn);
     }
 
     @SideOnly(Side.CLIENT)

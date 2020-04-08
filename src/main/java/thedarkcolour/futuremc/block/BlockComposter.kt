@@ -25,11 +25,11 @@ import net.minecraftforge.registries.IForgeRegistryEntry
 import thedarkcolour.core.block.InteractionBlock
 import thedarkcolour.futuremc.FutureMC.TAB
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.init.FBlocks.CORNFLOWER
-import thedarkcolour.futuremc.init.FBlocks.LILY_OF_THE_VALLEY
-import thedarkcolour.futuremc.init.FBlocks.WITHER_ROSE
-import thedarkcolour.futuremc.init.FItems.SWEET_BERRIES
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FBlocks.CORNFLOWER
+import thedarkcolour.futuremc.registry.FBlocks.LILY_OF_THE_VALLEY
+import thedarkcolour.futuremc.registry.FBlocks.WITHER_ROSE
+import thedarkcolour.futuremc.registry.FItems.SWEET_BERRIES
+import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.tile.TileComposter
 import java.util.*
 
@@ -38,7 +38,15 @@ class BlockComposter : InteractionBlock("Composter", Material.WOOD) {
         return BlockStateContainer(this, LEVEL)
     }
 
-    override fun addCollisionBoxToList(state: IBlockState, worldIn: World, pos: BlockPos, entityBox: AxisAlignedBB, collidingBoxes: List<AxisAlignedBB>, entityIn: Entity?, isActualState: Boolean) {
+    override fun addCollisionBoxToList(
+        state: IBlockState,
+        worldIn: World,
+        pos: BlockPos,
+        entityBox: AxisAlignedBB,
+        collidingBoxes: List<AxisAlignedBB>,
+        entityIn: Entity?,
+        isActualState: Boolean
+    ) {
         Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS)
         Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST)
         Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH)
@@ -46,7 +54,12 @@ class BlockComposter : InteractionBlock("Composter", Material.WOOD) {
         Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH)
         if (state.getValue(LEVEL) > 0) {
             val level = if (state.getValue(LEVEL) == 8) 6 else state.getValue(LEVEL) - 1
-            Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, makeAABB(2.0, 2.0, 2.0, 14.0, 3.0 + 2.0 * level, 14.0))
+            Block.addCollisionBoxToList(
+                pos,
+                entityBox,
+                collidingBoxes,
+                makeAABB(2.0, 2.0, 2.0, 14.0, 3.0 + 2.0 * level, 14.0)
+            )
         }
     }
 
@@ -58,7 +71,17 @@ class BlockComposter : InteractionBlock("Composter", Material.WOOD) {
         return state.getValue(LEVEL)
     }
 
-    override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+    override fun onBlockActivated(
+        worldIn: World,
+        pos: BlockPos,
+        state: IBlockState,
+        playerIn: EntityPlayer,
+        hand: EnumHand,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float
+    ): Boolean {
         val stack = playerIn.getHeldItem(hand)
         if (worldIn.getTileEntity(pos) is TileComposter) {
             val te = worldIn.getTileEntity(pos) as TileComposter?
@@ -87,7 +110,15 @@ class BlockComposter : InteractionBlock("Composter", Material.WOOD) {
             val d3 = random.nextGaussian() * 0.02
             val d4 = random.nextGaussian() * 0.02
             val d5 = random.nextGaussian() * 0.02
-            worldIn.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.x + d1 + d2 * random.nextFloat().toDouble(), pos.y.toDouble() + d0 + random.nextFloat().toDouble() * (1.0 - d0), pos.z.toDouble() + d1 + d2 * random.nextFloat().toDouble(), d3, d4, d5)
+            worldIn.spawnParticle(
+                EnumParticleTypes.VILLAGER_HAPPY,
+                pos.x + d1 + d2 * random.nextFloat().toDouble(),
+                pos.y.toDouble() + d0 + random.nextFloat().toDouble() * (1.0 - d0),
+                pos.z.toDouble() + d1 + d2 * random.nextFloat().toDouble(),
+                d3,
+                d4,
+                d5
+            )
         }
     }
 
@@ -95,8 +126,11 @@ class BlockComposter : InteractionBlock("Composter", Material.WOOD) {
         if (!worldIn.isRemote) {
             if (worldIn.getBlockState(pos).getValue(LEVEL) == 7) {
                 worldIn.setBlockState(pos, defaultState.withProperty(LEVEL, 8))
-                worldIn.playSound(null, pos, Sounds.COMPOSTER_READY, SoundCategory.BLOCKS, 1f, 1f)
-                (worldIn.getTileEntity(pos) as TileComposter?)!!.inventory.setStackInSlot(0, ItemStack(Items.DYE, 1, 15))
+                worldIn.playSound(null, pos, FSounds.COMPOSTER_READY, SoundCategory.BLOCKS, 1f, 1f)
+                (worldIn.getTileEntity(pos) as TileComposter?)!!.inventory.setStackInSlot(
+                    0,
+                    ItemStack(Items.DYE, 1, 15)
+                )
             }
         }
     }
@@ -147,7 +181,8 @@ class BlockComposter : InteractionBlock("Composter", Material.WOOD) {
         @kotlin.jvm.JvmStatic
         fun getChance(stack: ItemStack): Int {
             if (stack.isEmpty) return -1
-            val item = VALID_ITEMS.keys.stream().filter { itemStack: ItemStack -> itemStack.isItemEqual(stack) }.findFirst()
+            val item =
+                VALID_ITEMS.keys.stream().filter { itemStack: ItemStack -> itemStack.isItemEqual(stack) }.findFirst()
             return if (item.isPresent) VALID_ITEMS[item.get()]!! else -1
         }
 

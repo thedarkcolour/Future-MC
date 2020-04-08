@@ -1,11 +1,7 @@
 package thedarkcolour.futuremc.compat.jei.smoker;
 
 import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.gui.IDrawable;
-import mezz.jei.api.gui.IDrawableAnimated;
-import mezz.jei.api.gui.IDrawableStatic;
-import mezz.jei.api.gui.IGuiItemStackGroup;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.*;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.Minecraft;
@@ -13,7 +9,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import thedarkcolour.futuremc.FutureMC;
-import thedarkcolour.futuremc.init.FBlocks;
+import thedarkcolour.futuremc.registry.FBlocks;
 
 public class SmokerRecipeCategory implements IRecipeCategory<SmokerRecipeWrapper> {
     public static final String NAME = "container.jei.futuremc.smoker.name";

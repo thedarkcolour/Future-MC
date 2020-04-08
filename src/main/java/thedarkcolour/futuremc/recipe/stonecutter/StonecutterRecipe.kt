@@ -7,7 +7,7 @@ import thedarkcolour.core.util.predicateArrayListOf
 import thedarkcolour.futuremc.recipe.Recipe
 
 class StonecutterRecipe(override val input: ItemStack, vararg outputs: ItemStack) : Recipe() {
-    private val outputs: PredicateArrayList<ItemStack>
+    val outputs: PredicateArrayList<ItemStack>
     val totalOutputs: Int
         get() = outputs.size
 

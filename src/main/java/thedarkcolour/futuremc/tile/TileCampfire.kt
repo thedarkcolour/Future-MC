@@ -21,16 +21,15 @@ import thedarkcolour.core.item.ItemDebugger
 import thedarkcolour.core.tile.InteractionTile
 import thedarkcolour.futuremc.block.BlockCampfire
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.init.FBlocks
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipes
 
 class TileCampfire : InteractionTile(), ITickable {
     val cookingTimes = IntArray(4)
     val cookingTotalTimes = IntArray(4)
 
-    val inventory: DarkInventory = object : DarkInventory(4) {
+    val inventory = object : DarkInventory(4) {
         override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
-            return CampfireRecipes.getRecipe(stack).isPresent
+            return CampfireRecipes.getRecipe(stack) != null
         }
 
         override fun getSlotLimit(slot: Int): Int {
@@ -65,8 +64,9 @@ class TileCampfire : InteractionTile(), ITickable {
             if (!stack.isEmpty) {
                 ++cookingTimes[i]
                 if (cookingTimes[i] >= cookingTotalTimes[i]) {
-                    if (CampfireRecipes.getRecipe(stack).isPresent) {
-                        val output = CampfireRecipes.getRecipe(stack).get().output.copy()
+                    val recipe = CampfireRecipes.getRecipe(stack)
+                    if (recipe != null) {
+                        val output = recipe.output.copy()
                         inventory.setStackInSlot(i, ItemStack.EMPTY)
                         drop(output)
                         cookingTimes[i] = 0
@@ -103,7 +103,15 @@ class TileCampfire : InteractionTile(), ITickable {
         }
     }
 
-    override fun activated(state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+    override fun activated(
+        state: IBlockState,
+        playerIn: EntityPlayer,
+        hand: EnumHand,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float
+    ): Boolean {
         val stack = playerIn.getHeldItem(hand)
         if (stack.item is ItemDebugger) {
             return false
@@ -113,13 +121,13 @@ class TileCampfire : InteractionTile(), ITickable {
 
         if (!state.getValue(BlockCampfire.LIT)) {
             if (stack.item == Items.FLINT_AND_STEEL || stack.item == Items.FIRE_CHARGE) {
-                if (!((block is BlockLiquid) or (block is BlockFluidBase))) {
-                    (FBlocks.CAMPFIRE as BlockCampfire).setLit(world, pos, true)
+                if (!((block is BlockLiquid) || (block is BlockFluidBase))) {
+                    BlockCampfire.setLit(world, pos, true)
                     stack.damageItem(1, playerIn)
                 }
             }
         } else if (stack.item.getToolClasses(stack).contains("shovel")) {
-            world.setBlockState(pos, FBlocks.CAMPFIRE.blockState.baseState.withProperty(BlockCampfire.LIT, false))
+            world.setBlockState(pos, state.withProperty(BlockCampfire.LIT, false))
         }
 
         if (state.getValue(BlockCampfire.LIT)) {
@@ -179,25 +187,28 @@ class TileCampfire : InteractionTile(), ITickable {
     }
 
     private fun addItem(stack: ItemStack) {
-        if (!inventory.isItemValid(0, stack)) {
-            return
-        }
-
         for (i in 0..3) {
-            val stack1 = inventory.getStackInSlot(i)
-            if (stack1.isEmpty) {
-                cookingTotalTimes[i] = CampfireRecipes.getRecipe(stack).get().duration
-                cookingTimes[i] = 0
-                inventory.setStackInSlot(i, stack.splitStack(1))
-                inventoryChanged()
-                return
+            if (inventory.getStackInSlot(i).isEmpty) {
+                CampfireRecipes.getRecipe(stack)?.let {
+                    cookingTotalTimes[i] = it.duration
+                    cookingTimes[i] = 0
+                    inventory.setStackInSlot(i, stack.splitStack(1))
+                    inventoryChanged()
+                    return
+                }
             }
         }
     }
 
     fun dropAllItems() {
         for (i in 0..3) {
-            InventoryHelper.spawnItemStack(world, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), inventory.getStackInSlot(i))
+            InventoryHelper.spawnItemStack(
+                world,
+                pos.x.toDouble(),
+                pos.y.toDouble(),
+                pos.z.toDouble(),
+                inventory.getStackInSlot(i)
+            )
         }
         inventoryChanged()
     }

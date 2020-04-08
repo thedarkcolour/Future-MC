@@ -1,16 +1,18 @@
 [
-    {
-        "modid": "futuremc",
-        "name": "Future MC",
-        "description": "Adds features from future updates.",
-        "version": "${version}",
-        "mcversion": "${mcversion}",
-        "url": "",
-        "updateUrl": "",
-        "authorList": ["TheDarkColour"],
-        "credits": "Herobrine knows all.",
-        "logoFile": "",
-        "screenshots": [],
-        "dependencies": []
-    }
+  {
+    "modid": "futuremc",
+    "name": "Future MC",
+    "description": "Adds features from future updates.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "TheDarkColour"
+    ],
+    "credits": "Herobrine knows all.",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
 ]

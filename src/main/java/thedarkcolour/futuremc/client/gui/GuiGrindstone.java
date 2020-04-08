@@ -12,7 +12,7 @@ public class GuiGrindstone extends GuiContainer {
     private static final int WIDTH = 176;
     private static final int HEIGHT = 166;
 
-    private static final ResourceLocation background = new ResourceLocation(FutureMC.ID,"textures/gui/grindstone.png");
+    private static final ResourceLocation background = new ResourceLocation(FutureMC.ID, "textures/gui/grindstone.png");
 
     public GuiGrindstone(ContainerGrindstone container) {
         super(container);
@@ -25,28 +25,28 @@ public class GuiGrindstone extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String s = I18n.format("container.Grindstone");
-        this.fontRenderer.drawString(s, 8, 6, 4210752);
-        this.fontRenderer.drawString(container.getPlayerInv().getDisplayName().getUnformattedText(), 8, this.ySize - 93, 4210752);
+        fontRenderer.drawString(s, 8, 6, 4210752);
+        fontRenderer.drawString(container.getPlayerInv().getDisplayName().getUnformattedText(), 8, ySize - 93, 4210752);
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         mc.getTextureManager().bindTexture(background);
-        int i = (this.width - this.xSize) / 2;
-        int j = (this.height - this.ySize) / 2;
+        int i = (width - xSize) / 2;
+        int j = (height - ySize) / 2;
 
-        this.drawTexturedModalRect(i, j, 0, 0, xSize, ySize);
+        drawTexturedModalRect(i, j, 0, 0, xSize, ySize);
 
-        if(container.isRecipeInvalid()) {
-            this.drawTexturedModalRect(i + 92, j + 31, 176, 0, 28, 21);
+        if (container.isRecipeInvalid()) {
+            drawTexturedModalRect(i + 92, j + 31, 176, 0, 28, 21);
         }
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        this.drawDefaultBackground();
+        drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+        renderHoveredToolTip(mouseX, mouseY);
     }
 }

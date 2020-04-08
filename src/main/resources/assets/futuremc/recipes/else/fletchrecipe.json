@@ -1,25 +1,20 @@
 {
     "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
+    "pattern": [
         "bb ",
         "aa ",
         "aa "
     ],
-    "key":
-    {
-        "a":
-        {
+    "key": {
+        "a": {
             "type": "forge:ore_dict",
-            "ore":"plankWood"
+            "ore": "plankWood"
         },
-        "b":
-        {
+        "b": {
             "item": "minecraft:flint"
         }
     },
-    "result":
-    {
+    "result": {
         "item": "fletching_table"
     }
 }

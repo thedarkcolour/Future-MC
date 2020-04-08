@@ -2,10 +2,12 @@ package thedarkcolour.core.item
 
 import net.minecraft.block.Block
 import net.minecraft.item.ItemBlock
+import thedarkcolour.core.util.setItemModel
 
-class ItemModeledBlock(block: Block) : ItemBlock(block), Modeled {
+open class ItemModeledBlock(block: Block) : ItemBlock(block) {
     init {
-        addModel()
         registryName = block.registryName
+
+        setItemModel(this, 0)
     }
 }

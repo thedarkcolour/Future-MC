@@ -20,7 +20,14 @@ class BiomeFrozenOcean : Biome(BiomeProperties("FrozenOcean").setBaseHeight(-1F)
         spawnableCreatureList.add(SpawnListEntry(EntityPolarBear::class.java, 1, 1, 2))
     }
 
-    override fun genTerrainBlocks(worldIn: World, rand: Random, chunkPrimerIn: ChunkPrimer, x: Int, z: Int, noiseVal: Double) {
+    override fun genTerrainBlocks(
+        worldIn: World,
+        rand: Random,
+        chunkPrimerIn: ChunkPrimer,
+        x: Int,
+        z: Int,
+        noiseVal: Double
+    ) {
         if (worldSeed != worldIn.seed || noise == null || roofNoise == null) {
             val random = Random(worldSeed)
             noise = NoiseGeneratorPerlin(random, 4)

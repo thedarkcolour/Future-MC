@@ -42,7 +42,15 @@ class ModelCod : ModelBase() {
         finTop.setRotationPoint(0.0F, 20.0F, 0.0F)
     }
 
-    override fun render(entityIn: Entity, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float) {
+    override fun render(
+        entityIn: Entity,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float,
+        scale: Float
+    ) {
         setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn)
         body.render(scale)
         head.render(scale)
@@ -53,7 +61,15 @@ class ModelCod : ModelBase() {
         finTop.render(scale)
     }
 
-    override fun setRotationAngles(limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scaleFactor: Float, entityIn: Entity) {
+    override fun setRotationAngles(
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float,
+        scaleFactor: Float,
+        entityIn: Entity
+    ) {
         val f = if (entityIn.isInWater) {
             1F
         } else {

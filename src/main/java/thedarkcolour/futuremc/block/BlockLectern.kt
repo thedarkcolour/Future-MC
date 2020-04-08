@@ -25,16 +25,29 @@ import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.tile.TileLectern
 
 class BlockLectern : RotatableBlock("Lectern", Material.WOOD), ITileEntityProvider {
+    init {
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.REDSTONE else TAB
+    }
+
     override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity? {
         return TileLectern()
     }
 
-    override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+    override fun onBlockActivated(
+        worldIn: World,
+        pos: BlockPos,
+        state: IBlockState,
+        playerIn: EntityPlayer,
+        hand: EnumHand,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float
+    ): Boolean {
         val tile = worldIn.getTileEntity(pos)
         if (tile is TileLectern) {
-            val lectern = tile
-            if (!lectern.book.isEmpty) {
-                openForPlayer(playerIn, hand, lectern.book)
+            if (!tile.book.isEmpty) {
+                openForPlayer(playerIn, hand, tile.book)
                 return true
             }
         }
@@ -46,18 +59,14 @@ class BlockLectern : RotatableBlock("Lectern", Material.WOOD), ITileEntityProvid
     }
 
     companion object {
-        fun openForPlayer(player: EntityPlayer?, hand: EnumHand?, stack: ItemStack?) {
+        fun openForPlayer(player: EntityPlayer, hand: EnumHand, stack: ItemStack?) {
             if (player is EntityPlayerMP) {
-                val packetbuffer = PacketBuffer(Unpooled.buffer())
-                packetbuffer.writeEnumValue(hand)
-                player.connection.sendPacket(SPacketCustomPayload("MC|BOpen", packetbuffer))
+                val buffer = PacketBuffer(Unpooled.buffer())
+                buffer.writeEnumValue(hand)
+                player.connection.sendPacket(SPacketCustomPayload("MC|BOpen", buffer))
             } else if (player is EntityPlayerSP) {
                 Minecraft.getMinecraft().displayGuiScreen(GuiLectern(player, stack))
             }
         }
-    }
-
-    init {
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.REDSTONE else TAB
     }
 }

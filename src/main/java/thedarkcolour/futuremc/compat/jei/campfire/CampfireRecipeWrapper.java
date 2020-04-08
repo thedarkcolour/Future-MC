@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipe;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class CampfireRecipeWrapper implements IRecipeWrapper {
     public final CampfireRecipe recipe;
@@ -18,12 +18,12 @@ public class CampfireRecipeWrapper implements IRecipeWrapper {
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-        ingredients.setInput(VanillaTypes.ITEM, recipe.input);
-        ingredients.setOutput(VanillaTypes.ITEM, recipe.output);
+        ingredients.setInput(VanillaTypes.ITEM, recipe.getInput());
+        ingredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
     }
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-        minecraft.fontRenderer.drawString(I18n.format("container.jei.futuremc.campfire.duration") + ": " + recipe.duration, 2, 2, Color.gray.getRGB());
+        minecraft.fontRenderer.drawString(I18n.format("container.jei.futuremc.campfire.duration") + ": " + recipe.getDuration(), 2, 2, Color.gray.getRGB());
     }
 }

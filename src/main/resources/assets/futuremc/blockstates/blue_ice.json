@@ -4,7 +4,11 @@
         "model": "futuremc:blue_ice"
     },
     "variants": {
-        "normal": [{}],
-        "inventory": [{}]
+        "normal": [
+            {}
+        ],
+        "inventory": [
+            {}
+        ]
     }
 }

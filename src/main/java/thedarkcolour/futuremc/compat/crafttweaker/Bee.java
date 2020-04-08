@@ -3,48 +3,39 @@ package thedarkcolour.futuremc.compat.crafttweaker;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
-import crafttweaker.api.block.IBlock;
-import crafttweaker.api.block.IBlockPattern;
+import crafttweaker.api.block.IBlockState;
 import crafttweaker.api.minecraft.CraftTweakerMC;
-import net.minecraft.init.Blocks;
 import org.apache.logging.log4j.Level;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
-import thedarkcolour.core.util.PredicateArrayList;
-import thedarkcolour.core.util.Util;
 import thedarkcolour.futuremc.FutureMC;
-import thedarkcolour.futuremc.init.FBlocks;
+import thedarkcolour.futuremc.entity.bee.BeeEntity;
 
 @ZenRegister
 @ZenClass("mods.futuremc.Bee")
 public final class Bee {
-    public static final PredicateArrayList<IBlock> FLOWERS = Util.predicateArrayListOf(IBlockPattern::matches, list -> {
-            list.add(CraftTweakerMC.getBlock(Blocks.YELLOW_FLOWER, 0));
-            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 0));
-            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 1));
-            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 2));
-            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 3));
-            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 4));
-            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 5));
-            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 6));
-            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 7));
-            list.add(CraftTweakerMC.getBlock(Blocks.RED_FLOWER, 8));
-            list.add(CraftTweakerMC.getBlock(FBlocks.INSTANCE.getCORNFLOWER(), 0));
-            list.add(CraftTweakerMC.getBlock(FBlocks.INSTANCE.getLILY_OF_THE_VALLEY(), 0));
-    });
-
     @ZenMethod
-    public static void addFlower(IBlock block) {
-        if (!FLOWERS.containsEquivalent(block)) {
-            CraftTweakerAPI.apply((AddFlower)() -> FLOWERS.add(block));
+    public static void addFlower(IBlockState block) {
+        net.minecraft.block.state.IBlockState state = CraftTweakerMC.getBlockState(block);
+        if (!BeeEntity.FLOWERS.contains(state)) {
+            CraftTweakerAPI.apply(AddFlower.of(() -> BeeEntity.FLOWERS.add(state)));
         } else {
-            FutureMC.INSTANCE.getLOGGER().log(Level.ERROR, "Tried to add duplicate flower block to bee " + block.getDefinition().getId() + ":" + block.getMeta());
+            FutureMC.LOGGER.log(Level.WARN, "Tried to add duplicate flower block to bee: " + state);
         }
     }
 
     private interface AddFlower extends IAction {
         @Override
         void apply();
+
+        /**
+         * Get rid of ugly casting
+         * @param runnable the remove action
+         * @return the remove action
+         */
+        static IAction of(AddFlower runnable) {
+            return runnable;
+        }
 
         @Override
         default String describe() {
@@ -53,11 +44,13 @@ public final class Bee {
     }
 
     @ZenMethod
-    public static void removeFlower(IBlock block) {
-        if (FLOWERS.containsEquivalent(block)) {
-            CraftTweakerAPI.apply((RemoveFlower)() -> FLOWERS.add(block));
+    public static void removeFlower(IBlockState block) {
+        net.minecraft.block.state.IBlockState state = CraftTweakerMC.getBlockState(block);
+
+        if (BeeEntity.FLOWERS.contains(state)) {
+            CraftTweakerAPI.apply(RemoveFlower.of(() -> BeeEntity.FLOWERS.remove(state)));
         } else {
-            FutureMC.INSTANCE.getLOGGER().log(Level.ERROR, "Tried to remove non pollinate-able flower block to bee " + block.getDefinition().getId() + ":" + block.getMeta());
+            FutureMC.LOGGER.log(Level.WARN, "Tried to remove non pollinateable flower block to bee " + state);
         }
     }
 
@@ -65,14 +58,36 @@ public final class Bee {
         @Override
         void apply();
 
+        /**
+         * Get rid of ugly casting
+         * @param runnable the remove action
+         * @return the remove action
+         */
+        static IAction of(RemoveFlower runnable) {
+            return runnable;
+        }
+
         @Override
         default String describe() {
             return "Removed a valid flower for bee pollination";
         }
     }
 
+    /**
+     * Clears all flowers added up to the point this method is called.
+     */
     @ZenMethod
     public static void clearValidFlowers() {
-        FLOWERS.clear();
+        CraftTweakerAPI.apply(new IAction() {
+            @Override
+            public void apply() {
+                BeeEntity.FLOWERS.clear();
+            }
+
+            @Override
+            public String describe() {
+                return "Cleared pollinateable flowers";
+            }
+        });
     }
 }

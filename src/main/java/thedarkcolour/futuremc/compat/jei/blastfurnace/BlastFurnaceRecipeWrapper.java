@@ -11,8 +11,8 @@ public class BlastFurnaceRecipeWrapper implements IRecipeWrapper {
     private final ItemStack output;
 
     public BlastFurnaceRecipeWrapper(FurnaceRecipe recipe) {
-        this.input = recipe.input;
-        this.output = recipe.output;
+        this.input = recipe.getInput();
+        this.output = recipe.getOutput();
     }
 
     @Override

@@ -2,32 +2,25 @@ package thedarkcolour.futuremc.asm
 
 import net.minecraft.block.BlockPistonBase.canPush
 import net.minecraft.block.material.EnumPushReaction
+import net.minecraft.block.state.BlockPistonStructureHelper
 import net.minecraft.block.state.IBlockState
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.futuremc.api.IStickyBlock
 
-class BlockPistonStructureHelper(private val world: World, private val pistonPos: BlockPos, private val facing: EnumFacing, private val extending: Boolean) {
-    private val toDestroy = ArrayList<BlockPos>()
-    private val toMove = ArrayList<BlockPos>()
-    private val moveDirection: EnumFacing
-    private val blockToMove: BlockPos
-
-    init {
-        if (extending) {
-            moveDirection = facing
-            blockToMove = pistonPos.offset(facing)
-        } else {
-            moveDirection = facing.opposite
-            blockToMove = pistonPos.offset(facing, 2)
-        }
-    }
-
-    fun canMove(): Boolean {
+@Suppress("unused")
+class BlockPistonStructureHelper(
+    world: World,
+    pistonPos: BlockPos,
+    private val facing: EnumFacing,
+    private val extending: Boolean
+) : BlockPistonStructureHelper(world, pistonPos, facing, extending) {
+    override fun canMove(): Boolean {
         toMove.clear()
         toDestroy.clear()
         val state = world.getBlockState(blockToMove)
+        // Changes last parameter to facing instead of moveDirection
         if (!canPush(state, world, blockToMove, moveDirection, false, facing)) {
             return if (extending && state.pushReaction == EnumPushReaction.DESTROY) {
                 toDestroy.add(blockToMove)
@@ -41,6 +34,7 @@ class BlockPistonStructureHelper(private val world: World, private val pistonPos
             for (i in toMove.indices) {
                 val pos = toMove[i]
                 val state1 = world.getBlockState(pos)
+
                 if (state1.block.isStickyBlock(state1) && !addBranchingBlocks(pos)) {
                     return false
                 }
@@ -52,6 +46,8 @@ class BlockPistonStructureHelper(private val world: World, private val pistonPos
 
     private fun addBlockLine(origin: BlockPos, facing: EnumFacing): Boolean {
         var state = world.getBlockState(origin)
+        // remove block variable
+
         if (world.isAirBlock(origin)) {
             return true
         } else if (!canPush(state, world, origin, moveDirection, false, facing)) {
@@ -62,15 +58,27 @@ class BlockPistonStructureHelper(private val world: World, private val pistonPos
             return true
         } else {
             var i = 1
+
             if (i + toMove.size > 12) {
                 return false
             } else {
+                // add oldState variable
                 var oldState: IBlockState
+
                 while (state.block.isStickyBlock(state)) {
                     val pos = origin.offset(moveDirection.opposite, i)
+                    // save to oldState before updating state
                     oldState = state
                     state = world.getBlockState(pos)
-                    if (state.block.isAir(state, world, pos) || !canBlocksStick(oldState, state) || !canPush(state, world, pos, moveDirection, false, moveDirection.opposite) || pos == pistonPos) {
+                    if (state.block.isAir(state, world, pos) || !canBlocksStick(oldState, state) || !canPush(
+                            state,
+                            world,
+                            pos,
+                            moveDirection,
+                            false,
+                            moveDirection.opposite
+                        ) || pos == pistonPos
+                    ) {
                         break
                     }
                     ++i
@@ -85,10 +93,12 @@ class BlockPistonStructureHelper(private val world: World, private val pistonPos
                 }
                 var j1 = 1
                 while (true) {
-                    val blockpos1 = origin.offset(moveDirection, j1)
-                    val j = toMove.indexOf(blockpos1)
+                    val pos1 = origin.offset(moveDirection, j1)
+                    val j = toMove.indexOf(pos1)
+
                     if (j > -1) {
                         reorderListAtCollision(l, j)
+
                         for (k in 0..j + l) {
                             val blockpos2 = toMove[k]
                             val state1 = world.getBlockState(blockpos2)
@@ -98,21 +108,21 @@ class BlockPistonStructureHelper(private val world: World, private val pistonPos
                         }
                         return true
                     }
-                    state = world.getBlockState(blockpos1)
-                    if (state.block.isAir(state, world, blockpos1)) {
+                    state = world.getBlockState(pos1)
+                    if (state.block.isAir(state, world, pos1)) {
                         return true
                     }
-                    if (!canPush(state, world, blockpos1, moveDirection, true, moveDirection) || blockpos1 == pistonPos) {
+                    if (!canPush(state, world, pos1, moveDirection, true, moveDirection) || pos1 == pistonPos) {
                         return false
                     }
                     if (state.pushReaction == EnumPushReaction.DESTROY) {
-                        toDestroy.add(blockpos1)
+                        toDestroy.add(pos1)
                         return true
                     }
                     if (toMove.size >= 12) {
                         return false
                     }
-                    toMove.add(blockpos1)
+                    toMove.add(pos1)
                     ++l
                     ++j1
                 }
@@ -134,10 +144,15 @@ class BlockPistonStructureHelper(private val world: World, private val pistonPos
     }
 
     private fun addBranchingBlocks(fromPos: BlockPos): Boolean {
+        // add state variable
         val state = world.getBlockState(fromPos)
         for (facing in EnumFacing.values()) {
+            // remove !addBlockLine
             if (facing.axis != moveDirection.axis) {
+                // add pos variable
                 val pos = fromPos.offset(facing)
+                // add canBlocksStick using pos and state
+                // add back !addBlockLine
                 if (canBlocksStick(world.getBlockState(pos), state) && !addBlockLine(pos, facing)) {
                     return false
                 }
@@ -147,6 +162,7 @@ class BlockPistonStructureHelper(private val world: World, private val pistonPos
         return true
     }
 
+    // sticky check
     private fun canBlocksStick(state: IBlockState, other: IBlockState): Boolean {
         val block = state.block
         val otherBlock = other.block
@@ -159,13 +175,5 @@ class BlockPistonStructureHelper(private val world: World, private val pistonPos
             }
             else -> true
         }
-    }
-
-    fun getBlocksToMove(): List<BlockPos> {
-        return toMove
-    }
-
-    fun getBlocksToDestroy(): List<BlockPos> {
-        return toDestroy
     }
 }

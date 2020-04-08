@@ -1,6 +1,6 @@
 {
-  "parent": "block/cross",
-  "textures": {
-    "cross": "futuremc:blocks/cornflower"
-  }
+    "parent": "block/cross",
+    "textures": {
+        "cross": "futuremc:blocks/cornflower"
+    }
 }

@@ -34,7 +34,7 @@ tile.futuremc.end_stone_wall.name=Pared de piedra del End
 tile.futuremc.nether_brick_wall.name=Pared de ladrillos del Nether
 tile.futuremc.sandstone_wall.name=Pared de arenisca
 tile.futuremc.red_sandstone_wall.name=Pared de arenisca roja
-tile.futuremc.nether_brick_red_wall.name=Pared de ladrillos del Nether rojos
+tile.futuremc.red_nether_brick_wall.name=Pared de ladrillos del Nether rojos
 
 # Losas
 tile.futuremc.granite_slab.name=Losa de granito

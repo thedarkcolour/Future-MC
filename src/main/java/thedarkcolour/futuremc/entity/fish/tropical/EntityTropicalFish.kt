@@ -15,8 +15,8 @@ import thedarkcolour.core.util.getOrCreateTag
 import thedarkcolour.core.util.stack
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.entity.fish.EntityGroupFish
-import thedarkcolour.futuremc.init.FItems
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FItems
+import thedarkcolour.futuremc.registry.FSounds
 import java.util.*
 
 class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
@@ -52,14 +52,14 @@ class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
 
     override fun getFishBucket(): ItemStack = FItems.TROPICAL_FISH_BUCKET.stack
 
-    override fun getAmbientSound(): SoundEvent = Sounds.TROPICAL_FISH_AMBIENT
+    override fun getAmbientSound(): SoundEvent = FSounds.TROPICAL_FISH_AMBIENT
 
-    override fun getDeathSound(): SoundEvent = Sounds.TROPICAL_FISH_DEATH
+    override fun getDeathSound(): SoundEvent = FSounds.TROPICAL_FISH_DEATH
 
-    override fun getHurtSound(damageSourceIn: DamageSource): SoundEvent = Sounds.TROPICAL_FISH_HURT
+    override fun getHurtSound(damageSourceIn: DamageSource): SoundEvent = FSounds.TROPICAL_FISH_HURT
 
     override val flopSound: SoundEvent
-        get() = Sounds.TROPICAL_FISH_FLOP
+        get() = FSounds.TROPICAL_FISH_FLOP
 
     fun getSize(): Int {
         return getBody(variant)
@@ -130,10 +130,50 @@ class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
 
     companion object {
         private val VARIANT = EntityDataManager.createKey(EntityTropicalFish::class.java, DataSerializers.VARINT)
-        private val BODY_TEXTURES = arrayOf(ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a.png"), ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b.png"))
-        private val PATTERN_TEXTURES_A = arrayOf(ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a_pattern_1.png"), ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a_pattern_2.png"), ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a_pattern_3.png"), ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a_pattern_4.png"), ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a_pattern_5.png"), ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a_pattern_6.png"))
-        private val PATTERN_TEXTURES_B = arrayOf(ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b_pattern_1.png"), ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b_pattern_2.png"), ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b_pattern_3.png"), ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b_pattern_4.png"), ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b_pattern_5.png"), ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b_pattern_6.png"))
-        val SPECIAL_VARIANTS = intArrayOf(makeVariant(Type.STRIPEY, EnumDyeColor.ORANGE, EnumDyeColor.GRAY), makeVariant(Type.FLOPPER, EnumDyeColor.GRAY, EnumDyeColor.GRAY), makeVariant(Type.FLOPPER, EnumDyeColor.GRAY, EnumDyeColor.BLUE), makeVariant(Type.CLAYFISH, EnumDyeColor.WHITE, EnumDyeColor.GRAY), makeVariant(Type.SUNSTREAK, EnumDyeColor.BLUE, EnumDyeColor.GRAY), makeVariant(Type.KOB, EnumDyeColor.ORANGE, EnumDyeColor.WHITE), makeVariant(Type.SPOTTY, EnumDyeColor.PINK, EnumDyeColor.LIGHT_BLUE), makeVariant(Type.BLOCKFISH, EnumDyeColor.PURPLE, EnumDyeColor.YELLOW), makeVariant(Type.CLAYFISH, EnumDyeColor.WHITE, EnumDyeColor.RED), makeVariant(Type.SPOTTY, EnumDyeColor.WHITE, EnumDyeColor.YELLOW), makeVariant(Type.GLITTER, EnumDyeColor.WHITE, EnumDyeColor.GRAY), makeVariant(Type.CLAYFISH, EnumDyeColor.WHITE, EnumDyeColor.ORANGE), makeVariant(Type.DASHER, EnumDyeColor.CYAN, EnumDyeColor.PINK), makeVariant(Type.BRINELY, EnumDyeColor.LIME, EnumDyeColor.LIGHT_BLUE), makeVariant(Type.BETTY, EnumDyeColor.RED, EnumDyeColor.WHITE), makeVariant(Type.SNOOPER, EnumDyeColor.GRAY, EnumDyeColor.RED), makeVariant(Type.BLOCKFISH, EnumDyeColor.RED, EnumDyeColor.WHITE), makeVariant(Type.FLOPPER, EnumDyeColor.WHITE, EnumDyeColor.YELLOW), makeVariant(Type.KOB, EnumDyeColor.RED, EnumDyeColor.WHITE), makeVariant(Type.SUNSTREAK, EnumDyeColor.GRAY, EnumDyeColor.WHITE), makeVariant(Type.DASHER, EnumDyeColor.CYAN, EnumDyeColor.YELLOW), makeVariant(Type.FLOPPER, EnumDyeColor.YELLOW, EnumDyeColor.YELLOW))
+        private val BODY_TEXTURES = arrayOf(
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a.png"),
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b.png")
+        )
+        private val PATTERN_TEXTURES_A = arrayOf(
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a_pattern_1.png"),
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a_pattern_2.png"),
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a_pattern_3.png"),
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a_pattern_4.png"),
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a_pattern_5.png"),
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a_pattern_6.png")
+        )
+        private val PATTERN_TEXTURES_B = arrayOf(
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b_pattern_1.png"),
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b_pattern_2.png"),
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b_pattern_3.png"),
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b_pattern_4.png"),
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b_pattern_5.png"),
+            ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b_pattern_6.png")
+        )
+        val SPECIAL_VARIANTS = intArrayOf(
+            makeVariant(Type.STRIPEY, EnumDyeColor.ORANGE, EnumDyeColor.GRAY),
+            makeVariant(Type.FLOPPER, EnumDyeColor.GRAY, EnumDyeColor.GRAY),
+            makeVariant(Type.FLOPPER, EnumDyeColor.GRAY, EnumDyeColor.BLUE),
+            makeVariant(Type.CLAYFISH, EnumDyeColor.WHITE, EnumDyeColor.GRAY),
+            makeVariant(Type.SUNSTREAK, EnumDyeColor.BLUE, EnumDyeColor.GRAY),
+            makeVariant(Type.KOB, EnumDyeColor.ORANGE, EnumDyeColor.WHITE),
+            makeVariant(Type.SPOTTY, EnumDyeColor.PINK, EnumDyeColor.LIGHT_BLUE),
+            makeVariant(Type.BLOCKFISH, EnumDyeColor.PURPLE, EnumDyeColor.YELLOW),
+            makeVariant(Type.CLAYFISH, EnumDyeColor.WHITE, EnumDyeColor.RED),
+            makeVariant(Type.SPOTTY, EnumDyeColor.WHITE, EnumDyeColor.YELLOW),
+            makeVariant(Type.GLITTER, EnumDyeColor.WHITE, EnumDyeColor.GRAY),
+            makeVariant(Type.CLAYFISH, EnumDyeColor.WHITE, EnumDyeColor.ORANGE),
+            makeVariant(Type.DASHER, EnumDyeColor.CYAN, EnumDyeColor.PINK),
+            makeVariant(Type.BRINELY, EnumDyeColor.LIME, EnumDyeColor.LIGHT_BLUE),
+            makeVariant(Type.BETTY, EnumDyeColor.RED, EnumDyeColor.WHITE),
+            makeVariant(Type.SNOOPER, EnumDyeColor.GRAY, EnumDyeColor.RED),
+            makeVariant(Type.BLOCKFISH, EnumDyeColor.RED, EnumDyeColor.WHITE),
+            makeVariant(Type.FLOPPER, EnumDyeColor.WHITE, EnumDyeColor.YELLOW),
+            makeVariant(Type.KOB, EnumDyeColor.RED, EnumDyeColor.WHITE),
+            makeVariant(Type.SUNSTREAK, EnumDyeColor.GRAY, EnumDyeColor.WHITE),
+            makeVariant(Type.DASHER, EnumDyeColor.CYAN, EnumDyeColor.YELLOW),
+            makeVariant(Type.FLOPPER, EnumDyeColor.YELLOW, EnumDyeColor.YELLOW)
+        )
 
         private fun makeVariant(size: Type, pattern: EnumDyeColor, bodyColor: EnumDyeColor): Int {
             return (size.primary and 255) or ((size.secondary and 255) shl 8) or ((pattern.metadata and 255) shl 16) or ((bodyColor.metadata and 255) shl 24)

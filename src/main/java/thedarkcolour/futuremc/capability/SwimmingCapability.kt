@@ -1,18 +1,63 @@
 package thedarkcolour.futuremc.capability
 
-class SwimmingCapability : ISwimmingCapability {
-    private var lastSwimmingAnimation: Float = 0.0f
-    private var swimmingAnimation: Float = 0.0f
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.nbt.NBTBase
+import net.minecraft.nbt.NBTPrimitive
+import net.minecraft.nbt.NBTTagByte
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.ResourceLocation
+import net.minecraftforge.common.capabilities.Capability
+import net.minecraftforge.common.capabilities.Capability.IStorage
+import net.minecraftforge.common.capabilities.CapabilityManager
+import net.minecraftforge.event.AttachCapabilitiesEvent
+import thedarkcolour.core.util.addListener
+import thedarkcolour.futuremc.FutureMC
 
-    override fun getSwimmingAnimation() = swimmingAnimation
+interface SwimmingCapability {
+    var swimAnimation: Float
+    var lastSwimAnimation: Float
+    var isSwimming: Boolean
 
-    override fun setSwimmingAnimation(value: Float) {
-        swimmingAnimation = value
+    companion object {
+        @JvmStatic
+        val ID = ResourceLocation(FutureMC.ID, "swimming")
+
+        fun register() {
+            CapabilityManager.INSTANCE.register(
+                SwimmingCapability::class.java,
+                object : IStorage<SwimmingCapability> {
+                    override fun writeNBT(
+                        capability: Capability<SwimmingCapability>,
+                        instance: SwimmingCapability,
+                        side: EnumFacing
+                    ): NBTBase {
+                        return NBTTagByte((if (instance.isSwimming) 1 else 0).toByte())
+                    }
+
+                    override fun readNBT(
+                        capability: Capability<SwimmingCapability>,
+                        instance: SwimmingCapability,
+                        side: EnumFacing,
+                        nbt: NBTBase
+                    ) {
+                        instance.isSwimming = (nbt as NBTPrimitive).int == 1
+                    }
+                },
+                ::Impl
+            )
+            addListener(this::attachCapability)
+        }
+
+        private fun attachCapability(event: AttachCapabilitiesEvent<*>) {
+            if (event.getObject() is EntityPlayer) {
+                event.addCapability(ID, SwimmingProvider())
+            }
+        }
     }
 
-    override fun getLastSwimmingAnimation() = lastSwimmingAnimation
-
-    override fun setLastSwimmingAnimation(value: Float) {
-        lastSwimmingAnimation = value
+    private class Impl : SwimmingCapability {
+        override var swimAnimation = 0f
+        override var lastSwimAnimation = 0f
+        override var isSwimming = false
     }
 }

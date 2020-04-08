@@ -21,7 +21,7 @@ public final class Smoker {
         if (!BlockFurnaceAdvanced.FurnaceType.SMOKER.canCraft(CraftTweakerMC.getItemStack(input))) {
             CraftTweakerAPI.apply(new AddRecipe(input, output));
         } else {
-            FutureMC.INSTANCE.getLOGGER().log(Level.WARN, "Tried to add duplicate valid Smoker input for " + input.getDefinition().getId());
+            FutureMC.LOGGER.log(Level.WARN, "Tried to add duplicate valid Smoker input for " + input.getDefinition().getId());
         }
     }
 
@@ -36,7 +36,7 @@ public final class Smoker {
 
         @Override
         public void apply() {
-            SmokerRecipes.addRecipe(input, output);
+            SmokerRecipes.INSTANCE.addRecipe(input, output);
         }
 
         @Override
@@ -51,7 +51,7 @@ public final class Smoker {
     }
 
     private static class RemoveRecipe implements IAction {
-        private ItemStack input;
+        private final ItemStack input;
 
         private RemoveRecipe(IItemStack input) {
             this.input = CraftTweakerMC.getItemStack(input);
@@ -59,7 +59,7 @@ public final class Smoker {
 
         @Override
         public void apply() {
-            SmokerRecipes.removeRecipe(input);
+            SmokerRecipes.INSTANCE.removeRecipe(input);
         }
 
         @Override
@@ -70,6 +70,6 @@ public final class Smoker {
 
     @ZenMethod
     public static void clearRecipes() {
-        SmokerRecipes.clearAllRecipes();
+        SmokerRecipes.INSTANCE.clear();
     }
 }

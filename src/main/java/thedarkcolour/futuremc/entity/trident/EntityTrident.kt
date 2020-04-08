@@ -19,13 +19,13 @@ import net.minecraft.util.math.RayTraceResult
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import thedarkcolour.futuremc.enchantment.EnchantHelper
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FSounds
 
 class EntityTrident : EntityModArrow {
-    private var thrownStack: ItemStack = ItemStack.EMPTY
-    private var hasChanneled: Boolean = false
+    private var thrownStack = ItemStack.EMPTY
+    private var hasChanneled = false
     private var ticksInGround = 0
-    private var isReturning: Boolean = false
+    private var isReturning = false
 
     override val waterDrag: Float
         get() = 0.99f
@@ -51,7 +51,11 @@ class EntityTrident : EntityModArrow {
             return null
         }
         var entity: Entity? = null
-        val list = world.getEntitiesInAABBexcluding(this, entityBoundingBox.expand(motionX, motionY, motionZ).grow(1.0), ARROW_TARGETS::invoke)
+        val list = world.getEntitiesInAABBexcluding(
+            this,
+            entityBoundingBox.expand(motionX, motionY, motionZ).grow(1.0),
+            ARROW_TARGETS::invoke
+        )
         var d0 = 0.0
 
         for (entity1 in list) {
@@ -109,7 +113,7 @@ class EntityTrident : EntityModArrow {
                         (shootingEntity as EntityPlayerMP).connection.sendPacket(SPacketChangeGameState(6, 0.0f))
                     }
 
-                    playSound(Sounds.TRIDENT_PIERCE, 1.0f, 1.0f)
+                    playSound(FSounds.TRIDENT_PIERCE, 1.0f, 1.0f)
 
                     motionX *= -0.009999999776482582
                     motionY *= -0.10000000149011612
@@ -120,8 +124,16 @@ class EntityTrident : EntityModArrow {
                     if (!hasChanneled && !thrownStack.isEmpty) { // Enchantment handling
                         if (EnchantHelper.hasChanneling(thrownStack)) {
                             if (world.isThundering) {
-                                shootingEntity!!.world.addWeatherEffect(EntityLightningBolt(shootingEntity!!.world, posX, posY, posZ, false))
-                                playSound(Sounds.TRIDENT_CONDUCTIVIDAD, 5.0f, 1.0f)
+                                shootingEntity!!.world.addWeatherEffect(
+                                    EntityLightningBolt(
+                                        shootingEntity!!.world,
+                                        posX,
+                                        posY,
+                                        posZ,
+                                        false
+                                    )
+                                )
+                                playSound(FSounds.TRIDENT_CONDUCTIVIDAD, 5.0f, 1.0f)
                                 hasChanneled = true
                             }
                         }
@@ -146,12 +158,12 @@ class EntityTrident : EntityModArrow {
             inGround = true
             arrowShake = 7
 
-            playSound(Sounds.TRIDENT_IMPACT, 1.0f, 1.0f)
+            playSound(FSounds.TRIDENT_IMPACT, 1.0f, 1.0f)
 
             if (!hasChanneled && EnchantHelper.hasChanneling(thrownStack)) { // Enchantment handling
                 val living = if (shootingEntity == null) this else shootingEntity
                 living.world.addWeatherEffect(EntityLightningBolt(living.world, posX, posY, posZ, false))
-                playSound(Sounds.TRIDENT_CONDUCTIVIDAD, 5.0f, 1.0f)
+                playSound(FSounds.TRIDENT_CONDUCTIVIDAD, 5.0f, 1.0f)
                 hasChanneled = true
             }
         }
@@ -169,12 +181,16 @@ class EntityTrident : EntityModArrow {
                 noClip = true
 
                 if (!isReturning) {
-                    playSound(Sounds.TRIDENT_LOYALTY, 1.0f, 1.0f)
+                    playSound(FSounds.TRIDENT_LOYALTY, 1.0f, 1.0f)
                     isReturning = true
                 }
                 if (ticksInGround >= 100 - loyalty * 20) {
                     val d0 = 0.02 * loyalty.toDouble()
-                    val vec3d = Vec3d(shootingEntity!!.posX - posX, shootingEntity!!.posY + shootingEntity!!.eyeHeight.toDouble() - posY, shootingEntity!!.posZ - posZ)
+                    val vec3d = Vec3d(
+                        shootingEntity!!.posX - posX,
+                        shootingEntity!!.posY + shootingEntity!!.eyeHeight.toDouble() - posY,
+                        shootingEntity!!.posZ - posZ
+                    )
                     motionX += vec3d.x * d0 - motionX * 0.05
                     motionY += vec3d.y * d0 - motionY * 0.05
                     motionZ += vec3d.z * d0 - motionZ * 0.05
@@ -204,6 +220,10 @@ class EntityTrident : EntityModArrow {
 
     override fun setFire(seconds: Int) {
         // Fireproof
+    }
+
+    override fun canPickup(entityIn: EntityPlayer): Boolean {
+        return entityIn == shootingEntity
     }
 
     private fun getDamageForTrident(target: Entity): Float {

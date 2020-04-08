@@ -1,6 +1,5 @@
 package thedarkcolour.core.inventory
 
-import net.minecraft.inventory.InventoryBasic
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.nbt.NBTTagList
@@ -11,14 +10,14 @@ import net.minecraftforge.common.util.INBTSerializable
 import net.minecraftforge.items.IItemHandlerModifiable
 import net.minecraftforge.items.ItemHandlerHelper
 import thedarkcolour.core.gui.TextComponentStringHolder
-import thedarkcolour.core.util.make
 import java.util.*
 
 /**
  * An iterable [net.minecraftforge.items.ItemStackHandler] with extra functionality.
  * Backed by an array instead of a [net.minecraft.util.NonNullList]
  */
-open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: String? = null) : IItemHandlerModifiable, INBTSerializable<NBTTagCompound>, Iterable<ItemStack?> {
+open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: String? = null) : IItemHandlerModifiable,
+    INBTSerializable<NBTTagCompound>, Iterable<ItemStack?> {
     protected var stacks: Array<ItemStack>
     private val defaultName: TextComponentTranslation
     private val displayName: TextComponentStringHolder? = null
@@ -143,9 +142,13 @@ open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: Strin
     }
 
     open fun onContentsChanged(slot: Int) {}
-
+/*
     val vanillaInventory: InventoryBasic
-        get() = make(InventoryBasic(getDisplayName().unformattedText, false, stacks.size)) { inventory: InventoryBasic ->
+        get() = InventoryBasic(
+            getDisplayName().unformattedText,
+            false,
+            stacks.size
+        ).also { inventory: InventoryBasic ->
             for (i in stacks.indices) {
                 inventory.setInventorySlotContents(i, stacks[i].copy())
             }
@@ -155,9 +158,18 @@ open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: Strin
         if (this.displayName != null) {
             this.displayName.text = displayName
         }
-    }
+    }*/
 
     fun getDisplayName(): ITextComponent {
         return displayName ?: defaultName
+    }
+
+    fun anyMatch(predicate: (ItemStack) -> Boolean): Boolean {
+        for (stack in this) {
+            if (predicate(stack)) {
+                return true
+            }
+        }
+        return false
     }
 }

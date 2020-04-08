@@ -4,9 +4,17 @@
         "model": "futuremc:lantern"
     },
     "variants": {
-        "normal": [{}],
-        "inventory": { "model": "futuremc:item/lantern"},
-        "hanging=false" : { "model": "futuremc:lantern" },
-        "hanging=true" : { "model": "futuremc:hanging_lantern"}
+        "normal": [
+            {}
+        ],
+        "inventory": {
+            "model": "futuremc:item/lantern"
+        },
+        "hanging=false": {
+            "model": "futuremc:lantern"
+        },
+        "hanging=true": {
+            "model": "futuremc:hanging_lantern"
+        }
     }
 }

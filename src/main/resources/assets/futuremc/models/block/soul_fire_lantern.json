@@ -1,0 +1,6 @@
+{
+    "parent": "futuremc:block/template_lantern",
+    "textures": {
+        "lantern": "futuremc:blocks/soul_fire_lantern"
+    }
+}

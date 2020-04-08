@@ -16,17 +16,23 @@ import net.minecraft.world.World
 import thedarkcolour.core.block.BlockBase
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.api.IStickyBlock
+import thedarkcolour.futuremc.compat.quark.QuarkCompat
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FSounds
+import vazkii.quark.api.INonSticky
 import kotlin.math.abs
 
-class BlockHoneyBlock : BlockBase("honey_block", Material.CLAY, MapColor.ADOBE, Sounds.HONEY_BLOCK), IStickyBlock {
+class BlockHoneyBlock : BlockBase("honey_block", Material.CLAY, MapColor.ADOBE, FSounds.HONEY_BLOCK), IStickyBlock, INonSticky {
     init {
         blockHardness = 0.0f
         creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.DECORATIONS else FutureMC.TAB
     }
 
-    override fun getCollisionBoundingBox(blockState: IBlockState, worldIn: IBlockAccess, pos: BlockPos): AxisAlignedBB? {
+    override fun getCollisionBoundingBox(
+        blockState: IBlockState,
+        worldIn: IBlockAccess,
+        pos: BlockPos
+    ): AxisAlignedBB {
         return AABB
     }
 
@@ -43,7 +49,7 @@ class BlockHoneyBlock : BlockBase("honey_block", Material.CLAY, MapColor.ADOBE, 
             entityIn.fallDistance = 0.0f
             slideParticles(worldIn, entityIn)
             if (worldIn.worldTime % 10L == 0L) {
-                entityIn.playSound(Sounds.HONEY_BLOCK_SLIDE, 1.0f, 1.0f)
+                entityIn.playSound(FSounds.HONEY_BLOCK_SLIDE, 1.0f, 1.0f)
             }
         }
         super.onEntityCollision(worldIn, pos, state, entityIn)
@@ -71,36 +77,93 @@ class BlockHoneyBlock : BlockBase("honey_block", Material.CLAY, MapColor.ADOBE, 
 
     private fun slideParticles(worldIn: World, entityIn: Entity) {
         val width = entityIn.width
-        spawnParticles(entityIn, worldIn, 1, (worldIn.rand.nextFloat() - 0.5) * width, worldIn.rand.nextFloat() / 2.0f.toDouble(), (worldIn.rand.nextFloat() - 0.5) * width, worldIn.rand.nextFloat() - 0.5, (worldIn.rand.nextFloat() - 1.0f).toDouble(), worldIn.rand.nextFloat() - 0.5)
+        spawnParticles(
+            entityIn,
+            worldIn,
+            1,
+            (worldIn.rand.nextFloat() - 0.5) * width,
+            worldIn.rand.nextFloat() / 2.0f.toDouble(),
+            (worldIn.rand.nextFloat() - 0.5) * width,
+            worldIn.rand.nextFloat() - 0.5,
+            (worldIn.rand.nextFloat() - 1.0f).toDouble(),
+            worldIn.rand.nextFloat() - 0.5
+        )
     }
 
     private fun fallParticles(worldIn: World, entityIn: Entity) {
         val width = entityIn.width
-        spawnParticles(entityIn, worldIn, 10, (worldIn.rand.nextFloat().toDouble() - 0.5) * width, 0.0, (worldIn.rand.nextFloat() - 0.5) * width, worldIn.rand.nextFloat() - 0.5, 0.5, worldIn.rand.nextFloat() - 0.5)
+        spawnParticles(
+            entityIn,
+            worldIn,
+            10,
+            (worldIn.rand.nextFloat().toDouble() - 0.5) * width,
+            0.0,
+            (worldIn.rand.nextFloat() - 0.5) * width,
+            worldIn.rand.nextFloat() - 0.5,
+            0.5,
+            worldIn.rand.nextFloat() - 0.5
+        )
     }
 
-    private fun spawnParticles(entity: Entity, worldIn: World, numOfParticles: Int, double_1: Double, double_2: Double, double_3: Double, double_4: Double, double_5: Double, double_6: Double) {
+    private fun spawnParticles(
+        entity: Entity,
+        worldIn: World,
+        numOfParticles: Int,
+        double_1: Double,
+        double_2: Double,
+        double_3: Double,
+        double_4: Double,
+        double_5: Double,
+        double_6: Double
+    ) {
         for (i in 0 until numOfParticles) {
-            worldIn.spawnParticle(EnumParticleTypes.BLOCK_CRACK, entity.posX + double_1, entity.posY + double_2, entity.posZ + double_3, double_4, double_5, double_6, getStateId(defaultState))
+            worldIn.spawnParticle(
+                EnumParticleTypes.BLOCK_CRACK,
+                entity.posX + double_1,
+                entity.posY + double_2,
+                entity.posZ + double_3,
+                double_4,
+                double_5,
+                double_6,
+                getStateId(defaultState)
+            )
         }
     }
 
-    override fun shouldSideBeRendered(blockState: IBlockState, blockAccess: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean {
-        return blockAccess.getBlockState(pos.offset(side)).block == this || super.shouldSideBeRendered(blockState, blockAccess, pos, side)
+    override fun shouldSideBeRendered(
+        blockState: IBlockState,
+        blockAccess: IBlockAccess,
+        pos: BlockPos,
+        side: EnumFacing
+    ): Boolean {
+        return blockAccess.getBlockState(pos.offset(side)).block == this
+                || super.shouldSideBeRendered(blockState, blockAccess, pos, side)
     }
 
-    override fun isOpaqueCube(state: IBlockState): Boolean = false
+    override fun isOpaqueCube(state: IBlockState) = false
 
-    override fun isFullBlock(state: IBlockState): Boolean = false
+    override fun isFullBlock(state: IBlockState) = false
 
-    override fun isFullCube(state: IBlockState): Boolean = false
+    override fun isFullCube(state: IBlockState) = false
 
-    override fun getRenderLayer(): BlockRenderLayer = BlockRenderLayer.TRANSLUCENT
+    override fun getRenderLayer() = BlockRenderLayer.TRANSLUCENT
 
-    override fun isStickyBlock(state: IBlockState): Boolean = true
+    override fun isStickyBlock(state: IBlockState) = true
 
-    override fun canStickTo(state: IBlockState, otherBlock: IBlockState): Boolean {
-        return otherBlock.block !is BlockSlime
+    override fun canStickTo(state: IBlockState, other: IBlockState): Boolean {
+        return other.block !is BlockSlime && QuarkCompat.isNotColoredSlime(other)
+    }
+
+    override fun canStickToBlock(
+        world: World,
+        pistonPos: BlockPos,
+        pos: BlockPos,
+        slimePos: BlockPos,
+        state: IBlockState,
+        slimeState: IBlockState,
+        direction: EnumFacing
+    ): Boolean {
+        return canStickTo(state, slimeState)
     }
 
     companion object {

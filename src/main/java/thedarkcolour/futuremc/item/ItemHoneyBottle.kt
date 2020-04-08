@@ -22,13 +22,13 @@ import thedarkcolour.futuremc.config.FConfig
 class ItemHoneyBottle : ItemModeled("honey_bottle") {
     init {
         setMaxStackSize(16)
-        setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.FOOD else FutureMC.TAB)
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.FOOD else FutureMC.TAB
         containerItem = Items.GLASS_BOTTLE
     }
 
-    override fun getItemUseAction(stack: ItemStack): EnumAction = EnumAction.DRINK
+    override fun getItemUseAction(stack: ItemStack) = EnumAction.DRINK
 
-    override fun getMaxItemUseDuration(stack: ItemStack): Int = 40
+    override fun getMaxItemUseDuration(stack: ItemStack) = 40
 
     override fun onItemRightClick(worldIn: World, playerIn: EntityPlayer, handIn: EnumHand): ActionResult<ItemStack> {
         playerIn.activeHand = handIn
@@ -40,7 +40,14 @@ class ItemHoneyBottle : ItemModeled("honey_bottle") {
             CriteriaTriggers.CONSUME_ITEM.trigger(entityLiving, stack)
             entityLiving.foodStats.addStats(6, 0.8f)
             stack.shrink(1)
-            worldIn.playSound(null, entityLiving.position, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5f, worldIn.rand.nextFloat() * 0.1f + 0.9f)
+            worldIn.playSound(
+                null,
+                entityLiving.position,
+                SoundEvents.ENTITY_PLAYER_BURP,
+                SoundCategory.PLAYERS,
+                0.5f,
+                worldIn.rand.nextFloat() * 0.1f + 0.9f
+            )
         }
 
         if (!worldIn.isRemote) {

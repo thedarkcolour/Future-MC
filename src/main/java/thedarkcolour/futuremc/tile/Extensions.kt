@@ -1,12 +1,11 @@
-// Package allows access to eventListeners
-@file:Suppress("PackageDirectoryMismatch")
-
-package net.minecraft.world
+package thedarkcolour.futuremc.tile
 
 import net.minecraft.entity.Entity
 import net.minecraft.util.SoundCategory
 import net.minecraft.util.SoundEvent
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IWorldEventListener
+import net.minecraft.world.World
 import net.minecraftforge.event.ForgeEventFactory
 
 @Suppress("NAME_SHADOWING")
@@ -21,11 +20,28 @@ fun World.playSound(pos: BlockPos, soundIn: SoundEvent, category: SoundCategory,
     val pitch = event.pitch
 
     for (i in eventListeners.indices) {
-        (eventListeners[i] as IWorldEventListener).playSoundToAllNearExcept(null, soundIn, category, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), volume, pitch)
+        (eventListeners[i] as IWorldEventListener).playSoundToAllNearExcept(
+            null,
+            soundIn,
+            category,
+            pos.x.toDouble(),
+            pos.y.toDouble(),
+            pos.z.toDouble(),
+            volume,
+            pitch
+        )
     }
 }
 
-fun World.playSound(x: Double, y: Double, z: Double, soundIn: SoundEvent, category: SoundCategory, volume: Float, pitch: Float) {
+fun World.playSound(
+    x: Double,
+    y: Double,
+    z: Double,
+    soundIn: SoundEvent,
+    category: SoundCategory,
+    volume: Float,
+    pitch: Float
+) {
     playSound(null, x, y, z, soundIn, category, volume, pitch)
 }
 

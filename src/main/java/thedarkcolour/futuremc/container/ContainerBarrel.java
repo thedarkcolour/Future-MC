@@ -13,12 +13,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import thedarkcolour.core.gui.Container;
+import thedarkcolour.core.gui.ContainerBase;
 import thedarkcolour.futuremc.client.gui.GuiBarrel;
 import thedarkcolour.futuremc.tile.TileBarrel;
 
 @ChestContainer
-public class ContainerBarrel extends Container {
+public class ContainerBarrel extends ContainerBase {
     public final TileBarrel te;
     public final InventoryPlayer playerInventory;
 
@@ -48,14 +48,12 @@ public class ContainerBarrel extends Container {
     }
 
     private void addOwnSlots() {
-        IItemHandler itemHandler = this.te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        int slotIndex = 0;
+        IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
                 int x = 8 + col * 18;
                 int y = 18 + row * 18;
-                addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, x, y));
-                slotIndex++;
+                addSlotToContainer(new SlotItemHandler(itemHandler, col + row * 9, x, y));
             }
         }
     }
@@ -88,7 +86,7 @@ public class ContainerBarrel extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        return playerIn.getDistanceSq(te.getPos().add(0.5D, 0.5D, 0.5D)) <= 64D;
+        return isTileInRange(te, playerIn);
     }
 
     @SideOnly(Side.CLIENT)

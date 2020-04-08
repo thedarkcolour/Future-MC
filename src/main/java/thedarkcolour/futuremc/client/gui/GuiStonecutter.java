@@ -7,11 +7,11 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.common.Loader;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import thedarkcolour.core.gui.GuiContainer;
 import thedarkcolour.futuremc.FutureMC;
+import thedarkcolour.futuremc.compat.Compat;
 import thedarkcolour.futuremc.config.FConfig;
 import thedarkcolour.futuremc.container.ContainerStonecutter;
 import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipe;
@@ -19,16 +19,14 @@ import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipe;
 import java.io.IOException;
 
 public class GuiStonecutter extends GuiContainer<ContainerStonecutter> {
-    private static final ResourceLocation BACKGROUND = new ResourceLocation(FutureMC.ID,"textures/gui/stonecutter.png");
+    private static final ResourceLocation BACKGROUND = new ResourceLocation(FutureMC.ID, "textures/gui/stonecutter.png");
     private float sliderProgress;
     private boolean clickedOnScroll;
     private int recipeIndexOffset = 0;
     private boolean hasItemsInInputSlot;
-    private static final boolean jeiLoaded = Loader.isModLoaded("jei");
 
     public GuiStonecutter(ContainerStonecutter container) {
         super(container);
-        this.container = container;
         container.setInventoryUpdateListener(this::onInventoryUpdate);
     }
 
@@ -41,7 +39,7 @@ public class GuiStonecutter extends GuiContainer<ContainerStonecutter> {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         fontRenderer.drawString(I18n.format("container.Stonecutter"), 8, 6, 4210752);
-        fontRenderer.drawString(container.getPlayerInv().getDisplayName().getUnformattedText(), 8, ySize - 94, 4210752);
+        fontRenderer.drawString(getContainer().getPlayerInv().getDisplayName().getUnformattedText(), 8, ySize - 94, 4210752);
     }
 
     @Override
@@ -54,10 +52,11 @@ public class GuiStonecutter extends GuiContainer<ContainerStonecutter> {
         drawTexturedModalRect(i, j, 0, 0, xSize, ySize);
         int scrollY = (int) (41.0F * sliderProgress);
         drawTexturedModalRect(i + 119, j + 15 + scrollY, 176 + (canScroll() ? 0 : 12), 0, 12, 15);
-        if (jeiLoaded && FConfig.INSTANCE.getVillageAndPillage().stonecutter.recipeButton) {
+
+        if (Compat.isModLoaded(Compat.JEI)) {
             drawRecipeButton(mouseX, mouseY, i, j);
         }
-        if (container.getCurrentRecipe() != null) {
+        if (getContainer().getCurrentRecipe() != null) {
             int x = guiLeft + 52;
             int y = guiTop + 14;
             int k = recipeIndexOffset + 12;
@@ -67,27 +66,27 @@ public class GuiStonecutter extends GuiContainer<ContainerStonecutter> {
     }
 
     private void drawRecipesBackground(int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
-        for (int i = recipeIndexOffset; i < recipeIndexOffsetMax && i < container.getCurrentRecipe().getTotalOutputs(); ++i) {
+        for (int i = recipeIndexOffset; i < recipeIndexOffsetMax && i < getContainer().getCurrentRecipe().getTotalOutputs(); ++i) {
             int j = i - recipeIndexOffset;
             int k = left + j % 4 * 16;
             int l = j / 4;
             int i1 = top + l * 18 + 2;
             int j1 = ySize;
-            if (i == container.getSelectedIndex()) {
+            if (i == getContainer().getSelectedIndex()) {
                 j1 += 18;
             } else if (mouseX >= k && mouseY >= i1 && mouseX < k + 16 && mouseY < i1 + 18) {
                 j1 += 36;
             }
 
-            drawTexturedModalRect(k, i1 -1, 0, j1, 16, 18);
+            drawTexturedModalRect(k, i1 - 1, 0, j1, 16, 18);
         }
     }
 
     private void drawRecipesItems(int left, int top, int recipeIndexOffsetMax) {
         RenderHelper.enableGUIStandardItemLighting();
-        StonecutterRecipe recipe = container.getCurrentRecipe();
+        StonecutterRecipe recipe = getContainer().getCurrentRecipe();
 
-        for (int i = recipeIndexOffset; i < recipeIndexOffsetMax && i < container.getCurrentRecipe().getTotalOutputs(); ++i) {
+        for (int i = recipeIndexOffset; i < recipeIndexOffsetMax && i < getContainer().getCurrentRecipe().getTotalOutputs(); ++i) {
             int j = i - recipeIndexOffset;
             int k = left + j % 4 * 16;
             int l = j / 4;
@@ -99,13 +98,15 @@ public class GuiStonecutter extends GuiContainer<ContainerStonecutter> {
     }
 
     private void drawRecipeButton(int mouseX, int mouseY, int i, int j) {
-        int x = guiLeft + 143;
-        int y = guiTop + 8;
-        int textureY = 166;
-        if (mouseX >= x && mouseY >= y && mouseX < x + 16 && mouseY < y + 16) {
-            textureY += 16;
+        if (FConfig.INSTANCE.getVillageAndPillage().stonecutter.recipeButton) {
+            int x = guiLeft + 143;
+            int y = guiTop + 8;
+            int textureY = 166;
+            if (mouseX >= x && mouseY >= y && mouseX < x + 16 && mouseY < y + 16) {
+                textureY += 16;
+            }
+            drawTexturedModalRect(i + 143, j + 8, 16, textureY, 16, 16);
         }
-        drawTexturedModalRect(i + 143, j + 8, 16, textureY, 16, 16);
     }
 
     @Override
@@ -118,18 +119,18 @@ public class GuiStonecutter extends GuiContainer<ContainerStonecutter> {
 
             for (int l = recipeIndexOffset; l < k; ++l) {
                 int i1 = l - recipeIndexOffset;
-                double x = mouseX - (double)(i + i1 % 4 * 16);
-                double y = mouseY - (double)(j + i1 / 4 * 18);
-                if (x >= 0.0D && y >= 0.0D && x < 16.0D && y < 18.0D && container.enchantItem(mc.player, l)) {
+                double x = mouseX - (double) (i + i1 % 4 * 16);
+                double y = mouseY - (double) (j + i1 / 4 * 18);
+                if (x >= 0.0D && y >= 0.0D && x < 16.0D && y < 18.0D && getContainer().enchantItem(mc.player, l)) {
                     Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-                    mc.playerController.sendEnchantPacket(container.windowId, l);
+                    mc.playerController.sendEnchantPacket(getContainer().windowId, l);
                     return;
                 }
             }
 
             i = this.guiLeft + 119;
             j = this.guiTop + 9;
-            if (mouseX >= (double)i && mouseX < (double)(i + 12) && mouseY >= (double)j && mouseY < (double)(j + 54)) {
+            if (mouseX >= (double) i && mouseX < (double) (i + 12) && mouseY >= (double) j && mouseY < (double) (j + 54)) {
                 clickedOnScroll = true;
             }
         }
@@ -144,7 +145,7 @@ public class GuiStonecutter extends GuiContainer<ContainerStonecutter> {
             int j = i + 54;
             sliderProgress = (mouseY - i - 7.5F) / (j - i - 15.0F);
             sliderProgress = MathHelper.clamp(sliderProgress, 0.0F, 1.0F);
-            recipeIndexOffset = (int)((sliderProgress * getHiddenRows()) + 0.5D) << 2;
+            recipeIndexOffset = (int) ((sliderProgress * getHiddenRows()) + 0.5D) << 2;
         }
         super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
     }
@@ -157,22 +158,22 @@ public class GuiStonecutter extends GuiContainer<ContainerStonecutter> {
         if (i != 0 && canScroll()) {
             i = (int) Math.signum(i);
             int h = getHiddenRows();
-            sliderProgress = (float)((double)sliderProgress - i / (double)h);
+            sliderProgress = (float) ((double) sliderProgress - i / (double) h);
             sliderProgress = MathHelper.clamp(sliderProgress, 0.0F, 1.0F);
-            recipeIndexOffset = (int)((double)(sliderProgress * (float)h) + 0.5D) * 4;
+            recipeIndexOffset = (int) ((double) (sliderProgress * (float) h) + 0.5D) << 2;
         }
     }
 
     private boolean canScroll() {
-        return container.getCurrentRecipe() != null && hasItemsInInputSlot && container.getCurrentRecipe().getTotalOutputs() > 12;
+        return getContainer().getCurrentRecipe() != null && hasItemsInInputSlot && getContainer().getCurrentRecipe().getTotalOutputs() > 12;
     }
 
     private int getHiddenRows() {
-        return (container.getRecipeListSize() + 4 - 1) / 4 - 3;
+        return (getContainer().getRecipeListSize() + 4 - 1) / 4 - 3;
     }
 
     private void onInventoryUpdate() {
-        hasItemsInInputSlot = container.hasRecipe();
+        hasItemsInInputSlot = getContainer().hasRecipe();
 
         if (!hasItemsInInputSlot) {
             sliderProgress = 0.0F;

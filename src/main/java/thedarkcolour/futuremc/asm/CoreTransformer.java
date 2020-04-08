@@ -3,16 +3,7 @@ package thedarkcolour.futuremc.asm;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.FieldInsnNode;
-import org.objectweb.asm.tree.FrameNode;
-import org.objectweb.asm.tree.InsnList;
-import org.objectweb.asm.tree.LocalVariableNode;
-import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
-import org.objectweb.asm.tree.TypeInsnNode;
-import org.objectweb.asm.tree.VarInsnNode;
+import org.objectweb.asm.tree.*;
 import thedarkcolour.core.util.Util;
 
 import java.util.ArrayList;
@@ -34,19 +25,61 @@ public class CoreTransformer implements IClassTransformer {
             return patchWorldGenBigTree(basicClass);
         }
 
-        // Patch to redirect all methods to my PistonHelper
         if (transformedName.equals("net.minecraft.block.BlockPistonBase")) {
-            return patchBlockPistonBase(basicClass);
+            if (!Util.isQuarkLoaded()) {
+                return patchBlockPistonBase(basicClass);
+            } else {
+                // Use Quark API instead
+                return basicClass;
+            }
+        }
+
+        if (transformedName.equals("net.minecraft.client.renderer.EntityRenderer")) {
+            return patchEntityRenderer(basicClass);
         }
 
         return basicClass;
+    }
+
+    private byte[] patchEntityRenderer(byte[] basicClass) {
+        ClassNode classNode = new ClassNode();
+        ClassReader classReader = new ClassReader(basicClass);
+        classReader.accept(classNode, 0);
+        ArrayList<String> names = Util.make(new ArrayList<>(), list -> {
+            list.add("renderWorldPass");
+            list.add("func_175068_a");
+        });
+
+        for (MethodNode method : classNode.methods) {
+            if (names.contains(method.name)) {
+                for (AbstractInsnNode instruction : method.instructions.toArray()) {
+                    if (instruction.getOpcode() == IFNE) {
+                        if (instruction.getPrevious() instanceof MethodInsnNode) {
+                            if (names.contains(((MethodInsnNode) instruction.getPrevious()).name)) {
+                                method.instructions.remove(instruction.getPrevious().getPrevious().getPrevious());
+                                method.instructions.remove(instruction.getPrevious().getPrevious());
+                                method.instructions.remove(instruction.getPrevious());
+                                method.instructions.remove(instruction);
+                                System.out.println("Patched EntityRenderer");
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+        }
+
+        ClassWriter cw = new ClassWriter(0);
+        classNode.accept(cw);
+        return cw.toByteArray();
     }
 
     private byte[] patchBlockPistonBase(byte[] basicClass) {
         ClassNode classNode = new ClassNode();
         ClassReader classReader = new ClassReader(basicClass);
         classReader.accept(classNode, 0);
-        ArrayList<String> names = Util.jmake(new ArrayList<>(), list -> {
+        ArrayList<String> names = Util.make(new ArrayList<>(), list -> {
             list.add("checkForMove");
             list.add("func_176316_e");
             list.add("doMove");
@@ -62,10 +95,10 @@ public class CoreTransformer implements IClassTransformer {
                 while (iterator.hasNext()) {
                     AbstractInsnNode node = iterator.next();
 
-                    if (node.getOpcode() == NEW && ((TypeInsnNode)node).desc.equals(helperName)) {
-                        ((TypeInsnNode)node).desc = tdcHelperName;
-                    } else if (node instanceof MethodInsnNode && ((MethodInsnNode)node).owner.equals(helperName)) {
-                        ((MethodInsnNode)node).owner = tdcHelperName;
+                    if (node.getOpcode() == NEW && ((TypeInsnNode) node).desc.equals(helperName)) {
+                        ((TypeInsnNode) node).desc = tdcHelperName;
+                    } else if (node instanceof MethodInsnNode && ((MethodInsnNode) node).owner.equals(helperName)) {
+                        ((MethodInsnNode) node).owner = tdcHelperName;
                     } else if (node instanceof FrameNode) {
                         FrameNode frame = (FrameNode) node;
                         List<Object> local = frame.local;
@@ -101,7 +134,7 @@ public class CoreTransformer implements IClassTransformer {
                 .filter(node -> node.name.equals(isObfuscated ? "func_180709_b" : "generate") && node.desc.equals("(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;)Z"))
                 .findFirst()
                 .orElseThrow(NoSuchMethodError::new);
-        InsnList toAdd = Util.jmake(new InsnList(), list -> {
+        InsnList toAdd = Util.make(new InsnList(), list -> {
             list.add(new VarInsnNode(ALOAD, 1));
             list.add(new VarInsnNode(ALOAD, 2));
             list.add(new VarInsnNode(ALOAD, 3));
@@ -122,11 +155,13 @@ public class CoreTransformer implements IClassTransformer {
         ClassNode classNode = new ClassNode();
         ClassReader classReader = new ClassReader(basicClass);
         classReader.accept(classNode, 0);
+
         MethodNode method = classNode.methods.stream()
+                //.peek(node -> System.out.println(node.name + "   " + node.desc))
                 .filter(node -> node.name.equals(isObfuscated ? "func_180709_b" : "generate") && node.desc.equals("(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;)Z"))
                 .findFirst()
                 .orElseThrow(NoSuchMethodError::new);
-        InsnList toAdd = Util.jmake(new InsnList(), list -> {
+        InsnList toAdd = Util.make(new InsnList(), list -> {
             list.add(new VarInsnNode(ALOAD, 1));
             list.add(new VarInsnNode(ALOAD, 2));
             list.add(new VarInsnNode(ALOAD, 3));

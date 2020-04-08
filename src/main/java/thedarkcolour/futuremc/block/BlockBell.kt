@@ -13,7 +13,7 @@ import net.minecraft.util.*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.core.block.RotatableBlock
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.tile.TileBell
 
 class BlockBell : RotatableBlock("bell", Material.IRON, SoundType.ANVIL) {
@@ -21,26 +21,45 @@ class BlockBell : RotatableBlock("bell", Material.IRON, SoundType.ANVIL) {
         setHardness(5.0f)
     }
 
-    override fun hasTileEntity(state: IBlockState): Boolean = true
+    override fun hasTileEntity(state: IBlockState) = true
 
-    override fun createTileEntity(world: World, state: IBlockState): TileEntity? {
+    override fun createTileEntity(world: World, state: IBlockState): TileEntity {
         return TileBell()
     }
 
-    override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
-        return ring(worldIn, state, worldIn.getTileEntity(pos), hitY, facing, pos)
+    override fun onBlockActivated(
+        worldIn: World,
+        pos: BlockPos,
+        state: IBlockState,
+        playerIn: EntityPlayer,
+        hand: EnumHand,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float
+    ): Boolean {
+        return ring(worldIn, state, worldIn.getTileEntity(pos), facing, hitY, playerIn, pos, true)
     }
 
-    private fun ring(worldIn: World, state: IBlockState, te: TileEntity?, hitY: Float, facing: EnumFacing, pos: BlockPos): Boolean {
-        val flag = func_220129_a(state, facing, hitY - pos.y)
-        if (!worldIn.isRemote && te is TileBell && flag) {
-            te.func_213939_a(facing)
+    private fun ring(
+        worldIn: World,
+        state: IBlockState,
+        te: TileEntity?,
+        facing: EnumFacing,
+        hitY: Float,
+        playerIn: EntityPlayer?,
+        pos: BlockPos,
+        checkFacing: Boolean
+    ): Boolean {
+        val shouldRing = !checkFacing || canRingFrom(state, facing, hitY - pos.y)
+        if (!worldIn.isRemote && te is TileBell && shouldRing) {
+            te.ring(facing)
             playRingSound(worldIn, pos)
         }
         return true
     }
 
-    private fun func_220129_a(state: IBlockState, facing: EnumFacing, v: Float): Boolean {
+    private fun canRingFrom(state: IBlockState, facing: EnumFacing, v: Float): Boolean {
         return if (facing.axis != EnumFacing.Axis.Y && v <= 0.8124f) {
             val direction = state.getValue(FACING)
             when (state.getValue(ATTACHMENT)) {
@@ -55,7 +74,7 @@ class BlockBell : RotatableBlock("bell", Material.IRON, SoundType.ANVIL) {
     }
 
     private fun playRingSound(worldIn: World, pos: BlockPos) {
-        worldIn.playSound(null, pos, Sounds.BELL_RING, SoundCategory.BLOCKS, 2.0f, 1.0f)
+        worldIn.playSound(null, pos, FSounds.BELL_RING, SoundCategory.BLOCKS, 2.0f, 1.0f)
     }
 
     override fun isFullBlock(state: IBlockState): Boolean {
@@ -83,22 +102,53 @@ class BlockBell : RotatableBlock("bell", Material.IRON, SoundType.ANVIL) {
 
     }
 
-    override fun getStateForPlacement(worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState {
+    override fun getStateForPlacement(
+        worldIn: World,
+        pos: BlockPos,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float,
+        meta: Int,
+        placer: EntityLivingBase
+    ): IBlockState {
         val axis = facing.axis
         if (axis == EnumFacing.Axis.Y) {
-            val blockstate = this.defaultState.withProperty(ATTACHMENT, if (facing == EnumFacing.DOWN) BellAttachment.CEILING else BellAttachment.FLOOR).withProperty(FACING, placer.horizontalFacing)
+            val blockstate = this.defaultState.withProperty(
+                ATTACHMENT,
+                if (facing == EnumFacing.DOWN) BellAttachment.CEILING else BellAttachment.FLOOR
+            ).withProperty(FACING, placer.horizontalFacing)
             if (blockstate.block.canPlaceBlockAt(worldIn, pos)) {
                 return blockstate
             }
         } else {
-            val flag = axis == EnumFacing.Axis.X && isSideSolid(worldIn.getBlockState(pos.west()), worldIn, pos.west(), EnumFacing.EAST) && isSideSolid(worldIn.getBlockState(pos.east()), worldIn, pos.east(), EnumFacing.WEST) || axis == EnumFacing.Axis.Z && isSideSolid(worldIn.getBlockState(pos.north()), worldIn, pos.north(), EnumFacing.SOUTH) && isSideSolid(worldIn
-                    .getBlockState(pos.south()), worldIn, pos.south(), EnumFacing.NORTH)
-            var blockstate1 = this.defaultState.withProperty(FACING, facing.opposite).withProperty(ATTACHMENT, if (flag) BellAttachment.DOUBLE_WALL else BellAttachment.SINGLE_WALL)
+            val flag = axis == EnumFacing.Axis.X && isSideSolid(
+                worldIn.getBlockState(pos.west()),
+                worldIn,
+                pos.west(),
+                EnumFacing.EAST
+            ) && isSideSolid(
+                worldIn.getBlockState(pos.east()),
+                worldIn,
+                pos.east(),
+                EnumFacing.WEST
+            ) || axis == EnumFacing.Axis.Z && isSideSolid(
+                worldIn.getBlockState(pos.north()),
+                worldIn,
+                pos.north(),
+                EnumFacing.SOUTH
+            ) && isSideSolid(
+                worldIn
+                    .getBlockState(pos.south()), worldIn, pos.south(), EnumFacing.NORTH
+            )
+            var blockstate1 = this.defaultState.withProperty(FACING, facing.opposite)
+                .withProperty(ATTACHMENT, if (flag) BellAttachment.DOUBLE_WALL else BellAttachment.SINGLE_WALL)
             if (blockstate1.block.canPlaceBlockAt(worldIn, pos)) {
                 return blockstate1
             }
             val flag1 = isSideSolid(worldIn.getBlockState(pos.down()), worldIn, pos.down(), EnumFacing.UP)
-            blockstate1 = blockstate1.withProperty(ATTACHMENT, if (flag1) BellAttachment.FLOOR else BellAttachment.CEILING)
+            blockstate1 =
+                blockstate1.withProperty(ATTACHMENT, if (flag1) BellAttachment.FLOOR else BellAttachment.CEILING)
             if (blockstate1.block.canPlaceBlockAt(worldIn, pos)) {
                 return blockstate1
             }
@@ -111,7 +161,8 @@ class BlockBell : RotatableBlock("bell", Material.IRON, SoundType.ANVIL) {
     }
 
     override fun getStateFromMeta(meta: Int): IBlockState {
-        return defaultState.withProperty(ATTACHMENT, BellAttachment.values()[meta / 4]).withProperty(FACING, EnumFacing.byHorizontalIndex(meta % 4))
+        return defaultState.withProperty(ATTACHMENT, BellAttachment.values()[meta / 4])
+            .withProperty(FACING, EnumFacing.byHorizontalIndex(meta % 4))
     }
 
     override fun getMetaFromState(state: IBlockState): Int {

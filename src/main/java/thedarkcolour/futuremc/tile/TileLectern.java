@@ -11,7 +11,7 @@ public class TileLectern extends TileEntity {
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        if(compound.hasKey("heldBook")) {
+        if (compound.hasKey("heldBook")) {
             inventory.deserializeNBT((NBTTagCompound) compound.getTag("heldBook"));
         }
     }

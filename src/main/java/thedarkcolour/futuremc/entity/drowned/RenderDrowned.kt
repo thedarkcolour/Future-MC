@@ -12,11 +12,21 @@ class RenderDrowned(manager: RenderManager) : RenderBiped<EntityDrowned>(manager
         addLayer(LayerDrowned(this))
     }
 
-    override fun applyRotations(entityLiving: EntityDrowned, ageInTicks: Float, rotationYaw: Float, partialTicks: Float) {
+    override fun applyRotations(
+        entityLiving: EntityDrowned,
+        ageInTicks: Float,
+        rotationYaw: Float,
+        partialTicks: Float
+    ) {
         val swimAnimation = entityLiving.getSwimAnimation(partialTicks)
         super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks)
         if (swimAnimation > 0) {
-            rotate(lerp(swimAnimation, entityLiving.rotationPitch, -10.0f - entityLiving.rotationPitch), 1.0f, 0.0f, 0.0f)
+            rotate(
+                lerp(swimAnimation, entityLiving.rotationPitch, -10.0f - entityLiving.rotationPitch),
+                1.0f,
+                0.0f,
+                0.0f
+            )
         }
     }
 

@@ -22,10 +22,10 @@ import net.minecraft.world.World
 import thedarkcolour.core.util.stack
 import thedarkcolour.futuremc.entity.WaterCreature
 import thedarkcolour.futuremc.entity.fish.EntityFish
-import thedarkcolour.futuremc.init.FItems
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FItems
+import thedarkcolour.futuremc.registry.FSounds
 
-class EntityPufferfish (worldIn: World) : EntityFish(worldIn) {
+class EntityPufferfish(worldIn: World) : EntityFish(worldIn) {
     var inflateTimer: Int = 0
     var deflateTimer: Int = 0
     var puffState: Int
@@ -80,7 +80,11 @@ class EntityPufferfish (worldIn: World) : EntityFish(worldIn) {
 
     class AIPuff(private val pufferfish: EntityPufferfish) : EntityAIBase() {
         override fun shouldExecute(): Boolean {
-            val list = pufferfish.world.getEntitiesWithinAABB(EntityLivingBase::class.java, pufferfish.entityBoundingBox.grow(2.0), ENEMY_MATCHER)
+            val list = pufferfish.world.getEntitiesWithinAABB(
+                EntityLivingBase::class.java,
+                pufferfish.entityBoundingBox.grow(2.0),
+                ENEMY_MATCHER
+            )
             return list.isNotEmpty()
         }
 
@@ -98,20 +102,24 @@ class EntityPufferfish (worldIn: World) : EntityFish(worldIn) {
         if (!world.isRemote && isEntityAlive && isServerWorld) {
             if (inflateTimer > 0) {
                 if (puffState == 0) {
-                    playSound(Sounds.PUFFERFISH_INFLATE, soundVolume, soundPitch)
-                    world.getEntitiesWithinAABB(EntityLivingBase::class.java, entityBoundingBox.grow(2.0), ENEMY_MATCHER).forEach { println(it.toString()) }
+                    playSound(FSounds.PUFFERFISH_INFLATE, soundVolume, soundPitch)
+                    world.getEntitiesWithinAABB(
+                        EntityLivingBase::class.java,
+                        entityBoundingBox.grow(2.0),
+                        ENEMY_MATCHER
+                    ).forEach { println(it.toString()) }
                     puffState = 1
                 } else if (inflateTimer > 40 && puffState == 1) {
-                    playSound(Sounds.PUFFERFISH_INFLATE, soundVolume, soundPitch)
+                    playSound(FSounds.PUFFERFISH_INFLATE, soundVolume, soundPitch)
                     puffState = 2
                 }
                 ++inflateTimer
             } else if (puffState != 0) {
                 if (deflateTimer > 60 && puffState == 2) {
-                    playSound(Sounds.PUFFERFISH_DEFLATE, soundVolume, soundPitch)
+                    playSound(FSounds.PUFFERFISH_DEFLATE, soundVolume, soundPitch)
                     puffState = 1
                 } else if (deflateTimer > 100 && puffState == 1) {
-                    playSound(Sounds.PUFFERFISH_DEFLATE, soundVolume, soundPitch)
+                    playSound(FSounds.PUFFERFISH_DEFLATE, soundVolume, soundPitch)
                     puffState = 0
                 }
                 ++deflateTimer
@@ -124,7 +132,11 @@ class EntityPufferfish (worldIn: World) : EntityFish(worldIn) {
     override fun onLivingUpdate() {
         super.onLivingUpdate()
         if (isEntityAlive && puffState > 0) {
-            for (mob in world.getEntitiesWithinAABB(EntityMob::class.java, entityBoundingBox.grow(0.3), ENEMY_MATCHER)) {
+            for (mob in world.getEntitiesWithinAABB(
+                EntityMob::class.java,
+                entityBoundingBox.grow(0.3),
+                ENEMY_MATCHER
+            )) {
                 if (mob.isEntityAlive) {
                     attack(mob)
                 }
@@ -136,13 +148,17 @@ class EntityPufferfish (worldIn: World) : EntityFish(worldIn) {
         val i: Int = puffState
         if (mob.attackEntityFrom(DamageSource.causeMobDamage(this), (1 + i).toFloat())) {
             mob.addPotionEffect(PotionEffect(MobEffects.POISON, 60 * i, 0))
-            playSound(Sounds.PUFFERFISH_STING, 1.0f, 1.0f)
+            playSound(FSounds.PUFFERFISH_STING, 1.0f, 1.0f)
         }
     }
 
     override fun onCollideWithPlayer(entityIn: EntityPlayer) {
         val i: Int = puffState
-        if (entityIn is EntityPlayerMP && i > 0 && entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (1 + i).toFloat())) {
+        if (entityIn is EntityPlayerMP && i > 0 && entityIn.attackEntityFrom(
+                DamageSource.causeMobDamage(this),
+                (1 + i).toFloat()
+            )
+        ) {
             entityIn.connection.sendPacket(SPacketSting(0F))
             entityIn.addPotionEffect(PotionEffect(MobEffects.POISON, 60 * i, 0))
         }
@@ -153,19 +169,28 @@ class EntityPufferfish (worldIn: World) : EntityFish(worldIn) {
         override fun getGameState(): Int {
             val client = Minecraft.getMinecraft()
             val player = client.player
-            client.world.playSound(player, player.posX, player.posY, player.posZ, Sounds.PUFFERFISH_STING, SoundCategory.NEUTRAL, 1F, 1F)
+            client.world.playSound(
+                player,
+                player.posX,
+                player.posY,
+                player.posZ,
+                FSounds.PUFFERFISH_STING,
+                SoundCategory.NEUTRAL,
+                1F,
+                1F
+            )
             return 9
         }
     }
 
-    override fun getAmbientSound(): SoundEvent = Sounds.PUFFERFISH_AMBIENT
+    override fun getAmbientSound(): SoundEvent = FSounds.PUFFERFISH_AMBIENT
 
-    override fun getDeathSound(): SoundEvent= Sounds.PUFFERFISH_DEATH
+    override fun getDeathSound(): SoundEvent = FSounds.PUFFERFISH_DEATH
 
-    override fun getHurtSound(damageSourceIn: DamageSource?): SoundEvent = Sounds.PUFFERFISH_HURT
+    override fun getHurtSound(damageSourceIn: DamageSource?): SoundEvent = FSounds.PUFFERFISH_HURT
 
     override val flopSound: SoundEvent
-        get() = Sounds.PUFFERFISH_FLOP
+        get() = FSounds.PUFFERFISH_FLOP
 
     companion object {
         private val PUFF_STATE = EntityDataManager.createKey(EntityPufferfish::class.java, DataSerializers.VARINT)

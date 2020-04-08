@@ -4,30 +4,38 @@ Version 0.2.0 - Big update! New things:
  *Salmon* - Fish from 1.13 that spawns in river and deep ocean biomes.
  *Tropical Fish* - Colorful fish that spawns in deep ocean biomes.
  *Wooden Trapdoors* - All wood variants have their own trapdoors from 1.13.
+ *Loom Functionality* - You can now use the Loom to craft banners.
  Bamboo - Added bamboo saplings from 1.14.
  Bamboo - Hitbox is now like 1.14's hitbox.
  Bamboo - Added config option to tighten the hitbox to its collision box or to leave it as it is in 1.14.
+ Bee - Updated AI to match 1.15.2.
+ Bee - Split classes into separate files to make code more readable.
+ Bee - Changed CraftTweaker methods to use IBlockState instead of IBlock.
+ Bee - Fixed a bug that prevented removal of certain flowers as pollinateable.
  Blast Furnace & Smoker - Now detect ores and foods from other mods.
  Blocks, Items, Tile entities - Adjusted the ids of certain things (they now follow naming convention) and made things more accurate (flowerblack -> wither_rose, flowerwhite -> lily_of_the_valley, sweetberry -> sweet_berries, etc.)
+ Beehives and Bee nests - Can now be harvested by dispensers.
  Campfire - No longer crashes if you are burned to death on it while running OptiFine.
  Campfire - Added particles.
- Config - Completely redone. You may need to set some of your options again. It's in a new file called "futuremc.cfg", so you can look back if you want to convert from "future-mc.cfg".
+ Config - Completely redone. You may need to set some of your options again. It's in a new file called "futuremc.cfg", so you can look back if you want to migrate from "future-mc.cfg".
  Config - Categorized by minecraft version instead of "general" and "flowers". Options are now sorted alphabetically.
  Config - Added a bunch of new options, removed a few options that I feel do not fit in the mod.
  Config - Added much finer configuration for blocks and entities.
  Config - Fish spawning is configurable.
- Crossbow - Adjusted sounds to match 1.14.
- Future MC - Changed modid from "minecraftfuture" to "futuremc". This shouldn't break any of your old worlds, but you will need to fix this in you crafttweaker scripts.
+ Future MC - Changed modid from "minecraftfuture" to "futuremc". This shouldn't break any of your old worlds, but you will need to fix your crafttweaker scripts.
  Honey Bottle - Now shows hunger and saturation information for mods like Appleskin.
  Honey Bottle - No longer empties in creative after consumption.
  Iron Golem - Can now be repaired with iron ingots.
  Iron Golem - Now cracks as its health decreases.
  Legacy Bamboo Jungle - Removed from the mod. Worlds that had this biome will still have bamboo jungles from FutureMC, they will just show up as plains in F3.
  Lantern - Adjusted sounds to match 1.14.
+ Panda - Removed some dangerous code.
  Smooth Stone - Adjusted hardness to match 1.14.
  Stonecutter - Fixed some blocks having the wrong amount of outputs.
  Suspicious Stew - Now supports custom potion effects.
  Trident - Updated sounds.
+ Trapdoors - Added from 1.14
+ Trapdoors - Each individual wood type can be enabled/disabled.
  Walls - Much more configurable, you can now disable individual types of walls.
  Wither Rose - Now drops correctly.
  Wither Rose - Now places on the correct blocks again.

@@ -9,18 +9,23 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import thedarkcolour.core.block.BlockBase
 import thedarkcolour.core.util.stack
-import thedarkcolour.futuremc.init.FItems
-import thedarkcolour.futuremc.init.Sounds
-import java.util.*
+import thedarkcolour.futuremc.registry.FItems
+import thedarkcolour.futuremc.registry.FSounds
 
 class BlockBambooSapling : BlockBase("bamboo_sapling", Material.WOOD) {
     init {
-        soundType = Sounds.BAMBOO_SAPLING
+        soundType = FSounds.BAMBOO_SAPLING
         tickRandomly = true
         blockHardness = 0.0f
     }
 
-    override fun getPickBlock(state: IBlockState, target: RayTraceResult, world: World, pos: BlockPos, player: EntityPlayer): ItemStack {
+    override fun getPickBlock(
+        state: IBlockState,
+        target: RayTraceResult,
+        world: World,
+        pos: BlockPos,
+        player: EntityPlayer
+    ): ItemStack {
         return FItems.BAMBOO.stack
     }
 
@@ -29,9 +34,9 @@ class BlockBambooSapling : BlockBase("bamboo_sapling", Material.WOOD) {
         return Vec3d(((i shr 16 and 15L) / 15.0f - 0.5) * 0.5, 0.0, ((i shr 24 and 15L) / 15.0f - 0.5) * 0.5)
     }
 
-    override fun updateTick(worldIn: World, pos: BlockPos, state: IBlockState, rand: Random) {
-        super.updateTick(worldIn, pos, state, rand)
-    }
+    //override fun updateTick(worldIn: World, pos: BlockPos, state: IBlockState, rand: Random) {
+    //    super.updateTick(worldIn, pos, state, rand)
+    //}
 
     override fun getCollisionBoundingBox(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos): AxisAlignedBB {
         val vec3d = state.getOffset(worldIn, pos)

@@ -1,10 +1,14 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "futuremc:lily_of_the_valley"
-  },
-  "variants": {
-    "normal": [{}],
-    "inventory": {"model": "futuremc:item/lily_of_the_valley"}
-  }
+    "forge_marker": 1,
+    "defaults": {
+        "model": "futuremc:lily_of_the_valley"
+    },
+    "variants": {
+        "normal": [
+            {}
+        ],
+        "inventory": {
+            "model": "futuremc:item/lily_of_the_valley"
+        }
+    }
 }

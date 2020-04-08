@@ -28,14 +28,16 @@ import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.RayTraceResult
+import net.minecraft.util.math.Vec3d
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import net.minecraftforge.fluids.BlockFluidBase
 import net.minecraftforge.fluids.IFluidBlock
 import thedarkcolour.core.block.InteractionBlock
 import thedarkcolour.futuremc.FutureMC
-import thedarkcolour.futuremc.client.particle.Particles
 import thedarkcolour.futuremc.config.FConfig
+import thedarkcolour.futuremc.registry.FBlocks
+import thedarkcolour.futuremc.registry.FParticles
 import thedarkcolour.futuremc.tile.TileCampfire
 import java.util.*
 
@@ -51,37 +53,35 @@ class BlockCampfire : InteractionBlock("Campfire", Material.WOOD) {
         return TileCampfire()
     }
 
-    override fun createBlockState(): BlockStateContainer {
-        return BlockStateContainer(this, FACING, LIT, SIGNAL)
-    }
+    override fun createBlockState() = BlockStateContainer(this, FACING, LIT, SIGNAL)
 
     override fun getStateFromMeta(meta: Int): IBlockState {
-        return defaultState.withProperty(LIT, meta and 4 != 0).withProperty(FACING, EnumFacing.byHorizontalIndex(meta and -5)).withProperty(SIGNAL, meta and 8 != 0)
+        return defaultState
+            .withProperty(LIT, meta and 4 != 0)
+            .withProperty(FACING, EnumFacing.byHorizontalIndex(meta and -5))
+            .withProperty(SIGNAL, meta and 8 != 0)
     }
 
     override fun getMetaFromState(state: IBlockState): Int {
         return (if (state.getValue(SIGNAL)) 8 else 0) or (if (state.getValue(LIT)) 4 else 0) or state.getValue(FACING).horizontalIndex
     }
 
-    // TODO Make signal block not hardcoded
-    override fun getStateForPlacement(worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState {
+    override fun getStateForPlacement(
+        worldIn: World,
+        pos: BlockPos,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float,
+        meta: Int,
+        placer: EntityLivingBase
+    ): IBlockState {
         val block = worldIn.getBlockState(pos.up()).block
-        return defaultState.withProperty(FACING, placer.horizontalFacing.opposite).withProperty(LIT, block !is BlockLiquid || block is IFluidBlock).withProperty(SIGNAL, worldIn.getBlockState(pos.down()).block == Blocks.WHEAT)
+        return defaultState.withProperty(FACING, placer.horizontalFacing.opposite)
+            .withProperty(LIT, block !is BlockLiquid || block is IFluidBlock)
+            .withProperty(SIGNAL, worldIn.getBlockState(pos.down()).block == Blocks.WHEAT)
     }
-/*
-    override fun randomDisplayTick(stateIn: IBlockState, worldIn: World, pos: BlockPos, rand: Random) {
-        if (stateIn.getValue(LIT)) {
-            if (rand.nextInt(10) == 0) {
-                worldIn.playSound(pos.x.toFloat() + 0.5f.toDouble(), pos.y.toFloat() + 0.5f.toDouble(), pos.z.toFloat() + 0.5f.toDouble(), Sounds.CAMPFIRE_CRACKLE, SoundCategory.BLOCKS, 0.5f + rand.nextFloat(), rand.nextFloat() * 0.7f + 0.6f, false)
-            }
-            if (rand.nextInt(5) == 0) {
-                for (i in 0 until rand.nextInt(1) + 1) {
-                    worldIn.spawnParticle(EnumParticleTypes.LAVA, pos.x.toFloat() + 0.5f.toDouble(), pos.y.toFloat() + 0.5f.toDouble(), pos.z.toFloat() + 0.5f.toDouble(), rand.nextFloat() / 2.0f.toDouble(), 5.0E-5, rand.nextFloat() / 2.0f.toDouble())
-                }
-            }
-        }
-    }
-*/
+
     override fun breakBlock(worldIn: World, pos: BlockPos, state: IBlockState) {
         if (worldIn.getTileEntity(pos) is TileCampfire) {
             (worldIn.getTileEntity(pos) as TileCampfire).dropAllItems()
@@ -89,7 +89,14 @@ class BlockCampfire : InteractionBlock("Campfire", Material.WOOD) {
         super.breakBlock(worldIn, pos, state)
     }
 
-    override fun harvestBlock(worldIn: World, player: EntityPlayer, pos: BlockPos, state: IBlockState, te: TileEntity?, stack: ItemStack) {
+    override fun harvestBlock(
+        worldIn: World,
+        player: EntityPlayer,
+        pos: BlockPos,
+        state: IBlockState,
+        te: TileEntity?,
+        stack: ItemStack
+    ) {
         player.addExhaustion(0.005f)
         harvesters.set(player)
         val i = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack)
@@ -115,7 +122,7 @@ class BlockCampfire : InteractionBlock("Campfire", Material.WOOD) {
 
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromPos: BlockPos) {
         val block = worldIn.getBlockState(pos.up()).block
-        if (block is BlockFluidBase || block is BlockLiquid) {
+        if (state.getValue(LIT) && (block is BlockFluidBase || block is BlockLiquid)) {
             setLit(worldIn, pos, false)
 
             if (worldIn.isRemote) {
@@ -137,24 +144,26 @@ class BlockCampfire : InteractionBlock("Campfire", Material.WOOD) {
         }
     }
 
-    fun setLit(worldIn: World, pos: BlockPos, lit: Boolean) {
-        if (!lit) {
-            if (worldIn.getTileEntity(pos) is TileCampfire) {
-                (worldIn.getTileEntity(pos) as TileCampfire?)!!.dropAllItems()
-            }
-        }
-        worldIn.setBlockState(pos, getBlockState().baseState.withProperty(LIT, lit))
-    }
-
     override fun getBoundingBox(state: IBlockState, source: IBlockAccess, pos: BlockPos): AxisAlignedBB {
         return BOUNDING_BOX
     }
 
-    override fun getPickBlock(state: IBlockState, target: RayTraceResult, world: World, pos: BlockPos, player: EntityPlayer): ItemStack {
+    override fun getPickBlock(
+        state: IBlockState,
+        target: RayTraceResult,
+        world: World,
+        pos: BlockPos,
+        player: EntityPlayer
+    ): ItemStack {
         return ItemStack(this)
     }
 
-    override fun getBlockFaceShape(worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing): BlockFaceShape {
+    override fun getBlockFaceShape(
+        worldIn: IBlockAccess,
+        state: IBlockState,
+        pos: BlockPos,
+        face: EnumFacing
+    ): BlockFaceShape {
         return BlockFaceShape.UNDEFINED
     }
 
@@ -197,14 +206,61 @@ class BlockCampfire : InteractionBlock("Campfire", Material.WOOD) {
         fun spawnSmokeParticles(worldIn: World, pos: BlockPos, isSignal: Boolean, spawnExtraSmoke: Boolean) {
             val rng = worldIn.rand
             val type = if (isSignal) {
-                Particles.CAMPFIRE_COSY_SMOKE
+                FParticles.CAMPFIRE_COSY_SMOKE
             } else {
-                Particles.CAMPFIRE_SIGNAL_SMOKE
+                FParticles.CAMPFIRE_SIGNAL_SMOKE
             }
-            worldIn.spawnParticle(type, pos.x + 0.5 + rng.nextDouble() / 3.0 * if (rng.nextBoolean()) 1.0 else -1.0, pos.y + rng.nextDouble() + rng.nextDouble(), pos.z + 0.5 + rng.nextDouble() / 3.0 * if (rng.nextBoolean()) 1.0 else -1.0, 0.0, 0.07, 0.0)
+            worldIn.spawnParticle(
+                type,
+                pos.x + 0.5 + rng.nextDouble() / 3.0 * if (rng.nextBoolean()) 1.0 else -1.0,
+                pos.y + rng.nextDouble() + rng.nextDouble(),
+                pos.z + 0.5 + rng.nextDouble() / 3.0 * if (rng.nextBoolean()) 1.0 else -1.0,
+                0.0,
+                0.07,
+                0.0
+            )
             if (spawnExtraSmoke) {
-                worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.x + 0.25 + rng.nextDouble() / 2.0 * (if (rng.nextBoolean()) 1 else -1).toDouble(), pos.y.toDouble() + 0.4, pos.z.toDouble() + 0.25 + rng.nextDouble() / 2.0 * (if (rng.nextBoolean()) 1 else -1).toDouble(), 0.0, 0.005, 0.0)
+                worldIn.spawnParticle(
+                    EnumParticleTypes.SMOKE_NORMAL,
+                    pos.x + 0.25 + rng.nextDouble() / 2.0 * (if (rng.nextBoolean()) 1 else -1).toDouble(),
+                    pos.y.toDouble() + 0.4,
+                    pos.z.toDouble() + 0.25 + rng.nextDouble() / 2.0 * (if (rng.nextBoolean()) 1 else -1).toDouble(),
+                    0.0,
+                    0.005,
+                    0.0
+                )
             }
+        }
+
+        fun isLitInRange(worldIn: World, pos: BlockPos, range: Int): Boolean {
+            for (i in 0 until range) {
+                val down = pos.down(i)
+                val state = worldIn.getBlockState(down)
+                if (isLitCampfire(state)) {
+                    return true
+                }
+
+                val box = state.getCollisionBoundingBox(worldIn, pos)
+                val flag = box != null && BOUNDING_BOX.contains(Vec3d(box.minX, box.minY, box.minZ)) && BOUNDING_BOX.contains(Vec3d(box.maxX, box.maxY, box.maxZ))
+                if (flag) {
+                    return isLitCampfire(worldIn.getBlockState(down.down()))
+                }
+            }
+
+            return false
+        }
+
+        private fun isLitCampfire(state: IBlockState): Boolean {
+            return state.block is BlockCampfire && state.getValue(LIT)
+        }
+
+        fun setLit(worldIn: World, pos: BlockPos, lit: Boolean) {
+            if (!lit) {
+                if (worldIn.getTileEntity(pos) is TileCampfire) {
+                    (worldIn.getTileEntity(pos) as TileCampfire?)!!.dropAllItems()
+                }
+            }
+            worldIn.setBlockState(pos, FBlocks.CAMPFIRE.defaultState.withProperty(LIT, lit))
         }
     }
 }

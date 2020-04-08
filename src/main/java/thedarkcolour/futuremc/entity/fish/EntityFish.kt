@@ -2,7 +2,6 @@ package thedarkcolour.futuremc.entity.fish
 
 import net.minecraft.block.material.Material
 import net.minecraft.entity.EntityCreature
-import net.minecraft.entity.IEntityLivingData
 import net.minecraft.entity.MoverType
 import net.minecraft.entity.SharedMonsterAttributes
 import net.minecraft.entity.ai.*
@@ -20,10 +19,9 @@ import net.minecraft.util.EnumHand
 import net.minecraft.util.SoundEvent
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
-import net.minecraft.world.DifficultyInstance
 import net.minecraft.world.World
 import thedarkcolour.futuremc.entity.WaterCreature
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FSounds
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.sqrt
@@ -31,20 +29,13 @@ import kotlin.math.sqrt
 abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreature {
     abstract val flopSound: SoundEvent
     var fromBucket: Boolean
-        get() {
-            return dataManager[FROM_BUCKET]
-        }
+        get() = dataManager[FROM_BUCKET]
         set(value) {
             dataManager[FROM_BUCKET] = value
         }
 
     init {
         moveHelper = MoveHelper(this)
-    }
-
-    override fun onInitialSpawn(difficulty: DifficultyInstance, livingdata: IEntityLivingData?): IEntityLivingData? {
-        println(position.toString())
-        return super.onInitialSpawn(difficulty, livingdata)
     }
 
     private class MoveHelper(private val fish: EntityFish) : EntityMoveHelper(fish) {
@@ -62,7 +53,8 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
                 val f = (atan2(d2, d0) * (180F / PI.toFloat()).toDouble()).toFloat() - 90.0F
                 fish.rotationYaw = limitAngle(fish.rotationYaw, f, 90.0F)
                 fish.renderYawOffset = fish.rotationYaw
-                val f1 = (speed * fish.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).attributeValue).toFloat()
+                val f1 =
+                    (speed * fish.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).attributeValue).toFloat()
                 fish.aiMoveSpeed = fish.aiMoveSpeed + 0.125F * (f1 - fish.aiMoveSpeed)
                 fish.motionY += fish.aiMoveSpeed.toDouble() * d1 * 0.1
             } else {
@@ -84,7 +76,10 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
     override fun initEntityAI() {
         super.initEntityAI()
         tasks.addTask(0, EntityAIPanic(this, 1.25))
-        tasks.addTask(2, EntityAIAvoidEntity(this, EntityPlayer::class.java, EntitySelectors.NOT_SPECTATING, 8F, 1.6, 1.4))
+        tasks.addTask(
+            2,
+            EntityAIAvoidEntity(this, EntityPlayer::class.java, EntitySelectors.NOT_SPECTATING, 8F, 1.6, 1.4)
+        )
         tasks.addTask(4, AISwim(this))
     }
 
@@ -156,7 +151,7 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
         return 1 + rand.nextInt(3)
     }
 
-    override fun getSwimSound(): SoundEvent = Sounds.FISH_SWIM
+    override fun getSwimSound(): SoundEvent = FSounds.FISH_SWIM
 
     override fun onEntityUpdate() {
         if (!isInWater && onGround && collidedVertically) {
@@ -186,7 +181,7 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
     override fun processInteract(player: EntityPlayer, hand: EnumHand): Boolean {
         val stack = player.getHeldItem(hand)
         return if (stack.item == Items.WATER_BUCKET && isEntityAlive) {
-            playSound(Sounds.BUCKET_FILL_FISH, 1.0f, 1.0f)
+            playSound(FSounds.BUCKET_FILL_FISH, 1.0f, 1.0f)
             stack.shrink(1)
             val itemstack1: ItemStack = getFishBucket()
             setBucketData(itemstack1)

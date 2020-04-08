@@ -1,21 +1,17 @@
 {
     "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
+    "pattern": [
         "   ",
         "aaa",
         "aaa"
     ],
-    "key":
-    {
-        "a":
-        {
+    "key": {
+        "a": {
             "item": "minecraft:prismarine",
             "data": 0
         }
     },
-    "result":
-    {
+    "result": {
         "item": "prismarine_wall",
         "count": 6
     }

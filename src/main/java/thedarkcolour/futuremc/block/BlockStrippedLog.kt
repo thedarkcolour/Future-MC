@@ -3,25 +3,17 @@ package thedarkcolour.futuremc.block
 import net.minecraft.block.BlockLog
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
-import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.NonNullList
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
-import net.minecraftforge.client.model.ModelLoader
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.FutureMC.TAB
 import thedarkcolour.futuremc.config.FConfig
-import java.util.*
 
 class BlockStrippedLog(variant: String) : BlockLog() {
-    fun model() {
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, ModelResourceLocation(Item.getItemFromBlock(this).registryName, "inventory"))
-    }
-
     override fun getSubBlocks(itemIn: CreativeTabs, items: NonNullList<ItemStack>) {
         items.add(ItemStack(this))
     }
@@ -46,13 +38,13 @@ class BlockStrippedLog(variant: String) : BlockLog() {
     }
 
     override fun getMetaFromState(state: IBlockState): Int {
-        var meta = 0
-        when (state.getValue(LOG_AXIS)) {
-            EnumAxis.X -> meta = meta or 4
-            EnumAxis.Z -> meta = meta or 8
-            EnumAxis.NONE -> meta = meta or 12
+        val meta = 0
+        return when (state.getValue(LOG_AXIS)) {
+            EnumAxis.Y -> meta
+            EnumAxis.X -> meta or 4
+            EnumAxis.Z -> meta or 8
+            EnumAxis.NONE -> meta or 12
         }
-        return meta
     }
 
     override fun createBlockState(): BlockStateContainer {
@@ -60,8 +52,7 @@ class BlockStrippedLog(variant: String) : BlockLog() {
     }
 
     companion object {
-        @kotlin.jvm.JvmField
-        var variants = Arrays.asList("acacia", "jungle", "birch", "oak", "spruce", "dark_oak")
+        var variants = arrayOf("acacia", "jungle", "birch", "oak", "spruce", "dark_oak")
     }
 
     init {

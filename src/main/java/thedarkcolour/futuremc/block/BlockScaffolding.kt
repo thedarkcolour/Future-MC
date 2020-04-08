@@ -18,16 +18,25 @@ import net.minecraft.util.math.BlockPos.MutableBlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import thedarkcolour.core.block.BlockBase
-import thedarkcolour.futuremc.init.FBlocks
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FBlocks
+import thedarkcolour.futuremc.registry.FSounds
 import java.util.*
 
-class BlockScaffolding : BlockBase("scaffolding", Material.CIRCUITS, Sounds.SCAFFOLDING) {
+class BlockScaffolding : BlockBase("scaffolding", Material.CIRCUITS, FSounds.SCAFFOLDING) {
     override fun getRenderLayer(): BlockRenderLayer {
         return BlockRenderLayer.CUTOUT
     }
 
-    override fun getStateForPlacement(worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState {
+    override fun getStateForPlacement(
+        worldIn: World,
+        pos: BlockPos,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float,
+        meta: Int,
+        placer: EntityLivingBase
+    ): IBlockState {
         val i = getDistance(worldIn, pos)
         return this.defaultState.withProperty(DISTANCE, i).withProperty(BOTTOM, hasBottom(worldIn, pos, i))
     }
@@ -42,7 +51,15 @@ class BlockScaffolding : BlockBase("scaffolding", Material.CIRCUITS, Sounds.SCAF
         }
     }
 
-    override fun addCollisionBoxToList(state: IBlockState, worldIn: World, pos: BlockPos, entityBox: AxisAlignedBB, collidingBoxes: List<AxisAlignedBB>, entityIn: Entity?, isActualState: Boolean) {
+    override fun addCollisionBoxToList(
+        state: IBlockState,
+        worldIn: World,
+        pos: BlockPos,
+        entityBox: AxisAlignedBB,
+        collidingBoxes: List<AxisAlignedBB>,
+        entityIn: Entity?,
+        isActualState: Boolean
+    ) {
         if (shouldBlock(entityIn)) {
             for (box in boundingBoxesA) {
                 addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
@@ -69,7 +86,15 @@ class BlockScaffolding : BlockBase("scaffolding", Material.CIRCUITS, Sounds.SCAF
         val blockstate = state.withProperty(DISTANCE, i).withProperty(BOTTOM, hasBottom(worldIn, pos, i))
         if (blockstate.getValue(DISTANCE) == 7) {
             if (state.getValue(DISTANCE) == 7) {
-                worldIn.spawnEntity(EntityFallingBlock(worldIn, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, state))
+                worldIn.spawnEntity(
+                    EntityFallingBlock(
+                        worldIn,
+                        pos.x.toDouble() + 0.5,
+                        pos.y.toDouble(),
+                        pos.z.toDouble() + 0.5,
+                        state
+                    )
+                )
             } else {
                 worldIn.destroyBlock(pos, true)
             }
@@ -139,19 +164,18 @@ class BlockScaffolding : BlockBase("scaffolding", Material.CIRCUITS, Sounds.SCAF
         private val BOTTOM_AABB = makeAABB(0.0, 0.0, 0.0, 16.0, 2.0, 16.0)
         private val TOP_AABB = makeAABB(0.0, 14.0, 0.0, 16.0, 16.0, 16.0)
 
-        private var boundingBoxesA: Array<AxisAlignedBB?> = arrayOfNulls(5)
-        private var boundingBoxesB: Array<AxisAlignedBB?> = arrayOfNulls(4)
-
-        init {
-            boundingBoxesA[0] = makeAABB(0.0, 14.0, 0.0, 16.0, 16.0, 16.0)
-            boundingBoxesA[1] = makeAABB(0.0, 0.0, 0.0, 2.0, 16.0, 2.0)
-            boundingBoxesA[2] = makeAABB(14.0, 0.0, 0.0, 16.0, 16.0, 2.0)
-            boundingBoxesA[3] = makeAABB(0.0, 0.0, 14.0, 2.0, 16.0, 16.0)
-            boundingBoxesA[4] = makeAABB(14.0, 0.0, 14.0, 16.0, 16.0, 16.0)
-            boundingBoxesB[0] = makeAABB(0.0, 0.0, 0.0, 2.0, 2.0, 16.0)
-            boundingBoxesB[1] = makeAABB(14.0, 0.0, 0.0, 16.0, 2.0, 16.0)
-            boundingBoxesB[2] = makeAABB(0.0, 0.0, 14.0, 16.0, 2.0, 16.0)
-            boundingBoxesB[3] = makeAABB(0.0, 0.0, 0.0, 16.0, 2.0, 2.0)
-        }
+        private var boundingBoxesA: Array<AxisAlignedBB> = arrayOf(
+            makeAABB(0.0, 0.0, 0.0, 2.0, 2.0, 16.0),
+            makeAABB(14.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+            makeAABB(0.0, 0.0, 14.0, 16.0, 2.0, 16.0),
+            makeAABB(0.0, 0.0, 0.0, 16.0, 2.0, 2.0)
+        )
+        private var boundingBoxesB: Array<AxisAlignedBB> = arrayOf(
+            makeAABB(0.0, 14.0, 0.0, 16.0, 16.0, 16.0),
+            makeAABB(0.0, 0.0, 0.0, 2.0, 16.0, 2.0),
+            makeAABB(14.0, 0.0, 0.0, 16.0, 16.0, 2.0),
+            makeAABB(0.0, 0.0, 14.0, 2.0, 16.0, 16.0),
+            makeAABB(14.0, 0.0, 14.0, 16.0, 16.0, 16.0)
+        )
     }
 }

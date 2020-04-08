@@ -57,7 +57,10 @@ class EntityPiercingArrow : EntityModArrow {
     }
 
     private fun updateColor() {
-        dataManager.set(COLOR, PotionUtils.getPotionColorFromEffectList(PotionUtils.mergeEffects(potion, customPotionEffects)))
+        dataManager.set(
+            COLOR,
+            PotionUtils.getPotionColorFromEffectList(PotionUtils.mergeEffects(potion, customPotionEffects))
+        )
     }
 
     fun addEffect(effect: PotionEffect) {
@@ -83,7 +86,15 @@ class EntityPiercingArrow : EntityModArrow {
             val d2 = (i shr 0 and 255).toDouble() / 255.0
 
             for (j in 0 until particleCount) {
-                world.spawnParticle(EnumParticleTypes.SPELL_MOB, posX + (rand.nextDouble() - 0.5) * width.toDouble(), posY + rand.nextDouble() * height.toDouble(), posZ + (rand.nextDouble() - 0.5) * width.toDouble(), d0, d1, d2)
+                world.spawnParticle(
+                    EnumParticleTypes.SPELL_MOB,
+                    posX + (rand.nextDouble() - 0.5) * width.toDouble(),
+                    posY + rand.nextDouble() * height.toDouble(),
+                    posZ + (rand.nextDouble() - 0.5) * width.toDouble(),
+                    d0,
+                    d1,
+                    d2
+                )
             }
         }
     }

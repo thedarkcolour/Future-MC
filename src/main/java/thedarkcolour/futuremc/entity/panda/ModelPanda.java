@@ -49,9 +49,9 @@ public class ModelPanda extends ModelQuadruped {
     @Override
     public void setLivingAnimations(EntityLivingBase entityLiving, float limbSwing, float limbSwingAmount, float partialTickTime) {
         super.setLivingAnimations(entityLiving, limbSwing, limbSwingAmount, partialTickTime);
-        this.field_217164_l = ((EntityPanda)entityLiving).func_213561_v(partialTickTime);
-        this.field_217165_m = ((EntityPanda)entityLiving).func_213583_w(partialTickTime);
-        this.field_217166_n = entityLiving.isChild() ? 0.0F : ((EntityPanda)entityLiving).func_213591_x(partialTickTime);
+        this.field_217164_l = ((EntityPanda) entityLiving).func_213561_v(partialTickTime);
+        this.field_217165_m = ((EntityPanda) entityLiving).func_213583_w(partialTickTime);
+        this.field_217166_n = entityLiving.isChild() ? 0.0F : ((EntityPanda) entityLiving).func_213591_x(partialTickTime);
     }
 
     @Override
@@ -75,22 +75,22 @@ public class ModelPanda extends ModelQuadruped {
 
         if (flag1) {
             if (i < 15) {
-                this.head.rotateAngleX = (-(float)Math.PI / 4F) * (float)i / 14.0F;
+                this.head.rotateAngleX = (-(float) Math.PI / 4F) * (float) i / 14.0F;
             } else if (i < 20) {
-                float f = (float)((i - 15) / 5);
-                this.head.rotateAngleX = (-(float)Math.PI / 4F) + ((float)Math.PI / 4F) * f;
+                float f = (float) ((i - 15) / 5);
+                this.head.rotateAngleX = (-(float) Math.PI / 4F) + ((float) Math.PI / 4F) * f;
             }
         }
 
         if (this.field_217164_l > 0.0F) {
             this.body.rotateAngleX = this.func_217163_a(this.body.rotateAngleX, 1.7407963F, this.field_217164_l);
-            this.head.rotateAngleX = this.func_217163_a(this.head.rotateAngleX, ((float)Math.PI / 2F), this.field_217164_l);
+            this.head.rotateAngleX = this.func_217163_a(this.head.rotateAngleX, ((float) Math.PI / 2F), this.field_217164_l);
             this.leg1.rotateAngleZ = -0.27079642F;
             this.leg2.rotateAngleZ = 0.27079642F;
             this.leg3.rotateAngleZ = 0.5707964F;
             this.leg4.rotateAngleZ = -0.5707964F;
             if (flag2) {
-                this.head.rotateAngleX = ((float)Math.PI / 2F) + 0.2F * MathHelper.sin(ageInTicks * 0.6F);
+                this.head.rotateAngleX = ((float) Math.PI / 2F) + 0.2F * MathHelper.sin(ageInTicks * 0.6F);
                 this.leg3.rotateAngleX = -0.4F - 0.2F * MathHelper.sin(ageInTicks * 0.6F);
                 this.leg4.rotateAngleX = -0.4F - 0.2F * MathHelper.sin(ageInTicks * 0.6F);
             }
@@ -112,7 +112,7 @@ public class ModelPanda extends ModelQuadruped {
             this.leg2.rotateAngleX = 0.6F * MathHelper.sin(ageInTicks * 0.15F);
             this.leg3.rotateAngleX = 0.3F * MathHelper.sin(ageInTicks * 0.25F);
             this.leg4.rotateAngleX = -0.3F * MathHelper.sin(ageInTicks * 0.25F);
-            this.head.rotateAngleX = this.func_217163_a(this.head.rotateAngleX, ((float)Math.PI / 2F), this.field_217165_m);
+            this.head.rotateAngleX = this.func_217163_a(this.head.rotateAngleX, ((float) Math.PI / 2F), this.field_217165_m);
         }
 
         if (this.field_217166_n > 0.0F) {
@@ -127,12 +127,12 @@ public class ModelPanda extends ModelQuadruped {
     protected float func_217163_a(float p_217163_1_, float p_217163_2_, float p_217163_3_) {
         float f;
         f = p_217163_2_ - p_217163_1_;
-        while (f < -(float)Math.PI) {
+        while (f < -(float) Math.PI) {
             f += ((float) Math.PI * 2F);
         }
 
-        while(f >= (float)Math.PI) {
-            f -= ((float)Math.PI * 2F);
+        while (f >= (float) Math.PI) {
+            f -= ((float) Math.PI * 2F);
         }
 
         return p_217163_1_ + p_217163_3_ * f;

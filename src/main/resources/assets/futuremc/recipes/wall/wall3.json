@@ -1,21 +1,17 @@
 {
     "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
+    "pattern": [
         "   ",
         "aaa",
         "aaa"
     ],
-    "key":
-    {
-        "a":
-        {
+    "key": {
+        "a": {
             "item": "minecraft:stone",
             "data": 1
         }
     },
-    "result":
-    {
+    "result": {
         "item": "granite_wall",
         "count": 6
     }

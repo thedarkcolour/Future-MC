@@ -13,20 +13,19 @@ import net.minecraft.potion.PotionUtils
 import net.minecraft.util.NonNullList
 import net.minecraft.world.World
 import net.minecraftforge.fml.common.registry.ForgeRegistries
-import thedarkcolour.core.item.Modeled
-import thedarkcolour.core.util.make
+import thedarkcolour.core.util.setItemModel
 import thedarkcolour.core.util.stack
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.init.FItems
+import thedarkcolour.futuremc.registry.FItems
 
-class ItemSuspiciousStew : ItemFood(6, 0.6f, false), Modeled {
+class ItemSuspiciousStew : ItemFood(6, 0.6f, false) {
     init {
         setMaxStackSize(1)
         setRegistryName("suspicious_stew")
         translationKey = "${FutureMC.ID}.suspicious_stew"
         if (!FConfig.useVanillaCreativeTabs) creativeTab = FutureMC.TAB
-        addModel()
+        setItemModel(this, 0)
     }
 
     override fun onItemUseFinish(stack: ItemStack, worldIn: World, entityLiving: EntityLivingBase): ItemStack {
@@ -76,13 +75,19 @@ class ItemSuspiciousStew : ItemFood(6, 0.6f, false), Modeled {
     }
 
     companion object {
-        fun createRecipe(flower: ItemStack, effect: PotionEffect) {
-            val r = ShapelessRecipes("", PotionUtils.appendEffects(FItems.SUSPICIOUS_STEW.stack, listOf(effect)), make(NonNullList.create<Ingredient>()) {
-                it.addAll(arrayOf(
-                        Ingredient.fromStacks(ItemStack(Blocks.BROWN_MUSHROOM)),
-                        Ingredient.fromStacks(ItemStack(Blocks.RED_MUSHROOM)),
-                        Ingredient.fromStacks(ItemStack(Items.BOWL)), Ingredient.fromStacks(flower)))
-            })
+        fun addRecipe(flower: ItemStack, effect: PotionEffect) {
+            val r = ShapelessRecipes(
+                "",
+                PotionUtils.appendEffects(FItems.SUSPICIOUS_STEW.stack, listOf(effect)),
+                NonNullList.create<Ingredient>().also {
+                    it.addAll(
+                        arrayOf(
+                            Ingredient.fromStacks(ItemStack(Blocks.BROWN_MUSHROOM)),
+                            Ingredient.fromStacks(ItemStack(Blocks.RED_MUSHROOM)),
+                            Ingredient.fromStacks(ItemStack(Items.BOWL)), Ingredient.fromStacks(flower)
+                        )
+                    )
+                })
             ForgeRegistries.RECIPES.register(r.setRegistryName("futuremc:suspicious_stew_${flower.item.registryName!!.path}"))
         }
     }

@@ -13,5 +13,5 @@ class TextComponentStringHolder(var text: String) : TextComponentBase() {
         return copy
     }
 
-    override fun getUnformattedComponentText(): String = text
+    override fun getUnformattedComponentText() = text
 }

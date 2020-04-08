@@ -4,7 +4,11 @@
         "model": "futuremc:cartography_table"
     },
     "variants": {
-        "normal": [{}],
-        "inventory": [{}]
+        "normal": [
+            {}
+        ],
+        "inventory": [
+            {}
+        ]
     }
 }

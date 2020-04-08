@@ -21,7 +21,17 @@ import thedarkcolour.futuremc.FutureMC.TAB
 import thedarkcolour.futuremc.config.FConfig
 
 class BlockGrindstone : BlockBase("Grindstone") {
-    override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+    override fun onBlockActivated(
+        worldIn: World,
+        pos: BlockPos,
+        state: IBlockState,
+        playerIn: EntityPlayer,
+        hand: EnumHand,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float
+    ): Boolean {
         return if (worldIn.isRemote) {
             true
         } else {
@@ -61,40 +71,52 @@ class BlockGrindstone : BlockBase("Grindstone") {
     override fun getStateFromMeta(meta: Int): IBlockState {
         return when (meta) {
             1 -> {
-                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.FLOOR).withProperty(FACING, EnumFacing.EAST)
+                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.FLOOR)
+                    .withProperty(FACING, EnumFacing.EAST)
             }
             2 -> {
-                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.FLOOR).withProperty(FACING, EnumFacing.SOUTH)
+                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.FLOOR)
+                    .withProperty(FACING, EnumFacing.SOUTH)
             }
             3 -> {
-                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.FLOOR).withProperty(FACING, EnumFacing.WEST)
+                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.FLOOR)
+                    .withProperty(FACING, EnumFacing.WEST)
             }
             4 -> {
-                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.WALL).withProperty(FACING, EnumFacing.NORTH)
+                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.WALL)
+                    .withProperty(FACING, EnumFacing.NORTH)
             }
             5 -> {
-                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.WALL).withProperty(FACING, EnumFacing.EAST)
+                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.WALL)
+                    .withProperty(FACING, EnumFacing.EAST)
             }
             6 -> {
-                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.WALL).withProperty(FACING, EnumFacing.SOUTH)
+                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.WALL)
+                    .withProperty(FACING, EnumFacing.SOUTH)
             }
             7 -> {
-                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.WALL).withProperty(FACING, EnumFacing.WEST)
+                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.WALL)
+                    .withProperty(FACING, EnumFacing.WEST)
             }
             8 -> {
-                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.CEILING).withProperty(FACING, EnumFacing.NORTH)
+                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.CEILING)
+                    .withProperty(FACING, EnumFacing.NORTH)
             }
             9 -> {
-                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.CEILING).withProperty(FACING, EnumFacing.EAST)
+                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.CEILING)
+                    .withProperty(FACING, EnumFacing.EAST)
             }
             10 -> {
-                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.CEILING).withProperty(FACING, EnumFacing.SOUTH)
+                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.CEILING)
+                    .withProperty(FACING, EnumFacing.SOUTH)
             }
             11 -> {
-                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.CEILING).withProperty(FACING, EnumFacing.WEST)
+                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.CEILING)
+                    .withProperty(FACING, EnumFacing.WEST)
             }
             else -> {
-                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.FLOOR).withProperty(FACING, EnumFacing.NORTH)
+                getBlockState().baseState.withProperty(ATTACHMENT, EnumAttachment.FLOOR)
+                    .withProperty(FACING, EnumFacing.NORTH)
             }
         }
     }
@@ -128,7 +150,10 @@ class BlockGrindstone : BlockBase("Grindstone") {
         }
     }
 
-    override fun getStateForPlacement(worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState {
+    override fun getStateForPlacement(
+        worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float,
+        hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase
+    ): IBlockState {
         val attachment = EnumAttachment.getFromFacing(facing)
         var finalFacing = placer.horizontalFacing
         if (attachment == EnumAttachment.WALL) {
@@ -145,19 +170,19 @@ class BlockGrindstone : BlockBase("Grindstone") {
         return false
     }
 
-    override fun getBlockFaceShape(worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing): BlockFaceShape {
+    override fun getBlockFaceShape(
+        worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing
+    ): BlockFaceShape {
         return BlockFaceShape.UNDEFINED
     }
 
-    override fun isFullCube(state: IBlockState): Boolean {
-        return false
-    }
+    override fun isFullCube(state: IBlockState) = false
 
     companion object {
         private val ATTACHMENT = PropertyEnum.create("face", EnumAttachment::class.java)
         private val FACING = BlockHorizontal.FACING
 
-        fun createBoundingBox(attachment: EnumAttachment?, facing: EnumFacing?): AxisAlignedBB? {
+        fun createBoundingBox(attachment: EnumAttachment, facing: EnumFacing): AxisAlignedBB? {
             val floorX = makeAABB(2.0, 4.0, 4.0, 14.0, 16.0, 12.0)
             val floorZ = makeAABB(4.0, 4.0, 2.0, 12.0, 16.0, 14.0)
             val ceilingX = makeAABB(2.0, 0.0, 4.0, 14.0, 12.0, 12.0)
@@ -167,59 +192,32 @@ class BlockGrindstone : BlockBase("Grindstone") {
             val wallSouth = makeAABB(4.0, 2.0, 4.0, 12.0, 14.0, 16.0)
             val wallEast = makeAABB(4.0, 2.0, 4.0, 16.0, 14.0, 12.0)
 
-            when (attachment) {
+            return when (attachment) {
                 EnumAttachment.FLOOR -> {
-                    run {
-                        when (facing) {
-                            EnumFacing.NORTH, EnumFacing.SOUTH -> return floorZ
-                            EnumFacing.EAST, EnumFacing.WEST -> return floorX
-                            else -> FULL_BLOCK_AABB
-                        }
-                    }
-                    run {
-                        when (facing) {
-                            EnumFacing.EAST -> return wallEast
-                            EnumFacing.WEST -> return wallWest
-                            EnumFacing.NORTH -> return wallNorth
-                            EnumFacing.SOUTH -> return wallSouth
-                            else -> FULL_BLOCK_AABB
-                        }
-                    }
-                    run {
-                        when (facing) {
-                            EnumFacing.NORTH, EnumFacing.SOUTH -> return ceilingZ
-                            EnumFacing.EAST, EnumFacing.WEST -> return ceilingX
-                            else -> FULL_BLOCK_AABB
-                        }
+                    when (facing) {
+                        EnumFacing.NORTH, EnumFacing.SOUTH -> floorZ
+                        EnumFacing.EAST, EnumFacing.WEST -> floorX
+                        else -> FULL_BLOCK_AABB
                     }
                 }
                 EnumAttachment.WALL -> {
-                    run {
-                        when (facing) {
-                            EnumFacing.EAST -> return wallEast
-                            EnumFacing.WEST -> return wallWest
-                            EnumFacing.NORTH -> return wallNorth
-                            EnumFacing.SOUTH -> return wallSouth
-                            else -> FULL_BLOCK_AABB
-                        }
+                    when (facing) {
+                        EnumFacing.EAST -> wallEast
+                        EnumFacing.WEST -> wallWest
+                        EnumFacing.NORTH -> wallNorth
+                        EnumFacing.SOUTH -> wallSouth
+                        else -> FULL_BLOCK_AABB
                     }
-                    run {
-                        when (facing) {
-                            EnumFacing.NORTH, EnumFacing.SOUTH -> return ceilingZ
-                            EnumFacing.EAST, EnumFacing.WEST -> return ceilingX
-                            else -> FULL_BLOCK_AABB
-                        }
-                    }
+
                 }
                 EnumAttachment.CEILING -> {
                     when (facing) {
-                        EnumFacing.NORTH, EnumFacing.SOUTH -> return ceilingZ
-                        EnumFacing.EAST, EnumFacing.WEST -> return ceilingX
+                        EnumFacing.NORTH, EnumFacing.SOUTH -> ceilingZ
+                        EnumFacing.EAST, EnumFacing.WEST -> ceilingX
                         else -> FULL_BLOCK_AABB
                     }
                 }
             }
-            return NULL_AABB
         }
     }
 

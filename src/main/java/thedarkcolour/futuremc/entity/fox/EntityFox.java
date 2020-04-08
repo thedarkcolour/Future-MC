@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.entity.fox;
 
-public class EntityFox {}/*extends EntityAnimal {
+public class EntityFox {
+}/*extends EntityAnimal {
     private static final DataParameter<Integer> FOX_TYPE = EntityDataManager.createKey(EntityFox.class, DataSerializers.VARINT);
     private static final DataParameter<Byte> FOX_FLAGS = EntityDataManager.createKey(EntityFox.class, DataSerializers.BYTE);
     private static final DataParameter<Optional<UUID>> TRUSTED_UUID_SECONDARY = EntityDataManager.createKey(EntityFox.class, DataSerializers.OPTIONAL_UNIQUE_ID);

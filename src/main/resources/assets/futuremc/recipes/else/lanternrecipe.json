@@ -1,24 +1,19 @@
 {
     "type": "minecraft:crafting_shaped",
-    "pattern":
-    [
+    "pattern": [
         "xxx",
         "xax",
         "xxx"
     ],
-    "key":
-    {
-        "x":
-        {
+    "key": {
+        "x": {
             "item": "minecraft:iron_nugget"
         },
-        "a":
-        {
+        "a": {
             "item": "minecraft:torch"
         }
     },
-    "result":
-    {
+    "result": {
         "item": "lantern"
     }
 }

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 /**
- * Extremely sophisticated list.
+ * Extremely sophisticated data structure based on {@link java.util.ArrayList}.
  */
 public final class PredicateArrayList<E> extends ArrayList<E> {
     private final BiPredicate<E, E> isEquivalent;
@@ -15,7 +15,7 @@ public final class PredicateArrayList<E> extends ArrayList<E> {
     }
 
     public boolean containsEquivalent(E obj) {
-        for (E o: this) {
+        for (E o : this) {
             if (isEquivalent.test(o, obj)) {
                 return true;
             }

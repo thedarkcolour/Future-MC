@@ -13,7 +13,14 @@ class RenderPufferfish(manager: RenderManager) : RenderLiving<EntityPufferfish>(
     private val mediumModel = ModelMediumPufferfish()
     private val largeModel = ModelLargePufferfish()
 
-    override fun doRender(entity: EntityPufferfish, x: Double, y: Double, z: Double, entityYaw: Float, partialTicks: Float) {
+    override fun doRender(
+        entity: EntityPufferfish,
+        x: Double,
+        y: Double,
+        z: Double,
+        entityYaw: Float,
+        partialTicks: Float
+    ) {
         val i = entity.puffState
         if (i != puffState) {
             mainModel = when (i) {
@@ -29,7 +36,12 @@ class RenderPufferfish(manager: RenderManager) : RenderLiving<EntityPufferfish>(
         super.doRender(entity, x, y, z, entityYaw, partialTicks)
     }
 
-    override fun applyRotations(entityLiving: EntityPufferfish, ageInTicks: Float, rotationYaw: Float, partialTicks: Float) {
+    override fun applyRotations(
+        entityLiving: EntityPufferfish,
+        ageInTicks: Float,
+        rotationYaw: Float,
+        partialTicks: Float
+    ) {
         GlStateManager.translate(0.0F, cos(ageInTicks * 0.05F) * 0.08F, 0.0F)
         super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks)
     }

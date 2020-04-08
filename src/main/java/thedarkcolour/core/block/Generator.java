@@ -29,7 +29,7 @@ import java.util.List;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public final class Generator {
     public static void setup() {
-        if (FutureMC.INSTANCE.getDEBUG()) {
+        if (FutureMC.DEBUG) {
             generateFolders();
         }
     }
@@ -62,7 +62,7 @@ public final class Generator {
             }
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            for (ResourceLocation key : Util.jmake(new HashSet<>(registry.getKeys()), keys -> keys.removeIf(key -> !(key.getNamespace().equals("minecraftfuture") || key.getNamespace().equals("minecraftfuture"))))) {
+            for (ResourceLocation key : Util.make(new HashSet<>(registry.getKeys()), keys -> keys.removeIf(key -> !(key.getNamespace().equals("minecraftfuture") || key.getNamespace().equals("minecraftfuture"))))) {
                 writer.write(key.toString());
                 writer.newLine();
             }
@@ -93,7 +93,7 @@ public final class Generator {
             }
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            for (ResourceLocation key : Util.jmake(new HashSet<>(registry.getKeys()), keys -> keys.removeIf(key -> !(key.getNamespace().equals("minecraftfuture") || key.getNamespace().equals("minecraftfuture"))))) {
+            for (ResourceLocation key : Util.make(new HashSet<>(registry.getKeys()), keys -> keys.removeIf(key -> !(key.getNamespace().equals("minecraftfuture") || key.getNamespace().equals("minecraftfuture"))))) {
                 writer.write(key.toString() + ", " + key.toString().replaceFirst("minecraftfuture", "futuremc"));
                 writer.newLine();
             }
@@ -105,7 +105,7 @@ public final class Generator {
 
     @SuppressWarnings("StringConcatenationInLoop")
     public static void generateBlockStates() {
-        for (Block block : Util.jmake(Lists.newArrayList(ForgeRegistries.BLOCKS.getValues()), list -> list.removeIf(block -> !block.getRegistryName().getNamespace().equals("minecraftfuture")))) {
+        for (Block block : Util.make(Lists.newArrayList(ForgeRegistries.BLOCKS.getValues()), list -> list.removeIf(block -> !block.getRegistryName().getNamespace().equals("minecraftfuture")))) {
             File json = new File("config/future-mc/generated/blockstates/" + block.getRegistryName().getPath() + ".json");
 
             try {

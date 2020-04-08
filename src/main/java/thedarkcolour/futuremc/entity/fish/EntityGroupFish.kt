@@ -44,8 +44,13 @@ abstract class EntityGroupFish(worldIn: World) : EntityFish(worldIn) {
                 else -> {
                     randomInt = this.genInt(fish)
                     val predicate = { fish: EntityGroupFish? -> fish!!.canGroupGrow() || !fish.hasGroupLeader() }
-                    val list = fish.world.getEntitiesWithinAABB(fish::class.java, fish.entityBoundingBox.grow(8.0, 8.0, 8.0), predicate::invoke)
-                    val groupFish: EntityGroupFish = list.stream().filter(EntityGroupFish::canGroupGrow).findAny().orElse(fish)
+                    val list = fish.world.getEntitiesWithinAABB(
+                        fish::class.java,
+                        fish.entityBoundingBox.grow(8.0, 8.0, 8.0),
+                        predicate::invoke
+                    )
+                    val groupFish: EntityGroupFish =
+                        list.stream().filter(EntityGroupFish::canGroupGrow).findAny().orElse(fish)
                     groupFish.acceptMembers(list.stream().filter { !it.hasGroupLeader() })
                     fish.hasGroupLeader()
                 }

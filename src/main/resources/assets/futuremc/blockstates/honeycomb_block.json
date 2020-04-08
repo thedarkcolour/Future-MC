@@ -4,7 +4,11 @@
         "model": "futuremc:honeycomb_block"
     },
     "variants": {
-        "normal": [{}],
-        "inventory": [{}]
+        "normal": [
+            {}
+        ],
+        "inventory": [
+            {}
+        ]
     }
 }

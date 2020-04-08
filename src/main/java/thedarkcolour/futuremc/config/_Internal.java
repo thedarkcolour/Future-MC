@@ -2,9 +2,7 @@ package thedarkcolour.futuremc.config;
 
 import net.minecraftforge.common.config.Config;
 
-import static net.minecraftforge.common.config.Config.Comment;
-import static net.minecraftforge.common.config.Config.Name;
-import static net.minecraftforge.common.config.Config.RequiresMcRestart;
+import static net.minecraftforge.common.config.Config.*;
 
 @Config(modid = "futuremc", name = "futuremc/futuremc")
 public final class _Internal {
@@ -14,6 +12,8 @@ public final class _Internal {
     public static final FConfig.VillageAndPillage villageAndPillage = new FConfig.VillageAndPillage();
     @Name("Buzzy Bees")
     public static final FConfig.BuzzyBees buzzyBees = new FConfig.BuzzyBees();
+    @Name("Nether Update")
+    public static final FConfig.NetherUpdate netherUpdate = new FConfig.NetherUpdate();
     @Name("Use Vanilla Creative Tabs")
     @Comment("Whether this mod's items are displayed in a separate creative tab or sorted into their Vanilla tabs.")
     @RequiresMcRestart

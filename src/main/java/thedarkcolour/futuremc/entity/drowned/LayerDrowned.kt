@@ -8,7 +8,16 @@ import thedarkcolour.futuremc.FutureMC
 class LayerDrowned(private val renderer: RenderDrowned) : LayerRenderer<EntityDrowned> {
     private val model = ModelDrowned()
 
-    override fun doRenderLayer(entity: EntityDrowned, limbSwing: Float, limbSwingAmount: Float, partialTicks: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float) {
+    override fun doRenderLayer(
+        entity: EntityDrowned,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        partialTicks: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float,
+        scale: Float
+    ) {
         if (!entity.isInvisible) {
             renderer.mainModel.setModelAttributes(model)
             model.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTicks)

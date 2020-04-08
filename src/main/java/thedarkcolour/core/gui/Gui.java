@@ -9,36 +9,33 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import thedarkcolour.futuremc.FutureMC;
-import thedarkcolour.futuremc.container.ContainerBarrel;
-import thedarkcolour.futuremc.container.ContainerFurnaceAdvanced;
-import thedarkcolour.futuremc.container.ContainerGrindstone;
-import thedarkcolour.futuremc.container.ContainerLoom;
-import thedarkcolour.futuremc.container.ContainerStonecutter;
+import thedarkcolour.futuremc.container.*;
 
 /**
  * @author TheDarkColour
- *
+ * <p>
  * Uses enum constants for GUIs instead of IDs.
  * Simplifies opening and adding new GUIs.
- *
+ * <p>
  * Call {@link Gui#open(EntityPlayer, World, BlockPos)} on the desired GUI to open it.
- *
  * @see thedarkcolour.futuremc.block.BlockBarrel#onBlockActivated
  */
 public enum Gui {
-    BARREL         (ContainerBarrel::new            ),
-    FURNACE        (ContainerFurnaceAdvanced::new   ),
-    GRINDSTONE     (ContainerGrindstone::new        ),
-    STONECUTTER    (ContainerStonecutter::new       ),
-    LOOM           (ContainerLoom::new              );
+    BARREL(ContainerBarrel::new),
+    FURNACE(ContainerFurnaceAdvanced::new),
+    GRINDSTONE(ContainerGrindstone::new),
+    STONECUTTER(ContainerStonecutter::new),
+    LOOM(ContainerLoom::new),
+    SMITHING_TABLE(ContainerSmithingTable::new),
+    CARTOGRAPHY_TABLE(ContainerCartographyTable::new);
 
-    private final ContainerSupplier<? extends Container> container;
+    private final ContainerSupplier<? extends ContainerBase> container;
 
-    <T extends Container> Gui(ContainerSupplier<T> container) {
+    <T extends ContainerBase> Gui(ContainerSupplier<T> container) {
         this.container = container;
     }
 
-    <T extends Container> Gui(TEContainerSupplier<T> container) {
+    <T extends ContainerBase> Gui(TEContainerSupplier<T> container) {
         this.container = container;
     }
 
@@ -50,11 +47,11 @@ public enum Gui {
         return getContainer(playerInv, te).getGuiContainer();
     }
 
-    public Container getContainer(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
+    public ContainerBase getContainer(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
         return container.get(playerInv, worldIn, pos);
     }
 
-    public Container getContainer(InventoryPlayer playerInv, TileEntity te) {
+    public ContainerBase getContainer(InventoryPlayer playerInv, TileEntity te) {
         return container.get(playerInv, te);
     }
 
@@ -68,7 +65,7 @@ public enum Gui {
 
     private static class Handler implements IGuiHandler {
         @Override
-        public Container getServerGuiElement(int ID, EntityPlayer player, World worldIn, int x, int y, int z) {
+        public ContainerBase getServerGuiElement(int ID, EntityPlayer player, World worldIn, int x, int y, int z) {
             BlockPos pos = new BlockPos(x, y, z);
             Gui gui = values()[ID];
 
@@ -92,12 +89,12 @@ public enum Gui {
         }
     }
 
-    public static void setup() {
+    public static void registerGuiHandler() {
         NetworkRegistry.INSTANCE.registerGuiHandler(FutureMC.INSTANCE, new Handler());
     }
 
     @FunctionalInterface
-    private interface ContainerSupplier<T extends Container> {
+    private interface ContainerSupplier<T extends ContainerBase> {
         default T get(InventoryPlayer player, TileEntity te) {
             return null;
         }
@@ -106,7 +103,7 @@ public enum Gui {
     }
 
     @FunctionalInterface
-    private interface TEContainerSupplier<T extends Container> extends ContainerSupplier<T> {
+    private interface TEContainerSupplier<T extends ContainerBase> extends ContainerSupplier<T> {
         @Override
         default T get(InventoryPlayer player, World worldIn, BlockPos pos) {
             return null;

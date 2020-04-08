@@ -1,6 +1,5 @@
 package thedarkcolour.futuremc.block
 
-import net.minecraft.block.SoundType
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
@@ -16,10 +15,6 @@ import thedarkcolour.futuremc.config.FConfig
 import java.util.*
 
 class BlockWitherRose : BlockFlower("wither_rose") {
-    init {
-        soundType = SoundType.PLANT
-    }
-
     override fun randomDisplayTick(stateIn: IBlockState, worldIn: World, pos: BlockPos, rand: Random) {
         val d0 = pos.x.toDouble() + rand.nextDouble() * 0.5 + 0.2
         val d1 = pos.y.toDouble() + rand.nextDouble() * 0.3 + 0.2

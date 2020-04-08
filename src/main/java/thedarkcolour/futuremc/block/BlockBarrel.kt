@@ -22,12 +22,22 @@ import thedarkcolour.futuremc.FutureMC.TAB
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.tile.TileBarrel
 
-class BlockBarrel : BlockBase("Barrel", Material.WOOD), ITileEntityProvider {
-    override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+class BlockBarrel : BlockBase("barrel", Material.WOOD), ITileEntityProvider {
+    override fun onBlockActivated(
+        worldIn: World,
+        pos: BlockPos,
+        state: IBlockState,
+        player: EntityPlayer,
+        hand: EnumHand,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float
+    ): Boolean {
         if (worldIn.isRemote) {
             return true
         }
-        val te = worldIn.getTileEntity(pos) as? TileBarrel ?: return false
+        if (worldIn.getTileEntity(pos) !is TileBarrel) return false
         Gui.BARREL.open(player, worldIn, pos)
         return true
     }
@@ -48,12 +58,22 @@ class BlockBarrel : BlockBase("Barrel", Material.WOOD), ITileEntityProvider {
         return BlockStateContainer(this, FACING, OPEN)
     }
 
-    override fun getStateForPlacement(worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState {
+    override fun getStateForPlacement(
+        worldIn: World,
+        pos: BlockPos,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float,
+        meta: Int,
+        placer: EntityLivingBase
+    ): IBlockState {
         return defaultState.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer))
     }
 
     override fun getStateFromMeta(meta: Int): IBlockState {
-        return defaultState.withProperty(FACING, EnumFacing.byIndex(if (meta > 5) meta - 6 else meta)).withProperty(OPEN, meta > 5)
+        return defaultState.withProperty(FACING, EnumFacing.byIndex(if (meta > 5) meta - 6 else meta))
+            .withProperty(OPEN, meta > 5)
     }
 
     override fun getMetaFromState(state: IBlockState): Int {

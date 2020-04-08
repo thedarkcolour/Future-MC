@@ -42,7 +42,13 @@ abstract class BlockNewSlab : BlockSlab(Material.ROCK) {
         return if (isDouble) 0 else if (state.getValue(HALF) == EnumBlockHalf.TOP) 1 else 0
     }
 
-    override fun getPickBlock(state: IBlockState, target: RayTraceResult, world: World, pos: BlockPos, player: EntityPlayer): ItemStack {
+    override fun getPickBlock(
+        state: IBlockState,
+        target: RayTraceResult,
+        world: World,
+        pos: BlockPos,
+        player: EntityPlayer
+    ): ItemStack {
         return ItemStack(slab)
     }
 
@@ -50,7 +56,7 @@ abstract class BlockNewSlab : BlockSlab(Material.ROCK) {
 
     override fun getTypeForItem(stack: ItemStack): Comparable<*> = BlockPurpurSlab.Variant.DEFAULT
 
-    override fun isDouble(): Boolean = this is Double
+    override fun isDouble(): Boolean = this is BlockDoubleSlab
 
     override fun getTranslationKey(meta: Int): String {
         return super.getTranslationKey()
@@ -69,7 +75,7 @@ abstract class BlockNewSlab : BlockSlab(Material.ROCK) {
         override fun isOpaqueCube(state: IBlockState): Boolean = false
     }
 
-    class Double(val variant: String) : BlockNewSlab() {
+    class BlockDoubleSlab(val variant: String) : BlockNewSlab() {
         override val slab: Item
             get() = Item.getItemFromBlock(this)
 

@@ -1,7 +1,6 @@
 package thedarkcolour.futuremc.block
 
 import net.minecraft.block.Block
-import net.minecraft.block.BlockBush
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.state.BlockFaceShape
@@ -19,28 +18,42 @@ import net.minecraft.world.World
 import thedarkcolour.core.block.BlockBase
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FSounds
 
-class BlockLantern : BlockBase("lantern", Material.IRON) {
+class BlockLantern(regName: String) : BlockBase(regName, Material.IRON) {
     init {
-        setLightLevel(1f)
+        setLightLevel(if (regName == "soul_fire_lantern") 10.0f / 15.0f else 1.0f)
         setHardness(5f)
-        soundType = Sounds.LANTERN
+        soundType = FSounds.LANTERN
         setHarvestLevel("pickaxe", 0)
         defaultState = defaultState.withProperty(HANGING, false)
         creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.DECORATIONS else FutureMC.TAB
     }
 
-    override fun getStateForPlacement(worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase, hand: EnumHand): IBlockState {
-        return if (canBlockStay(worldIn, pos)) {
-            defaultState.withProperty(HANGING, facing == EnumFacing.DOWN)
-        } else defaultState.withProperty(HANGING, isBlockInvalid(worldIn, pos.down()))
+    override fun getStateForPlacement(
+        worldIn: World,
+        pos: BlockPos,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float,
+        meta: Int,
+        placer: EntityLivingBase,
+        hand: EnumHand
+    ): IBlockState {
+        return defaultState.withProperty(HANGING, isBlockInvalid(worldIn, pos, false))
     }
 
-    private fun isBlockInvalid(world: World, blockPos: BlockPos): Boolean {
-        val state = world.getBlockState(blockPos)
+    private fun isBlockInvalid(world: World, blockPos: BlockPos, hanging: Boolean): Boolean {
+        val facing = if (hanging) {
+            EnumFacing.UP
+        } else EnumFacing.DOWN
+        val pos = blockPos.offset(facing)
+        val state = world.getBlockState(pos)
         val block = state.block
-        return block is BlockBush || world.isAirBlock(blockPos) || isPiston(state)
+        val faceShape = state.getBlockFaceShape(world, pos, facing.opposite)
+        return isExceptBlockForAttachWithPiston(block)
+                || !arrayOf(BlockFaceShape.SOLID, BlockFaceShape.CENTER_BIG, BlockFaceShape.CENTER, BlockFaceShape.CENTER_SMALL).any(faceShape::equals)
     }
 
     private fun isPiston(state: IBlockState): Boolean {
@@ -48,23 +61,25 @@ class BlockLantern : BlockBase("lantern", Material.IRON) {
     }
 
     override fun canPlaceBlockAt(worldIn: World, pos: BlockPos): Boolean {
-        return super.canPlaceBlockAt(worldIn, pos) && canBlockStay(worldIn, pos)
+        return super.canPlaceBlockAt(worldIn, pos) && canPlaceBlock(worldIn, pos)
     }
 
-    private fun canBlockStay(worldIn: World, pos: BlockPos): Boolean {
-        return !(isBlockInvalid(worldIn, pos.down()) && isBlockInvalid(worldIn, pos.up()))
+    private fun canPlaceBlock(worldIn: World, pos: BlockPos): Boolean {
+        return !(isBlockInvalid(worldIn, pos, false) && isBlockInvalid(worldIn, pos, true))
+    }
+
+    private fun isInvalidPosition(worldIn: World, pos: BlockPos, state: IBlockState): Boolean {
+        return isBlockInvalid(worldIn, pos, state.getValue(HANGING))
     }
 
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromPos: BlockPos) {
-        if (!canBlockStay(worldIn, pos)) {
+        if (isInvalidPosition(worldIn, pos, state)) {
             dropBlockAsItem(worldIn, pos, state, 0)
             worldIn.setBlockToAir(pos)
         }
     }
 
-    override fun createBlockState(): BlockStateContainer {
-        return BlockStateContainer(this, HANGING)
-    }
+    override fun createBlockState() = BlockStateContainer(this, HANGING)
 
     override fun getStateFromMeta(meta: Int): IBlockState {
         return defaultState.withProperty(HANGING, meta != 1)
@@ -74,7 +89,7 @@ class BlockLantern : BlockBase("lantern", Material.IRON) {
         return if (state.getValue(HANGING)) 1 else 0
     }
 
-    override fun hasComparatorInputOverride(state: IBlockState): Boolean = true
+    override fun hasComparatorInputOverride(state: IBlockState) = true
 
     override fun getComparatorInputOverride(blockState: IBlockState, worldIn: World, pos: BlockPos): Int {
         return if (blockState.getValue(HANGING)) 15 else 0
@@ -84,19 +99,20 @@ class BlockLantern : BlockBase("lantern", Material.IRON) {
         return if (state.getValue(HANGING)) HANGING_AABB else SITTING_AABB
     }
 
-    override fun getRenderLayer(): BlockRenderLayer = BlockRenderLayer.CUTOUT
+    override fun getRenderLayer() = BlockRenderLayer.CUTOUT
 
-    override fun getBlockFaceShape(worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing): BlockFaceShape = BlockFaceShape.UNDEFINED
+    override fun getBlockFaceShape(worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing) =
+        BlockFaceShape.UNDEFINED
 
-    override fun isFullBlock(state: IBlockState): Boolean = false
+    override fun isFullBlock(state: IBlockState) = false
 
-    override fun isNormalCube(state: IBlockState, source: IBlockAccess, pos: BlockPos): Boolean = false
+    override fun isNormalCube(state: IBlockState, source: IBlockAccess, pos: BlockPos) = false
 
-    override fun isFullCube(state: IBlockState): Boolean = false
+    override fun isFullCube(state: IBlockState) = false
 
-    override fun isOpaqueCube(state: IBlockState): Boolean = false
+    override fun isOpaqueCube(state: IBlockState) = false
 
-    override fun isTopSolid(state: IBlockState): Boolean = false
+    override fun isTopSolid(state: IBlockState) = false
 
     companion object {
         private val HANGING = PropertyBool.create("hanging")

@@ -2,7 +2,6 @@ package thedarkcolour.futuremc.block
 
 import net.minecraft.block.Block
 import net.minecraft.block.IGrowable
-import net.minecraft.block.SoundType
 import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
@@ -25,27 +24,38 @@ import net.minecraft.world.biome.Biome
 import net.minecraftforge.common.ForgeHooks
 import net.minecraftforge.common.IPlantable
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.entity.bee.EntityBee
-import thedarkcolour.futuremc.init.FBlocks.SWEET_BERRY_BUSH
-import thedarkcolour.futuremc.init.FItems.SWEET_BERRIES
+import thedarkcolour.futuremc.entity.bee.BeeEntity
+import thedarkcolour.futuremc.registry.FBlocks.SWEET_BERRY_BUSH
+import thedarkcolour.futuremc.registry.FItems.SWEET_BERRIES
 import java.util.*
 
 class BlockSweetBerryBush : BlockFlower("sweet_berry_bush"), IGrowable, IPlantable {
     init {
-        soundType = SoundType.PLANT
         defaultState = getBlockState().baseState.withProperty(AGE, 1)
         tickRandomly = true
     }
 
-    override fun createBlockState(): BlockStateContainer {
-        return BlockStateContainer(this, AGE)
-    }
+    override fun createBlockState() = BlockStateContainer(this, AGE)
 
     override fun getMetaFromState(state: IBlockState): Int {
         return state.getValue(AGE)
     }
 
-    override fun onBlockActivated(worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean {
+    override fun getStateFromMeta(meta: Int): IBlockState {
+        return defaultState.withProperty(AGE, meta.coerceAtMost(3))
+    }
+
+    override fun onBlockActivated(
+        worldIn: World,
+        pos: BlockPos,
+        state: IBlockState,
+        playerIn: EntityPlayer,
+        hand: EnumHand,
+        facing: EnumFacing,
+        hitX: Float,
+        hitY: Float,
+        hitZ: Float
+    ): Boolean {
         if (worldIn.isRemote) {
             return true
         }
@@ -77,7 +87,7 @@ class BlockSweetBerryBush : BlockFlower("sweet_berry_bush"), IGrowable, IPlantab
     }
 
     override fun onEntityCollision(worldIn: World, pos: BlockPos, state: IBlockState, entityIn: Entity) {
-        if (entityIn is EntityLivingBase && entityIn !is EntityBee) {
+        if (entityIn is EntityLivingBase && entityIn !is BeeEntity) {
             entityIn.fallDistance = 0.0f
             entityIn.motionX *= 0.800000011920929
             entityIn.motionY *= 0.75
@@ -104,19 +114,17 @@ class BlockSweetBerryBush : BlockFlower("sweet_berry_bush"), IGrowable, IPlantab
         }
     }
 
-    override fun getStateFromMeta(meta: Int): IBlockState {
-        return if (meta < 4) {
-            defaultState.withProperty(AGE, meta)
-        } else {
-            defaultState.withProperty(AGE, 0)
-        }
-    }
-
     override fun getBoundingBox(state: IBlockState, source: IBlockAccess, pos: BlockPos): AxisAlignedBB {
         return if (state.getValue(AGE) == 0) YOUNG else MATURE
     }
 
-    override fun getPickBlock(state: IBlockState, target: RayTraceResult, world: World, pos: BlockPos, player: EntityPlayer): ItemStack {
+    override fun getPickBlock(
+        state: IBlockState,
+        target: RayTraceResult,
+        world: World,
+        pos: BlockPos,
+        player: EntityPlayer
+    ): ItemStack {
         return ItemStack(SWEET_BERRIES)
     }
 

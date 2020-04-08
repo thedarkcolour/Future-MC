@@ -4,11 +4,23 @@
         "model": "futuremc:lectern"
     },
     "variants": {
-        "normal": [{}],
-        "inventory": [{}],
-        "facing=north": [{}],
-        "facing=south": [{}],
-        "facing=east":  [{}],
-        "facing=west":  [{}]
+        "normal": [
+            {}
+        ],
+        "inventory": [
+            {}
+        ],
+        "facing=north": [
+            {}
+        ],
+        "facing=south": [
+            {}
+        ],
+        "facing=east": [
+            {}
+        ],
+        "facing=west": [
+            {}
+        ]
     }
 }

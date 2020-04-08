@@ -1,0 +1,6 @@
+{
+    "parent": "block/torch",
+    "textures": {
+        "torch": "futuremc:blocks/soul_fire_torch"
+    }
+}

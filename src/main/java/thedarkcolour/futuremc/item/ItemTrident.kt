@@ -23,14 +23,19 @@ import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.enchantment.EnchantHelper
 import thedarkcolour.futuremc.entity.trident.EntityTrident
-import thedarkcolour.futuremc.init.Sounds
+import thedarkcolour.futuremc.registry.FSounds
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
 class ItemTrident : ItemModeled("Trident") {
-    override fun canDestroyBlockInCreative(world: World, pos: BlockPos, stack: ItemStack, player: EntityPlayer): Boolean {
+    override fun canDestroyBlockInCreative(
+        world: World,
+        pos: BlockPos,
+        stack: ItemStack,
+        player: EntityPlayer
+    ): Boolean {
         return false
     }
 
@@ -52,7 +57,14 @@ class ItemTrident : ItemModeled("Trident") {
                         stack.damageItem(1, entityLiving)
                         if (j == 0) {
                             val trident = EntityTrident(worldIn, entityLiving, stack)
-                            trident.shoot(entityLiving, entityLiving.rotationPitch, entityLiving.rotationYaw, 0.0f, 2.5f + j.toFloat() * 0.5f, 1.0f)
+                            trident.shoot(
+                                entityLiving,
+                                entityLiving.rotationPitch,
+                                entityLiving.rotationYaw,
+                                0.0f,
+                                2.5f + j.toFloat() * 0.5f,
+                                1.0f
+                            )
                             if (entityLiving.capabilities.isCreativeMode) {
                                 trident.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY
                             }
@@ -62,7 +74,7 @@ class ItemTrident : ItemModeled("Trident") {
                             }
                         }
                     }
-                    var sound = Sounds.TRIDENT_THROW
+                    var sound = FSounds.TRIDENT_THROW
                     if (j > 0) {
                         val f = entityLiving.rotationYaw
                         val f1 = entityLiving.rotationPitch
@@ -77,20 +89,29 @@ class ItemTrident : ItemModeled("Trident") {
                         entityLiving.addVelocity(f2.toDouble(), f3.toDouble(), f4.toDouble())
                         sound = when {
                             j >= 3 -> {
-                                Sounds.TRIDENT_RIPTIDE_III
+                                FSounds.TRIDENT_RIPTIDE_III
                             }
                             j == 2 -> {
-                                Sounds.TRIDENT_RIPTIDE_II
+                                FSounds.TRIDENT_RIPTIDE_II
                             }
                             else -> {
-                                Sounds.TRIDENT_RIPTIDE_I
+                                FSounds.TRIDENT_RIPTIDE_I
                             }
                         }
                         if (entityLiving.onGround) {
                             entityLiving.move(MoverType.SELF, 0.0, 1.1999999, 0.0)
                         }
                     }
-                    worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, sound, SoundCategory.PLAYERS, 1.0f, 1.0f)
+                    worldIn.playSound(
+                        null,
+                        entityLiving.posX,
+                        entityLiving.posY,
+                        entityLiving.posZ,
+                        sound,
+                        SoundCategory.PLAYERS,
+                        1.0f,
+                        1.0f
+                    )
                 }
             }
         }
@@ -117,7 +138,13 @@ class ItemTrident : ItemModeled("Trident") {
         return stack.maxItemUseDuration - timeLeft
     }
 
-    override fun onBlockDestroyed(stack: ItemStack, worldIn: World, state: IBlockState, pos: BlockPos, entityLiving: EntityLivingBase): Boolean {
+    override fun onBlockDestroyed(
+        stack: ItemStack,
+        worldIn: World,
+        state: IBlockState,
+        pos: BlockPos,
+        entityLiving: EntityLivingBase
+    ): Boolean {
         if (state.getBlockHardness(worldIn, pos).toDouble() != 0.0) {
             stack.damageItem(2, entityLiving)
         }
@@ -127,8 +154,14 @@ class ItemTrident : ItemModeled("Trident") {
     override fun getItemAttributeModifiers(equipmentSlot: EntityEquipmentSlot): Multimap<String, AttributeModifier> {
         val multimap = super.getItemAttributeModifiers(equipmentSlot)
         if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.name, AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 8.0, 0))
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.name, AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (-2.9f).toDouble(), 0))
+            multimap.put(
+                SharedMonsterAttributes.ATTACK_DAMAGE.name,
+                AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 8.0, 0)
+            )
+            multimap.put(
+                SharedMonsterAttributes.ATTACK_SPEED.name,
+                AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (-2.9f).toDouble(), 0)
+            )
         }
         return multimap
     }

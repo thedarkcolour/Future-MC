@@ -16,10 +16,10 @@ import thedarkcolour.futuremc.recipe.campfire.CampfireRecipes;
 public final class Campfire {
     @ZenMethod
     public static void addRecipe(IItemStack input, IItemStack output, int duration) {
-        if (!CampfireRecipes.INSTANCE.getRecipe(CraftTweakerMC.getItemStack(input)).isPresent()) {
+        if (CampfireRecipes.INSTANCE.getRecipe(CraftTweakerMC.getItemStack(input)) == null) {
             CraftTweakerAPI.apply(new AddRecipe(input, output, duration));
         } else {
-            FutureMC.INSTANCE.getLOGGER().log(Level.WARN, "Failed to add duplicate recipe for " + input.getDefinition().getId());
+            FutureMC.LOGGER.log(Level.WARN, "Cannot add duplicate recipe for " + input.getDefinition().getId());
         }
     }
 
@@ -48,7 +48,7 @@ public final class Campfire {
 
     @ZenMethod
     public static void removeRecipe(IItemStack stack) {
-        if (CampfireRecipes.INSTANCE.getRecipe(CraftTweakerMC.getItemStack(stack)).isPresent()) {
+        if (CampfireRecipes.INSTANCE.getRecipe(CraftTweakerMC.getItemStack(stack)) != null) {
             CraftTweakerAPI.apply(new RemoveRecipe(stack));
         }
     }
