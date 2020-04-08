@@ -1,6 +1,0 @@
-{
-    "parent": "futuremc:item/slab_inv",
-    "textures": {
-        "tex": "blocks/stone"
-    }
-}

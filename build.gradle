@@ -1,60 +1,80 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://maven.tterrag.com/' }
+        maven { url = 'https://plugins.gradle.org/m2/' }
         jcenter()
         mavenCentral()
-        mavenLocal()
-        maven { url = "https://files.minecraftforge.net/maven" }
-        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url = "https://plugins.gradle.org/m2/" }
-        maven { url = 'https://dist.creeper.host/Sponge/maven' }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.70"
+        //noinspection SpellCheckingInspection
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        //noinspection SpellCheckingInspection
         classpath group: 'com.wynprice.cursemaven', name: 'CurseMaven', version: '2.1.1'
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: 'kotlin'
+apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.wynprice.cursemaven'
 
-version = "1.12.2-0.2.01"
-group = "thedarkcolour.futuremc"
-archivesBaseName = "future-mc"
+version = '1.0'
+group = 'thedarkcolour' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'futuremc'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = compileKotlin.kotlinOptions.jvmTarget = '1.8'
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    version = "1.12.2-14.23.5.2847"
-    runDir = "run"
+    mappings channel: 'snapshot', version: '20200213-mixed-1.15.2'
 
-    mappings = "stable_39"
-}
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
-jar {
-    manifest.attributes(
-            "FMLCorePlugin": "thedarkcolour.futuremc.asm.CoreLoader",
-            "FMLCorePluginContainsFMLMod": "true",
-            "FMLAT": "futuremc_at.cfg"
-    )
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                futuremc {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                futuremc {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'futuremc', '--all', '--output', file('src/generated/resources/')
+
+            mods {
+                futuremc {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
 }
 
 repositories {
     maven {
-        name = "CraftTweaker/Quark/AutoRegLib maven"
-        url = "http://maven.blamejared.com"
-    }
-    maven {
-        name = "JEI maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        name = "Forgelin maven"
-        url = "http://maven.shadowfacts.net/"
-    }
-    maven {
-        name "DynamicTrees maven"
-        url "https://minecraft.curseforge.com/api/maven/"
+        name = "Yarn Mappings"
+        url = "https://maven.tterrag.com/"
     }
     maven {
         name = "CurseForge"
@@ -63,28 +83,56 @@ repositories {
 }
 
 dependencies {
-    implementation "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548"
-    implementation "mezz.jei:jei_1.12.2:4.15.0.+"
-    implementation "net.shadowfacts:Forgelin:1.8.4"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.70"
-    implementation "vazkii.quark:Quark:r1.6-179.4"
-    implementation "vazkii.autoreglib:AutoRegLib:1.3-32.+"
-    implementation "curse.maven:dynamic-trees:2870267"
-    implementation "curse.maven:dynamic-trees-sources:2870269"
+    minecraft 'net.minecraftforge:forge:1.15.2-31.1.14'
+
+    fg.deobf (implementation ('curse.maven:biomes-o-plenty:2912265')) //
+    fg.deobf (implementation ('curse.maven:biomes-o-plenty-source:2912266')) //
 }
 
-processResources {
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+jar {
+    manifest {
+        attributes([
+                'Specification-Title': 'futuremc',
+                'Specification-Vendor': 'thedarkcolour',
+                'Specification-Version': '1', // We are version 1 of ourselves
+                'Implementation-Title': project.name,
+                'Implementation-Version': "${version}",
+                'Implementation-Vendor' :'thedarkcolour',
+                'Implementation-Timestamp': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ')
+        ])
+    }
+}
 
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
+buildscript {
+    dependencies {
+        // Make sure to use the correct version
+        //noinspection DifferentKotlinGradleVersion
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.70'
+    }
+}
 
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+apply plugin: 'kotlin'
+
+repositories {
+    maven {
+        name = 'kotlinforforge'
+        url = 'https://thedarkcolour.github.io/KotlinForForge/'
+    }
+}
+
+dependencies {
+    // Uses the latest version of KotlinForForge
+    implementation 'thedarkcolour:kotlinforforge:1.1.0'
+}
+
+compileKotlin {
+    // Needed if you use Forge.kt
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+    // Required to run in dev environment
+    copy {
+        from "$buildDir/classes/kotlin/main" into "$buildDir/classes/java/main"
     }
 }

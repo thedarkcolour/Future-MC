@@ -1,6 +1,0 @@
-{
-    "parent": "futuremc:block/wall_inventory",
-    "textures": {
-        "wall": "blocks/red_sandstone_normal"
-    }
-}

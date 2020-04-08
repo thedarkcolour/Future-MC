@@ -20,6 +20,6 @@ build
 # other
 eclipse
 run
-classes
-*.jar
-*.zip
+
+# Files from Forge MDK
+forge*changelog.txt

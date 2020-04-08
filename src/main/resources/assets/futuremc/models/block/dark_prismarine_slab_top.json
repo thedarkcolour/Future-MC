@@ -1,6 +1,0 @@
-{
-    "parent": "futuremc:block/slab_top",
-    "textures": {
-        "tex": "blocks/prismarine_dark"
-    }
-}

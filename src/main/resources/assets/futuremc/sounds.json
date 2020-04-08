@@ -1,497 +1,383 @@
 {
-    "bamboo_place": {
-        "subtitle": "futuremc.subtitles.bamboo_place",
+    "netherite_block_break": {
+        "subtitle": "futuremc.subtitles.netherite_block_break",
         "sounds": [
-            "futuremc:bamboo/place_0",
-            "futuremc:bamboo/place_1",
-            "futuremc:bamboo/place_2",
-            "futuremc:bamboo/place_3",
-            "futuremc:bamboo/place_4",
-            "futuremc:bamboo/place_5"
+            "futuremc:block/netherite_block/break1",
+            "futuremc:block/netherite_block/break2",
+            "futuremc:block/netherite_block/break3",
+            "futuremc:block/netherite_block/break4"
         ]
     },
-    "bamboo_step": {
-        "subtitle": "futuremc.subtitles.bamboo_step",
+    "netherite_block_step": {
+        "subtitle": "futuremc.subtitles.netherite_block_step",
         "sounds": [
-            "futuremc:bamboo/step_0",
-            "futuremc:bamboo/step_1",
-            "futuremc:bamboo/step_2",
-            "futuremc:bamboo/step_3",
-            "futuremc:bamboo/step_4",
-            "futuremc:bamboo/step_5"
+            "futuremc:block/netherite_block/step1",
+            "futuremc:block/netherite_block/step2",
+            "futuremc:block/netherite_block/step3",
+            "futuremc:block/netherite_block/step4"
         ]
     },
-    "bamboo_sapling_hit": {
-        "subtitle": "futuremc.subtitles.bamboo_sapling_hit",
+    "netherite_block_place": {
+        "subtitle": "futuremc.subtitles.netherite_block_place",
         "sounds": [
-            "futuremc:bamboo/sapling_hit_0",
-            "futuremc:bamboo/sapling_hit_1",
-            "futuremc:bamboo/sapling_hit_2",
-            "futuremc:bamboo/sapling_hit_3",
-            "futuremc:bamboo/sapling_hit_4"
+            "futuremc:block/netherite_block/break1",
+            "futuremc:block/netherite_block/break2",
+            "futuremc:block/netherite_block/break3",
+            "futuremc:block/netherite_block/break4"
         ]
     },
-    "bamboo_sapling_place": {
-        "subtitle": "futuremc.subtitles.bamboo_sapling_place",
+    "netherite_block_hit": {
+        "subtitle": "futuremc.subtitles.netherite_block_hit",
         "sounds": [
-            "futuremc:bamboo/sapling_place_0",
-            "futuremc:bamboo/sapling_place_1",
-            "futuremc:bamboo/sapling_place_2",
-            "futuremc:bamboo/sapling_place_3",
-            "futuremc:bamboo/sapling_place_4",
-            "futuremc:bamboo/sapling_place_5"
+            "futuremc:block/netherite_block/break1",
+            "futuremc:block/netherite_block/break2",
+            "futuremc:block/netherite_block/break3",
+            "futuremc:block/netherite_block/break4"
         ]
     },
-    "barrel_close": {
-        "subtitle": "futuremc.subtitles.barrel_close",
+    "netherite_block_fall": {
+        "subtitle": "futuremc.subtitles.netherite_block_fall",
         "sounds": [
-            "futuremc:barrel/close"
+            "futuremc:block/netherite_block/step1",
+            "futuremc:block/netherite_block/step2",
+            "futuremc:block/netherite_block/step3",
+            "futuremc:block/netherite_block/step4"
         ]
     },
-    "barrel_open": {
-        "subtitle": "futuremc.subtitle.barrel_open",
+    "ancient_debris_break": {
+        "subtitle": "futuremc.subtitles.ancient_debris_break",
         "sounds": [
-            "futuremc:barrel/open_0",
-            "futuremc:barrel/open_1"
+            "futuremc:block/ancient_debris/break1",
+            "futuremc:block/ancient_debris/break2",
+            "futuremc:block/ancient_debris/break3",
+            "futuremc:block/ancient_debris/break4",
+            "futuremc:block/ancient_debris/break5"
         ]
     },
-    "trident_throw": {
-        "subtitle": "futuremc.subtitle.trident_throw",
+    "ancient_debris_step": {
+        "subtitle": "futuremc.subtitles.ancient_debris_step",
         "sounds": [
-            "futuremc:trident/throw_0",
-            "futuremc:trident/throw_1"
+            "futuremc:block/ancient_debris/break1",
+            "futuremc:block/ancient_debris/break2",
+            "futuremc:block/ancient_debris/break3",
+            "futuremc:block/ancient_debris/break4",
+            "futuremc:block/ancient_debris/break5"
         ]
     },
-    "trident_pierce": {
-        "subtitle": "futuremc.subtitle.trident_pierce",
+    "ancient_debris_place": {
+        "subtitle": "futuremc.subtitles.ancient_debris_place",
         "sounds": [
-            "futuremc:trident/pierce_0",
-            "futuremc:trident/pierce_1",
-            "futuremc:trident/pierce_2"
+            "futuremc:block/ancient_debris/break1",
+            "futuremc:block/ancient_debris/break2",
+            "futuremc:block/ancient_debris/break3",
+            "futuremc:block/ancient_debris/break4",
+            "futuremc:block/ancient_debris/break5"
         ]
     },
-    "trident_impact": {
-        "subtitle": "futuremc.subtitle.trident_ground_impact",
+    "ancient_debris_hit": {
+        "subtitle": "futuremc.subtitles.ancient_debris_hit",
         "sounds": [
-            "futuremc:trident/impact_0",
-            "futuremc:trident/impact_1",
-            "futuremc:trident/impact_2",
-            "futuremc:trident/impact_3"
+            "futuremc:block/ancient_debris/break1",
+            "futuremc:block/ancient_debris/break2",
+            "futuremc:block/ancient_debris/break3",
+            "futuremc:block/ancient_debris/break4",
+            "futuremc:block/ancient_debris/break5"
         ]
     },
-    "trident_channeling": {
-        "subtitle": "futuremc.subtitle.trident_channeling",
+    "ancient_debris_fall": {
+        "subtitle": "futuremc.subtitles.ancient_debris_fall",
         "sounds": [
-            "futuremc:trident/channeling_0",
-            "futuremc:trident/channeling_1"
+            "futuremc:block/ancient_debris/break1",
+            "futuremc:block/ancient_debris/break2",
+            "futuremc:block/ancient_debris/break3",
+            "futuremc:block/ancient_debris/break4",
+            "futuremc:block/ancient_debris/break5"
         ]
     },
-    "loyalty": {
-        "subtitle": "futuremc.subtitle.trident_loyalty",
+    "soul_soil_break": {
+        "subtitle": "futuremc.subtitles.soul_soil_break",
         "sounds": [
-            "futuremc:trident/loyalty_0",
-            "futuremc:trident/loyalty_1",
-            "futuremc:trident/loyalty_2"
+            "futuremc:block/soul_soil/break1",
+            "futuremc:block/soul_soil/break2",
+            "futuremc:block/soul_soil/break3",
+            "futuremc:block/soul_soil/break4",
+            "futuremc:block/soul_soil/break5",
+            "futuremc:block/soul_soil/break6"
         ]
     },
-    "riptide_i": {
-        "subtitle": "futuremc.subtitle.riptide_i_trident",
+    "soul_soil_step": {
+        "subtitle": "futuremc.subtitles.soul_soil_step",
         "sounds": [
-            "futuremc:trident/riptide_i"
+            "futuremc:block/soul_soil/step1",
+            "futuremc:block/soul_soil/step2",
+            "futuremc:block/soul_soil/step3",
+            "futuremc:block/soul_soil/step4",
+            "futuremc:block/soul_soil/step5"
         ]
     },
-    "riptide_ii": {
-        "subtitle": "futuremc.subtitle.riptide_ii_trident",
+    "soul_soil_place": {
+        "subtitle": "futuremc.subtitles.soul_soil_place",
         "sounds": [
-            "futuremc:trident/riptide_ii"
+            "futuremc:block/soul_soil/break1",
+            "futuremc:block/soul_soil/break2",
+            "futuremc:block/soul_soil/break3",
+            "futuremc:block/soul_soil/break4",
+            "futuremc:block/soul_soil/break5",
+            "futuremc:block/soul_soil/break6"
         ]
     },
-    "riptide_iii": {
-        "subtitle": "futuremc.subtitle.riptide_iii_trident",
+    "soul_soil_hit": {
+        "subtitle": "futuremc.subtitles.soul_soil_hit",
         "sounds": [
-            "futuremc:trident/riptide_iii"
+            "futuremc:block/soul_soil/break1",
+            "futuremc:block/soul_soil/break2",
+            "futuremc:block/soul_soil/break3",
+            "futuremc:block/soul_soil/break4",
+            "futuremc:block/soul_soil/break5",
+            "futuremc:block/soul_soil/break6"
         ]
     },
-    "quick_charge_i": {
-        "subtitle": "futuremc.subtitle.crossbow_quick_charge_i",
+    "soul_soil_fall": {
+        "subtitle": "futuremc.subtitles.ancient_debris_fall",
         "sounds": [
-            "futuremc:crossbow/quick_charge_i_0",
-            "futuremc:crossbow/quick_charge_i_1",
-            "futuremc:crossbow/quick_charge_i_2"
+            "futuremc:block/soul_soil/step1",
+            "futuremc:block/soul_soil/step2",
+            "futuremc:block/soul_soil/step3",
+            "futuremc:block/soul_soil/step4",
+            "futuremc:block/soul_soil/step5"
         ]
     },
-    "quick_charge_ii": {
-        "subtitle": "futuremc.subtitle.crossbow_quick_charge_ii",
+    "nylium_break": {
+        "subtitle": "futuremc.subtitles.nylium_break",
         "sounds": [
-            "futuremc:crossbow/quick_charge_ii_0",
-            "futuremc:crossbow/quick_charge_ii_1",
-            "futuremc:crossbow/quick_charge_ii_2"
+            "futuremc:block/nylium/break1",
+            "futuremc:block/nylium/break2",
+            "futuremc:block/nylium/break3",
+            "futuremc:block/nylium/break4",
+            "futuremc:block/nylium/break5",
+            "futuremc:block/nylium/break6"
         ]
     },
-    "quick_charge_iii": {
-        "subtitle": "futuremc.subtitle.crossbow_quick_charge_iii",
+    "nylium_step": {
+        "subtitle": "futuremc.subtitles.nylium_step",
         "sounds": [
-            "futuremc:crossbow/quick_charge_iii_0",
-            "futuremc:crossbow/quick_charge_iii_1",
-            "futuremc:crossbow/quick_charge_iii_2"
+            "futuremc:block/nylium/step1",
+            "futuremc:block/nylium/step2",
+            "futuremc:block/nylium/step3",
+            "futuremc:block/nylium/step4",
+            "futuremc:block/nylium/step5",
+            "futuremc:block/nylium/step6"
         ]
     },
-    "crossbow_shoot": {
-        "subtitle": "futuremc.subtitle.crossbow_shoot",
+    "nylium_place": {
+        "subtitle": "futuremc.subtitles.nylium_place",
         "sounds": [
-            "futuremc:crossbow/shoot_0",
-            "futuremc:crossbow/shoot_1",
-            "futuremc:crossbow/shoot_2"
+            "futuremc:block/nylium/break1",
+            "futuremc:block/nylium/break2",
+            "futuremc:block/nylium/break3",
+            "futuremc:block/nylium/break4",
+            "futuremc:block/nylium/break5",
+            "futuremc:block/nylium/break6"
         ]
     },
-    "crossbow_loading_start": {
-        "subtitle": "futuremc.subtitle.crossbow_loading_start",
+    "nylium_hit": {
+        "subtitle": "futuremc.subtitles.nylium_hit",
         "sounds": [
-            "futuremc:crossbow/loading_start"
+            "futuremc:block/nylium/break1",
+            "futuremc:block/nylium/break2",
+            "futuremc:block/nylium/break3",
+            "futuremc:block/nylium/break4",
+            "futuremc:block/nylium/break5",
+            "futuremc:block/nylium/break6"
         ]
     },
-    "crossbow_loading_middle": {
-        "subtitle": "futuremc.subtitle.crossbow_loading_middle",
+    "nylium_fall": {
+        "subtitle": "futuremc.subtitles.nylium_fall",
         "sounds": [
-            "futuremc:crossbow/loading_middle_0",
-            "futuremc:crossbow/loading_middle_1",
-            "futuremc:crossbow/loading_middle_2",
-            "futuremc:crossbow/loading_middle_3"
+            "futuremc:block/nylium/step1",
+            "futuremc:block/nylium/step2",
+            "futuremc:block/nylium/step3",
+            "futuremc:block/nylium/step4",
+            "futuremc:block/nylium/step5",
+            "futuremc:block/nylium/step6"
         ]
     },
-    "crossbow_loading_end": {
-        "subtitle": "futuremc.subtitle.crossbow_loading_end",
+    "nether_stem_break": {
+        "subtitle": "futuremc.subtitles.nether_stem_break",
         "sounds": [
-            "futuremc:crossbow/loading_end"
+            "futuremc:block/nether_stem/break1",
+            "futuremc:block/nether_stem/break2",
+            "futuremc:block/nether_stem/break3",
+            "futuremc:block/nether_stem/break4",
+            "futuremc:block/nether_stem/break5",
+            "futuremc:block/nether_stem/break6"
         ]
     },
-    "grindstone_use": {
-        "subtitle": "futuremc.subtitle.grindstone_use",
+    "nether_stem_step": {
+        "subtitle": "futuremc.subtitles.nether_stem_step",
         "sounds": [
-            "futuremc:grindstone/use_0",
-            "futuremc:grindstone/use_1",
-            "futuremc:grindstone/use_2"
+            "futuremc:block/nether_stem/step1",
+            "futuremc:block/nether_stem/step2",
+            "futuremc:block/nether_stem/step3",
+            "futuremc:block/nether_stem/step4",
+            "futuremc:block/nether_stem/step5",
+            "futuremc:block/nether_stem/step6"
         ]
     },
-    "composter_empty": {
-        "subtitle": "futuremc.subtitle.composter_empty",
+    "nether_stem_place": {
+        "subtitle": "futuremc.subtitles.nether_stem_place",
         "sounds": [
-            "futuremc:composter/empty_0",
-            "futuremc:composter/empty_1",
-            "futuremc:composter/empty_2"
+            "futuremc:block/nether_stem/break1",
+            "futuremc:block/nether_stem/break2",
+            "futuremc:block/nether_stem/break3",
+            "futuremc:block/nether_stem/break4",
+            "futuremc:block/nether_stem/break5",
+            "futuremc:block/nether_stem/break6"
         ]
     },
-    "composter_fill": {
-        "subtitle": "futuremc.subtitle.composter_fill",
+    "nether_stem_hit": {
+        "subtitle": "futuremc.subtitles.nether_stem_hit",
         "sounds": [
-            "futuremc:composter/fill_0",
-            "futuremc:composter/fill_1",
-            "futuremc:composter/fill_2",
-            "futuremc:composter/fill_3"
+            "futuremc:block/nether_stem/break1",
+            "futuremc:block/nether_stem/break2",
+            "futuremc:block/nether_stem/break3",
+            "futuremc:block/nether_stem/break4",
+            "futuremc:block/nether_stem/break5",
+            "futuremc:block/nether_stem/break6"
         ]
     },
-    "composter_fill_success": {
-        "subtitle": "futuremc.subtitle.composter_fill_success",
+    "nether_stem_fall": {
+        "subtitle": "futuremc.subtitles.nether_stem_fall",
         "sounds": [
-            "futuremc:composter/fill_success_0",
-            "futuremc:composter/fill_success_1",
-            "futuremc:composter/fill_success_2",
-            "futuremc:composter/fill_success_3"
+            "futuremc:block/nether_stem/step1",
+            "futuremc:block/nether_stem/step2",
+            "futuremc:block/nether_stem/step3",
+            "futuremc:block/nether_stem/step4",
+            "futuremc:block/nether_stem/step5",
+            "futuremc:block/nether_stem/step6"
         ]
     },
-    "composter_ready": {
-        "subtitle": "futuremc.subtitle.composter_ready",
+    "nether_sprouts_break": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_break",
         "sounds": [
-            "futuremc:composter/ready_0",
-            "futuremc:composter/ready_1",
-            "futuremc:composter/ready_2",
-            "futuremc:composter/ready_3"
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
         ]
     },
-    "panda_aggressive_ambient": {
-        "subtitle": "futuremc.subtitles.panda_aggressive_ambient",
+    "nether_sprouts_step": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_step",
         "sounds": [
-            "futuremc:panda/aggressive_ambient_0",
-            "futuremc:panda/aggressive_ambient_1",
-            "futuremc:panda/aggressive_ambient_2",
-            "futuremc:panda/aggressive_ambient_3"
+            "futuremc:block/roots/step1",
+            "futuremc:block/roots/step2",
+            "futuremc:block/roots/step3",
+            "futuremc:block/roots/step4",
+            "futuremc:block/roots/step5"
         ]
     },
-    "panda_ambient": {
-        "subtitle": "futuremc.subtitles.panda_ambient",
+    "nether_sprouts_place": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_place",
         "sounds": [
-            "futuremc:panda/ambient_0",
-            "futuremc:panda/ambient_1",
-            "futuremc:panda/ambient_2",
-            "futuremc:panda/ambient_3"
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
         ]
     },
-    "panda_bite": {
-        "subtitle": "futuremc.subtitles.panda_bite",
+    "nether_sprouts_hit": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_hit",
         "sounds": [
-            "futuremc:panda/bite_0",
-            "futuremc:panda/bite_1",
-            "futuremc:panda/bite_2"
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
         ]
     },
-    "panda_cannot_breed": {
-        "subtitle": "futuremc.subtitles.panda_cannot_breed",
+    "nether_sprouts_fall": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_fall",
         "sounds": [
-            "futuremc:panda/cannot_breed_0",
-            "futuremc:panda/cannot_breed_1",
-            "futuremc:panda/cannot_breed_2",
-            "futuremc:panda/cannot_breed_3",
-            "futuremc:panda/cannot_breed_4"
+            "futuremc:block/roots/step1",
+            "futuremc:block/roots/step2",
+            "futuremc:block/roots/step3",
+            "futuremc:block/roots/step4",
+            "futuremc:block/roots/step5"
         ]
     },
-    "panda_death": {
-        "subtitle": "futuremc.subtitles.panda_death",
+    "roots_break": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_break",
         "sounds": [
-            "futuremc:panda/death_0",
-            "futuremc:panda/death_1",
-            "futuremc:panda/death_2",
-            "futuremc:panda/death_3"
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
         ]
     },
-    "panda_eat": {
-        "subtitle": "futuremc.subtitles.panda_eat",
+    "roots_step": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_step",
         "sounds": [
-            "futuremc:panda/eat_0",
-            "futuremc:panda/eat_1",
-            "futuremc:panda/eat_2",
-            "futuremc:panda/eat_3",
-            "futuremc:panda/eat_4",
-            "futuremc:panda/eat_5",
-            "futuremc:panda/eat_6",
-            "futuremc:panda/eat_7",
-            "futuremc:panda/eat_8",
-            "futuremc:panda/eat_9",
-            "futuremc:panda/eat_10",
-            "futuremc:panda/eat_11"
+            "futuremc:block/roots/step1",
+            "futuremc:block/roots/step2",
+            "futuremc:block/roots/step3",
+            "futuremc:block/roots/step4",
+            "futuremc:block/roots/step5"
         ]
     },
-    "panda_hurt": {
-        "subtitle": "futuremc.subtitles.panda_hurt",
+    "roots_place": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_place",
         "sounds": [
-            "futuremc:panda/hurt_0",
-            "futuremc:panda/hurt_1",
-            "futuremc:panda/hurt_2",
-            "futuremc:panda/hurt_3",
-            "futuremc:panda/hurt_4",
-            "futuremc:panda/hurt_5"
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
         ]
     },
-    "panda_pre_sneeze": {
-        "subtitle": "futuremc.subtitles.panda_pre_sneeze",
+    "roots_hit": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_hit",
         "sounds": [
-            "futuremc:panda/pre_sneeze"
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
         ]
     },
-    "panda_sneeze": {
-        "subtitle": "futuremc.subtitles.panda_sneeze",
+    "roots_fall": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_fall",
         "sounds": [
-            "futuremc:panda/sneeze_0",
-            "futuremc:panda/sneeze_1",
-            "futuremc:panda/sneeze_2"
+            "futuremc:block/roots/step1",
+            "futuremc:block/roots/step2",
+            "futuremc:block/roots/step3",
+            "futuremc:block/roots/step4",
+            "futuremc:block/roots/step5"
         ]
     },
-    "panda_step": {
-        "subtitle": "futuremc.subtitles.panda_step",
+    "equip_netherite": {
+        "subtitle": "futuremc.subtitles.equip_netherite",
         "sounds": [
-            "futuremc:panda/step_0",
-            "futuremc:panda/step_1",
-            "futuremc:panda/step_2",
-            "futuremc:panda/step_3",
-            "futuremc:panda/step_4"
+            "futuremc:item/armor/equip_netherite1",
+            "futuremc:item/armor/equip_netherite2",
+            "futuremc:item/armor/equip_netherite3",
+            "futuremc:item/armor/equip_netherite4"
         ]
     },
-    "panda_worried_ambient": {
-        "subtitle": "futuremc.subtitles.panda_worried_ambient",
+    "smithing_table_use": {
+        "subtitle": "futuremc.subtitles.smithing_table_use",
         "sounds": [
-            "futuremc:panda/worried_ambient_0",
-            "futuremc:panda/worried_ambient_1",
-            "futuremc:panda/worried_ambient_2",
-            "futuremc:panda/worried_ambient_3",
-            "futuremc:panda/worried_ambient_4",
-            "futuremc:panda/worried_ambient_5"
-        ]
-    },
-    "campfire_crackle": {
-        "subtitle": "futuremc.subtitles.campfire_crackle",
-        "sounds": [
-            "futuremc:campfire/crackle_0",
-            "futuremc:campfire/crackle_1",
-            "futuremc:campfire/crackle_2",
-            "futuremc:campfire/crackle_3",
-            "futuremc:campfire/crackle_4",
-            "futuremc:campfire/crackle_5"
-        ]
-    },
-    "bell_ring": {
-        "subtitle": "futuremc.subtitles.bell_ring",
-        "sounds": [
-            "futuremc:bell/ring_0",
-            "futuremc:bell/ring_1"
-        ]
-    },
-    "bee_enter_hive": {
-        "subtitle": "futuremc.subtitles.bee_enter_hive",
-        "sounds": [
-            "futuremc:bee/enter"
-        ]
-    },
-    "bee_exit_hive": {
-        "subtitle": "futuremc.subtitles.bee_exit_hive",
-        "sounds": [
-            "futuremc:bee/exit"
-        ]
-    },
-    "bee_sting": {
-        "subtitle": "futuremc.subtitles.bee_sting",
-        "sounds": [
-            "futuremc:bee/sting"
-        ]
-    },
-    "bee_death": {
-        "subtitle": "futuremc.subtitles.bee_death",
-        "sounds": [
-            "futuremc:bee/death_0",
-            "futuremc:bee/death_1"
-        ]
-    },
-    "bee_hurt": {
-        "subtitle": "futuremc.subtitles.bee_hurt",
-        "sounds": [
-            "futuremc:bee/hurt_0",
-            "futuremc:bee/hurt_1",
-            "futuremc:bee/hurt_2"
-        ]
-    },
-    "bee_pollinate": {
-        "subtitle": "futuremc.subtitles.bee_pollinate",
-        "sounds": [
-            "futuremc:bee/pollinate_0",
-            "futuremc:bee/pollinate_1",
-            "futuremc:bee/pollinate_2",
-            "futuremc:bee/pollinate_3"
-        ]
-    },
-    "bee_work": {
-        "subtitle": "futuremc.subtitles.bee_work",
-        "sounds": [
-            "futuremc:bee/work_0",
-            "futuremc:bee/work_1",
-            "futuremc:bee/work_2",
-            "futuremc:bee/work_3"
-        ]
-    },
-    "bee_aggressive": {
-        "subtitle": "futuremc.subtitles.bee_aggressive",
-        "sounds": [
-            "futuremc:bee/aggressive_0",
-            "futuremc:bee/aggressive_1",
-            "futuremc:bee/aggressive_2"
-        ]
-    },
-    "bee_passive": {
-        "subtitle": "futuremc.subtitles.bee_passive",
-        "sounds": [
-            "futuremc:bee/passive_0",
-            "futuremc:bee/passive_1",
-            "futuremc:bee/passive_2",
-            "futuremc:bee/passive_3",
-            "futuremc:bee/passive_3"
-        ]
-    },
-    "honey_bottle_drink": {
-        "subtitle": "futuremc.subtitles.honey_bottle_drink",
-        "sounds": [
-            "futuremc:bee/drink_honey_0",
-            "futuremc:bee/drink_honey_1",
-            "futuremc:bee/drink_honey_2"
-        ]
-    },
-    "shear_hive": {
-        "subtitle": "futuremc.subtitles.shear_hive",
-        "sounds": [
-            "futuremc:bee/shear"
-        ]
-    },
-    "honey_block_break": {
-        "subtitle": "futuremc.subtitles.honey_block_break",
-        "sounds": [
-            "futuremc:honey_block/break_0",
-            "futuremc:honey_block/break_1",
-            "futuremc:honey_block/break_2",
-            "futuremc:honey_block/break_3",
-            "futuremc:honey_block/break_4"
-        ]
-    },
-    "honey_block_step": {
-        "subtitle": "futuremc.subtitles.honey_block_step",
-        "sounds": [
-            "futuremc:honey_block/step_0",
-            "futuremc:honey_block/step_1",
-            "futuremc:honey_block/step_2",
-            "futuremc:honey_block/step_3",
-            "futuremc:honey_block/step_4"
-        ]
-    },
-    "coral_dig": {
-        "subtitle": "futuremc.subtitles.honey_block_dig",
-        "sounds": [
-            "futuremc:coral/dig_0",
-            "futuremc:coral/dig_1",
-            "futuremc:coral/dig_2",
-            "futuremc:coral/dig_3"
-        ]
-    },
-    "coral_step": {
-        "subtitle": "futuremc.subtitles.honey_block_step",
-        "sounds": [
-            "futuremc:coral/step_0",
-            "futuremc:coral/step_1",
-            "futuremc:coral/step_2",
-            "futuremc:coral/step_3",
-            "futuremc:coral/step_4"
-        ]
-    },
-    "honey_block_slide": {
-        "subtitle": "futuremc.subtitles.honey_block_slide",
-        "sounds": [
-            "futuremc:honey_block/slide_0",
-            "futuremc:honey_block/slide_1",
-            "futuremc:honey_block/slide_2",
-            "futuremc:honey_block/slide_3"
-        ]
-    },
-    "stonecutter_carve": {
-        "subtitle": "futuremc.subtitles.stonecutter_carve",
-        "sounds": [
-            "futuremc:stonecutter/carve_0",
-            "futuremc:stonecutter/carve_1"
-        ]
-    },
-    "lantern_break": {
-        "subtitle": "futuremc.subtitles.lantern_break",
-        "sounds": [
-            "futuremc:lantern/break_0",
-            "futuremc:lantern/break_1",
-            "futuremc:lantern/break_2",
-            "futuremc:lantern/break_3",
-            "futuremc:lantern/break_4",
-            "futuremc:lantern/break_5"
-        ]
-    },
-    "lantern_place": {
-        "subtitle": "futuremc.subtitles.lantern_place",
-        "sounds": [
-            "futuremc:lantern/place_0",
-            "futuremc:lantern/place_1",
-            "futuremc:lantern/place_2",
-            "futuremc:lantern/place_3",
-            "futuremc:lantern/place_4",
-            "futuremc:lantern/place_5"
+            "futuremc:block/smithing_table/use1",
+            "futuremc:block/smithing_table/use2",
+            "futuremc:block/smithing_table/use3"
         ]
     }
 }
