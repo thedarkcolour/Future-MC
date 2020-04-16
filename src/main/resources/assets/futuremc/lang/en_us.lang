@@ -133,15 +133,15 @@ entity.futuremc:tropical_fish.name=Tropical Fish
 
 # Enchantment
 enchantment.loyalty=Loyalty
-enchantment.minecraftfuture.loyalty.desc=Trident returns after being thrown. Higher levels reduce return time.
+enchantment.futuremc.loyalty.desc=Trident returns after being thrown. Higher levels reduce return time.
 enchantment.channeling=Channeling
-enchantment.minecraftfuture.channeling.desc=Trident channels a bolt of lightning toward a hit entity. Functions only during thunderstorms and if target is unobstructed with opaque blocks.
+enchantment.futuremc.channeling.desc=Trident channels a bolt of lightning toward a hit entity. Functions only during thunderstorms and if target is unobstructed with opaque blocks.
 enchantment.riptide=Riptide
-enchantment.minecraftfuture.riptide.desc=Trident launches player when thrown. Functions only in water or rain.
+enchantment.futuremc.riptide.desc=Trident launches player when thrown. Functions only in water or rain.
 enchantment.impaling=Impaling
-enchantment.minecraftfuture.impaling.desc=Deals additional damage to mobs that spawn naturally in the ocean.
+enchantment.futuremc.impaling.desc=Deals additional damage to mobs that spawn naturally in the ocean.
 enchantment.quick_charge=Quick Charge
-enchantment.minecraftfuture.quick_charge.desc=Decreases charging time.
+enchantment.futuremc.quick_charge.desc=Decreases charging time.
 
 # Creative Tab
 itemGroup.futuremc=Future MC
