@@ -16,7 +16,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.wynprice.cursemaven'
 
-version = '1.0'
+version = '1.15.2-1.1.0'
 group = 'thedarkcolour' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'futuremc'
 
@@ -73,20 +73,30 @@ minecraft {
 
 repositories {
     maven {
-        name = "Yarn Mappings"
-        url = "https://maven.tterrag.com/"
+        name = "CraftTweaker/Quark/AutoRegLib maven"
+        url = "https://maven.blamejared.com/"
     }
     maven {
         name = "CurseForge"
         url = "https://minecraft.curseforge.com/api/maven/"
+    }
+    maven {
+        name = "JEI maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        name = "Yarn Mappings"
+        url = "https://maven.tterrag.com/"
     }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.15.2-31.1.14'
 
-    fg.deobf (implementation ('curse.maven:biomes-o-plenty:2912265')) //
-    fg.deobf (implementation ('curse.maven:biomes-o-plenty-source:2912266')) //
+    implementation(fg.deobf('curse.maven:biomes-o-plenty:2912265'))
+    implementation(fg.deobf('curse.maven:biomes-o-plenty-source:2912266'))
+    implementation(fg.deobf('mezz.jei:jei-1.15.2:6.0.0.2'))
+    implementation(fg.deobf('com.blamejared.crafttweaker:CraftTweaker-1.15.2:6.0.0.12'))
 }
 
 jar {
