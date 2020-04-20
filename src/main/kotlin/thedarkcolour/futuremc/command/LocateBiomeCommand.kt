@@ -1,4 +1,4 @@
-package thedarkcolour.futuremc.server.command
+package thedarkcolour.futuremc.command
 
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.context.CommandContext

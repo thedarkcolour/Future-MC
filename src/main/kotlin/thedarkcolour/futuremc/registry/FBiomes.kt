@@ -14,6 +14,7 @@ import thedarkcolour.futuremc.biome.CrimsonForestBiome
 import thedarkcolour.futuremc.biome.SoulSandValleyBiome
 import thedarkcolour.futuremc.biome.WarpedForestBiome
 import thedarkcolour.futuremc.biome.provider.NoisePoint
+import thedarkcolour.futuremc.compat.checkBiomesOPlenty
 import thedarkcolour.futuremc.config.Config
 import java.util.*
 import java.util.function.ToDoubleFunction
@@ -35,12 +36,18 @@ object FBiomes {
     }
 
     private fun registerBiomes(biomes: IForgeRegistry<Biome>) {
-        if (Config.warpedForest.value)
+        if (Config.warpedForest.value) {
             biomes.register(WARPED_FOREST)
-        if (Config.crimsonForest.value)
+            checkBiomesOPlenty()?.addNetherBiome(WARPED_FOREST)
+        }
+        if (Config.crimsonForest.value) {
             biomes.register(CRIMSON_FOREST)
-        if (Config.soulSandValley.value)
+            checkBiomesOPlenty()?.addNetherBiome(CRIMSON_FOREST)
+        }
+        if (Config.soulSandValley.value) {
             biomes.register(SOUL_SAND_VALLEY)
+            checkBiomesOPlenty()?.addNetherBiome(SOUL_SAND_VALLEY)
+        }
     }
 
     private fun addBiomeNoise() {

@@ -13,9 +13,18 @@ import thedarkcolour.futuremc.registry.FBiomes
 import thedarkcolour.futuremc.registry.FBlocks
 import thedarkcolour.futuremc.registry.FContainers
 import thedarkcolour.futuremc.registry.FParticles
+import thedarkcolour.kotlinforforge.forge.FORGE_BUS
+import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import java.util.*
 
 object ClientHandler {
+    fun registerEvents() {
+        MOD_BUS.addListener(::clientSetup)
+        MOD_BUS.addListener(::registerParticleFactories)
+        FORGE_BUS.addListener(::renderNetherFog)
+        FORGE_BUS.addListener(::addNetherParticles)
+    }
+
     @SubscribeEvent
     fun clientSetup(event: FMLClientSetupEvent) {
         FBlocks.setRenderLayers()
@@ -35,11 +44,13 @@ object ClientHandler {
             val xCenter = MathHelper.floor(player.x)
             val yCenter = MathHelper.floor(player.y)
             val zCenter = MathHelper.floor(player.z)
+            // prevents unnecessary allocations
+            val mutablePos = BlockPos.Mutable()
 
             // see function below for animateTick
             for (i in 0 until 667) {
-                world.animate(xCenter, yCenter, zCenter, 16, random, BlockPos.Mutable())
-                world.animate(xCenter, yCenter, zCenter, 32, random, BlockPos.Mutable())
+                world.animate(xCenter, yCenter, zCenter, 16, random, mutablePos)
+                world.animate(xCenter, yCenter, zCenter, 32, random, mutablePos)
             }
         }
     }

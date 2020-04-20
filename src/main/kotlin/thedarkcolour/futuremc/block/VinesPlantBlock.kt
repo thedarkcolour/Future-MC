@@ -2,6 +2,7 @@ package thedarkcolour.futuremc.block
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.IGrowable
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Direction
@@ -12,49 +13,76 @@ import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
 import net.minecraft.world.IWorldReader
+import net.minecraft.world.World
 import net.minecraft.world.server.ServerWorld
 import java.util.*
 
-open class VinesPlantBlock(private val shape: VoxelShape, private val stem: () -> VinesBlock, properties: Properties) : Block(properties) {
+open class VinesPlantBlock(private val shape: VoxelShape, private val stem: () -> VinesBlock, properties: Properties) : Block(properties), IGrowable {
     override fun isValidPosition(state: BlockState?, worldIn: IWorldReader, pos: BlockPos): Boolean {
-        val pos1 = pos.offset(Direction.UP)
+        val stem = stem()
+        val pos1 = pos.offset(stem.direction.opposite)
         val state1 = worldIn.getBlockState(pos1)
         val block = state1.block
 
-        return block == stem || block == this || state1.isSideSolidFullSquare(worldIn, pos1, Direction.DOWN)
+        return block == stem || block == this || state1.isSideSolidFullSquare(worldIn, pos1, stem.direction)
     }
 
-    override fun scheduledTick(state: BlockState, worldIn: ServerWorld, pos: BlockPos, p_225534_4_: Random) {
+    override fun scheduledTick(state: BlockState, worldIn: ServerWorld, pos: BlockPos, rand: Random) {
         if (!state.isValidPosition(worldIn, pos)) {
             worldIn.breakBlock(pos, true, null)
         }
     }
 
     override fun updatePostPlacement(state: BlockState, direction: Direction, neighborState: BlockState, worldIn: IWorld, pos: BlockPos, neighborPos: BlockPos): BlockState {
-        if (direction == Direction.UP && !state.isValidPosition(worldIn, pos)) {
+        val stem = stem()
+
+        if (direction == stem.direction.opposite && !state.isValidPosition(worldIn, pos)) {
             worldIn.pendingBlockTicks.scheduleTick(pos, this, 1)
         }
 
-        if (direction == Direction.DOWN) {
+        if (direction == stem.direction) {
             val block = neighborState.block
 
             if (block != this && block != stem) {
-                return stem().getRandomGrowthState(worldIn)
+                return stem.getRandomGrowthState(worldIn)
             }
         }
 
-        return super.updatePostPlacement(state, direction, neighborState, worldIn, pos, neighborPos)
+        return state
     }
 
     override fun getPickBlock(state: BlockState?, target: RayTraceResult?, world: IBlockReader?, pos: BlockPos?, player: PlayerEntity?): ItemStack {
         return stem().getPickBlock(state, target, world, pos, player)
     }
 
-    override fun getShape(p_220053_1_: BlockState, p_220053_2_: IBlockReader, p_220053_3_: BlockPos, p_220053_4_: ISelectionContext): VoxelShape {
+    override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos?, context: ISelectionContext?): VoxelShape {
         return shape
     }
 
-    companion object {
-        val SHAPE = makeCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0)
+    override fun canGrow(worldIn: IBlockReader, pos: BlockPos, state: BlockState, isClient: Boolean): Boolean {
+        val stemPos = getStemPos(worldIn, pos, state)?.offset(stem().direction)
+        return stemPos != null && worldIn.getBlockState(stemPos).isAir(worldIn, stemPos)
+    }
+
+    private fun getStemPos(worldIn: IBlockReader, pos: BlockPos, state: BlockState): BlockPos? {
+        val stem = stem()
+        val direction = stem.direction
+        var pos1 = BlockPos.Mutable(pos)
+
+        var block: BlockState
+        do {
+            pos1 = pos1.move(direction)
+            block = worldIn.getBlockState(pos1)
+        } while (block == state)
+
+        return if (state.block == stem) pos1 else null
+    }
+
+    override fun canUseBonemeal(worldIn: World?, rand: Random?, pos: BlockPos?, state: BlockState?): Boolean {
+        return true
+    }
+
+    override fun grow(worldIn: ServerWorld, rand: Random, pos: BlockPos, state: BlockState) {
+        TODO("not implemented")
     }
 }

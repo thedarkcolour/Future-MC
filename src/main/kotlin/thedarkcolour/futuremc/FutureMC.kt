@@ -4,7 +4,10 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.ForgeConfigSpec
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.config.ModConfig
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent
 import thedarkcolour.futuremc.client.ClientHandler
+import thedarkcolour.futuremc.command.LocateBiomeCommand
+import thedarkcolour.futuremc.config.Config
 import thedarkcolour.futuremc.config.Holder
 import thedarkcolour.futuremc.events.Events
 import thedarkcolour.futuremc.registry.RegistryEventHandler
@@ -20,25 +23,29 @@ object FutureMC {
     const val DEBUG = true
 
     init {
-        MOD_BUS.register(this)
-        MOD_BUS.register(RegistryEventHandler)
-        MOD_BUS.register(Holder)
-        FORGE_BUS.register(Events)
-        FORGE_BUS.register(Holder)
+        RegistryEventHandler.registerEvents()
+        MOD_BUS.addListener(Holder::sync)
+        FORGE_BUS.addListener(Events::openSmithingScreen)
+        FORGE_BUS.addListener(::onServerStart)
 
         if (DIST == Dist.CLIENT) {
-            MOD_BUS.register(ClientHandler)
-            FORGE_BUS.register(ClientHandler)
+            ClientHandler.registerEvents()
         }
 
         val specPair = ForgeConfigSpec.Builder().configure(Holder::configure)
 
         registerConfig(ModConfig.Type.COMMON, specPair.right, "futuremc.toml")
 
-        if (DEBUG) {
+        if (Config.netherWorldType.value) {
             FWorldType
         }
 
         //LOADING_CONTEXT.registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY) { ConfigScreen.Factory() }
+    }
+
+    private fun onServerStart(event: FMLServerStartingEvent) {
+        if (Config.locateBiomeCommand.value) {
+            LocateBiomeCommand.register(event.commandDispatcher)
+        }
     }
 }

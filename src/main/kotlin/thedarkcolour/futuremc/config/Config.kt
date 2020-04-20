@@ -49,17 +49,17 @@ object Config {
     val soulSandValley = OptionType.BOOL
             .configure("soul_sand_valley")
             .description("Whether the Soul Sand Valley biome is added")
-            .defaultValue(false)
+            .defaultValue(true) // todo add to main category and change to false
             .build()
     val warpedForest = OptionType.BOOL
             .configure("warped_forest")
             .description("Whether the Warped Forest biome is added")
-            .defaultValue(false)
+            .defaultValue(true) // todo add to main category and change to false
             .build()
     val crimsonForest = OptionType.BOOL
             .configure("soul_sand_valley")
             .description("Whether the Crimson Forest biome is added")
-            .defaultValue(false)
+            .defaultValue(true) // todo add to main category and change to false
             .build()
 
     private var setup = false
@@ -72,6 +72,9 @@ object Config {
             netherUpdate.add(netherite)
             netherUpdate.add(smithingTable)
             netherUpdate.add(locateBiomeCommand)
+            netherUpdate.add(soulSandValley)
+            netherUpdate.add(warpedForest)
+            netherUpdate.add(crimsonForest)
 
             setup = true
         }

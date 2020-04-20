@@ -1,5 +1,5 @@
 modLoader="kotlinforforge"
-loaderVersion="[1,)"
+loaderVersion="[1.1.0,)"
 
 [[mods]] #mandatory
 modId="futuremc" #mandatory

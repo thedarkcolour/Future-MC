@@ -1,7 +1,6 @@
 package thedarkcolour.futuremc.config
 
 import net.minecraftforge.common.ForgeConfigSpec.Builder
-import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.config.ModConfig.ModConfigEvent
 
 object Holder {
@@ -12,7 +11,6 @@ object Holder {
         Config.netherUpdate.addToConfig(builder)
     }
 
-    @SubscribeEvent
     fun sync(event: ModConfigEvent) {
         val data = event.config.configData
 

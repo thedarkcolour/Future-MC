@@ -3,7 +3,7 @@ package net.minecraft.entity
 import net.minecraft.block.BlockState
 import net.minecraft.crash.CrashReport
 import net.minecraft.crash.ReportedException
-import net.minecraft.entity.Entity.horizontalMag
+import net.minecraft.entity.MoverType
 import net.minecraft.entity.item.ItemEntity
 import net.minecraft.tags.FluidTags
 import net.minecraft.util.math.BlockPos
@@ -11,7 +11,7 @@ import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
 import net.minecraftforge.event.ForgeEventFactory
 
-object _Access {
+object _Access : ItemEntity(null, 0.0, 0.0, 0.0) {
     fun update(entity: ItemEntity) {
         if (entity.item.isEmpty) {
             entity.remove()
@@ -123,7 +123,9 @@ object _Access {
                         entity.fillCrashReport(crashreportcategory)
                         throw ReportedException(crashreport)
                     }
-                    entity.motion = entity.motion.mul(entity.velocityMultiplier.toDouble(), 1.0, entity.velocityMultiplier.toDouble())
+
+                    val velocityMultipler = entity.velocityMultiplier.toDouble()
+                    entity.motion = entity.motion.mul(velocityMultipler, 1.0, velocityMultipler)
 
                     if (entity.fireTimer <= 0) {
                         entity.fireTimer = -entity.fireImmuneTicks
