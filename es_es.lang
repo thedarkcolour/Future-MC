@@ -1,0 +1,127 @@
+# Bloques funcionales
+tile.minecraftfuture.Lantern.name=Farol
+tile.minecraftfuture.Barrel.name=Barril
+tile.minecraftfuture.Loom.name=Telar
+tile.minecraftfuture.Stonecutter.name=Cortapiedras
+tile.minecraftfuture.Blast_Furnace.name=Alto horno
+tile.minecraftfuture.Smoker.name=Ahumador
+tile.minecraftfuture.Grindstone.name=Afiladora
+tile.minecraftfuture.Composter.name=Compostador
+
+# Plantas
+tile.minecraftfuture.FlowerWhite.name=Lirio de valle
+tile.minecraftfuture.FlowerBlack.name=Rosa del Wither
+tile.minecraftfuture.FlowerBlue.name=Aciano
+tile.minecraftfuture.BerryBush.name=Arbusto de bayas dulces
+tile.minecraftfuture.Campfire.name=Hoguera
+tile.minecraftfuture.stripped_oak_log.name=Tronco de roble sin corteza
+tile.minecraftfuture.stripped_spruce_log.name=Tronco de abeto sin corteza
+tile.minecraftfuture.stripped_birch_log.name=Tronco de abedul sin corteza
+tile.minecraftfuture.stripped_jungle_log.name=Tronco de jungla sin corteza
+tile.minecraftfuture.stripped_acacia_log.name=Tronco de acacia sin corteza
+tile.minecraftfuture.stripped_dark_oak_log.name=Tronco de roble oscuro sin corteza
+death.attack.berryBush=%1$s fue empujado hacia la muerte por un arbusto de bayas dulces
+death.attack.trident=%1$s fue empalado por %2$s
+death.attack.trident.item=%1$s fue empalado por %2$s con %3$s
+
+# Paredes
+tile.minecraftfuture.brick_wall.name=Pared de ladrillos
+tile.minecraftfuture.andesite_wall.name=Pared de andesita
+tile.minecraftfuture.diorite_wall.name=Pared de diorita
+tile.minecraftfuture.granite_wall.name=Pared de granito
+tile.minecraftfuture.prismarine_wall.name=Pared de prismarina
+tile.minecraftfuture.stone_brick_wall.name=Pared de ladrillos de piedra
+tile.minecraftfuture.mossy_stone_wall.name=Pared de ladrillos de piedra musgosa
+tile.minecraftfuture.end_stone_wall.name=Pared de piedra del End
+tile.minecraftfuture.nether_brick_wall.name=Pared de ladrillos del Nether
+tile.minecraftfuture.sandstone_wall.name=Pared de arenisca
+tile.minecraftfuture.red_sandstone_wall.name=Pared de arenisca roja
+tile.minecraftfuture.nether_brick_red_wall.name=Pared de ladrillos del Nether rojos
+
+# Losas
+tile.minecraftfuture.granite_slab.name=Losa de granito
+tile.minecraftfuture.andesite_slab.name=Losa de andesita
+tile.minecraftfuture.diorite_slab.name=Losa de diorita
+tile.minecraftfuture.polished_granite_slab.name=Losa de granito pulido
+tile.minecraftfuture.polished_andesite_slab.name=Losa de andesita pulida
+tile.minecraftfuture.polished_diorite_slab.name=Losa de diorita pulida
+tile.minecraftfuture.stone_slab.name=Losa de piedra
+tile.minecraftfuture.prismarine_slab.name=Losa de prismarina
+tile.minecraftfuture.dark_prismarine_slab.name=Losa de prismarina oscuro
+tile.minecraftfuture.prismarine_brick_slab.name=Losa de ladrillos de prismarinas
+tile.minecraftfuture.smooth_red_sandstone_slab.name=Losa de arenisca roja lisa
+tile.minecraftfuture.smooth_sandstone_slab.name=Losa de arenisca lisa
+tile.minecraftfuture.mossy_stone_brick_slab.name=Losa de ladrillos de piedra musgosa
+tile.minecraftfuture.mossy_stone_slab.name=Losa de piedra musgosa
+tile.minecraftfuture.smooth_quartz_slab.name=Losa de cuarzo liso
+tile.minecraftfuture.red_nether_brick_slab.name=Losa de ladrillos del Nether rojos
+tile.minecraftfuture.end_stone_brick_slab.name=Losa de ladrillos de piedra del End
+tile.minecraftfuture.Bamboo.name=Bambú
+tile.minecraftfuture.bee_nest.name=Colmena
+tile.minecraftfuture.bee_hive.name=Apiario
+tile.minecraftfuture.honey_block.name=Bloque de miel
+tile.minecraftfuture.honeycomb_block.name=Bloque de panal
+
+# Bloques decorativos
+tile.minecraftfuture.SmoothStone.name=Piedra lisa
+tile.minecraftfuture.SmoothQuartz.name=Cuarzo liso
+tile.minecraftfuture.FletchingTable.name=Mesa de flechas
+tile.minecraftfuture.SmithingTable.name=Mesa de herrería
+tile.minecraftfuture.BlueIce.name=Hielo azul
+entity.ItemFrame.name=Marco
+
+item.minecraftfuture.dye.0.name=Tinte blanco
+item.minecraftfuture.dye.1.name=Tinte azul
+item.minecraftfuture.dye.2.name=Tinte marrón
+item.minecraftfuture.dye.3.name=Tinte negro
+
+# Ítems
+item.minecraftfuture.Trident.name=Tridente
+item.minecraftfuture.Crossbow.name=Ballesta
+item.minecraftfuture.Crossbow_Loaded.name=Ballesta con flecha
+item.minecraftfuture.SuspiciousStew.name=Sopa sospechosa
+item.minecraftfuture.SweetBerry.name=Bayas dulces
+item.minecraftfuture.Bamboo.name=Bambú
+item.minecraftfuture.banner_pattern.name=Diseño de estandarte
+item.minecraftfuture.banner_pattern.flower=Estampado de flor
+item.minecraftfuture.banner_pattern.creeper=Estampado de creeper
+item.minecraftfuture.banner_pattern.skull=Estampado de calavera
+item.minecraftfuture.banner_pattern.thing=Estampado de Mojang
+item.minecraftfuture.banner_pattern.globe=Estampado de planeta
+item.minecraftfuture.honey_bottle.name=Frasco de miel
+item.minecraftfuture.honeycomb.name=Panal
+
+# GUI
+container.Barrel=Barril
+container.BlastFurnace=Alto horno
+container.Smoker=Ahumador
+container.Grindstone=Reparar y desencantar
+container.Stonecutter=Cortapiedras
+container.Loom=Telar
+
+# Entidad
+entity.trident.name=Tridente
+entity.panda.name=Panda
+entity.bee.name=Abeja
+
+# Encantamientos
+enchantment.loyalty=Lealtad
+enchantment.minecraftfuture.loyalty.desc=El tridente vuelve a su dueño tras ser lanzado, cuanto más nivel tenga el encantamiento mayor sera la velocidad de retorno.
+enchantment.channeling=Conductividad
+enchantment.minecraftfuture.channeling.desc=El tridente canaliza durante una tormenta los rayos y al ser lanzado la siguiente criatura golpeada sera golpeada por un rayo.
+enchantment.riptide=Propulsión acutica
+enchantment.minecraftfuture.riptide.desc=Al usar el tridente lanzará al jugador hacía la dirección a la que esté mirando. Solo funciona en el agua o mientras llueve. Este encantamiento hace daño al chocar contra criaturas permitiendo hacer embestidas (también recibes daño por contacto con las criaturas hostiles que causan daño físicamente, así que cuidado).
+enchantment.impaling=Empalamiento
+enchantment.minecraftfuture.impaling.desc=Daño adicional a las criaturas generadas naturalmente del océano.
+enchantment.quick_charge=Carga rápida
+enchantment.minecraftfuture.quick_charge.desc=Disminuye el tiempo de carga para la ballesta.
+
+# Creativo
+itemGroup.Future=Future MC
+
+# JEI
+container.jei.minecraftfuture.campfire.name=Hoguera
+container.jei.minecraftfuture.blast_furnace.name=Alto horno
+container.jei.minecraftfuture.smoker.name=Ahumador
+container.jei.minecraftfuture.stonecutter.name=Cortapiedras
+container.jei.minecraftfuture.campfire.duration=Duración
