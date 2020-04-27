@@ -7,17 +7,15 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        //noinspection SpellCheckingInspection
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-        //noinspection SpellCheckingInspection
         classpath group: 'com.wynprice.cursemaven', name: 'CurseMaven', version: '2.1.1'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.wynprice.cursemaven'
 
-version = '1.15.2-1.1.0'
-group = 'thedarkcolour' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = '1.15.2-1.0.1'
+group = 'thedarkcolour.futuremc'
 archivesBaseName = 'futuremc'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
@@ -91,12 +89,11 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.1.14'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.1.46'
 
     implementation(fg.deobf('curse.maven:biomes-o-plenty:2912265'))
     implementation(fg.deobf('curse.maven:biomes-o-plenty-source:2912266'))
     implementation(fg.deobf('mezz.jei:jei-1.15.2:6.0.0.3'))
-    //implementation(fg.deobf('mezz.jei:jei-1.15.2:6.0.0.3:sources'))
     implementation(fg.deobf('com.blamejared.crafttweaker:CraftTweaker-1.15.2:6.0.0.12'))
 }
 
@@ -105,7 +102,7 @@ jar {
         attributes([
                 'Specification-Title': 'futuremc',
                 'Specification-Vendor': 'thedarkcolour',
-                'Specification-Version': '1', // We are version 1 of ourselves
+                'Specification-Version': '1',
                 'Implementation-Title': project.name,
                 'Implementation-Version': "${version}",
                 'Implementation-Vendor' :'thedarkcolour',

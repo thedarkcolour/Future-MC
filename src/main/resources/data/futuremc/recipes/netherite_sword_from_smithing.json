@@ -1,0 +1,13 @@
+{
+    "type": "futuremc:smithing",
+    "input": {
+        "item": "minecraft:diamond_sword"
+    },
+    "material": {
+        "tag": "forge:ingots/netherite"
+    },
+    "material_cost": 1,
+    "result": {
+        "item": "futuremc:netherite_sword"
+    }
+}

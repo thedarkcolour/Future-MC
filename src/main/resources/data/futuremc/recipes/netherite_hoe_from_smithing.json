@@ -1,0 +1,13 @@
+{
+    "type": "futuremc:smithing",
+    "input": {
+        "item": "minecraft:diamond_hoe"
+    },
+    "material": {
+        "tag": "forge:ingots/netherite"
+    },
+    "material_cost": 1,
+    "result": {
+        "item": "futuremc:netherite_hoe"
+    }
+}

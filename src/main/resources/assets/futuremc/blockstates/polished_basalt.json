@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "axis=x": {
+            "model": "futuremc:block/polished_basalt",
+            "x": 90,
+            "y": 90
+        },
+        "axis=y": {
+            "model": "futuremc:block/polished_basalt"
+        },
+        "axis=z": {
+            "model": "futuremc:block/polished_basalt",
+            "x": 90
+        }
+    }
+}

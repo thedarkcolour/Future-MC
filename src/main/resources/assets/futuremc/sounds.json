@@ -379,5 +379,164 @@
             "futuremc:block/smithing_table/use2",
             "futuremc:block/smithing_table/use3"
         ]
+    },
+    "fungus_break": {
+        "subtitle": "futuremc.subtitles.fungus_break",
+        "sounds": [
+            "futuremc:block/fungus/break1",
+            "futuremc:block/fungus/break2",
+            "futuremc:block/fungus/break3",
+            "futuremc:block/fungus/break4",
+            "futuremc:block/fungus/break5",
+            "futuremc:block/fungus/break6"
+        ]
+    },
+    "fungus_step": {
+        "subtitle": "futuremc.subtitles.fungus_step",
+        "sounds": [
+            "futuremc:block/fungus/break1",
+            "futuremc:block/fungus/break2",
+            "futuremc:block/fungus/break3",
+            "futuremc:block/fungus/break4",
+            "futuremc:block/fungus/break5",
+            "futuremc:block/fungus/break6"
+        ]
+    },
+    "fungus_place": {
+        "subtitle": "futuremc.subtitles.fungus_place",
+        "sounds": [
+            "futuremc:block/fungus/break1",
+            "futuremc:block/fungus/break2",
+            "futuremc:block/fungus/break3",
+            "futuremc:block/fungus/break4",
+            "futuremc:block/fungus/break5",
+            "futuremc:block/fungus/break6"
+        ]
+    },
+    "fungus_hit": {
+        "subtitle": "futuremc.subtitles.fungus_hit",
+        "sounds": [
+            "futuremc:block/fungus/break1",
+            "futuremc:block/fungus/break2",
+            "futuremc:block/fungus/break3",
+            "futuremc:block/fungus/break4",
+            "futuremc:block/fungus/break5",
+            "futuremc:block/fungus/break6"
+        ]
+    },
+    "fungus_fall": {
+        "subtitle": "futuremc.subtitles.fungus_fall",
+        "sounds": [
+            "futuremc:block/fungus/break1",
+            "futuremc:block/fungus/break2",
+            "futuremc:block/fungus/break3",
+            "futuremc:block/fungus/break4",
+            "futuremc:block/fungus/break5",
+            "futuremc:block/fungus/break6"
+        ]
+    },
+    "basalt_break": {
+        "subtitle": "futuremc.subtitles.basalt_break",
+        "sounds": [
+            "futuremc:block/basalt/break1",
+            "futuremc:block/basalt/break2",
+            "futuremc:block/basalt/break3",
+            "futuremc:block/basalt/break4",
+            "futuremc:block/basalt/break5"
+        ]
+    },
+    "basalt_step": {
+        "subtitle": "futuremc.subtitles.basalt_step",
+        "sounds": [
+            "futuremc:block/basalt/step1",
+            "futuremc:block/basalt/step2",
+            "futuremc:block/basalt/step3",
+            "futuremc:block/basalt/step4",
+            "futuremc:block/basalt/step5",
+            "futuremc:block/basalt/step6"
+        ]
+    },
+    "basalt_place": {
+        "subtitle": "futuremc.subtitles.basalt_place",
+        "sounds": [
+            "futuremc:block/basalt/break1",
+            "futuremc:block/basalt/break2",
+            "futuremc:block/basalt/break3",
+            "futuremc:block/basalt/break4",
+            "futuremc:block/basalt/break5"
+        ]
+    },
+    "basalt_hit": {
+        "subtitle": "futuremc.subtitles.basalt_hit",
+        "sounds": [
+            "futuremc:block/basalt/break1",
+            "futuremc:block/basalt/break2",
+            "futuremc:block/basalt/break3",
+            "futuremc:block/basalt/break4",
+            "futuremc:block/basalt/break5"
+        ]
+    },
+    "basalt_fall": {
+        "subtitle": "futuremc.subtitles.basalt_fall",
+        "sounds": [
+            "futuremc:block/basalt/step1",
+            "futuremc:block/basalt/step2",
+            "futuremc:block/basalt/step3",
+            "futuremc:block/basalt/step4",
+            "futuremc:block/basalt/step5",
+            "futuremc:block/basalt/step6"
+        ]
+    },
+    "shroomlight_break": {
+        "subtitle": "futuremc.subtitles.shroomlight_break",
+        "sounds": [
+            "futuremc:block/shroomlight/break1",
+            "futuremc:block/shroomlight/break2",
+            "futuremc:block/shroomlight/break3",
+            "futuremc:block/shroomlight/break4",
+            "futuremc:block/shroomlight/break5"
+        ]
+    },
+    "shroomlight_step": {
+        "subtitle": "futuremc.subtitles.shroomlight_step",
+        "sounds": [
+            "futuremc:block/shroomlight/step1",
+            "futuremc:block/shroomlight/step2",
+            "futuremc:block/shroomlight/step3",
+            "futuremc:block/shroomlight/step4",
+            "futuremc:block/shroomlight/step5",
+            "futuremc:block/shroomlight/step6"
+        ]
+    },
+    "shroomlight_place": {
+        "subtitle": "futuremc.subtitles.shroomlight_place",
+        "sounds": [
+            "futuremc:block/shroomlight/break1",
+            "futuremc:block/shroomlight/break2",
+            "futuremc:block/shroomlight/break3",
+            "futuremc:block/shroomlight/break4",
+            "futuremc:block/shroomlight/break5"
+        ]
+    },
+    "shroomlight_hit": {
+        "subtitle": "futuremc.subtitles.shroomlight_hit",
+        "sounds": [
+            "futuremc:block/shroomlight/break1",
+            "futuremc:block/shroomlight/break2",
+            "futuremc:block/shroomlight/break3",
+            "futuremc:block/shroomlight/break4",
+            "futuremc:block/shroomlight/break5"
+        ]
+    },
+    "shroomlight_fall": {
+        "subtitle": "futuremc.subtitles.shroomlight_fall",
+        "sounds": [
+            "futuremc:block/shroomlight/step1",
+            "futuremc:block/shroomlight/step2",
+            "futuremc:block/shroomlight/step3",
+            "futuremc:block/shroomlight/step4",
+            "futuremc:block/shroomlight/step5",
+            "futuremc:block/shroomlight/step6"
+        ]
     }
 }

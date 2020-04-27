@@ -3,6 +3,15 @@ Future MC 1.15.2 1.1.0 - Nether biomes!
 *Crimson Forest Biome* - 1.16 biome that generates in the nether. Has red foliage.
 *Warped Forest Biome* - 1.16 biome that generates in the nether. Has teal foliage.
 *Soul Sand Valley* - 1.16 biome that generates in the nether. Has soul soil and basalt pillars.
+*Nether Biomes* - Generate in the Biomes O' Plenty world type.
+
+Future MC 1.15.2. 1.0.1 - Fix
+*CraftTweaker Support for Smithing Table* - Smithing table support for CraftTweaker. I will document soon. For now, just try and read thedarkcolour/futuremc/compat/crafttweaker/SmithingTable.kt
+Fixed server crash #118
+Added missing sounds
+Added missing furnace and blast furnace recipes
+Bumped Kotlin for Forge version
+Added Netherite ingot to forge item tags
 
 Future MC 1.15.2 1.0.0 - First release!
 *Netherite Toolset and Armor* - Added netherite toolset and armor from 1.16 snapshots.
