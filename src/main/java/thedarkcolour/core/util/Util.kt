@@ -168,11 +168,7 @@ inline fun <reified E : Event> addListener(crossinline consumer: (E) -> Unit, pr
     val listener = IEventListener {
         val old = loader.activeModContainer()
         loader.setActiveModContainer(owner)
-        try {
-            (it as IContextSetter).setModContainer(owner)
-        } catch (e: ClassCastException) {
-            // ignore
-        }
+        if (it is IContextSetter) it.setModContainer(owner)
         consumer(it as E)
         loader.setActiveModContainer(old)
     }
