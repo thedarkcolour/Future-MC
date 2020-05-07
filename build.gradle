@@ -71,6 +71,8 @@ dependencies {
     implementation "vazkii.autoreglib:AutoRegLib:1.3-32.+"
     implementation "curse.maven:dynamic-trees:2870267"
     implementation "curse.maven:dynamic-trees-sources:2870269"
+    implementation "curse.maven:enchantment-descriptions:2689502"
+    implementation "curse.maven:enchantment-descriptions-sources:2689503"
 }
 
 processResources {
