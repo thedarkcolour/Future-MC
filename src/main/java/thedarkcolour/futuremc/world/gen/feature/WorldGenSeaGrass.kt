@@ -19,8 +19,8 @@ object WorldGenSeaGrass : IWorldGenerator {
         chunkGenerator: IChunkGenerator,
         chunkProvider: IChunkProvider
     ) {
-        val x = chunkX * 16 + 8
-        val z = chunkZ * 16 + 8
+        val x = chunkX shl 4 + 8
+        val z = chunkZ shl 4 + 8
         val biome = worldIn.getBiomeForCoordsBody(BlockPos(x, 0, z))
         val chunkPos = worldIn.getChunk(chunkX, chunkZ).pos
         when (biome) {

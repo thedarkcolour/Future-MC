@@ -19,7 +19,7 @@ class ItemDye : Item() {
         setItemName(this, "dye")
         setHasSubtypes(true)
         maxDamage = 0
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else FutureMC.TAB
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else FutureMC.GROUP
 
         addModels()
     }

@@ -8,12 +8,12 @@ import net.minecraft.client.renderer.BlockFluidRenderer
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.client.resources.IReloadableResourceManager
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.dispenser.IBlockSource
 import net.minecraft.init.Blocks
-import net.minecraft.init.Bootstrap
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.BannerPattern
+import net.minecraftforge.client.resource.ISelectiveResourceReloadListener
+import net.minecraftforge.client.resource.VanillaResourceType
 import net.minecraftforge.common.util.EnumHelper
 import net.minecraftforge.fluids.Fluid
 import net.minecraftforge.fluids.FluidRegistry
@@ -34,7 +34,9 @@ import thedarkcolour.core.command.GenerateCommand
 import thedarkcolour.core.command.HealCommand
 import thedarkcolour.core.command.ModeToggleCommand
 import thedarkcolour.core.gui.Gui
-import thedarkcolour.core.util.registerDispenserBehaviour
+import thedarkcolour.core.util.TODO
+import thedarkcolour.core.util.registerAndDispenserBehaviour
+import thedarkcolour.core.util.registerServerOptionalDispenserBehaviour
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.block.BlockFlower
 import thedarkcolour.futuremc.capability.SwimmingCapability
@@ -45,18 +47,14 @@ import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.entity.trident.EntityTrident
 import thedarkcolour.futuremc.event.Events
 import thedarkcolour.futuremc.item.ItemBannerPattern
-import thedarkcolour.futuremc.recipe.campfire.CampfireRecipes
-import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes
-import thedarkcolour.futuremc.recipe.furnace.SmokerRecipes
-import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes
 import thedarkcolour.futuremc.registry.FBlocks
 import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FParticles
 import thedarkcolour.futuremc.tile.BeeHiveTile
-import thedarkcolour.futuremc.tile.TileBell
-import thedarkcolour.futuremc.tile.TileCampfire
+import thedarkcolour.futuremc.tile.BellTileEntity
+import thedarkcolour.futuremc.tile.CampfireTile
+import thedarkcolour.futuremc.world.gen.feature.BambooFeature
 import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator
-import thedarkcolour.futuremc.world.gen.feature.WorldGenBamboo
 import thedarkcolour.futuremc.world.gen.feature.WorldGenFlower
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -72,7 +70,7 @@ import thedarkcolour.futuremc.world.gen.feature.WorldGenFlower
 object FutureMC {
     const val ID = "futuremc"
     const val NAME = "Future MC"
-    const val VERSION = "0.2.01"
+    const val VERSION = "0.2.03"
     const val DEPENDENCIES = "after:forgelin"
 
     // Set this to false
@@ -84,54 +82,39 @@ object FutureMC {
 
     @EventHandler
     fun init(event: FMLInitializationEvent) {
-        if (DEBUG) {
+        if (TODO()) {
             SwimmingCapability.register()
         }
 
         Gui.registerGuiHandler()
 
         if (FConfig.updateAquatic.trident) {
-            registerDispenserBehaviour(FItems.TRIDENT, IProjectileDispenserBehaviour(::EntityTrident))
+            registerAndDispenserBehaviour(FItems.TRIDENT, IProjectileDispenserBehaviour(::EntityTrident))
         }
         if (FConfig.buzzyBees.bee.enabled) {
-            registerDispenserBehaviour(Items.SHEARS, object : Bootstrap.BehaviorDispenseOptional() {
-                override fun dispenseStack(source: IBlockSource, stack: ItemStack): ItemStack {
-                    val worldIn = source.world
-                    if (!worldIn.isRemote) {
-                        val pos = source.blockPos.offset(source.blockState.getValue(BlockDispenser.FACING))
-                        val te = worldIn.getTileEntity(pos)
+            registerServerOptionalDispenserBehaviour(Items.SHEARS) { worldIn, source, stack ->
+                val pos = source.blockPos.offset(source.blockState.getValue(BlockDispenser.FACING))
+                val te = worldIn.getTileEntity(pos)
 
-                        if (te is BeeHiveTile && te.honeyLevel >= 5) {
-                            if (stack.attemptDamageItem(1, worldIn.rand, null)) {
-                                stack.count = 0
-                            }
-
-                            te.dropHoneyCombs(worldIn, pos)
-                        }
+                if (te is BeeHiveTile && te.honeyLevel >= 5) {
+                    if (stack.attemptDamageItem(1, worldIn.rand, null)) {
+                        stack.count = 0
                     }
 
-                    return stack
+                    te.dropHoneyCombs(worldIn, pos)
                 }
-            })
-            registerDispenserBehaviour(Items.SHEARS, object : Bootstrap.BehaviorDispenseOptional() {
-                override fun dispenseStack(source: IBlockSource, stack: ItemStack): ItemStack {
-                    val worldIn = source.world
-                    if (!worldIn.isRemote) {
-                        val pos = source.blockPos.offset(source.blockState.getValue(BlockDispenser.FACING))
-                        val te = worldIn.getTileEntity(pos)
 
-                        if (te is BeeHiveTile && te.honeyLevel >= 5) {
-                            if (stack.attemptDamageItem(1, worldIn.rand, null)) {
-                                stack.count = 0
-                            }
+                stack
+            }
+            registerServerOptionalDispenserBehaviour(Items.GLASS_BOTTLE) { worldIn, source, stack ->
+                val pos = source.blockPos.offset(source.blockState.getValue(BlockDispenser.FACING))
+                val te = worldIn.getTileEntity(pos)
 
-                            te.dropHoneyCombs(worldIn, pos)
-                        }
-                    }
-
-                    return stack
-                }
-            })
+                if (te is BeeHiveTile && te.honeyLevel >= 5) {
+                    te.setHoneyLevel(0, true)
+                    ItemStack(FItems.HONEY_BOTTLE)
+                } else stack
+            }
         }
 
         if (FConfig.villageAndPillage.loom.enabled) {
@@ -145,27 +128,37 @@ object FutureMC {
 
         // TESR registering
         runOnClient {
-            ClientRegistry.bindTileEntitySpecialRenderer(TileBell::class.java, BellRenderer())
-            ClientRegistry.bindTileEntitySpecialRenderer(TileCampfire::class.java, CampfireRenderer)
+            ClientRegistry.bindTileEntitySpecialRenderer(BellTileEntity::class.java, BellRenderer())
+            ClientRegistry.bindTileEntitySpecialRenderer(CampfireTile::class.java, CampfireRenderer)
             //ClientRegistry.bindTileEntitySpecialRenderer(TileSeagrassRenderer::class.java, TESRSeagrassRenderer)
 
-            (Minecraft.getMinecraft().resourceManager as IReloadableResourceManager).registerReloadListener {
-                val field = Fluid::class.java.getDeclaredField("color")
-                field.isAccessible = true
-                field.set(FluidRegistry.WATER, 0x3f76e4)
+            (Minecraft.getMinecraft().resourceManager as IReloadableResourceManager).registerReloadListener(
+                ISelectiveResourceReloadListener { _, predicate ->
+                    if (predicate.test(VanillaResourceType.TEXTURES)) {
+                        val field = Fluid::class.java.getDeclaredField("color")
+                        field.isAccessible = true
+                        field.set(FluidRegistry.WATER, 0x3f76e4)
 
-                if (FConfig.updateAquatic.newWaterColor) {
-                    val textures = ObfuscationReflectionHelper.getPrivateValue<Array<TextureAtlasSprite>, BlockFluidRenderer>(
-                        BlockFluidRenderer::class.java, Minecraft.getMinecraft().blockRendererDispatcher.fluidRenderer, "field_178271_b")
+                        // fix crash before getting to load screen
+                        kotlin.runCatching {
+                            if (FConfig.updateAquatic.newWaterColor) {
+                                val textures =
+                                    ObfuscationReflectionHelper.getPrivateValue<Array<TextureAtlasSprite>, BlockFluidRenderer>(
+                                        BlockFluidRenderer::class.java,
+                                        Minecraft.getMinecraft().blockRendererDispatcher.fluidRenderer,
+                                        "field_178271_b"
+                                    )
 
-                    val map = Minecraft.getMinecraft().textureMapBlocks
+                                val map = Minecraft.getMinecraft().textureMapBlocks
 
-                    textures[0] = map.getAtlasSprite("futuremc:blocks/water_still")
-                    textures[1] = map.getAtlasSprite("futuremc:blocks/water_flow")
+                                textures[0] = map.getAtlasSprite("futuremc:blocks/water_still")
+                                textures[1] = map.getAtlasSprite("futuremc:blocks/water_flow")
+                            }
+                        }
+                    }
                 }
-            }
+            )
         }
-        //StonecutterRecipes.validate()
     }
 
     @EventHandler
@@ -173,10 +166,6 @@ object FutureMC {
         // Recipes
         GameRegistry.addSmelting(ItemStack(Blocks.STONE), ItemStack(FBlocks.SMOOTH_STONE), 0.1f)
         GameRegistry.addSmelting(ItemStack(Blocks.QUARTZ_BLOCK), ItemStack(FBlocks.SMOOTH_QUARTZ), 0.1f)
-        CampfireRecipes.addDefaults()
-        StonecutterRecipes.addDefaults()
-        BlastFurnaceRecipes.addDefaults()
-        SmokerRecipes.addDefaults()
     }
 
     private fun registerWorldGen() {
@@ -190,7 +179,7 @@ object FutureMC {
             GameRegistry.registerWorldGenerator(WorldGenFlower(FBlocks.SWEET_BERRY_BUSH as BlockFlower), 0)
         }
         if (FConfig.villageAndPillage.bamboo.enabled) {
-            GameRegistry.registerWorldGenerator(WorldGenBamboo, 0)
+            GameRegistry.registerWorldGenerator(BambooFeature, 0)
         }
         if (FConfig.buzzyBees.bee.enabled) {
             BeeNestGenerator.refresh()
@@ -200,7 +189,7 @@ object FutureMC {
     @EventHandler
     fun onServerStart(event: FMLServerStartingEvent) {
         event.registerServerCommand(FastGiveCommand)
-        if (DEBUG) {
+        if (TODO()) {
             event.registerServerCommand(HealCommand())
             event.registerServerCommand(ModeToggleCommand())
             event.registerServerCommand(GenerateCommand())
@@ -208,7 +197,8 @@ object FutureMC {
     }
 
     // Initialize after config
-    lateinit var TAB: CreativeTabs
+    // todo split into object to match hardcore dungeons and fmc 1.14/15
+    lateinit var GROUP: CreativeTabs
 
     @JvmField
     val LOGGER: Logger = LogManager.getLogger()

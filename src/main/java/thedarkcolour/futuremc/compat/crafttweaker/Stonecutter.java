@@ -50,4 +50,9 @@ public final class Stonecutter {
             return r::run;
         }
     }
+
+    static {
+        StonecutterRecipes.INSTANCE.getClass();
+        StonecutterRecipes.INSTANCE.addDefaults();
+    }
 }

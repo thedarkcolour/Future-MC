@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.*
 import net.minecraft.entity.ai.EntityAIFollowParent
 import net.minecraft.entity.ai.EntityAIMate
+import net.minecraft.entity.ai.EntityAISwimming
 import net.minecraft.entity.passive.EntityAnimal
 import net.minecraft.entity.passive.EntityFlying
 import net.minecraft.entity.player.EntityPlayer
@@ -24,14 +25,15 @@ import net.minecraft.pathfinding.PathNodeType
 import net.minecraft.potion.PotionEffect
 import net.minecraft.util.DamageSource
 import net.minecraft.util.EntityDamageSource
+import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.SoundEvent
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
-import net.minecraft.util.math.Vec3d
 import net.minecraft.world.EnumDifficulty
 import net.minecraft.world.World
 import thedarkcolour.core.util.lerp
 import thedarkcolour.futuremc.entity.bee.ai.*
+import thedarkcolour.futuremc.registry.FBlocks
 import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.tile.BeeHiveTile
 import java.util.*
@@ -48,15 +50,12 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
     var ticksSincePollination = 0
     var cannotEnterHiveTicks = 0
     private var cropsGrownSincePollination = 0
-    private var findHiveCooldown = 0
+    var findHiveCooldown = 0
     var findFlowerCooldown = 0
     var flowerPos: BlockPos? = null
     var hivePos: BlockPos? = null
-    private lateinit var pollinateAI: PollinateAI
-    private lateinit var aiFindHive: FindHiveAI
-    private lateinit var aiFindFlower: FindFlowerAI
-    val random: Random
-        get() = rand
+    lateinit var pollinateAI: PollinateAI
+    lateinit var findHiveAI: FindHiveAI
 
     init {
         moveHelper = FlyHelper(this)
@@ -85,17 +84,17 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
         pollinateAI = PollinateAI(this)
         tasks.addTask(4, pollinateAI)
         tasks.addTask(5, EntityAIFollowParent(this, 1.25))
-        tasks.addTask(5, FindHiveAI(this))
+        tasks.addTask(5, UpdateHiveAI(this))
+        findHiveAI = FindHiveAI(this)
+        tasks.addTask(5, findHiveAI)
         tasks.addTask(6, FindFlowerAI(this))
         tasks.addTask(7, GrowCropsAI(this))
         tasks.addTask(8, WanderAI(this))
+        tasks.addTask(9, EntityAISwimming(this))
         targetTasks.addTask(1, RevengeAI(this))
         targetTasks.addTask(2, FollowTargetAI(this))
     }
 
-    fun isFlowerValid(state: IBlockState): Boolean {
-        return FLOWERS.contains(state)
-    }
 
     fun doesFlowerExist(pos: BlockPos): Boolean {
         return isFlowerValid(world.getBlockState(pos))
@@ -110,7 +109,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
         if (hasFlower()) {
             compound.setTag("FlowerPos", NBTUtil.createPosTag(flowerPos))
         }
-        compound.setBoolean("HasNectar", hasPollen())
+        compound.setBoolean("HasNectar", hasNectar())
         compound.setBoolean("HasStung", hasStung())
         compound.setInteger("TicksSincePollination", ticksSincePollination)
         compound.setInteger("CannotEnterHiveTicks", cannotEnterHiveTicks)
@@ -125,14 +124,12 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
     }
 
     override fun readEntityFromNBT(compound: NBTTagCompound) {
-        hivePos = null
-        if (compound.hasKey("HivePos")) {
-            hivePos = NBTUtil.getPosFromTag(compound.getCompoundTag("HivePos"))
-        }
-        flowerPos = null
-        if (compound.hasKey("FlowerPos")) {
-            flowerPos = NBTUtil.getPosFromTag(compound.getCompoundTag("FlowerPos"))
-        }
+        hivePos = if (compound.hasKey("HivePos")) {
+            NBTUtil.getPosFromTag(compound.getCompoundTag("HivePos"))
+        } else null
+        flowerPos = if (compound.hasKey("FlowerPos")) {
+            NBTUtil.getPosFromTag(compound.getCompoundTag("FlowerPos"))
+        } else null
         super.readEntityFromNBT(compound)
         setHasNectar(compound.getBoolean("HasNectar"))
         setHasStung(compound.getBoolean("HasStung"))
@@ -189,21 +186,45 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
 
     override fun onUpdate() {
         super.onUpdate()
-
+        /*if (hasNectar()) {
+            for (i in 0..(rand.nextInt(2) + 1)) {
+                spawnParticle(FParticles.FALLING_BEE_NECTAR, posX - 0.3, posX + 0.3, posZ - 0.3f, posZ + 0.3f, getBodyHeight(0.5f))
+            }
+        }*/
         updateBodyPitch()
     }
 
-    fun hasFlower(): Boolean {
-        return flowerPos != null
+    private fun spawnParticle(particleType: EnumParticleTypes, lastX: Double, nextX: Double, lastZ: Double, nextZ: Double, middle: Double) {
+        world.spawnParticle(particleType, lerp(rand.nextDouble(), lastX, nextX), middle, lerp(rand.nextDouble(), lastX, lastZ), 0.0, 0.0, 0.0)
     }
 
+    fun hasFlower() = flowerPos != null
+
+    private fun getBodyHeight(partialTicks: Float): Double {
+        return posY + height * partialTicks
+    }
+
+    // todo check this
     fun shouldReturnToHive(): Boolean {
         return if (cannotEnterHiveTicks > 0) {
             false
         } else if (!hasHive()) {
             false
         } else {
-            hasPollen() || world.isDaytime || world.isRainingAt(position) || ticksSincePollination > 3600
+            hasNectar() || world.isDaytime || world.isRainingAt(position) || ticksSincePollination > 3600
+        }
+    }
+
+    private fun failedPollinatingTooLong(): Boolean {
+        return ticksSincePollination > 3600
+    }
+
+    fun canEnterHive(): Boolean {
+        return if (cannotEnterHiveTicks <= 0 && !pollinateAI.isRunning && !hasStung()) {
+            val flag = failedPollinatingTooLong() || world.isRaining || !world.isDaytime || hasNectar()
+            flag && !isHiveNearFire()
+        } else {
+            false
         }
     }
 
@@ -248,7 +269,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
             }
         }
 
-        if (!hasPollen()) {
+        if (!hasNectar()) {
             ++ticksSincePollination
         }
     }
@@ -257,9 +278,16 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
         ticksSincePollination = 0
     }
 
-    fun isAngry(): Boolean {
-        return getAnger() > 0
+    private fun isHiveNearFire(): Boolean {
+        return if (hasHive()) {
+            false
+        } else {
+            val hive = world.getTileEntity(hivePos ?: return false)
+            hive is BeeHiveTile && hive.isNearFire()
+        }
     }
+
+    fun isAngry() = getAnger() > 0
 
     private fun getAnger(): Int {
         return dataManager.get(ANGER)
@@ -300,7 +328,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
             if (findFlowerCooldown > 0) {
                 --findFlowerCooldown
             }
-
+/*
             if (isPollinating() && !hasPath()) {
                 val f = if (rand.nextBoolean()) 2.0f else -2.0f
                 val vec3d: Vec3d
@@ -314,20 +342,16 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
 
                 getNavigator().tryMoveToXYZ(vec3d.x, vec3d.y, vec3d.z, 0.4000000059604645)
             }
-
+*/
             setNearTarget(isAngry() && !hasStung() && attackTarget != null && attackTarget!!.getDistanceSq(this) < 4.0)
 
             if (hasHive() && ticksExisted % 20 == 0 && !isHiveValid()) {
-                hivePos = BlockPos.ORIGIN
+                hivePos = null
             }
         }
     }
 
-    fun isHiveValid(): Boolean {
-        return hasHive() && world.getTileEntity(hivePos!!) is BeeHiveTile
-    }
-
-    fun hasPollen(): Boolean {
+    fun hasNectar(): Boolean {
         return getBeeFlag(0x8)
     }
 
@@ -351,10 +375,19 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
         setBeeFlag(0x2, isNearTarget)
     }
 
+    fun isTooFar(pos: BlockPos): Boolean {
+        return !isWithinDistance(pos, 48)
+    }
+// todo check this
+    fun isHiveValid(): Boolean {
+        return hasHive() && world.getTileEntity(hivePos!!) is BeeHiveTile
+    }
+/*
     private fun isPollinating(): Boolean {
         return getBeeFlag(0x1)
     }
-
+*/
+// todo check this
     fun setPollinating(isPollinating: Boolean) {
         setBeeFlag(0x1, isPollinating)
     }
@@ -384,7 +417,13 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
     override fun createNavigator(worldIn: World): PathNavigate {
         val navigateFlying = object : PathNavigateFlying(this, worldIn) {
             override fun canEntityStandOnPos(pos: BlockPos): Boolean {
-                return worldIn.getBlockState(pos.down()).block == Blocks.AIR
+                return !worldIn.isAirBlock(pos.down())
+            }
+
+            override fun onUpdateNavigation() {
+                if (!pollinateAI.isRunning) {
+                    super.onUpdateNavigation()
+                }
             }
         }
         navigateFlying.setCanOpenDoors(false)
@@ -398,12 +437,16 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
         return isFlowerValid(Block.getBlockFromItem(stack.item).getStateFromMeta(stack.metadata))
     }
 
-    override fun playStepSound(pos: BlockPos, blockIn: Block) {}
-
-    override fun getAmbientSound(): SoundEvent? {
-        return if (isAngry()) FSounds.BEE_AGGRESSIVE else FSounds.BEE_PASSIVE
+    fun isFlowerValid(state: IBlockState): Boolean {
+        return FLOWERS.contains(state)
     }
 
+    override fun playStepSound(pos: BlockPos, blockIn: Block) {}
+/*
+    override fun getAmbientSound(): SoundEvent? {
+        return null
+    }
+*/
     override fun getHurtSound(damageSourceIn: DamageSource?): SoundEvent? {
         return FSounds.BEE_HURT
     }
@@ -421,7 +464,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
     }
 
     override fun getEyeHeight(): Float {
-        return if (isChild) height * 0.95f else 0.6f
+        return height * 0.5f
     }
 
     override fun fall(distance: Float, damageMultiplier: Float) {}
@@ -435,21 +478,6 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
     fun onHoneyDelivered() {
         setHasNectar(false)
         resetCropCounter()
-    }
-
-    fun getBlockInRange(range: Int, test: (BlockPos) -> Boolean): BlockPos? {
-        val pos = position.add(-range, -range, -range)
-
-        for (x in 0 until (range shl 1) + 1) {
-            for (y in 0 until (range shl 1) + 1) {
-                for (z in 0 until (range shl 1) + 1) {
-                    if (test(pos.add(x, y, z))) {
-                        return pos.add(x, y, z)
-                    }
-                }
-            }
-        }
-        return null
     }
 
     fun setBeeAttacker(entity: Entity): Boolean {
@@ -479,8 +507,26 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
         return EnumCreatureAttribute.ARTHROPOD
     }
 
-    fun isWithinDistance(flowerPos: BlockPos, distance: Int): Boolean {
-        return flowerPos.distanceSq(position) < distance * distance
+    override fun handleJumpWater() {
+        motionY += 0.01
+    }
+
+    override fun handleJumpLava() {
+        motionY += 0.01
+    }
+
+    fun isWithinDistance(flowerPos: BlockPos?, distance: Int): Boolean {
+        return (flowerPos ?: return false).distanceSq(position) < distance * distance
+    }
+
+    fun getBlockInRange(range: Int, test: (BlockPos) -> Boolean): BlockPos? {
+        for (pos in BlockPos.getAllInBoxMutable(position.add(-range, -range, -range), position.add(range, range, range))) {
+            if (test(pos)) {
+                return pos.toImmutable()
+            }
+        }
+
+        return null
     }
 
     companion object {
@@ -489,6 +535,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
 
         @JvmField
         val FLOWERS = arrayListOf(
+            FBlocks.CORNFLOWER.defaultState, FBlocks.LILY_OF_THE_VALLEY, FBlocks.WITHER_ROSE,
             Blocks.YELLOW_FLOWER.defaultState.withProperty(Blocks.YELLOW_FLOWER.typeProperty, EnumFlowerType.DANDELION),
             Blocks.RED_FLOWER.defaultState.withProperty(Blocks.RED_FLOWER.typeProperty, EnumFlowerType.POPPY),
             Blocks.RED_FLOWER.defaultState.withProperty(Blocks.RED_FLOWER.typeProperty, EnumFlowerType.BLUE_ORCHID),

@@ -4,25 +4,31 @@
             "model": "futuremc:birch_trapdoor_bottom"
         },
         "facing=south,half=bottom,open=false": {
-            "model": "futuremc:birch_trapdoor_bottom"
+            "model": "futuremc:birch_trapdoor_bottom",
+            "y": 180
         },
         "facing=east,half=bottom,open=false": {
-            "model": "futuremc:birch_trapdoor_bottom"
+            "model": "futuremc:birch_trapdoor_bottom",
+            "y": 90
         },
         "facing=west,half=bottom,open=false": {
-            "model": "futuremc:birch_trapdoor_bottom"
+            "model": "futuremc:birch_trapdoor_bottom",
+            "y": 270
         },
         "facing=north,half=top,open=false": {
             "model": "futuremc:birch_trapdoor_top"
         },
         "facing=south,half=top,open=false": {
-            "model": "futuremc:birch_trapdoor_top"
+            "model": "futuremc:birch_trapdoor_top",
+            "y": 180
         },
         "facing=east,half=top,open=false": {
-            "model": "futuremc:birch_trapdoor_top"
+            "model": "futuremc:birch_trapdoor_top",
+            "y": 90
         },
         "facing=west,half=top,open=false": {
-            "model": "futuremc:birch_trapdoor_top"
+            "model": "futuremc:birch_trapdoor_top",
+            "y": 270
         },
         "facing=north,half=bottom,open=true": {
             "model": "futuremc:birch_trapdoor_open"

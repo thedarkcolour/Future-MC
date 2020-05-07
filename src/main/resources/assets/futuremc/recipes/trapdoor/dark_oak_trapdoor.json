@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:planks",
+            "data": 5
+        }
+    },
+    "result": {
+        "item": "futuremc:dark_oak_trapdoor",
+        "count": 2
+    }
+}

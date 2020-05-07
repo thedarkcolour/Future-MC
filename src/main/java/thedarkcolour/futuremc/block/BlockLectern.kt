@@ -1,8 +1,6 @@
 package thedarkcolour.futuremc.block
 
 import io.netty.buffer.Unpooled
-import net.minecraft.block.ITileEntityProvider
-import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.EntityPlayerSP
@@ -19,30 +17,25 @@ import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.core.block.RotatableBlock
-import thedarkcolour.futuremc.FutureMC.TAB
+import thedarkcolour.futuremc.FutureMC.GROUP
 import thedarkcolour.futuremc.client.gui.GuiLectern
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.tile.TileLectern
 
-class BlockLectern : RotatableBlock("Lectern", Material.WOOD), ITileEntityProvider {
+class BlockLectern(properties: Properties?) : RotatableBlock(properties) {
     init {
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.REDSTONE else TAB
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.REDSTONE else GROUP
     }
 
-    override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity? {
+    override fun hasTileEntity(state: IBlockState) = true
+
+    override fun createTileEntity(worldIn: World, state: IBlockState): TileEntity? {
         return TileLectern()
     }
 
     override fun onBlockActivated(
-        worldIn: World,
-        pos: BlockPos,
-        state: IBlockState,
-        playerIn: EntityPlayer,
-        hand: EnumHand,
-        facing: EnumFacing,
-        hitX: Float,
-        hitY: Float,
-        hitZ: Float
+        worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer,
+        hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float
     ): Boolean {
         val tile = worldIn.getTileEntity(pos)
         if (tile is TileLectern) {

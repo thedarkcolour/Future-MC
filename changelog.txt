@@ -1,3 +1,28 @@
+Version 0.2.03 - Bug fix update:
+ Trapdoors - No longer have strange rotations.
+ Fixed CraftTweaker issues when using remove functions on certain blocks
+ Readjusted attributes of several blocks to be consistent with 1.13+
+ Fixed BiomeTweaker crash #113
+ Fixed Cascading worldgen lag #128
+ Added Smooth Sandstone and Smooth Red Sandstone
+ Changed block id of Mossy Stone Brick Wall and End Stone Brick Wall to be consistent with 1.13+
+
+Version 0.2.02 - Bug fix update:
+ Bark blocks - Fixed models
+ Campfire - Fixed missing crackle particles
+ Trident - No longer passes through entities
+ Fixed missing translation keys on some items
+
+Version 0.2.01 - Test update:
+ Some things from the 0.2.0 update...
+ Cod, Pufferfish, Salmon, Tropical Fish, Trapdoors, Loom functionality,
+ Soul fire torch/lantern/soil, bamboo fixes, blast furnace/smoker changes,
+ new modid, beehive/bee nest adjustments, campfire particles/sounds, new config,
+ honey bottle adjustments, iron golem cracking, lantern sounds, smooth stone fix,
+ stonecutter fixes, suspicious stew adjustments, wither rose fixes...
+
+ Note that Bee AI has been broken in this test update.
+
 Version 0.2.0 - Big update! New things:
  *Cod* - Fish from 1.13 that spawns in ocean biomes.
  *Pufferfish* - Fish from 1.13 that spawns in deep ocean biomes and puffs up when threatened.
@@ -5,6 +30,9 @@ Version 0.2.0 - Big update! New things:
  *Tropical Fish* - Colorful fish that spawns in deep ocean biomes.
  *Wooden Trapdoors* - All wood variants have their own trapdoors from 1.13.
  *Loom Functionality* - You can now use the Loom to craft banners.
+ *Soul Fire Torch* - Creative item and block from 1.15.
+ *Soul Lantern* - Creative item and block from 1.15.
+ *Soul Soil* - Creative item and block from 1.15.
  Bamboo - Added bamboo saplings from 1.14.
  Bamboo - Hitbox is now like 1.14's hitbox.
  Bamboo - Added config option to tighten the hitbox to its collision box or to leave it as it is in 1.14.
@@ -17,6 +45,7 @@ Version 0.2.0 - Big update! New things:
  Beehives and Bee nests - Can now be harvested by dispensers.
  Campfire - No longer crashes if you are burned to death on it while running OptiFine.
  Campfire - Added particles.
+ Campfire - Added missing crackle sounds.
  Config - Completely redone. You may need to set some of your options again. It's in a new file called "futuremc.cfg", so you can look back if you want to migrate from "future-mc.cfg".
  Config - Categorized by minecraft version instead of "general" and "flowers". Options are now sorted alphabetically.
  Config - Added a bunch of new options, removed a few options that I feel do not fit in the mod.

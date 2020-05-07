@@ -8,7 +8,6 @@ import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.state.BlockFaceShape
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
-import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
 import net.minecraft.init.Blocks
 import net.minecraft.util.EnumFacing
@@ -16,130 +15,70 @@ import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
-import thedarkcolour.futuremc.FutureMC
-import thedarkcolour.futuremc.config.FConfig
+import thedarkcolour.core.block.FBlock
 
-class BlockWall(variant: Variant) : Block(variant.material) {
+class BlockWall(properties: Properties) : FBlock(properties) {
     init {
-        defaultState = defaultState
-            .withProperty(UP, false)
-            .withProperty(NORTH, false)
-            .withProperty(EAST, false)
-            .withProperty(SOUTH, false)
-            .withProperty(WEST, false)
-        setHardness(variant.hardness)
-        setResistance(variant.resistance)
-        val name = variant.name.toLowerCase() + "_wall"
-        setRegistryName(name)
-        translationKey = "${FutureMC.ID}.$name"
-        soundType = variant.soundType
-        creativeTab = if (FConfig.useVanillaCreativeTabs) {
-            CreativeTabs.DECORATIONS
-        } else {
-            FutureMC.TAB
-        }
+        defaultState = defaultState.withProperty(UP, false).withProperty(NORTH, false).withProperty(EAST, false).withProperty(SOUTH, false).withProperty(WEST, false)
     }
 
-    override fun getBoundingBox(
-        state: IBlockState,
-        source: IBlockAccess,
-        pos: BlockPos
-    ): AxisAlignedBB {
+    override fun getBoundingBox(state: IBlockState, source: IBlockAccess, pos: BlockPos): AxisAlignedBB {
         val actualState = getActualState(state, source, pos)
         return AABB_BY_INDEX[getAABBIndex(actualState)]
     }
 
     override fun addCollisionBoxToList(
-        state: IBlockState,
-        worldIn: World,
-        pos: BlockPos,
-        entityBox: AxisAlignedBB,
-        collidingBoxes: List<AxisAlignedBB>,
-        entityIn: Entity?,
-        isActualState: Boolean
+        state: IBlockState, worldIn: World, pos: BlockPos, entityBox: AxisAlignedBB, 
+        collidingBoxes: List<AxisAlignedBB>, entityIn: Entity?, isActualState: Boolean
     ) {
         var actualState = state
         if (!isActualState) {
             actualState = getActualState(state, worldIn, pos)
         }
-        addCollisionBoxToList(
-            pos,
-            entityBox,
-            collidingBoxes,
-            CLIP_AABB_BY_INDEX[getAABBIndex(actualState)]
-        )
+        addCollisionBoxToList(pos, entityBox, collidingBoxes, CLIP_AABB_BY_INDEX[getAABBIndex(actualState)])
     }
 
-    override fun getCollisionBoundingBox(
-        blockState: IBlockState,
-        worldIn: IBlockAccess,
-        pos: BlockPos
-    ): AxisAlignedBB? {
-        val actualState = getActualState(blockState, worldIn, pos)
+    override fun getCollisionBoundingBox(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos): AxisAlignedBB {
+        val actualState = getActualState(state, worldIn, pos)
         return CLIP_AABB_BY_INDEX[getAABBIndex(actualState)]
     }
 
-    override fun isFullCube(state: IBlockState): Boolean {
-        return false
-    }
+    override fun isFullCube(state: IBlockState) = false
 
-    override fun isPassable(worldIn: IBlockAccess, pos: BlockPos): Boolean {
-        return false
-    }
+    override fun isPassable(worldIn: IBlockAccess, pos: BlockPos) = false
 
-    override fun isOpaqueCube(state: IBlockState): Boolean {
-        return false
-    }
+    override fun isOpaqueCube(state: IBlockState) = false
 
     private fun canConnectTo(
         worldIn: IBlockAccess,
         pos: BlockPos,
-        p_176253_3_: EnumFacing
+        facing: EnumFacing
     ): Boolean {
-        val iblockstate = worldIn.getBlockState(pos)
-        val block = iblockstate.block
-        val blockfaceshape = iblockstate.getBlockFaceShape(worldIn, pos, p_176253_3_)
-        val flag =
-            blockfaceshape == BlockFaceShape.MIDDLE_POLE_THICK || blockfaceshape == BlockFaceShape.MIDDLE_POLE && block is BlockFenceGate
-        return !isExceptBlockForAttachWithPiston(block) && blockfaceshape == BlockFaceShape.SOLID || flag
+        val state = worldIn.getBlockState(pos)
+        val block = state.block
+        val shape = state.getBlockFaceShape(worldIn, pos, facing)
+        val flag = shape == BlockFaceShape.MIDDLE_POLE_THICK || shape == BlockFaceShape.MIDDLE_POLE && block is BlockFenceGate
+        return !isExceptBlockForAttachWithPiston(block) && shape == BlockFaceShape.SOLID || flag
     }
 
-    override fun shouldSideBeRendered(
-        blockState: IBlockState,
-        blockAccess: IBlockAccess,
-        pos: BlockPos,
-        side: EnumFacing
-    ): Boolean {
-        return if (side == EnumFacing.DOWN) super.shouldSideBeRendered(blockState, blockAccess, pos, side) else true
+    override fun shouldSideBeRendered(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean {
+        return if (side == EnumFacing.DOWN) super.shouldSideBeRendered(state, worldIn, pos, side) else true
     }
-
-
-    override fun getActualState(
-        state: IBlockState,
-        worldIn: IBlockAccess,
-        pos: BlockPos
-    ): IBlockState {
+    
+    override fun getActualState(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos): IBlockState {
         val flag = canWallConnectTo(worldIn, pos, EnumFacing.NORTH)
         val flag1 = canWallConnectTo(worldIn, pos, EnumFacing.EAST)
         val flag2 = canWallConnectTo(worldIn, pos, EnumFacing.SOUTH)
         val flag3 = canWallConnectTo(worldIn, pos, EnumFacing.WEST)
         val flag4 = flag && !flag1 && flag2 && !flag3 || !flag && flag1 && !flag2 && flag3
-        return state.withProperty(
-            UP,
-            java.lang.Boolean.valueOf(!flag4 || !worldIn.isAirBlock(pos.up()))
-        ).withProperty(NORTH, java.lang.Boolean.valueOf(flag))
-            .withProperty(EAST, java.lang.Boolean.valueOf(flag1))
-            .withProperty(SOUTH, java.lang.Boolean.valueOf(flag2))
-            .withProperty(WEST, java.lang.Boolean.valueOf(flag3))
+        return state.withProperty(UP, (!flag4 || !worldIn.isAirBlock(pos.up()))).withProperty(NORTH, (flag)).withProperty(EAST, (flag1)).withProperty(SOUTH, (flag2)).withProperty(WEST, (flag3))
     }
 
     override fun createBlockState(): BlockStateContainer {
         return BlockStateContainer(this, UP, NORTH, EAST, WEST, SOUTH)
     }
 
-    override fun getMetaFromState(state: IBlockState): Int {
-        return 0
-    }
+    override fun getMetaFromState(state: IBlockState) = 0
 
     override fun getBlockFaceShape(
         worldIn: IBlockAccess,

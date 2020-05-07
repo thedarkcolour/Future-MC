@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.SlotItemHandler;
-import thedarkcolour.core.gui.ContainerBase;
+import thedarkcolour.core.gui.FContainer;
 import thedarkcolour.core.inventory.DarkInventory;
 import thedarkcolour.futuremc.client.gui.GuiGrindstone;
 import thedarkcolour.futuremc.enchantment.EnchantHelper;
@@ -28,10 +28,10 @@ import thedarkcolour.futuremc.registry.FSounds;
 
 import java.util.Map;
 
-public class ContainerGrindstone extends ContainerBase {
-    private InventoryPlayer playerInv;
-    private World world;
-    private BlockPos pos;
+public class ContainerGrindstone extends FContainer {
+    private final InventoryPlayer playerInv;
+    private final World world;
+    private final BlockPos pos;
 
     public DarkInventory input = new DarkInventory(2) {
         @Override
@@ -82,12 +82,6 @@ public class ContainerGrindstone extends ContainerBase {
             int x = 9 + row * 18 - 1;
             int y = 58 + 70 + 14;
             this.addSlotToContainer(new Slot(this.playerInv, row, x, y));
-        }
-    }
-
-    private void clearInput() {
-        for (int i = 0; i < input.getSlots(); i++) {
-            input.getStackInSlot(i).shrink(1);
         }
     }
 
@@ -247,21 +241,27 @@ public class ContainerGrindstone extends ContainerBase {
         return enchantment.getMinEnchantability(enchantLevel);
     }
 
+    private void clearInput() {
+        for (int i = 0; i < input.getSlots(); i++) {
+            input.getStackInSlot(i).shrink(1);
+        }
+    }
+
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
+        Slot slot = inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
             ItemStack itemStack1 = slot.getStack();
             itemstack = itemStack1.copy();
 
             if (index < 3) {
-                if (!this.mergeItemStack(itemStack1, 3, this.inventorySlots.size(), true)) {
+                if (!mergeItemStack(itemStack1, 3, inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onSlotChange(itemStack1, itemstack);
-            } else if (!this.mergeItemStack(itemStack1, 0, 3, false)) {
+            } else if (!mergeItemStack(itemStack1, 0, 3, false)) {
                 return ItemStack.EMPTY;
             }
             if (itemStack1.isEmpty()) {

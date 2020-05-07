@@ -10,7 +10,7 @@ class WanderAI(private val bee: BeeEntity) : EntityAIBase() {
     }
 
     override fun shouldExecute(): Boolean {
-        return bee.navigator.noPath() && bee.rng.nextInt(10) == 0 || !bee.hasHive()
+        return bee.navigator.noPath() && bee.rng.nextInt(10) == 0
     }
 
     override fun shouldContinueExecuting(): Boolean {
@@ -23,8 +23,9 @@ class WanderAI(private val bee: BeeEntity) : EntityAIBase() {
             bee.navigator.tryMoveToXYZ(vec3d.x, vec3d.y, vec3d.z, 1.0)
         }
     }
-
+/*
     override fun resetTask() {
         bee.navigator.setPath(null, 1.0)
     }
+ */
 }

@@ -6,10 +6,8 @@ import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import net.minecraft.item.ItemStack;
-import org.apache.logging.log4j.Level;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
-import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
 import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes;
 
@@ -18,30 +16,25 @@ import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes;
 public final class BlastFurnace {
     @ZenMethod
     public static void addRecipe(IItemStack input, IItemStack output) {
-        if (!BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE.canCraft(CraftTweakerMC.getItemStack(input))) {
-            CraftTweakerAPI.apply(new AddRecipe(input, output));
+        ItemStack inputStack = CraftTweakerMC.getItemStack(input);
+        inputStack.setCount(1);
+        ItemStack outputStack = CraftTweakerMC.getItemStack(output);
+        outputStack.setCount(1);
+
+        if (!BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE.canCraft(inputStack)) {
+            CraftTweakerAPI.apply(new IAction() {
+                @Override
+                public void apply() {
+                    BlastFurnaceRecipes.INSTANCE.addRecipe(inputStack, outputStack);
+                }
+
+                @Override
+                public String describe() {
+                    return "Adding Blast Furnace recipe (input: " + inputStack.toString() + ") -> (output: " + outputStack.toString() + ")";
+                }
+            });
         } else {
-            FutureMC.LOGGER.log(Level.WARN, "Tried to add duplicate valid BlastFurnace input for " + input.getDefinition().getId());
-        }
-    }
-
-    private static class AddRecipe implements IAction {
-        private final ItemStack input;
-        private final ItemStack output;
-
-        private AddRecipe(IItemStack input, IItemStack output) {
-            this.input = CraftTweakerMC.getItemStack(input);
-            this.output = CraftTweakerMC.getItemStack(output);
-        }
-
-        @Override
-        public void apply() {
-            BlastFurnaceRecipes.INSTANCE.addRecipe(input, output);
-        }
-
-        @Override
-        public String describe() {
-            return "Added " + input.getItem().getRegistryName() + " to smeltable items BlastFurnace";
+            System.out.println("Tried to add duplicate valid BlastFurnace input for " + inputStack.toString());
         }
     }
 
@@ -50,7 +43,7 @@ public final class BlastFurnace {
         CraftTweakerAPI.apply(new RemoveRecipe(input));
     }
 
-    private static class RemoveRecipe implements IAction {
+    private static final class RemoveRecipe implements IAction {
         private ItemStack input;
 
         private RemoveRecipe(IItemStack input) {

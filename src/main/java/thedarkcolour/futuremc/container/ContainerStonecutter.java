@@ -14,14 +14,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import thedarkcolour.core.gui.ContainerBase;
+import thedarkcolour.core.gui.FContainer;
 import thedarkcolour.futuremc.client.gui.GuiStonecutter;
 import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipe;
 import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes;
 import thedarkcolour.futuremc.registry.FBlocks;
 import thedarkcolour.futuremc.registry.FSounds;
 
-public class ContainerStonecutter extends ContainerBase {
+public class ContainerStonecutter extends FContainer {
     private final World world;
     private final BlockPos pos;
     private final InventoryPlayer playerInv;

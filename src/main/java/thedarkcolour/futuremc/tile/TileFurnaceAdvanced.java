@@ -171,7 +171,7 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
         if (!getType().canCraft(furnaceItemStacks.get(0))) {
             return false;
         } else {
-            ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(furnaceItemStacks.get(0));
+            ItemStack itemstack = getType().getOutput(furnaceItemStacks.get(0));
 
             if (itemstack.isEmpty()) {
                 return false;
@@ -208,10 +208,10 @@ public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable
         switch (id) {
             case 0:
                 furnaceBurnTime = value;
-                break;
+                return;
             case 1:
                 currentItemBurnTime = value;
-                break;
+                return;
             case 2:
                 cookTime = value;
         }

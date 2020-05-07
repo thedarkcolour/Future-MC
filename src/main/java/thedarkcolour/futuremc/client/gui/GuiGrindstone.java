@@ -24,7 +24,7 @@ public class GuiGrindstone extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String s = I18n.format("container.Grindstone");
+        String s = I18n.format("container.grindstone");
         fontRenderer.drawString(s, 8, 6, 4210752);
         fontRenderer.drawString(container.getPlayerInv().getDisplayName().getUnformattedText(), 8, ySize - 93, 4210752);
     }

@@ -1,6 +1,3 @@
-@file:JvmName("Init")
-@file:Suppress("MemberVisibilityCanBePrivate", "UNCHECKED_CAST")
-
 package thedarkcolour.futuremc.registry
 
 import net.minecraft.tileentity.TileEntity

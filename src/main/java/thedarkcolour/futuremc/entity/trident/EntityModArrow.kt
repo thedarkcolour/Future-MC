@@ -182,16 +182,9 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
         val block = iblockstate.block
 
         if (iblockstate.material != Material.AIR) {
-            val axisalignedbb = iblockstate.getCollisionBoundingBox(world, blockpos)
+            val box = iblockstate.getCollisionBoundingBox(world, blockpos)
 
-            if (axisalignedbb != Block.NULL_AABB && axisalignedbb!!.offset(blockpos).contains(
-                    Vec3d(
-                        posX,
-                        posY,
-                        posZ
-                    )
-                )
-            ) {
+            if (box != Block.NULL_AABB && box!!.offset(blockpos).contains(Vec3d(posX, posY, posZ))) {
                 inGround = true
             }
         }
@@ -239,9 +232,9 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
             }
 
             if (result != null && result.entityHit is EntityPlayer) {
-                val entityplayer = result.entityHit as EntityPlayer
+                val playerIn = result.entityHit as EntityPlayer
 
-                if (shootingEntity is EntityPlayer && !(shootingEntity as EntityPlayer).canAttackPlayer(entityplayer)) {
+                if (shootingEntity is EntityPlayer && !(shootingEntity as EntityPlayer).canAttackPlayer(playerIn)) {
                     result = null
                 }
             }
@@ -424,16 +417,15 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
     }
 
     override fun move(type: MoverType?, x: Double, y: Double, z: Double) {
-
-        if (inGround) {
+        /*if (inGround) {
             xTile = floor(posX).toInt()
             yTile = floor(posY).toInt()
             zTile = floor(posZ).toInt()
-        }
+        }*/
     }
 
     override fun arrowHit(living: EntityLivingBase?) {}
-
+/*
     override fun findEntityOnPath(start: Vec3d, end: Vec3d): Entity? {
         if (world.isRemote) {
             return null
@@ -442,16 +434,17 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
         val list = world.getEntitiesInAABBexcluding(
             this,
             entityBoundingBox.expand(motionX, motionY, motionZ).grow(1.0),
-            ARROW_TARGETS::invoke
+            ARROW_TARGETS
         )
         var d0 = 0.0
 
         for (entity1 in list) {
-            if (entity1 != shootingEntity || ticksInAir >= 5) {
+            if (entity1 != shootingEntity) {
                 val box = entity1.entityBoundingBox.grow(0.30000001192092896)
                 val result = box.calculateIntercept(start, end)
 
                 if (result != null) {
+                    if (result.entityHit != null) return result.entityHit
                     val d1 = start.squareDistanceTo(result.hitVec)
 
                     if (d1 < d0 || d0 == 0.0) {
@@ -464,7 +457,7 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
 
         return entity
     }
-
+*/
     override fun writeEntityToNBT(compound: NBTTagCompound) {
         compound.setInteger("xTile", xTile)
         compound.setInteger("yTile", yTile)
@@ -607,7 +600,7 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
     companion object {
         private val CRITICAL = EntityDataManager.createKey(EntityModArrow::class.java, DataSerializers.BYTE)
         private val PIERCE_LEVEL = EntityDataManager.createKey(EntityModArrow::class.java, DataSerializers.BYTE)
-        val ARROW_TARGETS: (Entity?) -> Boolean = {
+        val ARROW_TARGETS = com.google.common.base.Predicate<Entity?> {
             it?.let {
                 (it is EntityPlayer && it.isSpectator) && it.isEntityAlive && it.canBeCollidedWith()
             } ?: false

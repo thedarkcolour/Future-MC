@@ -45,15 +45,14 @@ object FItems {
             addListener(it::update)
         }
         HONEYCOMB = register(
-            ItemModeled("honeycomb").setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else FutureMC.TAB),
+            ItemModeled("honeycomb").setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else FutureMC.GROUP),
             FConfig.buzzyBees.bee.enabled
         )
         HONEY_BOTTLE = register(ItemHoneyBottle(), FConfig.buzzyBees.bee.enabled)
         SWEET_BERRIES = register(ItemSweetBerries(), FConfig.villageAndPillage.sweetBerryBush.enabled)
         SUSPICIOUS_STEW = register(ItemSuspiciousStew(), FConfig.villageAndPillage.suspiciousStew)
         BAMBOO = register(ItemBamboo(), FConfig.villageAndPillage.bamboo.enabled)
-        PUFFERFISH_BUCKET =
-            register(ItemFishBucket("pufferfish_bucket", ::EntityPufferfish), FConfig.updateAquatic.fish.pufferfish.enabled)
+        PUFFERFISH_BUCKET = register(ItemFishBucket("pufferfish_bucket", ::EntityPufferfish), FConfig.updateAquatic.fish.pufferfish.enabled)
         SALMON_BUCKET =
             register(ItemFishBucket("salmon_bucket", ::EntitySalmon), FConfig.updateAquatic.fish.salmon.enabled)
         COD_BUCKET =
@@ -61,7 +60,7 @@ object FItems {
         TROPICAL_FISH_BUCKET =
             register(ItemFishBucket("tropical_fish_bucket", ::EntityTropicalFish), FConfig.updateAquatic.fish.tropicalFish.enabled)
         NAUTILUS_SHELL =
-            register(ItemModeled("nautilus_shell").setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else FutureMC.TAB))
+            register(ItemModeled("nautilus_shell").setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else FutureMC.GROUP))
 
         DEBUGGER = register(ItemDebugger(), FutureMC.DEBUG)
 
@@ -74,7 +73,7 @@ object FItems {
         register(ItemModeledBlock(FBlocks.FLETCHING_TABLE), FConfig.villageAndPillage.fletchingTable)
         register(ItemModeledBlock(FBlocks.SMITHING_TABLE), FConfig.villageAndPillage.smithingTable.enabled)
         register(ItemModeledBlock(FBlocks.CARTOGRAPHY_TABLE), FConfig.villageAndPillage.cartographyTable.enabled)
-        register(ItemModeledBlock(FBlocks.GRINDSTONE), FConfig.villageAndPillage.grindstone)
+        register(ItemModeledBlock(FBlocks.GRINDSTONE), FConfig.villageAndPillage.grindstone.enabled)
         register(ItemModeledBlock(FBlocks.COMPOSTER), FConfig.villageAndPillage.composter)
         register(ItemModeledBlock(FBlocks.BELL), FConfig.villageAndPillage.bell)
         //register(ItemModeledBlock(FBlocks.SCAFFOLDING), villageAndPillage.scaffolding)
@@ -99,10 +98,10 @@ object FItems {
         register(ItemModeledBlock(FBlocks.SANDSTONE_WALL), FConfig.villageAndPillage.newWalls.sandstone)
         register(ItemModeledBlock(FBlocks.RED_SANDSTONE_WALL), FConfig.villageAndPillage.newWalls.redSandstone)
         register(ItemModeledBlock(FBlocks.STONE_BRICK_WALL), FConfig.villageAndPillage.newWalls.stoneBrick)
-        register(ItemModeledBlock(FBlocks.MOSSY_STONE_WALL), FConfig.villageAndPillage.newWalls.mossyStone)
+        register(ItemModeledBlock(FBlocks.MOSSY_STONE_BRICK_WALL), FConfig.villageAndPillage.newWalls.mossyStone)
         register(ItemModeledBlock(FBlocks.NETHER_BRICK_WALL), FConfig.villageAndPillage.newWalls.netherBrick)
         register(ItemModeledBlock(FBlocks.RED_NETHER_BRICK_WALL), FConfig.villageAndPillage.newWalls.redNetherBrick)
-        register(ItemModeledBlock(FBlocks.END_STONE_WALL), FConfig.villageAndPillage.newWalls.endStoneBrick)
+        register(ItemModeledBlock(FBlocks.END_STONE_BRICK_WALL), FConfig.villageAndPillage.newWalls.endStoneBrick)
         register(ItemModeledBlock(FBlocks.PRISMARINE_WALL), FConfig.villageAndPillage.newWalls.prismarine)
         register(ItemModeledBlock(FBlocks.SMOOTH_STONE), FConfig.villageAndPillage.smoothStone)
         register(ItemModeledBlock(FBlocks.SMOOTH_QUARTZ), FConfig.villageAndPillage.smoothQuartz)
@@ -127,6 +126,7 @@ object FItems {
 
         register(ItemModeledBlock(FBlocks.SOUL_FIRE_LANTERN), FConfig.netherUpdate.soulFireLantern)
         register(ItemModeledBlock(FBlocks.SOUL_FIRE_TORCH), FConfig.netherUpdate.soulFireTorch)
+        register(ItemModeledBlock(FBlocks.SOUL_SOIL), FConfig.netherUpdate.soulSoil)
 
         //register(ItemSeagrass(), FConfig.updateAquatic.seagrass)
 
@@ -160,5 +160,27 @@ object FItems {
         if (FConfig.updateAquatic.strippedLogs.darkOak)
             OreDictionary.registerOre("logWood", FBlocks.STRIPPED_DARK_OAK_LOG)
 
+        if (FConfig.updateAquatic.wood.strippedAcacia)
+            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_ACACIA_WOOD)
+        if (FConfig.updateAquatic.wood.strippedJungle)
+            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_JUNGLE_WOOD)
+        if (FConfig.updateAquatic.wood.strippedBirch)
+            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_BIRCH_WOOD)
+        if (FConfig.updateAquatic.wood.strippedOak)
+            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_OAK_WOOD)
+        if (FConfig.updateAquatic.wood.strippedSpruce)
+            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_SPRUCE_WOOD)
+        if (FConfig.updateAquatic.wood.strippedDarkOak)
+            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_DARK_OAK_WOOD)
+        if (FConfig.updateAquatic.wood.acacia)
+            OreDictionary.registerOre("logWood", FBlocks.ACACIA_WOOD)
+        if (FConfig.updateAquatic.wood.jungle)
+            OreDictionary.registerOre("logWood", FBlocks.JUNGLE_WOOD)
+        if (FConfig.updateAquatic.wood.oak)
+            OreDictionary.registerOre("logWood", FBlocks.BIRCH_WOOD)
+        if (FConfig.updateAquatic.wood.spruce)
+            OreDictionary.registerOre("logWood", FBlocks.OAK_WOOD)
+        if (FConfig.updateAquatic.wood.darkOak)
+            OreDictionary.registerOre("logWood", FBlocks.SPRUCE_WOOD)
     }
 }

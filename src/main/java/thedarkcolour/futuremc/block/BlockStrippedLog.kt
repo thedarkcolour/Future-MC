@@ -10,9 +10,11 @@ import net.minecraft.util.NonNullList
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import thedarkcolour.futuremc.FutureMC
-import thedarkcolour.futuremc.FutureMC.TAB
+import thedarkcolour.futuremc.FutureMC.GROUP
 import thedarkcolour.futuremc.config.FConfig
 
+// todo extend FBlock
+//      redo
 class BlockStrippedLog(variant: String) : BlockLog() {
     override fun getSubBlocks(itemIn: CreativeTabs, items: NonNullList<ItemStack>) {
         items.add(ItemStack(this))
@@ -58,7 +60,7 @@ class BlockStrippedLog(variant: String) : BlockLog() {
     init {
         translationKey = FutureMC.ID + ".stripped_" + variant + "_log"
         setRegistryName("stripped_" + variant + "_log")
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.BUILDING_BLOCKS else TAB
-        this.defaultState = getBlockState().baseState.withProperty(LOG_AXIS, EnumAxis.Y)
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.BUILDING_BLOCKS else GROUP
+        defaultState = defaultState.withProperty(LOG_AXIS, EnumAxis.Y)
     }
 }

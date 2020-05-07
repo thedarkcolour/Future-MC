@@ -3,13 +3,11 @@ package thedarkcolour.futuremc.block
 import net.minecraft.block.Block
 import net.minecraft.block.BlockDirt
 import net.minecraft.block.IGrowable
-import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.properties.PropertyEnum
 import net.minecraft.block.state.BlockFaceShape
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
-import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.init.Blocks
@@ -22,20 +20,14 @@ import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
-import thedarkcolour.core.block.BlockBase
-import thedarkcolour.futuremc.FutureMC
+import thedarkcolour.core.block.FBlock
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.registry.FBlocks.BAMBOO
-import thedarkcolour.futuremc.registry.FSounds
 import java.util.*
 
-open class BlockBamboo : BlockBase("bamboo", Material.PLANTS, FSounds.BAMBOO), IGrowable {
+open class BlockBamboo(properties: Properties) : FBlock(properties), IGrowable {
     init {
-        defaultState = defaultState.withProperty(THICK, false).withProperty(LEAVES, EnumLeaves.NO_LEAVES)
-            .withProperty(MATURE, false)
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else FutureMC.TAB
-        tickRandomly = true
-        blockHardness = 1.0F
+        defaultState = defaultState.withProperty(THICK, false).withProperty(LEAVES, EnumLeaves.NO_LEAVES).withProperty(MATURE, false)
     }
 
     override fun breakBlock(worldIn: World, pos: BlockPos, state: IBlockState) {

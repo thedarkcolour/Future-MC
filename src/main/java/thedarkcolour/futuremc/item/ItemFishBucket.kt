@@ -2,6 +2,7 @@ package thedarkcolour.futuremc.item
 
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.client.util.ITooltipFlag
+import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.init.Blocks
@@ -18,6 +19,8 @@ import net.minecraftforge.event.ForgeEventFactory
 import thedarkcolour.core.item.ItemModeled
 import thedarkcolour.core.util.getOrCreateTag
 import thedarkcolour.core.util.stack
+import thedarkcolour.futuremc.FutureMC
+import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.entity.fish.EntityFish
 import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
 import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish.Companion.getBodyDyeColor
@@ -26,8 +29,11 @@ import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish.Companion.
 import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish.Companion.getTranslationPrefixSpecial
 import thedarkcolour.futuremc.registry.FSounds
 
-class ItemFishBucket<E : EntityFish>(private val regName: String, private val fishType: (World) -> E) :
-    ItemModeled(regName) {
+class ItemFishBucket<E : EntityFish>(private val regName: String, private val fishType: (World) -> E) : ItemModeled(regName) {
+    init {
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else FutureMC.GROUP
+    }
+
     @Suppress("NAME_SHADOWING")
     override fun onItemRightClick(worldIn: World, playerIn: EntityPlayer, handIn: EnumHand): ActionResult<ItemStack> {
         val stack = playerIn.getHeldItem(handIn)

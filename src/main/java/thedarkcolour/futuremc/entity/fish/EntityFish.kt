@@ -135,23 +135,23 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
         }
     }
 
-    override fun getMaxSpawnedInChunk(): Int = 8
+    override fun getMaxSpawnedInChunk() = 8
 
-    override fun canBreatheUnderwater(): Boolean = true
+    override fun canBreatheUnderwater() = true
 
-    override fun getCanSpawnHere(): Boolean = true
+    override fun getCanSpawnHere() = true
 
     override fun isNotColliding(): Boolean {
         return world.checkNoEntityCollision(entityBoundingBox, this)
     }
 
-    override fun getTalkInterval(): Int = 120
+    override fun getTalkInterval() = 120
 
-    override fun getExperiencePoints(player: EntityPlayer): Int {
+    override fun getExperiencePoints(player: EntityPlayer?): Int {
         return 1 + rand.nextInt(3)
     }
 
-    override fun getSwimSound(): SoundEvent = FSounds.FISH_SWIM
+    override fun getSwimSound() = FSounds.FISH_SWIM
 
     override fun onEntityUpdate() {
         if (!isInWater && onGround && collidedVertically) {

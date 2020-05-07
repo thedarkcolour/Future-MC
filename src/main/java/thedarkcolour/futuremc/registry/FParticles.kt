@@ -12,37 +12,39 @@ object FParticles {
     lateinit var CAMPFIRE_COSY_SMOKE: EnumParticleTypes
     lateinit var CAMPFIRE_SIGNAL_SMOKE: EnumParticleTypes
     lateinit var SOUL_FLAME: EnumParticleTypes
+    lateinit var FALLING_BEE_NECTAR: EnumParticleTypes
 
     fun registerParticles() {
-        CAMPFIRE_COSY_SMOKE =
-            registerParticle(
-                "CAMPFIRE_COSY_SMOKE",
-                "campfireCosySmoke",
-                true,
-                CampfireParticle::CosyFactory
-            )
-        CAMPFIRE_SIGNAL_SMOKE =
-            registerParticle(
-                "CAMPFIRE_SIGNAL_SMOKE",
-                "campfireSignalSmoke",
-                true,
-                CampfireParticle::SignalFactory
-            )
-        SOUL_FLAME =
-            registerParticle(
-                "SOUL_FLAME",
-                "soulFlame",
-                false,
-                SoulFlameParticle::Factory
-            )
+        CAMPFIRE_COSY_SMOKE = registerParticle(
+            "CAMPFIRE_COSY_SMOKE",
+            "campfireCosySmoke",
+            true,
+            CampfireParticle::CosyFactory
+        )
+        CAMPFIRE_SIGNAL_SMOKE = registerParticle(
+            "CAMPFIRE_SIGNAL_SMOKE",
+            "campfireSignalSmoke",
+            true,
+            CampfireParticle::SignalFactory
+        )
+        SOUL_FLAME = registerParticle(
+            "SOUL_FLAME",
+            "soulFlame",
+            false,
+            SoulFlameParticle::Factory
+        )/*
+        FALLING_BEE_NECTAR = registerParticle(
+            "FALLING_BEE_NECTAR",
+            "fallingBeeNectar",
+            false,
+            BeeParticle::FallingNectarFactory
+        )*/
     }
 
     // Registers a particle
     private fun registerParticle(
-        enumName: String,
-        particleName: String,
-        alwaysShow: Boolean,
-        factory: () -> Any
+        enumName: String, particleName: String,
+        alwaysShow: Boolean, factory: () -> Any
     ): EnumParticleTypes {
         val id = EnumParticleTypes.values().size
         val particle = EnumHelper.addEnum(

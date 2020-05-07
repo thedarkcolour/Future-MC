@@ -7,6 +7,7 @@ tile.futuremc.blast_furnace.name=Blast Furnace
 tile.futuremc.smoker.name=Smoker
 tile.futuremc.grindstone.name=Grindstone
 tile.futuremc.composter.name=Composter
+tile.futuremc.cartography_table=Cartography Table
 
 # Plant
 tile.futuremc.lily_of_the_valley.name=Lily of the Valley
@@ -32,8 +33,8 @@ tile.futuremc.diorite_wall.name=Diorite Wall
 tile.futuremc.granite_wall.name=Granite Wall
 tile.futuremc.prismarine_wall.name=Prismarine Wall
 tile.futuremc.stone_brick_wall.name=Stone Brick Wall
-tile.futuremc.mossy_stone_wall.name=Mossy Stone Brick Wall
-tile.futuremc.end_stone_wall.name=End Stone Brick Wall
+tile.futuremc.mossy_stone_brick_wall.name=Mossy Stone Brick Wall
+tile.futuremc.end_stone_brick_wall.name=End Stone Brick Wall
 tile.futuremc.nether_brick_wall.name=Nether Brick Wall
 tile.futuremc.sandstone_wall.name=Sandstone Wall
 tile.futuremc.red_sandstone_wall.name=Red Sandstone Wall
@@ -66,11 +67,30 @@ tile.futuremc.honeycomb_block.name=Honeycomb Block
 # Decorative Block
 tile.futuremc.smooth_stone.name=Smooth Stone
 tile.futuremc.smooth_quartz.name=Smooth Quartz
+tile.futuremc.soul_soil.name=Soul Soil
 tile.futuremc.fletching_table.name=Fletching Table
 tile.futuremc.smithing_table.name=Smithing Table
 tile.futuremc.blue_ice.name=Blue Ice
 tile.futuremc.soul_fire_torch.name=Soul Fire Torch
 tile.futuremc.soul_fire_lantern.name=Soul Fire Lantern
+tile.futuremc.acacia_trapdoor.name=Acacia Trapdoor
+tile.futuremc.jungle_trapdoor.name=Jungle Trapdoor
+tile.futuremc.birch_trapdoor.name=Birch Trapdoor
+tile.futuremc.spruce_trapdoor.name=Spruce Trapdoor
+tile.futuremc.dark_oak_trapdoor.name=Dark Oak Trapdoor
+tile.futuremc.bell.name=Bell
+tile.futuremc.acacia_wood.name=Acacia Wood
+tile.futuremc.jungle_wood.name=Jungle Wood
+tile.futuremc.birch_wood.name=Birch Wood
+tile.futuremc.oak_wood.name=Oak Wood
+tile.futuremc.spruce_wood.name=Spruce Wood
+tile.futuremc.dark_oak_wood.name=Dark Oak Wood
+tile.futuremc.stripped_acacia_wood.name=Stripped Acacia Wood
+tile.futuremc.stripped_jungle_wood.name=Stripped Jungle Wood
+tile.futuremc.stripped_birch_wood.name=Stripped Birch Wood
+tile.futuremc.stripped_oak_wood.name=Stripped Oak Wood
+tile.futuremc.stripped_spruce_wood.name=Stripped Spruce Wood
+tile.futuremc.stripped_dark_oak_wood.name=Stripped Dark Oak Wood
 entity.ItemFrame.name=Item Frame
 
 # Banner
@@ -113,6 +133,10 @@ item.futuremc.banner_pattern.globe=Globe
 item.futuremc.honey_bottle.name=Honey Bottle
 item.futuremc.honeycomb.name=Honeycomb
 item.futuremc.nautilus_shell.name=Nautilus Shell
+item.futuremc.pufferfish_bucket.name=Pufferfish Bucket
+item.futuremc.salmon_bucket.name=Salmon Bucket
+item.futuremc.cod_bucket.name=Cod Bucket
+item.futuremc.tropical_fish_bucket.name=Tropical Fish Bucket
 
 # GUI
 container.barrel=Barrel

@@ -5,7 +5,6 @@ import net.minecraft.block.ITileEntityProvider
 import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
-import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.SoundEvents
@@ -18,10 +17,8 @@ import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import thedarkcolour.core.block.BlockBase
+import thedarkcolour.core.block.FBlock
 import thedarkcolour.core.gui.Gui
-import thedarkcolour.futuremc.FutureMC
-import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes
 import thedarkcolour.futuremc.recipe.furnace.SmokerRecipes
 import thedarkcolour.futuremc.registry.FBlocks
@@ -30,15 +27,7 @@ import thedarkcolour.futuremc.tile.TileFurnaceAdvanced.TileBlastFurnace
 import thedarkcolour.futuremc.tile.TileFurnaceAdvanced.TileSmoker
 import java.util.*
 
-class BlockFurnaceAdvanced(private val type: FurnaceType) : BlockBase(type.type), ITileEntityProvider {
-    init {
-        creativeTab = if (FConfig.useVanillaCreativeTabs) {
-            CreativeTabs.DECORATIONS
-        } else {
-            FutureMC.TAB
-        }
-    }
-
+class BlockFurnaceAdvanced(private val type: FurnaceType, properties: Properties) : FBlock(properties), ITileEntityProvider {
     override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity? {
         if (type == FurnaceType.SMOKER) {
             return TileSmoker()
@@ -171,6 +160,14 @@ class BlockFurnaceAdvanced(private val type: FurnaceType) : BlockBase(type.type)
                 BlastFurnaceRecipes.getRecipe(stack) != null
             } else {
                 SmokerRecipes.getRecipe(stack) != null
+            }
+        }
+
+        fun getOutput(stack: ItemStack): ItemStack? {
+            return if (this == BLAST_FURNACE) {
+                BlastFurnaceRecipes.getRecipe(stack)?.output
+            } else {
+                SmokerRecipes.getRecipe(stack)?.output
             }
         }
 

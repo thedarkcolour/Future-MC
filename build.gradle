@@ -18,7 +18,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'kotlin'
 apply plugin: 'com.wynprice.cursemaven'
 
-version = "1.12.2-0.2.01"
+version = "1.12.2-0.2.03"
 group = "thedarkcolour.futuremc"
 archivesBaseName = "future-mc"
 
@@ -67,7 +67,7 @@ dependencies {
     implementation "mezz.jei:jei_1.12.2:4.15.0.+"
     implementation "net.shadowfacts:Forgelin:1.8.4"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.70"
-    implementation "vazkii.quark:Quark:r1.6-179.4"
+    implementation "vazkii.quark:Quark:r1.6-180.7"
     implementation "vazkii.autoreglib:AutoRegLib:1.3-32.+"
     implementation "curse.maven:dynamic-trees:2870267"
     implementation "curse.maven:dynamic-trees-sources:2870269"

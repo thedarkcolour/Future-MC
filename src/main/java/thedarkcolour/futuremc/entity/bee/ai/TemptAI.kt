@@ -38,16 +38,16 @@ class TemptAI(private val bee: BeeEntity) : EntityAIBase() {
 
     override fun resetTask() {
         closestPlayer = null
-        bee.getNavigator().clearPath()
+        bee.navigator.clearPath()
         coolDown = 100
     }
 
     override fun updateTask() {
         bee.lookHelper.setLookPositionWithEntity(closestPlayer!!, 75.0f, 40.0f)
         if (bee.getDistanceSq(closestPlayer!!) < 6.25) {
-            bee.getNavigator().clearPath()
+            bee.navigator.clearPath()
         } else {
-            bee.getNavigator().tryMoveToEntityLiving(closestPlayer!!, 1.25)
+            bee.navigator.tryMoveToEntityLiving(closestPlayer!!, 1.25)
         }
     }
 }

@@ -13,7 +13,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import thedarkcolour.core.inventory.DarkInventory;
 import thedarkcolour.core.tile.InteractionTile;
-import thedarkcolour.futuremc.block.BlockComposter;
+import thedarkcolour.futuremc.block.ComposterBlock;
 import thedarkcolour.futuremc.registry.FBlocks;
 import thedarkcolour.futuremc.registry.FSounds;
 
@@ -23,7 +23,7 @@ public class TileComposter extends InteractionTile {
     private final DarkInventory inventory = new DarkInventory(1) {
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            return BlockComposter.Companion.canCompost(stack, world.getBlockState(pos));
+            return ComposterBlock.Companion.canCompost(stack, world.getBlockState(pos));
         }
 
         @Override
@@ -91,7 +91,7 @@ public class TileComposter extends InteractionTile {
 
     @Override
     public void broken(IBlockState state, EntityPlayer playerIn) {
-        if (!world.isRemote && world.getBlockState(pos).getValue(BlockComposter.Companion.getLEVEL()) == 8) {
+        if (!world.isRemote && world.getBlockState(pos).getValue(ComposterBlock.Companion.getLEVEL()) == 8) {
             EntityItem item = new EntityItem(world, pos.getX() + 0.5D, pos.getY() + 0.6D, pos.getZ() + 0.5D);
             item.setItem(new ItemStack(Items.DYE, 1, 15));
             world.spawnEntity(item);
@@ -111,9 +111,9 @@ public class TileComposter extends InteractionTile {
     }
 
     private void handleStack(ItemStack stack) {
-        if (BlockComposter.Companion.canCompost(stack, world.getBlockState(pos))) {
+        if (ComposterBlock.Companion.canCompost(stack, world.getBlockState(pos))) {
             if (!stack.isEmpty() && !isBoneMeal(stack)) {
-                if (world.rand.nextInt(100) <= BlockComposter.ItemsForComposter.getChance(stack)) {
+                if (world.rand.nextInt(100) <= ComposterBlock.ItemsForComposter.getChance(stack)) {
                     addLayer();
                 } else {
                     world.playSound(null, pos, FSounds.INSTANCE.getCOMPOSTER_FILL(), SoundCategory.BLOCKS, 1F, 1F);
@@ -124,10 +124,10 @@ public class TileComposter extends InteractionTile {
     }
 
     public void addLayer() {
-        world.setBlockState(pos, FBlocks.INSTANCE.getCOMPOSTER().getDefaultState().withProperty(BlockComposter.Companion.getLEVEL(), world.getBlockState(pos).getValue(BlockComposter.Companion.getLEVEL()) + 1));
+        world.setBlockState(pos, FBlocks.INSTANCE.getCOMPOSTER().getDefaultState().withProperty(ComposterBlock.Companion.getLEVEL(), world.getBlockState(pos).getValue(ComposterBlock.Companion.getLEVEL()) + 1));
         world.playSound(null, pos, FSounds.INSTANCE.getCOMPOSTER_FILL_SUCCESS(), SoundCategory.BLOCKS, 1F, 1F);
 
-        if (world.getBlockState(pos).getValue(BlockComposter.Companion.getLEVEL()) >= 7) {
+        if (world.getBlockState(pos).getValue(ComposterBlock.Companion.getLEVEL()) >= 7) {
             world.scheduleBlockUpdate(pos, FBlocks.INSTANCE.getCOMPOSTER(), 30, 1);
         }
     }

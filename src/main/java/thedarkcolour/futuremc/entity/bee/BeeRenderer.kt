@@ -8,9 +8,9 @@ import thedarkcolour.futuremc.FutureMC
 class BeeRenderer(manager: RenderManager) : RenderLiving<BeeEntity>(manager, BeeModel(), 0.4f) {
     override fun getEntityTexture(bee: BeeEntity): ResourceLocation? {
         return if (bee.isAngry()) {
-            if (bee.hasPollen()) ANGRY_NECTAR else ANGRY
+            if (bee.hasNectar()) ANGRY_NECTAR else ANGRY
         } else {
-            if (bee.hasPollen()) PASSIVE_NECTAR else PASSIVE
+            if (bee.hasNectar()) PASSIVE_NECTAR else PASSIVE
         }
     }
 

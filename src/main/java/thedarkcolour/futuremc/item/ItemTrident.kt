@@ -174,7 +174,7 @@ class ItemTrident : ItemModeled("Trident") {
     //    get() = SpecialItemRenderer.instance
 
     init {
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.COMBAT else FutureMC.TAB
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.COMBAT else FutureMC.GROUP
         maxDamage = 250
         setMaxStackSize(1)
     }

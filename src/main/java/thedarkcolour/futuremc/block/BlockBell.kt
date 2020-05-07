@@ -1,7 +1,5 @@
 package thedarkcolour.futuremc.block
 
-import net.minecraft.block.SoundType
-import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyEnum
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
@@ -14,17 +12,13 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.core.block.RotatableBlock
 import thedarkcolour.futuremc.registry.FSounds
-import thedarkcolour.futuremc.tile.TileBell
+import thedarkcolour.futuremc.tile.BellTileEntity
 
-class BlockBell : RotatableBlock("bell", Material.IRON, SoundType.ANVIL) {
-    init {
-        setHardness(5.0f)
-    }
-
+class BlockBell(properties: Properties) : RotatableBlock(properties) {
     override fun hasTileEntity(state: IBlockState) = true
 
     override fun createTileEntity(world: World, state: IBlockState): TileEntity {
-        return TileBell()
+        return BellTileEntity()
     }
 
     override fun onBlockActivated(
@@ -52,7 +46,7 @@ class BlockBell : RotatableBlock("bell", Material.IRON, SoundType.ANVIL) {
         checkFacing: Boolean
     ): Boolean {
         val shouldRing = !checkFacing || canRingFrom(state, facing, hitY - pos.y)
-        if (!worldIn.isRemote && te is TileBell && shouldRing) {
+        if (!worldIn.isRemote && te is BellTileEntity && shouldRing) {
             te.ring(facing)
             playRingSound(worldIn, pos)
         }

@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation
 
 class LayerBeeStinger : LayerRenderer<EntityPlayer> {
     override fun shouldCombineTextures(): Boolean {
-        TODO("not implemented")
+        return false
     }
 
     override fun doRenderLayer(
@@ -19,7 +19,6 @@ class LayerBeeStinger : LayerRenderer<EntityPlayer> {
         headPitch: Float,
         scale: Float
     ) {
-        TODO("not implemented")
     }
 
     companion object {

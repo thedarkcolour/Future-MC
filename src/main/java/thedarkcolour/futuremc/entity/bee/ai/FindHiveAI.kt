@@ -1,36 +1,68 @@
 package thedarkcolour.futuremc.entity.bee.ai
 
+import net.minecraft.pathfinding.Path
 import net.minecraft.util.math.BlockPos
 import thedarkcolour.futuremc.block.BeeHiveBlock
 import thedarkcolour.futuremc.entity.bee.BeeEntity
-import thedarkcolour.futuremc.tile.BeeHiveTile
 import java.util.*
 
 class FindHiveAI(bee: BeeEntity) : FindBlockAI(bee) {
-    private val possibleHives = ArrayDeque<BlockPos>(3)
+    val possibleHives = ArrayDeque<BlockPos>(3)
+    var path: Path? = null
 
     override fun canBeeStart(): Boolean {
         val hivePos = bee.hivePos ?: return false
-        return (bee.maximumHomeDistance != -1.0f) && shouldReturnToHive()
+        return (bee.maximumHomeDistance != -1.0f) && bee.canEnterHive()
                 && !isCloseEnough(hivePos) && bee.world.getBlockState(hivePos).block is BeeHiveBlock
     }
 
-    private fun shouldReturnToHive(): Boolean {
-        return if (bee.cannotEnterHiveTicks <= 0 && !bee.hasStung()) {
-            val flag = bee.ticksSincePollination > 3600 || bee.world.isRaining || !bee.world.isDaytime || bee.hasPollen()
-            return flag && !isHiveNearFire()
-        } else {
-            false
+    override fun updateTask() {
+        val hivePos = bee.hivePos
+
+        if (hivePos != null) {
+            ++searchingTicks
+            if (searchingTicks > 600) {
+                addPossibleHive(hivePos)
+            } else if(bee.navigator.noPath()) {
+                if (bee.isWithinDistance(hivePos, 16)) {
+                    if (bee.isTooFar(hivePos)) {
+                        reset()
+                    } else {
+                        startMovingTo(hivePos)
+                    }
+                } else {
+                    val flag = startMovingToFar(hivePos)
+
+                    if (!flag) {
+                        makeChosenHivePossibleHive()
+                    } else if (path != null && bee.navigator.path?.isSamePath(path!!) == true) {
+                        reset()
+                    } else {
+                        path = bee.navigator.path
+                    }
+                }
+            }
         }
     }
 
-    private fun isHiveNearFire(): Boolean {
-        return if (bee.hivePos == null) {
-            false
-        } else {
-            val te = bee.world.getTileEntity(bee.hivePos!!)
-            te is BeeHiveTile && te.isNearFire()
+    private fun startMovingToFar(pos: BlockPos): Boolean {
+        bee.navigator.tryMoveToXYZ(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), 1.0)
+        return bee.navigator.path != null // if all goes wrong, coremod the reachesTarget() method
+    }
+
+    private fun makeChosenHivePossibleHive() {
+        val hivePos = bee.hivePos
+
+        if (hivePos != null) {
+            addPossibleHive(hivePos)
         }
+
+        reset()
+    }
+
+    private fun reset() {
+        bee.hivePos = null
+        bee.findHiveCooldown = 200
     }
 
     private fun isCloseEnough(pos: BlockPos): Boolean {
@@ -38,32 +70,13 @@ class FindHiveAI(bee: BeeEntity) : FindBlockAI(bee) {
             true
         } else {
             val path = bee.navigator.path
-
-            if (path != null) {
-                val target = path.target
-                val targetPos = BlockPos(target.x, target.y, target.z)
-
-                targetPos == pos && path.isFinished
-            } else {
-                false
-            }
-        }
-    }
-
-    override fun updateTask() {
-        if (bee.hasHive()) {
-            ++searchingTicks
-            if (searchingTicks > 600) {
-                addPossibleHive(bee.hivePos!!)
-            }
+            path != null && path.target == pos && path.isFinished /* reachesTarget() */
         }
     }
 
     private fun addPossibleHive(pos: BlockPos) {
+        // remove before adding to avoid illegal state exception
+        while (possibleHives.size > 3) possibleHives.remove()
         possibleHives.add(pos)
-
-        while (possibleHives.size > 3) {
-            possibleHives.remove()
-        }
     }
 }

@@ -21,11 +21,9 @@ class WorldGenFlower(flower: Block) : IWorldGenerator {
                 random.nextInt(8) - random.nextInt(8),
                 random.nextInt(4) - random.nextInt(4),
                 random.nextInt(8) - random.nextInt(8)
-            )
+            )//.add(random.nextInt(16) + 8, 0, random.nextInt(16) + 8)
             if (world.isAirBlock(pos) && (!world.provider.isNether || pos.y < 255) && flower.canBlockStay(
-                    world,
-                    pos,
-                    state
+                    world, pos, state
                 )
             ) {
                 world.setBlockState(pos, state, 2)

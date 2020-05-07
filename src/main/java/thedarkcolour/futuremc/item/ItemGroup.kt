@@ -7,7 +7,7 @@ import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.registry.FBlocks
 import thedarkcolour.futuremc.registry.FItems
 
-class ItemGroup : CreativeTabs("futuremc") {
+object ItemGroup : CreativeTabs("futuremc") {
     override fun createIcon(): ItemStack {
         return when {
             FConfig.villageAndPillage.lantern -> ItemStack(FBlocks.LANTERN)

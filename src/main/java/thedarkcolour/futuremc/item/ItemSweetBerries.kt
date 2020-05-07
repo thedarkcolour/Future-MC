@@ -19,7 +19,7 @@ import net.minecraftforge.common.EnumPlantType
 import net.minecraftforge.common.IPlantable
 import thedarkcolour.core.util.setItemModel
 import thedarkcolour.futuremc.FutureMC
-import thedarkcolour.futuremc.block.BlockSweetBerryBush
+import thedarkcolour.futuremc.block.SweetBerryBushBlock
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.registry.FBlocks
 
@@ -27,7 +27,7 @@ class ItemSweetBerries : ItemFood(2, 0.2f, false), IPlantable {
     init {
         translationKey = FutureMC.ID + ".sweet_berries"
         setRegistryName("sweet_berries")
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.FOOD else FutureMC.TAB
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.FOOD else FutureMC.GROUP
         setItemModel(this, 0)
     }
 
@@ -51,7 +51,7 @@ class ItemSweetBerries : ItemFood(2, 0.2f, false), IPlantable {
         if (bush.canPlaceBlockAt(worldIn, pos)) {
             if (worldIn.isAirBlock(pos)) {
                 worldIn.playSound(player, pos, SoundEvents.BLOCK_GRASS_PLACE, SoundCategory.BLOCKS, 1.0f, 0.8f)
-                worldIn.setBlockState(pos, bush.defaultState.withProperty(BlockSweetBerryBush.AGE, 0))
+                worldIn.setBlockState(pos, bush.defaultState.withProperty(SweetBerryBushBlock.AGE, 0))
                 itemstack.shrink(1)
                 return EnumActionResult.SUCCESS
             }

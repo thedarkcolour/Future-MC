@@ -14,6 +14,7 @@ fun World.playSound(pos: BlockPos, soundIn: SoundEvent, category: SoundCategory,
     if (event.isCanceled || event.sound == null) {
         return
     }
+    // shadowed
     val soundIn = event.sound
     val category = event.category
     val volume = event.volume

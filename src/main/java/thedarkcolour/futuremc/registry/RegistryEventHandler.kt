@@ -1,13 +1,11 @@
 package thedarkcolour.futuremc.registry
 
 import net.minecraft.block.Block
-import net.minecraft.client.renderer.entity.RenderIronGolem
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.EntityLiving
 import net.minecraft.entity.EntitySpawnPlacementRegistry
 import net.minecraft.entity.EnumCreatureType
-import net.minecraft.init.Biomes
 import net.minecraft.init.Blocks
 import net.minecraft.init.MobEffects
 import net.minecraft.item.Item
@@ -25,46 +23,31 @@ import net.minecraftforge.fml.common.registry.EntityRegistry
 import net.minecraftforge.fml.common.registry.ForgeRegistries
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
-import thedarkcolour.core.util.registerEntity
-import thedarkcolour.core.util.registerEntityModel
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.client.color.WaterColor
 import thedarkcolour.futuremc.client.particle.CampfireParticle
 import thedarkcolour.futuremc.client.particle.SoulFlameParticle
 import thedarkcolour.futuremc.command.FastGiveCommand
-import thedarkcolour.futuremc.config.FConfig.buzzyBees
 import thedarkcolour.futuremc.config.FConfig.updateAquatic
 import thedarkcolour.futuremc.config.FConfig.useVanillaCreativeTabs
-import thedarkcolour.futuremc.config.FConfig.villageAndPillage
-import thedarkcolour.futuremc.entity.bee.BeeEntity
-import thedarkcolour.futuremc.entity.bee.BeeRenderer
 import thedarkcolour.futuremc.entity.fish.cod.EntityCod
-import thedarkcolour.futuremc.entity.fish.cod.RenderCod
 import thedarkcolour.futuremc.entity.fish.pufferfish.EntityPufferfish
-import thedarkcolour.futuremc.entity.fish.pufferfish.RenderPufferfish
 import thedarkcolour.futuremc.entity.fish.salmon.EntitySalmon
-import thedarkcolour.futuremc.entity.fish.salmon.RenderSalmon
 import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
-import thedarkcolour.futuremc.entity.fish.tropical.RenderTropicalFish
-import thedarkcolour.futuremc.entity.irongolem.LayerIronGolemCrack
-import thedarkcolour.futuremc.entity.panda.EntityPanda
-import thedarkcolour.futuremc.entity.panda.RenderPanda
-import thedarkcolour.futuremc.entity.trident.EntityTrident
-import thedarkcolour.futuremc.entity.trident.RenderTrident
 import thedarkcolour.futuremc.item.ItemGroup
 import thedarkcolour.futuremc.item.ItemSuspiciousStew
 
 object RegistryEventHandler {
     @SubscribeEvent
     fun onBlockRegistry(event: RegistryEvent.Register<Block>) {
-        FutureMC.TAB = if (useVanillaCreativeTabs) {
+        FutureMC.GROUP = if (useVanillaCreativeTabs) {
             CreativeTabs.MISC
         } else {
-            ItemGroup()
+            ItemGroup
         }
 
-        FBlocks.init()
+        FBlocks.registerBlocks(event.registry)
     }
 
     @SubscribeEvent
@@ -79,74 +62,8 @@ object RegistryEventHandler {
 
     @SubscribeEvent
     fun onEntityRegistry(event: RegistryEvent.Register<EntityEntry>) {
-        if (updateAquatic.trident) {
-            registerEntity("trident", EntityTrident::class.java, 32, 1)
-        }
-        //if (updateAquatic.drowned) {
-        //    registerEntity("drowned", EntityDrowned::class.java, 36, 2, 9433559, 7969893)
-        //    EntityRegistry.addSpawn(EntityDrowned::class.java, 5, 1, 1, EnumCreatureType.MONSTER, Biomes.OCEAN, Biomes.DEEP_OCEAN, Biomes.FROZEN_OCEAN)
-        //    EntityRegistry.addSpawn(EntityDrowned::class.java, 100, 1, 1, EnumCreatureType.MONSTER, Biomes.RIVER, Biomes.FROZEN_RIVER)
-        //}
-        if (villageAndPillage.panda && villageAndPillage.bamboo.enabled) {
-            registerEntity("panda", EntityPanda::class.java, 36, 3, 15198183, 1776418)
-            EntityRegistry.addSpawn(
-                EntityPanda::class.java,
-                1,
-                1,
-                2,
-                EnumCreatureType.CREATURE,
-                Biomes.JUNGLE,
-                Biomes.JUNGLE_HILLS,
-                Biomes.MUTATED_JUNGLE
-            )
-        }
-        if (buzzyBees.bee.enabled) {
-            registerEntity("bee", BeeEntity::class.java, 32, 4, 16770398, 2500144)
-        }
-        if (updateAquatic.fish.cod.enabled) {
-            registerEntity("cod", EntityCod::class.java, 32, 5, 12691306, 15058059)
-        }
-        if (updateAquatic.fish.pufferfish.enabled) {
-            registerEntity("pufferfish", EntityPufferfish::class.java, 32, 6, 16167425, 3654642)
-        }
-        if (updateAquatic.fish.salmon.enabled) {
-            registerEntity("salmon", EntitySalmon::class.java, 32, 7, 10489616, 951412)
-        }
-        if (updateAquatic.fish.tropicalFish.enabled) {
-            registerEntity("tropical_fish", EntityTropicalFish::class.java, 32, 8, 15690005, 16775663)
-        }
-
-        runOnClient {
-            if (updateAquatic.trident) {
-                registerEntityModel(::RenderTrident)
-            }
-            if (villageAndPillage.panda && villageAndPillage.bamboo.enabled) {
-                registerEntityModel(::RenderPanda)
-            }
-            if (buzzyBees.bee.enabled) {
-                registerEntityModel(::BeeRenderer)
-            }
-            if (updateAquatic.fish.cod.enabled) {
-                registerEntityModel(::RenderCod)
-            }
-            if (updateAquatic.fish.pufferfish.enabled) {
-                registerEntityModel(::RenderPufferfish)
-            }
-            if (updateAquatic.fish.salmon.enabled) {
-                registerEntityModel(::RenderSalmon)
-            }
-            if (updateAquatic.fish.tropicalFish.enabled) {
-                registerEntityModel(::RenderTropicalFish)
-            }
-            // of course they do :)
-            if (buzzyBees.ironGolems.doCrack) {
-                registerEntityModel { manager ->
-                    val renderer = RenderIronGolem(manager)
-                    renderer.addLayer(LayerIronGolemCrack(renderer))
-                    renderer
-                }
-            }
-        }
+        FEntities.registerEntities()
+        runOnClient(FEntities::registerEntityRenderers)
     }
 
     @SubscribeEvent
@@ -169,7 +86,8 @@ object RegistryEventHandler {
             val fishClass = classes.next()
             if (fish.enabled) {
                 for (spawnEntry in fish.validBiomes) {
-                    val loc = ResourceLocation(spawnEntry.modid, spawnEntry.biome)
+                    val parts = spawnEntry.split(":")
+                    val loc = ResourceLocation(parts[0], parts[1])
                     val biome = event.registry.getValue(loc)
 
                     if (biome == null) {
@@ -178,18 +96,8 @@ object RegistryEventHandler {
                         }
                         break
                     } else {
-                        EntityRegistry.addSpawn(
-                            fishClass,
-                            spawnEntry.weight,
-                            spawnEntry.minGroupCount,
-                            spawnEntry.maxGroupCount,
-                            EnumCreatureType.WATER_CREATURE,
-                            biome
-                        )
-                        EntitySpawnPlacementRegistry.setPlacementType(
-                            fishClass,
-                            EntityLiving.SpawnPlacementType.IN_WATER
-                        )
+                        EntityRegistry.addSpawn(fishClass, Integer.parseInt(parts[2]), Integer.parseInt(parts[3]), Integer.parseInt(parts[4]), EnumCreatureType.WATER_CREATURE, biome)
+                        EntitySpawnPlacementRegistry.setPlacementType(fishClass, EntityLiving.SpawnPlacementType.IN_WATER)
                     }
                 }
             }
@@ -203,7 +111,7 @@ object RegistryEventHandler {
                     else -> biome.waterColor
                 }
 
-                // Use the Obj2IntMap function
+                // Use the Obj2IntMap function because Kotlin is weird about the overloads
                 @Suppress("ReplacePutWithAssignment")
                 WaterColor.BIOME_COLORS.put(biome.delegate, waterColor)
             }
@@ -230,7 +138,7 @@ object RegistryEventHandler {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     fun onTextureStitchEventPre(event: TextureStitchEvent.Pre) {
-        arrayOf(
+        CampfireParticle.textures = arrayOf(
             ResourceLocation(FutureMC.ID, "particles/big_smoke_0"),
             ResourceLocation(FutureMC.ID, "particles/big_smoke_1"),
             ResourceLocation(FutureMC.ID, "particles/big_smoke_2"),
@@ -243,12 +151,11 @@ object RegistryEventHandler {
             ResourceLocation(FutureMC.ID, "particles/big_smoke_9"),
             ResourceLocation(FutureMC.ID, "particles/big_smoke_10"),
             ResourceLocation(FutureMC.ID, "particles/big_smoke_11")
-        ).forEachIndexed { i, loc ->
-            CampfireParticle.textures[i] = event.map.registerSprite(loc)
-        }
+        ).map(event.map::registerSprite).toTypedArray()
+
         SoulFlameParticle.texture = event.map.registerSprite(ResourceLocation(FutureMC.ID, "particles/soul_fire_flame"))
 
-        event.map.registerSprite(ResourceLocation(FutureMC.ID, "blocks/water_still"))
-        event.map.registerSprite(ResourceLocation(FutureMC.ID, "blocks/water_flow"))
+        //event.map.registerSprite(ResourceLocation(FutureMC.ID, "blocks/water_still"))
+        //event.map.registerSprite(ResourceLocation(FutureMC.ID, "blocks/water_flow"))
     }
 }

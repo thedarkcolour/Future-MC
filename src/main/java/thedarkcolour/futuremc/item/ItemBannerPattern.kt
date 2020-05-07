@@ -17,7 +17,7 @@ class ItemBannerPattern : ItemModeled("banner_pattern") {
     init {
         setHasSubtypes(true)
         maxDamage = 0
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else FutureMC.TAB
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else FutureMC.GROUP
 
         for (i in 1..4) {
             setItemModel(this, i)

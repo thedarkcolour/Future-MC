@@ -13,17 +13,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import thedarkcolour.core.gui.ContainerBase;
+import thedarkcolour.core.gui.FContainer;
+import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.client.gui.GuiBarrel;
 import thedarkcolour.futuremc.tile.TileBarrel;
 
 @ChestContainer
-public class ContainerBarrel extends ContainerBase {
+public class ContainerBarrel extends FContainer {
     public final TileBarrel te;
     public final InventoryPlayer playerInventory;
 
     public ContainerBarrel(InventoryPlayer playerInv, TileEntity te) {
-        this.te = (TileBarrel) te;
+        try {
+            this.te = (TileBarrel) te;
+        } catch (ClassCastException e) {
+            FutureMC.LOGGER.fatal("Missing a tile entity for barrel block");
+            throw e;
+        }
         this.playerInventory = playerInv;
 
         addOwnSlots();

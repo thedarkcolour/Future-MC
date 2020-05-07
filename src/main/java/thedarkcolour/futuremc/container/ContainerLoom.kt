@@ -15,7 +15,7 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import net.minecraftforge.items.SlotItemHandler
-import thedarkcolour.core.gui.ContainerBase
+import thedarkcolour.core.gui.FContainer
 import thedarkcolour.core.inventory.DarkInventory
 import thedarkcolour.core.util.anyMatch
 import thedarkcolour.core.util.getOreNames
@@ -26,7 +26,7 @@ import thedarkcolour.futuremc.item.ItemBannerPattern.Companion.getBannerPattern
 import thedarkcolour.futuremc.registry.FBlocks.LOOM
 
 class ContainerLoom(private val playerInv: InventoryPlayer, private val world: World, private val pos: BlockPos) :
-    ContainerBase() {
+    FContainer() {
     private val handler: DarkInventory = object : DarkInventory(4) {
         override fun onContentsChanged(slot: Int) {
             if (slot != 3) {

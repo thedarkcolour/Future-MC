@@ -38,7 +38,7 @@ public class GuiStonecutter extends GuiContainer<ContainerStonecutter> {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        fontRenderer.drawString(I18n.format("container.Stonecutter"), 8, 6, 4210752);
+        fontRenderer.drawString(I18n.format("container.stonecutter"), 8, 6, 4210752);
         fontRenderer.drawString(getContainer().getPlayerInv().getDisplayName().getUnformattedText(), 8, ySize - 94, 4210752);
     }
 

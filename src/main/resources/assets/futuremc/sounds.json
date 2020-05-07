@@ -493,5 +493,386 @@
             "futuremc:lantern/place_4",
             "futuremc:lantern/place_5"
         ]
+    },
+    "netherite_block_break": {
+        "subtitle": "futuremc.subtitles.netherite_block_break",
+        "sounds": [
+            "futuremc:block/netherite_block/break1",
+            "futuremc:block/netherite_block/break2",
+            "futuremc:block/netherite_block/break3",
+            "futuremc:block/netherite_block/break4"
+        ]
+    },
+    "netherite_block_step": {
+        "subtitle": "futuremc.subtitles.netherite_block_step",
+        "sounds": [
+            "futuremc:block/netherite_block/step1",
+            "futuremc:block/netherite_block/step2",
+            "futuremc:block/netherite_block/step3",
+            "futuremc:block/netherite_block/step4"
+        ]
+    },
+    "netherite_block_place": {
+        "subtitle": "futuremc.subtitles.netherite_block_place",
+        "sounds": [
+            "futuremc:block/netherite_block/break1",
+            "futuremc:block/netherite_block/break2",
+            "futuremc:block/netherite_block/break3",
+            "futuremc:block/netherite_block/break4"
+        ]
+    },
+    "netherite_block_hit": {
+        "subtitle": "futuremc.subtitles.netherite_block_hit",
+        "sounds": [
+            "futuremc:block/netherite_block/break1",
+            "futuremc:block/netherite_block/break2",
+            "futuremc:block/netherite_block/break3",
+            "futuremc:block/netherite_block/break4"
+        ]
+    },
+    "netherite_block_fall": {
+        "subtitle": "futuremc.subtitles.netherite_block_fall",
+        "sounds": [
+            "futuremc:block/netherite_block/step1",
+            "futuremc:block/netherite_block/step2",
+            "futuremc:block/netherite_block/step3",
+            "futuremc:block/netherite_block/step4"
+        ]
+    },
+    "ancient_debris_break": {
+        "subtitle": "futuremc.subtitles.ancient_debris_break",
+        "sounds": [
+            "futuremc:block/ancient_debris/break1",
+            "futuremc:block/ancient_debris/break2",
+            "futuremc:block/ancient_debris/break3",
+            "futuremc:block/ancient_debris/break4",
+            "futuremc:block/ancient_debris/break5"
+        ]
+    },
+    "ancient_debris_step": {
+        "subtitle": "futuremc.subtitles.ancient_debris_step",
+        "sounds": [
+            "futuremc:block/ancient_debris/break1",
+            "futuremc:block/ancient_debris/break2",
+            "futuremc:block/ancient_debris/break3",
+            "futuremc:block/ancient_debris/break4",
+            "futuremc:block/ancient_debris/break5"
+        ]
+    },
+    "ancient_debris_place": {
+        "subtitle": "futuremc.subtitles.ancient_debris_place",
+        "sounds": [
+            "futuremc:block/ancient_debris/break1",
+            "futuremc:block/ancient_debris/break2",
+            "futuremc:block/ancient_debris/break3",
+            "futuremc:block/ancient_debris/break4",
+            "futuremc:block/ancient_debris/break5"
+        ]
+    },
+    "ancient_debris_hit": {
+        "subtitle": "futuremc.subtitles.ancient_debris_hit",
+        "sounds": [
+            "futuremc:block/ancient_debris/break1",
+            "futuremc:block/ancient_debris/break2",
+            "futuremc:block/ancient_debris/break3",
+            "futuremc:block/ancient_debris/break4",
+            "futuremc:block/ancient_debris/break5"
+        ]
+    },
+    "ancient_debris_fall": {
+        "subtitle": "futuremc.subtitles.ancient_debris_fall",
+        "sounds": [
+            "futuremc:block/ancient_debris/break1",
+            "futuremc:block/ancient_debris/break2",
+            "futuremc:block/ancient_debris/break3",
+            "futuremc:block/ancient_debris/break4",
+            "futuremc:block/ancient_debris/break5"
+        ]
+    },
+    "soul_soil_break": {
+        "subtitle": "futuremc.subtitles.soul_soil_break",
+        "sounds": [
+            "futuremc:block/soul_soil/break1",
+            "futuremc:block/soul_soil/break2",
+            "futuremc:block/soul_soil/break3",
+            "futuremc:block/soul_soil/break4",
+            "futuremc:block/soul_soil/break5",
+            "futuremc:block/soul_soil/break6"
+        ]
+    },
+    "soul_soil_step": {
+        "subtitle": "futuremc.subtitles.soul_soil_step",
+        "sounds": [
+            "futuremc:block/soul_soil/step1",
+            "futuremc:block/soul_soil/step2",
+            "futuremc:block/soul_soil/step3",
+            "futuremc:block/soul_soil/step4",
+            "futuremc:block/soul_soil/step5"
+        ]
+    },
+    "soul_soil_place": {
+        "subtitle": "futuremc.subtitles.soul_soil_place",
+        "sounds": [
+            "futuremc:block/soul_soil/break1",
+            "futuremc:block/soul_soil/break2",
+            "futuremc:block/soul_soil/break3",
+            "futuremc:block/soul_soil/break4",
+            "futuremc:block/soul_soil/break5",
+            "futuremc:block/soul_soil/break6"
+        ]
+    },
+    "soul_soil_hit": {
+        "subtitle": "futuremc.subtitles.soul_soil_hit",
+        "sounds": [
+            "futuremc:block/soul_soil/break1",
+            "futuremc:block/soul_soil/break2",
+            "futuremc:block/soul_soil/break3",
+            "futuremc:block/soul_soil/break4",
+            "futuremc:block/soul_soil/break5",
+            "futuremc:block/soul_soil/break6"
+        ]
+    },
+    "soul_soil_fall": {
+        "subtitle": "futuremc.subtitles.ancient_debris_fall",
+        "sounds": [
+            "futuremc:block/soul_soil/step1",
+            "futuremc:block/soul_soil/step2",
+            "futuremc:block/soul_soil/step3",
+            "futuremc:block/soul_soil/step4",
+            "futuremc:block/soul_soil/step5"
+        ]
+    },
+    "nylium_break": {
+        "subtitle": "futuremc.subtitles.nylium_break",
+        "sounds": [
+            "futuremc:block/nylium/break1",
+            "futuremc:block/nylium/break2",
+            "futuremc:block/nylium/break3",
+            "futuremc:block/nylium/break4",
+            "futuremc:block/nylium/break5",
+            "futuremc:block/nylium/break6"
+        ]
+    },
+    "nylium_step": {
+        "subtitle": "futuremc.subtitles.nylium_step",
+        "sounds": [
+            "futuremc:block/nylium/step1",
+            "futuremc:block/nylium/step2",
+            "futuremc:block/nylium/step3",
+            "futuremc:block/nylium/step4",
+            "futuremc:block/nylium/step5",
+            "futuremc:block/nylium/step6"
+        ]
+    },
+    "nylium_place": {
+        "subtitle": "futuremc.subtitles.nylium_place",
+        "sounds": [
+            "futuremc:block/nylium/break1",
+            "futuremc:block/nylium/break2",
+            "futuremc:block/nylium/break3",
+            "futuremc:block/nylium/break4",
+            "futuremc:block/nylium/break5",
+            "futuremc:block/nylium/break6"
+        ]
+    },
+    "nylium_hit": {
+        "subtitle": "futuremc.subtitles.nylium_hit",
+        "sounds": [
+            "futuremc:block/nylium/break1",
+            "futuremc:block/nylium/break2",
+            "futuremc:block/nylium/break3",
+            "futuremc:block/nylium/break4",
+            "futuremc:block/nylium/break5",
+            "futuremc:block/nylium/break6"
+        ]
+    },
+    "nylium_fall": {
+        "subtitle": "futuremc.subtitles.nylium_fall",
+        "sounds": [
+            "futuremc:block/nylium/step1",
+            "futuremc:block/nylium/step2",
+            "futuremc:block/nylium/step3",
+            "futuremc:block/nylium/step4",
+            "futuremc:block/nylium/step5",
+            "futuremc:block/nylium/step6"
+        ]
+    },
+    "nether_stem_break": {
+        "subtitle": "futuremc.subtitles.nether_stem_break",
+        "sounds": [
+            "futuremc:block/nether_stem/break1",
+            "futuremc:block/nether_stem/break2",
+            "futuremc:block/nether_stem/break3",
+            "futuremc:block/nether_stem/break4",
+            "futuremc:block/nether_stem/break5",
+            "futuremc:block/nether_stem/break6"
+        ]
+    },
+    "nether_stem_step": {
+        "subtitle": "futuremc.subtitles.nether_stem_step",
+        "sounds": [
+            "futuremc:block/nether_stem/step1",
+            "futuremc:block/nether_stem/step2",
+            "futuremc:block/nether_stem/step3",
+            "futuremc:block/nether_stem/step4",
+            "futuremc:block/nether_stem/step5",
+            "futuremc:block/nether_stem/step6"
+        ]
+    },
+    "nether_stem_place": {
+        "subtitle": "futuremc.subtitles.nether_stem_place",
+        "sounds": [
+            "futuremc:block/nether_stem/break1",
+            "futuremc:block/nether_stem/break2",
+            "futuremc:block/nether_stem/break3",
+            "futuremc:block/nether_stem/break4",
+            "futuremc:block/nether_stem/break5",
+            "futuremc:block/nether_stem/break6"
+        ]
+    },
+    "nether_stem_hit": {
+        "subtitle": "futuremc.subtitles.nether_stem_hit",
+        "sounds": [
+            "futuremc:block/nether_stem/break1",
+            "futuremc:block/nether_stem/break2",
+            "futuremc:block/nether_stem/break3",
+            "futuremc:block/nether_stem/break4",
+            "futuremc:block/nether_stem/break5",
+            "futuremc:block/nether_stem/break6"
+        ]
+    },
+    "nether_stem_fall": {
+        "subtitle": "futuremc.subtitles.nether_stem_fall",
+        "sounds": [
+            "futuremc:block/nether_stem/step1",
+            "futuremc:block/nether_stem/step2",
+            "futuremc:block/nether_stem/step3",
+            "futuremc:block/nether_stem/step4",
+            "futuremc:block/nether_stem/step5",
+            "futuremc:block/nether_stem/step6"
+        ]
+    },
+    "nether_sprouts_break": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_break",
+        "sounds": [
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
+        ]
+    },
+    "nether_sprouts_step": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_step",
+        "sounds": [
+            "futuremc:block/roots/step1",
+            "futuremc:block/roots/step2",
+            "futuremc:block/roots/step3",
+            "futuremc:block/roots/step4",
+            "futuremc:block/roots/step5"
+        ]
+    },
+    "nether_sprouts_place": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_place",
+        "sounds": [
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
+        ]
+    },
+    "nether_sprouts_hit": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_hit",
+        "sounds": [
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
+        ]
+    },
+    "nether_sprouts_fall": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_fall",
+        "sounds": [
+            "futuremc:block/roots/step1",
+            "futuremc:block/roots/step2",
+            "futuremc:block/roots/step3",
+            "futuremc:block/roots/step4",
+            "futuremc:block/roots/step5"
+        ]
+    },
+    "roots_break": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_break",
+        "sounds": [
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
+        ]
+    },
+    "roots_step": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_step",
+        "sounds": [
+            "futuremc:block/roots/step1",
+            "futuremc:block/roots/step2",
+            "futuremc:block/roots/step3",
+            "futuremc:block/roots/step4",
+            "futuremc:block/roots/step5"
+        ]
+    },
+    "roots_place": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_place",
+        "sounds": [
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
+        ]
+    },
+    "roots_hit": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_hit",
+        "sounds": [
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
+        ]
+    },
+    "roots_fall": {
+        "subtitle": "futuremc.subtitles.nether_sprouts_fall",
+        "sounds": [
+            "futuremc:block/roots/step1",
+            "futuremc:block/roots/step2",
+            "futuremc:block/roots/step3",
+            "futuremc:block/roots/step4",
+            "futuremc:block/roots/step5"
+        ]
+    },
+    "equip_netherite": {
+        "subtitle": "futuremc.subtitles.equip_netherite",
+        "sounds": [
+            "futuremc:item/armor/equip_netherite1",
+            "futuremc:item/armor/equip_netherite2",
+            "futuremc:item/armor/equip_netherite3",
+            "futuremc:item/armor/equip_netherite4"
+        ]
+    },
+    "smithing_table_use": {
+        "subtitle": "futuremc.subtitles.smithing_table_use",
+        "sounds": [
+            "futuremc:block/smithing_table/use1",
+            "futuremc:block/smithing_table/use2",
+            "futuremc:block/smithing_table/use3"
+        ]
     }
 }

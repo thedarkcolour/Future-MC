@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "futuremc:blocks/stripped_dark_oak_log"
+    }
+}

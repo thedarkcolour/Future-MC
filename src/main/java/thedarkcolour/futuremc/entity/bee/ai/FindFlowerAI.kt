@@ -13,16 +13,17 @@ class FindFlowerAI(bee: BeeEntity) : FindBlockAI(bee) {
     }
 
     override fun updateTask() {
-        val pos = bee.flowerPos
-        if (pos != null) {
+        val flowerPos = bee.flowerPos
+
+        if (flowerPos != null) {
             ++searchingTicks
             if (searchingTicks > 600) {
                 bee.flowerPos = null
-            } else if (!bee.navigator.noPath()) {
-                if (isTooFar(pos)) {
+            } else if (bee.navigator.noPath()) {
+                if (isTooFar(flowerPos)) {
                     bee.flowerPos = null
                 } else {
-                    startMovingTo(pos)
+                    startMovingTo(flowerPos)
                 }
             }
         }

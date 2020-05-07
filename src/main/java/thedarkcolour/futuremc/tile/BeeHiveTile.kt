@@ -20,13 +20,14 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.ITickable
 import net.minecraft.util.SoundCategory
+import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraft.world.chunk.storage.AnvilChunkLoader
 import sun.reflect.Reflection
 import thedarkcolour.core.tile.InteractionTile
 import thedarkcolour.futuremc.block.BeeHiveBlock
-import thedarkcolour.futuremc.block.BlockCampfire
+import thedarkcolour.futuremc.block.CampfireBlock
 import thedarkcolour.futuremc.entity.bee.BeeEntity
 import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FSounds
@@ -38,27 +39,25 @@ class BeeHiveTile : InteractionTile(), ITickable {
         private set
 
     fun isNearFire(): Boolean {
-        return if (world == null) {
-            false
-        } else {
-            for (pos in BlockPos.getAllInBoxMutable(pos.add(-1, -1, -1), pos.add(1, 1, 1))) {
-                if (world.getBlockState(pos).block is BlockFire) {
-                    return true
-                }
+        world ?: return false
+        for (pos in BlockPos.getAllInBoxMutable(pos.add(-1, -1, -1), pos.add(1, 1, 1))) {
+            if (world.getBlockState(pos).block is BlockFire) {
+                return true
             }
-            false
         }
+        return false
     }
 
     private fun hasNoBees() = bees.isEmpty()
 
     fun isFullOfBees() = bees.size == 3
 
+    // release the BEES
     fun angerBees(playerIn: EntityPlayer?, state: BeeState) {
-        val list: ArrayList<BeeEntity> = tryReleaseBee(state)
+        val bees = tryReleaseBee(state)
 
         if (playerIn != null) {
-            for (bee in list) {
+            for (bee in bees) {
                 if (playerIn.squaredDistanceTo(bee) <= 16.0) {
                     if (!isSmoked()) {
                         bee.setBeeAttacker(playerIn)
@@ -78,7 +77,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
 
     fun getBeeCount() = bees.size
 
-    private fun isSmoked() = BlockCampfire.isLitInRange(world, pos, 5)
+    private fun isSmoked() = CampfireBlock.isLitInRange(world, pos, 5)
 
     fun tryEnterHive(entityIn: BeeEntity, isDelivering: Boolean, i: Int = 0) {
         if (bees.size < 3) {
@@ -302,19 +301,52 @@ class BeeHiveTile : InteractionTile(), ITickable {
         val tile = worldIn.getTileEntity(pos)
 
         if (tile is BeeHiveTile) {
-            val hive = tile as BeeHiveTile?
-            hive!!.setHoneyLevel(0, true)
-            hive.angerBees(playerIn, BeeState.HONEY_DELIVERED)
+            tile.setHoneyLevel(0, true)
+            tile.angerBees(playerIn, BeeState.HONEY_DELIVERED)
         }
     }
 
     override fun broken(state: IBlockState, playerIn: EntityPlayer) {
-        val isCreative = playerIn.isCreative
-        if (!world.isRemote && (isCreative || EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, playerIn.heldItemMainhand) == 1)) {
-            val item = EntityItem(world, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), getItemWithBees(isCreative) ?: return)
-            item.setDefaultPickupDelay()
+        if (!world.isRemote) {
+            val isCreative = playerIn.isCreative
 
-            world.spawnEntity(item)
+            if (isCreative || EnchantmentHelper.getEnchantmentLevel(
+                    Enchantments.SILK_TOUCH,
+                    playerIn.heldItemMainhand
+                ) == 1
+            ) {
+                val item = EntityItem(
+                    world,
+                    pos.x.toDouble(),
+                    pos.y.toDouble(),
+                    pos.z.toDouble(),
+                    getItemWithBees(isCreative) ?: return
+                )
+                item.setDefaultPickupDelay()
+
+                world.spawnEntity(item)
+            } else {
+                if (!world.isRemote && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, playerIn.heldItemMainhand) == 0) {
+                    angerBees(playerIn, BeeState.HONEY_DELIVERED)
+                    world.updateComparatorOutputLevel(pos, blockType)
+                }
+                val nearbyBees = world.getEntitiesWithinAABB(BeeEntity::class.java, AxisAlignedBB(pos).expand(8.0, 6.0, 8.0))
+
+                if (nearbyBees.isNotEmpty()) {
+                    val nearbyPlayers = world.getEntitiesWithinAABB(EntityPlayer::class.java, AxisAlignedBB(pos).expand(8.0, 6.0, 8.0))
+                    val players = nearbyPlayers.size
+
+                    // use the variable because we have it and
+                    // it saves on method calls
+                    if (players != 0) {
+                        for (bee in nearbyBees) {
+                            if (bee.attackTarget == null) {
+                                bee.setBeeAttacker(nearbyPlayers[world.rand.nextInt(players)])
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

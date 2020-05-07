@@ -41,11 +41,12 @@ object FConfig {
         @JvmField
         val fish = FishConfig()
 
-        @Name("New Water Color")
-        @Comment("Whether water uses its new color from 1.13+")
-        @RequiresMcRestart
-        @JvmField
-        var newWaterColor = true
+        //@Name("New Water Color")
+        //@Comment("Whether water uses its new color from 1.13+")
+        //@RequiresMcRestart
+        //@JvmField
+        @Ignore
+        val newWaterColor = false
 
         @Name("Stripped Logs")
         @Comment("Options for stripped logs")
@@ -75,41 +76,39 @@ object FConfig {
             @Comment("Options for Cod")
             @RequiresMcRestart
             @JvmField
-            var cod = Fish(
-                Fish.SpawnEntry("minecraft", "frozen_ocean", 15,3, 6),
-                Fish.SpawnEntry("minecraft", "ocean", 10,3, 6),
-                Fish.SpawnEntry("minecraft", "deep_ocean", 10,3, 6)
-            )
+            var cod = Fish(listOf("minecraft:frozen_ocean:15:3:6", "minecraft:ocean:10:3:6", "minecraft:deep_ocean:10:3:6"))
 
             @Name("Pufferfish")
             @Comment("Options for Pufferfish")
             @RequiresMcRestart
             @JvmField
-            var pufferfish = Fish(Fish.SpawnEntry("minecraft", "deep_ocean", 5, 1, 3))
+            var pufferfish = Fish(listOf("minecraft:deep_ocean:5:1:3"))
 
             @Name("Salmon")
             @Comment("Options for Salmon")
             @RequiresMcRestart
             @JvmField
             var salmon = Fish(
-                Fish.SpawnEntry("minecraft", "frozen_ocean", 15, 1, 5),//"minecraft:frozen_ocean:15:1:5",
-                Fish.SpawnEntry("minecraft", "deep_ocean", 15, 1, 5),
-                Fish.SpawnEntry("minecraft", "river", 5, 1, 5),
-                Fish.SpawnEntry("minecraft", "frozen_river", 5, 1, 5)
+                listOf(
+                    "minecraft:frozen_ocean:15:1:5",
+                    "minecraft:deep_ocean:15:1:5",
+                    "minecraft:river:5:1:5",
+                    "minecraft:frozen_river:5:1:5"
+                )
             )
 
             @Name("Tropical Fish")
             @Comment("Options for Tropical Fish")
             @RequiresMcRestart
             @JvmField
-            var tropicalFish = Fish(Fish.SpawnEntry("minecraft", "deep_ocean", 25, 8, 8))
+            var tropicalFish = Fish(listOf("minecraft:deep_ocean:25:8:8"))
 
             @Name("Invalid Biome Messages")
             @Comment("Whether missing biomes in a fish's Valid Biomes are logged to the console. Recommended for testing tweaked config options.")
             @JvmField
             var logMissingValidBiomes = false
 
-            class Fish(vararg defaultValidBiomes: SpawnEntry) {
+            class Fish(defaultValidBiomes: List<String>) {
                 @Name("Enabled")
                 @Comment("Whether this feature is enabled.")
                 @RequiresMcRestart
@@ -117,39 +116,13 @@ object FConfig {
                 var enabled = true
 
                 @Name("Valid Biomes")
-                @Comment("Which biomes this fish can spawn in.")
+                @Comment(
+                    "Which biomes this fish can spawn in.",
+                    "Goes like: modID:biomeID:weight:minimumGroupCount:maximumGroupCount"
+                )
                 @RequiresMcRestart
                 @JvmField
-                @Suppress("UNCHECKED_CAST")
-                var validBiomes = defaultValidBiomes as Array<SpawnEntry>
-
-                class SpawnEntry(
-                    @Name("Mod ID")
-                    @Comment("The mod that this biome comes from")
-                    @RequiresMcRestart
-                    @JvmField
-                    var modid: String,
-
-                    @Name("Biome ID")
-                    @RequiresMcRestart
-                    @JvmField
-                    var biome: String,
-
-                    @Name("Weight")
-                    @RequiresMcRestart
-                    @JvmField
-                    var weight: Int,
-
-                    @Name("Minimum Group Count")
-                    @RequiresMcRestart
-                    @JvmField
-                    var minGroupCount: Int,
-
-                    @Name("Maximum Group Count")
-                    @RequiresMcRestart
-                    @JvmField
-                    var maxGroupCount: Int
-                )
+                var validBiomes = defaultValidBiomes.toTypedArray()
             }
         }
 
@@ -339,7 +312,7 @@ object FConfig {
         @Comment("Whether the Grindstone is enabled.")
         @RequiresMcRestart
         @JvmField
-        var grindstone = true
+        var grindstone = Grindstone()
 
         @Name("Lantern")
         @Comment("Whether the Lantern is enabled.")
@@ -385,6 +358,18 @@ object FConfig {
         @RequiresMcRestart
         @JvmField
         var smoker = true
+
+        @Name("Smooth Stone")
+        @Comment("Whether Smooth Stone is enabled.")
+        @RequiresMcRestart
+        @JvmField
+        var smoothSandstone = true
+
+        @Name("Smooth Stone")
+        @Comment("Whether Smooth Stone is enabled.")
+        @RequiresMcRestart
+        @JvmField
+        var smoothRedSandstone = true
 
         @Name("Smooth Stone")
         @Comment("Whether Smooth Stone is enabled.")
@@ -466,6 +451,20 @@ object FConfig {
             var spawnRate = 0.5
         }
 
+        class Grindstone {
+            @Name("Enabled")
+            @Comment("Whether this feature is enabled.")
+            @RequiresMcRestart
+            @JvmField
+            var enabled = true
+
+            @Name("Functionality")
+            @Comment("Whether the Grindstone can be used to repair/disenchant.")
+            @JvmField
+            @RequiresMcRestart
+            var functionality = true
+        }
+
         class Loom {
             @Name("Enabled")
             @Comment("Whether this feature is enabled.")
@@ -476,6 +475,7 @@ object FConfig {
             @Name("Functionality")
             @Comment("Whether the Loom can be used to make banners.")
             @JvmField
+            @RequiresMcRestart
             var functionality = true
         }
 
@@ -484,31 +484,31 @@ object FConfig {
             @Comment("Whether this feature is enabled.")
             @RequiresMcRestart
             @JvmField
-            var acacia = false
+            var acacia = true
 
             @Name("Jungle")
             @Comment("Whether this feature is enabled.")
             @RequiresMcRestart
             @JvmField
-            var jungle = false
+            var jungle = true
 
             @Name("Birch")
             @Comment("Whether this feature is enabled.")
             @RequiresMcRestart
             @JvmField
-            var birch = false
+            var birch = true
 
             @Name("Spruce")
             @Comment("Whether this feature is enabled.")
             @RequiresMcRestart
             @JvmField
-            var spruce = false
+            var spruce = true
 
             @Name("Dark Oak")
             @Comment("Whether this feature is enabled.")
             @RequiresMcRestart
             @JvmField
-            var darkOak = false
+            var darkOak = true
         }
 
         class NewWalls {
@@ -595,6 +595,7 @@ object FConfig {
             @Name("Functionality")
             @Comment("Whether this block's gui can be used.")
             @JvmField
+            @RequiresMcRestart
             var functionality = true
         }
 
@@ -684,7 +685,7 @@ object FConfig {
         )
         @JvmField
         var validBiomesForBeeNest =
-            arrayOf("minecraft:plains:1", "minecraft:sunflower_plains:1", "minecraft:mutated_forest:0.4")
+            arrayOf("minecraft:plains:0.05", "minecraft:sunflower_plains:0.05", "minecraft:mutated_forest:0.02")
 
         class Bee {
             @Name("Enabled")
@@ -726,6 +727,19 @@ object FConfig {
         @Name("Soul Fire Torch")
         @Comment("Whether the Soul Fire Torch is enabled.")
         @RequiresMcRestart
+        @JvmField
         var soulFireTorch = true
+
+        @Name("Soul Soil")
+        @Comment("Whether soul soil is added.")
+        @RequiresMcRestart
+        @JvmField
+        var soulSoil = true
+
+        @Name("Chain")
+        @Comment("Whether the decorative chain block is enabled.")
+        @RequiresMcRestart
+        @JvmField
+        var chain = true
     }
 }

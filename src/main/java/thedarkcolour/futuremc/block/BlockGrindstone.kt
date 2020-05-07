@@ -15,29 +15,24 @@ import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
-import thedarkcolour.core.block.BlockBase
+import thedarkcolour.core.block.FBlock
 import thedarkcolour.core.gui.Gui
-import thedarkcolour.futuremc.FutureMC.TAB
+import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
 
-class BlockGrindstone : BlockBase("Grindstone") {
+class BlockGrindstone(properties: Properties) : FBlock(properties) {
+    init {
+        setHardness(3.5f)
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.DECORATIONS else FutureMC.GROUP
+    }
+
     override fun onBlockActivated(
-        worldIn: World,
-        pos: BlockPos,
-        state: IBlockState,
-        playerIn: EntityPlayer,
-        hand: EnumHand,
-        facing: EnumFacing,
-        hitX: Float,
-        hitY: Float,
-        hitZ: Float
+        worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer,
+        hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float
     ): Boolean {
-        return if (worldIn.isRemote) {
-            true
-        } else {
+        return if (FConfig.villageAndPillage.grindstone.functionality) {
             Gui.GRINDSTONE.open(playerIn, worldIn, pos)
-            true
-        }
+        } else false
     }
 
     override fun getBoundingBox(state: IBlockState, source: IBlockAccess, pos: BlockPos): AxisAlignedBB {
@@ -219,10 +214,5 @@ class BlockGrindstone : BlockBase("Grindstone") {
                 }
             }
         }
-    }
-
-    init {
-        setHardness(3.5f)
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.DECORATIONS else TAB
     }
 }

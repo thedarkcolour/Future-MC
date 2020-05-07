@@ -1,5 +1,6 @@
 package thedarkcolour.core.inventory
 
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.nbt.NBTTagList
@@ -14,7 +15,7 @@ import java.util.*
 
 /**
  * An iterable [net.minecraftforge.items.ItemStackHandler] with extra functionality.
- * Backed by an array instead of a [net.minecraft.util.NonNullList]
+ * Uses an array instead of a [net.minecraft.util.NonNullList]
  */
 open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: String? = null) : IItemHandlerModifiable,
     INBTSerializable<NBTTagCompound>, Iterable<ItemStack?> {
@@ -105,9 +106,9 @@ open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: Strin
         }
     }
 
-    override fun getSlotLimit(slot: Int): Int = 64
+    override fun getSlotLimit(slot: Int) = 64
 
-    override fun isItemValid(slot: Int, stack: ItemStack): Boolean = true
+    override fun isItemValid(slot: Int, stack: ItemStack) = true
 
     override fun serializeNBT(): NBTTagCompound {
         val nbtTagList = NBTTagList()
@@ -171,5 +172,13 @@ open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: Strin
             }
         }
         return false
+    }
+
+    open fun canTakeStack(playerIn: EntityPlayer, slot: Int): Boolean {
+        return true
+    }
+
+    open fun onTake(playerIn: EntityPlayer, stack: ItemStack, slot: Int): ItemStack {
+        return stack
     }
 }

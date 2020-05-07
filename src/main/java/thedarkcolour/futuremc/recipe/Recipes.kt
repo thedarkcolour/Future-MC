@@ -4,16 +4,25 @@ import net.minecraft.item.ItemStack
 import java.util.*
 
 abstract class Recipes<T : Recipe> {
+    init {
+        //addDefaults()
+    }
+
     abstract val recipes: ArrayList<T>
 
-    abstract fun addDefaults()
+    // todo remove
+    open fun addDefaults() {}
 
     /**
      * Removes a recipe with the given input
      * Ignores if the recipe doesn't exist.
      */
     open fun removeRecipe(input: ItemStack) {
-        recipes.removeIf { it.matches(input) }
+        val iterator = recipes.iterator()
+        while (iterator.hasNext()) {
+            if (iterator.next().matches(input))
+                iterator.remove()
+        }
     }
 
     /**

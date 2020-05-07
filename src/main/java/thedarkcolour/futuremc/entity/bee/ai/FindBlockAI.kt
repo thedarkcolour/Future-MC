@@ -7,7 +7,7 @@ import thedarkcolour.futuremc.entity.bee.BeeEntity
 import kotlin.math.abs
 
 abstract class FindBlockAI(bee: BeeEntity) : PassiveAI(bee) {
-    protected var searchingTicks = bee.random.nextInt(10)
+    protected var searchingTicks = bee.rng.nextInt(10)
 
     init {
         mutexBits = 0x1

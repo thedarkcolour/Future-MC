@@ -40,7 +40,7 @@ class ItemCrossbow : ItemModeled("crossbow") {
     init {
         setMaxStackSize(1)
         maxDamage = 326
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.COMBAT else FutureMC.TAB
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.COMBAT else FutureMC.GROUP
         addPropertyOverride(ResourceLocation("pull")) { stack, _, entityIn ->
             if (entityIn != null && stack.item == this) {
                 if (isCharged(stack)) {

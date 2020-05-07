@@ -7,9 +7,7 @@ import thedarkcolour.futuremc.recipe.Recipes
 import java.util.*
 
 object BlastFurnaceRecipes : Recipes<FurnaceRecipe>() {
-    override val recipes = ArrayList<FurnaceRecipe>()
-
-    override fun addDefaults() {
+    override val recipes = ArrayList<FurnaceRecipe>().also { recipes ->
         for (string in OreDictionary.getOreNames()) {
             if (string.startsWith("ore") || string.startsWith("dust")) {
                 val ores = OreDictionary.getOres(string)
@@ -17,7 +15,7 @@ object BlastFurnaceRecipes : Recipes<FurnaceRecipe>() {
                 ores.forEach { stack ->
                     val result = FurnaceRecipes.instance().getSmeltingResult(stack)
                     if (!result.isEmpty) {
-                        addRecipe(stack, result)
+                        recipes.add(FurnaceRecipe(stack, result))
                     }
                 }
             }
@@ -25,7 +23,6 @@ object BlastFurnaceRecipes : Recipes<FurnaceRecipe>() {
     }
 
     fun addRecipe(input: ItemStack, output: ItemStack) {
-        println("Added a recipe: $input, $output")
         recipes.add(FurnaceRecipe(input, output))
     }
 }

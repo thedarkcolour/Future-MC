@@ -31,7 +31,9 @@ public final class Smoker {
 
         private AddRecipe(IItemStack input, IItemStack output) {
             this.input = CraftTweakerMC.getItemStack(input);
+            this.input.setCount(1);
             this.output = CraftTweakerMC.getItemStack(output);
+            this.output.setCount(1);
         }
 
         @Override

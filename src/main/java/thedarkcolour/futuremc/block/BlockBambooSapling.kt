@@ -1,23 +1,16 @@
 package thedarkcolour.futuremc.block
 
-import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.*
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
-import thedarkcolour.core.block.BlockBase
+import thedarkcolour.core.block.FBlock
 import thedarkcolour.core.util.stack
 import thedarkcolour.futuremc.registry.FItems
-import thedarkcolour.futuremc.registry.FSounds
 
-class BlockBambooSapling : BlockBase("bamboo_sapling", Material.WOOD) {
-    init {
-        soundType = FSounds.BAMBOO_SAPLING
-        tickRandomly = true
-        blockHardness = 0.0f
-    }
+class BlockBambooSapling(properties: Properties) : FBlock(properties) {
 
     override fun getPickBlock(
         state: IBlockState,

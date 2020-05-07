@@ -1,191 +1,249 @@
 package thedarkcolour.futuremc.registry
 
 import net.minecraft.block.Block
+import net.minecraft.block.SoundType
 import net.minecraft.block.material.MapColor
 import net.minecraft.block.material.Material
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraftforge.fml.common.registry.ForgeRegistries
-import thedarkcolour.core.block.BlockBase
+import net.minecraftforge.registries.IForgeRegistry
+import thedarkcolour.core.block.FBlock
+import thedarkcolour.core.block.FBlock.Properties
 import thedarkcolour.core.gui.Gui
-import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.*
-import thedarkcolour.futuremc.block.BlockWall.Variant
+import thedarkcolour.futuremc.block.netherupdate.ChainBlock
+import thedarkcolour.futuremc.block.netherupdate.NyliumBlock
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.tile.*
 
+// todo add properties for everything
+@Suppress("MemberVisibilityCanBePrivate")
 object FBlocks {
-    lateinit var LANTERN: Block private set
-    lateinit var STONECUTTER: Block private set
-    lateinit var BARREL: Block private set
-    lateinit var SMOKER: Block private set
-    lateinit var BLAST_FURNACE: Block private set
-    lateinit var LOOM: Block private set
-    lateinit var FLETCHING_TABLE: Block private set
-    lateinit var SMITHING_TABLE: Block private set
-    lateinit var CARTOGRAPHY_TABLE: Block private set
-    lateinit var GRINDSTONE: Block private set
-    lateinit var COMPOSTER: Block private set
-    lateinit var HONEY_BLOCK: Block private set
-    lateinit var HONEYCOMB_BLOCK: Block private set
-    lateinit var LILY_OF_THE_VALLEY: Block private set
-    lateinit var CORNFLOWER: Block private set
-    lateinit var WITHER_ROSE: BlockWitherRose private set
-    lateinit var SWEET_BERRY_BUSH: Block private set
-    lateinit var CAMPFIRE: Block private set
-    lateinit var BAMBOO: Block private set
-    lateinit var BAMBOO_SAPLING: Block private set
-    lateinit var BEE_NEST: Block private set
-    lateinit var BEEHIVE: Block private set
-    lateinit var STRIPPED_ACACIA_LOG: Block private set
-    lateinit var STRIPPED_JUNGLE_LOG: Block private set
-    lateinit var STRIPPED_BIRCH_LOG: Block private set
-    lateinit var STRIPPED_OAK_LOG: Block private set
-    lateinit var STRIPPED_SPRUCE_LOG: Block private set
-    lateinit var STRIPPED_DARK_OAK_LOG: Block private set
-    lateinit var BRICK_WALL: Block private set
-    lateinit var GRANITE_WALL: Block private set
-    lateinit var ANDESITE_WALL: Block private set
-    lateinit var DIORITE_WALL: Block private set
-    lateinit var SANDSTONE_WALL: Block private set
-    lateinit var RED_SANDSTONE_WALL: Block private set
-    lateinit var STONE_BRICK_WALL: Block private set
-    lateinit var MOSSY_STONE_WALL: Block private set
-    lateinit var NETHER_BRICK_WALL: Block private set
-    lateinit var RED_NETHER_BRICK_WALL: Block private set
-    lateinit var END_STONE_WALL: Block private set
-    lateinit var PRISMARINE_WALL: Block private set
-    lateinit var SMOOTH_STONE: Block private set
-    lateinit var SMOOTH_QUARTZ: Block private set
-    lateinit var BLUE_ICE: Block private set
-    lateinit var STRIPPED_ACACIA_WOOD: Block private set
-    lateinit var STRIPPED_JUNGLE_WOOD: Block private set
-    lateinit var STRIPPED_BIRCH_WOOD: Block private set
-    lateinit var STRIPPED_OAK_WOOD: Block private set
-    lateinit var STRIPPED_SPRUCE_WOOD: Block private set
-    lateinit var STRIPPED_DARK_OAK_WOOD: Block private set
-    lateinit var ACACIA_WOOD: Block private set
-    lateinit var JUNGLE_WOOD: Block private set
-    lateinit var BIRCH_WOOD: Block private set
-    lateinit var OAK_WOOD: Block private set
-    lateinit var SPRUCE_WOOD: Block private set
-    lateinit var DARK_OAK_WOOD: Block private set
-    lateinit var ACACIA_TRAPDOOR: Block private set
-    lateinit var JUNGLE_TRAPDOOR: Block private set
-    lateinit var BIRCH_TRAPDOOR: Block private set
-    lateinit var SPRUCE_TRAPDOOR: Block private set
-    lateinit var DARK_OAK_TRAPDOOR: Block private set
+    val STRIPPED_ACACIA_LOG = BlockStrippedLog("acacia")
+    val STRIPPED_JUNGLE_LOG = BlockStrippedLog("jungle")
+    val STRIPPED_BIRCH_LOG = BlockStrippedLog("birch")
+    val STRIPPED_OAK_LOG = BlockStrippedLog("oak")
+    val STRIPPED_SPRUCE_LOG = BlockStrippedLog("spruce")
+    val STRIPPED_DARK_OAK_LOG = BlockStrippedLog("dark_oak")
 
-    lateinit var SOUL_FIRE_LANTERN: Block private set
-    lateinit var SOUL_FIRE_TORCH: Block private set
+    val LANTERN = LanternBlock(Properties(Material.IRON, "lantern").hardnessAndResistance(3.5f).sound(FSounds.LANTERN).light(15).group(CreativeTabs.DECORATIONS))
+    val STONECUTTER = StonecutterBlock(Properties(Material.ROCK, "stonecutter").hardnessAndResistance(3.5f).group(CreativeTabs.DECORATIONS))
+    val BARREL = BarrelBlock(Properties(Material.WOOD, "barrel").sound(SoundType.WOOD).hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS))
+    val SMOKER = BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.SMOKER, Properties(Material.ROCK, "smoker").group(CreativeTabs.DECORATIONS))
+    val BLAST_FURNACE = BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE, Properties(Material.ROCK, "blast_furnace").group(CreativeTabs.DECORATIONS))
+    val LOOM = VillageStationBlock(Properties(Material.WOOD, "loom"), Gui.LOOM, FConfig.villageAndPillage.loom.functionality)
+    val FLETCHING_TABLE = VillageStationBlock(Properties(Material.WOOD, "fletching_table"), null, false)
+    val SMITHING_TABLE = VillageStationBlock(Properties(Material.WOOD, "smithing_table"), null, FConfig.villageAndPillage.smithingTable.functionality)
+    val CARTOGRAPHY_TABLE = VillageStationBlock(Properties(Material.WOOD, "cartography_table"), null, FConfig.villageAndPillage.cartographyTable.functionality)
+    val GRINDSTONE = BlockGrindstone(Properties(Material.ANVIL, "grindstone").color(MapColor.IRON).group(CreativeTabs.DECORATIONS).hardnessAndResistance(2.0F, 6.0F))
+    val COMPOSTER = ComposterBlock(Properties(Material.WOOD, "composter").hardnessAndResistance(0.6F).sound(SoundType.WOOD))
+    val HONEY_BLOCK = HoneyBlockBlock(Properties(Material.CLAY, "honey_block").color(MapColor.ADOBE).hardnessAndResistance(0.0f).sound(FSounds.HONEY_BLOCK))
+    val HONEYCOMB_BLOCK = FBlock(Properties(Material.CLAY, "honeycomb_block").color(MapColor.ADOBE).hardnessAndResistance(0.6F).sound(FSounds.CORAL))
+    val LILY_OF_THE_VALLEY = LilyOfTheValleyBlock()
+    val CORNFLOWER = CornflowerBlock()
+    val WITHER_ROSE = WitherRoseBlock()
+    val SWEET_BERRY_BUSH = SweetBerryBushBlock()
+    val CAMPFIRE = CampfireBlock(Properties(Material.WOOD, "campfire").color(MapColor.OBSIDIAN).hardnessAndResistance(2.0f).sound(SoundType.WOOD).light(15).tickRandomly())
+    val BAMBOO = BlockBamboo(Properties(Material.PLANTS, "bamboo").sound(FSounds.BAMBOO).group(CreativeTabs.MISC).tickRandomly().hardnessAndResistance(1.0f))
+    val BAMBOO_SAPLING = BlockBambooSapling(Properties(Material.WOOD, "bamboo_sapling").sound(FSounds.BAMBOO_SAPLING).tickRandomly().breakInstantly())
+    val BEE_NEST = BeeHiveBlock(Properties(Material.WOOD, "bee_nest").hardnessAndResistance(0.3f).sound(SoundType.WOOD))
+    val BEEHIVE = BeeHiveBlock(Properties(Material.WOOD, "beehive").hardnessAndResistance(0.6f).sound(SoundType.WOOD))
+    val BRICK_WALL = BlockWall(Properties(Material.ROCK, "brick_wall").color(MapColor.RED).hardnessAndResistance(2.0f, 6.0f))
+    val PRISMARINE_WALL = BlockWall(Properties(Material.ROCK, "prismarine_wall").color(MapColor.CYAN).hardnessAndResistance(1.5f, 6.0f))
+    val RED_SANDSTONE_WALL = BlockWall(Properties(Material.ROCK, "red_sandstone_wall").color(MapColor.ADOBE).hardnessAndResistance(0.8f))
+    val MOSSY_STONE_BRICK_WALL = BlockWall(Properties(Material.ROCK, "mossy_stone_brick_wall").hardnessAndResistance(1.5f, 6.0f))
+    val GRANITE_WALL = BlockWall(Properties(Material.ROCK, "granite_wall").color(MapColor.DIRT).hardnessAndResistance(1.5f, 6.0f))
+    val STONE_BRICK_WALL = BlockWall(Properties(Material.ROCK, "stone_brick_wall").hardnessAndResistance(1.5f, 6.0f))
+    val NETHER_BRICK_WALL = BlockWall(Properties(Material.ROCK, "nether_brick_wall").color(MapColor.NETHERRACK).hardnessAndResistance(2.0f, 6.0f))
+    val ANDESITE_WALL = BlockWall(Properties(Material.ROCK, "andesite_wall").color(MapColor.STONE).hardnessAndResistance(1.5f, 6.0f))
+    val RED_NETHER_BRICK_WALL = BlockWall(Properties(Material.ROCK, "red_nether_brick_wall").color(MapColor.NETHERRACK).hardnessAndResistance(2.0f, 6.0f))
+    val SANDSTONE_WALL = BlockWall(Properties(Material.ROCK, "sandstone_wall").color(MapColor.SAND).hardnessAndResistance(0.8f))
+    val END_STONE_BRICK_WALL = BlockWall(Properties(Material.ROCK, "end_stone_brick_wall").color(MapColor.SAND).hardnessAndResistance(3.0f, 9.0f))
+    val DIORITE_WALL = BlockWall(Properties(Material.ROCK, "diorite_wall").color(MapColor.QUARTZ).hardnessAndResistance(1.5f, 6.0f))
+    val SMOOTH_STONE = FBlock(Properties(Material.ROCK, "smooth_stone").hardnessAndResistance(2.0f, 6.0f))
+    val SMOOTH_SANDSTONE = FBlock(Properties(Material.ROCK, "smooth_sandstone").color(MapColor.SAND).hardnessAndResistance(2.0f, 6.0f))
+    val SMOOTH_QUARTZ = FBlock(Properties(Material.ROCK, "smooth_quartz").color(MapColor.QUARTZ).hardnessAndResistance(2.0f, 6.0f))
+    val SMOOTH_RED_SANDSTONE = FBlock(Properties(Material.ROCK, "smooth_red_sandstone").color(MapColor.ADOBE).hardnessAndResistance(2.0f, 6.0f))
+    val BLUE_ICE = BlueIceBlock(Properties(Material.PACKED_ICE, "blue_ice").group(CreativeTabs.BUILDING_BLOCKS).slipperiness(0.989f).hardnessAndResistance(2.8f))
+    val STRIPPED_ACACIA_WOOD = BlockWood("stripped_acacia_wood")
+    val STRIPPED_JUNGLE_WOOD = BlockWood("stripped_jungle_wood")
+    val STRIPPED_BIRCH_WOOD = BlockWood("stripped_birch_wood")
+    val STRIPPED_OAK_WOOD = BlockWood("stripped_oak_wood")
+    val STRIPPED_SPRUCE_WOOD = BlockWood("stripped_spruce_wood")
+    val STRIPPED_DARK_OAK_WOOD = BlockWood("stripped_dark_oak_wood")
+    val ACACIA_WOOD = BlockWood("acacia_wood")
+    val JUNGLE_WOOD = BlockWood("jungle_wood")
+    val BIRCH_WOOD = BlockWood("birch_wood")
+    val OAK_WOOD = BlockWood("oak_wood")
+    val SPRUCE_WOOD = BlockWood("spruce_wood")
+    val DARK_OAK_WOOD = BlockWood("dark_oak_wood")
+    val ACACIA_TRAPDOOR = BlockWoodTrapdoor("acacia_trapdoor")
+    val JUNGLE_TRAPDOOR = BlockWoodTrapdoor("jungle_trapdoor")
+    val BIRCH_TRAPDOOR = BlockWoodTrapdoor("birch_trapdoor")
+    val SPRUCE_TRAPDOOR = BlockWoodTrapdoor("spruce_trapdoor")
+    val DARK_OAK_TRAPDOOR = BlockWoodTrapdoor("dark_oak_trapdoor")
 
-    lateinit var SEAGRASS_FLOWING: Block private set
-    lateinit var SEAGRASS: Block private set
+    val SOUL_FIRE_LANTERN = LanternBlock(Properties(Material.IRON, "soul_fire_lantern").hardnessAndResistance(3.5f).sound(FSounds.LANTERN).light(10))
+    val SOUL_FIRE_TORCH = BlockSoulFireTorch()
+    val SOUL_SOIL = FBlock(Properties(Material.GROUND, "soul_soil").group(CreativeTabs.BUILDING_BLOCKS).sound(FSounds.SOUL_SOIL))
+    val CHAIN = ChainBlock(Properties(Material.IRON, "chain").hardnessAndResistance(5.0f, 6.0f))
+    val WARPED_NYLIUM = NyliumBlock(Properties(Material.ROCK, "warped_nylium").color(MapColor.CYAN).hardnessAndResistance(1.0f).sound(FSounds.NYLIUM))
+    val CRIMSON_NYLIUM = NyliumBlock(Properties(Material.ROCK, "crimson_nylium").color(MapColor.RED))
+    val WARPED_WART_BLOCK = FBlock(Properties(Material.GRASS, "warped_wart_block").color(MapColor.CYAN))
 
-    lateinit var SCAFFOLDING: Block private set
-    lateinit var BELL: Block private set
+    val SEAGRASS = BlockSeaGrass()
+    val SEAGRASS_FLOWING = SEAGRASS.flowing
 
-    fun init() {
-        val register = ForgeRegistries.BLOCKS
+    val SCAFFOLDING = ScaffoldingBlock(Properties(Material.CIRCUITS, "scaffolding").sound(FSounds.SCAFFOLDING))
+    val BELL = BlockBell(Properties(Material.IRON, "bell").hardnessAndResistance(5.0f).sound(SoundType.ANVIL))
 
-        LANTERN = register(BlockLantern("lantern"), FConfig.villageAndPillage.lantern)
-        STONECUTTER = register(BlockStonecutter(), FConfig.villageAndPillage.stonecutter.enabled)
-        BARREL = register(BlockBarrel(), FConfig.villageAndPillage.barrel)
-        SMOKER =
-            register(BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.SMOKER), FConfig.villageAndPillage.smoker)
-        BLAST_FURNACE = register(
-            BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE),
-            FConfig.villageAndPillage.blastFurnace
-        )
-        LOOM = register(BlockVillageStation(BlockBase.Props("loom"), Gui.LOOM, FConfig.villageAndPillage.loom::functionality), FConfig.villageAndPillage.loom.enabled)
-        FLETCHING_TABLE = register(BlockVillageStation(BlockBase.Props("fletching_table"), null) {false}, FConfig.villageAndPillage.fletchingTable)
-        SMITHING_TABLE = register(BlockVillageStation(BlockBase.Props("smithing_table"), Gui.SMITHING_TABLE, FConfig.villageAndPillage.smithingTable::functionality), FConfig.villageAndPillage.smithingTable.enabled)
-        CARTOGRAPHY_TABLE = register(BlockVillageStation(BlockBase.Props("cartography_table"), Gui.CARTOGRAPHY_TABLE, FConfig.villageAndPillage.cartographyTable::functionality), FConfig.villageAndPillage.cartographyTable.enabled)
-        GRINDSTONE = register(BlockGrindstone(), FConfig.villageAndPillage.grindstone)
-        COMPOSTER = register(BlockComposter(), FConfig.villageAndPillage.composter)
-        BELL = register(BlockBell(), FConfig.villageAndPillage.bell)
+    fun registerBlocks(blocks: IForgeRegistry<Block>) {
+        if (FConfig.villageAndPillage.lantern)
+            blocks.register(LANTERN)
+        if (FConfig.villageAndPillage.stonecutter.enabled)
+            blocks.register(STONECUTTER)
+        if (FConfig.villageAndPillage.barrel)
+            blocks.register(BARREL)
+        if (FConfig.villageAndPillage.smoker)
+            blocks.register(SMOKER)
+        if (FConfig.villageAndPillage.blastFurnace)
+            blocks.register(BLAST_FURNACE)
+        if (FConfig.villageAndPillage.loom.enabled)
+            blocks.register(LOOM)
+        if (FConfig.villageAndPillage.fletchingTable)
+            blocks.register(FLETCHING_TABLE)
+        if (FConfig.villageAndPillage.smithingTable.enabled)
+            blocks.register(SMITHING_TABLE)
+        if (FConfig.villageAndPillage.cartographyTable.enabled)
+            blocks.register(CARTOGRAPHY_TABLE)
+        if (FConfig.villageAndPillage.grindstone.enabled)
+            blocks.register(GRINDSTONE)
+        if (FConfig.villageAndPillage.composter)
+            blocks.register(COMPOSTER)
+        if (FConfig.villageAndPillage.bell)
+            blocks.register(BELL)
         //SCAFFOLDING = register(BlockScaffolding(), villageAndPillage.scaffolding)
-        HONEY_BLOCK = register(BlockHoneyBlock(), FConfig.buzzyBees.honeyBlock.enabled)
-        HONEYCOMB_BLOCK = register(
-            BlockBase(
-                "honeycomb_block",
-                Material.CLAY,
-                MapColor.ADOBE,
-                FSounds.CORAL
-            ).setHardness(0.6F).setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.DECORATIONS else FutureMC.TAB),
-            FConfig.buzzyBees.honeycombBlock
-        )
-        LILY_OF_THE_VALLEY = register(BlockLilyOfTheValley(), FConfig.villageAndPillage.lilyOfTheValley.enabled)
-        CORNFLOWER = register(BlockCornflower(), FConfig.villageAndPillage.cornflower.enabled)
-        WITHER_ROSE = register(BlockWitherRose(), FConfig.villageAndPillage.witherRose.enabled) as BlockWitherRose
-        SWEET_BERRY_BUSH = register(BlockSweetBerryBush(), FConfig.villageAndPillage.sweetBerryBush.enabled)
-        CAMPFIRE = register(BlockCampfire(), FConfig.villageAndPillage.campfire.enabled)
-        BAMBOO = register(BlockBamboo(), FConfig.villageAndPillage.bamboo.enabled)
-        BAMBOO_SAPLING = register(BlockBambooSapling(), FConfig.villageAndPillage.bamboo.enabled)
-        BEE_NEST = register(BeeHiveBlock("bee_nest").setHardness(0.3F), FConfig.buzzyBees.bee.enabled)
-        BEEHIVE = register(BeeHiveBlock("beehive").setHardness(0.6F), FConfig.buzzyBees.bee.enabled)
-        STRIPPED_ACACIA_LOG = register(BlockStrippedLog("acacia"), FConfig.updateAquatic.strippedLogs.acacia)
-        STRIPPED_JUNGLE_LOG = register(BlockStrippedLog("jungle"), FConfig.updateAquatic.strippedLogs.jungle)
-        STRIPPED_BIRCH_LOG = register(BlockStrippedLog("birch"), FConfig.updateAquatic.strippedLogs.birch)
-        STRIPPED_OAK_LOG = register(BlockStrippedLog("oak"), FConfig.updateAquatic.strippedLogs.oak)
-        STRIPPED_SPRUCE_LOG = register(BlockStrippedLog("spruce"), FConfig.updateAquatic.strippedLogs.spruce)
-        STRIPPED_DARK_OAK_LOG = register(BlockStrippedLog("dark_oak"), FConfig.updateAquatic.strippedLogs.darkOak)
-        BRICK_WALL = register(BlockWall(Variant.BRICK), FConfig.villageAndPillage.newWalls.brick)
-        GRANITE_WALL = register(BlockWall(Variant.GRANITE), FConfig.villageAndPillage.newWalls.granite)
-        ANDESITE_WALL = register(BlockWall(Variant.ANDESITE), FConfig.villageAndPillage.newWalls.andesite)
-        DIORITE_WALL = register(BlockWall(Variant.DIORITE), FConfig.villageAndPillage.newWalls.diorite)
-        SANDSTONE_WALL = register(BlockWall(Variant.SANDSTONE), FConfig.villageAndPillage.newWalls.sandstone)
-        RED_SANDSTONE_WALL = register(BlockWall(Variant.RED_SANDSTONE), FConfig.villageAndPillage.newWalls.redSandstone)
-        STONE_BRICK_WALL = register(BlockWall(Variant.STONE_BRICK), FConfig.villageAndPillage.newWalls.stoneBrick)
-        MOSSY_STONE_WALL = register(BlockWall(Variant.MOSSY_STONE), FConfig.villageAndPillage.newWalls.mossyStone)
-        NETHER_BRICK_WALL = register(BlockWall(Variant.NETHER_BRICK), FConfig.villageAndPillage.newWalls.netherBrick)
-        RED_NETHER_BRICK_WALL =
-            register(BlockWall(Variant.RED_NETHER_BRICK), FConfig.villageAndPillage.newWalls.redNetherBrick)
-        END_STONE_WALL = register(BlockWall(Variant.END_STONE), FConfig.villageAndPillage.newWalls.endStoneBrick)
-        PRISMARINE_WALL = register(BlockWall(Variant.PRISMARINE), FConfig.villageAndPillage.newWalls.prismarine)
-        SMOOTH_STONE = register(
-            BlockBase("smooth_stone").setHardness(2.0F).setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.BUILDING_BLOCKS else FutureMC.TAB),
-            FConfig.villageAndPillage.smoothStone
-        )
-        SMOOTH_QUARTZ = register(
-            BlockBase("smooth_quartz").setHardness(2.0F).setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.BUILDING_BLOCKS else FutureMC.TAB),
-            FConfig.villageAndPillage.smoothQuartz
-        )
-        BLUE_ICE = register(BlockBlueIce(), FConfig.updateAquatic.blueIce)
-        STRIPPED_ACACIA_WOOD = register(BlockWood("stripped_acacia_wood"), FConfig.updateAquatic.wood.strippedAcacia)
-        STRIPPED_JUNGLE_WOOD = register(BlockWood("stripped_jungle_wood"), FConfig.updateAquatic.wood.strippedJungle)
-        STRIPPED_BIRCH_WOOD = register(BlockWood("stripped_birch_wood"), FConfig.updateAquatic.wood.strippedBirch)
-        STRIPPED_OAK_WOOD = register(BlockWood("stripped_oak_wood"), FConfig.updateAquatic.wood.strippedOak)
-        STRIPPED_SPRUCE_WOOD = register(BlockWood("stripped_spruce_wood"), FConfig.updateAquatic.wood.strippedSpruce)
-        STRIPPED_DARK_OAK_WOOD = register(BlockWood("stripped_dark_oak_wood"), FConfig.updateAquatic.wood.strippedDarkOak)
-        ACACIA_WOOD = register(BlockWood("acacia_wood"), FConfig.updateAquatic.wood.acacia)
-        JUNGLE_WOOD = register(BlockWood("jungle_wood"), FConfig.updateAquatic.wood.jungle)
-        BIRCH_WOOD = register(BlockWood("birch_wood"), FConfig.updateAquatic.wood.birch)
-        OAK_WOOD = register(BlockWood("oak_wood"), FConfig.updateAquatic.wood.oak)
-        SPRUCE_WOOD = register(BlockWood("spruce_wood"), FConfig.updateAquatic.wood.spruce)
-        DARK_OAK_WOOD = register(BlockWood("dark_oak_wood"), FConfig.updateAquatic.wood.darkOak)
-        ACACIA_TRAPDOOR = register(BlockWoodTrapdoor("acacia_trapdoor"), FConfig.villageAndPillage.newTrapdoors.acacia)
-        JUNGLE_TRAPDOOR = register(BlockWoodTrapdoor("jungle_trapdoor"), FConfig.villageAndPillage.newTrapdoors.jungle)
-        BIRCH_TRAPDOOR = register(BlockWoodTrapdoor("birch_trapdoor"), FConfig.villageAndPillage.newTrapdoors.birch)
-        SPRUCE_TRAPDOOR = register(BlockWoodTrapdoor("spruce_trapdoor"), FConfig.villageAndPillage.newTrapdoors.spruce)
-        DARK_OAK_TRAPDOOR = register(BlockWoodTrapdoor("dark_oak_trapdoor"), FConfig.villageAndPillage.newTrapdoors.darkOak)
+        if (FConfig.buzzyBees.honeyBlock.enabled)
+            blocks.register(HONEY_BLOCK)
+        if (FConfig.buzzyBees.honeycombBlock)
+            blocks.register(FBlock(Properties(Material.CLAY, "honeycomb_block").color(MapColor.ADOBE).sound(FSounds.CORAL).hardnessAndResistance(0.6f).group(CreativeTabs.DECORATIONS)))
+        if (FConfig.villageAndPillage.lilyOfTheValley.enabled)
+            blocks.register(LILY_OF_THE_VALLEY)
+        if (FConfig.villageAndPillage.cornflower.enabled)
+            blocks.register(CORNFLOWER)
+        if (FConfig.villageAndPillage.witherRose.enabled)
+            blocks.register(WITHER_ROSE)
+        if (FConfig.villageAndPillage.sweetBerryBush.enabled)
+            blocks.register(SWEET_BERRY_BUSH)
+        if (FConfig.villageAndPillage.campfire.enabled)
+            blocks.register(CAMPFIRE)
+        if (FConfig.villageAndPillage.bamboo.enabled)
+            blocks.register(BAMBOO)
+        if (FConfig.villageAndPillage.bamboo.enabled)
+            blocks.register(BAMBOO_SAPLING)
+        if (FConfig.buzzyBees.bee.enabled)
+            blocks.register(BEE_NEST)
+        if (FConfig.buzzyBees.bee.enabled)
+            blocks.register(BEEHIVE)
+        if (FConfig.updateAquatic.strippedLogs.acacia)
+            blocks.register(STRIPPED_ACACIA_LOG)
+        if (FConfig.updateAquatic.strippedLogs.jungle)
+            blocks.register(STRIPPED_JUNGLE_LOG)
+        if (FConfig.updateAquatic.strippedLogs.birch)
+            blocks.register(STRIPPED_BIRCH_LOG)
+        if (FConfig.updateAquatic.strippedLogs.oak)
+            blocks.register(STRIPPED_OAK_LOG)
+        if (FConfig.updateAquatic.strippedLogs.spruce)
+            blocks.register(STRIPPED_SPRUCE_LOG)
+        if (FConfig.updateAquatic.strippedLogs.darkOak)
+            blocks.register(STRIPPED_DARK_OAK_LOG)
+        if (FConfig.villageAndPillage.newWalls.brick)
+            blocks.register(BRICK_WALL) // register(BlockWall(Variant.BRICK),)
+        if (FConfig.villageAndPillage.newWalls.granite)
+            blocks.register(GRANITE_WALL) // register(BlockWall(Variant.GRANITE),)
+        if (FConfig.villageAndPillage.newWalls.andesite)
+            blocks.register(ANDESITE_WALL) // register(BlockWall(Variant.ANDESITE),)
+        if (FConfig.villageAndPillage.newWalls.diorite)
+            blocks.register(DIORITE_WALL) // register(BlockWall(Variant.DIORITE),)
+        if (FConfig.villageAndPillage.newWalls.sandstone)
+            blocks.register(SANDSTONE_WALL) // register(BlockWall(Variant.SANDSTONE),)
+        if (FConfig.villageAndPillage.newWalls.redSandstone)
+            blocks.register(RED_SANDSTONE_WALL) // register(BlockWall(Variant.RED_SANDSTONE),)
+        if (FConfig.villageAndPillage.newWalls.stoneBrick)
+            blocks.register(STONE_BRICK_WALL) // register(BlockWall(Variant.STONE_BRICK),)
+        if (FConfig.villageAndPillage.newWalls.mossyStone)
+            blocks.register(MOSSY_STONE_BRICK_WALL) // register(BlockWall(Variant.MOSSY_STONE),)
+        if (FConfig.villageAndPillage.newWalls.netherBrick)
+            blocks.register(NETHER_BRICK_WALL) // register(BlockWall(Variant.NETHER_BRICK),)
+        if (FConfig.villageAndPillage.newWalls.redNetherBrick)
+            blocks.register(RED_NETHER_BRICK_WALL) // register(BlockWall(Variant.RED_NETHER_BRICK),)
+        if (FConfig.villageAndPillage.newWalls.endStoneBrick)
+            blocks.register(END_STONE_BRICK_WALL) // register(BlockWall(Variant.END_STONE),)
+        if (FConfig.villageAndPillage.newWalls.prismarine)
+            blocks.register(PRISMARINE_WALL) // register(BlockWall(Variant.PRISMARINE),)
+        if (FConfig.villageAndPillage.smoothStone)
+            blocks.register(SMOOTH_STONE) // register(FBlock("smooth_stone").setHardness(2.0F).setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.BUILDING_BLOCKS else FutureMC.TAB),)
+        if (FConfig.villageAndPillage.smoothSandstone)
+            blocks.register(SMOOTH_SANDSTONE)
+        if (FConfig.villageAndPillage.smoothQuartz)
+            blocks.register(SMOOTH_QUARTZ) // register(FBlock("smooth_quartz").setHardness(2.0F).setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.BUILDING_BLOCKS else FutureMC.TAB),)
+        if (FConfig.villageAndPillage.smoothRedSandstone)
+            blocks.register(SMOOTH_RED_SANDSTONE)
+        if (FConfig.updateAquatic.blueIce)
+            blocks.register(BLUE_ICE)
+        if (FConfig.updateAquatic.wood.strippedAcacia)
+            blocks.register(STRIPPED_ACACIA_WOOD) // register(BlockWood("stripped_acacia_wood"),)
+        if (FConfig.updateAquatic.wood.strippedJungle)
+            blocks.register(STRIPPED_JUNGLE_WOOD) // register(BlockWood("stripped_jungle_wood"),)
+        if (FConfig.updateAquatic.wood.strippedBirch)
+            blocks.register(STRIPPED_BIRCH_WOOD) // register(BlockWood("stripped_birch_wood"),)
+        if (FConfig.updateAquatic.wood.strippedOak)
+            blocks.register(STRIPPED_OAK_WOOD) // register(BlockWood("stripped_oak_wood"),)
+        if (FConfig.updateAquatic.wood.strippedSpruce)
+            blocks.register(STRIPPED_SPRUCE_WOOD) // register(BlockWood("stripped_spruce_wood"),)
+        if (FConfig.updateAquatic.wood.strippedDarkOak)
+            blocks.register(STRIPPED_DARK_OAK_WOOD) // register(BlockWood("stripped_dark_oak_wood"),)
+        if (FConfig.updateAquatic.wood.acacia)
+            blocks.register(ACACIA_WOOD) // register(BlockWood("acacia_wood"),)
+        if (FConfig.updateAquatic.wood.jungle)
+            blocks.register(JUNGLE_WOOD) // register(BlockWood("jungle_wood"),)
+        if (FConfig.updateAquatic.wood.birch)
+            blocks.register(BIRCH_WOOD) // register(BlockWood("birch_wood"),)
+        if (FConfig.updateAquatic.wood.oak)
+            blocks.register(OAK_WOOD) // register(BlockWood("oak_wood"),)
+        if (FConfig.updateAquatic.wood.spruce)
+            blocks.register(SPRUCE_WOOD) // register(BlockWood("spruce_wood"),)
+        if (FConfig.updateAquatic.wood.darkOak)
+            blocks.register(DARK_OAK_WOOD) // register(BlockWood("dark_oak_wood"),)
+        if (FConfig.villageAndPillage.newTrapdoors.acacia)
+            blocks.register(ACACIA_TRAPDOOR) // register(BlockWoodTrapdoor("acacia_trapdoor"),)
+        if (FConfig.villageAndPillage.newTrapdoors.jungle)
+            blocks.register(JUNGLE_TRAPDOOR) // register(BlockWoodTrapdoor("jungle_trapdoor"),)
+        if (FConfig.villageAndPillage.newTrapdoors.birch)
+            blocks.register(BIRCH_TRAPDOOR) // register(BlockWoodTrapdoor("birch_trapdoor"),)
+        if (FConfig.villageAndPillage.newTrapdoors.spruce)
+            blocks.register(SPRUCE_TRAPDOOR) // register(BlockWoodTrapdoor("spruce_trapdoor"),)
+        if (FConfig.villageAndPillage.newTrapdoors.darkOak)
+            blocks.register(DARK_OAK_TRAPDOOR) // register(BlockWoodTrapdoor("dark_oak_trapdoor"),)
 
-        SOUL_FIRE_LANTERN = register(BlockLantern("soul_fire_lantern"), FConfig.netherUpdate.soulFireLantern)
-        SOUL_FIRE_TORCH = register(BlockSoulFireTorch(), FConfig.netherUpdate.soulFireTorch)
-
+        if (FConfig.netherUpdate.soulFireLantern)
+            blocks.register(SOUL_FIRE_LANTERN)
+        if (FConfig.netherUpdate.soulFireTorch)
+            blocks.register(SOUL_FIRE_TORCH)
+        if (FConfig.netherUpdate.soulSoil)
+            blocks.register(SOUL_SOIL)
+        if (FConfig.netherUpdate.chain)
+            blocks.register(CHAIN)
         //SEAGRASS = register(BlockSeaGrass(), FConfig.updateAquatic.seagrass) {
         //    register(it.flowing)
         //}
 
         registerTE("futuremc:barrel", TileBarrel::class.java, FConfig.villageAndPillage.barrel)
-        registerTE(
-            "futuremc:blast_furnace",
-            TileFurnaceAdvanced.TileBlastFurnace::class.java,
-            FConfig.villageAndPillage.blastFurnace
-        )
+        registerTE("futuremc:blast_furnace", TileFurnaceAdvanced.TileBlastFurnace::class.java, FConfig.villageAndPillage.blastFurnace)
+        registerTE("futuremc:beehive", BeeHiveTile::class.java, FConfig.buzzyBees.bee.enabled)
+        registerTE("futuremc:bell", BellTileEntity::class.java, FConfig.villageAndPillage.bell)
         registerTE("futuremc:smoker", TileFurnaceAdvanced.TileSmoker::class.java, FConfig.villageAndPillage.smoker)
         registerTE("futuremc:composter", TileComposter::class.java, FConfig.villageAndPillage.composter)
-        registerTE("futuremc:beehive", BeeHiveTile::class.java, FConfig.buzzyBees.bee.enabled)
-        registerTE("futuremc:campfire", TileCampfire::class.java, FConfig.villageAndPillage.campfire.enabled)
+        registerTE("futuremc:campfire", CampfireTile::class.java, FConfig.villageAndPillage.campfire.enabled)
 
         //registerTE("futuremc:water_renderer", TileSeagrassRenderer::class.java, FConfig.updateAquatic.seagrass)
     }

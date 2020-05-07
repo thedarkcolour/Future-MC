@@ -70,15 +70,7 @@ class BlockPistonStructureHelper(
                     // save to oldState before updating state
                     oldState = state
                     state = world.getBlockState(pos)
-                    if (state.block.isAir(state, world, pos) || !canBlocksStick(oldState, state) || !canPush(
-                            state,
-                            world,
-                            pos,
-                            moveDirection,
-                            false,
-                            moveDirection.opposite
-                        ) || pos == pistonPos
-                    ) {
+                    if (state.block.isAir(state, world, pos) || !canBlocksStick(oldState, state) || !canPush(state, world, pos, moveDirection, false, moveDirection.opposite) || pos == pistonPos) {
                         break
                     }
                     ++i

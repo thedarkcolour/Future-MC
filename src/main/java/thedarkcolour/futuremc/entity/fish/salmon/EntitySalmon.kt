@@ -1,8 +1,6 @@
 package thedarkcolour.futuremc.entity.fish.salmon
 
-import net.minecraft.item.ItemStack
 import net.minecraft.util.DamageSource
-import net.minecraft.util.SoundEvent
 import net.minecraft.world.World
 import thedarkcolour.core.util.stack
 import thedarkcolour.futuremc.entity.fish.EntityGroupFish
@@ -17,14 +15,14 @@ class EntitySalmon(worldIn: World) : EntityGroupFish(worldIn) {
     override val maxGroupSize: Int
         get() = 5
 
-    override fun getFishBucket(): ItemStack = FItems.SALMON_BUCKET.stack
+    override fun getFishBucket() = FItems.SALMON_BUCKET.stack
 
-    override fun getAmbientSound(): SoundEvent = FSounds.SALMON_AMBIENT
+    override fun getAmbientSound() = FSounds.SALMON_AMBIENT
 
-    override fun getDeathSound(): SoundEvent = FSounds.SALMON_DEATH
+    override fun getDeathSound() = FSounds.SALMON_DEATH
 
-    override fun getHurtSound(damageSourceIn: DamageSource?): SoundEvent = FSounds.SALMON_HURT
+    override fun getHurtSound(damageSourceIn: DamageSource?) = FSounds.SALMON_HURT
 
-    override val flopSound: SoundEvent
+    override val flopSound
         get() = FSounds.SALMON_FLOP
 }

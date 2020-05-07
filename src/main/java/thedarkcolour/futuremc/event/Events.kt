@@ -22,6 +22,7 @@ import net.minecraft.item.ItemTool
 import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
+import net.minecraftforge.client.event.DrawBlockHighlightEvent
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.common.config.Config
@@ -72,6 +73,7 @@ object Events {
         addListener(this::onWitherKillLiving)
         addListener(this::onHoneyJump)
         addListener(this::onConfigChanged)
+        // todo optimize into a coremod/mixin
         if (updateAquatic.newWaterColor)
             addListener(this::onGetWaterColor)
         addListener(this::onEntityInteract)
@@ -204,6 +206,7 @@ object Events {
     private fun onConfigChanged(event: ConfigChangedEvent) {
         if (event.modID == FutureMC.ID) {
             ConfigManager.sync(FutureMC.ID, Config.Type.INSTANCE)
+            // makes things reloadable
             BeeNestGenerator.refresh()
         }
     }
@@ -288,5 +291,9 @@ object Events {
 
     private fun canPlayerSwim(player: EntityPlayer): Boolean {
         return player.isInWater && player.isInsideOfMaterial(Material.WATER)
+    }
+
+    private fun renderFancyBoundingBox(event: DrawBlockHighlightEvent) {
+        event.isCanceled = true
     }
 }

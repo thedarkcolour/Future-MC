@@ -1,0 +1,12 @@
+package thedarkcolour.futuremc.biome.feature
+
+enum class DecorationStage {
+    RAW_GENERATION,
+    LOCAL_MODIFICATIONS,
+    UNDERGROUND_STRUCTURES,
+    SURFACE_STRUCTURES,
+    UNDERGROUND_ORES,
+    UNDERGROUND_DECORATION,
+    VEGETAL_GENERATION,
+    TOP_LAYER_MODIFICATION
+}

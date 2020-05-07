@@ -7,18 +7,15 @@ import thedarkcolour.futuremc.recipe.Recipes
 import java.util.*
 
 object SmokerRecipes : Recipes<FurnaceRecipe>() {
-    override val recipes = ArrayList<FurnaceRecipe>()
-
-    override fun addDefaults() {
+    override val recipes = ArrayList<FurnaceRecipe>().also { recipes ->
         for ((key, value) in FurnaceRecipes.instance().smeltingList) {
             if (key.item is ItemFood || value.item is ItemFood) {
-                addRecipe(key, value)
+                recipes.add(FurnaceRecipe(key, value))
             }
         }
     }
 
     fun addRecipe(input: ItemStack, output: ItemStack) {
-        println("Added a recipe: $input, $output")
         recipes.add(FurnaceRecipe(input, output))
     }
 }

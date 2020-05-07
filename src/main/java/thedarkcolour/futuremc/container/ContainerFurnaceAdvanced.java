@@ -10,12 +10,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thedarkcolour.core.gui.ContainerBase;
+import thedarkcolour.core.gui.FContainer;
 import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
 import thedarkcolour.futuremc.client.gui.GuiFurnaceAdvanced;
 import thedarkcolour.futuremc.tile.TileFurnaceAdvanced;
 
-public class ContainerFurnaceAdvanced extends ContainerBase {
+public class ContainerFurnaceAdvanced extends FContainer {
     public final TileFurnaceAdvanced te;
     public final InventoryPlayer playerInventory;
     protected int fuelLeft, progress, currentItemBurnTime;

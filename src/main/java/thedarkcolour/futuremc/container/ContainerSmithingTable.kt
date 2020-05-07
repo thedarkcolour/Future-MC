@@ -5,20 +5,20 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import thedarkcolour.core.gui.ContainerBase
+import thedarkcolour.core.gui.FContainer
 import thedarkcolour.futuremc.client.gui.GuiSmithingTable
-import thedarkcolour.futuremc.registry.FBlocks
 
 class ContainerSmithingTable(
     private val playerInv: InventoryPlayer,
     private val world: World,
     private val pos: BlockPos
-) : ContainerBase() {
+) : FContainer() {
     override fun getGuiContainer(): GuiContainer {
         return GuiSmithingTable(ContainerSmithingTable(playerInv, world, pos))
     }
 
     override fun canInteractWith(playerIn: EntityPlayer): Boolean {
-        return isBlockInRange(FBlocks.SMITHING_TABLE, world, pos, playerIn)
+        return thedarkcolour.core.util.TODO()
+        // return isBlockInRange(FBlocks.SMITHING_TABLE, world, pos, playerIn)
     }
 }

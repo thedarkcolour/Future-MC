@@ -20,7 +20,7 @@ class BlockSoulFireTorch : BlockTorch() {
         setRegistryName("soul_fire_torch")
         translationKey = "${FutureMC.ID}.soul_fire_torch"
         soundType = SoundType.WOOD
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.DECORATIONS else FutureMC.TAB
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.DECORATIONS else FutureMC.GROUP
     }
 
     override fun randomDisplayTick(stateIn: IBlockState, worldIn: World, pos: BlockPos, rand: Random) {

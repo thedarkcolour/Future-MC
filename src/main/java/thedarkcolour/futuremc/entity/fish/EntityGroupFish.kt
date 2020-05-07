@@ -9,7 +9,7 @@ import java.util.stream.Stream
 abstract class EntityGroupFish(worldIn: World) : EntityFish(worldIn) {
     var groupLeader: EntityGroupFish? = null
     var groupSize = 1
-    open val maxGroupSize: Int
+    open val maxGroupSize
         get() = super.getMaxSpawnedInChunk()
 
     override fun initEntityAI() {

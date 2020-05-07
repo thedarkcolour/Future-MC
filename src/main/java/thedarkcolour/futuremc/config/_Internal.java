@@ -4,6 +4,11 @@ import net.minecraftforge.common.config.Config;
 
 import static net.minecraftforge.common.config.Config.*;
 
+/**
+ * Exposes Kotlin config to the ConfigManager.
+ * Required because the config manager also picks up the INSTANCE field
+ * that Kotlin object classes generate.
+ */
 @Config(modid = "futuremc", name = "futuremc/futuremc")
 public final class _Internal {
     @Name("Update Aquatic")

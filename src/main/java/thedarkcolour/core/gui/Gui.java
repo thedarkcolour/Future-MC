@@ -17,8 +17,8 @@ import thedarkcolour.futuremc.container.*;
  * Uses enum constants for GUIs instead of IDs.
  * Simplifies opening and adding new GUIs.
  * <p>
- * Call {@link Gui#open(EntityPlayer, World, BlockPos)} on the desired GUI to open it.
- * @see thedarkcolour.futuremc.block.BlockBarrel#onBlockActivated
+ * Call {@link Gui#open(EntityPlayer, World, BlockPos)} on the enum to open its associated container/gui.
+ * @see thedarkcolour.futuremc.block.BarrelBlock#onBlockActivated
  */
 public enum Gui {
     BARREL(ContainerBarrel::new),
@@ -29,13 +29,13 @@ public enum Gui {
     SMITHING_TABLE(ContainerSmithingTable::new),
     CARTOGRAPHY_TABLE(ContainerCartographyTable::new);
 
-    private final ContainerSupplier<? extends ContainerBase> container;
+    private final ContainerSupplier<? extends FContainer> container;
 
-    <T extends ContainerBase> Gui(ContainerSupplier<T> container) {
+    <T extends FContainer> Gui(ContainerSupplier<T> container) {
         this.container = container;
     }
 
-    <T extends ContainerBase> Gui(TEContainerSupplier<T> container) {
+    <T extends FContainer> Gui(TEContainerSupplier<T> container) {
         this.container = container;
     }
 
@@ -47,11 +47,11 @@ public enum Gui {
         return getContainer(playerInv, te).getGuiContainer();
     }
 
-    public ContainerBase getContainer(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
+    public FContainer getContainer(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
         return container.get(playerInv, worldIn, pos);
     }
 
-    public ContainerBase getContainer(InventoryPlayer playerInv, TileEntity te) {
+    public FContainer getContainer(InventoryPlayer playerInv, TileEntity te) {
         return container.get(playerInv, te);
     }
 
@@ -59,13 +59,21 @@ public enum Gui {
         return container instanceof TEContainerSupplier<?>;
     }
 
-    public void open(EntityPlayer playerIn, World worldIn, BlockPos pos) {
-        playerIn.openGui(FutureMC.INSTANCE, ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+    public boolean open(EntityPlayer playerIn, World worldIn, BlockPos pos) {
+        if (!worldIn.isRemote) {
+            playerIn.openGui(FutureMC.INSTANCE, ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+        }
+        return true;
     }
 
-    private static class Handler implements IGuiHandler {
+    private static final class Handler implements IGuiHandler {
+        private static final Handler INSTANCE = new Handler();
+
+        private Handler() {
+        }
+
         @Override
-        public ContainerBase getServerGuiElement(int ID, EntityPlayer player, World worldIn, int x, int y, int z) {
+        public FContainer getServerGuiElement(int ID, EntityPlayer player, World worldIn, int x, int y, int z) {
             BlockPos pos = new BlockPos(x, y, z);
             Gui gui = values()[ID];
 
@@ -90,11 +98,11 @@ public enum Gui {
     }
 
     public static void registerGuiHandler() {
-        NetworkRegistry.INSTANCE.registerGuiHandler(FutureMC.INSTANCE, new Handler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(FutureMC.INSTANCE, Handler.INSTANCE);
     }
 
     @FunctionalInterface
-    private interface ContainerSupplier<T extends ContainerBase> {
+    private interface ContainerSupplier<T extends FContainer> {
         default T get(InventoryPlayer player, TileEntity te) {
             return null;
         }
@@ -103,7 +111,7 @@ public enum Gui {
     }
 
     @FunctionalInterface
-    private interface TEContainerSupplier<T extends ContainerBase> extends ContainerSupplier<T> {
+    private interface TEContainerSupplier<T extends FContainer> extends ContainerSupplier<T> {
         @Override
         default T get(InventoryPlayer player, World worldIn, BlockPos pos) {
             return null;

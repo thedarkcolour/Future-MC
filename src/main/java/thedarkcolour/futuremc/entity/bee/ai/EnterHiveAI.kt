@@ -7,7 +7,7 @@ class EnterHiveAI(bee: BeeEntity) : PassiveAI(bee) {
     override fun canBeeStart(): Boolean {
         val hivePos = bee.hivePos ?: return false
 
-        if (bee.shouldReturnToHive() && bee.isWithinDistance(hivePos, 2)) {
+        if (bee.canEnterHive() && bee.isWithinDistance(hivePos, 2)) {
             val te = bee.world.getTileEntity(hivePos)
 
             if (te is BeeHiveTile) {
@@ -24,9 +24,9 @@ class EnterHiveAI(bee: BeeEntity) : PassiveAI(bee) {
     override fun canBeeContinue() = false
 
     override fun startExecuting() {
-        val te = bee.world.getTileEntity(bee.hivePos!!)
+        val te = bee.world.getTileEntity(bee.hivePos ?: return) // better to not assume, avoid accidental bugs
         if (te is BeeHiveTile) {
-            te.tryEnterHive(bee, bee.hasPollen())
+            te.tryEnterHive(bee, bee.hasNectar())
         }
     }
 }

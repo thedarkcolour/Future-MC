@@ -1,5 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch")
 
+// not exactly sure why i needed protected access...
+// check this later
 package net.minecraft.world.biome
 
 import net.minecraft.entity.monster.EntityPolarBear

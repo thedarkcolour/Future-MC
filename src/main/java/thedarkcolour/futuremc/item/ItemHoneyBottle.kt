@@ -7,22 +7,27 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.init.Items
 import net.minecraft.init.MobEffects
-import net.minecraft.init.SoundEvents
 import net.minecraft.item.EnumAction
+import net.minecraft.item.ItemFood
 import net.minecraft.item.ItemStack
+import net.minecraft.stats.StatList
 import net.minecraft.util.ActionResult
 import net.minecraft.util.EnumActionResult
 import net.minecraft.util.EnumHand
-import net.minecraft.util.SoundCategory
 import net.minecraft.world.World
-import thedarkcolour.core.item.ItemModeled
+import thedarkcolour.core.util.setItemModel
+import thedarkcolour.core.util.setItemName
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
 
-class ItemHoneyBottle : ItemModeled("honey_bottle") {
+// work with apple skin and quark
+class ItemHoneyBottle : ItemFood(6, 0.8f, false) {
     init {
+        // use functions from ItemModeled.kt
+        setItemName(this, "honey_bottle")
+        setItemModel(this, 0)
         setMaxStackSize(16)
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.FOOD else FutureMC.TAB
+        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.FOOD else FutureMC.GROUP
         containerItem = Items.GLASS_BOTTLE
     }
 
@@ -36,30 +41,27 @@ class ItemHoneyBottle : ItemModeled("honey_bottle") {
     }
 
     override fun onItemUseFinish(stack: ItemStack, worldIn: World, entityLiving: EntityLivingBase): ItemStack {
+        super.onItemUseFinish(stack, worldIn, entityLiving)
         if (entityLiving is EntityPlayerMP) {
             CriteriaTriggers.CONSUME_ITEM.trigger(entityLiving, stack)
-            entityLiving.foodStats.addStats(6, 0.8f)
-            stack.shrink(1)
-            worldIn.playSound(
-                null,
-                entityLiving.position,
-                SoundEvents.ENTITY_PLAYER_BURP,
-                SoundCategory.PLAYERS,
-                0.5f,
-                worldIn.rand.nextFloat() * 0.1f + 0.9f
-            )
+            entityLiving.addStat(StatList.getObjectUseStats(this)!!)
         }
 
         if (!worldIn.isRemote) {
             entityLiving.removePotionEffect(MobEffects.POISON)
         }
 
-        val isCreative = entityLiving is EntityPlayer && entityLiving.isCreative
-
-        return if (stack.isEmpty && !isCreative) {
+        return if (stack.isEmpty) {
             ItemStack(Items.GLASS_BOTTLE)
         } else {
-            stack.grow(1)
+            val bottle = ItemStack(Items.GLASS_BOTTLE)
+
+            if (entityLiving is EntityPlayer && !entityLiving.capabilities.isCreativeMode) {
+                if (!entityLiving.inventory.addItemStackToInventory(bottle)) {
+                    entityLiving.dropItem(bottle, false)
+                }
+            }
+
             stack
         }
     }

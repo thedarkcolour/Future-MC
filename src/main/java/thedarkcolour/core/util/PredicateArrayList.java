@@ -6,6 +6,8 @@ import java.util.function.BiPredicate;
 
 /**
  * Extremely sophisticated data structure based on {@link java.util.ArrayList}.
+ *
+ * Really only used because ItemStack is complicated and can't have a default implementation for equals().
  */
 public final class PredicateArrayList<E> extends ArrayList<E> {
     private final BiPredicate<E, E> isEquivalent;

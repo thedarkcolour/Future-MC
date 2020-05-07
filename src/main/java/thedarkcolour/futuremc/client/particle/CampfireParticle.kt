@@ -24,9 +24,7 @@ class CampfireParticle(
         setParticleTexture(getSprite(rand.nextInt(12))!!)
     }
 
-    override fun getFXLayer(): Int {
-        return 1
-    }
+    override fun getFXLayer() = 1
 
     private fun getSprite(index: Int): TextureAtlasSprite? {
         return textures[index]
@@ -69,7 +67,5 @@ class CampfireParticle(
 
     companion object {
         var textures = arrayOfNulls<TextureAtlasSprite>(12)
-
-
     }
 }

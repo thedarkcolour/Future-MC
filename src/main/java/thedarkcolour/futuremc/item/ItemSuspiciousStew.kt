@@ -24,7 +24,7 @@ class ItemSuspiciousStew : ItemFood(6, 0.6f, false) {
         setMaxStackSize(1)
         setRegistryName("suspicious_stew")
         translationKey = "${FutureMC.ID}.suspicious_stew"
-        if (!FConfig.useVanillaCreativeTabs) creativeTab = FutureMC.TAB
+        if (!FConfig.useVanillaCreativeTabs) creativeTab = FutureMC.GROUP
         setItemModel(this, 0)
     }
 
@@ -35,7 +35,7 @@ class ItemSuspiciousStew : ItemFood(6, 0.6f, false) {
 
     override fun onFoodEaten(stack: ItemStack, worldIn: World, player: EntityPlayer) {
         if (!worldIn.isRemote) {
-            for (effect in PotionUtils.getEffectsFromStack(stack)) {
+            for (effect in PotionUtils.getFullEffectsFromItem(stack)) {
                 player.addPotionEffect(effect)
             }
             /*if (stack.hasTagCompound()) {
@@ -79,8 +79,8 @@ class ItemSuspiciousStew : ItemFood(6, 0.6f, false) {
             val r = ShapelessRecipes(
                 "",
                 PotionUtils.appendEffects(FItems.SUSPICIOUS_STEW.stack, listOf(effect)),
-                NonNullList.create<Ingredient>().also {
-                    it.addAll(
+                NonNullList.create<Ingredient>().also { ingredients ->
+                    ingredients.addAll(
                         arrayOf(
                             Ingredient.fromStacks(ItemStack(Blocks.BROWN_MUSHROOM)),
                             Ingredient.fromStacks(ItemStack(Blocks.RED_MUSHROOM)),

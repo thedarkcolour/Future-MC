@@ -3,15 +3,19 @@
 package thedarkcolour.core.util
 
 import com.google.common.collect.ImmutableMap
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap
 import net.minecraft.block.BlockDispenser
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.dispenser.IBehaviorDispenseItem
+import net.minecraft.dispenser.IBlockSource
 import net.minecraft.entity.Entity
+import net.minecraft.init.Bootstrap
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.ResourceLocation
+import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.client.registry.RenderingRegistry
 import net.minecraftforge.fml.common.Loader
@@ -21,6 +25,11 @@ import net.minecraftforge.oredict.OreDictionary
 import thedarkcolour.futuremc.FutureMC
 import java.util.function.BiPredicate
 import java.util.function.Consumer
+
+@Suppress("UNCHECKED_CAST")
+fun <T> cast(obj: Any): T {
+    return obj as T
+}
 
 @Suppress("SpellCheckingInspection")
 fun <T> make(obj: T, consumer: Consumer<T>): T {
@@ -70,7 +79,10 @@ fun <T> predicateArrayListOf(contents: Array<out T>, isEquivalent: (T, T) -> Boo
     return list.insertAll(*contents)
 }
 
-fun registerDispenserBehaviour(item: Item, behaviour: IBehaviorDispenseItem) {
+/**
+ * Adds new functionality to the item without removing the old functionality.
+ */
+fun registerAndDispenserBehaviour(item: Item, behaviour: IBehaviorDispenseItem) {
     if (BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.keys.contains(item)) {
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, IBehaviorDispenseItem { worldIn, stack ->
             val stack1 = BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.getObject(item).dispense(worldIn, stack)
@@ -79,6 +91,18 @@ fun registerDispenserBehaviour(item: Item, behaviour: IBehaviorDispenseItem) {
     } else {
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, behaviour)
     }
+}
+
+inline fun registerServerOptionalDispenserBehaviour(item: Item, crossinline behaviour: (World, IBlockSource, ItemStack) -> ItemStack) {
+    registerAndDispenserBehaviour(item, object : Bootstrap.BehaviorDispenseOptional() {
+        override fun dispenseStack(source: IBlockSource, stack: ItemStack): ItemStack {
+            val worldIn = source.world
+            if (!worldIn.isRemote) {
+                behaviour(worldIn, source, stack)
+            }
+            return stack
+        }
+    })
 }
 
 /**
@@ -167,9 +191,14 @@ fun lerp(a: Float, b: Float, c: Float): Float {
     return b + a * (c - b)
 }
 
+// linear interpolation
+fun lerp(a: Double, b: Double, c: Double): Double {
+    return b + a * (c - b)
+}
+
 // for some reason #defaultInstance is client only
 val Item.stack: ItemStack
-    get() = ItemStack(this)
+    inline get() = ItemStack(this)
 
 fun <T> T.matchesAny(vararg any: T): Boolean {
     for (t in any) {
@@ -219,3 +248,9 @@ fun setItemName(item: Item, registryName: String, translationKey: String = "${Fu
 
 @Suppress("FunctionName")
 fun TODO() = false
+
+fun <T> getDoubleOrDefault(map: Object2DoubleMap<T>, key: T, default: Double): Double {
+    return if (map.containsKey(key)) {
+        map.getDouble(key)
+    } else default
+}

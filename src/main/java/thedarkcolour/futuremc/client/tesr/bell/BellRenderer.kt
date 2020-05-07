@@ -4,15 +4,15 @@ import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.ResourceLocation
-import thedarkcolour.futuremc.tile.TileBell
+import thedarkcolour.futuremc.tile.BellTileEntity
 import kotlin.math.sin
 
-class BellRenderer : TileEntitySpecialRenderer<TileBell>() {
+class BellRenderer : TileEntitySpecialRenderer<BellTileEntity>() {
     private val model = BellModel()
 
     @Suppress("NON_EXHAUSTIVE_WHEN")
     override fun render(
-        te: TileBell,
+        te: BellTileEntity,
         x: Double,
         y: Double,
         z: Double,

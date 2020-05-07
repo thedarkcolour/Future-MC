@@ -46,36 +46,6 @@ class EntityTrident : EntityModArrow {
         return thrownStack.copy()
     }
 
-    override fun findEntityOnPath(start: Vec3d, end: Vec3d): Entity? {
-        if (world.isRemote) {
-            return null
-        }
-        var entity: Entity? = null
-        val list = world.getEntitiesInAABBexcluding(
-            this,
-            entityBoundingBox.expand(motionX, motionY, motionZ).grow(1.0),
-            ARROW_TARGETS::invoke
-        )
-        var d0 = 0.0
-
-        for (entity1 in list) {
-            if (entity1 != shootingEntity) {
-                val box = entity1.entityBoundingBox.grow(0.30000001192092896)
-                val raytraceresult = box.calculateIntercept(start, end)
-
-                if (raytraceresult != null) {
-                    val d1 = start.squareDistanceTo(raytraceresult.hitVec)
-
-                    if (d1 < d0 || d0 == 0.0) {
-                        entity = entity1
-                        d0 = d1
-                    }
-                }
-            }
-        }
-        return entity
-    }
-
     override fun writeEntityToNBT(compound: NBTTagCompound) {
         super.writeEntityToNBT(compound)
         compound.setTag("ItemTrident", thrownStack.writeToNBT(NBTTagCompound()))

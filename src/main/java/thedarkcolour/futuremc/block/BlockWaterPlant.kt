@@ -13,7 +13,7 @@ import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.tile.TileSeagrassRenderer
 
 open class BlockWaterPlant(name: String) : BlockStaticLiquid(Material.WATER) {
-    private val flowing = Flowing(name)
+    val flowing = Flowing(name)
 
     init {
         setRegistryName("${FutureMC.ID}:$name")
@@ -59,6 +59,7 @@ open class BlockWaterPlant(name: String) : BlockStaticLiquid(Material.WATER) {
             soundType = SoundType.PLANT
         }
 
+        @Suppress("DEPRECATION")
         override fun getBoundingBox(state: IBlockState, source: IBlockAccess, pos: BlockPos): AxisAlignedBB {
             return this@BlockWaterPlant.getBoundingBox(state, source, pos)
         }

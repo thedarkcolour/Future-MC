@@ -13,9 +13,9 @@ import net.minecraft.world.World
 import thedarkcolour.core.block.RotatableBlock
 import thedarkcolour.futuremc.block.BlockBamboo
 import thedarkcolour.futuremc.block.BlockBamboo.EnumLeaves
-import thedarkcolour.futuremc.block.BlockCampfire
-import thedarkcolour.futuremc.block.BlockComposter
-import thedarkcolour.futuremc.block.BlockSweetBerryBush
+import thedarkcolour.futuremc.block.CampfireBlock
+import thedarkcolour.futuremc.block.ComposterBlock
+import thedarkcolour.futuremc.block.SweetBerryBushBlock
 import thedarkcolour.futuremc.entity.bee.BeeEntity
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipes
 import thedarkcolour.futuremc.registry.FBlocks.BAMBOO
@@ -23,7 +23,7 @@ import thedarkcolour.futuremc.registry.FBlocks.CAMPFIRE
 import thedarkcolour.futuremc.registry.FBlocks.COMPOSTER
 import thedarkcolour.futuremc.registry.FBlocks.SWEET_BERRY_BUSH
 import thedarkcolour.futuremc.tile.BeeHiveTile
-import thedarkcolour.futuremc.tile.TileCampfire
+import thedarkcolour.futuremc.tile.CampfireTile
 import thedarkcolour.futuremc.tile.TileComposter
 
 class ItemDebugger : ItemModeled("debugger") {
@@ -55,8 +55,8 @@ class ItemDebugger : ItemModeled("debugger") {
                     player.sendMessage(TextComponentString("Bees: ${hive.getBeeCount()}, HoneyLevel: ${hive.honeyLevel}, " + pos))
                 }
             }
-        } else if (worldIn.getTileEntity(pos) is TileCampfire) {
-            val campfire = worldIn.getTileEntity(pos) as TileCampfire?
+        } else if (worldIn.getTileEntity(pos) is CampfireTile) {
+            val campfire = worldIn.getTileEntity(pos) as CampfireTile?
             if (!worldIn.isRemote) {
                 if (player.isSneaking) {
                     for (i in 0..3) {
@@ -76,7 +76,7 @@ class ItemDebugger : ItemModeled("debugger") {
             }
         } else if (block == COMPOSTER) {
             if (player.isSneaking) {
-                if (!BlockComposter.isFull(state)) {
+                if (!ComposterBlock.isFull(state)) {
                     (worldIn.getTileEntity(pos) as TileComposter?)!!.addLayer()
                 }
             } else {
@@ -84,7 +84,7 @@ class ItemDebugger : ItemModeled("debugger") {
                     player.sendStatusMessage(
                         TextComponentString(
                             "Layers: " + worldIn.getBlockState(pos).getValue(
-                                BlockComposter.LEVEL
+                                ComposterBlock.LEVEL
                             )
                         ), true
                     )
@@ -102,7 +102,7 @@ class ItemDebugger : ItemModeled("debugger") {
                 worldIn.getBlockState(pos).withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(i))
             )
         } else if (block == CAMPFIRE) {
-            worldIn.setBlockState(pos, state.withProperty(BlockCampfire.LIT, !state.getValue(BlockCampfire.LIT)))
+            worldIn.setBlockState(pos, state.withProperty(CampfireBlock.LIT, !state.getValue(CampfireBlock.LIT)))
         } else if (block == BAMBOO) {
             if (player.isSneaking) {
                 worldIn.setBlockState(pos, state.withProperty(BlockBamboo.THICK, !state.getValue(BlockBamboo.THICK)))
@@ -116,13 +116,13 @@ class ItemDebugger : ItemModeled("debugger") {
                 worldIn.setBlockState(pos, state.withProperty(BlockBamboo.LEAVES, EnumLeaves.values()[i]))
             }
         } else if (block == SWEET_BERRY_BUSH) {
-            var i = state.getValue(BlockSweetBerryBush.AGE)
+            var i = state.getValue(SweetBerryBushBlock.AGE)
             if (i > 3) {
                 i = 0
             } else {
                 ++i
             }
-            worldIn.setBlockState(pos, state.withProperty(BlockSweetBerryBush.AGE, i))
+            worldIn.setBlockState(pos, state.withProperty(SweetBerryBushBlock.AGE, i))
         } else {
             return EnumActionResult.FAIL
         }
