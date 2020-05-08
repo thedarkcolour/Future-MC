@@ -8,6 +8,7 @@ import net.minecraft.block.BlockCrops
 import net.minecraft.block.BlockStem
 import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.init.Blocks
+import thedarkcolour.futuremc.api.BeePollinationHandler
 import thedarkcolour.futuremc.block.SweetBerryBushBlock
 import thedarkcolour.futuremc.entity.bee.BeeEntity
 import thedarkcolour.futuremc.registry.FBlocks
@@ -33,7 +34,14 @@ class GrowCropsAI(bee: BeeEntity) : PassiveAI(bee) {
                 val block = state.block
                 var canGrow = false
                 var ageProperty: PropertyInteger? = null
-                if (canGrowBlock(block)) {
+
+                val pollinationHandler = BeePollinationHandler.get(block)
+
+                if (pollinationHandler != null) {
+                    if (pollinationHandler.pollinateCrop(bee.world, pos, state, bee)) {
+                        bee.addCropCounter()
+                    }
+                } else if (canGrowBlock(block)) {
                     if (block is BlockCrops) {
                         if (!block.isMaxAge(state)) {
                             canGrow = true
