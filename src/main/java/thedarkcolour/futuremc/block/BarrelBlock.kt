@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import thedarkcolour.core.block.FBlock
-import thedarkcolour.core.gui.Gui
+import thedarkcolour.futuremc.client.gui.Gui
 import thedarkcolour.futuremc.tile.TileBarrel
 
 class BarrelBlock(properties: Properties) : FBlock(properties), ITileEntityProvider {

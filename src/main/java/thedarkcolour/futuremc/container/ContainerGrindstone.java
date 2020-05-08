@@ -29,7 +29,6 @@ import thedarkcolour.futuremc.registry.FSounds;
 import java.util.Map;
 
 public class ContainerGrindstone extends FContainer {
-    private final InventoryPlayer playerInv;
     private final World world;
     private final BlockPos pos;
 
@@ -48,12 +47,12 @@ public class ContainerGrindstone extends FContainer {
     };
 
     public ContainerGrindstone(InventoryPlayer playerInv, World worldIn, BlockPos posIn) {
-        this.playerInv = playerInv;
+        super(playerInv);
         this.world = worldIn;
         this.pos = posIn;
 
         addOwnSlots();
-        addPlayerSlots();
+        addPlayerSlots(playerInv);
     }
 
     private void addOwnSlots() {
@@ -66,23 +65,6 @@ public class ContainerGrindstone extends FContainer {
                 return stack;
             }
         });
-    }
-
-    private void addPlayerSlots() {
-        for (int row = 0; row < 3; ++row) {
-            for (int col = 0; col < 9; ++col) {
-                int x = col * 18 + 8;
-                int y = row * 18 + 84;
-                this.addSlotToContainer(new Slot(this.playerInv, col + row * 9 + 9, x, y));
-            }
-        }
-
-        // Slots for the hotBar
-        for (int row = 0; row < 9; ++row) {
-            int x = 9 + row * 18 - 1;
-            int y = 58 + 70 + 14;
-            this.addSlotToContainer(new Slot(this.playerInv, row, x, y));
-        }
     }
 
     private void handleCrafting() {
@@ -201,7 +183,7 @@ public class ContainerGrindstone extends FContainer {
             } else {
                 for (int i = 0; i < input.getSlots(); i++) {
                     if (!input.getStackInSlot(i).isEmpty()) {
-                        playerInv.placeItemBackInInventory(world, input.getStackInSlot(i));
+                        getPlayerInv().placeItemBackInInventory(world, input.getStackInSlot(i));
                     }
                 }
             }
@@ -237,7 +219,7 @@ public class ContainerGrindstone extends FContainer {
         }
     }
 
-    private int getEnchantmentEXP(Enchantment enchantment, int enchantLevel) {
+    private static int getEnchantmentEXP(Enchantment enchantment, int enchantLevel) {
         return enchantment.getMinEnchantability(enchantLevel);
     }
 
@@ -275,10 +257,6 @@ public class ContainerGrindstone extends FContainer {
         return itemstack;
     }
 
-    public InventoryPlayer getPlayerInv() {
-        return playerInv;
-    }
-
     public boolean isRecipeInvalid() {
         return !(input.getStackInSlot(0).isEmpty() && input.getStackInSlot(1).isEmpty()) && output.getStackInSlot(0).isEmpty();
     }
@@ -290,6 +268,6 @@ public class ContainerGrindstone extends FContainer {
 
     @SideOnly(Side.CLIENT)
     public GuiContainer getGuiContainer() {
-        return new GuiGrindstone(new ContainerGrindstone(playerInv, world, pos));
+        return new GuiGrindstone(new ContainerGrindstone(getPlayerInv(), world, pos));
     }
 }

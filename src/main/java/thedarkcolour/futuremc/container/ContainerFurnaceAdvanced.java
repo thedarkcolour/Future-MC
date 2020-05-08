@@ -3,7 +3,10 @@ package thedarkcolour.futuremc.container;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnaceFuel;
+import net.minecraft.inventory.SlotFurnaceOutput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntity;
@@ -17,36 +20,20 @@ import thedarkcolour.futuremc.tile.TileFurnaceAdvanced;
 
 public class ContainerFurnaceAdvanced extends FContainer {
     public final TileFurnaceAdvanced te;
-    public final InventoryPlayer playerInventory;
     protected int fuelLeft, progress, currentItemBurnTime;
 
     public ContainerFurnaceAdvanced(InventoryPlayer playerInv, TileEntity te) {
+        super(playerInv);
         this.te = (TileFurnaceAdvanced) te;
-        this.playerInventory = playerInv;
+
         addOwnSlots();
         addPlayerSlots(playerInv);
     }
 
     private void addOwnSlots() {
-        this.addSlotToContainer(new Slot(te, 0, 56, 17));
-        this.addSlotToContainer(new SlotFurnaceFuel(te, 1, 56, 53));
-        this.addSlotToContainer(new SlotFurnaceOutput(playerInventory.player, te, 2, 116, 35));
-    }
-
-    private void addPlayerSlots(IInventory playerInv) {
-        for (int row = 0; row < 3; ++row) {
-            for (int col = 0; col < 9; ++col) { // Inventory
-                int x = 9 + col * 18 - 1;
-                int y = row * 18 + 70 + 14;
-                this.addSlotToContainer(new Slot(playerInv, col + row * 9 + 9, x, y));
-            }
-        }
-
-        for (int col = 0; col < 9; ++col) { // Hotbar
-            int x = 9 + col * 18 - 1;
-            int y = 58 + 70 + 14;
-            this.addSlotToContainer(new Slot(playerInv, col, x, y));
-        }
+        addSlotToContainer(new Slot(te, 0, 56, 17));
+        addSlotToContainer(new SlotFurnaceFuel(te, 1, 56, 53));
+        addSlotToContainer(new SlotFurnaceOutput(getPlayerInv().player, te, 2, 116, 35));
     }
 
     @Override
@@ -126,7 +113,7 @@ public class ContainerFurnaceAdvanced extends FContainer {
     @SideOnly(Side.CLIENT)
     public GuiContainer getGuiContainer() {
         return te.getType() == BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE ?
-                new GuiFurnaceAdvanced.BlastFurnace(new ContainerFurnaceAdvanced(playerInventory, te)) :
-                new GuiFurnaceAdvanced.Smoker(new ContainerFurnaceAdvanced(playerInventory, te));
+                new GuiFurnaceAdvanced.BlastFurnace(new ContainerFurnaceAdvanced(getPlayerInv(), te)) :
+                new GuiFurnaceAdvanced.Smoker(new ContainerFurnaceAdvanced(getPlayerInv(), te));
     }
 }

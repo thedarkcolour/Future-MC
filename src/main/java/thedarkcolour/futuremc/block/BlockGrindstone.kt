@@ -16,8 +16,8 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import thedarkcolour.core.block.FBlock
-import thedarkcolour.core.gui.Gui
 import thedarkcolour.futuremc.FutureMC
+import thedarkcolour.futuremc.client.gui.Gui
 import thedarkcolour.futuremc.config.FConfig
 
 class BlockGrindstone(properties: Properties) : FBlock(properties) {
@@ -157,21 +157,10 @@ class BlockGrindstone(properties: Properties) : FBlock(properties) {
         return getBlockState().baseState.withProperty(ATTACHMENT, attachment).withProperty(FACING, finalFacing)
     }
 
-    override fun isFullBlock(state: IBlockState): Boolean {
-        return false
-    }
-
-    override fun isOpaqueCube(state: IBlockState): Boolean {
-        return false
-    }
-
-    override fun getBlockFaceShape(
-        worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing
-    ): BlockFaceShape {
-        return BlockFaceShape.UNDEFINED
-    }
-
-    override fun isFullCube(state: IBlockState) = false
+    override fun isFullBlock(state: IBlockState) = false
+    override fun isOpaqueCube(state: IBlockState) = false
+    override fun isNormalCube(state: IBlockState) = false
+    override fun getBlockFaceShape(worldIn: IBlockAccess?, state: IBlockState?, pos: BlockPos?, face: EnumFacing?) = BlockFaceShape.UNDEFINED
 
     companion object {
         private val ATTACHMENT = PropertyEnum.create("face", EnumAttachment::class.java)

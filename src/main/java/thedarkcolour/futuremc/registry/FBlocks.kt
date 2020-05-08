@@ -8,10 +8,10 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.core.block.FBlock
 import thedarkcolour.core.block.FBlock.Properties
-import thedarkcolour.core.gui.Gui
 import thedarkcolour.futuremc.block.*
 import thedarkcolour.futuremc.block.netherupdate.ChainBlock
 import thedarkcolour.futuremc.block.netherupdate.NyliumBlock
+import thedarkcolour.futuremc.client.gui.Gui
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.tile.*
 
@@ -26,43 +26,43 @@ object FBlocks {
     val STRIPPED_DARK_OAK_LOG = BlockStrippedLog("dark_oak")
 
     val LANTERN = LanternBlock(Properties(Material.IRON, "lantern").hardnessAndResistance(3.5f).sound(FSounds.LANTERN).light(15).group(CreativeTabs.DECORATIONS))
-    val STONECUTTER = StonecutterBlock(Properties(Material.ROCK, "stonecutter").hardnessAndResistance(3.5f).group(CreativeTabs.DECORATIONS))
+    val STONECUTTER = StonecutterBlock(Properties(Material.ROCK, "stonecutter").hardnessAndResistance(3.5f).group(CreativeTabs.DECORATIONS), Gui.STONECUTTER, FConfig.villageAndPillage.stonecutter.functionality)
     val BARREL = BarrelBlock(Properties(Material.WOOD, "barrel").sound(SoundType.WOOD).hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS))
     val SMOKER = BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.SMOKER, Properties(Material.ROCK, "smoker").group(CreativeTabs.DECORATIONS))
     val BLAST_FURNACE = BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE, Properties(Material.ROCK, "blast_furnace").group(CreativeTabs.DECORATIONS))
-    val LOOM = VillageStationBlock(Properties(Material.WOOD, "loom"), Gui.LOOM, FConfig.villageAndPillage.loom.functionality)
-    val FLETCHING_TABLE = VillageStationBlock(Properties(Material.WOOD, "fletching_table"), null, false)
-    val SMITHING_TABLE = VillageStationBlock(Properties(Material.WOOD, "smithing_table"), null, FConfig.villageAndPillage.smithingTable.functionality)
-    val CARTOGRAPHY_TABLE = VillageStationBlock(Properties(Material.WOOD, "cartography_table"), null, FConfig.villageAndPillage.cartographyTable.functionality)
+    val LOOM = VillageStationBlock(Properties(Material.WOOD, "loom").group(CreativeTabs.DECORATIONS), Gui.LOOM, FConfig.villageAndPillage.loom.functionality)
+    val FLETCHING_TABLE = VillageStationBlock(Properties(Material.WOOD, "fletching_table").group(CreativeTabs.DECORATIONS), null, false)
+    val SMITHING_TABLE = VillageStationBlock(Properties(Material.WOOD, "smithing_table").group(CreativeTabs.DECORATIONS), null, FConfig.villageAndPillage.smithingTable.functionality)
+    val CARTOGRAPHY_TABLE = VillageStationBlock(Properties(Material.WOOD, "cartography_table").group(CreativeTabs.DECORATIONS), null, FConfig.villageAndPillage.cartographyTable.functionality)
     val GRINDSTONE = BlockGrindstone(Properties(Material.ANVIL, "grindstone").color(MapColor.IRON).group(CreativeTabs.DECORATIONS).hardnessAndResistance(2.0F, 6.0F))
-    val COMPOSTER = ComposterBlock(Properties(Material.WOOD, "composter").hardnessAndResistance(0.6F).sound(SoundType.WOOD))
-    val HONEY_BLOCK = HoneyBlockBlock(Properties(Material.CLAY, "honey_block").color(MapColor.ADOBE).hardnessAndResistance(0.0f).sound(FSounds.HONEY_BLOCK))
-    val HONEYCOMB_BLOCK = FBlock(Properties(Material.CLAY, "honeycomb_block").color(MapColor.ADOBE).hardnessAndResistance(0.6F).sound(FSounds.CORAL))
+    val COMPOSTER = ComposterBlock(Properties(Material.WOOD, "composter").hardnessAndResistance(0.6F).sound(SoundType.WOOD).group(CreativeTabs.MISC))
+    val HONEY_BLOCK = HoneyBlockBlock(Properties(Material.CLAY, "honey_block").color(MapColor.ADOBE).hardnessAndResistance(0.0f).sound(FSounds.HONEY_BLOCK).group(CreativeTabs.DECORATIONS))
+    val HONEYCOMB_BLOCK = FBlock(Properties(Material.CLAY, "honeycomb_block").color(MapColor.ADOBE).hardnessAndResistance(0.6F).sound(FSounds.CORAL).group(CreativeTabs.DECORATIONS))
     val LILY_OF_THE_VALLEY = LilyOfTheValleyBlock()
     val CORNFLOWER = CornflowerBlock()
     val WITHER_ROSE = WitherRoseBlock()
     val SWEET_BERRY_BUSH = SweetBerryBushBlock()
-    val CAMPFIRE = CampfireBlock(Properties(Material.WOOD, "campfire").color(MapColor.OBSIDIAN).hardnessAndResistance(2.0f).sound(SoundType.WOOD).light(15).tickRandomly())
+    val CAMPFIRE = CampfireBlock(Properties(Material.WOOD, "campfire").color(MapColor.OBSIDIAN).hardnessAndResistance(2.0f).sound(SoundType.WOOD).light(15).tickRandomly().group(CreativeTabs.DECORATIONS))
     val BAMBOO = BlockBamboo(Properties(Material.PLANTS, "bamboo").sound(FSounds.BAMBOO).group(CreativeTabs.MISC).tickRandomly().hardnessAndResistance(1.0f))
     val BAMBOO_SAPLING = BlockBambooSapling(Properties(Material.WOOD, "bamboo_sapling").sound(FSounds.BAMBOO_SAPLING).tickRandomly().breakInstantly())
-    val BEE_NEST = BeeHiveBlock(Properties(Material.WOOD, "bee_nest").hardnessAndResistance(0.3f).sound(SoundType.WOOD))
-    val BEEHIVE = BeeHiveBlock(Properties(Material.WOOD, "beehive").hardnessAndResistance(0.6f).sound(SoundType.WOOD))
-    val BRICK_WALL = BlockWall(Properties(Material.ROCK, "brick_wall").color(MapColor.RED).hardnessAndResistance(2.0f, 6.0f))
-    val PRISMARINE_WALL = BlockWall(Properties(Material.ROCK, "prismarine_wall").color(MapColor.CYAN).hardnessAndResistance(1.5f, 6.0f))
-    val RED_SANDSTONE_WALL = BlockWall(Properties(Material.ROCK, "red_sandstone_wall").color(MapColor.ADOBE).hardnessAndResistance(0.8f))
-    val MOSSY_STONE_BRICK_WALL = BlockWall(Properties(Material.ROCK, "mossy_stone_brick_wall").hardnessAndResistance(1.5f, 6.0f))
-    val GRANITE_WALL = BlockWall(Properties(Material.ROCK, "granite_wall").color(MapColor.DIRT).hardnessAndResistance(1.5f, 6.0f))
-    val STONE_BRICK_WALL = BlockWall(Properties(Material.ROCK, "stone_brick_wall").hardnessAndResistance(1.5f, 6.0f))
-    val NETHER_BRICK_WALL = BlockWall(Properties(Material.ROCK, "nether_brick_wall").color(MapColor.NETHERRACK).hardnessAndResistance(2.0f, 6.0f))
-    val ANDESITE_WALL = BlockWall(Properties(Material.ROCK, "andesite_wall").color(MapColor.STONE).hardnessAndResistance(1.5f, 6.0f))
-    val RED_NETHER_BRICK_WALL = BlockWall(Properties(Material.ROCK, "red_nether_brick_wall").color(MapColor.NETHERRACK).hardnessAndResistance(2.0f, 6.0f))
-    val SANDSTONE_WALL = BlockWall(Properties(Material.ROCK, "sandstone_wall").color(MapColor.SAND).hardnessAndResistance(0.8f))
-    val END_STONE_BRICK_WALL = BlockWall(Properties(Material.ROCK, "end_stone_brick_wall").color(MapColor.SAND).hardnessAndResistance(3.0f, 9.0f))
-    val DIORITE_WALL = BlockWall(Properties(Material.ROCK, "diorite_wall").color(MapColor.QUARTZ).hardnessAndResistance(1.5f, 6.0f))
-    val SMOOTH_STONE = FBlock(Properties(Material.ROCK, "smooth_stone").hardnessAndResistance(2.0f, 6.0f))
-    val SMOOTH_SANDSTONE = FBlock(Properties(Material.ROCK, "smooth_sandstone").color(MapColor.SAND).hardnessAndResistance(2.0f, 6.0f))
-    val SMOOTH_QUARTZ = FBlock(Properties(Material.ROCK, "smooth_quartz").color(MapColor.QUARTZ).hardnessAndResistance(2.0f, 6.0f))
-    val SMOOTH_RED_SANDSTONE = FBlock(Properties(Material.ROCK, "smooth_red_sandstone").color(MapColor.ADOBE).hardnessAndResistance(2.0f, 6.0f))
+    val BEE_NEST = BeeHiveBlock(Properties(Material.WOOD, "bee_nest").hardnessAndResistance(0.3f).sound(SoundType.WOOD).group(CreativeTabs.DECORATIONS))
+    val BEEHIVE = BeeHiveBlock(Properties(Material.WOOD, "beehive").hardnessAndResistance(0.6f).sound(SoundType.WOOD).group(CreativeTabs.DECORATIONS))
+    val BRICK_WALL = BlockWall(Properties(Material.ROCK, "brick_wall").color(MapColor.RED).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.DECORATIONS))
+    val PRISMARINE_WALL = BlockWall(Properties(Material.ROCK, "prismarine_wall").color(MapColor.CYAN).hardnessAndResistance(1.5f, 6.0f).group(CreativeTabs.DECORATIONS))
+    val RED_SANDSTONE_WALL = BlockWall(Properties(Material.ROCK, "red_sandstone_wall").color(MapColor.ADOBE).hardnessAndResistance(0.8f).group(CreativeTabs.DECORATIONS))
+    val MOSSY_STONE_BRICK_WALL = BlockWall(Properties(Material.ROCK, "mossy_stone_brick_wall").hardnessAndResistance(1.5f, 6.0f).group(CreativeTabs.DECORATIONS))
+    val GRANITE_WALL = BlockWall(Properties(Material.ROCK, "granite_wall").color(MapColor.DIRT).hardnessAndResistance(1.5f, 6.0f).group(CreativeTabs.DECORATIONS))
+    val STONE_BRICK_WALL = BlockWall(Properties(Material.ROCK, "stone_brick_wall").hardnessAndResistance(1.5f, 6.0f).group(CreativeTabs.DECORATIONS))
+    val NETHER_BRICK_WALL = BlockWall(Properties(Material.ROCK, "nether_brick_wall").color(MapColor.NETHERRACK).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.DECORATIONS))
+    val ANDESITE_WALL = BlockWall(Properties(Material.ROCK, "andesite_wall").color(MapColor.STONE).hardnessAndResistance(1.5f, 6.0f).group(CreativeTabs.DECORATIONS))
+    val RED_NETHER_BRICK_WALL = BlockWall(Properties(Material.ROCK, "red_nether_brick_wall").color(MapColor.NETHERRACK).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.DECORATIONS))
+    val SANDSTONE_WALL = BlockWall(Properties(Material.ROCK, "sandstone_wall").color(MapColor.SAND).hardnessAndResistance(0.8f).group(CreativeTabs.DECORATIONS))
+    val END_STONE_BRICK_WALL = BlockWall(Properties(Material.ROCK, "end_stone_brick_wall").color(MapColor.SAND).hardnessAndResistance(3.0f, 9.0f).group(CreativeTabs.DECORATIONS))
+    val DIORITE_WALL = BlockWall(Properties(Material.ROCK, "diorite_wall").color(MapColor.QUARTZ).hardnessAndResistance(1.5f, 6.0f).group(CreativeTabs.DECORATIONS))
+    val SMOOTH_STONE = FBlock(Properties(Material.ROCK, "smooth_stone").hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.BUILDING_BLOCKS))
+    val SMOOTH_SANDSTONE = FBlock(Properties(Material.ROCK, "smooth_sandstone").color(MapColor.SAND).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.BUILDING_BLOCKS))
+    val SMOOTH_QUARTZ = FBlock(Properties(Material.ROCK, "smooth_quartz").color(MapColor.QUARTZ).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.BUILDING_BLOCKS))
+    val SMOOTH_RED_SANDSTONE = FBlock(Properties(Material.ROCK, "smooth_red_sandstone").color(MapColor.ADOBE).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.BUILDING_BLOCKS))
     val BLUE_ICE = BlueIceBlock(Properties(Material.PACKED_ICE, "blue_ice").group(CreativeTabs.BUILDING_BLOCKS).slipperiness(0.989f).hardnessAndResistance(2.8f))
     val STRIPPED_ACACIA_WOOD = BlockWood("stripped_acacia_wood")
     val STRIPPED_JUNGLE_WOOD = BlockWood("stripped_jungle_wood")
@@ -82,7 +82,7 @@ object FBlocks {
     val SPRUCE_TRAPDOOR = BlockWoodTrapdoor("spruce_trapdoor")
     val DARK_OAK_TRAPDOOR = BlockWoodTrapdoor("dark_oak_trapdoor")
 
-    val SOUL_FIRE_LANTERN = LanternBlock(Properties(Material.IRON, "soul_fire_lantern").hardnessAndResistance(3.5f).sound(FSounds.LANTERN).light(10))
+    val SOUL_FIRE_LANTERN = LanternBlock(Properties(Material.IRON, "soul_fire_lantern").hardnessAndResistance(3.5f).sound(FSounds.LANTERN).light(10).group(CreativeTabs.DECORATIONS))
     val SOUL_FIRE_TORCH = BlockSoulFireTorch()
     val SOUL_SOIL = FBlock(Properties(Material.GROUND, "soul_soil").group(CreativeTabs.BUILDING_BLOCKS).sound(FSounds.SOUL_SOIL))
     val CHAIN = ChainBlock(Properties(Material.IRON, "chain").hardnessAndResistance(5.0f, 6.0f))
@@ -94,7 +94,7 @@ object FBlocks {
     val SEAGRASS_FLOWING = SEAGRASS.flowing
 
     val SCAFFOLDING = ScaffoldingBlock(Properties(Material.CIRCUITS, "scaffolding").sound(FSounds.SCAFFOLDING))
-    val BELL = BlockBell(Properties(Material.IRON, "bell").hardnessAndResistance(5.0f).sound(SoundType.ANVIL))
+    val BELL = BlockBell(Properties(Material.IRON, "bell").hardnessAndResistance(5.0f).sound(SoundType.ANVIL).group(CreativeTabs.DECORATIONS))
 
     fun registerBlocks(blocks: IForgeRegistry<Block>) {
         if (FConfig.villageAndPillage.lantern)
@@ -125,7 +125,7 @@ object FBlocks {
         if (FConfig.buzzyBees.honeyBlock.enabled)
             blocks.register(HONEY_BLOCK)
         if (FConfig.buzzyBees.honeycombBlock)
-            blocks.register(FBlock(Properties(Material.CLAY, "honeycomb_block").color(MapColor.ADOBE).sound(FSounds.CORAL).hardnessAndResistance(0.6f).group(CreativeTabs.DECORATIONS)))
+            blocks.register(HONEYCOMB_BLOCK)
         if (FConfig.villageAndPillage.lilyOfTheValley.enabled)
             blocks.register(LILY_OF_THE_VALLEY)
         if (FConfig.villageAndPillage.cornflower.enabled)

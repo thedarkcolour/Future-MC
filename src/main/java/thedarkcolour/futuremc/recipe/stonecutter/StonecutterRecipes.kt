@@ -1,89 +1,75 @@
 package thedarkcolour.futuremc.recipe.stonecutter
 
-import net.minecraft.block.Block
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fml.common.registry.ForgeRegistries
 import thedarkcolour.futuremc.recipe.Recipes
+import thedarkcolour.futuremc.recipe.SimpleRecipe
 import thedarkcolour.futuremc.registry.FBlocks
-import java.util.*
 
-object StonecutterRecipes : Recipes<StonecutterRecipe>() {
-    override val recipes = ArrayList<StonecutterRecipe>()
+object StonecutterRecipes : Recipes<SimpleRecipe>() {
+    override val recipes = arrayListOf(
+        SimpleRecipe(ItemStack(Blocks.STONE), ItemStack(Blocks.STONE_SLAB, 2)),
+        SimpleRecipe(ItemStack(Blocks.STONE), ItemStack(Blocks.STONEBRICK)),
+        SimpleRecipe(ItemStack(Blocks.STONE), ItemStack(Blocks.STONE_SLAB, 2, 5)),
+        SimpleRecipe(ItemStack(Blocks.STONE), ItemStack(Blocks.STONE_BRICK_STAIRS)),
+        SimpleRecipe(ItemStack(Blocks.STONE), ItemStack(FBlocks.STONE_BRICK_WALL)),
+        SimpleRecipe(ItemStack(Blocks.STONE), ItemStack(Blocks.STONEBRICK, 1, 3)),
+        SimpleRecipe(ItemStack(FBlocks.SMOOTH_STONE), ItemStack(Blocks.STONE_SLAB, 2, 0)),
+        SimpleRecipe(ItemStack(Blocks.STONEBRICK), ItemStack(Blocks.STONE_BRICK_STAIRS)),
+        SimpleRecipe(ItemStack(Blocks.STONEBRICK), ItemStack(FBlocks.STONE_BRICK_WALL)),
+        SimpleRecipe(ItemStack(Blocks.STONEBRICK), ItemStack(Blocks.STONEBRICK, 1, 3)),
+        SimpleRecipe(ItemStack(Blocks.STONEBRICK, 1, 1), ItemStack(FBlocks.MOSSY_STONE_BRICK_WALL)),
+        SimpleRecipe(ItemStack(Blocks.STONE, 1, 1), ItemStack(FBlocks.GRANITE_WALL)),
+        SimpleRecipe(ItemStack(Blocks.STONE, 1, 1), ItemStack(Blocks.STONE, 1, 2)),
+        SimpleRecipe(ItemStack(Blocks.STONE, 1, 3), ItemStack(FBlocks.DIORITE_WALL)),
+        SimpleRecipe(ItemStack(Blocks.STONE, 1, 5), ItemStack(FBlocks.ANDESITE_WALL)),
+        SimpleRecipe(ItemStack(Blocks.COBBLESTONE), ItemStack(Blocks.STONE_SLAB, 2, 3)),
+        SimpleRecipe(ItemStack(Blocks.COBBLESTONE), ItemStack(Blocks.STONE_STAIRS)),
+        SimpleRecipe(ItemStack(Blocks.COBBLESTONE), ItemStack(Blocks.COBBLESTONE_WALL)),
+        SimpleRecipe(ItemStack(Blocks.MOSSY_COBBLESTONE), ItemStack(Blocks.COBBLESTONE_WALL)),
+        SimpleRecipe(ItemStack(Blocks.SANDSTONE), ItemStack(Blocks.STONE_SLAB, 2, 1)),
+        SimpleRecipe(ItemStack(Blocks.SANDSTONE), ItemStack(Blocks.SANDSTONE_STAIRS)),
+        SimpleRecipe(ItemStack(Blocks.SANDSTONE), ItemStack(FBlocks.SANDSTONE_WALL)),
+        SimpleRecipe(ItemStack(Blocks.SANDSTONE), ItemStack(Blocks.SANDSTONE, 1, 2)),
+        SimpleRecipe(ItemStack(Blocks.SANDSTONE), ItemStack(Blocks.SANDSTONE, 1, 1)),
+        SimpleRecipe(ItemStack(Blocks.RED_SANDSTONE), ItemStack(Blocks.STONE_SLAB2, 2)),
+        SimpleRecipe(ItemStack(Blocks.RED_SANDSTONE), ItemStack(Blocks.RED_SANDSTONE_STAIRS)),
+        SimpleRecipe(ItemStack(Blocks.RED_SANDSTONE), ItemStack(FBlocks.RED_SANDSTONE_WALL)),
+        SimpleRecipe(ItemStack(Blocks.RED_SANDSTONE), ItemStack(Blocks.RED_SANDSTONE, 1, 2)),
+        SimpleRecipe(ItemStack(Blocks.RED_SANDSTONE), ItemStack(Blocks.RED_SANDSTONE, 1, 1)),
+        SimpleRecipe(ItemStack(Blocks.PRISMARINE), ItemStack(FBlocks.PRISMARINE_WALL)),
+        SimpleRecipe(ItemStack(Blocks.QUARTZ_BLOCK), ItemStack(Blocks.STONE_SLAB, 1, 7)),
+        SimpleRecipe(ItemStack(Blocks.QUARTZ_BLOCK), ItemStack(Blocks.QUARTZ_STAIRS)),
+        SimpleRecipe(ItemStack(Blocks.QUARTZ_BLOCK), ItemStack(Blocks.QUARTZ_BLOCK, 1, 1)),
+        SimpleRecipe(ItemStack(Blocks.QUARTZ_BLOCK), ItemStack(Blocks.QUARTZ_BLOCK, 1, 2)),
+        SimpleRecipe(ItemStack(Blocks.PURPUR_BLOCK), ItemStack(Blocks.PURPUR_SLAB, 2)),
+        SimpleRecipe(ItemStack(Blocks.PURPUR_BLOCK), ItemStack(Blocks.PURPUR_STAIRS)),
+        SimpleRecipe(ItemStack(Blocks.PURPUR_BLOCK), ItemStack(Blocks.PURPUR_PILLAR)),
+        SimpleRecipe(ItemStack(Blocks.BRICK_BLOCK), ItemStack(Blocks.STONE_SLAB, 2, 4)),
+        SimpleRecipe(ItemStack(Blocks.BRICK_BLOCK), ItemStack(Blocks.BRICK_STAIRS)),
+        SimpleRecipe(ItemStack(Blocks.NETHER_BRICK), ItemStack(Blocks.STONE_SLAB, 2, 6)),
+        SimpleRecipe(ItemStack(Blocks.NETHER_BRICK), ItemStack(Blocks.NETHER_BRICK_STAIRS)),
+        SimpleRecipe(ItemStack(Blocks.NETHER_BRICK), ItemStack(FBlocks.NETHER_BRICK_WALL)),
+        SimpleRecipe(ItemStack(Blocks.RED_NETHER_BRICK), ItemStack(FBlocks.RED_NETHER_BRICK_WALL)),
+        SimpleRecipe(ItemStack(Blocks.END_BRICKS), ItemStack(FBlocks.END_STONE_BRICK_WALL)),
+        SimpleRecipe(ItemStack(Blocks.END_STONE), ItemStack(Blocks.END_BRICKS)),
+        SimpleRecipe(ItemStack(Blocks.END_STONE), ItemStack(FBlocks.END_STONE_BRICK_WALL))
+    )
 
-    override fun addDefaults() {
-        addRecipe(Blocks.STONE, ItemStack(Blocks.STONE_SLAB, 2), ItemStack(Blocks.STONEBRICK), ItemStack(Blocks.STONE_SLAB, 2, 5), ItemStack(Blocks.STONE_BRICK_STAIRS), ItemStack(FBlocks.STONE_BRICK_WALL), ItemStack(Blocks.STONEBRICK, 1, 3))
-        addRecipe(FBlocks.SMOOTH_STONE, ItemStack(Blocks.STONE_SLAB, 2, 0))
-        addRecipe(Blocks.STONEBRICK, Blocks.STONE_BRICK_STAIRS, FBlocks.STONE_BRICK_WALL).addOutput(ItemStack(Blocks.STONEBRICK, 1, 3))
-        addRecipe(ItemStack(Blocks.STONEBRICK, 1, 1), ItemStack(FBlocks.MOSSY_STONE_BRICK_WALL))
-        addRecipe(ItemStack(Blocks.STONE, 1, 1)).addOutput(FBlocks.GRANITE_WALL).addOutput(ItemStack(Blocks.STONE, 1, 2))
-        addRecipe(ItemStack(Blocks.STONE, 1, 3)).addOutput(FBlocks.DIORITE_WALL)
-        addRecipe(ItemStack(Blocks.STONE, 1, 5)).addOutput(FBlocks.ANDESITE_WALL)
-        addRecipe(Blocks.COBBLESTONE, ItemStack(Blocks.STONE_SLAB, 2, 3), ItemStack(Blocks.STONE_STAIRS), ItemStack(Blocks.COBBLESTONE_WALL))
-        addRecipe(ItemStack(Blocks.MOSSY_COBBLESTONE)).addOutput(Blocks.COBBLESTONE_WALL)
-        addRecipe(ItemStack(Blocks.SANDSTONE), ItemStack(Blocks.STONE_SLAB, 2, 1), ItemStack(Blocks.SANDSTONE_STAIRS), ItemStack(FBlocks.SANDSTONE_WALL), ItemStack(Blocks.SANDSTONE, 1, 2), ItemStack(Blocks.SANDSTONE, 1, 1))
-        addRecipe(ItemStack(Blocks.RED_SANDSTONE), ItemStack(Blocks.STONE_SLAB2, 2), ItemStack(Blocks.RED_SANDSTONE_STAIRS), ItemStack(FBlocks.RED_SANDSTONE_WALL), ItemStack(Blocks.RED_SANDSTONE, 1, 2), ItemStack(Blocks.RED_SANDSTONE, 1, 1))
-        addRecipe(ItemStack(Blocks.PRISMARINE)).addOutput(FBlocks.PRISMARINE_WALL)
-        addRecipe(ItemStack(Blocks.QUARTZ_BLOCK), ItemStack(Blocks.STONE_SLAB, 1, 7), ItemStack(Blocks.QUARTZ_STAIRS), ItemStack(Blocks.QUARTZ_BLOCK, 1, 1), ItemStack(Blocks.QUARTZ_BLOCK, 1, 2))
-        addRecipe(Blocks.PURPUR_BLOCK, ItemStack(Blocks.PURPUR_SLAB, 2), ItemStack(Blocks.PURPUR_STAIRS), ItemStack(Blocks.PURPUR_PILLAR))
-        addRecipe(Blocks.BRICK_BLOCK, ItemStack(Blocks.STONE_SLAB, 2, 4)).addOutput(Blocks.BRICK_STAIRS)
-        addRecipe(Blocks.NETHER_BRICK, ItemStack(Blocks.STONE_SLAB, 2, 6), ItemStack(Blocks.NETHER_BRICK_STAIRS), ItemStack(FBlocks.NETHER_BRICK_WALL))
-        addRecipe(Blocks.RED_NETHER_BRICK, FBlocks.RED_NETHER_BRICK_WALL)
-        addRecipe(Blocks.END_STONE, Blocks.END_BRICKS, FBlocks.END_STONE_BRICK_WALL)
-        addRecipe(Blocks.END_BRICKS, FBlocks.END_STONE_BRICK_WALL)
+    fun addRecipe(input: ItemStack, output: ItemStack) {
+        recipes.add(SimpleRecipe(input, output))
     }
 
-    private fun addRecipe(input: ItemStack, vararg outputs: ItemStack): StonecutterRecipe {
-        val recipe = StonecutterRecipe(input, *outputs)
-        recipes.add(recipe)
-        return recipe
-    }
-
-    private fun addRecipe(input: Block, vararg outputs: ItemStack): StonecutterRecipe {
-        return addRecipe(ItemStack(input), *outputs)
-    }
-
-    private fun addRecipe(input: Block, vararg outputs: Block): StonecutterRecipe {
-        val blocks: Array<ItemStack> =
-            Arrays.stream(outputs).map(::ItemStack).toArray { value -> arrayOfNulls<ItemStack>(value) }
-        return addRecipe(ItemStack(input), *blocks)
-    }
-
-    fun addOrCreateRecipe(input: ItemStack, vararg outputs: ItemStack) {
-        val recipe = getRecipe(input)
-        if (recipe != null) {
-            for (output in outputs) {
-                recipe.addOutput(output)
-            }
-        } else {
-            addRecipe(input, *outputs)
-        }
-    }
-
-    fun removeOutputs(input: ItemStack, vararg outputs: ItemStack) {
-        getRecipe(input)?.let { recipe: StonecutterRecipe ->
-            for (output in outputs) {
-                recipe.removeOutput(output)
-            }
-
-            if (recipe.totalOutputs == 0) {
-                recipes.remove(recipe)
-            }
-        }
+    fun removeRecipe(input: ItemStack, output: ItemStack) {
+        recipes.removeIf { recipe -> recipe.matches(input, output) }
     }
 
     override fun validate() {
-        for (recipe in recipes) {
-            val registry = ForgeRegistries.ITEMS
-            for (output in recipe.outputs) {
-                if (!registry.containsValue(output.item)) {
-                    recipe.outputs.remove(output)
-                }
-            }
+        val registry = ForgeRegistries.ITEMS
 
-            if (recipe.outputs.isEmpty()) {
-                recipes.remove(recipe)
-            }
+        recipes.removeIf { recipe ->
+            !registry.containsValue(recipe.output.item) || !registry.containsValue(recipe.input.item)
         }
     }
 }

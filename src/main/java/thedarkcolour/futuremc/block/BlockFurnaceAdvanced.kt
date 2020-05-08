@@ -18,7 +18,7 @@ import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.core.block.FBlock
-import thedarkcolour.core.gui.Gui
+import thedarkcolour.futuremc.client.gui.Gui
 import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes
 import thedarkcolour.futuremc.recipe.furnace.SmokerRecipes
 import thedarkcolour.futuremc.registry.FBlocks

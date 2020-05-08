@@ -1,4 +1,4 @@
-package thedarkcolour.core.gui;
+package thedarkcolour.futuremc.client.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import thedarkcolour.core.gui.FContainer;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.container.*;
 
@@ -24,7 +25,7 @@ public enum Gui {
     BARREL(ContainerBarrel::new),
     FURNACE(ContainerFurnaceAdvanced::new),
     GRINDSTONE(ContainerGrindstone::new),
-    STONECUTTER(ContainerStonecutter::new),
+    STONECUTTER(StonecutterContainer::new),
     LOOM(ContainerLoom::new),
     SMITHING_TABLE(ContainerSmithingTable::new),
     CARTOGRAPHY_TABLE(ContainerCartographyTable::new);

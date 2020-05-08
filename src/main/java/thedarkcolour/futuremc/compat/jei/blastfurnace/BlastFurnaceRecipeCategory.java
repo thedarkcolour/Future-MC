@@ -9,9 +9,10 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import thedarkcolour.futuremc.FutureMC;
+import thedarkcolour.futuremc.compat.jei.SimpleRecipeWrapper;
 import thedarkcolour.futuremc.registry.FBlocks;
 
-public class BlastFurnaceRecipeCategory implements IRecipeCategory<BlastFurnaceRecipeWrapper> {
+public class BlastFurnaceRecipeCategory implements IRecipeCategory<SimpleRecipeWrapper> {
     public static final String NAME = "container.jei.futuremc.blast_furnace.name";
     private final IDrawable background;
     private final IDrawableAnimated animatedFlame;
@@ -61,7 +62,7 @@ public class BlastFurnaceRecipeCategory implements IRecipeCategory<BlastFurnaceR
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, BlastFurnaceRecipeWrapper recipeWrapper, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, SimpleRecipeWrapper recipeWrapper, IIngredients ingredients) {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
         guiItemStacks.init(0, true, 0, 0);

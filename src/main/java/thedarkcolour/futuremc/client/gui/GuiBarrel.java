@@ -1,15 +1,14 @@
 package thedarkcolour.futuremc.client.gui;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+import thedarkcolour.core.gui.GuiContainer;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.container.ContainerBarrel;
 import thedarkcolour.futuremc.tile.TileBarrel;
 
-public class GuiBarrel extends GuiContainer {
-    public final InventoryPlayer playerInventory;
+public class GuiBarrel extends GuiContainer<ContainerBarrel> {
     public final TileBarrel te;
     private static final int WIDTH = 176;
     private static final int HEIGHT = 167;
@@ -19,7 +18,6 @@ public class GuiBarrel extends GuiContainer {
     public GuiBarrel(ContainerBarrel container) {
         super(container);
         this.te = container.te;
-        this.playerInventory = container.playerInventory;
 
         xSize = WIDTH;
         ySize = HEIGHT;
@@ -35,8 +33,8 @@ public class GuiBarrel extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        fontRenderer.drawString(te.getInventory().getDisplayName().getUnformattedText(), 8, 6, 4210752);
-        fontRenderer.drawString(playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 92, 4210752);
+        fontRenderer.drawString(I18n.format("container.barrel"), 8, 6, 4210752);
+        fontRenderer.drawString(getContainer().getPlayerInv().getDisplayName().getUnformattedText(), 8, this.ySize - 92, 4210752);
     }
 
     @Override

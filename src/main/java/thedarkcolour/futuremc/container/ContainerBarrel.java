@@ -4,7 +4,6 @@ import invtweaks.api.container.ChestContainer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -21,39 +20,22 @@ import thedarkcolour.futuremc.tile.TileBarrel;
 @ChestContainer
 public class ContainerBarrel extends FContainer {
     public final TileBarrel te;
-    public final InventoryPlayer playerInventory;
 
     public ContainerBarrel(InventoryPlayer playerInv, TileEntity te) {
+        super(playerInv);
+
         try {
             this.te = (TileBarrel) te;
         } catch (ClassCastException e) {
             FutureMC.LOGGER.fatal("Missing a tile entity for barrel block");
             throw e;
         }
-        this.playerInventory = playerInv;
 
         addOwnSlots();
-        addPlayerSlots(playerInventory);
+        addPlayerSlots(playerInv);
     }
 
-    private void addPlayerSlots(IInventory playerInventory) {
-        for (int row = 0; row < 3; ++row) {
-            for (int col = 0; col < 9; ++col) {
-                int x = 9 + col * 18 - 1;
-                int y = row * 18 + 70 + 15;
-                this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 9, x, y));
-            }
-        }
-
-        // Slots for the hotBar
-        for (int row = 0; row < 9; ++row) {
-            int x = 9 + row * 18 - 1;
-            int y = 58 + 70 + 15;
-            this.addSlotToContainer(new Slot(playerInventory, row, x, y));
-        }
-    }
-
-    private void addOwnSlots() {
+    protected void addOwnSlots() {
         IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
@@ -97,6 +79,6 @@ public class ContainerBarrel extends FContainer {
 
     @SideOnly(Side.CLIENT)
     public GuiContainer getGuiContainer() {
-        return new GuiBarrel(new ContainerBarrel(playerInventory, te));
+        return new GuiBarrel(new ContainerBarrel(getPlayerInv(), te));
     }
 }

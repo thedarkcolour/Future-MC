@@ -7,7 +7,7 @@ import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.core.block.RotatableBlock
-import thedarkcolour.core.gui.Gui
+import thedarkcolour.futuremc.client.gui.Gui
 
 class BlockLoom(properties: Properties?) : RotatableBlock(properties) {
     override fun onBlockActivated(

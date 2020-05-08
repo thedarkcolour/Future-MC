@@ -1,24 +1,24 @@
 package thedarkcolour.futuremc.client.gui;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ResourceLocation;
+import thedarkcolour.core.gui.GuiContainer;
 import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
 import thedarkcolour.futuremc.container.ContainerFurnaceAdvanced;
 import thedarkcolour.futuremc.tile.TileFurnaceAdvanced;
 
-public class GuiFurnaceAdvanced extends GuiContainer {
+public class GuiFurnaceAdvanced extends GuiContainer<ContainerFurnaceAdvanced> {
     private static final ResourceLocation FURNACE_GUI_TEXTURES = new ResourceLocation("textures/gui/container/furnace.png");
     private final InventoryPlayer playerInv;
     private final TileFurnaceAdvanced te;
 
-    private GuiFurnaceAdvanced(ContainerFurnaceAdvanced containerFurnaceAdvanced) {
-        super(containerFurnaceAdvanced);
-        playerInv = containerFurnaceAdvanced.playerInventory;
-        te = containerFurnaceAdvanced.te;
+    private GuiFurnaceAdvanced(ContainerFurnaceAdvanced container) {
+        super(container);
+        playerInv = container.getPlayerInv();
+        te = container.te;
     }
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

@@ -3,13 +3,11 @@ package thedarkcolour.futuremc.block
 import net.minecraft.block.Block
 import net.minecraft.block.BlockHorizontal
 import net.minecraft.block.BlockLiquid
-import net.minecraft.block.SoundType
 import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.properties.PropertyDirection
 import net.minecraft.block.state.BlockFaceShape
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
-import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
@@ -28,7 +26,6 @@ import net.minecraft.world.World
 import net.minecraftforge.fluids.BlockFluidBase
 import net.minecraftforge.fluids.IFluidBlock
 import thedarkcolour.core.block.InteractionBlock
-import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.registry.FParticles
 import thedarkcolour.futuremc.registry.FSounds
@@ -38,10 +35,8 @@ import java.util.*
 @Suppress("HasPlatformType")
 class CampfireBlock(properties: Properties) : InteractionBlock(properties) {
     init {
-        soundType = SoundType.WOOD
-        setHardness(2.0f)
         defaultState = getBlockState().baseState.withProperty(LIT, true).withProperty(FACING, EnumFacing.NORTH)
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.DECORATIONS else FutureMC.GROUP
+        useNeighborBrightness = true
     }
 
     override fun createTileEntity(worldIn: World?, state: IBlockState?): TileEntity {
@@ -129,12 +124,6 @@ class CampfireBlock(properties: Properties) : InteractionBlock(properties) {
         return ItemStack(this)
     }
 
-    override fun getBlockFaceShape(
-        worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing
-    ): BlockFaceShape {
-        return BlockFaceShape.UNDEFINED
-    }
-
     override fun getRenderLayer() = BlockRenderLayer.CUTOUT
 
     override fun onBlockAdded(worldIn: World, pos: BlockPos, state: IBlockState) {
@@ -145,8 +134,11 @@ class CampfireBlock(properties: Properties) : InteractionBlock(properties) {
     override fun isNormalCube(state: IBlockState, world: IBlockAccess, pos: BlockPos) = false
     override fun isFullBlock(state: IBlockState) = false
     override fun isOpaqueCube(state: IBlockState) = false
+    override fun isNormalCube(state: IBlockState) = false
+    override fun isFullCube(state: IBlockState) = false
     override fun canPlaceTorchOnTop(state: IBlockState, world: IBlockAccess, pos: BlockPos) = false
     override fun isTopSolid(state: IBlockState) = false
+    override fun getBlockFaceShape(worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing) = BlockFaceShape.UNDEFINED
 
     override fun randomDisplayTick(
         state: IBlockState, worldIn: World, pos: BlockPos, rand: Random

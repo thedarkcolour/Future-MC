@@ -1,11 +1,9 @@
 package thedarkcolour.futuremc.block
 
 import net.minecraft.block.Block
-import net.minecraft.block.SoundType
 import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
-import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
@@ -22,7 +20,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.registries.IForgeRegistryEntry
 import thedarkcolour.core.block.InteractionBlock
-import thedarkcolour.futuremc.FutureMC.GROUP
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.registry.FBlocks.CORNFLOWER
 import thedarkcolour.futuremc.registry.FBlocks.LILY_OF_THE_VALLEY
@@ -34,9 +31,7 @@ import java.util.*
 
 class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
     init {
-        soundType = SoundType.WOOD
         defaultState = defaultState.withProperty(LEVEL, 0)
-        creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else GROUP
     }
 
     override fun createBlockState(): BlockStateContainer {

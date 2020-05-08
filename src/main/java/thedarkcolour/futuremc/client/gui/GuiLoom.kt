@@ -5,6 +5,7 @@ import net.minecraft.client.audio.PositionedSoundRecord
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.renderer.BannerTextures
 import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.resources.I18n
 import net.minecraft.init.SoundEvents
 import net.minecraft.item.EnumDyeColor
 import net.minecraft.item.ItemStack
@@ -32,12 +33,16 @@ class GuiLoom(private val container: ContainerLoom) : GuiContainer(container) {
 
     init {
         container.setInventoryUpdateListener(::onInventoryUpdate)
-        //BASIC_PATTERNS.forEach { println(it.name) }
     }
 
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
         super.drawScreen(mouseX, mouseY, partialTicks)
         renderHoveredToolTip(mouseX, mouseY)
+    }
+
+    override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
+        fontRenderer.drawString(I18n.format("container.loom"), 8, 4, 4210752)
+        fontRenderer.drawString(container.playerInv.displayName.unformattedText, 8, ySize - 94, 4210752)
     }
 
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {

@@ -121,7 +121,7 @@ class HoneyBlockBlock(properties: Properties) : FBlock(properties), IStickyBlock
     override fun isStickyBlock(state: IBlockState) = true
 
     override fun canStickTo(state: IBlockState, other: IBlockState): Boolean {
-        return other.block !is BlockSlime && checkQuark()?.isNotColoredSlime(other) == true
+        return !(other.block is BlockSlime || checkQuark()?.isColoredSlime(other) == true)
     }
 
     override fun canStickToBlock(

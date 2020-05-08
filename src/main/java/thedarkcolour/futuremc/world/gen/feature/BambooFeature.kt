@@ -9,23 +9,18 @@ import net.minecraft.world.chunk.IChunkProvider
 import net.minecraft.world.gen.IChunkGenerator
 import net.minecraftforge.fml.common.IWorldGenerator
 import thedarkcolour.core.util.matchesAny
-import thedarkcolour.futuremc.block.BlockBamboo
 import thedarkcolour.futuremc.registry.FBlocks
 import java.util.*
 
 object BambooFeature : IWorldGenerator {
     private fun generate(worldIn: World, random: Random, pos: BlockPos) {
-        val bamboo = FBlocks.BAMBOO as BlockBamboo
+        val bamboo = FBlocks.BAMBOO
         if (worldIn.getBlockState(pos).block.isReplaceable(worldIn, pos) && bamboo.canPlaceBlockAt(worldIn, pos)) {
             worldIn.setBlockState(pos, bamboo.defaultState)
         }
         for (j in 0..9) {
-            if (worldIn.getBlockState(pos).block == bamboo && bamboo.canGrow(
-                    worldIn,
-                    pos,
-                    worldIn.getBlockState(pos),
-                    false
-                )
+            if (worldIn.getBlockState(pos).block == bamboo
+                && bamboo.canGrow(worldIn, pos, worldIn.getBlockState(pos), false)
             ) {
                 bamboo.grow(worldIn, random, pos, worldIn.getBlockState(pos))
             }

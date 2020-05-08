@@ -4,7 +4,6 @@ package thedarkcolour.futuremc.compat
 import net.minecraftforge.fml.common.Loader
 import thedarkcolour.futuremc.compat.crafttweaker.CraftTweakerCompat
 import thedarkcolour.futuremc.compat.dynamictrees.DynamicTreesCompat
-import thedarkcolour.futuremc.compat.jei.JeiCompat
 import thedarkcolour.futuremc.compat.quark.QuarkCompat
 
 const val CRAFTTWEAKER = "crafttweaker"
@@ -13,7 +12,7 @@ const val JEI = "jei"
 const val QUARK = "quark"
 
 fun checkCraftTweaker(): CraftTweakerCompat? {
-    return if (isModLoaded(DYNAMIC_TREES)) {
+    return if (isModLoaded(CRAFTTWEAKER)) {
         CraftTweakerCompat
     } else null
 }
@@ -21,12 +20,6 @@ fun checkCraftTweaker(): CraftTweakerCompat? {
 fun checkDynamicTrees(): DynamicTreesCompat? {
     return if (isModLoaded(DYNAMIC_TREES)) {
         DynamicTreesCompat
-    } else null
-}
-
-fun checkJei(): JeiCompat? {
-    return if (isModLoaded(JEI)) {
-        JeiCompat
     } else null
 }
 

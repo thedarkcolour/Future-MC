@@ -19,7 +19,7 @@ import java.util.*
  */
 open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: String? = null) : IItemHandlerModifiable,
     INBTSerializable<NBTTagCompound>, Iterable<ItemStack?> {
-    protected var stacks: Array<ItemStack>
+    private var stacks: Array<ItemStack>
     private val defaultName: TextComponentTranslation
     private val displayName: TextComponentStringHolder? = null
 
@@ -49,12 +49,11 @@ open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: Strin
 
     override fun getStackInSlot(slot: Int): ItemStack = stacks[slot]
 
-    operator fun get(index: Int): ItemStack {
-        return getStackInSlot(index)
-    }
+    operator fun get(index: Int): ItemStack = stacks[index]
 
     operator fun set(index: Int, stack: ItemStack) {
-        return setStackInSlot(index, stack)
+        stacks[index] = stack
+        onContentsChanged(index)
     }
 
     override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {

@@ -9,10 +9,15 @@ import thedarkcolour.core.gui.FContainer
 import thedarkcolour.futuremc.client.gui.GuiSmithingTable
 
 class ContainerSmithingTable(
-    private val playerInv: InventoryPlayer,
+    playerInv: InventoryPlayer,
     private val world: World,
     private val pos: BlockPos
-) : FContainer() {
+) : FContainer(playerInv) {
+    init {
+        // addOwnSlots()
+        addPlayerSlots(playerInv)
+    }
+
     override fun getGuiContainer(): GuiContainer {
         return GuiSmithingTable(ContainerSmithingTable(playerInv, world, pos))
     }

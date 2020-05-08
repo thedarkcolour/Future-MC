@@ -25,8 +25,7 @@ import thedarkcolour.futuremc.item.ItemBannerPattern
 import thedarkcolour.futuremc.item.ItemBannerPattern.Companion.getBannerPattern
 import thedarkcolour.futuremc.registry.FBlocks.LOOM
 
-class ContainerLoom(private val playerInv: InventoryPlayer, private val world: World, private val pos: BlockPos) :
-    FContainer() {
+class ContainerLoom(playerInv: InventoryPlayer, private val world: World, private val pos: BlockPos) : FContainer(playerInv) {
     private val handler: DarkInventory = object : DarkInventory(4) {
         override fun onContentsChanged(slot: Int) {
             if (slot != 3) {
@@ -35,23 +34,35 @@ class ContainerLoom(private val playerInv: InventoryPlayer, private val world: W
             inventoryUpdateListener()
         }
     }
-    private val slots = arrayOf(
-        object : SlotItemHandler(handler, 0, 13, 26) {
+    private var selectedIndex = 0
+    private var inventoryUpdateListener = {}
+    private lateinit var bannerSlot: Slot
+    private lateinit var dyeSlot: Slot
+    private lateinit var patternSlot: Slot
+    private lateinit var resultSlot: Slot
+
+    init {
+        addOwnSlots()
+        addPlayerSlots(playerInv)
+    }
+
+    private fun addOwnSlots() {
+        bannerSlot = addSlotToContainer(object : SlotItemHandler(handler, 0, 13, 26) {
             override fun isItemValid(stack: ItemStack): Boolean {
                 return stack.item is ItemBanner
             }
-        },
-        object : SlotItemHandler(handler, 1, 33, 26) {
+        })
+        dyeSlot = addSlotToContainer(object : SlotItemHandler(handler, 1, 33, 26) {
             override fun isItemValid(stack: ItemStack): Boolean {
                 return getOreNames(stack).anyMatch { it.startsWith("dye") }
             }
-        },
-        object : SlotItemHandler(handler, 2, 23, 45) {
+        })
+        patternSlot = addSlotToContainer(object : SlotItemHandler(handler, 2, 23, 45) {
             override fun isItemValid(stack: ItemStack): Boolean {
                 return stack.item is ItemBannerPattern
             }
-        },
-        object : SlotItemHandler(handler, 3, 143, 57) {
+        })
+        resultSlot = addSlotToContainer(object : SlotItemHandler(handler, 3, 143, 57) {
             override fun isItemValid(stack: ItemStack) = false
 
             override fun onTake(thePlayer: EntityPlayer, stack: ItemStack): ItemStack {
@@ -59,35 +70,7 @@ class ContainerLoom(private val playerInv: InventoryPlayer, private val world: W
                 banner.shrink(1)
                 return stack
             }
-        }
-    )
-    private var selectedIndex = 0
-    private var inventoryUpdateListener = {}
-
-    init {
-        addOwnSlots()
-        addPlayerSlots()
-    }
-
-    private fun addOwnSlots() {
-        for (slot in slots) {
-            addSlotToContainer(slot)
-        }
-    }
-
-    private fun addPlayerSlots() {
-        for (row in 0..2) {
-            for (col in 0..8) {
-                val x = col * 18 + 8
-                val y = row * 18 + 84
-                addSlotToContainer(Slot(playerInv, col + row * 9 + 9, x, y))
-            }
-        }
-        for (col in 0..8) {
-            val x = 9 + col * 18 - 1
-            val y = 58 + 70 + 14
-            addSlotToContainer(Slot(playerInv, col, x, y))
-        }
+        })
     }
 
     val banner: ItemStack
@@ -112,7 +95,13 @@ class ContainerLoom(private val playerInv: InventoryPlayer, private val world: W
         }
 
     fun getLoomSlot(index: Int): Slot {
-        return slots[index]
+        return when (index) {
+            0 -> bannerSlot
+            1 -> dyeSlot
+            2 -> patternSlot
+            3 -> resultSlot
+            else -> throw IllegalArgumentException("Index $index must be in 0..3")
+        }
     }
 
     override fun canInteractWith(playerIn: EntityPlayer): Boolean {

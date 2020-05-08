@@ -33,13 +33,13 @@ import thedarkcolour.core.block.IProjectileDispenserBehaviour
 import thedarkcolour.core.command.GenerateCommand
 import thedarkcolour.core.command.HealCommand
 import thedarkcolour.core.command.ModeToggleCommand
-import thedarkcolour.core.gui.Gui
 import thedarkcolour.core.util.TODO
 import thedarkcolour.core.util.registerAndDispenserBehaviour
 import thedarkcolour.core.util.registerServerOptionalDispenserBehaviour
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.block.BlockFlower
 import thedarkcolour.futuremc.capability.SwimmingCapability
+import thedarkcolour.futuremc.client.gui.Gui
 import thedarkcolour.futuremc.client.tesr.bell.BellRenderer
 import thedarkcolour.futuremc.client.tesr.campfire.CampfireRenderer
 import thedarkcolour.futuremc.command.FastGiveCommand

@@ -5,7 +5,6 @@ import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
-import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes;
@@ -17,7 +16,19 @@ import java.util.Arrays;
 public final class Stonecutter {
     @ZenMethod
     public static void addOutputs(IItemStack input, IItemStack... outputs) {
-        CraftTweakerAPI.apply(Action.of(() -> StonecutterRecipes.INSTANCE.addOrCreateRecipe(CraftTweakerMC.getItemStack(input), Arrays.stream(outputs).map(CraftTweakerMC::getItemStack).toArray(ItemStack[]::new))));
+        Arrays.stream(outputs).forEach(output -> addOutput(input, output));
+    }
+
+    @ZenMethod
+    public static void addOutput(IItemStack input, IItemStack output) {
+        CraftTweakerAPI.apply(Action.of(() -> StonecutterRecipes.INSTANCE.addRecipe(CraftTweakerMC.getItemStack(input), CraftTweakerMC.getItemStack(output))));
+    }
+
+    @ZenMethod
+    public static void removeOutputs(IItemStack input, IItemStack... outputs) {
+        Arrays.stream(outputs).forEach(output -> {
+            CraftTweakerAPI.apply(Action.of(() -> StonecutterRecipes.INSTANCE.removeRecipe(CraftTweakerMC.getItemStack(input), CraftTweakerMC.getItemStack(output))));
+        });
     }
 
     @ZenMethod
@@ -25,11 +36,7 @@ public final class Stonecutter {
         CraftTweakerAPI.apply(Action.of(() -> StonecutterRecipes.INSTANCE.removeRecipe(CraftTweakerMC.getItemStack(input))));
     }
 
-    @ZenMethod
-    public static void removeOutputs(IItemStack input, IItemStack... outputs) {
-        CraftTweakerAPI.apply(Action.of(() -> StonecutterRecipes.INSTANCE.removeOutputs(CraftTweakerMC.getItemStack(input), Arrays.stream(outputs).map(CraftTweakerMC::getItemStack).toArray(ItemStack[]::new))));
-    }
-
+    // todo turn into overloaded version of #removeOutputs and add separate functionality for #removeRecipe
     @ZenMethod
     public static void removeAllOutputsForInput(IItemStack input) {
         CraftTweakerAPI.apply(Action.of(() -> StonecutterRecipes.INSTANCE.removeRecipe(CraftTweakerMC.getItemStack(input))));
@@ -37,7 +44,7 @@ public final class Stonecutter {
 
     @ZenMethod
     public static void clearRecipes() {
-        CraftTweakerAPI.apply(Action.of(Stonecutter::clearRecipes));
+        CraftTweakerAPI.apply(Action.of(StonecutterRecipes.INSTANCE::clear));
     }
 
     private interface Action extends IAction {
@@ -51,8 +58,8 @@ public final class Stonecutter {
         }
     }
 
+    // initialize recipes
     static {
         StonecutterRecipes.INSTANCE.getClass();
-        StonecutterRecipes.INSTANCE.addDefaults();
     }
 }

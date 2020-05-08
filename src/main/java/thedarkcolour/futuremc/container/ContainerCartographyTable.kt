@@ -9,12 +9,21 @@ import thedarkcolour.core.gui.FContainer
 import thedarkcolour.futuremc.client.gui.GuiCartographyTable
 
 class ContainerCartographyTable(
-    private val playerInv: InventoryPlayer,
+    playerInv: InventoryPlayer,
     private val world: World,
     private val pos: BlockPos
-) : FContainer() {
+) : FContainer(playerInv) {
+    init {
+        addOwnSlots()
+        addPlayerSlots(playerInv)
+    }
+
     override fun getGuiContainer(): GuiContainer {
         return GuiCartographyTable(ContainerCartographyTable(playerInv, world, pos))
+    }
+
+    private fun addOwnSlots() {
+
     }
 
     override fun canInteractWith(playerIn: EntityPlayer): Boolean {

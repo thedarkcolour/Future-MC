@@ -4,14 +4,7 @@ import net.minecraft.item.ItemStack
 import java.util.*
 
 abstract class Recipes<T : Recipe> {
-    init {
-        //addDefaults()
-    }
-
     abstract val recipes: ArrayList<T>
-
-    // todo remove
-    open fun addDefaults() {}
 
     /**
      * Removes a recipe with the given input
@@ -38,6 +31,15 @@ abstract class Recipes<T : Recipe> {
     }
 
     /**
+     * Gets all available recipes for the input and puts them in a list.
+     *
+     * If no recipes match the input, then return an empty list.
+     */
+    open fun getRecipes(input: ItemStack): List<T> {
+        return recipes.filter { it.matches(input) }
+    }
+
+    /**
      * Removes default recipes.
      */
     open fun clear() {
@@ -47,7 +49,5 @@ abstract class Recipes<T : Recipe> {
     /**
      * Used to check for any missing items in recipes before adding to JEI.
      */
-    open fun validate() {
-
-    }
+    abstract fun validate()
 }
