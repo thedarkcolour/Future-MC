@@ -16,8 +16,18 @@ interface BeePollinationHandler {
      * You must add the bone meal particles yourself.
      * @see net.minecraftforge.common.util.Constants.WorldEvents.BONEMEAL_PARTICLES
      *
+     * Do not add a crop counter to the bee, as it is added by the AI
+     * based on the [Boolean] result of this handler.
+     *
      * If the bee cannot pollinate this crop (say the crop is maximum age),
      * then return false.
+     *
+     * Example in Java:
+     *  public class CalledLiterallyAnywhere {
+     *      static {
+     *          BeePollinationHandler.addHandler(Blocks.CAKE, (worldIn, pos, state, beeEntity) -> false);
+     *      }
+     *  }
      *
      * @return whether the bee has successfully pollinated the crop
      */
@@ -31,7 +41,7 @@ interface BeePollinationHandler {
          * or override the pollination behaviour of a block.
          */
         @JvmStatic
-        fun addBeePollinationHandler(block: Block, handler: BeePollinationHandler) {
+        fun addHandler(block: Block, handler: BeePollinationHandler) {
             handlers[block] = handler
         }
 
