@@ -20,8 +20,8 @@
         }
     },
     "textures": {
-        "particle": "futuremc:blocks/campfire_log",
-        "log": "futuremc:blocks/campfire_log"
+        "particle": "futuremc:block/campfire_log",
+        "log": "futuremc:block/campfire_log"
     },
     "elements": [
         {

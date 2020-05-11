@@ -1,10 +1,10 @@
 {
     "parent": "block/block",
     "textures": {
-        "particle": "futuremc:blocks/scaffolding_top",
-        "top": "futuremc:blocks/scaffolding_top",
-        "side": "futuremc:blocks/scaffolding_side",
-        "bottom": "futuremc:blocks/scaffolding_bottom"
+        "particle": "futuremc:block/scaffolding_top",
+        "top": "futuremc:block/scaffolding_top",
+        "side": "futuremc:block/scaffolding_side",
+        "bottom": "futuremc:block/scaffolding_bottom"
     },
     "elements": [
         {

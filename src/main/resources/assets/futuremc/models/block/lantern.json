@@ -1,6 +1,6 @@
 {
     "parent": "futuremc:block/template_lantern",
     "textures": {
-        "lantern": "futuremc:blocks/lantern"
+        "lantern": "futuremc:block/lantern"
     }
 }

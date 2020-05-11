@@ -1,12 +1,12 @@
 {
     "parent": "block/orientable",
     "textures": {
-        "particle": "futuremc:blocks/bee_hive_side",
-        "down": "futuremc:blocks/bee_hive_end",
-        "up": "futuremc:blocks/bee_hive_end",
-        "north": "futuremc:blocks/bee_hive_empty",
-        "east": "futuremc:blocks/bee_hive_side",
-        "south": "futuremc:blocks/bee_hive_side",
-        "west": "futuremc:blocks/bee_hive_side"
+        "particle": "futuremc:block/bee_hive_side",
+        "down": "futuremc:block/bee_hive_end",
+        "up": "futuremc:block/bee_hive_end",
+        "north": "futuremc:block/bee_hive_empty",
+        "east": "futuremc:block/bee_hive_side",
+        "south": "futuremc:block/bee_hive_side",
+        "west": "futuremc:block/bee_hive_side"
     }
 }

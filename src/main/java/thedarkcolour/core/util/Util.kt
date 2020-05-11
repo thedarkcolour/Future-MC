@@ -1,5 +1,3 @@
-@file:JvmName("Util")
-
 package thedarkcolour.core.util
 
 import com.google.common.collect.ImmutableMap
@@ -219,15 +217,6 @@ fun <T> Iterable<T>.anyMatch(test: (T) -> Boolean): Boolean {
 fun <T> janyMatch(iterable: Iterable<T>, test: (T) -> Boolean): Boolean {
     return iterable.anyMatch(test)
 }
-
-// needed before ModList is initialized
-val isQuarkLoaded: Boolean =
-    try {
-        Class.forName("vazkii.quark.base.handler.QuarkPistonStructureHelper")
-        true
-    } catch (e: ClassNotFoundException) {
-        false
-    }
 
 val models = ArrayList<Triple<Item, Int, String>>()
 

@@ -22,7 +22,7 @@ public final class Composter {
             if (!TileComposter.isBoneMeal(CraftTweakerMC.getItemStack(stack))) {
                 CraftTweakerAPI.apply(new Add(stack, rarity));
             } else {
-                FutureMC.LOGGER.log(Level.ERROR, "Cannot add bone meal to compostable items!");
+                FutureMC.LOGGER.log(Level.ERROR, "Cannot add bone meal to compostable item!");
             }
         } else {
             FutureMC.LOGGER.log(Level.WARN, "Failed to add duplicate recipe for item " + stack.toCommandString());
@@ -54,7 +54,7 @@ public final class Composter {
         if (ComposterBlock.ItemsForComposter.getChance(CraftTweakerMC.getItemStack(stack)) != -1) {
             CraftTweakerAPI.apply(new Remove(CraftTweakerMC.getItemStack(stack)));
         } else {
-            FutureMC.LOGGER.log(Level.WARN, "Cannot remove non-existent item from valid composter items " + stack.toCommandString());
+            FutureMC.LOGGER.log(Level.WARN, "Cannot remove non-existent item from valid composter item " + stack.toCommandString());
         }
     }
 
@@ -72,7 +72,7 @@ public final class Composter {
 
         @Override
         public String describe() {
-            return "Removed item " + stack.getItem().getRegistryName() + " from the list of valid Composter items.";
+            return "Removed item " + stack.getItem().getRegistryName() + " from the list of valid Composter item.";
         }
     }
 

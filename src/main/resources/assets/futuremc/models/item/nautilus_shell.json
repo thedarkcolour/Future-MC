@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "futuremc:items/nautilus_shell"
+        "layer0": "futuremc:item/nautilus_shell"
     }
 }

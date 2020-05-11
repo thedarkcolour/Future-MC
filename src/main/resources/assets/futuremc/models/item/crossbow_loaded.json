@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "futuremc:items/crossbow_loaded"
+        "layer0": "futuremc:item/crossbow_loaded"
     },
     "display": {
         "thirdperson_righthand": {

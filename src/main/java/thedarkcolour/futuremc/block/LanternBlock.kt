@@ -1,7 +1,6 @@
 package thedarkcolour.futuremc.block
 
 import net.minecraft.block.Block
-import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.state.BlockFaceShape
 import net.minecraft.block.state.BlockStateContainer
@@ -26,31 +25,42 @@ class LanternBlock(properties: Properties) : FBlock(properties) {
         worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float,
         hitZ: Float, meta: Int, placer: EntityLivingBase, hand: EnumHand
     ): IBlockState {
-        return defaultState.withProperty(HANGING, isBlockInvalid(worldIn, pos, false))
+        return if (facing == EnumFacing.DOWN && !isBlockInvalid(worldIn, pos, EnumFacing.UP)) {
+            defaultState.withProperty(HANGING, true)
+        } else {
+            defaultState.withProperty(HANGING, false)
+        }
     }
 
-    private fun isBlockInvalid(world: World, blockPos: BlockPos, hanging: Boolean): Boolean {
-        val facing = if (hanging) {
-            EnumFacing.UP
-        } else EnumFacing.DOWN
+    /**
+     * Checks if a lantern should not be place-able here.
+     *
+     * @param facing the offset of the block to check
+     */
+    private fun isBlockInvalid(world: World, blockPos: BlockPos, facing: EnumFacing): Boolean {
         val pos = blockPos.offset(facing)
         val state = world.getBlockState(pos)
         val block = state.block
         val faceShape = state.getBlockFaceShape(world, pos, facing.opposite)
         return isExceptBlockForAttachWithPiston(block)
-                || !arrayOf(BlockFaceShape.SOLID, BlockFaceShape.CENTER_BIG, BlockFaceShape.CENTER, BlockFaceShape.CENTER_SMALL).any(faceShape::equals)
+                || arrayOf(BlockFaceShape.BOWL, BlockFaceShape.UNDEFINED).any(faceShape::equals)
     }
 
-    private fun isPiston(state: IBlockState): Boolean {
-        return state.material == Material.PISTON
-    }
-
+    /**
+     * Returns true if:
+     *      The block at the position is replaceable
+     *      If there is a valid block below  OR
+     *      If there is a valid block above
+     */
     override fun canPlaceBlockAt(worldIn: World, pos: BlockPos): Boolean {
-        return super.canPlaceBlockAt(worldIn, pos) && !(isBlockInvalid(worldIn, pos, false) && isBlockInvalid(worldIn, pos, true))
+        return super.canPlaceBlockAt(worldIn, pos) && !(isBlockInvalid(worldIn, pos, EnumFacing.DOWN) && isBlockInvalid(worldIn, pos, EnumFacing.UP))
     }
 
+    /**
+     * Shortcut method to use [IBlockState] instead of [EnumFacing]
+     */
     private fun isInvalidPosition(worldIn: World, pos: BlockPos, state: IBlockState): Boolean {
-        return isBlockInvalid(worldIn, pos, state.getValue(HANGING))
+        return isBlockInvalid(worldIn, pos, if (state.getValue(HANGING)) EnumFacing.UP else EnumFacing.DOWN)
     }
 
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromPos: BlockPos) {
@@ -82,22 +92,19 @@ class LanternBlock(properties: Properties) : FBlock(properties) {
 
     override fun getRenderLayer() = BlockRenderLayer.CUTOUT
 
-    override fun getBlockFaceShape(worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing) =
-        BlockFaceShape.UNDEFINED
-
+    override fun isBlockNormalCube(state: IBlockState): Boolean = false
+    override fun isNormalCube(state: IBlockState, world: IBlockAccess, pos: BlockPos) = false
     override fun isFullBlock(state: IBlockState) = false
-
-    override fun isNormalCube(state: IBlockState, source: IBlockAccess, pos: BlockPos) = false
-
-    override fun isFullCube(state: IBlockState) = false
-
     override fun isOpaqueCube(state: IBlockState) = false
-
+    override fun isNormalCube(state: IBlockState) = false
+    override fun isFullCube(state: IBlockState) = false
+    override fun canPlaceTorchOnTop(state: IBlockState, world: IBlockAccess, pos: BlockPos) = false
     override fun isTopSolid(state: IBlockState) = false
+    override fun getBlockFaceShape(worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing) = BlockFaceShape.UNDEFINED
 
     companion object {
         private val HANGING = PropertyBool.create("hanging")
-        private val SITTING_AABB = makeAABB(5.0, 0.0, 5.0, 11.0, 9.0, 11.0)
-        private val HANGING_AABB = makeAABB(5.0, 1.0, 5.0, 11.0, 10.0, 11.0)
+        private val SITTING_AABB = makeCube(5.0, 0.0, 5.0, 11.0, 9.0, 11.0)
+        private val HANGING_AABB = makeCube(5.0, 1.0, 5.0, 11.0, 10.0, 11.0)
     }
 }

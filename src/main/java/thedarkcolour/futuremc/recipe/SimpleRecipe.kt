@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack
 /**
  * Simple recipe with one input and one output.
  */
-class SimpleRecipe(override val input: ItemStack, val output: ItemStack) : Recipe() {
+class SimpleRecipe(override val input: ItemStack, val output: ItemStack) : Recipe<SimpleRecipe>() {
     override fun matches(input: ItemStack): Boolean {
         return compareItems(this.input, input)
     }

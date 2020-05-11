@@ -1,11 +1,11 @@
 {
     "parent": "block/block",
     "textures": {
-        "particle": "futuremc:blocks/composter_side",
-        "top": "futuremc:blocks/composter_top",
-        "bottom": "futuremc:blocks/composter_bottom",
-        "side": "futuremc:blocks/composter_side",
-        "inside": "futuremc:blocks/composter_bottom"
+        "particle": "futuremc:block/composter_side",
+        "top": "futuremc:block/composter_top",
+        "bottom": "futuremc:block/composter_bottom",
+        "side": "futuremc:block/composter_side",
+        "inside": "futuremc:block/composter_bottom"
     },
     "elements": [
         {

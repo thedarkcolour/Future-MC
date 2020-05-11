@@ -40,7 +40,7 @@ class PollinateAI(bee: BeeEntity) : PassiveAI(bee) {
     override fun canBeeContinue(): Boolean {
         return if (!isRunning) {
             false
-        } else if (bee.hasFlower()) {
+        } else if (!bee.hasFlower()) {
             false
         } else if (bee.world.isRaining) {
             false
@@ -73,6 +73,7 @@ class PollinateAI(bee: BeeEntity) : PassiveAI(bee) {
 
         isRunning = false
         bee.navigator.clearPath()
+        bee.findFlowerCooldown = 200
     }
 
     override fun updateTask() {

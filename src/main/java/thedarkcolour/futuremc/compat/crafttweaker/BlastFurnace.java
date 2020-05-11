@@ -57,7 +57,7 @@ public final class BlastFurnace {
 
         @Override
         public String describe() {
-            return "Removed " + input.getItem().getRegistryName() + " from smeltable items BlastFurnace";
+            return "Removed " + input.getItem().getRegistryName() + " from smeltable item BlastFurnace";
         }
     }
 

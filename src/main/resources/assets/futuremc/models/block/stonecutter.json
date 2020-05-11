@@ -1,11 +1,11 @@
 {
     "parent": "block/block",
     "textures": {
-        "particle": "futuremc:blocks/stonecutter_bottom",
-        "bottom": "futuremc:blocks/stonecutter_bottom",
-        "top": "futuremc:blocks/stonecutter_top",
-        "side": "futuremc:blocks/stonecutter_side",
-        "saw": "futuremc:blocks/stonecutter_saw"
+        "particle": "futuremc:block/stonecutter_bottom",
+        "bottom": "futuremc:block/stonecutter_bottom",
+        "top": "futuremc:block/stonecutter_top",
+        "side": "futuremc:block/stonecutter_side",
+        "saw": "futuremc:block/stonecutter_saw"
     },
     "elements": [
         {

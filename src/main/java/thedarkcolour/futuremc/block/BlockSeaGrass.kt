@@ -9,6 +9,6 @@ class BlockSeaGrass : BlockWaterPlant("seagrass") {
     override fun getBoundingBox(state: IBlockState, source: IBlockAccess, pos: BlockPos) = AABB
 
     companion object {
-        val AABB = FBlock.makeAABB(2.0, 0.0, 2.0, 14.0, 12.0, 14.0)
+        val AABB = FBlock.makeCube(2.0, 0.0, 2.0, 14.0, 12.0, 14.0)
     }
 }

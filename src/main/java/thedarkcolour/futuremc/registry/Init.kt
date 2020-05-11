@@ -4,6 +4,10 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.registries.IForgeRegistry
 import net.minecraftforge.registries.IForgeRegistryEntry
 
+fun <T : IForgeRegistryEntry<T>> IForgeRegistry<T>.registerIf(t: T, enabled: Boolean) {
+
+}
+
 @Deprecated(level = DeprecationLevel.WARNING, message = "Extremely messy and confusing outside of an IDE")
 operator fun <T : IForgeRegistryEntry<T>> IForgeRegistry<T>.invoke(t: T, enabled: Boolean): T {
     if (enabled) {

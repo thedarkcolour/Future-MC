@@ -13,15 +13,15 @@ public class TileBarrel extends TileEntity {
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        if (compound.hasKey("items")) {
-            storage.deserializeNBT((NBTTagCompound) compound.getTag("items"));
+        if (compound.hasKey("item")) {
+            storage.deserializeNBT((NBTTagCompound) compound.getTag("item"));
         }
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        compound.setTag("items", storage.serializeNBT());
+        compound.setTag("item", storage.serializeNBT());
         return compound;
     }
 

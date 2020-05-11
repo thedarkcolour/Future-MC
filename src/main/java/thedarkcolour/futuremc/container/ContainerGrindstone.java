@@ -68,12 +68,12 @@ public class ContainerGrindstone extends FContainer {
     }
 
     private void handleCrafting() {
-        // Handles two incompatible items
+        // Handles two incompatible item
         if (!input.getStackInSlot(0).isItemEqualIgnoreDurability(input.getStackInSlot(1)) && !(input.anyMatch(ItemStack::isEmpty))) {
             output.setStackInSlot(0, ItemStack.EMPTY);
         }
 
-        // Handles two compatible items
+        // Handles two compatible item
         else if (input.getStackInSlot(0).isItemEqualIgnoreDurability(input.getStackInSlot(1)) && input.getStackInSlot(0).isItemEnchantable()) {
             ItemStack stack = input.getStackInSlot(0);
             int sum = (stack.getMaxDamage() - stack.getItemDamage()) + (stack.getMaxDamage() - input.getStackInSlot(1).getItemDamage());

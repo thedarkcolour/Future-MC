@@ -5,16 +5,17 @@ import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.*;
-import thedarkcolour.core.util.Util;
+import thedarkcolour.core.util.UtilKt;
+import vazkii.quark.api.ClassTransformer;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.objectweb.asm.Opcodes.*;
 
 public class CoreTransformer implements IClassTransformer {
     protected static boolean isObfuscated;
+    protected static boolean isQuarkLoaded;
 
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
@@ -25,9 +26,10 @@ public class CoreTransformer implements IClassTransformer {
             if (transformedName.equals("net.minecraft.world.gen.feature.WorldGenBigTree")) {
                 return patchWorldGenBigTree(basicClass);
             }
-            if (transformedName.equals("net.minecraft.block.BlockPistonBase")) {
-                if (!Util.isQuarkLoaded()) {
-                    return patchBlockPistonBase(basicClass);
+            if (!isQuarkLoaded) {
+                if (transformedName.equals("net.minecraft.block.BlockPistonBase")) {
+                    // Use Bundled Quark transformer
+                    return ClassTransformer.transformBlockPistonBase(basicClass);
                 } else {
                     // Use Quark API instead
                     return basicClass;
@@ -73,48 +75,6 @@ public class CoreTransformer implements IClassTransformer {
         return cw.toByteArray();
     }
 
-    private static byte[] patchBlockPistonBase(byte[] basicClass) {
-        ClassNode classNode = createClassNode(basicClass);
-
-        List<String> names = CollectionsKt.listOf("checkForMove", "func_176316_e", "doMove", "func_176319_a");
-
-        for (MethodNode method : classNode.methods) {
-            if (names.contains(method.name)) {
-                String helperName = "net/minecraft/block/state/BlockPistonStructureHelper";
-                String tdcHelperName = "thedarkcolour/futuremc/asm/BlockPistonStructureHelper";
-                Iterator<AbstractInsnNode> iterator = method.instructions.iterator();
-
-                while (iterator.hasNext()) {
-                    AbstractInsnNode node = iterator.next();
-
-                    if (node.getOpcode() == NEW && ((TypeInsnNode) node).desc.equals(helperName)) {
-                        ((TypeInsnNode) node).desc = tdcHelperName;
-                    } else if (node instanceof MethodInsnNode && ((MethodInsnNode) node).owner.equals(helperName)) {
-                        ((MethodInsnNode) node).owner = tdcHelperName;
-                    } else if (node instanceof FrameNode) {
-                        FrameNode frame = (FrameNode) node;
-                        List<Object> local = frame.local;
-                        if (local == null) continue;
-
-                        for (Object o : local) {
-                            if (helperName.equals(o)) {
-                                local.set(local.indexOf(o), tdcHelperName);
-                            }
-                        }
-                    }
-                }
-
-                for (LocalVariableNode localVariable : method.localVariables) {
-                    if (localVariable.desc.equals("Lnet/minecraft/block/state/BlockPistonStructureHelper;")) {
-                        localVariable.desc = "Lthedarkcolour/futuremc/asm/BlockPistonStructureHelper;";
-                    }
-                }
-            }
-        }
-
-        return compile(classNode);
-    }
-
     private static byte[] patchWorldGenTrees(byte[] basicClass) {
         ClassNode classNode = createClassNode(basicClass);
 
@@ -122,7 +82,7 @@ public class CoreTransformer implements IClassTransformer {
                 .filter(node -> node.name.equals(isObfuscated ? "func_180709_b" : "generate") && node.desc.equals("(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;)Z"))
                 .findFirst()
                 .orElseThrow(NoSuchMethodError::new);
-        InsnList toAdd = Util.make(new InsnList(), list -> {
+        InsnList toAdd = UtilKt.make(new InsnList(), list -> {
             list.add(new VarInsnNode(ALOAD, 1));
             list.add(new VarInsnNode(ALOAD, 2));
             list.add(new VarInsnNode(ALOAD, 3));
@@ -141,7 +101,7 @@ public class CoreTransformer implements IClassTransformer {
                 .filter(node -> node.name.equals(isObfuscated ? "func_180709_b" : "generate") && node.desc.equals("(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;)Z"))
                 .findFirst()
                 .orElseThrow(NoSuchMethodError::new);
-        InsnList toAdd = Util.make(new InsnList(), list -> {
+        InsnList toAdd = UtilKt.make(new InsnList(), list -> {
             list.add(new VarInsnNode(ALOAD, 1));
             list.add(new VarInsnNode(ALOAD, 2));
             list.add(new VarInsnNode(ALOAD, 3));
@@ -172,5 +132,16 @@ public class CoreTransformer implements IClassTransformer {
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
         classNode.accept(cw);
         return cw.toByteArray();
+    }
+
+    static {
+        boolean b = false;
+
+        try {
+            Class.forName("vazkii.quark.base.Quark");
+            b = true;
+        } catch (Throwable ignored) {}
+
+        isQuarkLoaded = b;
     }
 }

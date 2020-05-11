@@ -135,7 +135,7 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
         var i = 7
         if (blockstate.block == FBlocks.SCAFFOLDING) {
             i = blockstate.getValue(DISTANCE)
-        } else if (blockstate.block.isSideSolid(blockstate, worldIn, blockPos, EnumFacing.UP)) {
+        } else if (blockstate.isSideSolid(worldIn, blockPos, EnumFacing.UP)) {
             return 0
         }
         for (direction in EnumFacing.Plane.HORIZONTAL) {
@@ -153,21 +153,21 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
     private companion object {
         private val DISTANCE: PropertyInteger = PropertyInteger.create("distance", 0, 7)
         private val BOTTOM: PropertyBool = PropertyBool.create("bottom")
-        private val BOTTOM_AABB = makeAABB(0.0, 0.0, 0.0, 16.0, 2.0, 16.0)
-        private val TOP_AABB = makeAABB(0.0, 14.0, 0.0, 16.0, 16.0, 16.0)
+        private val BOTTOM_AABB = makeCube(0.0, 0.0, 0.0, 16.0, 2.0, 16.0)
+        private val TOP_AABB = makeCube(0.0, 14.0, 0.0, 16.0, 16.0, 16.0)
 
         private var boundingBoxesA: Array<AxisAlignedBB> = arrayOf(
-            makeAABB(0.0, 0.0, 0.0, 2.0, 2.0, 16.0),
-            makeAABB(14.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-            makeAABB(0.0, 0.0, 14.0, 16.0, 2.0, 16.0),
-            makeAABB(0.0, 0.0, 0.0, 16.0, 2.0, 2.0)
+            makeCube(0.0, 0.0, 0.0, 2.0, 2.0, 16.0),
+            makeCube(14.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+            makeCube(0.0, 0.0, 14.0, 16.0, 2.0, 16.0),
+            makeCube(0.0, 0.0, 0.0, 16.0, 2.0, 2.0)
         )
         private var boundingBoxesB: Array<AxisAlignedBB> = arrayOf(
-            makeAABB(0.0, 14.0, 0.0, 16.0, 16.0, 16.0),
-            makeAABB(0.0, 0.0, 0.0, 2.0, 16.0, 2.0),
-            makeAABB(14.0, 0.0, 0.0, 16.0, 16.0, 2.0),
-            makeAABB(0.0, 0.0, 14.0, 2.0, 16.0, 16.0),
-            makeAABB(14.0, 0.0, 14.0, 16.0, 16.0, 16.0)
+            makeCube(0.0, 14.0, 0.0, 16.0, 16.0, 16.0),
+            makeCube(0.0, 0.0, 0.0, 2.0, 16.0, 2.0),
+            makeCube(14.0, 0.0, 0.0, 16.0, 16.0, 2.0),
+            makeCube(0.0, 0.0, 14.0, 2.0, 16.0, 16.0),
+            makeCube(14.0, 0.0, 14.0, 16.0, 16.0, 16.0)
         )
     }
 }

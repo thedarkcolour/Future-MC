@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "futuremc:items/sweet_berries"
+        "layer0": "futuremc:item/sweet_berries"
     }
 }

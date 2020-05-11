@@ -2,7 +2,6 @@
 package thedarkcolour.futuremc.compat
 
 import net.minecraftforge.fml.common.Loader
-import thedarkcolour.futuremc.compat.crafttweaker.CraftTweakerCompat
 import thedarkcolour.futuremc.compat.dynamictrees.DynamicTreesCompat
 import thedarkcolour.futuremc.compat.quark.QuarkCompat
 
@@ -11,11 +10,11 @@ const val DYNAMIC_TREES = "dynamictrees"
 const val JEI = "jei"
 const val QUARK = "quark"
 
-fun checkCraftTweaker(): CraftTweakerCompat? {
+/*fun checkCraftTweaker(): CraftTweakerCompat? {
     return if (isModLoaded(CRAFTTWEAKER)) {
         CraftTweakerCompat
     } else null
-}
+}*/
 
 fun checkDynamicTrees(): DynamicTreesCompat? {
     return if (isModLoaded(DYNAMIC_TREES)) {
@@ -24,6 +23,7 @@ fun checkDynamicTrees(): DynamicTreesCompat? {
 }
 
 fun checkQuark(): QuarkCompat? {
+    // just re-use the constant from Util.kt
     return if (isModLoaded(QUARK)) {
         QuarkCompat
     } else null

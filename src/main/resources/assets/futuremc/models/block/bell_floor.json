@@ -1,6 +1,6 @@
 {
     "textures": {
-        "particle": "futuremc:blocks/bell_bottom",
+        "particle": "futuremc:block/bell_bottom",
         "bar": "blocks/planks_big_oak",
         "post": "blocks/stone"
     },

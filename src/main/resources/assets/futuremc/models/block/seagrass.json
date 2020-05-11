@@ -2,8 +2,8 @@
     "parent": "block/block",
     "ambientocclusion": false,
     "textures": {
-        "seagrass": "futuremc:blocks/seagrass",
-        "particle": "futuremc:blocks/seagrass"
+        "seagrass": "futuremc:block/seagrass",
+        "particle": "futuremc:block/seagrass"
     },
     "elements": [
         {

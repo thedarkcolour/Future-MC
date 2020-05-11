@@ -4,6 +4,7 @@ package thedarkcolour.futuremc.tile
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockFire
+import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.item.EntityItem
@@ -100,7 +101,9 @@ class BeeHiveTile : InteractionTile(), ITickable {
     }
 
     private fun releaseBee(tag: NBTTagCompound, list: MutableList<BeeEntity>?, beeState: BeeState): Boolean {
-        if (world.isDaytime && !world.isRainingAt(pos)) {
+        if ((!world.isDaytime && world.isRainingAt(pos)) && beeState != BeeState.EMERGENCY) {
+            return false
+        } else {
             tag.removeTag("Passengers")
             tag.removeTag("Leash")
             tag.removeTag("UUIDLeast")
@@ -109,12 +112,13 @@ class BeeHiveTile : InteractionTile(), ITickable {
             val state = world.getBlockState(pos)
             val direction = state.getValue(BeeHiveBlock.FACING)
             val pos1 = pos.offset(direction)
-            val flag = !hasRoomForPlayer(world, pos1)
+            val flag = isExitBlocked(world, pos1)
 
             if (flag && beeState != BeeState.EMERGENCY) {
                 return false
             } else {
                 val entity = AnvilChunkLoader.readWorldEntity(tag, world, false)
+
                 if (entity != null) {
                     val width = entity.width
                     val d0 = if (flag) 0.0 else 0.55 + (width / 2.0f)
@@ -122,6 +126,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
                     val d2 = pos.y + 0.5 - (entity.height / 2.0f)
                     val d3 = pos.z + 0.5 + d0 * direction.zOffset
                     entity.setLocationAndAngles(d1, d2, d3, entity.rotationYaw, entity.rotationPitch)
+
                     if (entity !is BeeEntity) {
                         return false
                     } else {
@@ -132,7 +137,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
                         if (beeState == BeeState.HONEY_DELIVERED) {
                             entity.onHoneyDelivered()
 
-                            honeyLevel = (honeyLevel + if (world.rand.nextInt(100) == 0) 2 else 1).coerceAtMost(5)
+                            setHoneyLevel(honeyLevel + if (world.rand.nextInt(100) == 0) 2 else 1, true)
                         }
 
                         entity.resetPollinationTicks()
@@ -150,10 +155,8 @@ class BeeHiveTile : InteractionTile(), ITickable {
         return false
     }
 
-    private fun hasRoomForPlayer(worldIn: World, pos: BlockPos): Boolean {
-        val down = pos.down()
-        return worldIn.getBlockState(down).isSideSolid(world, down, EnumFacing.UP) && !worldIn.getBlockState(pos).material
-            .isSolid && !worldIn.getBlockState(pos.up()).material.isSolid
+    private fun isExitBlocked(worldIn: World, pos: BlockPos): Boolean {
+        return worldIn.getBlockState(pos).material != Material.AIR
     }
 
     private fun hasFlowerPos() = flowerPos != null

@@ -274,9 +274,9 @@ open class BlockBamboo(properties: Properties) : FBlock(properties), IGrowable {
         val THICK: PropertyBool = PropertyBool.create("thick")
         val LEAVES: PropertyEnum<EnumLeaves> = PropertyEnum.create("leaves", EnumLeaves::class.java)
         val MATURE: PropertyBool = PropertyBool.create("mature")
-        private val TIGHT_THICK_AABB = makeAABB(6.5, 0.0, 6.5, 9.5, 16.0, 9.5)
-        private val TIGHT_THIN_AABB = makeAABB(7.0, 0.0, 7.0, 9.0, 16.0, 9.0)
-        private val NORMAL_AABB = makeAABB(5.0, 0.0, 5.0, 11.0, 16.0, 11.0)
-        private val LEAVES_AABB = makeAABB(3.0, 0.0, 3.0, 13.0, 16.0, 13.0)
+        private val TIGHT_THICK_AABB = makeCube(6.5, 0.0, 6.5, 9.5, 16.0, 9.5)
+        private val TIGHT_THIN_AABB = makeCube(7.0, 0.0, 7.0, 9.0, 16.0, 9.0)
+        private val NORMAL_AABB = makeCube(5.0, 0.0, 5.0, 11.0, 16.0, 11.0)
+        private val LEAVES_AABB = makeCube(3.0, 0.0, 3.0, 13.0, 16.0, 13.0)
     }
 }

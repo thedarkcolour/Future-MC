@@ -20,12 +20,12 @@
         }
     },
     "textures": {
-        "particle": "futuremc:blocks/lectern_sides",
-        "bottom": "futuremc:blocks/oak_planks",
-        "base": "futuremc:blocks/lectern_base",
-        "front": "futuremc:blocks/lectern_front",
-        "sides": "futuremc:blocks/lectern_sides",
-        "top": "futuremc:blocks/lectern_top"
+        "particle": "futuremc:block/lectern_sides",
+        "bottom": "futuremc:block/oak_planks",
+        "base": "futuremc:block/lectern_base",
+        "front": "futuremc:block/lectern_front",
+        "sides": "futuremc:block/lectern_sides",
+        "top": "futuremc:block/lectern_top"
     },
     "elements": [
         {

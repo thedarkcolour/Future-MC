@@ -7,10 +7,7 @@ import thedarkcolour.futuremc.entity.bee.BeeEntity
 
 class RevengeAI(bee: BeeEntity) : EntityAIHurtByTarget(bee, true) {
     override fun setEntityAttackTarget(creatureIn: EntityCreature, entityLivingBaseIn: EntityLivingBase) {
-        if (creatureIn is BeeEntity && taskOwner.canEntityBeSeen(entityLivingBaseIn) && creatureIn.setBeeAttacker(
-                entityLivingBaseIn
-            )
-        ) {
+        if (creatureIn is BeeEntity && taskOwner.canEntityBeSeen(entityLivingBaseIn) && creatureIn.setBeeAttacker(entityLivingBaseIn)) {
             creatureIn.setAttackTarget(entityLivingBaseIn)
         }
     }

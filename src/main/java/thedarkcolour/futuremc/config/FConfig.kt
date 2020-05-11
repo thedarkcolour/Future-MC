@@ -41,6 +41,11 @@ object FConfig {
         @JvmField
         val fish = FishConfig()
 
+        @Name("Nautilus Shell")
+        @Comment("Whether the Nautilus Shell item is enabled.")
+        @JvmField
+        var nautilusShell = true
+
         //@Name("New Water Color")
         //@Comment("Whether water uses its new color from 1.13+")
         //@RequiresMcRestart

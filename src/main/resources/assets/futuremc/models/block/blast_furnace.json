@@ -1,12 +1,12 @@
 {
     "parent": "block/orientable",
     "textures": {
-        "particle": "futuremc:blocks/blast_furnace_front",
-        "down": "futuremc:blocks/blast_furnace_top",
-        "up": "futuremc:blocks/blast_furnace_top",
-        "north": "futuremc:blocks/blast_furnace_front",
-        "east": "futuremc:blocks/blast_furnace_side",
-        "south": "futuremc:blocks/blast_furnace_side",
-        "west": "futuremc:blocks/blast_furnace_side"
+        "particle": "futuremc:block/blast_furnace_front",
+        "down": "futuremc:block/blast_furnace_top",
+        "up": "futuremc:block/blast_furnace_top",
+        "north": "futuremc:block/blast_furnace_front",
+        "east": "futuremc:block/blast_furnace_side",
+        "south": "futuremc:block/blast_furnace_side",
+        "west": "futuremc:block/blast_furnace_side"
     }
 }

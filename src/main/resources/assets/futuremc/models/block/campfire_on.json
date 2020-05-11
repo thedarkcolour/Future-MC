@@ -10,10 +10,10 @@
         }
     },
     "textures": {
-        "particle": "futuremc:blocks/campfire_log",
-        "log": "futuremc:blocks/campfire_log",
-        "litlog": "futuremc:blocks/campfire_log_lit",
-        "fire": "futuremc:blocks/campfire_fire"
+        "particle": "futuremc:block/campfire_log",
+        "log": "futuremc:block/campfire_log",
+        "litlog": "futuremc:block/campfire_log_lit",
+        "fire": "futuremc:block/campfire_fire"
     },
     "elements": [
         {

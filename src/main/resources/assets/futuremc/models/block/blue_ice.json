@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "futuremc:blocks/blue_ice"
+        "all": "futuremc:block/blue_ice"
     }
 }

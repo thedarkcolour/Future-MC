@@ -24,7 +24,7 @@ class EnterHiveAI(bee: BeeEntity) : PassiveAI(bee) {
     override fun canBeeContinue() = false
 
     override fun startExecuting() {
-        val te = bee.world.getTileEntity(bee.hivePos ?: return) // better to not assume, avoid accidental bugs
+        val te = bee.world.getTileEntity(bee.hivePos!!)
         if (te is BeeHiveTile) {
             te.tryEnterHive(bee, bee.hasNectar())
         }

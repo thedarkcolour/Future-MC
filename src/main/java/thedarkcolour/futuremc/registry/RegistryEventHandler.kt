@@ -23,6 +23,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry
 import net.minecraftforge.fml.common.registry.ForgeRegistries
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
+import net.minecraftforge.registries.ForgeRegistry
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.client.color.WaterColor
@@ -36,7 +37,7 @@ import thedarkcolour.futuremc.entity.fish.pufferfish.EntityPufferfish
 import thedarkcolour.futuremc.entity.fish.salmon.EntitySalmon
 import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
 import thedarkcolour.futuremc.item.ItemGroup
-import thedarkcolour.futuremc.item.ItemSuspiciousStew
+import thedarkcolour.futuremc.item.SuspiciousStewItem
 
 object RegistryEventHandler {
     @SubscribeEvent
@@ -51,7 +52,7 @@ object RegistryEventHandler {
     }
 
     @SubscribeEvent
-    fun onItemRegistry(event: RegistryEvent.Register<Item>) = FItems.init()
+    fun onItemRegistry(event: RegistryEvent.Register<Item>) = FItems.registerItems(event.registry)
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     fun postItemRegistry(event: RegistryEvent.Register<Item>) {
@@ -120,19 +121,21 @@ object RegistryEventHandler {
 
     @SubscribeEvent
     fun onRecipeRegistry(event: RegistryEvent.Register<IRecipe>) {
-        ItemSuspiciousStew.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 8), PotionEffect(MobEffects.REGENERATION, 140, 1))
-        ItemSuspiciousStew.addRecipe(ItemStack(FBlocks.CORNFLOWER), PotionEffect(MobEffects.JUMP_BOOST, 100, 1))
-        ItemSuspiciousStew.addRecipe(ItemStack(FBlocks.LILY_OF_THE_VALLEY), PotionEffect(MobEffects.POISON, 220, 1))
-        ItemSuspiciousStew.addRecipe(ItemStack(FBlocks.WITHER_ROSE), PotionEffect(MobEffects.WITHER, 140, 1))
-        ItemSuspiciousStew.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 4), PotionEffect(MobEffects.WEAKNESS, 160, 1))
-        ItemSuspiciousStew.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 5), PotionEffect(MobEffects.WEAKNESS, 160, 1))
-        ItemSuspiciousStew.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 6), PotionEffect(MobEffects.WEAKNESS, 160, 1))
-        ItemSuspiciousStew.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 7), PotionEffect(MobEffects.WEAKNESS, 160, 1))
-        ItemSuspiciousStew.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 3), PotionEffect(MobEffects.BLINDNESS, 140, 1))
-        ItemSuspiciousStew.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 2), PotionEffect(MobEffects.FIRE_RESISTANCE, 60, 1))
-        ItemSuspiciousStew.addRecipe(ItemStack(Blocks.RED_FLOWER), PotionEffect(MobEffects.NIGHT_VISION, 100, 1))
-        ItemSuspiciousStew.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 1), PotionEffect(MobEffects.SATURATION, 100, 1))
-        ItemSuspiciousStew.addRecipe(ItemStack(Blocks.YELLOW_FLOWER), PotionEffect(MobEffects.SATURATION, 100, 1))
+        SuspiciousStewItem.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 8), PotionEffect(MobEffects.REGENERATION, 140, 1))
+        SuspiciousStewItem.addRecipe(ItemStack(FBlocks.CORNFLOWER), PotionEffect(MobEffects.JUMP_BOOST, 100, 1))
+        SuspiciousStewItem.addRecipe(ItemStack(FBlocks.LILY_OF_THE_VALLEY), PotionEffect(MobEffects.POISON, 220, 1))
+        SuspiciousStewItem.addRecipe(ItemStack(FBlocks.WITHER_ROSE), PotionEffect(MobEffects.WITHER, 140, 1))
+        SuspiciousStewItem.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 4), PotionEffect(MobEffects.WEAKNESS, 160, 1))
+        SuspiciousStewItem.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 5), PotionEffect(MobEffects.WEAKNESS, 160, 1))
+        SuspiciousStewItem.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 6), PotionEffect(MobEffects.WEAKNESS, 160, 1))
+        SuspiciousStewItem.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 7), PotionEffect(MobEffects.WEAKNESS, 160, 1))
+        SuspiciousStewItem.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 3), PotionEffect(MobEffects.BLINDNESS, 140, 1))
+        SuspiciousStewItem.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 2), PotionEffect(MobEffects.FIRE_RESISTANCE, 60, 1))
+        SuspiciousStewItem.addRecipe(ItemStack(Blocks.RED_FLOWER), PotionEffect(MobEffects.NIGHT_VISION, 100, 1))
+        SuspiciousStewItem.addRecipe(ItemStack(Blocks.RED_FLOWER, 1, 1), PotionEffect(MobEffects.SATURATION, 100, 1))
+        SuspiciousStewItem.addRecipe(ItemStack(Blocks.YELLOW_FLOWER), PotionEffect(MobEffects.SATURATION, 100, 1))
+
+        (event.registry as ForgeRegistry<IRecipe>).remove(ResourceLocation("minecraft:nether_brick_fence"))
     }
 
     @SubscribeEvent

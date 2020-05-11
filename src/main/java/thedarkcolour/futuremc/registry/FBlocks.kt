@@ -9,7 +9,6 @@ import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.core.block.FBlock
 import thedarkcolour.core.block.FBlock.Properties
 import thedarkcolour.futuremc.block.*
-import thedarkcolour.futuremc.block.netherupdate.ChainBlock
 import thedarkcolour.futuremc.block.netherupdate.NyliumBlock
 import thedarkcolour.futuremc.client.gui.Gui
 import thedarkcolour.futuremc.config.FConfig
@@ -85,7 +84,7 @@ object FBlocks {
     val SOUL_FIRE_LANTERN = LanternBlock(Properties(Material.IRON, "soul_fire_lantern").hardnessAndResistance(3.5f).sound(FSounds.LANTERN).light(10).group(CreativeTabs.DECORATIONS))
     val SOUL_FIRE_TORCH = BlockSoulFireTorch()
     val SOUL_SOIL = FBlock(Properties(Material.GROUND, "soul_soil").group(CreativeTabs.BUILDING_BLOCKS).sound(FSounds.SOUL_SOIL))
-    val CHAIN = ChainBlock(Properties(Material.IRON, "chain").hardnessAndResistance(5.0f, 6.0f))
+    val CHAIN = ChainBlock(Properties(Material.IRON, "chain").hardnessAndResistance(5.0f, 6.0f).shape(FBlock.makeCube(6.5, 0.0, 6.5, 9.5, 16.0, 9.5)))
     val WARPED_NYLIUM = NyliumBlock(Properties(Material.ROCK, "warped_nylium").color(MapColor.CYAN).hardnessAndResistance(1.0f).sound(FSounds.NYLIUM))
     val CRIMSON_NYLIUM = NyliumBlock(Properties(Material.ROCK, "crimson_nylium").color(MapColor.RED))
     val WARPED_WART_BLOCK = FBlock(Properties(Material.GRASS, "warped_wart_block").color(MapColor.CYAN))

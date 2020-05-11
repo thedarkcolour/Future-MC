@@ -8,7 +8,6 @@ import net.minecraft.network.datasync.DataSerializers
 import net.minecraft.network.datasync.EntityDataManager
 import net.minecraft.util.DamageSource
 import net.minecraft.util.ResourceLocation
-import net.minecraft.util.SoundEvent
 import net.minecraft.world.DifficultyInstance
 import net.minecraft.world.World
 import thedarkcolour.core.util.getOrCreateTag
@@ -28,6 +27,10 @@ class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
         set(value) {
             dataManager[VARIANT] = value
         }
+
+    init {
+        setSize(0.5f, 0.4f)
+    }
 
     override fun entityInit() {
         super.entityInit()
@@ -50,20 +53,17 @@ class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
         nbt.setInteger("BucketVariant", variant)
     }
 
-    override fun getFishBucket(): ItemStack = FItems.TROPICAL_FISH_BUCKET.stack
+    override fun getFishBucket() = FItems.TROPICAL_FISH_BUCKET.stack
 
-    override fun getAmbientSound(): SoundEvent = FSounds.TROPICAL_FISH_AMBIENT
+    override fun getAmbientSound() = FSounds.TROPICAL_FISH_AMBIENT
 
-    override fun getDeathSound(): SoundEvent = FSounds.TROPICAL_FISH_DEATH
+    override fun getDeathSound() = FSounds.TROPICAL_FISH_DEATH
 
-    override fun getHurtSound(damageSourceIn: DamageSource): SoundEvent = FSounds.TROPICAL_FISH_HURT
+    override fun getHurtSound(damageSourceIn: DamageSource?) = FSounds.TROPICAL_FISH_HURT
 
-    override val flopSound: SoundEvent
-        get() = FSounds.TROPICAL_FISH_FLOP
+    override val flopSound = FSounds.TROPICAL_FISH_FLOP
 
-    fun getSize(): Int {
-        return getBody(variant)
-    }
+    fun getSize() = getBody(variant)
 
     fun getPatternTexture(): ResourceLocation {
         return if (getBody(variant) == 0) {
@@ -113,7 +113,7 @@ class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
         variant = i or (j shl 8) or (k shl 16) or (l shl 24)
     }
 
-    enum class Type(val primary: Int, val secondary: Int) {
+    private enum class Type(val primary: Int, val secondary: Int) {
         KOB(0, 0),
         SUNSTREAK(0, 1),
         SNOOPER(0, 2),

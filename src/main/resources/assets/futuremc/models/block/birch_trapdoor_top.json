@@ -1,6 +1,6 @@
 {
     "parent": "block/trapdoor_top",
     "textures": {
-        "texture": "futuremc:blocks/birch_trapdoor"
+        "texture": "futuremc:block/birch_trapdoor"
     }
 }

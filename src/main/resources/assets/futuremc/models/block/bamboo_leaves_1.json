@@ -1,8 +1,8 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "texture": "futuremc:blocks/bamboo_leaves_1",
-        "particle": "futuremc:blocks/bamboo_leaves_1"
+        "texture": "futuremc:block/bamboo_leaves_1",
+        "particle": "futuremc:block/bamboo_leaves_1"
     },
     "elements": [
         {

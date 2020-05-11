@@ -1,12 +1,12 @@
 {
     "parent": "block/orientable",
     "textures": {
-        "particle": "futuremc:blocks/stonecutter_old_side",
-        "down": "futuremc:blocks/stonecutter_old_bottom",
-        "up": "futuremc:blocks/stonecutter_old_top",
-        "north": "futuremc:blocks/stonecutter_old_side_1",
-        "east": "futuremc:blocks/stonecutter_old_side",
-        "south": "futuremc:blocks/stonecutter_old_side_1",
-        "west": "futuremc:blocks/stonecutter_old_side"
+        "particle": "futuremc:block/stonecutter_old_side",
+        "down": "futuremc:block/stonecutter_old_bottom",
+        "up": "futuremc:block/stonecutter_old_top",
+        "north": "futuremc:block/stonecutter_old_side_1",
+        "east": "futuremc:block/stonecutter_old_side",
+        "south": "futuremc:block/stonecutter_old_side_1",
+        "west": "futuremc:block/stonecutter_old_side"
     }
 }

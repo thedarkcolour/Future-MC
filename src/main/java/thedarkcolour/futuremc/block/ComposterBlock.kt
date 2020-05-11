@@ -50,7 +50,7 @@ class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
         if (state.getValue(LEVEL) > 0) {
             val level = if (state.getValue(LEVEL) == 8) 6 else state.getValue(LEVEL) - 1
             addCollisionBoxToList(pos, entityBox, collidingBoxes,
-                makeAABB(2.0, 2.0, 2.0, 14.0, 3.0 + 2.0 * level, 14.0)
+                makeCube(2.0, 2.0, 2.0, 14.0, 3.0 + 2.0 * level, 14.0)
             )
         }
     }
@@ -253,7 +253,7 @@ class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
     @Suppress("HasPlatformType")
     companion object {
         val LEVEL = PropertyInteger.create("level", 0, 8)
-        private val AABB_LEGS = makeAABB(0.0, 0.0, 0.0, 16.0, 2.0, 16.0)
+        private val AABB_LEGS = makeCube(0.0, 0.0, 0.0, 16.0, 2.0, 16.0)
         private val AABB_WALL_NORTH = AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 1.0, 0.125)
         private val AABB_WALL_SOUTH = AxisAlignedBB(0.0, 0.0, 0.875, 1.0, 1.0, 1.0)
         private val AABB_WALL_EAST = AxisAlignedBB(0.875, 0.0, 0.0, 1.0, 1.0, 1.0)

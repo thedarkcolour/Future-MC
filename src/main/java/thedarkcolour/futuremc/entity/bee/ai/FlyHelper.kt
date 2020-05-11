@@ -25,7 +25,7 @@ class FlyHelper(bee: BeeEntity) : EntityMoveHelper(bee) {
 
             val f0 = (atan2(d2, d0) * 57.2957763671875).toFloat() - 90.0f
             entity.rotationYaw = limitAngle(entity.rotationYaw, f0, 90.0f)
-            val f1: Float = if (entity.onGround) {
+            val f1 = if (entity.onGround) {
                 (speed * entity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).attributeValue).toFloat()
             } else {
                 (speed * entity.getEntityAttribute(SharedMonsterAttributes.FLYING_SPEED).attributeValue).toFloat()

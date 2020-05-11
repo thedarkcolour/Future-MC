@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import thedarkcolour.core.util.Util;
+import thedarkcolour.core.util.UtilKt;
 import thedarkcolour.futuremc.FutureMC;
 
 import java.io.BufferedWriter;
@@ -26,6 +26,7 @@ import java.util.List;
 /**
  * Generates needed blockStates for every block in my mod.
  */
+// todo remove it's useless
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public final class Generator {
     public static void setup() {
@@ -62,7 +63,7 @@ public final class Generator {
             }
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            for (ResourceLocation key : Util.make(new HashSet<>(registry.getKeys()), keys -> keys.removeIf(key -> !(key.getNamespace().equals("minecraftfuture") || key.getNamespace().equals("minecraftfuture"))))) {
+            for (ResourceLocation key : UtilKt.make(new HashSet<>(registry.getKeys()), keys -> keys.removeIf(key -> !(key.getNamespace().equals("minecraftfuture") || key.getNamespace().equals("minecraftfuture"))))) {
                 writer.write(key.toString());
                 writer.newLine();
             }
@@ -93,7 +94,7 @@ public final class Generator {
             }
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            for (ResourceLocation key : Util.make(new HashSet<>(registry.getKeys()), keys -> keys.removeIf(key -> !(key.getNamespace().equals("minecraftfuture") || key.getNamespace().equals("minecraftfuture"))))) {
+            for (ResourceLocation key : UtilKt.make(new HashSet<>(registry.getKeys()), keys -> keys.removeIf(key -> !(key.getNamespace().equals("minecraftfuture") || key.getNamespace().equals("minecraftfuture"))))) {
                 writer.write(key.toString() + ", " + key.toString().replaceFirst("minecraftfuture", "futuremc"));
                 writer.newLine();
             }
@@ -105,7 +106,7 @@ public final class Generator {
 
     @SuppressWarnings("StringConcatenationInLoop")
     public static void generateBlockStates() {
-        for (Block block : Util.make(Lists.newArrayList(ForgeRegistries.BLOCKS.getValues()), list -> list.removeIf(block -> !block.getRegistryName().getNamespace().equals("minecraftfuture")))) {
+        for (Block block : UtilKt.make(Lists.newArrayList(ForgeRegistries.BLOCKS.getValues()), list -> list.removeIf(block -> !block.getRegistryName().getNamespace().equals("minecraftfuture")))) {
             File json = new File("config/future-mc/generated/blockstates/" + block.getRegistryName().getPath() + ".json");
 
             try {

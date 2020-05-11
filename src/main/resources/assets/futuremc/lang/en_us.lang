@@ -91,6 +91,7 @@ tile.futuremc.stripped_birch_wood.name=Stripped Birch Wood
 tile.futuremc.stripped_oak_wood.name=Stripped Oak Wood
 tile.futuremc.stripped_spruce_wood.name=Stripped Spruce Wood
 tile.futuremc.stripped_dark_oak_wood.name=Stripped Dark Oak Wood
+tile.futuremc.chain.name=Chain
 entity.ItemFrame.name=Item Frame
 
 # Banner

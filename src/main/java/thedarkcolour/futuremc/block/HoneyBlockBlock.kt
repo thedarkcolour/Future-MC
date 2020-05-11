@@ -4,6 +4,8 @@ import net.minecraft.block.BlockSlime
 import net.minecraft.block.state.IBlockState
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityLiving
+import net.minecraft.pathfinding.PathNodeType
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumParticleTypes
@@ -13,14 +15,13 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import thedarkcolour.core.block.FBlock
 import thedarkcolour.futuremc.FutureMC
-import thedarkcolour.futuremc.api.IStickyBlock
 import thedarkcolour.futuremc.compat.checkQuark
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.registry.FSounds
 import vazkii.quark.api.INonSticky
 import kotlin.math.abs
 
-class HoneyBlockBlock(properties: Properties) : FBlock(properties), IStickyBlock, INonSticky {
+class HoneyBlockBlock(properties: Properties) : FBlock(properties), INonSticky {
     init {
         blockHardness = 0.0f
         creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.DECORATIONS else FutureMC.GROUP
@@ -111,27 +112,30 @@ class HoneyBlockBlock(properties: Properties) : FBlock(properties), IStickyBlock
     }
 
     override fun isOpaqueCube(state: IBlockState) = false
-
     override fun isFullBlock(state: IBlockState) = false
-
     override fun isFullCube(state: IBlockState) = false
-
     override fun getRenderLayer() = BlockRenderLayer.TRANSLUCENT
-
     override fun isStickyBlock(state: IBlockState) = true
 
-    override fun canStickTo(state: IBlockState, other: IBlockState): Boolean {
-        return !(other.block is BlockSlime || checkQuark()?.isColoredSlime(other) == true)
+    override fun getAiPathNodeType(
+        state: IBlockState,
+        worldIn: IBlockAccess,
+        pos: BlockPos,
+        entityLiving: EntityLiving?
+    ): PathNodeType? {
+        // has the same value as water,
+        // so we'll just use water.
+        return PathNodeType.WATER
     }
 
     override fun canStickToBlock(
         world: World, pistonPos: BlockPos, pos: BlockPos, slimePos: BlockPos,
         state: IBlockState, slimeState: IBlockState, direction: EnumFacing
     ): Boolean {
-        return canStickTo(state, slimeState)
+        return !(slimeState.block is BlockSlime || checkQuark()?.isColoredSlime(slimeState) == true)
     }
 
     companion object {
-        private val AABB = makeAABB(1.0, 0.0, 1.0, 15.0, 15.0, 15.0)
+        private val AABB = makeCube(1.0, 0.0, 1.0, 15.0, 15.0, 15.0)
     }
 }

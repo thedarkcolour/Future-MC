@@ -43,7 +43,7 @@ public final class Smoker {
 
         @Override
         public String describe() {
-            return "Added " + input.getItem().getRegistryName() + " to smeltable items Smoker";
+            return "Added " + input.getItem().getRegistryName() + " to smeltable item Smoker";
         }
     }
 
@@ -66,7 +66,7 @@ public final class Smoker {
 
         @Override
         public String describe() {
-            return "Removed " + input.getItem().getRegistryName() + " from smeltable items Smoker";
+            return "Removed " + input.getItem().getRegistryName() + " from smeltable item Smoker";
         }
     }
 

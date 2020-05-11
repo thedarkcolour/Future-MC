@@ -90,3 +90,9 @@ processResources {
         exclude 'mcmod.info'
     }
 }
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs += '-XXLanguage:+NewInference'
+    }
+}

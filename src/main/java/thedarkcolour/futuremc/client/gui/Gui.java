@@ -27,7 +27,7 @@ public enum Gui {
     GRINDSTONE(ContainerGrindstone::new),
     STONECUTTER(StonecutterContainer::new),
     LOOM(ContainerLoom::new),
-    SMITHING_TABLE(ContainerSmithingTable::new),
+    SMITHING_TABLE(SmithingContainer::new),
     CARTOGRAPHY_TABLE(ContainerCartographyTable::new);
 
     private final ContainerSupplier<? extends FContainer> container;

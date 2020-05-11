@@ -22,8 +22,8 @@ import thedarkcolour.futuremc.config.FConfig
 
 class BlockGrindstone(properties: Properties) : FBlock(properties) {
     init {
-        setHardness(3.5f)
         creativeTab = if (FConfig.useVanillaCreativeTabs) CreativeTabs.DECORATIONS else FutureMC.GROUP
+        useNeighborBrightness = true
     }
 
     override fun onBlockActivated(
@@ -157,24 +157,30 @@ class BlockGrindstone(properties: Properties) : FBlock(properties) {
         return getBlockState().baseState.withProperty(ATTACHMENT, attachment).withProperty(FACING, finalFacing)
     }
 
+    // todo see if this can be pulled into FBlock and as a property in the constructor
+    override fun isBlockNormalCube(state: IBlockState): Boolean = false
+    override fun isNormalCube(state: IBlockState, world: IBlockAccess, pos: BlockPos) = false
     override fun isFullBlock(state: IBlockState) = false
     override fun isOpaqueCube(state: IBlockState) = false
     override fun isNormalCube(state: IBlockState) = false
-    override fun getBlockFaceShape(worldIn: IBlockAccess?, state: IBlockState?, pos: BlockPos?, face: EnumFacing?) = BlockFaceShape.UNDEFINED
+    override fun isFullCube(state: IBlockState) = false
+    override fun canPlaceTorchOnTop(state: IBlockState, world: IBlockAccess, pos: BlockPos) = false
+    override fun isTopSolid(state: IBlockState) = false
+    override fun getBlockFaceShape(worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing) = BlockFaceShape.UNDEFINED
 
     companion object {
         private val ATTACHMENT = PropertyEnum.create("face", EnumAttachment::class.java)
         private val FACING = BlockHorizontal.FACING
 
         fun createBoundingBox(attachment: EnumAttachment, facing: EnumFacing): AxisAlignedBB? {
-            val floorX = makeAABB(2.0, 4.0, 4.0, 14.0, 16.0, 12.0)
-            val floorZ = makeAABB(4.0, 4.0, 2.0, 12.0, 16.0, 14.0)
-            val ceilingX = makeAABB(2.0, 0.0, 4.0, 14.0, 12.0, 12.0)
-            val ceilingZ = makeAABB(4.0, 0.0, 2.0, 12.0, 12.0, 14.0)
-            val wallNorth = makeAABB(4.0, 2.0, 0.0, 12.0, 14.0, 12.0)
-            val wallWest = makeAABB(0.0, 2.0, 4.0, 12.0, 14.0, 12.0)
-            val wallSouth = makeAABB(4.0, 2.0, 4.0, 12.0, 14.0, 16.0)
-            val wallEast = makeAABB(4.0, 2.0, 4.0, 16.0, 14.0, 12.0)
+            val floorX = makeCube(2.0, 4.0, 4.0, 14.0, 16.0, 12.0)
+            val floorZ = makeCube(4.0, 4.0, 2.0, 12.0, 16.0, 14.0)
+            val ceilingX = makeCube(2.0, 0.0, 4.0, 14.0, 12.0, 12.0)
+            val ceilingZ = makeCube(4.0, 0.0, 2.0, 12.0, 12.0, 14.0)
+            val wallNorth = makeCube(4.0, 2.0, 0.0, 12.0, 14.0, 12.0)
+            val wallWest = makeCube(0.0, 2.0, 4.0, 12.0, 14.0, 12.0)
+            val wallSouth = makeCube(4.0, 2.0, 4.0, 12.0, 14.0, 16.0)
+            val wallEast = makeCube(4.0, 2.0, 4.0, 16.0, 14.0, 12.0)
 
             return when (attachment) {
                 EnumAttachment.FLOOR -> {

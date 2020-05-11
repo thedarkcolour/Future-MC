@@ -3,7 +3,7 @@ package thedarkcolour.futuremc.recipe
 import net.minecraft.item.ItemStack
 import java.util.*
 
-abstract class Recipes<T : Recipe> {
+abstract class Recipes<T : Recipe<T>> {
     abstract val recipes: ArrayList<T>
 
     /**
@@ -47,7 +47,7 @@ abstract class Recipes<T : Recipe> {
     }
 
     /**
-     * Used to check for any missing items in recipes before adding to JEI.
+     * Removes invalid recipes with missing item
      */
     abstract fun validate()
 }

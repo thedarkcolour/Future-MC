@@ -31,6 +31,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.EnumDifficulty
 import net.minecraft.world.World
+import thedarkcolour.core.util.isAir
 import thedarkcolour.core.util.lerp
 import thedarkcolour.futuremc.entity.bee.ai.*
 import thedarkcolour.futuremc.registry.FBlocks
@@ -54,8 +55,8 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
     var findFlowerCooldown = 0
     var flowerPos: BlockPos? = null
     var hivePos: BlockPos? = null
-    lateinit var pollinateAI: PollinateAI
-    lateinit var findHiveAI: FindHiveAI
+    var pollinateAI: PollinateAI? = null
+    lateinit var goToHiveAI: GoToHiveAI
 
     init {
         moveHelper = FlyHelper(this)
@@ -71,9 +72,8 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
         this.dataManager.register(ANGER, 0)
     }
 
-    override fun getBlockPathWeight(pos: BlockPos): Float {
-        val state = world.getBlockState(pos)
-        return if (state.block.isAir(state, world, pos)) 10.0f else 0.0f
+    override fun getBlockPathWeight(pos: BlockPos): Double {
+        return if (world.isAir(pos)) 10.0 else 0.0
     }
 
     override fun initEntityAI() {
@@ -82,17 +82,17 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
         tasks.addTask(2, EntityAIMate(this, 1.0))
         tasks.addTask(3, TemptAI(this))
         pollinateAI = PollinateAI(this)
-        tasks.addTask(4, pollinateAI)
+        tasks.addTask(4, pollinateAI!!)
         tasks.addTask(5, EntityAIFollowParent(this, 1.25))
-        tasks.addTask(5, UpdateHiveAI(this))
-        findHiveAI = FindHiveAI(this)
-        tasks.addTask(5, findHiveAI)
-        tasks.addTask(6, FindFlowerAI(this))
+        tasks.addTask(5, LocateHiveAI(this))
+        goToHiveAI = GoToHiveAI(this)
+        tasks.addTask(5, goToHiveAI)
+        tasks.addTask(6, GoToFlowerAI(this))
         tasks.addTask(7, GrowCropsAI(this))
         tasks.addTask(8, WanderAI(this))
         tasks.addTask(9, EntityAISwimming(this))
         targetTasks.addTask(1, RevengeAI(this))
-        targetTasks.addTask(2, FollowTargetAI(this))
+        targetTasks.addTask(2, SwarmAttackerAI(this))
     }
 
 
@@ -204,24 +204,13 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
         return posY + height * partialTicks
     }
 
-    // todo check this
-    fun shouldReturnToHive(): Boolean {
-        return if (cannotEnterHiveTicks > 0) {
-            false
-        } else if (!hasHive()) {
-            false
-        } else {
-            hasNectar() || world.isDaytime || world.isRainingAt(position) || ticksSincePollination > 3600
-        }
-    }
-
     private fun failedPollinatingTooLong(): Boolean {
         return ticksSincePollination > 3600
     }
 
     fun canEnterHive(): Boolean {
-        return if (cannotEnterHiveTicks <= 0 && !pollinateAI.isRunning && !hasStung()) {
-            val flag = failedPollinatingTooLong() || world.isRaining || !world.isDaytime || hasNectar()
+        return if (cannotEnterHiveTicks <= 0 && !pollinateAI!!.isRunning && !hasStung()) {
+            val flag = hasNectar() || failedPollinatingTooLong() || world.isRaining || !world.isDaytime
             flag && !isHiveNearFire()
         } else {
             false
@@ -421,7 +410,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
             }
 
             override fun onUpdateNavigation() {
-                if (!pollinateAI.isRunning) {
+                if (!pollinateAI!!.isRunning) {
                     super.onUpdateNavigation()
                 }
             }
@@ -495,7 +484,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
         } else {
             val attacker = source.trueSource
             if (attacker is EntityPlayer && !attacker.isCreative && this.canEntityBeSeen(attacker)) {
-                setPollinating(false)
+                pollinateAI?.isRunning = false
                 setBeeAttacker(attacker)
             }
 

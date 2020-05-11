@@ -1,10 +1,10 @@
 {
     "parent": "block/block",
     "textures": {
-        "pivot": "futuremc:blocks/grindstone_pivot",
-        "round": "futuremc:blocks/grindstone_round",
-        "side": "futuremc:blocks/grindstone_side",
-        "particle": "futuremc:blocks/grindstone_side",
+        "pivot": "futuremc:block/grindstone_pivot",
+        "round": "futuremc:block/grindstone_round",
+        "side": "futuremc:block/grindstone_side",
+        "particle": "futuremc:block/grindstone_side",
         "leg": "blocks/log_big_oak"
     },
     "elements": [

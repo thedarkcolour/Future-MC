@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.SoundEvents
+import net.minecraft.inventory.Container
 import net.minecraft.inventory.InventoryHelper
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
@@ -171,6 +172,18 @@ class BlockFurnaceAdvanced(private val type: FurnaceType, properties: Properties
             }
         }
 
+    }
+
+    override fun hasComparatorInputOverride(state: IBlockState): Boolean {
+        return true
+    }
+
+    override fun getComparatorInputOverride(
+        state: IBlockState,
+        worldIn: World,
+        pos: BlockPos
+    ): Int {
+        return Container.calcRedstone(worldIn.getTileEntity(pos))
     }
 
     companion object {

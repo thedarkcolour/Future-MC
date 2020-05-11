@@ -20,7 +20,7 @@ public final class _Internal {
     @Name("Nether Update")
     public static final FConfig.NetherUpdate netherUpdate = new FConfig.NetherUpdate();
     @Name("Use Vanilla Creative Tabs")
-    @Comment("Whether this mod's items are displayed in a separate creative tab or sorted into their Vanilla tabs.")
+    @Comment("Whether this mod's item are displayed in a separate creative tab or sorted into their Vanilla tabs.")
     @RequiresMcRestart
     public static boolean useVanillaCreativeTabs = true;
 }

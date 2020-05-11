@@ -91,11 +91,11 @@ object BeeNestGenerator {
     }
 
     private fun cannotGenerate(worldIn: World, rand: Random, pos: BlockPos): Boolean {
-        if (!buzzyBees.bee.enabled || Reflection.getCallerClass(4) != BiomeDecorator::class.java) {
+        if (!buzzyBees.bee.enabled || (Reflection.getCallerClass(4) != BiomeDecorator::class.java)) {
             return true
         }
         val biome = worldIn.getBiome(pos)
-        if (rand.nextDouble() <= getDoubleOrDefault(BIOMES_AND_CHANCES, biome, 0.0)) {
+        if (rand.nextDouble() > getDoubleOrDefault(BIOMES_AND_CHANCES, biome, 0.0)) {
             return true
         }
         return false
@@ -114,6 +114,7 @@ object BeeNestGenerator {
     }
 
     fun refresh() {
+        BIOMES_AND_CHANCES.clear()
         for (entry in buzzyBees.validBiomesForBeeNest) {
             val parts = entry.split(":".toRegex()).toTypedArray()
             val loc = ResourceLocation(parts[0], parts[1])

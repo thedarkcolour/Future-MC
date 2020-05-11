@@ -1,7 +1,7 @@
 {
     "textures": {
-        "particle": "futuremc:blocks/composter_compost",
-        "inside": "futuremc:blocks/composter_ready"
+        "particle": "futuremc:block/composter_compost",
+        "inside": "futuremc:block/composter_ready"
     },
     "elements": [
         {

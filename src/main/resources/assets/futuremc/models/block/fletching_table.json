@@ -1,12 +1,12 @@
 {
     "parent": "block/orientable",
     "textures": {
-        "particle": "futuremc:blocks/fletching_table_front",
+        "particle": "futuremc:block/fletching_table_front",
         "down": "blocks/planks_birch",
-        "up": "futuremc:blocks/fletching_table_top",
-        "north": "futuremc:blocks/fletching_table_front",
-        "east": "futuremc:blocks/fletching_table_side",
-        "south": "futuremc:blocks/fletching_table_front",
-        "west": "futuremc:blocks/fletching_table_side"
+        "up": "futuremc:block/fletching_table_top",
+        "north": "futuremc:block/fletching_table_front",
+        "east": "futuremc:block/fletching_table_side",
+        "south": "futuremc:block/fletching_table_front",
+        "west": "futuremc:block/fletching_table_side"
     }
 }

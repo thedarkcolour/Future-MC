@@ -120,9 +120,7 @@ abstract class EntityGroupFish(worldIn: World) : EntityFish(worldIn) {
 
     override fun shouldSwimAway(): Boolean = !hasGroupLeader()
 
-    override fun getMaxSpawnedInChunk(): Int {
-        return maxGroupSize
-    }
+    override fun getMaxSpawnedInChunk() = maxGroupSize
 
     override fun onInitialSpawn(difficulty: DifficultyInstance, livingdata: IEntityLivingData?): IEntityLivingData {
         super.onInitialSpawn(difficulty, livingdata)

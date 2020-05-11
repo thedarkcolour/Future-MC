@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "futuremc:blocks/honeycomb_block"
+        "all": "futuremc:block/honeycomb_block"
     }
 }

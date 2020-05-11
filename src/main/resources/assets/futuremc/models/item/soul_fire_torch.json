@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "futuremc:blocks/soul_fire_torch"
+        "layer0": "futuremc:block/soul_fire_torch"
     }
 }

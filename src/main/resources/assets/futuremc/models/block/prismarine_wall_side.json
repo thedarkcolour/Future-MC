@@ -1,6 +1,6 @@
 {
     "parent": "futuremc:block/template_wall_side",
     "textures": {
-        "wall": "futuremc:blocks/prismarine"
+        "wall": "futuremc:block/prismarine"
     }
 }

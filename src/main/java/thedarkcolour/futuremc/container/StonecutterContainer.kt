@@ -49,7 +49,7 @@ class StonecutterContainer(
 
         override fun onTake(playerIn: EntityPlayer, stack: ItemStack, slot: Int): ItemStack {
             if (slot == 0) {
-                if (stack.isEmpty) {
+                if (get(0).isEmpty) {
                     set(1, ItemStack.EMPTY)
                 }
             } else {
@@ -61,7 +61,7 @@ class StonecutterContainer(
                     selectedIndex = -1
                 }
                 stack.item.onCreated(stack, playerIn.world, playerIn)
-                val l: Long = worldIn.totalWorldTime
+                val l = worldIn.totalWorldTime
                 if (lastOnTake != l) {
                     worldIn.playSound(null, pos, STONECUTTER_CARVE, SoundCategory.BLOCKS, 1.0f, 1.0f)
                     lastOnTake = l
@@ -96,7 +96,7 @@ class StonecutterContainer(
 
     private fun updateResult() {
         if (recipeList.isNotEmpty() && selectedIndex > -1) {
-            handler.setStackInSlot(1, recipeList[selectedIndex].output)
+            handler.setStackInSlot(1, recipeList[selectedIndex].output.copy())
         } else {
             handler.setStackInSlot(1, ItemStack.EMPTY)
         }

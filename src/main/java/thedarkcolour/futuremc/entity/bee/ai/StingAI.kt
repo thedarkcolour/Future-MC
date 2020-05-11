@@ -9,6 +9,6 @@ class StingAI(private val bee: BeeEntity, speedIn: Double, useLongMemory: Boolea
     }
 
     override fun shouldContinueExecuting(): Boolean {
-        return shouldExecute()
+        return super.shouldContinueExecuting() && bee.isAngry() && !bee.hasStung()
     }
 }
