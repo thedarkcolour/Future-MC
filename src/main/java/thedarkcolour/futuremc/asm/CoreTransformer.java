@@ -28,7 +28,6 @@ public class CoreTransformer implements IClassTransformer {
             }
             if (!isQuarkLoaded) {
                 if (transformedName.equals("net.minecraft.block.BlockPistonBase")) {
-                    // Use Bundled Quark transformer
                     return ClassTransformer.transformBlockPistonBase(basicClass);
                 } else {
                     // Use Quark API instead
@@ -132,16 +131,5 @@ public class CoreTransformer implements IClassTransformer {
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
         classNode.accept(cw);
         return cw.toByteArray();
-    }
-
-    static {
-        boolean b = false;
-
-        try {
-            Class.forName("vazkii.quark.base.Quark");
-            b = true;
-        } catch (Throwable ignored) {}
-
-        isQuarkLoaded = b;
     }
 }
