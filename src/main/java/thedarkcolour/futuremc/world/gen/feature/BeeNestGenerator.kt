@@ -17,7 +17,7 @@ import thedarkcolour.core.util.isAir
 import thedarkcolour.core.util.offset
 import thedarkcolour.futuremc.block.BeeHiveBlock
 import thedarkcolour.futuremc.config.FConfig.buzzyBees
-import thedarkcolour.futuremc.entity.bee.BeeEntity
+import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.registry.FBlocks
 import thedarkcolour.futuremc.tile.BeeHiveTile
 import java.util.*
@@ -91,7 +91,10 @@ object BeeNestGenerator {
     }
 
     private fun cannotGenerate(worldIn: World, rand: Random, pos: BlockPos): Boolean {
-        if (!buzzyBees.bee.enabled || (Reflection.getCallerClass(4) != BiomeDecorator::class.java)) {
+        if (!buzzyBees.bee.enabled) {
+            return true
+        }
+        if (Reflection.getCallerClass(4) != BiomeDecorator::class.java && hasNoFlowersNearby(worldIn, pos)) {
             return true
         }
         val biome = worldIn.getBiome(pos)
@@ -101,13 +104,32 @@ object BeeNestGenerator {
         return false
     }
 
+    private fun hasNoFlowersNearby(worldIn: World, pos: BlockPos): Boolean {
+        val startX = pos.x - 2
+        val startY = pos.x - 1
+        val startZ = pos.z - 2
+        val endX   = pos.x + 2
+        val endY   = pos.x + 1
+        val endZ   = pos.z + 2
+
+        if (worldIn.isAreaLoaded(startX, startY, startZ, endX, endY, endZ, true)) {
+            for (pos1 in BlockPos.getAllInBoxMutable(startX, startY, startZ, endX, endY, endZ)) {
+                if (EntityBee.isFlowerValid(worldIn.getBlockState(pos1))) {
+                    return false
+                }
+            }
+        }
+
+        return true
+    }
+
     private fun placeBeeHive(worldIn: World, rand: Random, pos: MutableBlockPos) {
         worldIn.setBlockState(pos, BEE_NEST)
         val te = worldIn.getTileEntity(pos)
 
         if (te is BeeHiveTile) {
             for (j in 0..2) {
-                val bee = BeeEntity(worldIn)
+                val bee = EntityBee(worldIn)
                 te.tryEnterHive(bee, false, rand.nextInt(599))
             }
         }

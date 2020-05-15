@@ -16,7 +16,7 @@ import thedarkcolour.futuremc.block.BlockBamboo.EnumLeaves
 import thedarkcolour.futuremc.block.CampfireBlock
 import thedarkcolour.futuremc.block.ComposterBlock
 import thedarkcolour.futuremc.block.SweetBerryBushBlock
-import thedarkcolour.futuremc.entity.bee.BeeEntity
+import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipes
 import thedarkcolour.futuremc.registry.FBlocks.BAMBOO
 import thedarkcolour.futuremc.registry.FBlocks.CAMPFIRE
@@ -135,7 +135,7 @@ class ItemDebugger : ItemModeled("debugger") {
         target: EntityLivingBase,
         hand: EnumHand
     ): Boolean {
-        if (target is BeeEntity && !playerIn.world.isRemote) {
+        if (target is EntityBee && !playerIn.world.isRemote) {
             playerIn.sendMessage(TextComponentString("Hive: " + target.hivePos + ", Flower: " + target.flowerPos))
         }
         return false

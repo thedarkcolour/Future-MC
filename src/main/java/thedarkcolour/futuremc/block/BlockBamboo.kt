@@ -143,12 +143,7 @@ open class BlockBamboo(properties: Properties) : FBlock(properties), IGrowable {
 
     override fun getRenderLayer(): BlockRenderLayer = BlockRenderLayer.CUTOUT
 
-    override fun canGrow(
-        worldIn: World,
-        pos: BlockPos,
-        state: IBlockState,
-        isClient: Boolean
-    ): Boolean { // Why is there an "isClient" param?
+    override fun canGrow(worldIn: World, pos: BlockPos, state: IBlockState?, isClient: Boolean): Boolean {
         val i = numOfAboveBamboo(worldIn, pos)
         val j = numOfBelowBamboo(worldIn, pos)
         return (i + j + 1 < 16 && !worldIn.getBlockState(pos.up(i)).getValue(MATURE)

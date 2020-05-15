@@ -1,14 +1,12 @@
 package thedarkcolour.futuremc.entity.bee
 
-import net.minecraft.client.model.ModelBase
 import net.minecraft.client.model.ModelRenderer
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.math.Vec3d
+import thedarkcolour.futuremc.entity.FModel
 import kotlin.math.cos
 
-class BeeModel : ModelBase() {
+class BeeModel : FModel<EntityBee>() {
     private val body: ModelRenderer
     private val leftWing: ModelRenderer
     private val rightWing: ModelRenderer
@@ -18,7 +16,7 @@ class BeeModel : ModelBase() {
     private val stinger: ModelRenderer
     private val leftAntenna: ModelRenderer
     private val rightAntenna: ModelRenderer
-    private var bodyPitch: Float = 0.toFloat()
+    private var bodyPitch = 0.0f
 
     init {
         textureHeight = 64
@@ -69,34 +67,31 @@ class BeeModel : ModelBase() {
     }
 
 
-    override fun setLivingAnimations(
-        entitylivingbaseIn: EntityLivingBase?,
+    override fun setEntityLivingAnimations(
+        entity: EntityBee,
         limbSwing: Float,
         limbSwingAmount: Float,
-        partialTickTime: Float
+        partialTicks: Float
     ) {
-        val bee = entitylivingbaseIn as BeeEntity?
-        bodyPitch = if (bee!!.isChild) 0.0f else bee.getBodyPitch(partialTickTime)
-        stinger.showModel = !bee.hasStung()
+        bodyPitch = if (entity.isChild) 0.0f else entity.getBodyPitch(partialTicks)
+        stinger.showModel = !entity.hasStung()
     }
 
     override fun setRotationAngles(
+        entity: EntityBee,
         limbSwing: Float,
         limbSwingAmount: Float,
         ageInTicks: Float,
         netHeadYaw: Float,
         headPitch: Float,
-        scaleFactor: Float,
-        entityIn: Entity?
+        scaleFactor: Float
     ) {
-        val bee = entityIn as BeeEntity?
-
         leftWing.rotateAngleX = 0.0f
         leftAntenna.rotateAngleX = 0.0f
         rightAntenna.rotateAngleX = 0.0f
         body.rotateAngleX = 0.0f
         body.rotationPointY = 19.0f
-        val flag = Vec3d(bee!!.motionX, bee.motionY, bee.motionZ).lengthSquared() < 1.0E-7
+        val flag = Vec3d(entity.motionX, entity.motionY, entity.motionZ).lengthSquared() < 1.0E-7
         var f: Float
         if (flag) {
             leftWing.rotateAngleY = -0.2618f
@@ -122,7 +117,7 @@ class BeeModel : ModelBase() {
             body.rotateAngleZ = 0.0f
         }
 
-        if (!bee.isAngry()) {
+        if (!entity.isAngry) {
             body.rotateAngleX = 0.0f
             body.rotateAngleY = 0.0f
             body.rotateAngleZ = 0.0f
@@ -142,9 +137,8 @@ class BeeModel : ModelBase() {
         }
     }
 
-
     override fun render(
-        entityIn: Entity?,
+        entity: EntityBee,
         limbSwing: Float,
         limbSwingAmount: Float,
         ageInTicks: Float,
@@ -152,7 +146,6 @@ class BeeModel : ModelBase() {
         headPitch: Float,
         scale: Float
     ) {
-        setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn)
         if (isChild) {
             GlStateManager.pushMatrix()
             GlStateManager.scale(0.5f, 0.5f, 0.5f)
@@ -165,7 +158,7 @@ class BeeModel : ModelBase() {
     }
 
     private fun interpolateAngle(headPitch: Float, bodyPitch: Float): Float {
-        var var3: Float = 3.0915928f - headPitch
+        var var3 = 3.0915928f - headPitch
 
         while (var3 < -3.1415927f) {
             var3 += 6.2831855f

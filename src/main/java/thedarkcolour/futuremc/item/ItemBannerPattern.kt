@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.BannerPattern
 import net.minecraft.util.NonNullList
 import net.minecraft.world.World
+import net.minecraftforge.common.IRarity
 import thedarkcolour.core.item.ItemModeled
 import thedarkcolour.core.util.setItemModel
 import thedarkcolour.futuremc.FutureMC
@@ -24,26 +25,26 @@ class ItemBannerPattern : ItemModeled("banner_pattern") {
         }
     }
 
-    override fun getRarity(stack: ItemStack): EnumRarity {
+    override fun getForgeRarity(stack: ItemStack): IRarity {
         return when (stack.itemDamage) {
             1, 2 -> EnumRarity.UNCOMMON
             3, 4 -> EnumRarity.EPIC
-            else -> super.getRarity(stack)
+            else -> super.getForgeRarity(stack)
         }
     }
 
     override fun addInformation(
         stack: ItemStack,
         worldIn: World?,
-        tooltip: MutableList<String>?,
+        tooltip: MutableList<String>,
         flagIn: ITooltipFlag?
     ) {
         when (stack.metadata) {
-            1 -> tooltip!!.add(I18n.format("item.futuremc.banner_pattern.creeper"))
-            2 -> tooltip!!.add(I18n.format("item.futuremc.banner_pattern.skull"))
-            3 -> tooltip!!.add(I18n.format("item.futuremc.banner_pattern.thing"))
-            4 -> tooltip!!.add(I18n.format("item.futuremc.banner_pattern.globe"))
-            else -> tooltip!!.add(I18n.format("item.futuremc.banner_pattern.flower"))
+            1 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.creeper"))
+            2 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.skull"))
+            3 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.thing"))
+            4 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.globe"))
+            else -> tooltip.add(I18n.format("item.futuremc.banner_pattern.flower"))
         }
     }
 

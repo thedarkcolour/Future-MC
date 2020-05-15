@@ -19,7 +19,7 @@ import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.core.block.FBlock
-import thedarkcolour.futuremc.client.gui.Gui
+import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes
 import thedarkcolour.futuremc.recipe.furnace.SmokerRecipes
 import thedarkcolour.futuremc.registry.FBlocks
@@ -53,9 +53,6 @@ class BlockFurnaceAdvanced(private val type: FurnaceType, properties: Properties
         hitY: Float,
         hitZ: Float
     ): Boolean {
-        if (worldIn.isRemote) {
-            return true
-        }
         val te = worldIn.getTileEntity(pos) as? TileFurnaceAdvanced ?: return false
         val block = worldIn.getBlockState(pos).block
         if (block == FBlocks.BLAST_FURNACE) {
@@ -68,7 +65,7 @@ class BlockFurnaceAdvanced(private val type: FurnaceType, properties: Properties
                 return false
             }
         }
-        Gui.FURNACE.open(playerIn, worldIn, pos)
+        GuiType.FURNACE.open(playerIn, worldIn, pos)
         return true
     }
 

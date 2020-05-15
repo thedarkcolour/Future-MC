@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.client.gui.GuiFurnaceAdvanced
+import thedarkcolour.futuremc.client.gui.StonecutterGui
 import thedarkcolour.futuremc.compat.jei.blastfurnace.BlastFurnaceRecipeCategory
 import thedarkcolour.futuremc.compat.jei.campfire.CampfireRecipeCategory
 import thedarkcolour.futuremc.compat.jei.campfire.CampfireRecipeWrapper
@@ -16,7 +17,6 @@ import thedarkcolour.futuremc.compat.jei.smoker.SmokerRecipeCategory
 import thedarkcolour.futuremc.compat.jei.stonecutter.StonecutterRecipeCategory
 import thedarkcolour.futuremc.config.FConfig.villageAndPillage
 import thedarkcolour.futuremc.container.ContainerFurnaceAdvanced
-import thedarkcolour.futuremc.container.StonecutterGui
 import thedarkcolour.futuremc.recipe.SimpleRecipe
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipe
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipes

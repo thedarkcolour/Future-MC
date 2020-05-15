@@ -26,14 +26,19 @@ public class CoreTransformer implements IClassTransformer {
             if (transformedName.equals("net.minecraft.world.gen.feature.WorldGenBigTree")) {
                 return patchWorldGenBigTree(basicClass);
             }
-            if (!isQuarkLoaded) {
-                if (transformedName.equals("net.minecraft.block.BlockPistonBase")) {
+            if (transformedName.equals("net.minecraft.block.BlockPistonBase")) {
+                try {
+                    Class.forName("vazkii.quark.base.asm.LoadingPlugin");
+
+                    // Use bundled coremod from Quark
+                    // todo redo in Kotlin
                     return ClassTransformer.transformBlockPistonBase(basicClass);
-                } else {
-                    // Use Quark API instead
+                } catch (ClassNotFoundException e) {
+                    // Use Quark's coremod instead
                     return basicClass;
                 }
             }
+
             if (transformedName.equals("net.minecraft.client.renderer.EntityRenderer")) {
                 return patchEntityRenderer(basicClass);
             }

@@ -5,10 +5,10 @@ import it.unimi.dsi.fastutil.objects.Object2DoubleMap
 import net.minecraft.block.BlockDispenser
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.entity.RenderManager
+import net.minecraft.dispenser.BehaviorDefaultDispenseItem
 import net.minecraft.dispenser.IBehaviorDispenseItem
 import net.minecraft.dispenser.IBlockSource
 import net.minecraft.entity.Entity
-import net.minecraft.init.Bootstrap
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
@@ -16,12 +16,13 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.client.registry.RenderingRegistry
-import net.minecraftforge.fml.common.Loader
-import net.minecraftforge.fml.common.eventhandler.*
+import net.minecraftforge.fml.common.eventhandler.Event
+import net.minecraftforge.fml.common.eventhandler.EventBus
+import net.minecraftforge.fml.common.eventhandler.EventPriority
+import net.minecraftforge.fml.common.eventhandler.IEventListener
 import net.minecraftforge.fml.common.registry.EntityRegistry
 import net.minecraftforge.oredict.OreDictionary
 import thedarkcolour.futuremc.FutureMC
-import java.util.function.BiPredicate
 import java.util.function.Consumer
 
 @Suppress("UNCHECKED_CAST")
@@ -43,7 +44,7 @@ fun getOreNames(stack: ItemStack): List<String> {
 }
 
 /**
- * Used to avoid silly proxies.
+ * Avoids silly proxies.
  */
 inline fun runOnClient(runnable: () -> Unit) {
     if (FutureMC.CLIENT) {
@@ -59,28 +60,11 @@ fun <K, V> immutableMapOf(contents: (ImmutableMap.Builder<K, V>) -> Unit): Immut
 }
 
 /**
- * Returns a new instance of an extremely sophisticated data structure [PredicateArrayList] whose [java.util.List.contains] implementation
- * will return true if it contains a match for the specified [isEquivalent] predicate.
- * @param isEquivalent the test used to determine if two objects are equivalent
- * @param contents the initial contents to be contained in this list.
- */
-fun <T> predicateArrayListOf(
-    isEquivalent: BiPredicate<T, T>,
-    contents: Consumer<PredicateArrayList<T>>
-): PredicateArrayList<T> {
-    val list = PredicateArrayList(isEquivalent)
-    return list.also(contents::accept)
-}
-
-fun <T> predicateArrayListOf(contents: Array<out T>, isEquivalent: (T, T) -> Boolean): PredicateArrayList<T> {
-    val list = PredicateArrayList(isEquivalent)
-    return list.insertAll(*contents)
-}
-
-/**
  * Adds new functionality to the item without removing the old functionality.
+ *
+ * Think using the OR binary operator.
  */
-fun registerAndDispenserBehaviour(item: Item, behaviour: IBehaviorDispenseItem) {
+fun registerOrDispenserBehaviour(item: Item, behaviour: IBehaviorDispenseItem) {
     if (BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.keys.contains(item)) {
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, IBehaviorDispenseItem { worldIn, stack ->
             val stack1 = BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.getObject(item).dispense(worldIn, stack)
@@ -91,14 +75,17 @@ fun registerAndDispenserBehaviour(item: Item, behaviour: IBehaviorDispenseItem) 
     }
 }
 
-inline fun registerServerOptionalDispenserBehaviour(item: Item, crossinline behaviour: (World, IBlockSource, ItemStack) -> ItemStack) {
-    registerAndDispenserBehaviour(item, object : Bootstrap.BehaviorDispenseOptional() {
+/**
+ * Shortcut function that only runs the behaviour on server side
+ */
+inline fun registerServerDispenserBehaviour(item: Item, crossinline behaviour: (World, IBlockSource, ItemStack) -> ItemStack) {
+    registerOrDispenserBehaviour(item, object : BehaviorDefaultDispenseItem() {
         override fun dispenseStack(source: IBlockSource, stack: ItemStack): ItemStack {
             val worldIn = source.world
-            if (!worldIn.isRemote) {
+
+            return if (!worldIn.isRemote) {
                 behaviour(worldIn, source, stack)
-            }
-            return stack
+            } else stack
         }
     })
 }
@@ -159,16 +146,9 @@ inline fun <reified E : Event> addListener(crossinline consumer: (E) -> Unit, pr
     val constructor = E::class.java.getConstructor()
     constructor.isAccessible = true
     val event = constructor.newInstance()
-    val loader = Loader.instance()
-
-    val owner = loader.activeModContainer() ?: loader.minecraftModContainer
 
     val listener = IEventListener {
-        val old = loader.activeModContainer()
-        loader.setActiveModContainer(owner)
-        if (it is IContextSetter) it.setModContainer(owner)
         consumer(it as E)
-        loader.setActiveModContainer(old)
     }
 
     event.listenerList.register(EventBus::class.java.getDeclaredField("busID").also {

@@ -7,7 +7,7 @@ tile.futuremc.blast_furnace.name=Blast Furnace
 tile.futuremc.smoker.name=Smoker
 tile.futuremc.grindstone.name=Grindstone
 tile.futuremc.composter.name=Composter
-tile.futuremc.cartography_table=Cartography Table
+tile.futuremc.cartography_table.name=Cartography Table
 
 # Plant
 tile.futuremc.lily_of_the_valley.name=Lily of the Valley
@@ -66,6 +66,8 @@ tile.futuremc.honeycomb_block.name=Honeycomb Block
 
 # Decorative Block
 tile.futuremc.smooth_stone.name=Smooth Stone
+tile.futuremc.smooth_sandstone.name=Smooth Sandstone
+tile.futuremc.smooth_red_sandstone.name=Smooth Red Sandstone
 tile.futuremc.smooth_quartz.name=Smooth Quartz
 tile.futuremc.soul_soil.name=Soul Soil
 tile.futuremc.fletching_table.name=Fletching Table
@@ -180,3 +182,68 @@ container.jei.futuremc.campfire.duration=Duration
 
 # Config
 futuremc.config.blue_ice=Blue Ice
+
+# Vanilla Override
+tile.sandStone.smooth.name=Cut Sandstone
+tile.redSandStone.smooth.name=Cut Red Sandstone
+
+# Subtitles
+futuremc.subtitles.barrel_close=Barrel closes
+futuremc.subtitle.barrel_open=Barrel opens
+futuremc.subtitle.trident_throw=Trident clangs
+futuremc.subtitle.trident_pierce=Trident stabs
+futuremc.subtitle.trident_ground_impact=Trident vibrates
+futuremc.subtitle.trident_channeling=Trident thunder cracks
+futuremc.subtitle.trident_loyalty=Trident returns
+futuremc.subtitle.riptide_trident=Trident zooms
+futuremc.subtitle.crossbow_charge=Crossbow charges up
+futuremc.subtitle.crossbow_shoot=Crossbow fires
+futuremc.subtitle.grindstone_use=Grindstone used
+futuremc.subtitles.panda_aggressive_ambient=Panda huffs
+futuremc.subtitles.panda_ambient=Panda pants
+futuremc.subtitles.panda_bite=Panda bites
+futuremc.subtitles.panda_cannot_breed=Panda bleats
+futuremc.subtitles.panda_death=Panda dies
+futuremc.subtitles.panda_eat=Panda eats
+futuremc.subtitles.panda_hurt=Panda hurts
+futuremc.subtitles.panda_pre_sneeze=Panda's nose tickles
+futuremc.subtitles.panda_sneeze=Panda sneezes
+futuremc.subtitles.panda_step=Panda steps
+futuremc.subtitles.panda_worried_ambient=Panda whimpers
+futuremc.subtitles.campfire_crackle=Campfire crackles
+futuremc.subtitles.bell_ring=Bell rings
+futuremc.subtitles.bell_resonate=Bell resonates
+futuremc.subtitles.bee_enter_hive=Bee enters hive
+futuremc.subtitles.bee_exit_hive=Bee leaves hive
+futuremc.subtitles.bee_sting=Bee stings
+futuremc.subtitles.bee_death=Bee dies
+futuremc.subtitles.bee_hurt=Bee hurts
+futuremc.subtitles.bee_pollinate=Bee buzzes happily
+futuremc.subtitles.bee_work=Bees work
+futuremc.subtitles.bee_aggressive=Bee buzzes angrily
+futuremc.subtitles.bee_passive=Bee buzzes
+futuremc.subtitles.honey_bottle_drink=Honey gulping
+futuremc.subtitles.shear_hive=Shears scrape
+futuremc.subtitles.honey_block_slide=Sliding down a honey block
+futuremc.subtitles.equip_netherite=Netherite armor clanks
+futuremc.subtitles.smithing_table_use=Smithing table used
+futuremc.subtitles.cod_swim=Cod swims
+futuremc.subtitles.cod_hurt=Cod hurts
+futuremc.subtitles.cod_death=Cod dies
+futuremc.subtitles.cod_flop=Cod flops
+futuremc.subtitles.salmon_swim=Salmon swims
+futuremc.subtitles.salmon_hurt=Salmon hurts
+futuremc.subtitles.salmon_death=Salmon dies
+futuremc.subtitles.salmon_flop=Salmon flops
+futuremc.subtitles.pufferfish_swim=Pufferfish swims
+futuremc.subtitles.pufferfish_hurt=Pufferfish hurts
+futuremc.subtitles.pufferfish_death=Pufferfish dies
+futuremc.subtitles.pufferfish_flop=Pufferfish flops
+futuremc.subtitles.tropical_fish_swim=Tropical fish swims
+futuremc.subtitles.tropical_fish_hurt=Tropical fish hurts
+futuremc.subtitles.tropical_fish_death=Tropical fish dies
+futuremc.subtitles.tropical_fish_flop=Tropical fish flops
+futuremc.subtitles.iron_golem_repair=Iron golem repaired
+futuremc.subtitles.pufferfish_inflate=Pufferfish inflates
+futuremc.subtitles.pufferfish_deflate=Pufferfish deflates
+futuremc.subtitles.pufferfish_sting=Pufferfish stings

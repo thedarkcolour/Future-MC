@@ -1,0 +1,31 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " a ",
+        "aza",
+        "xxx"
+    ],
+    "key": {
+        "x": {
+            "type": "forge:ore_dict",
+            "ore": "logWood"
+        },
+        "a": {
+            "type": "forge:ore_dict",
+            "ore": "stickWood"
+        },
+        "z": [
+            {
+                "item": "minecraft:coal",
+                "data": 0
+            },
+            {
+                "item": "minecraft:coal",
+                "data": 1
+            }
+        ]
+    },
+    "result": {
+        "item": "campfire"
+    }
+}

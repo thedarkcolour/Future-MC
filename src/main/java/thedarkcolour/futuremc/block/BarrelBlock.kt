@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import thedarkcolour.core.block.FBlock
-import thedarkcolour.futuremc.client.gui.Gui
+import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.tile.TileBarrel
 
 class BarrelBlock(properties: Properties) : FBlock(properties), ITileEntityProvider {
@@ -26,10 +26,8 @@ class BarrelBlock(properties: Properties) : FBlock(properties), ITileEntityProvi
         worldIn: World, pos: BlockPos, state: IBlockState, player: EntityPlayer,
         hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float
     ): Boolean {
-        if (worldIn.isRemote)
-            return true
         if (worldIn.getTileEntity(pos) !is TileBarrel) return false
-        Gui.BARREL.open(player, worldIn, pos)
+        GuiType.BARREL.open(player, worldIn, pos)
         return true
     }
 

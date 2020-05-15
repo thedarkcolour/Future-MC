@@ -2,7 +2,6 @@ package thedarkcolour.futuremc.client.gui
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.audio.PositionedSoundRecord
-import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.renderer.BannerTextures
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.resources.I18n
@@ -19,7 +18,7 @@ import thedarkcolour.futuremc.container.ContainerLoom
 import kotlin.math.ceil
 import kotlin.math.sign
 
-class GuiLoom(private val container: ContainerLoom) : GuiContainer(container) {
+class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
     private var preview: ResourceLocation? = null
     private var banner = ItemStack.EMPTY
     private var color = ItemStack.EMPTY
@@ -35,18 +34,12 @@ class GuiLoom(private val container: ContainerLoom) : GuiContainer(container) {
         container.setInventoryUpdateListener(::onInventoryUpdate)
     }
 
-    override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
-        super.drawScreen(mouseX, mouseY, partialTicks)
-        renderHoveredToolTip(mouseX, mouseY)
-    }
-
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
         fontRenderer.drawString(I18n.format("container.loom"), 8, 4, 4210752)
         fontRenderer.drawString(container.playerInv.displayName.unformattedText, 8, ySize - 94, 4210752)
     }
 
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
-        drawDefaultBackground()
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f)
         mc.textureManager.bindTexture(BACKGROUND)
         val i = guiLeft

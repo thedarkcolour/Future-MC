@@ -1,6 +1,8 @@
 package thedarkcolour.futuremc.block
 
+import net.minecraft.block.Block
 import net.minecraft.block.properties.PropertyEnum
+import net.minecraft.block.state.BlockFaceShape
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
 import net.minecraft.command.InvalidBlockStateException
@@ -8,7 +10,9 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
+import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import thedarkcolour.core.block.RotatableBlock
 import thedarkcolour.futuremc.registry.FSounds
@@ -32,7 +36,7 @@ class BlockBell(properties: Properties) : RotatableBlock(properties) {
         hitY: Float,
         hitZ: Float
     ): Boolean {
-        return ring(worldIn, state, worldIn.getTileEntity(pos), facing, hitY, playerIn, pos, true)
+        return ring(worldIn, state, worldIn.getTileEntity(pos), facing, hitY, pos, true)
     }
 
     private fun ring(
@@ -41,7 +45,6 @@ class BlockBell(properties: Properties) : RotatableBlock(properties) {
         te: TileEntity?,
         facing: EnumFacing,
         hitY: Float,
-        playerIn: EntityPlayer?,
         pos: BlockPos,
         checkFacing: Boolean
     ): Boolean {
@@ -83,17 +86,10 @@ class BlockBell(properties: Properties) : RotatableBlock(properties) {
         return false
     }
 
+    override fun getBlockFaceShape(worldIn: IBlockAccess, state: IBlockState, pos: BlockPos, face: EnumFacing) = BlockFaceShape.UNDEFINED
+
     override fun createBlockState(): BlockStateContainer {
         return BlockStateContainer(this, ATTACHMENT, FACING)
-    }
-
-    enum class BellAttachment(private val string: String) : IStringSerializable {
-        FLOOR("floor"), CEILING("ceiling"), SINGLE_WALL("single_wall"), DOUBLE_WALL("double_wall");
-
-        override fun getName(): String {
-            return string
-        }
-
     }
 
     override fun getStateForPlacement(
@@ -116,33 +112,29 @@ class BlockBell(properties: Properties) : RotatableBlock(properties) {
                 return blockstate
             }
         } else {
-            val flag = axis == EnumFacing.Axis.X && isSideSolid(
-                worldIn.getBlockState(pos.west()),
-                worldIn,
-                pos.west(),
-                EnumFacing.EAST
-            ) && isSideSolid(
-                worldIn.getBlockState(pos.east()),
-                worldIn,
-                pos.east(),
-                EnumFacing.WEST
-            ) || axis == EnumFacing.Axis.Z && isSideSolid(
-                worldIn.getBlockState(pos.north()),
-                worldIn,
-                pos.north(),
-                EnumFacing.SOUTH
-            ) && isSideSolid(
-                worldIn
-                    .getBlockState(pos.south()), worldIn, pos.south(), EnumFacing.NORTH
-            )
-            var blockstate1 = this.defaultState.withProperty(FACING, facing.opposite)
-                .withProperty(ATTACHMENT, if (flag) BellAttachment.DOUBLE_WALL else BellAttachment.SINGLE_WALL)
+            val west = pos.west()
+            val east = pos.east()
+            val north = pos.north()
+            val south = pos.south()
+            val down = pos.down()
+
+            val flag =
+                axis == EnumFacing.Axis.X &&
+                        worldIn.getBlockState(west).getBlockFaceShape(worldIn, west, EnumFacing.EAST) == BlockFaceShape.SOLID &&
+                        worldIn.getBlockState(east).getBlockFaceShape(worldIn, east, EnumFacing.WEST) == BlockFaceShape.SOLID ||
+                axis == EnumFacing.Axis.Z &&
+                        worldIn.getBlockState(north).getBlockFaceShape(worldIn, north, EnumFacing.SOUTH) == BlockFaceShape.SOLID &&
+                        worldIn.getBlockState(south).getBlockFaceShape(worldIn, south, EnumFacing.NORTH) == BlockFaceShape.SOLID
+
+            var blockstate1 = defaultState.withProperty(FACING, facing.opposite).withProperty(ATTACHMENT, if (flag) BellAttachment.DOUBLE_WALL else BellAttachment.SINGLE_WALL)
+
             if (blockstate1.block.canPlaceBlockAt(worldIn, pos)) {
                 return blockstate1
             }
-            val flag1 = isSideSolid(worldIn.getBlockState(pos.down()), worldIn, pos.down(), EnumFacing.UP)
-            blockstate1 =
-                blockstate1.withProperty(ATTACHMENT, if (flag1) BellAttachment.FLOOR else BellAttachment.CEILING)
+
+            val flag1 = worldIn.getBlockState(down).getBlockFaceShape(worldIn, down, EnumFacing.UP) == BlockFaceShape.SOLID
+            blockstate1 = blockstate1.withProperty(ATTACHMENT, if (flag1) BellAttachment.FLOOR else BellAttachment.CEILING)
+
             if (blockstate1.block.canPlaceBlockAt(worldIn, pos)) {
                 return blockstate1
             }
@@ -150,9 +142,12 @@ class BlockBell(properties: Properties) : RotatableBlock(properties) {
         throw InvalidBlockStateException()
     }
 
-    override fun getRenderType(state: IBlockState): EnumBlockRenderType {
-        return EnumBlockRenderType.MODEL
+    override fun eventReceived(state: IBlockState, worldIn: World, pos: BlockPos, id: Int, param: Int): Boolean {
+        val bell = worldIn.getTileEntity(pos)
+        return bell?.receiveClientEvent(id, param) ?: false
     }
+
+    override fun getRenderType(state: IBlockState) = EnumBlockRenderType.MODEL
 
     override fun getStateFromMeta(meta: Int): IBlockState {
         return defaultState.withProperty(ATTACHMENT, BellAttachment.values()[meta / 4])
@@ -160,10 +155,50 @@ class BlockBell(properties: Properties) : RotatableBlock(properties) {
     }
 
     override fun getMetaFromState(state: IBlockState): Int {
-        return state.getValue(ATTACHMENT).ordinal * 4 + state.getValue(ATTACHMENT).ordinal
+        return (state.getValue(ATTACHMENT).ordinal shl 2) + state.getValue(FACING).horizontalIndex
+    }
+
+    override fun getBoundingBox(
+        state: IBlockState,
+        worldIn: IBlockAccess,
+        pos: BlockPos
+    ): AxisAlignedBB {
+        val facing = state.getValue(FACING)
+        val isXAxis = facing.axis == EnumFacing.Axis.X
+
+        @Suppress("UNNECESSARY_NOT_NULL_ASSERTION")
+        return when (state.getValue(ATTACHMENT)!!) {
+            BellAttachment.FLOOR -> if (isXAxis) FLOOR_X else FLOOR_Z
+            BellAttachment.DOUBLE_WALL -> if (isXAxis) DOUBLE_WALL_X else DOUBLE_WALL_Z
+            BellAttachment.CEILING -> CEILING
+            BellAttachment.SINGLE_WALL -> when (facing) {
+                EnumFacing.NORTH -> SINGLE_WALL_N
+                EnumFacing.SOUTH -> SINGLE_WALL_S
+                EnumFacing.WEST -> SINGLE_WALL_W
+                EnumFacing.EAST -> SINGLE_WALL_E
+                else -> Block.FULL_BLOCK_AABB
+            }
+        }
+    }
+
+    enum class BellAttachment(private val string: String) : IStringSerializable {
+        FLOOR("floor"), CEILING("ceiling"), SINGLE_WALL("single_wall"), DOUBLE_WALL("double_wall");
+
+        override fun getName(): String {
+            return string
+        }
     }
 
     companion object {
         val ATTACHMENT: PropertyEnum<BellAttachment> = PropertyEnum.create("attachment", BellAttachment::class.java)
+        val FLOOR_X = makeCube(4.0, 0.0, 0.0, 12.0, 16.0, 16.0)
+        val FLOOR_Z = makeCube(0.0, 0.0, 4.0, 16.0, 16.0, 12.0)
+        val DOUBLE_WALL_X = makeCube(0.0, 4.0, 4.0, 16.0, 16.0, 12.0)
+        val DOUBLE_WALL_Z = makeCube(4.0, 4.0, 0.0, 12.0, 16.0, 16.0)
+        val CEILING = makeCube(4.0, 4.0, 4.0, 12.0, 13.0, 12.0)
+        val SINGLE_WALL_N = makeCube(4.0, 4.0, 0.0, 12.0, 15.0, 13.0)
+        val SINGLE_WALL_S = makeCube(4.0, 4.0, 3.0, 12.0, 15.0, 16.0)
+        val SINGLE_WALL_W = makeCube(0.0, 4.0, 4.0, 13.0, 15.0, 12.0)
+        val SINGLE_WALL_E = makeCube(3.0, 4.0, 4.0, 16.0, 15.0, 12.0)
     }
 }

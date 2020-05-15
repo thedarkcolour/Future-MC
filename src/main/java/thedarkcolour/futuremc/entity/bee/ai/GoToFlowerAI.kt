@@ -4,7 +4,7 @@ import thedarkcolour.futuremc.entity.bee.BeeEntity
 
 class GoToFlowerAI(bee: BeeEntity) : GoToBlockAI(bee) {
     override fun canBeeStart(): Boolean {
-        return bee.hasFlower() && (bee.maximumHomeDistance != -1.0f) && shouldMoveToFlower()
+        return bee.hasFlower() && (bee.hasHome()) && shouldMoveToFlower()
                 && bee.doesFlowerExist(bee.flowerPos!!) && bee.isWithinDistance(bee.flowerPos!!, 2)
     }
 

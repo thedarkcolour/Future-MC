@@ -21,9 +21,7 @@ import java.util.*
 class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
     private var isSpecialVariant = true
     var variant: Int
-        get() {
-            return dataManager[VARIANT]
-        }
+        get() = dataManager[VARIANT]
         set(value) {
             dataManager[VARIANT] = value
         }
@@ -53,15 +51,12 @@ class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
         nbt.setInteger("BucketVariant", variant)
     }
 
-    override fun getFishBucket() = FItems.TROPICAL_FISH_BUCKET.stack
-
-    override fun getAmbientSound() = FSounds.TROPICAL_FISH_AMBIENT
+    override val fishBucket = FItems.TROPICAL_FISH_BUCKET.stack
 
     override fun getDeathSound() = FSounds.TROPICAL_FISH_DEATH
-
     override fun getHurtSound(damageSourceIn: DamageSource?) = FSounds.TROPICAL_FISH_HURT
-
     override val flopSound = FSounds.TROPICAL_FISH_FLOP
+    override fun getSwimSound() = FSounds.TROPICAL_FISH_SWIM
 
     fun getSize() = getBody(variant)
 
@@ -130,6 +125,7 @@ class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
 
     companion object {
         private val VARIANT = EntityDataManager.createKey(EntityTropicalFish::class.java, DataSerializers.VARINT)
+        val LOOT_TABLE = ResourceLocation(FutureMC.ID, "entities/tropical_fish")
         private val BODY_TEXTURES = arrayOf(
             ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_a.png"),
             ResourceLocation(FutureMC.ID, "textures/entity/tropical_fish/tropical_b.png")
@@ -220,4 +216,6 @@ class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
             Type.values()[i + 6 * j].name.toLowerCase(Locale.ROOT)
         }
     }
+
+    override fun getLootTable() = LOOT_TABLE
 }

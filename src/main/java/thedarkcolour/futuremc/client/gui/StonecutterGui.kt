@@ -1,30 +1,29 @@
 package thedarkcolour.futuremc.client.gui
-/*
+
+import net.minecraft.client.Minecraft
+import net.minecraft.client.audio.PositionedSoundRecord
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.resources.I18n
+import net.minecraft.init.SoundEvents
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.math.MathHelper
+import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.GL11
-import thedarkcolour.core.gui.GuiContainer
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.compat.JEI
 import thedarkcolour.futuremc.compat.isModLoaded
-import thedarkcolour.futuremc.config.FConfig.villageAndPillage
-import thedarkcolour.futuremc.container.ContainerStonecutter
+import thedarkcolour.futuremc.config.FConfig
+import thedarkcolour.futuremc.container.StonecutterContainer
+import kotlin.math.sign
 
-class StonecutterGui(container: ContainerStonecutter) : GuiContainer<ContainerStonecutter>(container) {
-    private var sliderProgress = 0f
-    private val clickedOnScroll = false
-    // used to start at a certain point to allow scrolling
+class StonecutterGui(container: StonecutterContainer) : FGui<StonecutterContainer>(container) {
+    private var sliderProgress = 0.0f
+    private var clickedOnScroll = false
     private var recipeIndexOffset = 0
     private var hasInput = false
 
     init {
-        container.setInventoryUpdateListener(::onInventoryUpdate)
-    }
-
-    override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
-        super.drawScreen(mouseX, mouseY, partialTicks)
-        renderHoveredToolTip(mouseX, mouseY)
+        container.inventoryUpdateListener = ::onInventoryUpdate
     }
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
@@ -32,12 +31,7 @@ class StonecutterGui(container: ContainerStonecutter) : GuiContainer<ContainerSt
         fontRenderer.drawString(container.playerInv.displayName.unformattedText, 8, ySize - 94, 4210752)
     }
 
-    override fun drawGuiContainerBackgroundLayer(
-        partialTicks: Float,
-        mouseX: Int,
-        mouseY: Int
-    ) {
-        drawDefaultBackground()
+    override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
         mc.textureManager.bindTexture(BACKGROUND)
         val i = (width - xSize) / 2
@@ -48,21 +42,21 @@ class StonecutterGui(container: ContainerStonecutter) : GuiContainer<ContainerSt
         if (isModLoaded(JEI)) {
             drawRecipeButton(mouseX, mouseY, i, j)
         }
-        if (container.currentRecipes.size != 0) {
+        if (container.recipeList.isNotEmpty()) {
             val x = guiLeft + 52
             val y = guiTop + 14
             val k = recipeIndexOffset + 12
-            drawRecipesBackground(mouseX, mouseY, x, y, k)
-            drawRecipesItems(x, y, k)
+            drawResultBackgrounds(mouseX, mouseY, x, y, k)
+            drawResultItems(x, y, k)
         }
     }
 
     private fun canScroll(): Boolean {
-        return hasInput && container.currentRecipes.size > 12
+        return hasInput && container.recipeList.size > 12
     }
 
     private fun drawRecipeButton(mouseX: Int, mouseY: Int, i: Int, j: Int) {
-        if (villageAndPillage.stonecutter.recipeButton) {
+        if (FConfig.villageAndPillage.stonecutter.recipeButton) {
             val x = guiLeft + 143
             val y = guiTop + 8
             var textureY = 166
@@ -73,9 +67,12 @@ class StonecutterGui(container: ContainerStonecutter) : GuiContainer<ContainerSt
         }
     }
 
-    private fun drawRecipesBackground(mouseX: Int, mouseY: Int, left: Int, top: Int, maxOffset: Int) {
+    /**
+     * Renders the button backgrounds for each choice.
+     */
+    private fun drawResultBackgrounds(mouseX: Int, mouseY: Int, left: Int, top: Int, maxOffset: Int) {
         var i = recipeIndexOffset
-        while (i < maxOffset && i < container.currentRecipes.size) {
+        while (i < maxOffset && i < container.recipeList.size) {
             val j = i - recipeIndexOffset
             val k = left + j % 4 * 16
             val l = j / 4
@@ -91,12 +88,15 @@ class StonecutterGui(container: ContainerStonecutter) : GuiContainer<ContainerSt
         }
     }
 
-    private fun drawRecipesItems(left: Int, top: Int, maxOffset: Int) {
+    /**
+     * Renders the choices for stonecutting into the gui.
+     */
+    private fun drawResultItems(left: Int, top: Int, maxOffset: Int) {
         RenderHelper.enableGUIStandardItemLighting()
-        val recipes = container.currentRecipes
+        val recipes = container.recipeList
         var i = recipeIndexOffset
 
-        while (i < maxOffset && i < container.currentRecipes.size) {
+        while (i < maxOffset && i < container.recipeList.size) {
             val j = i - recipeIndexOffset
             val k = left + j % 4 * 16
             val l = j / 4
@@ -107,8 +107,74 @@ class StonecutterGui(container: ContainerStonecutter) : GuiContainer<ContainerSt
         RenderHelper.disableStandardItemLighting()
     }
 
+    override fun mouseClicked(mouseX: Int, mouseY: Int, mouseButton: Int) {
+        clickedOnScroll = false
+        if (hasInput) {
+            var i = guiLeft + 52
+            var j = guiTop + 14
+            val k = recipeIndexOffset + 12
+
+            for (l in recipeIndexOffset until k) {
+                val i1 = l - recipeIndexOffset
+                val x = mouseX - (i + i1 % 4 * 16).toDouble()
+                val y = mouseY - (j + i1 / 4 * 18).toDouble()
+
+                if (x >= 0.0 && y >= 0.0 && x < 16.0 && y < 18.0 && container.enchantItem(mc.player, l)) {
+                    Minecraft.getMinecraft().soundHandler
+                        .playSound(
+                            PositionedSoundRecord.getMasterRecord(
+                                SoundEvents.UI_BUTTON_CLICK,
+                                1.0f
+                            )
+                        )
+                    mc.playerController.sendEnchantPacket(container.windowId, l)
+                    return
+                }
+            }
+            i = guiLeft + 119
+            j = guiTop + 9
+
+            if (mouseX >= i.toDouble() && mouseX < (i + 12).toDouble() && mouseY >= j.toDouble() && mouseY < (j + 54).toDouble()) {
+                clickedOnScroll = true
+            }
+        }
+        super.mouseClicked(mouseX, mouseY, mouseButton)
+    }
+
+    override fun mouseClickMove(
+        mouseX: Int,
+        mouseY: Int,
+        clickedMouseButton: Int,
+        timeSinceLastClick: Long
+    ) {
+        if (clickedOnScroll && canScroll()) {
+            val i = guiTop + 14
+            val j = i + 54
+            sliderProgress = (mouseY - i - 7.5f) / (j - i - 15.0f)
+            sliderProgress = MathHelper.clamp(sliderProgress, 0.0f, 1.0f)
+            recipeIndexOffset = (sliderProgress * getHiddenRows() + 0.5).toInt() shl 2
+        }
+        super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick)
+    }
+
+    override fun handleMouseInput() {
+        super.handleMouseInput()
+        var i = Mouse.getEventDWheel()
+        if (i != 0 && canScroll()) {
+            i = sign(i.toFloat()).toInt()
+            val h = getHiddenRows()
+            sliderProgress = (sliderProgress.toDouble() - i / h.toDouble()).toFloat()
+            sliderProgress = MathHelper.clamp(sliderProgress, 0.0f, 1.0f)
+            recipeIndexOffset = ((sliderProgress * h.toFloat()).toDouble() + 0.5).toInt() shl 2
+        }
+    }
+
+    private fun getHiddenRows(): Int {
+        return (container.recipeList.size + 4 - 1) / 4 - 3
+    }
+
     private fun onInventoryUpdate() {
-        hasInput = container.hasRecipe()
+        hasInput = container.recipeList.isNotEmpty()
 
         if (!hasInput) {
             sliderProgress = 0.0f
@@ -117,6 +183,9 @@ class StonecutterGui(container: ContainerStonecutter) : GuiContainer<ContainerSt
     }
 
     companion object {
-        private val BACKGROUND = ResourceLocation(FutureMC.ID, "textures/gui/stonecutter.png")
+        private val BACKGROUND = ResourceLocation(
+            FutureMC.ID,
+            "textures/gui/stonecutter.png"
+        )
     }
-} */
+}

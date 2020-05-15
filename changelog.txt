@@ -1,3 +1,52 @@
+Version 0.2.1 - MAJOR UPDATE ALERT!!!! - New things:
+ *Banner Patterns* - Banner patterns can be used in the Loom.
+ *Bell* - Rings just like in 1.14. Creative only at the moment because villagers don't trade them.
+ *Cartography Table* - Decorative only.
+ *Chain* - Decorative block from 1.16
+ *Cod, Pufferfish, Salmon, Tropical Fish* - Fish mobs that spawn in the water! Fixes #110 and #115
+ *Config* - Completely redone. You will have to set all the options again.
+            Many options have been added to fine-tune Future MC for your needs.
+ *Fish Buckets* - Collect fish and relocate them with buckets!
+ *Loom Functionality* - Loom can be used to craft banners. Fixes #133
+ *Smooth Sandstone & Smooth Red Sandstone* - Decorative blocks from 1.14
+ *Trapdoors* - All vanilla wood variants have trapdoors now. Fixes #127
+ *Wood Blocks* - All vanilla wood and stripped wood variants have wood blocks (the ones with all six sides bark)
+ Bamboo - Fixed hitbox and added option for tight hitbox and fixed bug involving OptiFine.
+ Bee - Changed CraftTweaker to use IBlockState instead of IItemStack. Fixes #92
+ Bee - New AI! Fixes #102
+ Bee - Adjusted eye level. Fixes #104
+ Bee Nests - Simplified world gen config and added more default biomes.
+ Bee Nests - Now generate if there's flowers nearby. Fixes #101
+ Bee Nests & Beehives - Shears and bottles can now be used to collect honeycomb and honey.
+ Blast Furnace & Smoker - Added comparator output. Fixes
+ Blast Furnace & Smoker - Fixed CraftTweaker #80 and #72
+ Blast Furnace & Smoker - Now detect ores and foods from other mods.
+ Bounding Boxes Render Underwater - Fixes #132
+ Campfire - Now has particles and crafttweaker recipes work properly now. Fixes #116
+ Campfire - Renders sides properly when OptiFine is installed. Fixes #111
+ Campfire - Cooking items in creative mode no longer consumes them from your hotbar. Fixes #107
+ Campfire - No longer resets facing when ignited. Fixes #117
+ Future MC - Changed modid from "minecraftfuture" to "futuremc". This shouldn't break any of your old worlds, but you will need to fix your crafttweaker scripts.
+ Grindstone - No longer blocks light.
+ Honey Block - Fixed the piston mechanics. Fixes #126
+ Honey Bottle - Fixes #82
+ Internal Refactors - Fixes #79, #106, #113 (partially), #121, #128, #131, #138
+ Internal Refactors - Changed properties for many blocks to be more accurate to Minecraft 1.13+
+ Iron Golem - Can now be repaired with iron ingots.
+ Iron Golem - Now cracks as its health decreases.
+ Lantern - Fixed placement to allow for placing on iron bars and other thin blocks
+ Lantern - Adjusted sounds to match 1.14.
+ Legacy Bamboo Jungle - Removed from the mod. Worlds that had this biome will still have bamboo jungles from FutureMC, they will just show up as plains in F3.
+ Recipes - Changed recipe IDs to follow minecraft naming convention.
+ Sounds - Added subtitles for all sounds. Fixes #97
+ Stonecutter - Fixed a crash #78
+ Stonecutter - Fixed a few incorrect recipes
+ Stonecutter - Removes empty recipes during postInit. Fixes #76
+ Suspicious Stew - Supports custom potion effects. Fixes #124
+ Walls - Much more configurable, you can now disable individual types of walls.
+ Wither Rose - Now drops correctly.
+ Wither Rose - Now places on the correct blocks again.
+
 Version 0.2.03 - Bug fix update:
  Trapdoors - No longer have strange rotations.
  Fixed CraftTweaker issues when using remove functions on certain blocks
@@ -125,7 +174,7 @@ Version 0.1.9 - Patch Update:
  Grindstone - Fixed durability issue with enchanted items.
  Trident - Fixed NPE when disabled.
  Trident - Tweaked Channeling enchantment to behave like in 1.13.
- Added a way to show incomplete features of the mod, such as the Scaffolding block and Loom gui. Check the README on GitHub!
+ Added a way to show incomplete features of the mod, such as the Scaffolding block and Loom guiType. Check the README on GitHub!
 
 Version 0.1.8b - Quick Patch:
  Bamboo Jungle - Added config option to re-enable the old Bamboo Jungles.

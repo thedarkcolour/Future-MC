@@ -11,9 +11,9 @@ import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
-import thedarkcolour.futuremc.client.gui.Gui
+import thedarkcolour.futuremc.client.gui.GuiType
 
-class StonecutterBlock(properties: Properties, gui: Gui?, functionalityOption: Boolean) : VillageStationBlock(properties, gui, functionalityOption) {
+class StonecutterBlock(properties: Properties, guiType: GuiType?, functionalityOption: Boolean) : VillageStationBlock(properties, guiType, functionalityOption) {
     init {
         defaultState = defaultState.withProperty(FACING, EnumFacing.NORTH)
         useNeighborBrightness = true

@@ -5,6 +5,10 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLiving
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.item.EntityBoat
+import net.minecraft.entity.item.EntityMinecart
+import net.minecraft.entity.item.EntityTNTPrimed
 import net.minecraft.pathfinding.PathNodeType
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.EnumFacing
@@ -31,26 +35,38 @@ class HoneyBlockBlock(properties: Properties) : FBlock(properties), INonSticky {
         return AABB
     }
 
+    // todo if there's issues in multi player see if custom packets will work
     override fun onFallenUpon(worldIn: World, pos: BlockPos, entityIn: Entity, fallDistance: Float) {
-        fallParticles(worldIn, entityIn)
-        entityIn.fall(fallDistance, 1.0f)
+        entityIn.playSound(FSounds.HONEY_BLOCK_SLIDE, 1.0f, 1.0f)
+
+        if (worldIn.isRemote) {
+            spawnParticles(entityIn, 10)
+        }
+
+        entityIn.fall(fallDistance, 0.2f)
     }
 
     override fun onEntityCollision(worldIn: World, pos: BlockPos, state: IBlockState, entityIn: Entity) {
-        if (slide(pos, entityIn)) {
-            if (entityIn.motionY < -0.05) {
-                entityIn.motionY = -0.05
-            }
-            entityIn.fallDistance = 0.0f
+        if (isSliding(pos, entityIn)) {
+            updateVelocity(entityIn)
             slideParticles(worldIn, entityIn)
-            if (worldIn.worldTime % 10L == 0L) {
-                entityIn.playSound(FSounds.HONEY_BLOCK_SLIDE, 1.0f, 1.0f)
-            }
+        } else {
+            entityIn.motionX *= 0.4
+            entityIn.motionZ *= 0.4
         }
-        super.onEntityCollision(worldIn, pos, state, entityIn)
     }
 
-    private fun slide(pos: BlockPos, entity: Entity): Boolean {
+    private fun updateVelocity(entityIn: Entity) {
+        if (entityIn.motionY < -0.13) {
+            val a = -0.05 / entityIn.motionY
+            entityIn.motionX *= a
+            entityIn.motionY = -0.05
+            entityIn.motionZ *= a
+        }
+        entityIn.fallDistance = 0.0f
+    }
+
+    private fun isSliding(pos: BlockPos, entity: Entity): Boolean {
         return when {
             entity.onGround -> false
             entity.posY > pos.y + 0.9375 - 1.0E-7 -> false
@@ -64,50 +80,40 @@ class HoneyBlockBlock(properties: Properties) : FBlock(properties), INonSticky {
         }
     }
 
+    // todo if there's issues in multi player see if custom packets will work
     private fun slideParticles(worldIn: World, entityIn: Entity) {
-        val width = entityIn.width
-        spawnParticles(
-            entityIn,
-            worldIn,
-            1,
-            (worldIn.rand.nextFloat() - 0.5) * width,
-            worldIn.rand.nextFloat() / 2.0f.toDouble(),
-            (worldIn.rand.nextFloat() - 0.5) * width,
-            worldIn.rand.nextFloat() - 0.5,
-            (worldIn.rand.nextFloat() - 1.0f).toDouble(),
-            worldIn.rand.nextFloat() - 0.5
-        )
+        if (hasSlideParticles(entityIn)) {
+            if (worldIn.rand.nextInt(5) == 0) {
+                entityIn.playSound(FSounds.HONEY_BLOCK_SLIDE, 1.0f, 1.0f)
+            }
+
+            if (worldIn.isRemote && worldIn.rand.nextInt(5) == 0) {
+                spawnParticles(entityIn, 5)
+            }
+        }
     }
 
-    private fun fallParticles(worldIn: World, entityIn: Entity) {
-        val width = entityIn.width
-        spawnParticles(
-            entityIn,
-            worldIn,
-            10,
-            (worldIn.rand.nextFloat().toDouble() - 0.5) * width,
-            0.0,
-            (worldIn.rand.nextFloat() - 0.5) * width,
-            worldIn.rand.nextFloat() - 0.5,
-            0.5,
-            worldIn.rand.nextFloat() - 0.5
-        )
+    private fun hasSlideParticles(entity: Entity): Boolean {
+        return entity is EntityLivingBase || entity is EntityMinecart || entity is EntityTNTPrimed || entity is EntityBoat
     }
 
-    private fun spawnParticles(
-        entity: Entity, worldIn: World, numOfParticles: Int,
-        posX: Double, posY: Double, posZ: Double, motX: Double, motY: Double, motZ: Double
-    ) {
-        for (i in 0 until numOfParticles) {
-            worldIn.spawnParticle(
-                EnumParticleTypes.BLOCK_CRACK, entity.posX + posX, entity.posY + posY, entity.posZ + posZ,
-                motX, motY, motZ, getStateId(defaultState)
+    // test for client
+    private fun spawnParticles(entityIn: Entity, particleCount: Int) {
+        for (i in 0 until particleCount) {
+            entityIn.world.spawnParticle(
+                EnumParticleTypes.BLOCK_CRACK, entityIn.posX, entityIn.posY, entityIn.posZ,
+                0.0, 0.0, 0.0, getStateId(defaultState)
             )
         }
     }
 
     @Suppress("DEPRECATION")
-    override fun shouldSideBeRendered(blockState: IBlockState, blockAccess: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean {
+    override fun shouldSideBeRendered(
+        blockState: IBlockState,
+        blockAccess: IBlockAccess,
+        pos: BlockPos,
+        side: EnumFacing
+    ): Boolean {
         return blockAccess.getBlockState(pos.offset(side)).block == this || super.shouldSideBeRendered(blockState, blockAccess, pos, side)
     }
 

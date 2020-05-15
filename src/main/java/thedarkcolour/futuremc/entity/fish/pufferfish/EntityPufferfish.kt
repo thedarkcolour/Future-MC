@@ -8,7 +8,6 @@ import net.minecraft.entity.passive.EntityWaterMob
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.init.MobEffects
-import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.datasync.DataParameter
 import net.minecraft.network.datasync.DataSerializers
@@ -16,18 +15,19 @@ import net.minecraft.network.datasync.EntityDataManager
 import net.minecraft.network.play.server.SPacketChangeGameState
 import net.minecraft.potion.PotionEffect
 import net.minecraft.util.DamageSource
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.SoundCategory
-import net.minecraft.util.SoundEvent
 import net.minecraft.world.World
 import thedarkcolour.core.util.stack
+import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.entity.WaterCreature
 import thedarkcolour.futuremc.entity.fish.EntityFish
 import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FSounds
 
 class EntityPufferfish(worldIn: World) : EntityFish(worldIn) {
-    var inflateTimer: Int = 0
-    var deflateTimer: Int = 0
+    var inflateTimer = 0
+    var deflateTimer = 0
     var puffState: Int
         get() {
             return dataManager[PUFF_STATE]
@@ -71,31 +71,11 @@ class EntityPufferfish(worldIn: World) : EntityFish(worldIn) {
         puffState = compound.getInteger("PuffState")
     }
 
-    override fun getFishBucket(): ItemStack = FItems.PUFFERFISH_BUCKET.stack
+    override val fishBucket = FItems.PUFFERFISH_BUCKET.stack
 
     override fun initEntityAI() {
         super.initEntityAI()
         tasks.addTask(1, AIPuff(this))
-    }
-
-    class AIPuff(private val pufferfish: EntityPufferfish) : EntityAIBase() {
-        override fun shouldExecute(): Boolean {
-            val list = pufferfish.world.getEntitiesWithinAABB(
-                EntityLivingBase::class.java,
-                pufferfish.entityBoundingBox.grow(2.0),
-                ENEMY_MATCHER
-            )
-            return list.isNotEmpty()
-        }
-
-        override fun startExecuting() {
-            pufferfish.inflateTimer = 1
-            pufferfish.deflateTimer = 0
-        }
-
-        override fun resetTask() {
-            pufferfish.inflateTimer = 0
-        }
     }
 
     override fun onUpdate() {
@@ -107,7 +87,7 @@ class EntityPufferfish(worldIn: World) : EntityFish(worldIn) {
                         EntityLivingBase::class.java,
                         entityBoundingBox.grow(2.0),
                         ENEMY_MATCHER
-                    ).forEach { println(it.toString()) }
+                    )
                     puffState = 1
                 } else if (inflateTimer > 40 && puffState == 1) {
                     playSound(FSounds.PUFFERFISH_INFLATE, soundVolume, soundPitch)
@@ -145,7 +125,7 @@ class EntityPufferfish(worldIn: World) : EntityFish(worldIn) {
     }
 
     private fun attack(mob: EntityMob) {
-        val i: Int = puffState
+        val i = puffState
         if (mob.attackEntityFrom(DamageSource.causeMobDamage(this), (1 + i).toFloat())) {
             mob.addPotionEffect(PotionEffect(MobEffects.POISON, 60 * i, 0))
             playSound(FSounds.PUFFERFISH_STING, 1.0f, 1.0f)
@@ -164,8 +144,14 @@ class EntityPufferfish(worldIn: World) : EntityFish(worldIn) {
         }
     }
 
-    // need this because 9 doesn't have a matching function on the client
+    // custom packet
     private class SPacketSting(value: Float) : SPacketChangeGameState(9, value) {
+        // because we are a custom packet we can
+        // immediately play our event instead of
+        // waiting for an existing branch in the
+        // switch statement that this function's
+        // result is used in. We can return 9
+        // and not worry about anything else happening.
         override fun getGameState(): Int {
             val client = Minecraft.getMinecraft()
             val player = client.player
@@ -183,17 +169,36 @@ class EntityPufferfish(worldIn: World) : EntityFish(worldIn) {
         }
     }
 
-    override fun getAmbientSound(): SoundEvent = FSounds.PUFFERFISH_AMBIENT
+    override fun getDeathSound() = FSounds.PUFFERFISH_DEATH
+    override fun getHurtSound(damageSourceIn: DamageSource?) = FSounds.PUFFERFISH_HURT
+    override val flopSound = FSounds.PUFFERFISH_FLOP
+    override fun getSwimSound() = FSounds.PUFFERFISH_SWIM
 
-    override fun getDeathSound(): SoundEvent = FSounds.PUFFERFISH_DEATH
+    override fun getLootTable() = LOOT_TABLE
 
-    override fun getHurtSound(damageSourceIn: DamageSource?): SoundEvent = FSounds.PUFFERFISH_HURT
+    class AIPuff(private val pufferfish: EntityPufferfish) : EntityAIBase() {
+        override fun shouldExecute(): Boolean {
+            val list = pufferfish.world.getEntitiesWithinAABB(
+                EntityLivingBase::class.java,
+                pufferfish.entityBoundingBox.grow(2.0),
+                ENEMY_MATCHER
+            )
+            return list.isNotEmpty()
+        }
 
-    override val flopSound: SoundEvent
-        get() = FSounds.PUFFERFISH_FLOP
+        override fun startExecuting() {
+            pufferfish.inflateTimer = 1
+            pufferfish.deflateTimer = 0
+        }
+
+        override fun resetTask() {
+            pufferfish.inflateTimer = 0
+        }
+    }
 
     companion object {
         private val PUFF_STATE = EntityDataManager.createKey(EntityPufferfish::class.java, DataSerializers.VARINT)
+        val LOOT_TABLE = ResourceLocation(FutureMC.ID, "entities/pufferfish")
         private val ENEMY_MATCHER = { entityLiving: EntityLivingBase? ->
             if (entityLiving == null) {
                 false

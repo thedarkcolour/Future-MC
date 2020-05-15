@@ -169,7 +169,7 @@ object FConfig {
             var darkOak = true
 
             @Name("Right click to strip")
-            @Comment("Whether right clicking with an axe will strip a log.")
+            @Comment("Whether right clicking with an axe will strip a wood.")
             @JvmField
             var rightClickToStrip = true
         }
@@ -265,7 +265,7 @@ object FConfig {
         @Comment("Whether the Bell is enabled.")
         @RequiresMcRestart
         @JvmField
-        var bell = true
+        var bell = false
 
         @Name("Blast Furnace")
         @Comment("Whether the Blast Furnace is enabled.")
@@ -295,11 +295,12 @@ object FConfig {
         @JvmField
         val cornflower = Foliage()
 
-        @Name("Crossbow")
-        @Comment("Whether the Crossbow is enabled.")
-        @RequiresMcRestart
-        @JvmField
-        var crossbow = false
+        //@Name("Crossbow")
+        //@Comment("Whether the Crossbow is enabled.")
+        //@RequiresMcRestart
+        //@JvmField
+        @Ignore
+        val crossbow = false
 
         @Name("Dyes")
         @Comment("Whether the new dyes are enabled.")
@@ -597,11 +598,12 @@ object FConfig {
             @JvmField
             var enabled = true
 
-            @Name("Functionality")
-            @Comment("Whether this block's gui can be used.")
-            @JvmField
-            @RequiresMcRestart
-            var functionality = true
+            //@Name("Functionality")
+            //@Comment("Whether this block's gui can be used.")
+            //@JvmField
+            //@RequiresMcRestart
+            @Ignore
+            val functionality = false
         }
 
         class Stonecutter {
@@ -658,13 +660,6 @@ object FConfig {
         @JvmField
         var bee = Bee()
 
-        @Name("Bee Nest Spawn Rate")
-        @Comment("The base chance a bee nest will spawn on a tree. Set to 0 to disable generation.")
-        @RangeDouble(min = 0.0, max = 1.0)
-        @SlidingOption
-        @JvmField
-        var beeNestChance = 0.05
-
         @Name("Honey Block")
         @Comment("Options for Honey Block")
         @RequiresMcRestart
@@ -682,15 +677,10 @@ object FConfig {
         @JvmField
         val ironGolems = IronGolem()
 
-        @Name("Bee Nest Biome Whitelist")
-        @Comment(
-            "The list of biomes that the Bee Nests will spawn in." +
-                    " Example: 'minecraft:taiga:2' allows bee nests to spawn in the Taiga biome and the nests have a 10% chance to spawn." +
-                    " You should lower the chance multiplier in biomes where there are lots of trees."
-        )
+        @Name("Bee Nest Biome Spawns")
+        @Comment("The list of biomes that the Bee Nests will spawn in. Format (without quotes): \"mod:biome:decimal_spawn_rate\"")
         @JvmField
-        var validBiomesForBeeNest =
-            arrayOf("minecraft:plains:0.05", "minecraft:sunflower_plains:0.05", "minecraft:mutated_forest:0.02")
+        var validBiomesForBeeNest = arrayOf("minecraft:plains:0.05", "minecraft:sunflower_plains:0.05", "minecraft:mutated_forest:0.02")
 
         class Bee {
             @Name("Enabled")
@@ -724,25 +714,25 @@ object FConfig {
 
     class NetherUpdate {
         @Name("Soul Fire Lantern")
-        @Comment("Whether the Soul Fire Lantern is enabled.")
+        @Comment("Whether the (CREATIVE ONLY) Soul Fire Lantern is enabled.")
         @RequiresMcRestart
         @JvmField
         var soulFireLantern = true
 
         @Name("Soul Fire Torch")
-        @Comment("Whether the Soul Fire Torch is enabled.")
+        @Comment("Whether the (CREATIVE ONLY) Soul Fire Torch is enabled.")
         @RequiresMcRestart
         @JvmField
         var soulFireTorch = true
 
         @Name("Soul Soil")
-        @Comment("Whether soul soil is added.")
+        @Comment("Whether (CREATIVE ONLY) Soul Soil is enabled.")
         @RequiresMcRestart
         @JvmField
         var soulSoil = true
 
         @Name("Chain")
-        @Comment("Whether the decorative chain block is enabled.")
+        @Comment("Whether the decorative Chain block is enabled.")
         @RequiresMcRestart
         @JvmField
         var chain = true

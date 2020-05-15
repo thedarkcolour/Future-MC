@@ -72,7 +72,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
         this.dataManager.register(ANGER, 0)
     }
 
-    override fun getBlockPathWeight(pos: BlockPos): Double {
+    fun getBlockPathWeightD(pos: BlockPos): Double {
         return if (world.isAir(pos)) 10.0 else 0.0
     }
 
@@ -88,7 +88,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
         goToHiveAI = GoToHiveAI(this)
         tasks.addTask(5, goToHiveAI)
         tasks.addTask(6, GoToFlowerAI(this))
-        tasks.addTask(7, GrowCropsAI(this))
+        //tasks.addTask(7, GrowCropsAI(this))
         tasks.addTask(8, WanderAI(this))
         tasks.addTask(9, EntityAISwimming(this))
         targetTasks.addTask(1, RevengeAI(this))
@@ -367,18 +367,9 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
     fun isTooFar(pos: BlockPos): Boolean {
         return !isWithinDistance(pos, 48)
     }
-// todo check this
+
     fun isHiveValid(): Boolean {
         return hasHive() && world.getTileEntity(hivePos!!) is BeeHiveTile
-    }
-/*
-    private fun isPollinating(): Boolean {
-        return getBeeFlag(0x1)
-    }
-*/
-// todo check this
-    fun setPollinating(isPollinating: Boolean) {
-        setBeeFlag(0x1, isPollinating)
     }
 
     private fun setBeeFlag(flag: Int, bool: Boolean) {
@@ -431,6 +422,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
     }
 
     override fun playStepSound(pos: BlockPos, blockIn: Block) {}
+    // todo bee sounds
 /*
     override fun getAmbientSound(): SoundEvent? {
         return null
@@ -524,7 +516,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
 
         @JvmField
         val FLOWERS = arrayListOf(
-            FBlocks.CORNFLOWER.defaultState, FBlocks.LILY_OF_THE_VALLEY, FBlocks.WITHER_ROSE,
+            FBlocks.CORNFLOWER.defaultState, FBlocks.LILY_OF_THE_VALLEY.defaultState, FBlocks.WITHER_ROSE.defaultState,
             Blocks.YELLOW_FLOWER.defaultState.withProperty(Blocks.YELLOW_FLOWER.typeProperty, EnumFlowerType.DANDELION),
             Blocks.RED_FLOWER.defaultState.withProperty(Blocks.RED_FLOWER.typeProperty, EnumFlowerType.POPPY),
             Blocks.RED_FLOWER.defaultState.withProperty(Blocks.RED_FLOWER.typeProperty, EnumFlowerType.BLUE_ORCHID),

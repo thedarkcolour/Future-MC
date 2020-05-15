@@ -3,12 +3,13 @@ package thedarkcolour.futuremc.registry
 import net.minecraft.client.renderer.entity.RenderIronGolem
 import net.minecraft.entity.EnumCreatureType
 import net.minecraft.init.Biomes
+import net.minecraft.world.storage.loot.LootTableList
 import net.minecraftforge.fml.common.registry.EntityRegistry
 import thedarkcolour.core.util.registerEntity
 import thedarkcolour.core.util.registerEntityModel
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.entity.bee.BeeEntity
 import thedarkcolour.futuremc.entity.bee.BeeRenderer
+import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.entity.fish.cod.EntityCod
 import thedarkcolour.futuremc.entity.fish.cod.RenderCod
 import thedarkcolour.futuremc.entity.fish.pufferfish.EntityPufferfish
@@ -38,19 +39,23 @@ object FEntities {
             EntityRegistry.addSpawn(EntityPanda::class.java, 1, 1, 2, EnumCreatureType.CREATURE, Biomes.JUNGLE, Biomes.JUNGLE_HILLS, Biomes.MUTATED_JUNGLE)
         }
         if (FConfig.buzzyBees.bee.enabled) {
-            registerEntity("bee", BeeEntity::class.java, 32, 4, 16770398, 2500144)
+            registerEntity("bee", EntityBee::class.java, 32, 4, 16770398, 2500144)
         }
         if (FConfig.updateAquatic.fish.cod.enabled) {
             registerEntity("cod", EntityCod::class.java, 32, 5, 12691306, 15058059)
+            LootTableList.register(EntityCod.LOOT_TABLE)
         }
         if (FConfig.updateAquatic.fish.pufferfish.enabled) {
             registerEntity("pufferfish", EntityPufferfish::class.java, 32, 6, 16167425, 3654642)
+            LootTableList.register(EntityPufferfish.LOOT_TABLE)
         }
         if (FConfig.updateAquatic.fish.salmon.enabled) {
             registerEntity("salmon", EntitySalmon::class.java, 32, 7, 10489616, 951412)
+            LootTableList.register(EntitySalmon.LOOT_TABLE)
         }
         if (FConfig.updateAquatic.fish.tropicalFish.enabled) {
             registerEntity("tropical_fish", EntityTropicalFish::class.java, 32, 8, 15690005, 16775663)
+            LootTableList.register(EntityTropicalFish.LOOT_TABLE)
         }
     }
 

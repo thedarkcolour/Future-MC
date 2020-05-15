@@ -7,7 +7,7 @@ import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.core.block.RotatableBlock
-import thedarkcolour.futuremc.client.gui.Gui
+import thedarkcolour.futuremc.client.gui.GuiType
 
 class BlockLoom(properties: Properties?) : RotatableBlock(properties) {
     override fun onBlockActivated(
@@ -15,7 +15,7 @@ class BlockLoom(properties: Properties?) : RotatableBlock(properties) {
         hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float
     ): Boolean {
         if (!worldIn.isRemote) {
-            Gui.LOOM.open(playerIn, worldIn, pos)
+            GuiType.LOOM.open(playerIn, worldIn, pos)
             return true
         }
         return true

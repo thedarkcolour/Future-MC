@@ -1,14 +1,12 @@
 package thedarkcolour.futuremc.client.gui;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.container.ContainerGrindstone;
 
-public class GuiGrindstone extends GuiContainer {
-    private final ContainerGrindstone container;
+public class GuiGrindstone extends FGui<ContainerGrindstone> {
     private static final int WIDTH = 176;
     private static final int HEIGHT = 166;
 
@@ -16,7 +14,6 @@ public class GuiGrindstone extends GuiContainer {
 
     public GuiGrindstone(ContainerGrindstone container) {
         super(container);
-        this.container = container;
 
         xSize = WIDTH;
         ySize = HEIGHT;
@@ -41,12 +38,5 @@ public class GuiGrindstone extends GuiContainer {
         if (container.isRecipeInvalid()) {
             drawTexturedModalRect(i + 92, j + 31, 176, 0, 28, 21);
         }
-    }
-
-    @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        drawDefaultBackground();
-        super.drawScreen(mouseX, mouseY, partialTicks);
-        renderHoveredToolTip(mouseX, mouseY);
     }
 }

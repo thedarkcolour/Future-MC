@@ -58,109 +58,108 @@ object FSounds {
     val BELL_RING = sound("bell_ring")
     val BEE_ENTER_HIVE = sound("bee_enter_hive")
     val ENTITY_BEE_EXIT_HIVE = sound("bee_exit_hive")
-    val BEE_STING = sound("bee_sting")
-    val BEE_DEATH = sound("bee_death")
-    val BEE_HURT = sound("bee_hurt")
-    val BEE_POLLINATE = sound("bee_pollinate")
-    val BEE_WORK = sound("bee_work")
-    val BEE_AGGRESSIVE = sound("bee_aggressive")
-    val BEE_PASSIVE = sound("bee_passive")
+    @JvmField val BEE_STING = sound("bee_sting")
+    @JvmField val BEE_DEATH = sound("bee_death")
+    @JvmField val BEE_HURT = sound("bee_hurt")
+    @JvmField val BEE_POLLINATE = sound("bee_pollinate")
+    @JvmField val BEE_WORK = sound("bee_work")
+    @JvmField val BEE_AGGRESSIVE = sound("bee_aggressive")
+    @JvmField val BEE_PASSIVE = sound("bee_passive")
     val HONEY_BOTTLE_DRINK = sound("honey_bottle_drink")
     val BEEHIVE_SHEAR = sound("shear_hive")
     val LANTERN_BREAK = sound("lantern_place")
     val LANTERN_PLACE = sound("lantern_break")
-    var BUCKET_FILL_FISH: SoundEvent private set
-    var BUCKET_EMPTY_FISH: SoundEvent private set
-    var FISH_SWIM: SoundEvent private set
-    var COD_FLOP: SoundEvent private set
-    var COD_HURT: SoundEvent private set
-    var COD_DEATH: SoundEvent private set
-    var COD_AMBIENT: SoundEvent private set
-    var PUFFERFISH_FLOP: SoundEvent private set
-    var PUFFERFISH_HURT: SoundEvent private set
-    var PUFFERFISH_DEATH: SoundEvent private set
-    var PUFFERFISH_AMBIENT: SoundEvent private set
-    var PUFFERFISH_INFLATE: SoundEvent private set
-    var PUFFERFISH_DEFLATE: SoundEvent private set
-    var PUFFERFISH_STING: SoundEvent private set
-    var SALMON_FLOP: SoundEvent private set
-    var SALMON_HURT: SoundEvent private set
-    var SALMON_DEATH: SoundEvent private set
-    var SALMON_AMBIENT: SoundEvent private set
-    var TROPICAL_FISH_FLOP: SoundEvent private set
-    var TROPICAL_FISH_HURT: SoundEvent private set
-    var TROPICAL_FISH_DEATH: SoundEvent private set
-    var TROPICAL_FISH_AMBIENT: SoundEvent private set
-    var DROWNED_AMBIENT: SoundEvent private set
-    var DROWNED_HURT: SoundEvent private set
-    var DROWNED_DEATH: SoundEvent private set
-    var DROWNED_STEP: SoundEvent private set
-    var DROWNED_SWIM: SoundEvent private set
-    var IRON_GOLEM_REPAIR: SoundEvent private set
-    var BLOCK_NETHERITE_BREAK: SoundEvent private set
-    var BLOCK_NETHERITE_STEP: SoundEvent private set
-    var BLOCK_NETHERITE_PLACE: SoundEvent private set
-    var BLOCK_NETHERITE_HIT: SoundEvent private set
-    var BLOCK_NETHERITE_FALL: SoundEvent private set
-    var BLOCK_ANCIENT_DEBRIS_BREAK: SoundEvent private set
-    var BLOCK_ANCIENT_DEBRIS_STEP: SoundEvent private set
-    var BLOCK_ANCIENT_DEBRIS_PLACE: SoundEvent private set
-    var BLOCK_ANCIENT_DEBRIS_HIT: SoundEvent private set
-    var BLOCK_ANCIENT_DEBRIS_FALL: SoundEvent private set
-    var BLOCK_SOUL_SOIL_BREAK: SoundEvent private set
-    var BLOCK_SOUL_SOIL_STEP: SoundEvent private set
-    var BLOCK_SOUL_SOIL_PLACE: SoundEvent private set
-    var BLOCK_SOUL_SOIL_HIT: SoundEvent private set
-    var BLOCK_SOUL_SOIL_FALL: SoundEvent private set
-    var BLOCK_NYLIUM_BREAK: SoundEvent private set
-    var BLOCK_NYLIUM_STEP: SoundEvent private set
-    var BLOCK_NYLIUM_PLACE: SoundEvent private set
-    var BLOCK_NYLIUM_HIT: SoundEvent private set
-    var BLOCK_NYLIUM_FALL: SoundEvent private set
-    var BLOCK_NETHER_STEM_BREAK: SoundEvent private set
-    var BLOCK_NETHER_STEM_STEP: SoundEvent private set
-    var BLOCK_NETHER_STEM_PLACE: SoundEvent private set
-    var BLOCK_NETHER_STEM_HIT: SoundEvent private set
-    var BLOCK_NETHER_STEM_FALL: SoundEvent private set
-    var BLOCK_NETHER_SPROUTS_BREAK: SoundEvent private set
-    var BLOCK_NETHER_SPROUTS_STEP: SoundEvent private set
-    var BLOCK_NETHER_SPROUTS_PLACE: SoundEvent private set
-    var BLOCK_NETHER_SPROUTS_HIT: SoundEvent private set
-    var BLOCK_NETHER_SPROUTS_FALL: SoundEvent private set
-    var BLOCK_FUNGUS_BREAK: SoundEvent private set
-    var BLOCK_FUNGUS_STEP: SoundEvent private set
-    var BLOCK_FUNGUS_PLACE: SoundEvent private set
-    var BLOCK_FUNGUS_HIT: SoundEvent private set
-    var BLOCK_FUNGUS_FALL: SoundEvent private set
-    var BLOCK_BASALT_BREAK: SoundEvent private set
-    var BLOCK_BASALT_STEP: SoundEvent private set
-    var BLOCK_BASALT_PLACE: SoundEvent private set
-    var BLOCK_BASALT_HIT: SoundEvent private set
-    var BLOCK_BASALT_FALL: SoundEvent private set
-    var BLOCK_WEEPING_VINES_BREAK: SoundEvent private set
-    var BLOCK_WEEPING_VINES_STEP: SoundEvent private set
-    var BLOCK_WEEPING_VINES_PLACE: SoundEvent private set
-    var BLOCK_WEEPING_VINES_HIT: SoundEvent private set
-    var BLOCK_WEEPING_VINES_FALL: SoundEvent private set
-    var BLOCK_SHROOMLIGHT_BREAK: SoundEvent private set
-    var BLOCK_SHROOMLIGHT_STEP: SoundEvent private set
-    var BLOCK_SHROOMLIGHT_PLACE: SoundEvent private set
-    var BLOCK_SHROOMLIGHT_HIT: SoundEvent private set
-    var BLOCK_SHROOMLIGHT_FALL: SoundEvent private set
-    var BLOCK_ROOTS_BREAK: SoundEvent private set
-    var BLOCK_ROOTS_STEP: SoundEvent private set
-    var BLOCK_ROOTS_PLACE: SoundEvent private set
-    var BLOCK_ROOTS_HIT: SoundEvent private set
-    var BLOCK_ROOTS_FALL: SoundEvent private set
+    val BUCKET_FILL_FISH = sound("bucket_fill_fish")
+    val BUCKET_EMPTY_FISH = sound("bucket_empty_fish")
+    val COD_SWIM = sound("cod_swim")
+    val COD_FLOP = sound("cod_flop")
+    val COD_HURT = sound("cod_hurt")
+    val COD_DEATH = sound("cod_death")
+    val PUFFERFISH_SWIM = sound("pufferfish_swim")
+    val PUFFERFISH_FLOP = sound("pufferfish_flop")
+    val PUFFERFISH_HURT = sound("pufferfish_hurt")
+    val PUFFERFISH_DEATH = sound("pufferfish_death")
+    val PUFFERFISH_INFLATE = sound("pufferfish_inflate")
+    val PUFFERFISH_DEFLATE = sound("pufferfish_deflate")
+    val PUFFERFISH_STING = sound("pufferfish_sting")
+    val SALMON_SWIM = sound("salmon_swim")
+    val SALMON_FLOP = sound("salmon_flop")
+    val SALMON_HURT = sound("salmon_hurt")
+    val SALMON_DEATH = sound("salmon_death")
+    val TROPICAL_FISH_SWIM = sound("tropical_fish_swim")
+    val TROPICAL_FISH_FLOP = sound("tropical_fish_flop")
+    val TROPICAL_FISH_HURT = sound("tropical_fish_hurt")
+    val TROPICAL_FISH_DEATH = sound("tropical_fish_death")
+    val DROWNED_AMBIENT = sound("drowned_ambient")
+    val DROWNED_HURT = sound("drowned_hurt")
+    val DROWNED_DEATH = sound("drowned_death")
+    val DROWNED_STEP = sound("drowned_step")
+    val DROWNED_SWIM = sound("drowned_swim")
+    val IRON_GOLEM_REPAIR = sound("iron_golem_repair")
+    val BLOCK_NETHERITE_BREAK = sound("netherite_block_break")
+    val BLOCK_NETHERITE_STEP = sound("netherite_block_step")
+    val BLOCK_NETHERITE_PLACE = sound("netherite_block_place")
+    val BLOCK_NETHERITE_HIT = sound("netherite_block_hit")
+    val BLOCK_NETHERITE_FALL = sound("netherite_block_fall")
+    val BLOCK_ANCIENT_DEBRIS_BREAK = sound("ancient_debris_break")
+    val BLOCK_ANCIENT_DEBRIS_STEP = sound("ancient_debris_step")
+    val BLOCK_ANCIENT_DEBRIS_PLACE = sound("ancient_debris_place")
+    val BLOCK_ANCIENT_DEBRIS_HIT = sound("ancient_debris_hit")
+    val BLOCK_ANCIENT_DEBRIS_FALL = sound("ancient_debris_fall")
+    val BLOCK_SOUL_SOIL_BREAK = sound("soul_soil_break")
+    val BLOCK_SOUL_SOIL_STEP = sound("soul_soil_step")
+    val BLOCK_SOUL_SOIL_PLACE = sound("soul_soil_place")
+    val BLOCK_SOUL_SOIL_HIT = sound("soul_soil_hit")
+    val BLOCK_SOUL_SOIL_FALL = sound("soul_soil_fall")
+    val BLOCK_NYLIUM_BREAK = sound("nylium_break")
+    val BLOCK_NYLIUM_STEP = sound("nylium_step")
+    val BLOCK_NYLIUM_PLACE = sound("nylium_place")
+    val BLOCK_NYLIUM_HIT = sound("nylium_hit")
+    val BLOCK_NYLIUM_FALL = sound("nylium_fall")
+    val BLOCK_NETHER_STEM_BREAK = sound("nether_stem_break")
+    val BLOCK_NETHER_STEM_STEP = sound("nether_stem_step")
+    val BLOCK_NETHER_STEM_PLACE = sound("nether_stem_place")
+    val BLOCK_NETHER_STEM_HIT = sound("nether_stem_hit")
+    val BLOCK_NETHER_STEM_FALL = sound("nether_stem_fall")
+    val BLOCK_NETHER_SPROUTS_BREAK = sound("nether_sprouts_break")
+    val BLOCK_NETHER_SPROUTS_STEP = sound("nether_sprouts_step")
+    val BLOCK_NETHER_SPROUTS_PLACE = sound("nether_sprouts_place")
+    val BLOCK_NETHER_SPROUTS_HIT = sound("nether_sprouts_hit")
+    val BLOCK_NETHER_SPROUTS_FALL = sound("nether_sprouts_fall")
+    val BLOCK_FUNGUS_BREAK = sound("fungus_break")
+    val BLOCK_FUNGUS_STEP = sound("fungus_step")
+    val BLOCK_FUNGUS_PLACE = sound("fungus_place")
+    val BLOCK_FUNGUS_HIT = sound("fungus_hit")
+    val BLOCK_FUNGUS_FALL = sound("fungus_fall")
+    val BLOCK_BASALT_BREAK = sound("basalt_break")
+    val BLOCK_BASALT_STEP = sound("basalt_step")
+    val BLOCK_BASALT_PLACE = sound("basalt_place")
+    val BLOCK_BASALT_HIT = sound("basalt_hit")
+    val BLOCK_BASALT_FALL = sound("basalt_fall")
+    val BLOCK_WEEPING_VINES_BREAK = sound("weeping_vines_break")
+    val BLOCK_WEEPING_VINES_STEP = sound("weeping_vines_step")
+    val BLOCK_WEEPING_VINES_PLACE = sound("weeping_vines_place")
+    val BLOCK_WEEPING_VINES_HIT = sound("weeping_vines_hit")
+    val BLOCK_WEEPING_VINES_FALL = sound("weeping_vines_fall")
+    val BLOCK_SHROOMLIGHT_BREAK = sound("shroomlight_break")
+    val BLOCK_SHROOMLIGHT_STEP = sound("shroomlight_step")
+    val BLOCK_SHROOMLIGHT_PLACE = sound("shroomlight_place")
+    val BLOCK_SHROOMLIGHT_HIT = sound("shroomlight_hit")
+    val BLOCK_SHROOMLIGHT_FALL = sound("shroomlight_fall")
+    val BLOCK_ROOTS_BREAK = sound("roots_break")
+    val BLOCK_ROOTS_STEP = sound("roots_step")
+    val BLOCK_ROOTS_PLACE = sound("roots_place")
+    val BLOCK_ROOTS_HIT = sound("roots_hit")
+    val BLOCK_ROOTS_FALL = sound("roots_fall")
     val BLOCK_SMITHING_TABLE_USE = sound("smithing_table_use")
     val ITEM_ARMOR_EQUIP_NETHERITE = sound("equip_netherite")
 
-    var BAMBOO: SoundType private set
-    var BAMBOO_SAPLING: SoundType private set
-    var CORAL: SoundType private set
-    var HONEY_BLOCK: SoundType private set
-    var LANTERN: SoundType private set
-    var SCAFFOLDING: SoundType private set
+    val BAMBOO: SoundType
+    val BAMBOO_SAPLING: SoundType
+    val CORAL: SoundType
+    val HONEY_BLOCK: SoundType
+    val LANTERN: SoundType
+    val SCAFFOLDING: SoundType
     val NETHERITE: SoundType
     val ANCIENT_DEBRIS: SoundType
     val SOUL_SOIL: SoundType
@@ -217,11 +216,11 @@ object FSounds {
         sounds.register(BAMBOO_PLACE)
         sounds.register(BAMBOO_SAPLING_PLACE)
         sounds.register(BAMBOO_SAPLING_HIT)
-        sounds.register(SCAFFOLD_BREAK)
-        sounds.register(SCAFFOLD_STEP)
-        sounds.register(SCAFFOLD_PLACE)
-        sounds.register(SCAFFOLD_HIT)
-        sounds.register(SCAFFOLD_FALL)
+        // sounds.register(SCAFFOLD_BREAK)
+        // sounds.register(SCAFFOLD_STEP)
+        // sounds.register(SCAFFOLD_PLACE)
+        // sounds.register(SCAFFOLD_HIT)
+        // sounds.register(SCAFFOLD_FALL)
         sounds.register(HONEY_BLOCK_BREAK)
         sounds.register(HONEY_BLOCK_STEP)
         sounds.register(HONEY_BLOCK_SLIDE)
@@ -242,97 +241,95 @@ object FSounds {
         sounds.register(BEEHIVE_SHEAR)
         sounds.register(LANTERN_PLACE)
         sounds.register(LANTERN_BREAK)
-        // TODO add sounds
-        BUCKET_FILL_FISH = sounds(sound("bucket_fill_fish"))
-        BUCKET_EMPTY_FISH = sounds(sound("bucket_empty_fish"))
-        FISH_SWIM = sounds(sound("fish_swim"))
-        COD_FLOP = sounds(sound("cod_flop"))
-        COD_HURT = sounds(sound("cod_hurt"))
-        COD_DEATH = sounds(sound("cod_death"))
-        COD_AMBIENT = sounds(sound("cod_ambient"))
-        PUFFERFISH_FLOP = sounds(sound("pufferfish_flop"))
-        PUFFERFISH_HURT = sounds(sound("pufferfish_hurt"))
-        PUFFERFISH_DEATH = sounds(sound("pufferfish_death"))
-        PUFFERFISH_AMBIENT = sounds(sound("pufferfish_ambient"))
-        PUFFERFISH_INFLATE = sounds(sound("pufferfish_inflate"))
-        PUFFERFISH_DEFLATE = sounds(sound("pufferfish_deflate"))
-        PUFFERFISH_STING = sounds(sound("pufferfish_sting"))
-        SALMON_FLOP = sounds(sound("salmon_flop"))
-        SALMON_HURT = sounds(sound("salmon_hurt"))
-        SALMON_DEATH = sounds(sound("salmon_death"))
-        SALMON_AMBIENT = sounds(sound("salmon_ambient"))
-        TROPICAL_FISH_FLOP = sounds(sound("tropical_fish_flop"))
-        TROPICAL_FISH_HURT = sounds(sound("tropical_fish_hurt"))
-        TROPICAL_FISH_DEATH = sounds(sound("tropical_fish_death"))
-        TROPICAL_FISH_AMBIENT = sounds(sound("tropical_fish_ambient"))
-        DROWNED_AMBIENT = sounds(sound("drowned_ambient"))
-        DROWNED_HURT = sounds(sound("drowned_hurt"))
-        DROWNED_DEATH = sounds(sound("drowned_death"))
-        DROWNED_STEP = sounds(sound("drowned_step"))
-        DROWNED_SWIM = sounds(sound("drowned_swim"))
-        IRON_GOLEM_REPAIR = sounds(sound("iron_golem_repair"))
-        BLOCK_NETHERITE_BREAK = sounds(sound("netherite_block_break"))
-        BLOCK_NETHERITE_STEP = sounds(sound("netherite_block_step"))
-        BLOCK_NETHERITE_PLACE = sounds(sound("netherite_block_place"))
-        BLOCK_NETHERITE_HIT = sounds(sound("netherite_block_hit"))
-        BLOCK_NETHERITE_FALL = sounds(sound("netherite_block_fall"))
-        BLOCK_ANCIENT_DEBRIS_BREAK = sounds(sound("ancient_debris_break"))
-        BLOCK_ANCIENT_DEBRIS_STEP = sounds(sound("ancient_debris_step"))
-        BLOCK_ANCIENT_DEBRIS_PLACE = sounds(sound("ancient_debris_place"))
-        BLOCK_ANCIENT_DEBRIS_HIT = sounds(sound("ancient_debris_hit"))
-        BLOCK_ANCIENT_DEBRIS_FALL = sounds(sound("ancient_debris_fall"))
-        BLOCK_SOUL_SOIL_BREAK = sounds(sound("soul_soil_break"))
-        BLOCK_SOUL_SOIL_STEP = sounds(sound("soul_soil_step"))
-        BLOCK_SOUL_SOIL_PLACE = sounds(sound("soul_soil_place"))
-        BLOCK_SOUL_SOIL_HIT = sounds(sound("soul_soil_hit"))
-        BLOCK_SOUL_SOIL_FALL = sounds(sound("soul_soil_fall"))
-        BLOCK_NYLIUM_BREAK = sounds(sound("nylium_break"))
-        BLOCK_NYLIUM_STEP = sounds(sound("nylium_step"))
-        BLOCK_NYLIUM_PLACE = sounds(sound("nylium_place"))
-        BLOCK_NYLIUM_HIT = sounds(sound("nylium_hit"))
-        BLOCK_NYLIUM_FALL = sounds(sound("nylium_fall"))
-        BLOCK_NETHER_STEM_BREAK = sounds(sound("nether_stem_break"))
-        BLOCK_NETHER_STEM_STEP = sounds(sound("nether_stem_step"))
-        BLOCK_NETHER_STEM_PLACE = sounds(sound("nether_stem_place"))
-        BLOCK_NETHER_STEM_HIT = sounds(sound("nether_stem_hit"))
-        BLOCK_NETHER_STEM_FALL = sounds(sound("nether_stem_fall"))
-        BLOCK_NETHER_SPROUTS_BREAK = sounds(sound("nether_sprouts_break"))
-        BLOCK_NETHER_SPROUTS_STEP = sounds(sound("nether_sprouts_step"))
-        BLOCK_NETHER_SPROUTS_PLACE = sounds(sound("nether_sprouts_place"))
-        BLOCK_NETHER_SPROUTS_HIT = sounds(sound("nether_sprouts_hit"))
-        BLOCK_NETHER_SPROUTS_FALL = sounds(sound("nether_sprouts_fall"))
-        BLOCK_FUNGUS_BREAK = sounds(sound("fungus_break"))
-        BLOCK_FUNGUS_STEP = sounds(sound("fungus_step"))
-        BLOCK_FUNGUS_PLACE = sounds(sound("fungus_place"))
-        BLOCK_FUNGUS_HIT = sounds(sound("fungus_hit"))
-        BLOCK_FUNGUS_FALL = sounds(sound("fungus_fall"))
-        BLOCK_BASALT_BREAK = sounds(sound("basalt_break"))
-        BLOCK_BASALT_STEP = sounds(sound("basalt_step"))
-        BLOCK_BASALT_PLACE = sounds(sound("basalt_place"))
-        BLOCK_BASALT_HIT = sounds(sound("basalt_hit"))
-        BLOCK_BASALT_FALL = sounds(sound("basalt_fall"))
-        BLOCK_WEEPING_VINES_BREAK = sounds(sound("weeping_vines_break"))
-        BLOCK_WEEPING_VINES_STEP = sounds(sound("weeping_vines_step"))
-        BLOCK_WEEPING_VINES_PLACE = sounds(sound("weeping_vines_place"))
-        BLOCK_WEEPING_VINES_HIT = sounds(sound("weeping_vines_hit"))
-        BLOCK_WEEPING_VINES_FALL = sounds(sound("weeping_vines_fall"))
-        BLOCK_SHROOMLIGHT_BREAK = sounds(sound("shroomlight_break"))
-        BLOCK_SHROOMLIGHT_STEP = sounds(sound("shroomlight_step"))
-        BLOCK_SHROOMLIGHT_PLACE = sounds(sound("shroomlight_place"))
-        BLOCK_SHROOMLIGHT_HIT = sounds(sound("shroomlight_hit"))
-        BLOCK_SHROOMLIGHT_FALL = sounds(sound("shroomlight_fall"))
-        BLOCK_ROOTS_BREAK = sounds(sound("roots_break"))
-        BLOCK_ROOTS_STEP = sounds(sound("roots_step"))
-        BLOCK_ROOTS_PLACE = sounds(sound("roots_place"))
-        BLOCK_ROOTS_HIT = sounds(sound("roots_hit"))
-        BLOCK_ROOTS_FALL = sounds(sound("roots_fall"))
+        sounds.register(BUCKET_FILL_FISH)
+        sounds.register(BUCKET_EMPTY_FISH)
+        sounds.register(COD_SWIM)
+        sounds.register(COD_FLOP)
+        sounds.register(COD_HURT)
+        sounds.register(COD_DEATH)
+        sounds.register(PUFFERFISH_SWIM)
+        sounds.register(PUFFERFISH_FLOP)
+        sounds.register(PUFFERFISH_HURT)
+        sounds.register(PUFFERFISH_DEATH)
+        sounds.register(PUFFERFISH_INFLATE)
+        sounds.register(PUFFERFISH_DEFLATE)
+        sounds.register(PUFFERFISH_STING)
+        sounds.register(SALMON_SWIM)
+        sounds.register(SALMON_FLOP)
+        sounds.register(SALMON_HURT)
+        sounds.register(SALMON_DEATH)
+        sounds.register(TROPICAL_FISH_SWIM)
+        sounds.register(TROPICAL_FISH_FLOP)
+        sounds.register(TROPICAL_FISH_HURT)
+        sounds.register(TROPICAL_FISH_DEATH)
+        // sounds.register(DROWNED_AMBIENT)
+        // sounds.register(DROWNED_HURT)
+        // sounds.register(DROWNED_DEATH)
+        // sounds.register(DROWNED_STEP)
+        // sounds.register(DROWNED_SWIM)
+        sounds.register(IRON_GOLEM_REPAIR)
+        sounds.register(BLOCK_NETHERITE_BREAK)
+        sounds.register(BLOCK_NETHERITE_STEP)
+        sounds.register(BLOCK_NETHERITE_PLACE)
+        sounds.register(BLOCK_NETHERITE_HIT)
+        sounds.register(BLOCK_NETHERITE_FALL)
+        sounds.register(BLOCK_ANCIENT_DEBRIS_BREAK)
+        sounds.register(BLOCK_ANCIENT_DEBRIS_STEP)
+        sounds.register(BLOCK_ANCIENT_DEBRIS_PLACE)
+        sounds.register(BLOCK_ANCIENT_DEBRIS_HIT)
+        sounds.register(BLOCK_ANCIENT_DEBRIS_FALL)
+        sounds.register(BLOCK_SOUL_SOIL_BREAK)
+        sounds.register(BLOCK_SOUL_SOIL_STEP)
+        sounds.register(BLOCK_SOUL_SOIL_PLACE)
+        sounds.register(BLOCK_SOUL_SOIL_HIT)
+        sounds.register(BLOCK_SOUL_SOIL_FALL)
+        sounds.register(BLOCK_NYLIUM_BREAK)
+        sounds.register(BLOCK_NYLIUM_STEP)
+        sounds.register(BLOCK_NYLIUM_PLACE)
+        sounds.register(BLOCK_NYLIUM_HIT)
+        sounds.register(BLOCK_NYLIUM_FALL)
+        sounds.register(BLOCK_NETHER_STEM_BREAK)
+        sounds.register(BLOCK_NETHER_STEM_STEP)
+        sounds.register(BLOCK_NETHER_STEM_PLACE)
+        sounds.register(BLOCK_NETHER_STEM_HIT)
+        sounds.register(BLOCK_NETHER_STEM_FALL)
+        sounds.register(BLOCK_NETHER_SPROUTS_BREAK)
+        sounds.register(BLOCK_NETHER_SPROUTS_STEP)
+        sounds.register(BLOCK_NETHER_SPROUTS_PLACE)
+        sounds.register(BLOCK_NETHER_SPROUTS_HIT)
+        sounds.register(BLOCK_NETHER_SPROUTS_FALL)
+        // sounds.register(BLOCK_FUNGUS_BREAK)
+        // sounds.register(BLOCK_FUNGUS_STEP)
+        // sounds.register(BLOCK_FUNGUS_PLACE)
+        // sounds.register(BLOCK_FUNGUS_HIT)
+        // sounds.register(BLOCK_FUNGUS_FALL)
+        // sounds.register(BLOCK_BASALT_BREAK)
+        // sounds.register(BLOCK_BASALT_STEP)
+        // sounds.register(BLOCK_BASALT_PLACE)
+        // sounds.register(BLOCK_BASALT_HIT)
+        // sounds.register(BLOCK_BASALT_FALL)
+        // sounds.register(BLOCK_WEEPING_VINES_BREAK)
+        // sounds.register(BLOCK_WEEPING_VINES_STEP)
+        // sounds.register(BLOCK_WEEPING_VINES_PLACE)
+        // sounds.register(BLOCK_WEEPING_VINES_HIT)
+        // sounds.register(BLOCK_WEEPING_VINES_FALL)
+        // sounds.register(BLOCK_SHROOMLIGHT_BREAK)
+        // sounds.register(BLOCK_SHROOMLIGHT_STEP)
+        // sounds.register(BLOCK_SHROOMLIGHT_PLACE)
+        // sounds.register(BLOCK_SHROOMLIGHT_HIT)
+        // sounds.register(BLOCK_SHROOMLIGHT_FALL)
+        sounds.register(BLOCK_ROOTS_BREAK)
+        sounds.register(BLOCK_ROOTS_STEP)
+        sounds.register(BLOCK_ROOTS_PLACE)
+        sounds.register(BLOCK_ROOTS_HIT)
+        sounds.register(BLOCK_ROOTS_FALL)
 
         BAMBOO = SoundType(1.0f, 1.0f, BAMBOO_PLACE, BAMBOO_STEP, BAMBOO_PLACE, BAMBOO_PLACE, BAMBOO_STEP)
         BAMBOO_SAPLING = SoundType(1.0f, 1.0f, BAMBOO_SAPLING_HIT, BAMBOO_SAPLING_PLACE, BAMBOO_SAPLING_PLACE, BAMBOO_SAPLING_HIT, BAMBOO_SAPLING_PLACE)
-        CORAL = SoundType(1.0f, 1.0f, SCAFFOLD_BREAK, SCAFFOLD_STEP, SCAFFOLD_PLACE, SCAFFOLD_HIT, SCAFFOLD_FALL)
+        CORAL = SoundType(1.0f, 1.0f, CORAL_DIG, CORAL_STEP, CORAL_DIG, CORAL_DIG, CORAL_STEP)
         HONEY_BLOCK = SoundType(1.0f, 1.0f, HONEY_BLOCK_BREAK, HONEY_BLOCK_STEP, HONEY_BLOCK_BREAK, HONEY_BLOCK_BREAK, HONEY_BLOCK_STEP)
         LANTERN = SoundType(1.0f, 1.0f, LANTERN_BREAK, LANTERN_PLACE, LANTERN_PLACE, LANTERN_BREAK, LANTERN_PLACE)
-        SCAFFOLDING = SoundType(1.0f, 1.0f, CORAL_DIG, CORAL_STEP, CORAL_DIG, CORAL_DIG, CORAL_STEP)
+        SCAFFOLDING = SoundType(1.0f, 1.0f, SCAFFOLD_BREAK, SCAFFOLD_STEP, SCAFFOLD_PLACE, SCAFFOLD_HIT, SCAFFOLD_FALL)
         NETHERITE = SoundType(1.0f, 1.0f, BLOCK_NETHERITE_BREAK, BLOCK_NETHERITE_STEP, BLOCK_NETHERITE_PLACE, BLOCK_NETHERITE_HIT, BLOCK_NETHERITE_FALL)
         ANCIENT_DEBRIS = SoundType(1.0f, 1.0f, BLOCK_ANCIENT_DEBRIS_BREAK, BLOCK_ANCIENT_DEBRIS_STEP, BLOCK_ANCIENT_DEBRIS_PLACE, BLOCK_ANCIENT_DEBRIS_HIT, BLOCK_ANCIENT_DEBRIS_FALL)
         SOUL_SOIL = SoundType(1.0f, 1.0f, BLOCK_SOUL_SOIL_BREAK, BLOCK_SOUL_SOIL_STEP, BLOCK_SOUL_SOIL_PLACE, BLOCK_SOUL_SOIL_HIT, BLOCK_SOUL_SOIL_FALL)

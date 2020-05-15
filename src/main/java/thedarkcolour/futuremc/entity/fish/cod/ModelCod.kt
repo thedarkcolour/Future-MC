@@ -1,12 +1,11 @@
 package thedarkcolour.futuremc.entity.fish.cod
 
-import net.minecraft.client.model.ModelBase
 import net.minecraft.client.model.ModelRenderer
-import net.minecraft.entity.Entity
+import thedarkcolour.futuremc.entity.FModel
 import kotlin.math.PI
 import kotlin.math.sin
 
-class ModelCod : ModelBase() {
+class ModelCod : FModel<EntityCod>() {
     private val body: ModelRenderer
     private val finTop: ModelRenderer
     private val head: ModelRenderer
@@ -43,7 +42,7 @@ class ModelCod : ModelBase() {
     }
 
     override fun render(
-        entityIn: Entity,
+        entity: EntityCod,
         limbSwing: Float,
         limbSwingAmount: Float,
         ageInTicks: Float,
@@ -51,7 +50,6 @@ class ModelCod : ModelBase() {
         headPitch: Float,
         scale: Float
     ) {
-        setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn)
         body.render(scale)
         head.render(scale)
         headFront.render(scale)
@@ -62,15 +60,15 @@ class ModelCod : ModelBase() {
     }
 
     override fun setRotationAngles(
+        entity: EntityCod,
         limbSwing: Float,
         limbSwingAmount: Float,
         ageInTicks: Float,
         netHeadYaw: Float,
         headPitch: Float,
-        scaleFactor: Float,
-        entityIn: Entity
+        scaleFactor: Float
     ) {
-        val f = if (entityIn.isInWater) {
+        val f = if (entity.isInWater) {
             1F
         } else {
             1.5F

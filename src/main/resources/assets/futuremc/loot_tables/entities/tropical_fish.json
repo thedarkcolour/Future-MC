@@ -1,0 +1,20 @@
+{
+    "pools": [
+        {
+            "name": "futuremc:tropical_fish",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:fish",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_data",
+                            "data": 2
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

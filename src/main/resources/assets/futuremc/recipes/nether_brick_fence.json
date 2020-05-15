@@ -9,7 +9,8 @@
             "item": "minecraft:nether_brick"
         },
         "X": {
-            "item": "minecraft:netherbrick"
+            "type": "forge:ore_dict",
+            "ore": "ingotBrickNether"
         }
     },
     "result": {

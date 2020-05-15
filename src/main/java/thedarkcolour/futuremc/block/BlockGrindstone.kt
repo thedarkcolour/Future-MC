@@ -17,7 +17,7 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import thedarkcolour.core.block.FBlock
 import thedarkcolour.futuremc.FutureMC
-import thedarkcolour.futuremc.client.gui.Gui
+import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.config.FConfig
 
 class BlockGrindstone(properties: Properties) : FBlock(properties) {
@@ -31,7 +31,7 @@ class BlockGrindstone(properties: Properties) : FBlock(properties) {
         hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float
     ): Boolean {
         return if (FConfig.villageAndPillage.grindstone.functionality) {
-            Gui.GRINDSTONE.open(playerIn, worldIn, pos)
+            GuiType.GRINDSTONE.open(playerIn, worldIn, pos)
         } else false
     }
 

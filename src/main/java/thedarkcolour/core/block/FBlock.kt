@@ -40,9 +40,9 @@ open class FBlock(properties: Properties) : Block(properties.material, propertie
     }
 
     override fun getBoundingBox(
-        p_getBoundingBox_1_: IBlockState,
-        p_getBoundingBox_2_: IBlockAccess,
-        p_getBoundingBox_3_: BlockPos
+        state: IBlockState,
+        worldIn: IBlockAccess,
+        pos: BlockPos
     ): AxisAlignedBB {
         return shape
     }

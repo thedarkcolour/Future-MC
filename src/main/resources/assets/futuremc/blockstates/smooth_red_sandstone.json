@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "futuremc:smooth_red_sandstone"
+    },
+    "variants": {
+        "inventory": [
+            {}
+        ],
+        "normal": [
+            {}
+        ]
+    }
+}

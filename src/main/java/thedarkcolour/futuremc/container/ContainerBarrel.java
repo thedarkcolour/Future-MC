@@ -17,8 +17,11 @@ import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.client.gui.GuiBarrel;
 import thedarkcolour.futuremc.tile.TileBarrel;
 
+import javax.annotation.Nonnull;
+
 @ChestContainer
 public class ContainerBarrel extends FContainer {
+    @Nonnull
     public final TileBarrel te;
 
     public ContainerBarrel(InventoryPlayer playerInv, TileEntity te) {

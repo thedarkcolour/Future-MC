@@ -12,7 +12,7 @@ class GoToHiveAI(bee: BeeEntity) : GoToBlockAI(bee) {
 
     override fun canBeeStart(): Boolean {
         val hivePos = bee.hivePos ?: return false
-        return (bee.maximumHomeDistance != -1.0f) && bee.canEnterHive()
+        return bee.hasHome() && bee.canEnterHive()
                 && !isCloseEnough(hivePos) && bee.world.getBlockState(hivePos).block is BeeHiveBlock
     }
 

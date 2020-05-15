@@ -18,7 +18,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'kotlin'
 apply plugin: 'com.wynprice.cursemaven'
 
-version = "1.12.2-0.2.03"
+version = "1.12.2-0.2.1"
 group = "thedarkcolour.futuremc"
 archivesBaseName = "future-mc"
 

@@ -30,6 +30,7 @@ import thedarkcolour.core.tile.InteractionTile
 import thedarkcolour.futuremc.block.BeeHiveBlock
 import thedarkcolour.futuremc.block.CampfireBlock
 import thedarkcolour.futuremc.entity.bee.BeeEntity
+import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FSounds
 
@@ -63,15 +64,15 @@ class BeeHiveTile : InteractionTile(), ITickable {
                     if (!isSmoked()) {
                         bee.setBeeAttacker(playerIn)
                     } else {
-                        bee.cannotEnterHiveTicks = 400
+                        bee.setCannotEnterHiveTicks(400)
                     }
                 }
             }
         }
     }
 
-    private fun tryReleaseBee(state: BeeState): ArrayList<BeeEntity> {
-        return ArrayList<BeeEntity>().also { list ->
+    private fun tryReleaseBee(state: BeeState): ArrayList<EntityBee> {
+        return ArrayList<EntityBee>().also { list ->
             bees.removeIf { releaseBee(it.data, list, state) }
         }
     }
@@ -80,7 +81,9 @@ class BeeHiveTile : InteractionTile(), ITickable {
 
     private fun isSmoked() = CampfireBlock.isLitInRange(world, pos, 5)
 
-    fun tryEnterHive(entityIn: BeeEntity, isDelivering: Boolean, i: Int = 0) {
+    fun tryEnterHive(entityIn: BeeEntity, isDelivering: Boolean, i: Int = 0): Nothing = TODO("DARK! FIX THE TILE ENTITY!")
+
+    fun tryEnterHive(entityIn: EntityBee, isDelivering: Boolean, i: Int = 0) {
         if (bees.size < 3) {
             entityIn.dismountRidingEntity()
             entityIn.removePassengers()
@@ -100,7 +103,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
         }
     }
 
-    private fun releaseBee(tag: NBTTagCompound, list: MutableList<BeeEntity>?, beeState: BeeState): Boolean {
+    private fun releaseBee(tag: NBTTagCompound, list: MutableList<EntityBee>?, beeState: BeeState): Boolean {
         if ((!world.isDaytime && world.isRainingAt(pos)) && beeState != BeeState.EMERGENCY) {
             return false
         } else {
@@ -127,7 +130,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
                     val d3 = pos.z + 0.5 + d0 * direction.zOffset
                     entity.setLocationAndAngles(d1, d2, d3, entity.rotationYaw, entity.rotationPitch)
 
-                    if (entity !is BeeEntity) {
+                    if (entity !is EntityBee) {
                         return false
                     } else {
                         if (hasFlowerPos() && !entity.hasFlower() && world.rand.nextFloat() < 0.9f) {
@@ -286,7 +289,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
         }
 
         return if (action) {
-            emptyHoney(world, state, pos, playerIn)
+            emptyHoney(world, pos, playerIn)
             true
         } else {
             false
@@ -299,8 +302,8 @@ class BeeHiveTile : InteractionTile(), ITickable {
         }
     }
 
-    private fun emptyHoney(worldIn: World, state: IBlockState, pos: BlockPos, playerIn: EntityPlayer) {
-        worldIn.setBlockState(pos, state.withProperty(BeeHiveBlock.IS_FULL, false), 3)
+    fun emptyHoney(worldIn: World, pos: BlockPos, playerIn: EntityPlayer?) {
+        worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(BeeHiveBlock.IS_FULL, false), 3)
         val tile = worldIn.getTileEntity(pos)
 
         if (tile is BeeHiveTile) {
@@ -333,7 +336,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
                     angerBees(playerIn, BeeState.HONEY_DELIVERED)
                     world.updateComparatorOutputLevel(pos, blockType)
                 }
-                val nearbyBees = world.getEntitiesWithinAABB(BeeEntity::class.java, AxisAlignedBB(pos).expand(8.0, 6.0, 8.0))
+                val nearbyBees = world.getEntitiesWithinAABB(EntityBee::class.java, AxisAlignedBB(pos).expand(8.0, 6.0, 8.0))
 
                 if (nearbyBees.isNotEmpty()) {
                     val nearbyPlayers = world.getEntitiesWithinAABB(EntityPlayer::class.java, AxisAlignedBB(pos).expand(8.0, 6.0, 8.0))

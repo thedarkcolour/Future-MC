@@ -5,9 +5,9 @@ import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.util.ResourceLocation
 import thedarkcolour.futuremc.FutureMC
 
-class BeeRenderer(manager: RenderManager) : RenderLiving<BeeEntity>(manager, BeeModel(), 0.4f) {
-    override fun getEntityTexture(bee: BeeEntity): ResourceLocation? {
-        return if (bee.isAngry()) {
+class BeeRenderer(manager: RenderManager) : RenderLiving<EntityBee>(manager, BeeModel(), 0.4f) {
+    override fun getEntityTexture(bee: EntityBee): ResourceLocation? {
+        return if (bee.isAngry) {
             if (bee.hasNectar()) ANGRY_NECTAR else ANGRY
         } else {
             if (bee.hasNectar()) PASSIVE_NECTAR else PASSIVE

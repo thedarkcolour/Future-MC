@@ -35,7 +35,7 @@ abstract class FContainer(val playerInv: InventoryPlayer) : Container() {
         }
 
         for (row in 0..8) {
-            val x = 9 + row * 18 - 1
+            val x = row * 18 + 8
             addSlotToContainer(Slot(playerInv, row, x, 142))
         }
     }

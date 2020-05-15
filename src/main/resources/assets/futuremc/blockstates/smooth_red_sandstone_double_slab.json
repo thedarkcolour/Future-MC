@@ -1,7 +1,7 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "model": "red_sandstone_smooth"
+        "model": "minecraft:smooth_sandstone_red"
     },
     "variants": {
         "inventory": [

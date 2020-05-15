@@ -11,7 +11,6 @@ import net.minecraft.world.World
 import net.minecraftforge.common.util.Constants.WorldEvents
 import thedarkcolour.futuremc.block.SweetBerryBushBlock
 import thedarkcolour.futuremc.entity.bee.EntityBee
-import thedarkcolour.futuremc.entity.bee.ai.GrowCropsAI
 import thedarkcolour.futuremc.registry.FBlocks
 
 /**
@@ -24,7 +23,7 @@ import thedarkcolour.futuremc.registry.FBlocks
  */
 interface BeePollinationHandler {
     /**
-     * This method is called in [GrowCropsAI.updateTask].
+     * This method is called in [EntityBee.AIGrowCrops.updateTask].
      *
      * If the bee cannot pollinate this crop (example: the crop is fully mature),
      * then return false.

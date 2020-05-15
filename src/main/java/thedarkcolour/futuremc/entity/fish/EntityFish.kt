@@ -16,6 +16,7 @@ import net.minecraft.pathfinding.PathNavigateSwimmer
 import net.minecraft.util.DamageSource.DROWN
 import net.minecraft.util.EntitySelectors
 import net.minecraft.util.EnumHand
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.SoundEvent
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
@@ -151,7 +152,7 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
         return 1 + rand.nextInt(3)
     }
 
-    override fun getSwimSound() = FSounds.FISH_SWIM
+    abstract override fun getSwimSound(): SoundEvent
 
     override fun onEntityUpdate() {
         if (!isInWater && onGround && collidedVertically) {
@@ -183,12 +184,14 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
         return if (stack.item == Items.WATER_BUCKET && isEntityAlive) {
             playSound(FSounds.BUCKET_FILL_FISH, 1.0f, 1.0f)
             stack.shrink(1)
-            val itemstack1: ItemStack = getFishBucket()
-            setBucketData(itemstack1)
+
+            val fishBucket = fishBucket
+            setBucketData(fishBucket)
+
             if (stack.isEmpty) {
-                player.setHeldItem(hand, itemstack1)
-            } else if (!player.inventory.addItemStackToInventory(itemstack1)) {
-                player.dropItem(itemstack1, false)
+                player.setHeldItem(hand, fishBucket)
+            } else if (!player.inventory.addItemStackToInventory(fishBucket)) {
+                player.dropItem(fishBucket, false)
             }
             setDead()
             true
@@ -197,7 +200,7 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
         }
     }
 
-    abstract fun getFishBucket(): ItemStack
+    abstract val fishBucket: ItemStack
 
     open fun setBucketData(stack: ItemStack) {
         if (hasCustomName()) {
@@ -214,6 +217,8 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
         super.readEntityFromNBT(compound)
         fromBucket = compound.getBoolean("FromBucket")
     }
+
+    abstract override fun getLootTable(): ResourceLocation
 
     companion object {
         private val FROM_BUCKET = EntityDataManager.createKey(EntityFish::class.java, DataSerializers.BOOLEAN)

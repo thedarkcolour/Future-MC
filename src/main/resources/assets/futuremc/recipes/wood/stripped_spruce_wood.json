@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "##",
+        "##"
+    ],
+    "key": {
+        "#": [
+            {
+                "item": "stripped_spruce_log"
+            }
+        ]
+    },
+    "result": {
+        "item": "stripped_spruce_wood",
+        "count": 3
+    }
+}

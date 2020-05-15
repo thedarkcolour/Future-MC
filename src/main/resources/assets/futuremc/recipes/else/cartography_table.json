@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "xx",
+        "aa",
+        "aa"
+    ],
+    "key": {
+        "x": {
+            "type": "forge:ore_dict",
+            "ore": "paper"
+        },
+        "a": {
+            "type": "forge:ore_dict",
+            "ore": "plankWood"
+        }
+    },
+    "result": {
+        "item": "cartography_table"
+    }
+}

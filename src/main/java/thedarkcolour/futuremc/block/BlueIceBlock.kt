@@ -5,11 +5,7 @@ import thedarkcolour.core.block.FBlock
 import java.util.*
 
 class BlueIceBlock(properties: Properties) : FBlock(properties) {
-    override fun quantityDropped(random: Random): Int {
-        return 0
-    }
+    override fun quantityDropped(random: Random) = 0
 
-    override fun getHarvestTool(state: IBlockState): String? {
-        return "pickaxe"
-    }
+    override fun getHarvestTool(state: IBlockState) = "pickaxe"
 }

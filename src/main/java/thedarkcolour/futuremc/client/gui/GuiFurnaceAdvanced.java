@@ -5,12 +5,11 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ResourceLocation;
-import thedarkcolour.core.gui.GuiContainer;
 import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
 import thedarkcolour.futuremc.container.ContainerFurnaceAdvanced;
 import thedarkcolour.futuremc.tile.TileFurnaceAdvanced;
 
-public class GuiFurnaceAdvanced extends GuiContainer<ContainerFurnaceAdvanced> {
+public class GuiFurnaceAdvanced extends FGui<ContainerFurnaceAdvanced> {
     private static final ResourceLocation FURNACE_GUI_TEXTURES = new ResourceLocation("textures/gui/container/furnace.png");
     private final InventoryPlayer playerInv;
     private final TileFurnaceAdvanced te;
@@ -61,13 +60,6 @@ public class GuiFurnaceAdvanced extends GuiContainer<ContainerFurnaceAdvanced> {
         }
 
         return i != 0 && j != 0 ? j * 13 / i : 0;
-    }
-
-    @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        this.drawDefaultBackground();
-        super.drawScreen(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
     }
 
     public static class Smoker extends GuiFurnaceAdvanced {

@@ -1,10 +1,9 @@
 package thedarkcolour.futuremc.entity.bee.ai
 
-import net.minecraft.entity.ai.RandomPositionGenerator
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
+import thedarkcolour.core.util.manhattanDistance
 import thedarkcolour.futuremc.entity.bee.BeeEntity
-import kotlin.math.abs
 
 abstract class GoToBlockAI(bee: BeeEntity) : PassiveAI(bee) {
     protected var searchingTicks = bee.rng.nextInt(10)
@@ -18,37 +17,32 @@ abstract class GoToBlockAI(bee: BeeEntity) : PassiveAI(bee) {
     }
 
     fun startMovingTo(pos: BlockPos) {
-        var targetPos = Vec3d(pos)
-        val y: Int
+        val vec3d = Vec3d(pos)
+        var i = 0
         val beePos = BlockPos(bee)
-        val verticalDistance = targetPos.y - beePos.y
-        y = if (verticalDistance > 2) {
-            4
-        } else {
-            -4
+        val j = vec3d.y.toInt() - beePos.y
+
+        if (j > 2) {
+            i = 4
+        } else if (j < -2) {
+            i = -4
         }
 
-        var xz = 6
-        val targetDistance = manhattanDistance(beePos, pos)
-        if (targetDistance < 15) {
-            xz = targetDistance / 2
+        var k = 6
+        var l = 8
+        // see Extensions.kt
+        val i1 = beePos.manhattanDistance(pos)
+
+        if (i1 < 15) {
+            k = i1 / 2
+            l = i1 / 2
         }
 
-        targetPos = findGroundTargetTowards(bee, xz, y, targetPos) ?: return
-        bee.navigator.tryMoveToXYZ(targetPos.x, targetPos.y, targetPos.z, 1.0)
-    }
+        val vec3d1 = WanderAI.findGroundTargetTowards(bee, k, l, i, vec3d, (Math.PI.toFloat() / 10f).toDouble())
 
-    private fun manhattanDistance(pos: BlockPos, other: BlockPos): Int {
-        val f = abs(other.x - pos.x)
-        val f1 = abs(other.y - pos.y)
-        val f2 = abs(other.z - pos.z)
-
-        return f + f1 + f2
-    }
-
-    private fun findGroundTargetTowards(bee: BeeEntity, xz: Int, y: Int, vector: Vec3d): Vec3d? {
-        val vec3d = vector.subtract(bee.posX, bee.posY, bee.posZ)
-        return RandomPositionGenerator.generateRandomPos(bee, xz, y, vec3d, false)
+        if (vec3d1 != null) {
+            bee.navigator.tryMoveToXYZ(vec3d1.x, vec3d1.y, vec3d1.z, 1.0)
+        }
     }
 
     override fun startExecuting() {

@@ -161,7 +161,7 @@ object Events {
                 "dark_oak" -> return STRIPPED_DARK_OAK_LOG.defaultState
             }
         }
-        throw IllegalStateException("Invalid log")
+        throw IllegalStateException("Invalid wood")
     }
 
     // wither rose spawn

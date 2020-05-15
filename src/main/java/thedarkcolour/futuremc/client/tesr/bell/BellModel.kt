@@ -18,9 +18,9 @@ class BellModel : ModelBase() {
         bell.addChild(fixture)
     }
 
-    fun renderBell(rotateAngleX: Float, rotateAngleZ: Float, scale: Float) {
+    fun renderBell(rotateAngleX: Float, rotateAngleZ: Float) {
         bell.rotateAngleX = rotateAngleX
         bell.rotateAngleZ = rotateAngleZ
-        bell.render(scale)
+        bell.render(0.0625f)
     }
 }

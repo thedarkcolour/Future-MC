@@ -1,10 +1,10 @@
 package thedarkcolour.futuremc.entity.fish.cod
 
-import net.minecraft.item.ItemStack
 import net.minecraft.util.DamageSource
-import net.minecraft.util.SoundEvent
+import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import thedarkcolour.core.util.stack
+import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.entity.fish.EntityGroupFish
 import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FSounds
@@ -14,14 +14,16 @@ class EntityCod(worldIn: World) : EntityGroupFish(worldIn) {
         setSize(0.5F, 0.3F)
     }
 
-    override fun getFishBucket(): ItemStack = FItems.COD_BUCKET.stack
+    override fun getDeathSound() = FSounds.COD_DEATH
+    override fun getHurtSound(damageSourceIn: DamageSource?) = FSounds.COD_HURT
+    override val flopSound = FSounds.COD_FLOP
+    override fun getSwimSound() = FSounds.COD_SWIM
 
-    override fun getAmbientSound(): SoundEvent = FSounds.COD_AMBIENT
+    override val fishBucket = FItems.COD_BUCKET.stack
 
-    override fun getDeathSound(): SoundEvent = FSounds.COD_DEATH
+    override fun getLootTable() = LOOT_TABLE
 
-    override fun getHurtSound(damageSourceIn: DamageSource?): SoundEvent = FSounds.COD_HURT
-
-    override val flopSound: SoundEvent
-        get() = FSounds.COD_FLOP
+    companion object {
+        val LOOT_TABLE = ResourceLocation(FutureMC.ID, "entities/cod")
+    }
 }

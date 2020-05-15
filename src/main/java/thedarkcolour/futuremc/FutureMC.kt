@@ -3,27 +3,16 @@
 package thedarkcolour.futuremc
 
 import net.minecraft.block.BlockDispenser
-import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.BlockFluidRenderer
-import net.minecraft.client.renderer.texture.TextureAtlasSprite
-import net.minecraft.client.resources.IReloadableResourceManager
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.BannerPattern
-import net.minecraftforge.client.resource.ISelectiveResourceReloadListener
-import net.minecraftforge.client.resource.VanillaResourceType
 import net.minecraftforge.common.util.EnumHelper
-import net.minecraftforge.fluids.Fluid
-import net.minecraftforge.fluids.FluidRegistry
 import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.FMLCommonHandler
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventHandler
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent
 import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.relauncher.Side
@@ -34,13 +23,12 @@ import thedarkcolour.core.command.GenerateCommand
 import thedarkcolour.core.command.HealCommand
 import thedarkcolour.core.command.ModeToggleCommand
 import thedarkcolour.core.util.TODO
-import thedarkcolour.core.util.registerAndDispenserBehaviour
-import thedarkcolour.core.util.registerServerOptionalDispenserBehaviour
+import thedarkcolour.core.util.registerOrDispenserBehaviour
+import thedarkcolour.core.util.registerServerDispenserBehaviour
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.block.BlockFlower
-import thedarkcolour.futuremc.capability.SwimmingCapability
-import thedarkcolour.futuremc.client.gui.Gui
-import thedarkcolour.futuremc.client.tesr.bell.BellRenderer
+import thedarkcolour.futuremc.client.gui.GuiType
+import thedarkcolour.futuremc.client.tesr.bell.BellTileEntityRenderer
 import thedarkcolour.futuremc.client.tesr.campfire.CampfireRenderer
 import thedarkcolour.futuremc.command.FastGiveCommand
 import thedarkcolour.futuremc.config.FConfig
@@ -64,14 +52,13 @@ import thedarkcolour.futuremc.world.gen.feature.WorldGenFlower
     version = FutureMC.VERSION,
     dependencies = FutureMC.DEPENDENCIES,
     modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter",
-    guiFactory = "thedarkcolour.futuremc.config.GuiFactory",
     useMetadata = true
 )
 object FutureMC {
     const val ID = "futuremc"
     const val NAME = "Future MC"
-    const val VERSION = "0.2.03"
-    const val DEPENDENCIES = "after:forgelin"
+    const val VERSION = "0.2.1"
+    const val DEPENDENCIES = "required-after:forgelin;required-after:forge@[14.23.5.2847,)"
 
     // Set this to false
     const val DEBUG = true
@@ -82,17 +69,17 @@ object FutureMC {
 
     @EventHandler
     fun init(event: FMLInitializationEvent) {
-        if (TODO()) {
-            SwimmingCapability.register()
-        }
+        //if (TODO()) {
+        //    SwimmingCapability.register()
+        //}
 
-        Gui.registerGuiHandler()
+        GuiType.registerGuiHandler()
 
         if (FConfig.updateAquatic.trident) {
-            registerAndDispenserBehaviour(FItems.TRIDENT, IProjectileDispenserBehaviour(::EntityTrident))
+            registerOrDispenserBehaviour(FItems.TRIDENT, IProjectileDispenserBehaviour(::EntityTrident))
         }
         if (FConfig.buzzyBees.bee.enabled) {
-            registerServerOptionalDispenserBehaviour(Items.SHEARS) { worldIn, source, stack ->
+            registerServerDispenserBehaviour(Items.SHEARS) { worldIn, source, stack ->
                 val pos = source.blockPos.offset(source.blockState.getValue(BlockDispenser.FACING))
                 val te = worldIn.getTileEntity(pos)
 
@@ -102,16 +89,17 @@ object FutureMC {
                     }
 
                     te.dropHoneyCombs(worldIn, pos)
+                    te.emptyHoney(worldIn, pos, null)
                 }
 
                 stack
             }
-            registerServerOptionalDispenserBehaviour(Items.GLASS_BOTTLE) { worldIn, source, stack ->
+            registerServerDispenserBehaviour(Items.GLASS_BOTTLE) { worldIn, source, stack ->
                 val pos = source.blockPos.offset(source.blockState.getValue(BlockDispenser.FACING))
                 val te = worldIn.getTileEntity(pos)
 
                 if (te is BeeHiveTile && te.honeyLevel >= 5) {
-                    te.setHoneyLevel(0, true)
+                    te.emptyHoney(worldIn, pos, null)
                     ItemStack(FItems.HONEY_BOTTLE)
                 } else stack
             }
@@ -128,11 +116,11 @@ object FutureMC {
 
         // TESR registering
         runOnClient {
-            ClientRegistry.bindTileEntitySpecialRenderer(BellTileEntity::class.java, BellRenderer())
+            ClientRegistry.bindTileEntitySpecialRenderer(BellTileEntity::class.java, BellTileEntityRenderer())
             ClientRegistry.bindTileEntitySpecialRenderer(CampfireTile::class.java, CampfireRenderer)
             //ClientRegistry.bindTileEntitySpecialRenderer(TileSeagrassRenderer::class.java, TESRSeagrassRenderer)
 
-            (Minecraft.getMinecraft().resourceManager as IReloadableResourceManager).registerReloadListener(
+            /*(Minecraft.getMinecraft().resourceManager as IReloadableResourceManager).registerReloadListener(
                 ISelectiveResourceReloadListener { _, predicate ->
                     if (predicate.test(VanillaResourceType.TEXTURES)) {
                         val field = Fluid::class.java.getDeclaredField("color")
@@ -140,6 +128,7 @@ object FutureMC {
                         field.set(FluidRegistry.WATER, 0x3f76e4)
 
                         // fix crash before getting to load screen
+
                         kotlin.runCatching {
                             if (FConfig.updateAquatic.newWaterColor) {
                                 val textures =
@@ -157,15 +146,8 @@ object FutureMC {
                         }
                     }
                 }
-            )
+            )*/
         }
-    }
-
-    @EventHandler
-    fun postInit(event: FMLPostInitializationEvent) {
-        // Recipes
-        GameRegistry.addSmelting(ItemStack(Blocks.STONE), ItemStack(FBlocks.SMOOTH_STONE), 0.1f)
-        GameRegistry.addSmelting(ItemStack(Blocks.QUARTZ_BLOCK), ItemStack(FBlocks.SMOOTH_QUARTZ), 0.1f)
     }
 
     private fun registerWorldGen() {

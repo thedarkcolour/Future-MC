@@ -16,6 +16,7 @@ import net.minecraft.world.biome.Biome
 import thedarkcolour.futuremc.block.BeeHiveBlock
 import thedarkcolour.futuremc.compat.DYNAMIC_TREES
 import thedarkcolour.futuremc.entity.bee.BeeEntity
+import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.tile.BeeHiveTile
 import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator
 
@@ -58,7 +59,7 @@ object BeeHiveFeature : IPostGrowFeature, IPostGenFeature {
 
                                 if (te is BeeHiveTile) {
                                     for (j in 0..2) {
-                                        val bee = BeeEntity(worldIn)
+                                        val bee = EntityBee(worldIn)
                                         te.tryEnterHive(bee, false, worldIn.rand.nextInt(599))
                                     }
                                 }

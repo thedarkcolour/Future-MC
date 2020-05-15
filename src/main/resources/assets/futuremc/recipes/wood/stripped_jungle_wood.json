@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "##",
+        "##"
+    ],
+    "key": {
+        "#": [
+            {
+                "item": "stripped_jungle_log"
+            }
+        ]
+    },
+    "result": {
+        "item": "stripped_jungle_wood",
+        "count": 3
+    }
+}
