@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.nbt.NBTTagList
-import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TextComponentTranslation
 import net.minecraftforge.common.util.Constants
 import net.minecraftforge.common.util.INBTSerializable
@@ -12,6 +11,8 @@ import net.minecraftforge.items.IItemHandlerModifiable
 import net.minecraftforge.items.ItemHandlerHelper
 import thedarkcolour.core.gui.TextComponentStringHolder
 import java.util.*
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 /**
  * An iterable [net.minecraftforge.items.ItemStackHandler] with extra functionality.
@@ -107,6 +108,9 @@ open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: Strin
 
     override fun getSlotLimit(slot: Int) = 64
 
+    /**
+     * Handles [DarkInventorySlot.isItemValid]
+     */
     override fun isItemValid(slot: Int, stack: ItemStack) = true
 
     override fun serializeNBT(): NBTTagCompound {
@@ -137,31 +141,25 @@ open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: Strin
         }
     }
 
-    override fun iterator(): MutableIterator<ItemStack> {
-        return arrayListOf(*stacks).iterator()
+    open fun onContentsChanged(slot: Int) {}
+
+    /**
+     * Sets the contents of this slot to [ItemStack.EMPTY].
+     */
+    fun setToEmpty(slot: Int) {
+        stacks[slot] = ItemStack.EMPTY
     }
 
-    open fun onContentsChanged(slot: Int) {}
-/*
-    val vanillaInventory: InventoryBasic
-        get() = InventoryBasic(
-            getDisplayName().unformattedText,
-            false,
-            stacks.size
-        ).also { inventory: InventoryBasic ->
-            for (i in stacks.indices) {
-                inventory.setInventorySlotContents(i, stacks[i].copy())
-            }
-        }
+    /**
+     * Creates a delegate to a certain slot in this inventory.
+     *
+     * @throws IllegalArgumentException if the slot is outside of the inventory's indices
+     */
+    fun delegate(slot: Int): ReadWriteProperty<Any?, ItemStack> {
+        if (slot !in stacks.indices)
+            throw IllegalArgumentException("Cannot delegate to slot $slot: Outside of inventory indices")
 
-    fun setDisplayName(displayName: String) {
-        if (this.displayName != null) {
-            this.displayName.text = displayName
-        }
-    }*/
-
-    fun getDisplayName(): ITextComponent {
-        return displayName ?: defaultName
+        return DarkInventoryDelegate(this, slot)
     }
 
     fun anyMatch(predicate: (ItemStack) -> Boolean): Boolean {
@@ -179,5 +177,22 @@ open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: Strin
 
     open fun onTake(playerIn: EntityPlayer, stack: ItemStack, slot: Int): ItemStack {
         return stack
+    }
+
+    override fun iterator(): MutableIterator<ItemStack> {
+        return arrayListOf(*stacks).iterator()
+    }
+
+    /**
+     * [ReadWriteProperty] delegate to a slot in a [DarkInventory].
+     */
+    private class DarkInventoryDelegate(private val inventory: DarkInventory, private val slot: Int) : ReadWriteProperty<Any?, ItemStack> {
+        override fun getValue(thisRef: Any?, property: KProperty<*>): ItemStack {
+            return inventory[slot]
+        }
+
+        override fun setValue(thisRef: Any?, property: KProperty<*>, value: ItemStack) {
+            inventory[slot] = value
+        }
     }
 }

@@ -25,6 +25,31 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
         return BlockStateContainer(this, DISTANCE, BOTTOM)
     }
 
+    // todo getShape
+    override fun getBoundingBox(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos): AxisAlignedBB {
+        return super.getBoundingBox(state, worldIn, pos)
+    }
+
+    override fun addCollisionBoxToList(
+        state: IBlockState,
+        worldIn: World,
+        pos: BlockPos,
+        entityBox: AxisAlignedBB,
+        collidingBoxes: List<AxisAlignedBB>,
+        entityIn: Entity?,
+        isActualState: Boolean
+    ) {
+        if (shouldBlock(entityIn)) {
+            for (box in bottomCollisionBoxes) {
+                addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
+            }
+        } else if (state.getValue(DISTANCE) != 0 && state.getValue(BOTTOM)) {
+            for (box in noBottomCollisionBoxes) {
+                addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
+            }
+        }
+    }
+
     override fun getRenderLayer(): BlockRenderLayer {
         return BlockRenderLayer.CUTOUT
     }
@@ -47,28 +72,8 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
         }
     }
 
-    override fun addCollisionBoxToList(
-        state: IBlockState,
-        worldIn: World,
-        pos: BlockPos,
-        entityBox: AxisAlignedBB,
-        collidingBoxes: List<AxisAlignedBB>,
-        entityIn: Entity?,
-        isActualState: Boolean
-    ) {
-        if (shouldBlock(entityIn)) {
-            for (box in boundingBoxesA) {
-                addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
-            }
-        } else if (state.getValue(DISTANCE) != 0 && state.getValue(BOTTOM)) {
-            for (box in boundingBoxesB) {
-                addCollisionBoxToList(pos, entityBox, collidingBoxes, box)
-            }
-        }
-    }
-
     private fun shouldBlock(entityIn: Entity?): Boolean {
-        return entityIn != null && !entityIn.isSneaking && entityIn is EntityPlayer
+        return entityIn is EntityPlayer && !entityIn.isSneaking
     }
 
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromPos: BlockPos) {
@@ -156,13 +161,13 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
         private val BOTTOM_AABB = makeCube(0.0, 0.0, 0.0, 16.0, 2.0, 16.0)
         private val TOP_AABB = makeCube(0.0, 14.0, 0.0, 16.0, 16.0, 16.0)
 
-        private var boundingBoxesA: Array<AxisAlignedBB> = arrayOf(
+        private var bottomCollisionBoxes = arrayOf(
             makeCube(0.0, 0.0, 0.0, 2.0, 2.0, 16.0),
             makeCube(14.0, 0.0, 0.0, 16.0, 2.0, 16.0),
             makeCube(0.0, 0.0, 14.0, 16.0, 2.0, 16.0),
             makeCube(0.0, 0.0, 0.0, 16.0, 2.0, 2.0)
         )
-        private var boundingBoxesB: Array<AxisAlignedBB> = arrayOf(
+        private var noBottomCollisionBoxes = arrayOf(
             makeCube(0.0, 14.0, 0.0, 16.0, 16.0, 16.0),
             makeCube(0.0, 0.0, 0.0, 2.0, 16.0, 2.0),
             makeCube(14.0, 0.0, 0.0, 16.0, 16.0, 2.0),

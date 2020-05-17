@@ -18,6 +18,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * and return whether the bee should gain a crop counter.
  *
  * @author TheDarkColour
+ *
  * @see BeePollinationHandler read the KDoc for more info
  * @see EntityBee.AIGrowCrops#updateTask
  * <p>

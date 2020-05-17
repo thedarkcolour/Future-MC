@@ -27,6 +27,7 @@ import thedarkcolour.core.util.registerOrDispenserBehaviour
 import thedarkcolour.core.util.registerServerDispenserBehaviour
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.block.BlockFlower
+import thedarkcolour.futuremc.capability.SwimmingCapability
 import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.client.tesr.bell.BellTileEntityRenderer
 import thedarkcolour.futuremc.client.tesr.campfire.CampfireRenderer
@@ -57,11 +58,10 @@ import thedarkcolour.futuremc.world.gen.feature.WorldGenFlower
 object FutureMC {
     const val ID = "futuremc"
     const val NAME = "Future MC"
-    const val VERSION = "0.2.1"
+    const val VERSION = "0.2.2"
     const val DEPENDENCIES = "required-after:forgelin;required-after:forge@[14.23.5.2847,)"
 
-    // Set this to false
-    const val DEBUG = true
+    const val DEBUG = false
 
     init {
         Events.registerEvents()
@@ -69,9 +69,9 @@ object FutureMC {
 
     @EventHandler
     fun init(event: FMLInitializationEvent) {
-        //if (TODO()) {
-        //    SwimmingCapability.register()
-        //}
+        if (DEBUG) {
+            SwimmingCapability.register()
+        }
 
         GuiType.registerGuiHandler()
 

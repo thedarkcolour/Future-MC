@@ -8,6 +8,7 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.core.block.FBlock
 import thedarkcolour.core.block.FBlock.Properties
+import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.*
 import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.config.FConfig
@@ -119,7 +120,8 @@ object FBlocks {
             blocks.register(COMPOSTER)
         if (FConfig.villageAndPillage.bell)
             blocks.register(BELL)
-        //SCAFFOLDING = register(BlockScaffolding(), villageAndPillage.scaffolding)
+        if (FutureMC.DEBUG)// FConfig.villageAndPillage.scaffolding
+            blocks.register(SCAFFOLDING)
         if (FConfig.buzzyBees.honeyBlock.enabled)
             blocks.register(HONEY_BLOCK)
         if (FConfig.buzzyBees.honeycombBlock)

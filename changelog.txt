@@ -1,3 +1,11 @@
+Version 0.2.2 - Bug fix update:
+ Bee - Fixed a crash with beetroots, pumpkins, and melons. Fixes #139
+ Composter - Optimized item rarity map and reduced memory footprint by 3 bytes per compostable item
+ Future MC - Fixed the old remapper.
+ Loom - Fixed a crash with banner pattern items
+ Stonecutter - Fixed a dupe glitch
+ Stonecutter - Fixed a glitch that allowed players to not take the entire output, deleting the remaining items
+
 Version 0.2.1 - MAJOR UPDATE ALERT!!!! - New things:
  *Banner Patterns* - Banner patterns can be used in the Loom.
  *Bell* - Rings just like in 1.14. Creative only at the moment because villagers don't trade them.

@@ -76,7 +76,7 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
                 val i1 = j + 13
                 val j1 = recipeIndexOffset + 16
                 var k1 = recipeIndexOffset
-                while (k1 < j1 && k1 <= BASIC_PATTERNS.size) {
+                while (k1 < j1 && k1 <= ContainerLoom.BASIC_PATTERNS.size) {
                     val l1 = k1 - recipeIndexOffset
                     val i2 = l + l1 % 4 * 14
                     val j2 = i1 + l1 / 4 * 14
@@ -201,63 +201,19 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
 
     companion object {
         private val BACKGROUND = ResourceLocation(FutureMC.ID, "textures/gui/loom.png")
-        val BASIC_PATTERNS = arrayOf(
-            BannerPattern.SQUARE_BOTTOM_LEFT,
-            BannerPattern.SQUARE_BOTTOM_RIGHT,
-            BannerPattern.SQUARE_TOP_LEFT,
-            BannerPattern.SQUARE_TOP_RIGHT,
-            BannerPattern.STRIPE_BOTTOM,
-            BannerPattern.STRIPE_TOP,
-            BannerPattern.STRIPE_LEFT,
-            BannerPattern.STRIPE_RIGHT,
-            BannerPattern.STRIPE_CENTER,
-            BannerPattern.STRIPE_MIDDLE,
-            BannerPattern.STRIPE_DOWNRIGHT,
-            BannerPattern.STRIPE_DOWNLEFT,
-            BannerPattern.STRIPE_SMALL,
-            BannerPattern.CROSS,
-            BannerPattern.STRAIGHT_CROSS,
-            BannerPattern.TRIANGLE_BOTTOM,
-            BannerPattern.TRIANGLE_TOP,
-            BannerPattern.TRIANGLES_BOTTOM,
-            BannerPattern.TRIANGLES_TOP,
-            BannerPattern.DIAGONAL_LEFT,
-            BannerPattern.DIAGONAL_RIGHT,
-            BannerPattern.DIAGONAL_LEFT_MIRROR,
-            BannerPattern.DIAGONAL_RIGHT_MIRROR,
-            BannerPattern.CIRCLE_MIDDLE,
-            BannerPattern.RHOMBUS_MIDDLE,
-            BannerPattern.HALF_VERTICAL,
-            BannerPattern.HALF_HORIZONTAL,
-            BannerPattern.HALF_VERTICAL_MIRROR,
-            BannerPattern.HALF_HORIZONTAL_MIRROR,
-            BannerPattern.BORDER,
-            BannerPattern.CURLY_BORDER,
-            BannerPattern.GRADIENT,
-            BannerPattern.GRADIENT_UP,
-            BannerPattern.BRICKS
-        )
-        private val ROWS = ceil(BASIC_PATTERNS.size / 4f).toInt()
+        private val ROWS = ceil(ContainerLoom.BASIC_PATTERNS.size / 4.0f).toInt()
         private val GREY = EnumDyeColor.GRAY
         private val WHITE = EnumDyeColor.WHITE
-        private val PALETTE = arrayListOf(GREY, WHITE)
-        private val PATTERN_TEXTURES: Array<ResourceLocation?> = BannerPattern.values().map {
+        private val PALETTE = listOf(GREY, WHITE)
+        private val PATTERN_TEXTURES = BannerPattern.values().map { pattern ->
             val s = "b" + GREY.metadata
-            val s1 = it.hashname + WHITE.metadata
-            BannerTextures.BANNER_DESIGNS.getResourceLocation(
-                s + s1,
-                arrayListOf(BannerPattern.BASE, it),
-                PALETTE
-            )
+            val s1 = pattern.hashname + WHITE.metadata
+            BannerTextures.BANNER_DESIGNS.getResourceLocation(s + s1, listOf(BannerPattern.BASE, pattern), PALETTE)
         }.toTypedArray()
-        private val BASIC_TEXTURES: Array<ResourceLocation?> = BASIC_PATTERNS.map {
+        private val BASIC_TEXTURES = ContainerLoom.BASIC_PATTERNS.map { pattern ->
             val s = "b" + GREY.metadata
-            val s1 = it.hashname + WHITE.metadata
-            BannerTextures.BANNER_DESIGNS.getResourceLocation(
-                s + s1,
-                arrayListOf(BannerPattern.BASE, it),
-                PALETTE
-            )
+            val s1 = pattern.hashname + WHITE.metadata
+            BannerTextures.BANNER_DESIGNS.getResourceLocation(s + s1, listOf(BannerPattern.BASE, pattern), PALETTE)
         }.toTypedArray()
     }
 }

@@ -8,6 +8,7 @@ import thedarkcolour.futuremc.compat.quark.QuarkCompat
 const val CRAFTTWEAKER = "crafttweaker"
 const val DYNAMIC_TREES = "dynamictrees"
 const val JEI = "jei"
+const val HARVESTCRAFT = ""
 const val QUARK = "quark"
 
 /*fun checkCraftTweaker(): CraftTweakerCompat? {

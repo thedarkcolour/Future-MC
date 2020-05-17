@@ -53,6 +53,7 @@ object FItems {
     val CORNFLOWER = ItemModeledBlock(FBlocks.CORNFLOWER)
     val WITHER_ROSE = ItemModeledBlock(FBlocks.WITHER_ROSE)
     val CAMPFIRE = ItemModeledBlock(FBlocks.CAMPFIRE)
+    val SCAFFOLDING = ItemModeledBlock(FBlocks.SCAFFOLDING)
     val BEE_NEST = ItemModeledBlock(FBlocks.BEE_NEST)
     val BEEHIVE = ItemModeledBlock(FBlocks.BEEHIVE)
     val STRIPPED_ACACIA_LOG = ItemModeledBlock(FBlocks.STRIPPED_ACACIA_LOG)
@@ -138,6 +139,8 @@ object FItems {
         if (FConfig.villageAndPillage.cornflower.enabled) items.register(CORNFLOWER)
         if (FConfig.villageAndPillage.witherRose.enabled) items.register(WITHER_ROSE)
         if (FConfig.villageAndPillage.campfire.enabled) items.register(CAMPFIRE)
+        if (FutureMC.DEBUG)// FConfig.villageAndPillage.scaffolding
+            items.register(SCAFFOLDING)
         if (FConfig.buzzyBees.bee.enabled) items.register(BEE_NEST)
         if (FConfig.buzzyBees.bee.enabled) items.register(BEEHIVE)
         if (FConfig.updateAquatic.strippedLogs.acacia) items.register(STRIPPED_ACACIA_LOG)

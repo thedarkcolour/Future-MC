@@ -39,7 +39,7 @@ interface BeePollinationHandler {
         private val handlers = hashMapOf<Block, BeePollinationHandler?>().also { map ->
             val blockCropsHandler = create { worldIn, pos, state, bee ->
                 if (worldIn.getBlockState(pos).getValue(BlockCrops.AGE) < 7) {
-                    bee.world.playEvent(2005, pos, 0)
+                    bee.world.playEvent(WorldEvents.BONEMEAL_PARTICLES, pos, 0)
                     bee.world.setBlockState(pos, state.withProperty(BlockCrops.AGE, state.getValue(BlockCrops.AGE) + 1))
                     true
                 } else {
@@ -48,7 +48,7 @@ interface BeePollinationHandler {
             }
             val beetRootsHandler = create { worldIn, pos, state, bee ->
                 if (worldIn.getBlockState(pos).getValue(BlockBeetroot.AGE) < 3) {
-                    bee.world.playEvent(2005, pos, 0)
+                    bee.world.playEvent(WorldEvents.BONEMEAL_PARTICLES, pos, 0)
                     bee.world.setBlockState(pos, state.withProperty(BlockBeetroot.AGE, state.getValue(BlockBeetroot.AGE) + 1))
                     true
                 } else {
@@ -56,9 +56,9 @@ interface BeePollinationHandler {
                 }
             }
             val stemBlockHandler = create { worldIn, pos, state, bee ->
-                if (worldIn.getBlockState(pos).getValue(BlockBeetroot.AGE) < 7) {
+                if (worldIn.getBlockState(pos).getValue(BlockStem.AGE) < 7) {
                     bee.world.playEvent(WorldEvents.BONEMEAL_PARTICLES, pos, 0)
-                    bee.world.setBlockState(pos, state.withProperty(BlockStem.FACING, state.getValue(BlockStem.FACING)).withProperty(BlockBeetroot.AGE, state.getValue(BlockBeetroot.AGE) + 1))
+                    bee.world.setBlockState(pos, state.withProperty(BlockStem.FACING, state.getValue(BlockStem.FACING)).withProperty(BlockStem.AGE, state.getValue(BlockStem.AGE) + 1))
                     true
                 } else {
                     false
@@ -66,7 +66,7 @@ interface BeePollinationHandler {
             }
             val sweetBerryBushHandler = create { worldIn, pos, state, bee ->
                 if (worldIn.getBlockState(pos).getValue(SweetBerryBushBlock.AGE) < 3) {
-                    bee.world.playEvent(2005, pos, 0)
+                    bee.world.playEvent(WorldEvents.BONEMEAL_PARTICLES, pos, 0)
                     bee.world.setBlockState(pos, state.withProperty(SweetBerryBushBlock.AGE, state.getValue(SweetBerryBushBlock.AGE) + 1))
                     true
                 } else {

@@ -213,26 +213,29 @@ open class BlockBamboo(properties: Properties) : FBlock(properties), IGrowable {
         }
     }
 
-    override fun getCollisionBoundingBox(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos): AxisAlignedBB {
+    // getShape
+    override fun getBoundingBox(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos): AxisAlignedBB {
         val vec3d = state.getOffset(worldIn, pos)
-        return if (state.getValue(THICK)) {
-            TIGHT_THICK_AABB.offset(vec3d)
-        } else {
-            TIGHT_THIN_AABB.offset(vec3d)
-        }
-    }
-
-    override fun getBoundingBox(state: IBlockState, source: IBlockAccess, pos: BlockPos): AxisAlignedBB {
-        val vec3d = state.getOffset(source, pos)
 
         return if (FConfig.villageAndPillage.bamboo.tightBoundingBox) {
-            getCollisionBoundingBox(state, source, pos)
+            getCollisionBoundingBox(state, worldIn, pos)
         } else {
             if (state.getValue(LEAVES) == EnumLeaves.LARGE_LEAVES) {
                 LEAVES_AABB.offset(vec3d)
             } else {
                 NORMAL_AABB.offset(vec3d)
             }
+        }
+    }
+
+    // getCollisionShape
+    override fun getCollisionBoundingBox(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos): AxisAlignedBB {
+        val vec3d = state.getOffset(worldIn, pos)
+
+        return if (state.getValue(THICK)) {
+            TIGHT_THICK_AABB.offset(vec3d)
+        } else {
+            TIGHT_THIN_AABB.offset(vec3d)
         }
     }
 

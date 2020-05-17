@@ -1,5 +1,6 @@
 package thedarkcolour.futuremc.block
 
+import it.unimi.dsi.fastutil.objects.Object2ByteOpenHashMap
 import net.minecraft.block.Block
 import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.BlockStateContainer
@@ -28,6 +29,7 @@ import thedarkcolour.futuremc.registry.FItems.SWEET_BERRIES
 import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.tile.TileComposter
 import java.util.*
+import kotlin.experimental.and
 
 class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
     init {
@@ -148,7 +150,8 @@ class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
     }
 
     object ItemsForComposter {
-        private val VALID_ITEMS = HashMap<ItemStack, Int>()
+        private val VALID_ITEMS = Object2ByteOpenHashMap<ItemStack>()
+
         private fun add(registryObject: IForgeRegistryEntry<*>, rarity: Rarity) {
             if (registryObject is Block) {
                 add(ItemStack(registryObject), rarity)
@@ -161,32 +164,38 @@ class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
             add(stack, rarity.chance)
         }
 
-        @kotlin.jvm.JvmStatic
+        @JvmStatic
         fun add(stack: ItemStack, rarity: Int) {
-            VALID_ITEMS[stack] = rarity
+            VALID_ITEMS[stack] = 100.toByte() and rarity.toByte()
         }
 
-        @kotlin.jvm.JvmStatic
-        fun getChance(stack: ItemStack): Int {
+        fun add(stack: ItemStack, rarity: Byte) {
+            VALID_ITEMS.put(stack, rarity)
+        }
+
+        @JvmStatic
+        fun getChance(stack: ItemStack): Byte {
             if (stack.isEmpty) return -1
-            val item =
-                VALID_ITEMS.keys.stream().filter { itemStack: ItemStack -> itemStack.isItemEqual(stack) }.findFirst()
-            return if (item.isPresent) VALID_ITEMS[item.get()]!! else -1
+            val item = VALID_ITEMS.keys.firstOrNull(stack::isItemEqual)
+            return VALID_ITEMS[item] ?: -1
         }
 
-        @kotlin.jvm.JvmStatic
+        @JvmStatic
         fun remove(stack: ItemStack?) {
-            VALID_ITEMS.remove(stack)
+            VALID_ITEMS.removeByte(stack)
         }
 
-        @kotlin.jvm.JvmStatic
+        @JvmStatic
         fun clear() {
             VALID_ITEMS.clear()
         }
 
-        enum class Rarity(val chance: Int) {
-            COMMON(30), UNCOMMON(50), RARE(65), EPIC(85), LEGENDARY(100);
-
+        enum class Rarity(val chance: Byte) {
+            COMMON(30),
+            UNCOMMON(50),
+            RARE(65),
+            EPIC(85),
+            LEGENDARY(100),
         }
 
         init {
@@ -260,7 +269,7 @@ class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
         private val AABB_WALL_WEST = AxisAlignedBB(0.0, 0.0, 0.0, 0.125, 1.0, 1.0)
 
         fun canCompost(stack: ItemStack, state: IBlockState): Boolean {
-            return ItemsForComposter.getChance(stack) != -1 && !isFull(state)
+            return ItemsForComposter.getChance(stack) != (-1).toByte() && !isFull(state)
         }
 
         fun isFull(state: IBlockState): Boolean {

@@ -216,11 +216,11 @@ object FSounds {
         sounds.register(BAMBOO_PLACE)
         sounds.register(BAMBOO_SAPLING_PLACE)
         sounds.register(BAMBOO_SAPLING_HIT)
-        // sounds.register(SCAFFOLD_BREAK)
-        // sounds.register(SCAFFOLD_STEP)
-        // sounds.register(SCAFFOLD_PLACE)
-        // sounds.register(SCAFFOLD_HIT)
-        // sounds.register(SCAFFOLD_FALL)
+        sounds.register(SCAFFOLD_BREAK) //
+        sounds.register(SCAFFOLD_STEP)  //
+        sounds.register(SCAFFOLD_PLACE) //
+        sounds.register(SCAFFOLD_HIT)   //
+        sounds.register(SCAFFOLD_FALL)  //
         sounds.register(HONEY_BLOCK_BREAK)
         sounds.register(HONEY_BLOCK_STEP)
         sounds.register(HONEY_BLOCK_SLIDE)

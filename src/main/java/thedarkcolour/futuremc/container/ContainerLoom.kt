@@ -14,9 +14,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
-import net.minecraftforge.items.SlotItemHandler
 import thedarkcolour.core.gui.FContainer
 import thedarkcolour.core.inventory.DarkInventory
+import thedarkcolour.core.inventory.DarkInventorySlot
 import thedarkcolour.core.util.anyMatch
 import thedarkcolour.core.util.getOreNames
 import thedarkcolour.core.util.janyMatch
@@ -26,12 +26,29 @@ import thedarkcolour.futuremc.item.ItemBannerPattern.Companion.getBannerPattern
 import thedarkcolour.futuremc.registry.FBlocks.LOOM
 
 class ContainerLoom(playerInv: InventoryPlayer, private val world: World, private val pos: BlockPos) : FContainer(playerInv) {
-    private val handler: DarkInventory = object : DarkInventory(4) {
+    private val handler = object : DarkInventory(4) {
         override fun onContentsChanged(slot: Int) {
             if (slot != 3) {
                 handleCrafting()
             }
             inventoryUpdateListener()
+        }
+
+        override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
+            return when (slot) {
+                0 -> stack.item is ItemBanner
+                1 -> isDye(stack)
+                2 -> stack.item is ItemBannerPattern
+                else -> false
+            }
+        }
+
+        override fun onTake(playerIn: EntityPlayer, stack: ItemStack, slot: Int): ItemStack {
+            if (slot == 3) {
+                color.shrink(1)
+                banner.shrink(1)
+            }
+            return super.onTake(playerIn, stack, slot)
         }
     }
     private var selectedIndex = 0
@@ -47,52 +64,17 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
     }
 
     private fun addOwnSlots() {
-        bannerSlot = addSlotToContainer(object : SlotItemHandler(handler, 0, 13, 26) {
-            override fun isItemValid(stack: ItemStack): Boolean {
-                return stack.item is ItemBanner
-            }
-        })
-        dyeSlot = addSlotToContainer(object : SlotItemHandler(handler, 1, 33, 26) {
-            override fun isItemValid(stack: ItemStack): Boolean {
-                return getOreNames(stack).anyMatch { it.startsWith("dye") }
-            }
-        })
-        patternSlot = addSlotToContainer(object : SlotItemHandler(handler, 2, 23, 45) {
-            override fun isItemValid(stack: ItemStack): Boolean {
-                return stack.item is ItemBannerPattern
-            }
-        })
-        resultSlot = addSlotToContainer(object : SlotItemHandler(handler, 3, 143, 57) {
-            override fun isItemValid(stack: ItemStack) = false
-
-            override fun onTake(thePlayer: EntityPlayer, stack: ItemStack): ItemStack {
-                color.shrink(1)
-                banner.shrink(1)
-                return stack
-            }
-        })
+        bannerSlot = addSlotToContainer(DarkInventorySlot(handler, 0, 13, 26))
+        dyeSlot = addSlotToContainer(DarkInventorySlot(handler, 1, 33, 26))
+        patternSlot = addSlotToContainer(DarkInventorySlot(handler, 2, 23, 45))
+        resultSlot = addSlotToContainer(DarkInventorySlot(handler, 3, 143, 57))
     }
 
-    val banner: ItemStack
-        get() = handler.getStackInSlot(0)
-
-    var color: ItemStack
-        get() = handler.getStackInSlot(1)
-        set(stack) {
-            handler.setStackInSlot(1, stack)
-        }
-
-    var pattern: ItemStack
-        get() = handler.getStackInSlot(2)
-        set(stack) {
-            handler.setStackInSlot(2, stack)
-        }
-
-    var output: ItemStack
-        get() = handler.getStackInSlot(3)
-        set(stack) {
-            handler.setStackInSlot(3, stack)
-        }
+    // delegates
+    val banner: ItemStack by handler.delegate(0)
+    var color: ItemStack by handler.delegate(1)
+    var pattern by handler.delegate(2)
+    var output by handler.delegate(3)
 
     fun getLoomSlot(index: Int): Slot {
         return when (index) {
@@ -109,7 +91,7 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
     }
 
     override fun enchantItem(playerIn: EntityPlayer, id: Int): Boolean {
-        if (id > 0 && id <= GuiLoom.BASIC_PATTERNS.size) {
+        if (id in BASIC_PATTERNS.indices) {
             selectedIndex = id
             updateRecipeResultSlot()
             return true
@@ -120,11 +102,10 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
     private fun handleCrafting() {
         val banner = banner
         val pattern = pattern
-        if (output.isEmpty || !banner.isEmpty && !color.isEmpty && selectedIndex > 0 && (selectedIndex < GuiLoom.BASIC_PATTERNS.size - 5 || !pattern.isEmpty)) {
-            if (!pattern.isEmpty && pattern.item is ItemBannerPattern) {
+        if (output.isEmpty || !banner.isEmpty && !color.isEmpty && selectedIndex > 0 && (selectedIndex < BASIC_PATTERNS.size - 5 || !pattern.isEmpty)) {
+            if (pattern.item is ItemBannerPattern) {
                 val tag = banner.getOrCreateSubCompound("BlockEntityTag")
-                val flag =
-                    tag.hasKey("Patterns", 9) && !banner.isEmpty && tag.getTagList("Patterns", 10).tagCount() >= 6
+                val flag = tag.hasKey("Patterns", 9) && !banner.isEmpty && tag.getTagList("Patterns", 10).tagCount() >= 6
                 selectedIndex = if (flag) {
                     0
                 } else {
@@ -135,6 +116,11 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
             output = ItemStack.EMPTY
             selectedIndex = 0
         }
+
+        if (pattern.isEmpty) {
+            selectedIndex = 0
+        }
+
         updateRecipeResultSlot()
         detectAndSendChanges()
     }
@@ -148,8 +134,7 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
                 stack = banner.copy()
                 stack.count = 1
                 val nbt = stack.getOrCreateSubCompound("BlockEntityTag")
-                val list: NBTTagList
-                list = if (nbt.hasKey("Patterns", 9)) {
+                val list = if (nbt.hasKey("Patterns", 9)) {
                     nbt.getTagList("Patterns", 10)
                 } else {
                     NBTTagList()
@@ -158,7 +143,7 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
                 var selectedIndex = selectedIndex
                 val bannerPatterns = if (pattern.isEmpty) {
                     --selectedIndex
-                    GuiLoom.BASIC_PATTERNS
+                    BASIC_PATTERNS
                 } else {
                     BannerPattern.values()
                 }
@@ -257,25 +242,66 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
     }
 
     companion object {
+        val BASIC_PATTERNS = arrayOf(
+            BannerPattern.SQUARE_BOTTOM_LEFT,
+            BannerPattern.SQUARE_BOTTOM_RIGHT,
+            BannerPattern.SQUARE_TOP_LEFT,
+            BannerPattern.SQUARE_TOP_RIGHT,
+            BannerPattern.STRIPE_BOTTOM,
+            BannerPattern.STRIPE_TOP,
+            BannerPattern.STRIPE_LEFT,
+            BannerPattern.STRIPE_RIGHT,
+            BannerPattern.STRIPE_CENTER,
+            BannerPattern.STRIPE_MIDDLE,
+            BannerPattern.STRIPE_DOWNRIGHT,
+            BannerPattern.STRIPE_DOWNLEFT,
+            BannerPattern.STRIPE_SMALL,
+            BannerPattern.CROSS,
+            BannerPattern.STRAIGHT_CROSS,
+            BannerPattern.TRIANGLE_BOTTOM,
+            BannerPattern.TRIANGLE_TOP,
+            BannerPattern.TRIANGLES_BOTTOM,
+            BannerPattern.TRIANGLES_TOP,
+            BannerPattern.DIAGONAL_LEFT,
+            BannerPattern.DIAGONAL_RIGHT,
+            BannerPattern.DIAGONAL_LEFT_MIRROR,
+            BannerPattern.DIAGONAL_RIGHT_MIRROR,
+            BannerPattern.CIRCLE_MIDDLE,
+            BannerPattern.RHOMBUS_MIDDLE,
+            BannerPattern.HALF_VERTICAL,
+            BannerPattern.HALF_HORIZONTAL,
+            BannerPattern.HALF_VERTICAL_MIRROR,
+            BannerPattern.HALF_HORIZONTAL_MIRROR,
+            BannerPattern.BORDER,
+            BannerPattern.CURLY_BORDER,
+            BannerPattern.GRADIENT,
+            BannerPattern.GRADIENT_UP,
+            BannerPattern.BRICKS
+        )
+
+        fun isDye(stack: ItemStack): Boolean {
+            return getOreNames(stack).anyMatch { it.startsWith("dye") }
+        }
+
         fun getColorForStack(stack: ItemStack): EnumDyeColor {
             for (s in getOreNames(stack)) {
                 if (s.startsWith("dye")) {
-                    when (s.replaceFirst("dye".toRegex(), "")) {
-                        "Black" -> return EnumDyeColor.BLACK
-                        "Blue" -> return EnumDyeColor.BLUE
-                        "Brown" -> return EnumDyeColor.BROWN
-                        "Red" -> return EnumDyeColor.RED
-                        "Green" -> return EnumDyeColor.GREEN
-                        "Purple" -> return EnumDyeColor.PURPLE
-                        "Cyan" -> return EnumDyeColor.CYAN
-                        "LightGray" -> return EnumDyeColor.SILVER
-                        "Gray" -> return EnumDyeColor.GRAY
-                        "Pink" -> return EnumDyeColor.PINK
-                        "Lime" -> return EnumDyeColor.LIME
-                        "Yellow" -> return EnumDyeColor.YELLOW
-                        "LightBlue" -> return EnumDyeColor.LIGHT_BLUE
-                        "Magenta" -> return EnumDyeColor.MAGENTA
-                        "Orange" -> return EnumDyeColor.ORANGE
+                    when (s) {
+                        "dyeBlack" -> return EnumDyeColor.BLACK
+                        "dyeBlue" -> return EnumDyeColor.BLUE
+                        "dyeBrown" -> return EnumDyeColor.BROWN
+                        "dyeRed" -> return EnumDyeColor.RED
+                        "dyeGreen" -> return EnumDyeColor.GREEN
+                        "dyePurple" -> return EnumDyeColor.PURPLE
+                        "dyeCyan" -> return EnumDyeColor.CYAN
+                        "dyeLightGray" -> return EnumDyeColor.SILVER
+                        "dyeGray" -> return EnumDyeColor.GRAY
+                        "dyePink" -> return EnumDyeColor.PINK
+                        "dyeLime" -> return EnumDyeColor.LIME
+                        "dyeYellow" -> return EnumDyeColor.YELLOW
+                        "dyeLightBlue" -> return EnumDyeColor.LIGHT_BLUE
+                        "dyeMagenta" -> return EnumDyeColor.MAGENTA
+                        "dyeOrange" -> return EnumDyeColor.ORANGE
                     }
                 }
             }

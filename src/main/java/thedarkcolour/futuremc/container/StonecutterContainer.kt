@@ -36,7 +36,7 @@ class StonecutterContainer(
     var inventoryUpdateListener = {}
 
     // item handler. i understand it's a bit messy, i'll probably organize into separate methods.
-    private val handler = object : DarkInventory(2) {
+    private val darkInventory = object : DarkInventory(2) {
         override fun onContentsChanged(slot: Int) {
             if (slot == 0) {
                 updateRecipeList()
@@ -51,7 +51,7 @@ class StonecutterContainer(
         override fun onTake(playerIn: EntityPlayer, stack: ItemStack, slot: Int): ItemStack {
             if (slot == 0) {
                 if (get(0).isEmpty) {
-                    set(1, ItemStack.EMPTY)
+                    setToEmpty(1)
                 }
             } else {
                 get(0).shrink(1)
@@ -78,28 +78,35 @@ class StonecutterContainer(
     }
 
     private fun addOwnSlots() {
-        addSlotToContainer(DarkInventorySlot(handler, 0, 20, 33))
-        addSlotToContainer(DarkInventorySlot(handler, 1, 143, 33))
+        addSlotToContainer(DarkInventorySlot(darkInventory, 0, 20, 33))
+        addSlotToContainer(DarkInventorySlot(darkInventory, 1, 143, 33).alwaysTakeAll(true))
     }
 
     private fun updateRecipeList() {
-        val recipes = StonecutterRecipes.getRecipes(handler[0])
+        val recipes = StonecutterRecipes.getRecipes(darkInventory[0])
 
         if (recipes.isNotEmpty()) {
             if (recipeList != recipes) {
                 recipeList = recipes
                 selectedIndex = -1
+
+                darkInventory.setToEmpty(1)
+
+                detectAndSendChanges()
             }
         } else {
             recipeList = emptyList()
+            darkInventory.setToEmpty(1)
+
+            detectAndSendChanges()
         }
     }
 
     private fun updateResult() {
         if (recipeList.isNotEmpty() && selectedIndex > -1) {
-            handler.setStackInSlot(1, recipeList[selectedIndex].output.copy())
+            darkInventory.setStackInSlot(1, recipeList[selectedIndex].output.copy())
         } else {
-            handler.setStackInSlot(1, ItemStack.EMPTY)
+            darkInventory.setStackInSlot(1, ItemStack.EMPTY)
         }
 
         detectAndSendChanges()
@@ -121,7 +128,7 @@ class StonecutterContainer(
 
     override fun onContainerClosed(playerIn: EntityPlayer) {
         super.onContainerClosed(playerIn)
-        val stack = handler.getStackInSlot(0)
+        val stack = darkInventory.getStackInSlot(0)
 
         if (!playerIn.isEntityAlive || playerIn is EntityPlayerMP && playerIn.hasDisconnected()) {
             if (!stack.isEmpty) {

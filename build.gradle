@@ -18,7 +18,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'kotlin'
 apply plugin: 'com.wynprice.cursemaven'
 
-version = "1.12.2-0.2.1"
+version = "1.12.2-0.2.2"
 group = "thedarkcolour.futuremc"
 archivesBaseName = "future-mc"
 
@@ -73,6 +73,7 @@ dependencies {
     implementation "curse.maven:dynamic-trees-sources:2870269"
     implementation "curse.maven:enchantment-descriptions:2689502"
     implementation "curse.maven:enchantment-descriptions-sources:2689503"
+    implementation "curse.maven:pams-harvestcraft:2904825"
 }
 
 processResources {
