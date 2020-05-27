@@ -29,14 +29,12 @@ public class CoreTransformer implements IClassTransformer {
             if (transformedName.equals("net.minecraft.block.BlockPistonBase")) {
                 try {
                     Class.forName("vazkii.quark.base.asm.LoadingPlugin");
-
-                    // Use bundled coremod from Quark
-                    // todo redo in Kotlin
-                    return ClassTransformer.transformBlockPistonBase(basicClass);
                 } catch (ClassNotFoundException e) {
-                    // Use Quark's coremod instead
-                    return basicClass;
+                    // If Quark isn't here just use the bundled coremod
+                    return ClassTransformer.transformBlockPistonBase(basicClass);
                 }
+                // use Quark's coremod
+                return basicClass;
             }
 
             if (transformedName.equals("net.minecraft.client.renderer.EntityRenderer")) {
