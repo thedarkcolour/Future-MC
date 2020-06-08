@@ -13,9 +13,9 @@ import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.container.*;
 
 /**
- *
  * Uses enum constants for GUIs instead of IDs.
  * Simplifies opening and adding new GUIs.
+ * Sadly there's no elegant way to redo this class in Kotlin.
  *
  * @author TheDarkColour
  *
@@ -30,43 +30,80 @@ public enum GuiType {
     SMITHING_TABLE(SmithingContainer::new),
     CARTOGRAPHY_TABLE(ContainerCartographyTable::new);
 
-    private final ContainerSupplier<? extends FContainer> container;
+    /**
+     * The container factory of this {@link GuiType}
+     */
+    private final ContainerFactory container;
 
     /**
      * Creates a {@link GuiType} for a block without a tile entity.
      *
      * @param container The container factory (and indirectly the gui factory)
      */
-    GuiType(ContainerSupplier<?> container) {
+    GuiType(ContainerFactory container) {
         this.container = container;
     }
+
     /**
      * Creates a {@link GuiType} for a tile entity.
      *
      * @param container The container factory (and indirectly the gui factory)
      */
-    GuiType(TEContainerSupplier<?> container) {
+    GuiType(TEContainerFactory container) {
         this.container = container;
     }
 
-    public GuiContainer getGui(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
+    /**
+     * Used internally in the {@link Handler} for opening a gui on the client.
+     *
+     * @param playerInv the player to open the gui for
+     * @param worldIn the world
+     * @param pos the position of this block or tile entity
+     * @return a new GuiContainer for this {@link GuiType}
+     */
+    private GuiContainer getGui(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
         return getContainer(playerInv, worldIn, pos).getGuiContainer();
     }
 
-    public GuiContainer getGui(InventoryPlayer playerInv, TileEntity te) {
+    /**
+     * Used internally in the {@link Handler} for opening a gui on the client.
+     *
+     * @param playerInv the player to open the gui for
+     * @param te the TileEntity that has World and BlockPos references
+     * @return a new GuiContainer for this {@link GuiType}
+     */
+    private GuiContainer getGui(InventoryPlayer playerInv, TileEntity te) {
         return getContainer(playerInv, te).getGuiContainer();
     }
 
-    public FContainer getContainer(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
+    /**
+     * Used internally in the {@link Handler} for opening a container on the server.
+     *
+     * @param playerInv the inventory of the player
+     * @param worldIn the World
+     * @param pos the position of this block or tile entity
+     * @return a new FContainer for this {@link GuiType}
+     */
+    private FContainer getContainer(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
         return container.get(playerInv, worldIn, pos);
     }
 
-    public FContainer getContainer(InventoryPlayer playerInv, TileEntity te) {
+    /**
+     * Used internally in the {@link Handler} for opening a container on the server.
+     *
+     * @param playerInv the inventory of the player
+     * @param te the TileEntity that has World and BlockPos references
+     * @return a new FContainer for this {@link GuiType}
+     */
+    private FContainer getContainer(InventoryPlayer playerInv, TileEntity te) {
         return container.get(playerInv, te);
     }
 
+    /**
+     * @return if this {@link GuiType} requires a TileEntity
+     */
     public boolean isTile() {
-        return container instanceof TEContainerSupplier<?>;
+        return container instanceof TEContainerFactory;
     }
 
     /**
@@ -80,61 +117,113 @@ public enum GuiType {
         if (!worldIn.isRemote) {
             playerIn.openGui(FutureMC.INSTANCE, ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
+
         return true;
     }
 
+    /**
+     * Singleton {@link IGuiHandler} for client-server gui opening.
+     */
     private static final class Handler implements IGuiHandler {
         private static final Handler INSTANCE = new Handler();
 
         private Handler() {
         }
 
+        /**
+         * Returns a Server side Container to be displayed to the user.
+         *
+         * @param ID The Gui ID Number
+         * @param playerIn The player viewing the Gui
+         * @param worldIn The current world
+         * @param x X Position
+         * @param y Y Position
+         * @param z Z Position
+         * @return A GuiScreen/Container to be displayed to the user, null if none.
+         */
         @Override
-        public FContainer getServerGuiElement(int ID, EntityPlayer player, World worldIn, int x, int y, int z) {
+        public FContainer getServerGuiElement(int ID, EntityPlayer playerIn, World worldIn, int x, int y, int z) {
             BlockPos pos = new BlockPos(x, y, z);
             GuiType guiType = values()[ID];
 
             if (guiType.isTile()) {
-                return guiType.getContainer(player.inventory, worldIn.getTileEntity(pos));
+                return guiType.getContainer(playerIn.inventory, worldIn.getTileEntity(pos));
             } else {
-                return guiType.getContainer(player.inventory, worldIn, pos);
+                return guiType.getContainer(playerIn.inventory, worldIn, pos);
             }
         }
 
+        /**
+         * Returns a Container to be displayed to the user. On the client side, this
+         * needs to return a instance of GuiScreen On the server side, this needs to
+         * return a instance of Container
+         *
+         * @param ID The Gui ID Number
+         * @param playerIn The player viewing the Gui
+         * @param worldIn The current world
+         * @param x X Position
+         * @param y Y Position
+         * @param z Z Position
+         * @return A GuiScreen/Container to be displayed to the user, null if none.
+         */
         @Override
-        public Object getClientGuiElement(int ID, EntityPlayer player, World worldIn, int x, int y, int z) {
+        public Object getClientGuiElement(int ID, EntityPlayer playerIn, World worldIn, int x, int y, int z) {
             BlockPos pos = new BlockPos(x, y, z);
             GuiType guiType = values()[ID];
 
             if (guiType.isTile()) {
-                return guiType.getGui(player.inventory, worldIn.getTileEntity(pos));
+                return guiType.getGui(playerIn.inventory, worldIn.getTileEntity(pos));
             } else {
-                return guiType.getGui(player.inventory, worldIn, pos);
+                return guiType.getGui(playerIn.inventory, worldIn, pos);
             }
         }
     }
 
+    /**
+     * Registers the internal IGuiHandler to the Forge network registry.
+     */
     public static void registerGuiHandler() {
         NetworkRegistry.INSTANCE.registerGuiHandler(FutureMC.INSTANCE, Handler.INSTANCE);
     }
 
+    /**
+     * Common ContainerFactory class that by default does not require a TileEntity.
+     */
     @FunctionalInterface
-    private interface ContainerSupplier<T extends FContainer> {
-        default T get(InventoryPlayer player, TileEntity te) {
+    private interface ContainerFactory {
+        /**
+         * Creates a new {@link FContainer} for a TileEntity.
+         *
+         * @param player the player
+         * @param te the TileEntity to create a new container with.
+         * @return a new {@link FContainer} for a TileEntity or {@code null} if this {@link ContainerFactory} is NOT for a TileEntity
+         */
+        default FContainer get(InventoryPlayer player, TileEntity te) {
             return null;
         }
 
-        T get(InventoryPlayer player, World worldIn, BlockPos pos);
+        /**
+         * Creates a new {@link FContainer} for a block that does not require a TileEntity.
+         *
+         * @param player the player
+         * @param worldIn the World
+         * @param pos the position of this block or tile entity
+         * @return {@code null} if this {@link ContainerFactory} is for a TileEntity or a new {@link FContainer}
+         */
+        FContainer get(InventoryPlayer player, World worldIn, BlockPos pos);
     }
 
+    /**
+     * Container supplier that requires a TileEntity.
+     */
     @FunctionalInterface
-    private interface TEContainerSupplier<T extends FContainer> extends ContainerSupplier<T> {
+    private interface TEContainerFactory extends ContainerFactory {
         @Override
-        default T get(InventoryPlayer player, World worldIn, BlockPos pos) {
+        default FContainer get(InventoryPlayer player, World worldIn, BlockPos pos) {
             return null;
         }
 
         @Override
-        T get(InventoryPlayer player, TileEntity te);
+        FContainer get(InventoryPlayer player, TileEntity te);
     }
 }

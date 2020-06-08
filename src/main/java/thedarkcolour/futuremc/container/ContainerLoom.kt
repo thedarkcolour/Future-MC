@@ -21,8 +21,8 @@ import thedarkcolour.core.util.anyMatch
 import thedarkcolour.core.util.getOreNames
 import thedarkcolour.core.util.janyMatch
 import thedarkcolour.futuremc.client.gui.GuiLoom
-import thedarkcolour.futuremc.item.ItemBannerPattern
-import thedarkcolour.futuremc.item.ItemBannerPattern.Companion.getBannerPattern
+import thedarkcolour.futuremc.item.BannerPatternItem
+import thedarkcolour.futuremc.item.BannerPatternItem.Companion.getBannerPattern
 import thedarkcolour.futuremc.registry.FBlocks.LOOM
 
 class ContainerLoom(playerInv: InventoryPlayer, private val world: World, private val pos: BlockPos) : FContainer(playerInv) {
@@ -38,7 +38,7 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
             return when (slot) {
                 0 -> stack.item is ItemBanner
                 1 -> isDye(stack)
-                2 -> stack.item is ItemBannerPattern
+                2 -> stack.item is BannerPatternItem
                 else -> false
             }
         }
@@ -103,7 +103,7 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
         val banner = banner
         val pattern = pattern
         if (output.isEmpty || !banner.isEmpty && !color.isEmpty && selectedIndex > 0 && (selectedIndex < BASIC_PATTERNS.size - 5 || !pattern.isEmpty)) {
-            if (pattern.item is ItemBannerPattern) {
+            if (pattern.item is BannerPatternItem) {
                 val tag = banner.getOrCreateSubCompound("BlockEntityTag")
                 val flag = tag.hasKey("Patterns", 9) && !banner.isEmpty && tag.getTagList("Patterns", 10).tagCount() >= 6
                 selectedIndex = if (flag) {
@@ -187,7 +187,7 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
                     if (!mergeItemStack(itemstack1, 1, 2, false)) {
                         return ItemStack.EMPTY
                     }
-                } else if (itemstack1.item is ItemBannerPattern) {
+                } else if (itemstack1.item is BannerPatternItem) {
                     if (!mergeItemStack(itemstack1, 2, 3, false)) {
                         return ItemStack.EMPTY
                     }

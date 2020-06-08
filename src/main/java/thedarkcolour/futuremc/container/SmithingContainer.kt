@@ -2,6 +2,7 @@ package thedarkcolour.futuremc.container
 
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.SoundCategory
@@ -16,7 +17,7 @@ import thedarkcolour.futuremc.recipe.smithing.SmithingRecipes
 import thedarkcolour.futuremc.registry.FBlocks
 import thedarkcolour.futuremc.registry.FSounds
 
-class SmithingContainer(playerInv: InventoryPlayer, private val world: World, private val pos: BlockPos) : FContainer(playerInv) {
+class SmithingContainer(playerInv: InventoryPlayer, private val worldIn: World, private val pos: BlockPos) : FContainer(playerInv) {
     private var recipe: SmithingRecipe? = null
     private val inventory = object : DarkInventory(3) {
         override fun onContentsChanged(slot: Int) {
@@ -26,9 +27,7 @@ class SmithingContainer(playerInv: InventoryPlayer, private val world: World, pr
             }
         }
 
-        override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
-            return false
-        }
+        override fun isItemValid(slot: Int, stack: ItemStack) = slot != 2
 
         override fun onTake(playerIn: EntityPlayer, stack: ItemStack, slot: Int): ItemStack {
             if (slot == 2) {
@@ -47,27 +46,94 @@ class SmithingContainer(playerInv: InventoryPlayer, private val world: World, pr
     private fun addOwnSlots() {
         addSlotToContainer(DarkInventorySlot(inventory, 0, 27, 47))
         addSlotToContainer(DarkInventorySlot(inventory, 1, 76, 47))
-        addSlotToContainer(DarkInventorySlot(inventory, 2, 134, 47))
+        addSlotToContainer(DarkInventorySlot(inventory, 2, 134, 47).alwaysTakeAll(true))
     }
 
     private fun updateResult() {
         val input = inventory[0]
-        recipe = SmithingRecipes.getRecipe(input)
+        recipe = SmithingRecipes.getRecipe(input, inventory[1])
+
+        if (recipe != null) {
+            val result = recipe!!.output.copy()
+            val tag = input.tagCompound
+            result.tagCompound = tag
+            inventory[2] = result
+        } else {
+            inventory.remove(2)
+        }
     }
 
     private fun consumeInputs() {
-        if (!world.isRemote) {
+        if (!worldIn.isRemote) {
+            inventory[1].shrink(recipe?.material?.count ?: return)
             inventory[0].shrink(1)
 
-            world.playSound(null, pos, FSounds.BLOCK_SMITHING_TABLE_USE, SoundCategory.BLOCKS, 1.0f, world.rand.nextFloat() * 0.1f + 0.9f)
+            detectAndSendChanges()
+
+            worldIn.playSound(null, pos, FSounds.BLOCK_SMITHING_TABLE_USE, SoundCategory.BLOCKS, 1.0f, worldIn.rand.nextFloat() * 0.1f + 0.9f)
         }
     }
 
     override fun canInteractWith(playerIn: EntityPlayer): Boolean {
-        return isBlockInRange(FBlocks.SMITHING_TABLE, world, pos, playerIn)
+        return isBlockInRange(FBlocks.SMITHING_TABLE, worldIn, pos, playerIn)
     }
 
     override fun getGuiContainer(): GuiContainer {
-        return SmithingGui(SmithingContainer(playerInv, world, pos))
+        return SmithingGui(SmithingContainer(playerInv, worldIn, pos))
+    }
+
+    override fun onContainerClosed(playerIn: EntityPlayer) {
+        super.onContainerClosed(playerIn)
+        val stack = inventory.getStackInSlot(0)
+        val stack1 = inventory.getStackInSlot(1)
+
+        if (!playerIn.isEntityAlive || playerIn is EntityPlayerMP && playerIn.hasDisconnected()) {
+            if (!stack.isEmpty) {
+                playerIn.entityDropItem(stack, 0.5f)
+            }
+            if (!stack1.isEmpty) {
+                playerIn.entityDropItem(stack1, 0.5f)
+            }
+        } else {
+            if (!stack.isEmpty) {
+                playerInv.placeItemBackInInventory(worldIn, stack)
+            }
+            if (!stack1.isEmpty) {
+                playerInv.placeItemBackInInventory(worldIn, stack1)
+            }
+        }
+    }
+
+    override fun transferStackInSlot(playerIn: EntityPlayer, index: Int): ItemStack {
+        var itemStack = ItemStack.EMPTY
+        val slot = inventorySlots[index]
+
+        if (slot.hasStack) {
+            val itemStack2 = slot.stack
+            itemStack = itemStack2.copy()
+            if (index == 2) {
+                if (!mergeItemStack(itemStack2, 3, 39, true)) {
+                    return ItemStack.EMPTY
+                }
+                slot.onSlotChange(itemStack2, itemStack)
+            } else if (index != 0 && index != 1) {
+                if (index in 3..38 && !mergeItemStack(itemStack2, 0, 2, false)) {
+                    return ItemStack.EMPTY
+                }
+            } else if (!this.mergeItemStack(itemStack2, 3, 39, false)) {
+                return ItemStack.EMPTY
+            }
+            if (itemStack2.isEmpty) {
+                slot.putStack(ItemStack.EMPTY)
+            } else {
+                slot.onSlotChanged()
+            }
+            if (itemStack2.count == itemStack.count) {
+                return ItemStack.EMPTY
+            }
+            slot.onTake(playerIn, itemStack2)
+        }
+
+        return itemStack
     }
 }

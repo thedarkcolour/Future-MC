@@ -1,10 +1,12 @@
 package thedarkcolour.futuremc.recipe
 
 import net.minecraft.item.ItemStack
+import net.minecraftforge.fml.common.registry.ForgeRegistries
 import java.util.*
 
-abstract class Recipes<T : Recipe<T>> {
-    abstract val recipes: ArrayList<T>
+abstract class Recipes<out T : Recipe<T>> {
+    /** List of all recipes for this class. */
+    abstract val recipes: ArrayList<out T>
 
     /**
      * Removes a recipe with the given input
@@ -12,9 +14,11 @@ abstract class Recipes<T : Recipe<T>> {
      */
     open fun removeRecipe(input: ItemStack) {
         val iterator = recipes.iterator()
+
         while (iterator.hasNext()) {
-            if (iterator.next().matches(input))
+            if (iterator.next().matches(input)) {
                 iterator.remove()
+            }
         }
     }
 
@@ -40,14 +44,22 @@ abstract class Recipes<T : Recipe<T>> {
     }
 
     /**
-     * Removes default recipes.
+     * Removes all default recipes.
      */
     open fun clear() {
         recipes.clear()
     }
 
     /**
-     * Removes invalid recipes with missing item
+     * Removes empty recipes after all recipes have been registered.
      */
-    abstract fun validate()
+    fun validate() {
+        val registry = ForgeRegistries.ITEMS
+
+        recipes.removeIf { recipe ->
+            val a = !registry.containsValue(recipe.output.item) || !registry.containsValue(recipe.input.item)
+            if (a) println(recipe)
+            a
+        }
+    }
 }

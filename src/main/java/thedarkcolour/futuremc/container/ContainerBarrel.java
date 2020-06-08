@@ -15,6 +15,7 @@ import net.minecraftforge.items.SlotItemHandler;
 import thedarkcolour.core.gui.FContainer;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.client.gui.GuiBarrel;
+import thedarkcolour.futuremc.registry.FBlocks;
 import thedarkcolour.futuremc.tile.TileBarrel;
 
 import javax.annotation.Nonnull;
@@ -77,7 +78,7 @@ public class ContainerBarrel extends FContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        return isTileInRange(te, playerIn);
+        return isTileInRange(te, playerIn) && isBlockInRange(FBlocks.BARREL, te.getWorld(), te.getPos(), playerIn);
     }
 
     @SideOnly(Side.CLIENT)

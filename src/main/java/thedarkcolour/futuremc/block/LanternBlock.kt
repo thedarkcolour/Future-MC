@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.block
 
 import net.minecraft.block.Block
+import net.minecraft.block.BlockTrapDoor
 import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.state.BlockFaceShape
 import net.minecraft.block.state.BlockStateContainer
@@ -14,6 +15,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import thedarkcolour.core.block.FBlock
+import java.util.*
 
 class LanternBlock(properties: Properties) : FBlock(properties) {
     init {
@@ -27,23 +29,11 @@ class LanternBlock(properties: Properties) : FBlock(properties) {
     ): IBlockState {
         return if (facing == EnumFacing.DOWN && !isBlockInvalid(worldIn, pos, EnumFacing.UP)) {
             defaultState.withProperty(HANGING, true)
+        } else if (isBlockInvalid(worldIn, pos, EnumFacing.DOWN)) {
+            defaultState.withProperty(HANGING, true)
         } else {
             defaultState.withProperty(HANGING, false)
         }
-    }
-
-    /**
-     * Checks if a lantern should not be place-able here.
-     *
-     * @param facing the offset of the block to check
-     */
-    private fun isBlockInvalid(world: World, blockPos: BlockPos, facing: EnumFacing): Boolean {
-        val pos = blockPos.offset(facing)
-        val state = world.getBlockState(pos)
-        val block = state.block
-        val faceShape = state.getBlockFaceShape(world, pos, facing.opposite)
-        return isExceptBlockForAttachWithPiston(block)
-                || arrayOf(BlockFaceShape.BOWL, BlockFaceShape.UNDEFINED).any(faceShape::equals)
     }
 
     /**
@@ -53,20 +43,52 @@ class LanternBlock(properties: Properties) : FBlock(properties) {
      *      If there is a valid block above
      */
     override fun canPlaceBlockAt(worldIn: World, pos: BlockPos): Boolean {
-        return super.canPlaceBlockAt(worldIn, pos) && !(isBlockInvalid(worldIn, pos, EnumFacing.DOWN) && isBlockInvalid(worldIn, pos, EnumFacing.UP))
+        return super.canPlaceBlockAt(worldIn, pos) && isValidPosition(worldIn, pos)
+    }
+
+    private fun isValidPosition(worldIn: World, pos: BlockPos): Boolean {
+        return !(isBlockInvalid(worldIn, pos, EnumFacing.DOWN) && isBlockInvalid(worldIn, pos, EnumFacing.UP))
     }
 
     /**
-     * Shortcut method to use [IBlockState] instead of [EnumFacing]
+     * Checks if a lantern should not be place-able here.
+     *
+     * @param facing the offset of the block to check
      */
-    private fun isInvalidPosition(worldIn: World, pos: BlockPos, state: IBlockState): Boolean {
-        return isBlockInvalid(worldIn, pos, if (state.getValue(HANGING)) EnumFacing.UP else EnumFacing.DOWN)
+    private fun isBlockInvalid(world: World, pos: BlockPos, facing: EnumFacing): Boolean {
+        val pos1 = pos.offset(facing)
+        val state = world.getBlockState(pos1)
+        val faceShape = state.getBlockFaceShape(world, pos1, facing.opposite)
+        return faceShape in INVALID_FACE_SHAPES || (state.block is BlockTrapDoor && isTrapdoorValid(state, facing))
+    }
+
+    private fun isTrapdoorValid(state: IBlockState, facing: EnumFacing): Boolean {
+        return (facing == EnumFacing.UP && state.getValue(BlockTrapDoor.HALF) == BlockTrapDoor.DoorHalf.TOP || facing == EnumFacing.DOWN && state.getValue(BlockTrapDoor.HALF) == BlockTrapDoor.DoorHalf.BOTTOM) && !state.getValue(BlockTrapDoor.OPEN)
     }
 
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromPos: BlockPos) {
-        if (isInvalidPosition(worldIn, pos, state)) {
-            dropBlockAsItem(worldIn, pos, state, 0)
-            worldIn.setBlockToAir(pos)
+        if (!worldIn.isRemote) {
+            if (!isValidPosition(worldIn, pos)) {
+                dropBlockAsItem(worldIn, pos, state, 0)
+                worldIn.setBlockToAir(pos)
+            }
+        }
+    }
+
+    override fun observedNeighborChange(
+        observerState: IBlockState,
+        worldIn: World,
+        observerPos: BlockPos,
+        changedBlock: Block,
+        changedBlockPos: BlockPos
+    ) {
+        if (changedBlock is BlockTrapDoor) {
+            val state = worldIn.getBlockState(changedBlockPos)
+            val facing = if (observerState.getValue(HANGING)) EnumFacing.UP else EnumFacing.DOWN
+            if (!isTrapdoorValid(state, facing)) {
+                dropBlockAsItem(worldIn, observerPos, observerState, 0)
+                worldIn.setBlockToAir(observerPos)
+            }
         }
     }
 
@@ -86,13 +108,13 @@ class LanternBlock(properties: Properties) : FBlock(properties) {
         return if (blockState.getValue(HANGING)) 15 else 0
     }
 
-    override fun getBoundingBox(state: IBlockState, source: IBlockAccess, pos: BlockPos): AxisAlignedBB {
+    override fun getBoundingBox(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos): AxisAlignedBB {
         return if (state.getValue(HANGING)) HANGING_AABB else SITTING_AABB
     }
 
     override fun getRenderLayer() = BlockRenderLayer.CUTOUT
 
-    override fun isBlockNormalCube(state: IBlockState): Boolean = false
+    override fun isBlockNormalCube(state: IBlockState) = false
     override fun isNormalCube(state: IBlockState, world: IBlockAccess, pos: BlockPos) = false
     override fun isFullBlock(state: IBlockState) = false
     override fun isOpaqueCube(state: IBlockState) = false
@@ -106,5 +128,6 @@ class LanternBlock(properties: Properties) : FBlock(properties) {
         private val HANGING = PropertyBool.create("hanging")
         private val SITTING_AABB = makeCube(5.0, 0.0, 5.0, 11.0, 9.0, 11.0)
         private val HANGING_AABB = makeCube(5.0, 1.0, 5.0, 11.0, 10.0, 11.0)
+        private val INVALID_FACE_SHAPES = EnumSet.of(BlockFaceShape.BOWL, BlockFaceShape.UNDEFINED)
     }
 }

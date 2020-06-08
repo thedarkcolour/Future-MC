@@ -20,7 +20,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
-import net.minecraft.world.biome.Biome
 import net.minecraftforge.common.ForgeHooks
 import net.minecraftforge.common.IPlantable
 import thedarkcolour.futuremc.config.FConfig
@@ -134,11 +133,18 @@ class SweetBerryBushBlock : BlockFlower("sweet_berry_bush"), IGrowable, IPlantab
         worldIn.setBlockState(pos, defaultState.withProperty(AGE, age + 1))
     }
 
-    override fun isBiomeValid(biome: Biome): Boolean {
-        return biome == Biomes.TAIGA || biome == Biomes.TAIGA_HILLS || biome == Biomes.COLD_TAIGA || biome == Biomes.COLD_TAIGA_HILLS || biome == Biomes.MUTATED_REDWOOD_TAIGA || biome == Biomes.MUTATED_REDWOOD_TAIGA_HILLS || biome == Biomes.REDWOOD_TAIGA || biome == Biomes.REDWOOD_TAIGA_HILLS || biome == Biomes.MUTATED_TAIGA_COLD
-    }
-
     override val flowerChance = FConfig.villageAndPillage.sweetBerryBush.spawnRate
+    override val validBiomes = setOf(
+        Biomes.TAIGA,
+        Biomes.TAIGA_HILLS,
+        Biomes.COLD_TAIGA,
+        Biomes.COLD_TAIGA_HILLS,
+        Biomes.MUTATED_REDWOOD_TAIGA,
+        Biomes.MUTATED_REDWOOD_TAIGA_HILLS,
+        Biomes.REDWOOD_TAIGA,
+        Biomes.REDWOOD_TAIGA_HILLS,
+        Biomes.MUTATED_TAIGA_COLD
+    )
 
     companion object {
         private val YOUNG = AxisAlignedBB(0.3, 0.0, 0.3, 0.7, 0.5, 0.7)

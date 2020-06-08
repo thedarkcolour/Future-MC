@@ -2,11 +2,13 @@ package thedarkcolour.futuremc.recipe.stonecutter
 
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
-import net.minecraftforge.fml.common.registry.ForgeRegistries
 import thedarkcolour.futuremc.recipe.Recipes
 import thedarkcolour.futuremc.recipe.SimpleRecipe
 import thedarkcolour.futuremc.registry.FBlocks
 
+/**
+ * @author TheDarkColour
+ */
 object StonecutterRecipes : Recipes<SimpleRecipe>() {
     override val recipes = arrayListOf(
         SimpleRecipe(ItemStack(Blocks.STONE), ItemStack(Blocks.STONE_SLAB, 2)),
@@ -63,13 +65,5 @@ object StonecutterRecipes : Recipes<SimpleRecipe>() {
 
     fun removeRecipe(input: ItemStack, output: ItemStack) {
         recipes.removeIf { recipe -> recipe.matches(input, output) }
-    }
-
-    override fun validate() {
-        val registry = ForgeRegistries.ITEMS
-
-        recipes.removeIf { recipe ->
-            !registry.containsValue(recipe.output.item) || !registry.containsValue(recipe.input.item)
-        }
     }
 }

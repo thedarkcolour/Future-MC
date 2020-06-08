@@ -146,7 +146,7 @@ open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: Strin
     /**
      * Sets the contents of this slot to [ItemStack.EMPTY].
      */
-    fun setToEmpty(slot: Int) {
+    fun remove(slot: Int) {
         stacks[slot] = ItemStack.EMPTY
     }
 

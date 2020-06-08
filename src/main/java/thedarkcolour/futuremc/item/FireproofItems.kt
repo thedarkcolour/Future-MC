@@ -1,2 +1,106 @@
 package thedarkcolour.futuremc.item
 
+import net.minecraft.block.Block
+import net.minecraft.entity.FireproofItemLogic
+import net.minecraft.entity.item.EntityItem
+import net.minecraft.inventory.EntityEquipmentSlot
+import net.minecraft.item.*
+import thedarkcolour.core.item.ModeledItem
+import thedarkcolour.core.item.ModeledItemBlock
+import thedarkcolour.core.util.setItemModel
+import thedarkcolour.core.util.setItemName
+
+class FireproofItemBlock(block: Block) : ModeledItemBlock(block) {
+    override fun onEntityItemUpdate(entity: EntityItem): Boolean {
+        FireproofItemLogic.update(entity)
+        return true
+    }
+}
+
+class FireproofItem(regName: String) : ModeledItem(regName) {
+    override fun onEntityItemUpdate(entity: EntityItem): Boolean {
+        FireproofItemLogic.update(entity)
+        return true
+    }
+}
+
+class FireproofAxeItem(
+    regName: String,
+    material: ToolMaterial,
+    damage: Float,
+    speed: Float
+) : ItemAxe(material, damage, speed) {
+    init {
+        setItemName(this, regName)
+        setItemModel(this, 0)
+    }
+
+    override fun onEntityItemUpdate(entity: EntityItem): Boolean {
+        FireproofItemLogic.update(entity)
+        return true
+    }
+}
+
+class FireproofHoeItem(regName: String, material: ToolMaterial) : ItemHoe(material) {
+    init {
+        setItemName(this, regName)
+        setItemModel(this, 0)
+    }
+
+    override fun onEntityItemUpdate(entity: EntityItem): Boolean {
+        FireproofItemLogic.update(entity)
+        return true
+    }
+}
+
+class FireproofPickaxeItem(regName: String, material: ToolMaterial) : ItemPickaxe(material) {
+    init {
+        setItemName(this, regName)
+        setItemModel(this, 0)
+    }
+
+    override fun onEntityItemUpdate(entity: EntityItem): Boolean {
+        FireproofItemLogic.update(entity)
+        return true
+    }
+}
+
+class FireproofShovelItem(regName: String, material: ToolMaterial) : ItemSpade(material) {
+    init {
+        setItemName(this, regName)
+        setItemModel(this, 0)
+    }
+
+    override fun onEntityItemUpdate(entity: EntityItem): Boolean {
+        FireproofItemLogic.update(entity)
+        return true
+    }
+}
+
+class FireproofSwordItem(regName: String, material: ToolMaterial) : ItemSword(material) {
+    init {
+        setItemName(this, regName)
+        setItemModel(this, 0)
+    }
+
+    override fun onEntityItemUpdate(entity: EntityItem): Boolean {
+        FireproofItemLogic.update(entity)
+        return true
+    }
+}
+
+class FireproofArmorItem(
+    regName: String,
+    materialIn: ArmorMaterial,
+    equipmentSlotIn: EntityEquipmentSlot
+) : ItemArmor(materialIn, 0, equipmentSlotIn) {
+    init {
+        setItemName(this, regName)
+        setItemModel(this, 0)
+    }
+
+    override fun onEntityItemUpdate(entity: EntityItem): Boolean {
+        FireproofItemLogic.update(entity)
+        return true
+    }
+}

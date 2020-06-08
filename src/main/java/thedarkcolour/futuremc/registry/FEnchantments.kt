@@ -6,8 +6,8 @@ import net.minecraftforge.common.util.EnumHelper
 import net.minecraftforge.fml.common.registry.ForgeRegistries
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.enchantment.*
-import thedarkcolour.futuremc.item.ItemCrossbow
-import thedarkcolour.futuremc.item.ItemTrident
+import thedarkcolour.futuremc.item.CrossbowItem
+import thedarkcolour.futuremc.item.TridentItem
 
 object FEnchantments {
     lateinit var CHANNELING: Enchantment private set
@@ -32,7 +32,7 @@ object FEnchantments {
         PIERCING = register(EnchantmentPiercing(), FConfig.villageAndPillage.crossbow)
         QUICK_CHARGE = register(EnchantmentQuickCharge(), FConfig.villageAndPillage.crossbow)
 
-        TRIDENT = EnumHelper.addEnchantmentType("weapons") { item -> (item is ItemTrident) }!!
-        CROSSBOW = EnumHelper.addEnchantmentType("weapons") { item -> (item is ItemCrossbow) }!!
+        TRIDENT = EnumHelper.addEnchantmentType("weapons") { item -> (item is TridentItem) }!!
+        CROSSBOW = EnumHelper.addEnchantmentType("weapons") { item -> (item is CrossbowItem) }!!
     }
 }

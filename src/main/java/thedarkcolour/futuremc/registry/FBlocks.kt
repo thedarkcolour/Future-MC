@@ -26,12 +26,12 @@ object FBlocks {
 
     val LANTERN = LanternBlock(Properties(Material.IRON, "lantern").hardnessAndResistance(3.5f).sound(FSounds.LANTERN).light(15).group(CreativeTabs.DECORATIONS))
     val STONECUTTER = StonecutterBlock(Properties(Material.ROCK, "stonecutter").hardnessAndResistance(3.5f).group(CreativeTabs.DECORATIONS), GuiType.STONECUTTER, FConfig.villageAndPillage.stonecutter.functionality)
-    val BARREL = BarrelBlock(Properties(Material.WOOD, "barrel").sound(SoundType.WOOD).hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS))
-    val SMOKER = BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.SMOKER, Properties(Material.ROCK, "smoker").hardnessAndResistance(3.5f).group(CreativeTabs.DECORATIONS))
-    val BLAST_FURNACE = BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE, Properties(Material.ROCK, "blast_furnace").hardnessAndResistance(3.5f).group(CreativeTabs.DECORATIONS))
+    @JvmField val BARREL = BarrelBlock(Properties(Material.WOOD, "barrel").sound(SoundType.WOOD).hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS))
+    @JvmField val SMOKER = BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.SMOKER, Properties(Material.ROCK, "smoker").hardnessAndResistance(3.5f).group(CreativeTabs.DECORATIONS))
+    @JvmField val BLAST_FURNACE = BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE, Properties(Material.ROCK, "blast_furnace").hardnessAndResistance(3.5f).group(CreativeTabs.DECORATIONS))
     val LOOM = VillageStationBlock(Properties(Material.WOOD, "loom").group(CreativeTabs.DECORATIONS), GuiType.LOOM, FConfig.villageAndPillage.loom.functionality)
     val FLETCHING_TABLE = VillageStationBlock(Properties(Material.WOOD, "fletching_table").hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS), null, false)
-    val SMITHING_TABLE = VillageStationBlock(Properties(Material.WOOD, "smithing_table").hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS), null, FConfig.villageAndPillage.smithingTable.functionality)
+    val SMITHING_TABLE = VillageStationBlock(Properties(Material.WOOD, "smithing_table").hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS), GuiType.SMITHING_TABLE, FConfig.villageAndPillage.smithingTable.functionality)
     val CARTOGRAPHY_TABLE = VillageStationBlock(Properties(Material.WOOD, "cartography_table").hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS), null, FConfig.villageAndPillage.cartographyTable.functionality)
     val GRINDSTONE = BlockGrindstone(Properties(Material.ANVIL, "grindstone").color(MapColor.IRON).group(CreativeTabs.DECORATIONS).hardnessAndResistance(2.0F, 6.0F))
     val COMPOSTER = ComposterBlock(Properties(Material.WOOD, "composter").hardnessAndResistance(0.6F).sound(SoundType.WOOD).group(CreativeTabs.MISC))
@@ -62,7 +62,7 @@ object FBlocks {
     val SMOOTH_SANDSTONE = FBlock(Properties(Material.ROCK, "smooth_sandstone").color(MapColor.SAND).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.BUILDING_BLOCKS))
     val SMOOTH_QUARTZ = FBlock(Properties(Material.ROCK, "smooth_quartz").color(MapColor.QUARTZ).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.BUILDING_BLOCKS))
     val SMOOTH_RED_SANDSTONE = FBlock(Properties(Material.ROCK, "smooth_red_sandstone").color(MapColor.ADOBE).hardnessAndResistance(2.0f, 6.0f).group(CreativeTabs.BUILDING_BLOCKS))
-    val BLUE_ICE = BlueIceBlock(Properties(Material.PACKED_ICE, "blue_ice").group(CreativeTabs.BUILDING_BLOCKS).slipperiness(0.989f).hardnessAndResistance(2.8f))
+    val BLUE_ICE = BlueIceBlock(Properties(Material.PACKED_ICE, "blue_ice").slipperiness(0.989f).hardnessAndResistance(2.8f).sound(SoundType.GLASS).group(CreativeTabs.BUILDING_BLOCKS))
     val STRIPPED_ACACIA_WOOD = BlockWood("stripped_acacia_wood")
     val STRIPPED_JUNGLE_WOOD = BlockWood("stripped_jungle_wood")
     val STRIPPED_BIRCH_WOOD = BlockWood("stripped_birch_wood")
@@ -85,12 +85,14 @@ object FBlocks {
     val SOUL_FIRE_TORCH = BlockSoulFireTorch()
     val SOUL_SOIL = FBlock(Properties(Material.GROUND, "soul_soil").group(CreativeTabs.BUILDING_BLOCKS).sound(FSounds.SOUL_SOIL))
     val CHAIN = ChainBlock(Properties(Material.IRON, "chain").hardnessAndResistance(5.0f, 6.0f).shape(FBlock.makeCube(6.5, 0.0, 6.5, 9.5, 16.0, 9.5)).group(CreativeTabs.DECORATIONS))
+    val NETHERITE_BLOCK = FBlock(Properties(Material.IRON, "netherite_block").color(MapColor.BLACK).hardnessAndResistance(50.0f, 1200.0f).sound(FSounds.NETHERITE).usableBeaconBase())
+    val ANCIENT_DEBRIS = FBlock(Properties(Material.IRON, "ancient_debris").color(MapColor.BLACK).hardnessAndResistance(30.0f, 1200.0f).sound(FSounds.ANCIENT_DEBRIS))
     // val WARPED_NYLIUM = NyliumBlock(Properties(Material.ROCK, "warped_nylium").color(MapColor.CYAN).hardnessAndResistance(1.0f).sound(FSounds.NYLIUM))
     // val CRIMSON_NYLIUM = NyliumBlock(Properties(Material.ROCK, "crimson_nylium").color(MapColor.RED))
     // val WARPED_WART_BLOCK = FBlock(Properties(Material.GRASS, "warped_wart_block").color(MapColor.CYAN))
 
     val SEAGRASS = BlockSeaGrass()
-    // val SEAGRASS_FLOWING = SEAGRASS.flowing
+    val SEAGRASS_FLOWING = SEAGRASS.flowing
 
     val SCAFFOLDING = ScaffoldingBlock(Properties(Material.CIRCUITS, "scaffolding").sound(FSounds.SCAFFOLDING))
     val BELL = BlockBell(Properties(Material.IRON, "bell").hardnessAndResistance(5.0f).sound(SoundType.ANVIL).group(CreativeTabs.DECORATIONS))
@@ -233,9 +235,10 @@ object FBlocks {
             blocks.register(SOUL_SOIL)
         if (FConfig.netherUpdate.chain)
             blocks.register(CHAIN)
-        //SEAGRASS = register(BlockSeaGrass(), FConfig.updateAquatic.seagrass) {
-        //    register(it.flowing)
-        //}
+        if (FConfig.netherUpdate.netherite)
+            blocks.registerAll(NETHERITE_BLOCK, ANCIENT_DEBRIS)
+        if (FConfig.updateAquatic.seagrass)
+            blocks.registerAll(SEAGRASS, SEAGRASS_FLOWING)
 
         registerTE("futuremc:barrel", TileBarrel::class.java, FConfig.villageAndPillage.barrel)
         registerTE("futuremc:blast_furnace", TileFurnaceAdvanced.TileBlastFurnace::class.java, FConfig.villageAndPillage.blastFurnace)
@@ -245,6 +248,7 @@ object FBlocks {
         registerTE("futuremc:composter", TileComposter::class.java, FConfig.villageAndPillage.composter)
         registerTE("futuremc:campfire", CampfireTile::class.java, FConfig.villageAndPillage.campfire.enabled)
 
-        //registerTE("futuremc:water_renderer", TileSeagrassRenderer::class.java, FConfig.updateAquatic.seagrass)
+        if (FConfig.updateAquatic.seagrass)
+            registerTE("futuremc:water_renderer", TileSeagrassRenderer::class.java, FConfig.updateAquatic.seagrass)
     }
 }

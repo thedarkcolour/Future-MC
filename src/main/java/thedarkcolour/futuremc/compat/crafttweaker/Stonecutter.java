@@ -58,7 +58,7 @@ public final class Stonecutter {
         }
     }
 
-    // initialize recipes
+    // initialize recipes todo check if this is needed
     static {
         StonecutterRecipes.INSTANCE.getClass();
     }

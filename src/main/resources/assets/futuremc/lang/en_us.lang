@@ -73,8 +73,8 @@ tile.futuremc.soul_soil.name=Soul Soil
 tile.futuremc.fletching_table.name=Fletching Table
 tile.futuremc.smithing_table.name=Smithing Table
 tile.futuremc.blue_ice.name=Blue Ice
-tile.futuremc.soul_fire_torch.name=Soul Fire Torch
-tile.futuremc.soul_fire_lantern.name=Soul Fire Lantern
+tile.futuremc.soul_fire_torch.name=Soul Torch
+tile.futuremc.soul_fire_lantern.name=Soul Lantern
 tile.futuremc.acacia_trapdoor.name=Acacia Trapdoor
 tile.futuremc.jungle_trapdoor.name=Jungle Trapdoor
 tile.futuremc.birch_trapdoor.name=Birch Trapdoor
@@ -94,6 +94,8 @@ tile.futuremc.stripped_oak_wood.name=Stripped Oak Wood
 tile.futuremc.stripped_spruce_wood.name=Stripped Spruce Wood
 tile.futuremc.stripped_dark_oak_wood.name=Stripped Dark Oak Wood
 tile.futuremc.chain.name=Chain
+tile.futuremc.ancient_debris.name=Ancient Debris
+tile.futuremc.netherite_block.name=Netherite Block
 entity.ItemFrame.name=Item Frame
 
 # Banner
@@ -121,7 +123,7 @@ item.futuremc.dye.2.name=Brown Dye
 item.futuremc.dye.3.name=Black Dye
 
 # Item
-item.futuremc.Trident.name=Trident
+item.futuremc.trident.name=Trident
 item.futuremc.crossbow.name=Crossbow
 item.futuremc.crossbow_loaded.name=Arrow Loaded Crossbow
 item.futuremc.suspicious_stew.name=Suspicious Stew
@@ -140,6 +142,17 @@ item.futuremc.pufferfish_bucket.name=Pufferfish Bucket
 item.futuremc.salmon_bucket.name=Salmon Bucket
 item.futuremc.cod_bucket.name=Cod Bucket
 item.futuremc.tropical_fish_bucket.name=Tropical Fish Bucket
+item.futuremc.netherite_axe.name=Netherite Axe
+item.futuremc.netherite_hoe.name=Netherite Hoe
+item.futuremc.netherite_pickaxe.name=Netherite Pickaxe
+item.futuremc.netherite_shovel.name=Netherite Shovel
+item.futuremc.netherite_sword.name=Netherite Sword
+item.futuremc.netherite_scrap.name=Netherite Scrap
+item.futuremc.netherite_helmet.name=Netherite Helmet
+item.futuremc.netherite_chestplate.name=Netherite Chestplate
+item.futuremc.netherite_leggings.name=Netherite Leggings
+item.futuremc.netherite_boots.name=Netherite Boots
+item.futuremc.netherite_ingot.name=Netherite Ingot
 
 # GUI
 container.barrel=Barrel
@@ -148,6 +161,7 @@ container.smoker=Smoker
 container.grindstone=Repair & Disenchant
 container.stonecutter=Stonecutter
 container.loom=Loom
+container.smithing=Upgrade Gear
 
 # Entity
 entity.futuremc:trident.name=Trident

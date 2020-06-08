@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "futuremc:block/ancient_debris_top",
+        "side": "futuremc:block/ancient_debris_side"
+    }
+}

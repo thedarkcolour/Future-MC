@@ -51,7 +51,7 @@ class StonecutterContainer(
         override fun onTake(playerIn: EntityPlayer, stack: ItemStack, slot: Int): ItemStack {
             if (slot == 0) {
                 if (get(0).isEmpty) {
-                    setToEmpty(1)
+                    remove(1)
                 }
             } else {
                 get(0).shrink(1)
@@ -90,13 +90,13 @@ class StonecutterContainer(
                 recipeList = recipes
                 selectedIndex = -1
 
-                darkInventory.setToEmpty(1)
+                darkInventory.remove(1)
 
                 detectAndSendChanges()
             }
         } else {
             recipeList = emptyList()
-            darkInventory.setToEmpty(1)
+            darkInventory.remove(1)
 
             detectAndSendChanges()
         }

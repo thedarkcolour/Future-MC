@@ -6,6 +6,7 @@ import net.minecraft.block.BlockDispenser
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
+import net.minecraft.launchwrapper.Launch
 import net.minecraft.tileentity.BannerPattern
 import net.minecraftforge.common.util.EnumHelper
 import net.minecraftforge.fml.client.registry.ClientRegistry
@@ -23,10 +24,9 @@ import thedarkcolour.core.command.GenerateCommand
 import thedarkcolour.core.command.HealCommand
 import thedarkcolour.core.command.ModeToggleCommand
 import thedarkcolour.core.util.TODO
-import thedarkcolour.core.util.registerOrDispenserBehaviour
+import thedarkcolour.core.util.registerDispenserBehaviour
 import thedarkcolour.core.util.registerServerDispenserBehaviour
 import thedarkcolour.core.util.runOnClient
-import thedarkcolour.futuremc.block.BlockFlower
 import thedarkcolour.futuremc.capability.SwimmingCapability
 import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.client.tesr.bell.BellTileEntityRenderer
@@ -35,16 +35,19 @@ import thedarkcolour.futuremc.command.FastGiveCommand
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.entity.trident.EntityTrident
 import thedarkcolour.futuremc.event.Events
-import thedarkcolour.futuremc.item.ItemBannerPattern
+import thedarkcolour.futuremc.item.BannerPatternItem
 import thedarkcolour.futuremc.registry.FBlocks
 import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FParticles
+import thedarkcolour.futuremc.registry.FRecipes
 import thedarkcolour.futuremc.tile.BeeHiveTile
 import thedarkcolour.futuremc.tile.BellTileEntity
 import thedarkcolour.futuremc.tile.CampfireTile
-import thedarkcolour.futuremc.world.gen.feature.BambooFeature
+import thedarkcolour.futuremc.world.gen.feature.AncientDebrisWorldGen
+import thedarkcolour.futuremc.world.gen.feature.BambooWorldGen
 import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator
-import thedarkcolour.futuremc.world.gen.feature.WorldGenFlower
+import thedarkcolour.futuremc.world.gen.feature.FlowerWorldGen
+import thedarkcolour.futuremc.world.test.FutureWorldType
 
 @Suppress("MemberVisibilityCanBePrivate")
 @Mod(
@@ -58,13 +61,18 @@ import thedarkcolour.futuremc.world.gen.feature.WorldGenFlower
 object FutureMC {
     const val ID = "futuremc"
     const val NAME = "Future MC"
-    const val VERSION = "0.2.2"
+    const val VERSION = "0.2.3"
     const val DEPENDENCIES = "required-after:forgelin;required-after:forge@[14.23.5.2847,)"
 
-    const val DEBUG = false
+    @JvmField
+    val DEBUG = Launch.blackboard["fml.deobfuscatedEnvironment"] as Boolean
 
     init {
         Events.registerEvents()
+
+        if (DEBUG) {
+            FutureWorldType
+        }
     }
 
     @EventHandler
@@ -76,10 +84,10 @@ object FutureMC {
         GuiType.registerGuiHandler()
 
         if (FConfig.updateAquatic.trident) {
-            registerOrDispenserBehaviour(FItems.TRIDENT, IProjectileDispenserBehaviour(::EntityTrident))
+            registerDispenserBehaviour(FItems.TRIDENT, IProjectileDispenserBehaviour(::EntityTrident))
         }
         if (FConfig.buzzyBees.bee.enabled) {
-            registerServerDispenserBehaviour(Items.SHEARS) { worldIn, source, stack ->
+            registerServerDispenserBehaviour(Items.SHEARS) { worldIn, source, stack, existing ->
                 val pos = source.blockPos.offset(source.blockState.getValue(BlockDispenser.FACING))
                 val te = worldIn.getTileEntity(pos)
 
@@ -92,23 +100,25 @@ object FutureMC {
                     te.emptyHoney(worldIn, pos, null)
                 }
 
-                stack
+                existing?.dispense(source, stack) ?: stack
             }
-            registerServerDispenserBehaviour(Items.GLASS_BOTTLE) { worldIn, source, stack ->
+            registerServerDispenserBehaviour(Items.GLASS_BOTTLE) { worldIn, source, stack, existing ->
                 val pos = source.blockPos.offset(source.blockState.getValue(BlockDispenser.FACING))
                 val te = worldIn.getTileEntity(pos)
 
                 if (te is BeeHiveTile && te.honeyLevel >= 5) {
                     te.emptyHoney(worldIn, pos, null)
                     ItemStack(FItems.HONEY_BOTTLE)
-                } else stack
+                } else existing?.dispense(source, stack) ?: stack
             }
         }
 
         if (FConfig.villageAndPillage.loom.enabled) {
             val params = arrayOf(String::class.java, String::class.java)
-            ItemBannerPattern.GLOBE = EnumHelper.addEnum(BannerPattern::class.java, "GLOBE", params, "globe", "glo")!!
+            BannerPatternItem.GLOBE = EnumHelper.addEnum(BannerPattern::class.java, "GLOBE", params, "globe", "glo")!!
         }
+
+        FRecipes.registerFMCRecipes()
 
         registerWorldGen()
 
@@ -152,19 +162,22 @@ object FutureMC {
 
     private fun registerWorldGen() {
         if (FConfig.villageAndPillage.lilyOfTheValley.enabled) {
-            GameRegistry.registerWorldGenerator(WorldGenFlower(FBlocks.LILY_OF_THE_VALLEY as BlockFlower), 0)
+            GameRegistry.registerWorldGenerator(FlowerWorldGen(FBlocks.LILY_OF_THE_VALLEY), 0)
         }
         if (FConfig.villageAndPillage.cornflower.enabled) {
-            GameRegistry.registerWorldGenerator(WorldGenFlower(FBlocks.CORNFLOWER as BlockFlower), 0)
+            GameRegistry.registerWorldGenerator(FlowerWorldGen(FBlocks.CORNFLOWER), 0)
         }
         if (FConfig.villageAndPillage.sweetBerryBush.enabled) {
-            GameRegistry.registerWorldGenerator(WorldGenFlower(FBlocks.SWEET_BERRY_BUSH as BlockFlower), 0)
+            GameRegistry.registerWorldGenerator(FlowerWorldGen(FBlocks.SWEET_BERRY_BUSH), 0)
         }
         if (FConfig.villageAndPillage.bamboo.enabled) {
-            GameRegistry.registerWorldGenerator(BambooFeature, 0)
+            GameRegistry.registerWorldGenerator(BambooWorldGen, 0)
         }
         if (FConfig.buzzyBees.bee.enabled) {
             BeeNestGenerator.refresh()
+        }
+        if (FConfig.netherUpdate.netherite) {
+            GameRegistry.registerWorldGenerator(AncientDebrisWorldGen, 0)
         }
     }
 

@@ -29,7 +29,7 @@ public final class Composter {
         }
     }
 
-    private static class Add implements IAction {
+    private static final class Add implements IAction {
         private final ItemStack stack;
         private final int rarity;
 

@@ -12,6 +12,8 @@ import net.minecraftforge.event.RegistryEvent.MissingMappings
 import net.minecraftforge.event.world.ChunkDataEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.registry.EntityEntry
+import net.minecraftforge.fml.common.registry.ForgeRegistries
+import net.minecraftforge.registries.IForgeRegistry
 import net.minecraftforge.registries.IForgeRegistryEntry
 import thedarkcolour.core.util.immutableMapOf
 
@@ -101,22 +103,22 @@ object OldWorldHandler {
     // Use getAllMappings because of new modid
     @SubscribeEvent
     fun onOldBlocksLoad(event: MissingMappings<Block>) {
-        remap(event, BLOCK_MAPPINGS)
+        remap(event, BLOCK_MAPPINGS, ForgeRegistries.BLOCKS)
     }
 
     @SubscribeEvent
     fun onOldEnchantmentsLoad(event: MissingMappings<Enchantment>) {
-        remap(event, ENCHANTMENT_MAPPINGS)
+        remap(event, ENCHANTMENT_MAPPINGS, ForgeRegistries.ENCHANTMENTS)
     }
 
     @SubscribeEvent
     fun onOldEntityLoad(event: MissingMappings<EntityEntry>) {
-        remap(event, ENTITY_MAPPINGS)
+        remap(event, ENTITY_MAPPINGS, ForgeRegistries.ENTITIES)
     }
 
     @SubscribeEvent
     fun onOldItemsLoad(event: MissingMappings<Item>) {
-        remap(event, ITEM_MAPPINGS)
+        remap(event, ITEM_MAPPINGS, ForgeRegistries.ITEMS)
     }
 
     @SubscribeEvent
@@ -128,10 +130,17 @@ object OldWorldHandler {
         }
     }
 
-    private fun <T : IForgeRegistryEntry<T>> remap(event: MissingMappings<T>, mappings: Map<String, String>) {
+    private fun <T : IForgeRegistryEntry<T>> remap(event: MissingMappings<T>, mappings: Map<String, String>, registry: IForgeRegistry<T>) {
         for (mapping in event.allMappings) {
-            if (mapping.key.namespace == "minecraftfuture") {
-                mapping.remap(event.registry.getValue(ResourceLocation(mappings[mapping.key.toString()] ?: continue)))
+            val key = mapping.key
+            val path = key.path
+
+            if (path == "scaffolding" || path == "debugger") mapping.ignore()
+
+            if (key.namespace == "minecraftfuture") {
+                val r = registry.getValue(ResourceLocation(mappings[key.toString()] ?: continue))
+
+                mapping.remap(r)
             }
         }
     }

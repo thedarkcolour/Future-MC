@@ -17,7 +17,7 @@ import net.minecraft.util.ITickable
 import net.minecraft.util.math.MathHelper
 import net.minecraftforge.fluids.BlockFluidBase
 import thedarkcolour.core.inventory.DarkInventory
-import thedarkcolour.core.item.ItemDebugger
+import thedarkcolour.core.item.DebuggerItem
 import thedarkcolour.core.tile.InteractionTile
 import thedarkcolour.futuremc.block.CampfireBlock
 import thedarkcolour.futuremc.config.FConfig
@@ -113,7 +113,7 @@ class CampfireTile : InteractionTile(), ITickable {
         hitZ: Float
     ): Boolean {
         val stack = playerIn.getHeldItem(hand)
-        if (stack.item is ItemDebugger) {
+        if (stack.item is DebuggerItem) {
             return false
         }
 

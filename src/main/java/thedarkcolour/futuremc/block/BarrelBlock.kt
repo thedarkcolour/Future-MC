@@ -1,13 +1,11 @@
 package thedarkcolour.futuremc.block
 
-import net.minecraft.block.ITileEntityProvider
 import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.properties.PropertyDirection
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
@@ -17,7 +15,7 @@ import thedarkcolour.core.block.FBlock
 import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.tile.TileBarrel
 
-class BarrelBlock(properties: Properties) : FBlock(properties), ITileEntityProvider {
+class BarrelBlock(properties: Properties) : FBlock(properties) {
     init {
         defaultState = defaultState.withProperty(FACING, EnumFacing.NORTH).withProperty(OPEN, false)
     }
@@ -39,9 +37,11 @@ class BarrelBlock(properties: Properties) : FBlock(properties), ITileEntityProvi
                     spawnAsEntity(world, pos, stack)
                 }
             }
+            world.removeTileEntity(pos)
         }
-        super.breakBlock(world, pos, state)
     }
+
+
 
     override fun createBlockState(): BlockStateContainer {
         return BlockStateContainer(this, FACING, OPEN)
@@ -61,25 +61,20 @@ class BarrelBlock(properties: Properties) : FBlock(properties), ITileEntityProvi
     }
 
     override fun getStateFromMeta(meta: Int): IBlockState {
-        return defaultState.withProperty(FACING, EnumFacing.byIndex(if (meta > 5) meta - 6 else meta))
+        return defaultState
+            .withProperty(FACING, EnumFacing.byIndex(if (meta > 5) meta - 6 else meta))
             .withProperty(OPEN, meta > 5)
     }
 
-    override fun getMetaFromState(state: IBlockState): Int {
-        return state.getValue(FACING).index
-    }
+    override fun getMetaFromState(state: IBlockState): Int =
+        state.getValue(FACING).index
 
-    override fun isFlammable(world: IBlockAccess, pos: BlockPos, face: EnumFacing): Boolean {
-        return true
-    }
+    override fun isFlammable(world: IBlockAccess, pos: BlockPos, face: EnumFacing) = true
 
-    override fun getFlammability(world: IBlockAccess, pos: BlockPos, face: EnumFacing): Int {
-        return 5
-    }
+    override fun getFlammability(world: IBlockAccess, pos: BlockPos, face: EnumFacing) = 5
 
-    override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity? {
-        return TileBarrel()
-    }
+    override fun hasTileEntity(state: IBlockState) = true
+    override fun createTileEntity(world: World, state: IBlockState) = TileBarrel()
 
     companion object {
         private val FACING = PropertyDirection.create("facing")

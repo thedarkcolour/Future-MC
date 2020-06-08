@@ -25,7 +25,7 @@ public final class Smoker {
         }
     }
 
-    private static class AddRecipe implements IAction {
+    private static final class AddRecipe implements IAction {
         private final ItemStack input;
         private final ItemStack output;
 
@@ -52,7 +52,7 @@ public final class Smoker {
         CraftTweakerAPI.apply(new RemoveRecipe(input));
     }
 
-    private static class RemoveRecipe implements IAction {
+    private static final class RemoveRecipe implements IAction {
         private final ItemStack input;
 
         private RemoveRecipe(IItemStack input) {

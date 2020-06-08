@@ -9,6 +9,7 @@ import net.minecraft.entity.EnumCreatureType
 import net.minecraft.item.Item
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.SoundEvent
 import net.minecraft.world.biome.Biome
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.event.RegistryEvent
@@ -22,10 +23,11 @@ import net.minecraftforge.fml.relauncher.SideOnly
 import net.minecraftforge.registries.IForgeRegistryModifiable
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.FutureMC
-import thedarkcolour.futuremc.client.color.WaterColor
+import thedarkcolour.futuremc.block.CampfireBlock
 import thedarkcolour.futuremc.client.particle.CampfireParticle
 import thedarkcolour.futuremc.client.particle.SoulFlameParticle
 import thedarkcolour.futuremc.command.FastGiveCommand
+import thedarkcolour.futuremc.compat.checkBetterWithMods
 import thedarkcolour.futuremc.config.FConfig.updateAquatic
 import thedarkcolour.futuremc.config.FConfig.useVanillaCreativeTabs
 import thedarkcolour.futuremc.entity.fish.cod.EntityCod
@@ -44,6 +46,10 @@ object RegistryEventHandler {
         }
 
         FBlocks.registerBlocks(event.registry)
+
+        checkBetterWithMods()?.addHeatSource(1, FBlocks.CAMPFIRE.blockState.validStates.filter { state ->
+            state.getValue(CampfireBlock.LIT)
+        })
     }
 
     @SubscribeEvent
@@ -63,7 +69,7 @@ object RegistryEventHandler {
     }
 
     @SubscribeEvent
-    fun onEnchantmentRegistry(event: RegistryEvent.Register<Enchantment>) = FEnchantments.init()
+    fun registerEnchantments(event: RegistryEvent.Register<Enchantment>) = FEnchantments.init()
 
     // Go after other biomes so we can add fish to them
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -98,7 +104,7 @@ object RegistryEventHandler {
                 }
             }
         }
-
+/*
         for (biome in event.registry) {
             runOnClient {
                 val waterColor = when (biome.waterColor) {
@@ -111,13 +117,18 @@ object RegistryEventHandler {
                 @Suppress("ReplacePutWithAssignment")
                 WaterColor.BIOME_COLORS.put(biome.delegate, waterColor)
             }
-        }
+        }*/
     }
 
     @SubscribeEvent
     @Suppress("UNCHECKED_CAST")
-    fun onRecipeRegistry(event: RegistryEvent.Register<IRecipe>) {
+    fun registerRecipes(event: RegistryEvent.Register<IRecipe>) {
         FRecipes.registerRecipes(event.registry as IForgeRegistryModifiable<IRecipe>)
+    }
+
+    @SubscribeEvent
+    fun registerSounds(event: RegistryEvent.Register<SoundEvent>) {
+        FSounds.registerSounds(event.registry)
     }
 
     @SubscribeEvent

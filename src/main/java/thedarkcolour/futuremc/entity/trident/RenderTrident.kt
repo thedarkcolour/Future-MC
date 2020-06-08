@@ -4,9 +4,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.entity.RenderManager
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.MathHelper
-import thedarkcolour.futuremc.FutureMC
 
 class RenderTrident(renderManager: RenderManager) : Render<EntityTrident>(renderManager) {
     private val modelTrident = ModelTrident()
@@ -36,7 +34,7 @@ class RenderTrident(renderManager: RenderManager) : Render<EntityTrident>(render
             0.0f,
             1.0f
         )
-        modelTrident.renderer()
+        modelTrident.renderAsBuiltin()
         GlStateManager.popMatrix()
 
         super.doRender(entity, x, y, z, entityYaw, partialTicks)
@@ -82,9 +80,5 @@ class RenderTrident(renderManager: RenderManager) : Render<EntityTrident>(render
         er.enableLightmap()
     }
 
-    override fun getEntityTexture(entity: EntityTrident): ResourceLocation = TEXTURE_LOCATION
-
-    companion object {
-        private val TEXTURE_LOCATION = ResourceLocation(FutureMC.ID, "textures/entity/trident/trident.png")
-    }
+    override fun getEntityTexture(entity: EntityTrident) = ModelTrident.TEXTURE_LOCATION
 }

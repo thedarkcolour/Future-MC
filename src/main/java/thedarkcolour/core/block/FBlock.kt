@@ -16,10 +16,14 @@ import thedarkcolour.futuremc.config.FConfig
 
 /**
  * Uses a properties class similar to the one from 1.13+
+ *
+ * @param properties
  */
 @Suppress("DEPRECATION")
 open class FBlock(properties: Properties) : Block(properties.material, properties.color) {
     private val shape: AxisAlignedBB
+    private val isBeaconBase: Boolean = properties.isBeaconBase
+
     init {
         translationKey = FutureMC.ID + "." + properties.registryName
         registryName = ResourceLocation(FutureMC.ID, properties.registryName)
@@ -34,7 +38,7 @@ open class FBlock(properties: Properties) : Block(properties.material, propertie
         creativeTab = if (FConfig.useVanillaCreativeTabs) {
             val group = properties.group
             if (group == null && FutureMC.DEBUG)
-                println(("No creative tab for block $this"))
+                println(("No creative tab for block ${toString()}"))
             group
         } else FutureMC.GROUP
     }
@@ -49,6 +53,10 @@ open class FBlock(properties: Properties) : Block(properties.material, propertie
 
     override fun toString(): String {
         return javaClass.canonicalName + "{${registryName}}"
+    }
+
+    override fun isBeaconBase(worldObj: IBlockAccess, pos: BlockPos, beacon: BlockPos): Boolean {
+        return isBeaconBase
     }
 
     companion object {
@@ -71,6 +79,7 @@ open class FBlock(properties: Properties) : Block(properties.material, propertie
         var randomTick = false
         var slipperiness = 0.6f
         var shape: AxisAlignedBB? = null
+        var isBeaconBase = false
 
         fun color(color: MapColor): Properties {
             this.color = color
@@ -121,6 +130,11 @@ open class FBlock(properties: Properties) : Block(properties.material, propertie
 
         fun shape(shape: AxisAlignedBB): Properties {
             this.shape = shape
+            return this
+        }
+
+        fun usableBeaconBase(): Properties {
+            this.isBeaconBase = true
             return this
         }
     }

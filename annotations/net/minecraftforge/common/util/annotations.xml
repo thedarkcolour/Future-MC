@@ -1,0 +1,8 @@
+<root>
+    <item name='net.minecraftforge.common.util.EnumHelper net.minecraft.item.ItemArmor.ArmorMaterial addArmorMaterial(java.lang.String, java.lang.String, int, int[], int, net.minecraft.util.SoundEvent, float)'>
+        <annotation name='org.jetbrains.annotations.Contract'>
+            <val name="value" val="&quot;!null,!null,_,!null,_,!null,_-&gt;!null&quot;"/>
+            <val name="pure" val="true"/>
+        </annotation>
+    </item>
+</root>

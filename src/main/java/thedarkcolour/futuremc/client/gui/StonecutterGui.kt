@@ -36,12 +36,12 @@ class StonecutterGui(container: StonecutterContainer) : FGui<StonecutterContaine
         mc.textureManager.bindTexture(BACKGROUND)
         val i = (width - xSize) / 2
         val j = (height - ySize) / 2
-        drawTexturedModalRect(i, j, 0, 0, xSize, ySize)
         val scrollY = (41.0f * sliderProgress).toInt()
+
+        drawTexturedModalRect(i, j, 0, 0, xSize, ySize)
         drawTexturedModalRect(i + 119, j + 15 + scrollY, 176 + if (canScroll()) 0 else 12, 0, 12, 15)
-        if (isModLoaded(JEI)) {
-            drawRecipeButton(mouseX, mouseY, i, j)
-        }
+        drawRecipeButton(mouseX, mouseY, i, j)
+
         if (container.recipeList.isNotEmpty()) {
             val x = guiLeft + 52
             val y = guiTop + 14
@@ -55,8 +55,11 @@ class StonecutterGui(container: StonecutterContainer) : FGui<StonecutterContaine
         return hasInput && container.recipeList.size > 12
     }
 
+    /**
+     * Draws the recipe button for JEI.
+     */
     private fun drawRecipeButton(mouseX: Int, mouseY: Int, i: Int, j: Int) {
-        if (FConfig.villageAndPillage.stonecutter.recipeButton) {
+        if (FConfig.villageAndPillage.stonecutter.recipeButton && isModLoaded(JEI)) {
             val x = guiLeft + 143
             val y = guiTop + 8
             var textureY = 166

@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import thedarkcolour.core.gui.FContainer;
 import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
 import thedarkcolour.futuremc.client.gui.GuiFurnaceAdvanced;
+import thedarkcolour.futuremc.registry.FBlocks;
 import thedarkcolour.futuremc.tile.TileFurnaceAdvanced;
 
 public class ContainerFurnaceAdvanced extends FContainer {
@@ -107,7 +108,10 @@ public class ContainerFurnaceAdvanced extends FContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        return isTileInRange(te, playerIn);
+        return isTileInRange(te, playerIn) && (
+                isBlockInRange(FBlocks.SMOKER, te.getWorld(), te.getPos(), playerIn) ||
+                isBlockInRange(FBlocks.BLAST_FURNACE, te.getWorld(), te.getPos(), playerIn)
+        );
     }
 
     @SideOnly(Side.CLIENT)

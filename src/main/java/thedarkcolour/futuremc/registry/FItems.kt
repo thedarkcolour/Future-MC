@@ -1,14 +1,16 @@
 package thedarkcolour.futuremc.registry
 
 import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraftforge.oredict.OreDictionary
 import net.minecraftforge.registries.IForgeRegistry
-import thedarkcolour.core.item.ItemDebugger
-import thedarkcolour.core.item.ItemModeled
-import thedarkcolour.core.item.ItemModeledBlock
+import thedarkcolour.core.item.DebuggerItem
+import thedarkcolour.core.item.ModeledItem
+import thedarkcolour.core.item.ModeledItemBlock
 import thedarkcolour.core.util.addListener
+import thedarkcolour.core.util.setItemGroup
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.entity.fish.cod.EntityCod
@@ -17,88 +19,115 @@ import thedarkcolour.futuremc.entity.fish.salmon.EntitySalmon
 import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
 import thedarkcolour.futuremc.item.*
 
+/**
+ * Object declaration containing references
+ * to all items and block items in Future MC.
+ *
+ * @author TheDarkColour
+ */
 @Suppress("MemberVisibilityCanBePrivate", "HasPlatformType", "DuplicatedCode")
 object FItems {
+    val DEBUGGER = DebuggerItem()
+
+    val NAUTILUS_SHELL = ModeledItem("nautilus_shell").setCreativeTab(CreativeTabs.MISC)
+    val SCUTE = ModeledItem("scute").setCreativeTab(CreativeTabs.MATERIALS)
+    val TRIDENT = TridentItem()
+    val PUFFERFISH_BUCKET = FishBucketItem("pufferfish_bucket", ::EntityPufferfish)
+    val COD_BUCKET = FishBucketItem("cod_bucket", ::EntityCod)
+    val TROPICAL_FISH_BUCKET = FishBucketItem("tropical_fish_bucket", ::EntityTropicalFish)
+    val SALMON_BUCKET = FishBucketItem("salmon_bucket", ::EntitySalmon)
+
     val DYES = ItemDye()
-    val TRIDENT = ItemTrident()
-    val BANNER_PATTERN = ItemBannerPattern()
-    val CROSSBOW = ItemCrossbow()
-    val HONEYCOMB = ItemModeled("honeycomb").setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else FutureMC.GROUP)
-    val HONEY_BOTTLE = HoneyBottleItem()
+    val BANNER_PATTERN = BannerPatternItem()
+    val CROSSBOW = CrossbowItem()
     val SWEET_BERRIES = SweetBerriesItem()
     val SUSPICIOUS_STEW = SuspiciousStewItem()
     val BAMBOO = BambooItem()
-    val PUFFERFISH_BUCKET = ItemFishBucket("pufferfish_bucket", ::EntityPufferfish)
-    val SALMON_BUCKET = ItemFishBucket("salmon_bucket", ::EntitySalmon)
-    val COD_BUCKET = ItemFishBucket("cod_bucket", ::EntityCod)
-    val TROPICAL_FISH_BUCKET = ItemFishBucket("tropical_fish_bucket", ::EntityTropicalFish)
-    val DEBUGGER = ItemDebugger()
-    val NAUTILUS_SHELL = ItemModeled("nautilus_shell").setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.MISC else FutureMC.GROUP)
 
-    val LANTERN = ItemModeledBlock(FBlocks.LANTERN)
-    val STONECUTTER = ItemModeledBlock(FBlocks.STONECUTTER)
-    val BARREL = ItemModeledBlock(FBlocks.BARREL)
-    val SMOKER = ItemModeledBlock(FBlocks.SMOKER)
-    val BLAST_FURNACE = ItemModeledBlock(FBlocks.BLAST_FURNACE)
-    val LOOM = ItemModeledBlock(FBlocks.LOOM)
-    val FLETCHING_TABLE = ItemModeledBlock(FBlocks.FLETCHING_TABLE)
-    val SMITHING_TABLE = ItemModeledBlock(FBlocks.SMITHING_TABLE)
-    val CARTOGRAPHY_TABLE = ItemModeledBlock(FBlocks.CARTOGRAPHY_TABLE)
-    val GRINDSTONE = ItemModeledBlock(FBlocks.GRINDSTONE)
-    val COMPOSTER = ItemModeledBlock(FBlocks.COMPOSTER)
-    val BELL = ItemModeledBlock(FBlocks.BELL)
-    val HONEY_BLOCK = ItemModeledBlock(FBlocks.HONEY_BLOCK)
-    val HONEYCOMB_BLOCK = ItemModeledBlock(FBlocks.HONEYCOMB_BLOCK)
-    val LILY_OF_THE_VALLEY = ItemModeledBlock(FBlocks.LILY_OF_THE_VALLEY)
-    val CORNFLOWER = ItemModeledBlock(FBlocks.CORNFLOWER)
-    val WITHER_ROSE = ItemModeledBlock(FBlocks.WITHER_ROSE)
-    val CAMPFIRE = ItemModeledBlock(FBlocks.CAMPFIRE)
-    val SCAFFOLDING = ItemModeledBlock(FBlocks.SCAFFOLDING)
-    val BEE_NEST = ItemModeledBlock(FBlocks.BEE_NEST)
-    val BEEHIVE = ItemModeledBlock(FBlocks.BEEHIVE)
-    val STRIPPED_ACACIA_LOG = ItemModeledBlock(FBlocks.STRIPPED_ACACIA_LOG)
-    val STRIPPED_JUNGLE_LOG = ItemModeledBlock(FBlocks.STRIPPED_JUNGLE_LOG)
-    val STRIPPED_BIRCH_LOG = ItemModeledBlock(FBlocks.STRIPPED_BIRCH_LOG)
-    val STRIPPED_OAK_LOG = ItemModeledBlock(FBlocks.STRIPPED_OAK_LOG)
-    val STRIPPED_SPRUCE_LOG = ItemModeledBlock(FBlocks.STRIPPED_SPRUCE_LOG)
-    val STRIPPED_DARK_OAK_LOG = ItemModeledBlock(FBlocks.STRIPPED_DARK_OAK_LOG)
-    val BRICK_WALL = ItemModeledBlock(FBlocks.BRICK_WALL)
-    val GRANITE_WALL = ItemModeledBlock(FBlocks.GRANITE_WALL)
-    val ANDESITE_WALL = ItemModeledBlock(FBlocks.ANDESITE_WALL)
-    val DIORITE_WALL = ItemModeledBlock(FBlocks.DIORITE_WALL)
-    val SANDSTONE_WALL = ItemModeledBlock(FBlocks.SANDSTONE_WALL)
-    val RED_SANDSTONE_WALL = ItemModeledBlock(FBlocks.RED_SANDSTONE_WALL)
-    val STONE_BRICK_WALL = ItemModeledBlock(FBlocks.STONE_BRICK_WALL)
-    val MOSSY_STONE_BRICK_WALL = ItemModeledBlock(FBlocks.MOSSY_STONE_BRICK_WALL)
-    val NETHER_BRICK_WALL = ItemModeledBlock(FBlocks.NETHER_BRICK_WALL)
-    val RED_NETHER_BRICK_WALL = ItemModeledBlock(FBlocks.RED_NETHER_BRICK_WALL)
-    val END_STONE_BRICK_WALL = ItemModeledBlock(FBlocks.END_STONE_BRICK_WALL)
-    val PRISMARINE_WALL = ItemModeledBlock(FBlocks.PRISMARINE_WALL)
-    val SMOOTH_STONE = ItemModeledBlock(FBlocks.SMOOTH_STONE)
-    val SMOOTH_SANDSTONE = ItemModeledBlock(FBlocks.SMOOTH_SANDSTONE)
-    val SMOOTH_QUARTZ = ItemModeledBlock(FBlocks.SMOOTH_QUARTZ)
-    val SMOOTH_RED_SANDSTONE = ItemModeledBlock(FBlocks.SMOOTH_RED_SANDSTONE)
-    val BLUE_ICE = ItemModeledBlock(FBlocks.BLUE_ICE)
-    val STRIPPED_ACACIA_WOOD = ItemModeledBlock(FBlocks.STRIPPED_ACACIA_WOOD)
-    val STRIPPED_JUNGLE_WOOD = ItemModeledBlock(FBlocks.STRIPPED_JUNGLE_WOOD)
-    val STRIPPED_BIRCH_WOOD = ItemModeledBlock(FBlocks.STRIPPED_BIRCH_WOOD)
-    val STRIPPED_OAK_WOOD = ItemModeledBlock(FBlocks.STRIPPED_OAK_WOOD)
-    val STRIPPED_SPRUCE_WOOD = ItemModeledBlock(FBlocks.STRIPPED_SPRUCE_WOOD)
-    val STRIPPED_DARK_OAK_WOOD = ItemModeledBlock(FBlocks.STRIPPED_DARK_OAK_WOOD)
-    val ACACIA_WOOD = ItemModeledBlock(FBlocks.ACACIA_WOOD)
-    val JUNGLE_WOOD = ItemModeledBlock(FBlocks.JUNGLE_WOOD)
-    val BIRCH_WOOD = ItemModeledBlock(FBlocks.BIRCH_WOOD)
-    val OAK_WOOD = ItemModeledBlock(FBlocks.OAK_WOOD)
-    val SPRUCE_WOOD = ItemModeledBlock(FBlocks.SPRUCE_WOOD)
-    val DARK_OAK_WOOD = ItemModeledBlock(FBlocks.DARK_OAK_WOOD)
-    val ACACIA_TRAPDOOR = ItemModeledBlock(FBlocks.ACACIA_TRAPDOOR)
-    val JUNGLE_TRAPDOOR = ItemModeledBlock(FBlocks.JUNGLE_TRAPDOOR)
-    val BIRCH_TRAPDOOR = ItemModeledBlock(FBlocks.BIRCH_TRAPDOOR)
-    val SPRUCE_TRAPDOOR = ItemModeledBlock(FBlocks.SPRUCE_TRAPDOOR)
-    val DARK_OAK_TRAPDOOR = ItemModeledBlock(FBlocks.DARK_OAK_TRAPDOOR)
-    val SOUL_FIRE_LANTERN = ItemModeledBlock(FBlocks.SOUL_FIRE_LANTERN)
-    val SOUL_FIRE_TORCH = ItemModeledBlock(FBlocks.SOUL_FIRE_TORCH)
-    val SOUL_SOIL = ItemModeledBlock(FBlocks.SOUL_SOIL)
+    val HONEYCOMB = ModeledItem("honeycomb").setCreativeTab(CreativeTabs.MISC)
+    val HONEY_BOTTLE = HoneyBottleItem()
+
+    // see Util.kt for Item.setItemGroup
+    val NETHERITE_INGOT = FireproofItem("netherite_ingot").setItemGroup(CreativeTabs.MATERIALS)
+    val NETHERITE_SCRAP = FireproofItem("netherite_scrap").setItemGroup(CreativeTabs.MATERIALS)
+    val NETHERITE_AXE = FireproofAxeItem("netherite_axe", FToolMaterial.NETHERITE, 5.0f, -3.0f).setItemGroup(CreativeTabs.TOOLS)
+    val NETHERITE_HOE = FireproofHoeItem("netherite_hoe", FToolMaterial.NETHERITE).setItemGroup(CreativeTabs.TOOLS)
+    val NETHERITE_PICKAXE = FireproofPickaxeItem("netherite_pickaxe", FToolMaterial.NETHERITE).setItemGroup(CreativeTabs.TOOLS)
+    val NETHERITE_SHOVEL = FireproofShovelItem("netherite_shovel", FToolMaterial.NETHERITE).setItemGroup(CreativeTabs.TOOLS)
+    val NETHERITE_SWORD = FireproofSwordItem("netherite_sword", FToolMaterial.NETHERITE).setItemGroup(CreativeTabs.COMBAT)
+    val NETHERITE_HELMET = FireproofArmorItem("netherite_helmet", FArmorMaterial.NETHERITE, EntityEquipmentSlot.HEAD).setItemGroup(CreativeTabs.COMBAT)
+    val NETHERITE_CHESTPLATE = FireproofArmorItem("netherite_chestplate", FArmorMaterial.NETHERITE, EntityEquipmentSlot.CHEST).setItemGroup(CreativeTabs.COMBAT)
+    val NETHERITE_LEGGINGS = FireproofArmorItem("netherite_leggings", FArmorMaterial.NETHERITE, EntityEquipmentSlot.LEGS).setItemGroup(CreativeTabs.COMBAT)
+    val NETHERITE_BOOTS = FireproofArmorItem("netherite_boots", FArmorMaterial.NETHERITE, EntityEquipmentSlot.FEET).setItemGroup(CreativeTabs.COMBAT)
+
+    val LANTERN = ModeledItemBlock(FBlocks.LANTERN)
+    val STONECUTTER = ModeledItemBlock(FBlocks.STONECUTTER)
+    val BARREL = ModeledItemBlock(FBlocks.BARREL)
+    val SMOKER = ModeledItemBlock(FBlocks.SMOKER)
+    val BLAST_FURNACE = ModeledItemBlock(FBlocks.BLAST_FURNACE)
+    val LOOM = ModeledItemBlock(FBlocks.LOOM)
+    val FLETCHING_TABLE = ModeledItemBlock(FBlocks.FLETCHING_TABLE)
+    val SMITHING_TABLE = ModeledItemBlock(FBlocks.SMITHING_TABLE)
+    val CARTOGRAPHY_TABLE = ModeledItemBlock(FBlocks.CARTOGRAPHY_TABLE)
+    val GRINDSTONE = ModeledItemBlock(FBlocks.GRINDSTONE)
+    val COMPOSTER = ModeledItemBlock(FBlocks.COMPOSTER)
+    val BELL = ModeledItemBlock(FBlocks.BELL)
+    val HONEY_BLOCK = ModeledItemBlock(FBlocks.HONEY_BLOCK)
+    val HONEYCOMB_BLOCK = ModeledItemBlock(FBlocks.HONEYCOMB_BLOCK)
+    val LILY_OF_THE_VALLEY = ModeledItemBlock(FBlocks.LILY_OF_THE_VALLEY)
+    val CORNFLOWER = ModeledItemBlock(FBlocks.CORNFLOWER)
+    val WITHER_ROSE = ModeledItemBlock(FBlocks.WITHER_ROSE)
+    val CAMPFIRE = ModeledItemBlock(FBlocks.CAMPFIRE)
+    val SCAFFOLDING = ModeledItemBlock(FBlocks.SCAFFOLDING)
+    val BEE_NEST = ModeledItemBlock(FBlocks.BEE_NEST)
+    val BEEHIVE = ModeledItemBlock(FBlocks.BEEHIVE)
+    val STRIPPED_ACACIA_LOG = ModeledItemBlock(FBlocks.STRIPPED_ACACIA_LOG)
+    val STRIPPED_JUNGLE_LOG = ModeledItemBlock(FBlocks.STRIPPED_JUNGLE_LOG)
+    val STRIPPED_BIRCH_LOG = ModeledItemBlock(FBlocks.STRIPPED_BIRCH_LOG)
+    val STRIPPED_OAK_LOG = ModeledItemBlock(FBlocks.STRIPPED_OAK_LOG)
+    val STRIPPED_SPRUCE_LOG = ModeledItemBlock(FBlocks.STRIPPED_SPRUCE_LOG)
+    val STRIPPED_DARK_OAK_LOG = ModeledItemBlock(FBlocks.STRIPPED_DARK_OAK_LOG)
+    val BRICK_WALL = ModeledItemBlock(FBlocks.BRICK_WALL)
+    val GRANITE_WALL = ModeledItemBlock(FBlocks.GRANITE_WALL)
+    val ANDESITE_WALL = ModeledItemBlock(FBlocks.ANDESITE_WALL)
+    val DIORITE_WALL = ModeledItemBlock(FBlocks.DIORITE_WALL)
+    val SANDSTONE_WALL = ModeledItemBlock(FBlocks.SANDSTONE_WALL)
+    val RED_SANDSTONE_WALL = ModeledItemBlock(FBlocks.RED_SANDSTONE_WALL)
+    val STONE_BRICK_WALL = ModeledItemBlock(FBlocks.STONE_BRICK_WALL)
+    val MOSSY_STONE_BRICK_WALL = ModeledItemBlock(FBlocks.MOSSY_STONE_BRICK_WALL)
+    val NETHER_BRICK_WALL = ModeledItemBlock(FBlocks.NETHER_BRICK_WALL)
+    val RED_NETHER_BRICK_WALL = ModeledItemBlock(FBlocks.RED_NETHER_BRICK_WALL)
+    val END_STONE_BRICK_WALL = ModeledItemBlock(FBlocks.END_STONE_BRICK_WALL)
+    val PRISMARINE_WALL = ModeledItemBlock(FBlocks.PRISMARINE_WALL)
+    val SMOOTH_STONE = ModeledItemBlock(FBlocks.SMOOTH_STONE)
+    val SMOOTH_SANDSTONE = ModeledItemBlock(FBlocks.SMOOTH_SANDSTONE)
+    val SMOOTH_QUARTZ = ModeledItemBlock(FBlocks.SMOOTH_QUARTZ)
+    val SMOOTH_RED_SANDSTONE = ModeledItemBlock(FBlocks.SMOOTH_RED_SANDSTONE)
+    val BLUE_ICE = ModeledItemBlock(FBlocks.BLUE_ICE)
+    val STRIPPED_ACACIA_WOOD = ModeledItemBlock(FBlocks.STRIPPED_ACACIA_WOOD)
+    val STRIPPED_JUNGLE_WOOD = ModeledItemBlock(FBlocks.STRIPPED_JUNGLE_WOOD)
+    val STRIPPED_BIRCH_WOOD = ModeledItemBlock(FBlocks.STRIPPED_BIRCH_WOOD)
+    val STRIPPED_OAK_WOOD = ModeledItemBlock(FBlocks.STRIPPED_OAK_WOOD)
+    val STRIPPED_SPRUCE_WOOD = ModeledItemBlock(FBlocks.STRIPPED_SPRUCE_WOOD)
+    val STRIPPED_DARK_OAK_WOOD = ModeledItemBlock(FBlocks.STRIPPED_DARK_OAK_WOOD)
+    val ACACIA_WOOD = ModeledItemBlock(FBlocks.ACACIA_WOOD)
+    val JUNGLE_WOOD = ModeledItemBlock(FBlocks.JUNGLE_WOOD)
+    val BIRCH_WOOD = ModeledItemBlock(FBlocks.BIRCH_WOOD)
+    val OAK_WOOD = ModeledItemBlock(FBlocks.OAK_WOOD)
+    val SPRUCE_WOOD = ModeledItemBlock(FBlocks.SPRUCE_WOOD)
+    val DARK_OAK_WOOD = ModeledItemBlock(FBlocks.DARK_OAK_WOOD)
+    val ACACIA_TRAPDOOR = ModeledItemBlock(FBlocks.ACACIA_TRAPDOOR)
+    val JUNGLE_TRAPDOOR = ModeledItemBlock(FBlocks.JUNGLE_TRAPDOOR)
+    val BIRCH_TRAPDOOR = ModeledItemBlock(FBlocks.BIRCH_TRAPDOOR)
+    val SPRUCE_TRAPDOOR = ModeledItemBlock(FBlocks.SPRUCE_TRAPDOOR)
+    val DARK_OAK_TRAPDOOR = ModeledItemBlock(FBlocks.DARK_OAK_TRAPDOOR)
+
+    val SOUL_FIRE_LANTERN = ModeledItemBlock(FBlocks.SOUL_FIRE_LANTERN)
+    val SOUL_FIRE_TORCH = ModeledItemBlock(FBlocks.SOUL_FIRE_TORCH)
+    val SOUL_SOIL = ModeledItemBlock(FBlocks.SOUL_SOIL)
+    val CHAIN = ModeledItemBlock(FBlocks.CHAIN)
+    val NETHERITE_BLOCK = FireproofItemBlock(FBlocks.NETHERITE_BLOCK)
+    val ANCIENT_DEBRIS = FireproofItemBlock(FBlocks.ANCIENT_DEBRIS)
 
     fun registerItems(items: IForgeRegistry<Item>) {
         if (FConfig.villageAndPillage.dyes) items.register(DYES)
@@ -141,8 +170,7 @@ object FItems {
         if (FConfig.villageAndPillage.campfire.enabled) items.register(CAMPFIRE)
         if (FutureMC.DEBUG)// FConfig.villageAndPillage.scaffolding
             items.register(SCAFFOLDING)
-        if (FConfig.buzzyBees.bee.enabled) items.register(BEE_NEST)
-        if (FConfig.buzzyBees.bee.enabled) items.register(BEEHIVE)
+        if (FConfig.buzzyBees.bee.enabled) items.registerAll(BEE_NEST, BEEHIVE)
         if (FConfig.updateAquatic.strippedLogs.acacia) items.register(STRIPPED_ACACIA_LOG)
         if (FConfig.updateAquatic.strippedLogs.jungle) items.register(STRIPPED_JUNGLE_LOG)
         if (FConfig.updateAquatic.strippedLogs.birch) items.register(STRIPPED_BIRCH_LOG)
@@ -188,11 +216,33 @@ object FItems {
         if (FConfig.netherUpdate.soulFireTorch) items.register(SOUL_FIRE_TORCH)
         if (FConfig.netherUpdate.soulSoil) items.register(SOUL_SOIL)
 
+        if (FConfig.netherUpdate.netherite) {
+            items.registerAll(
+                NETHERITE_INGOT,
+                NETHERITE_SCRAP,
+                NETHERITE_AXE,
+                NETHERITE_HOE,
+                NETHERITE_PICKAXE,
+                NETHERITE_SHOVEL,
+                NETHERITE_SWORD,
+                NETHERITE_HELMET,
+                NETHERITE_CHESTPLATE,
+                NETHERITE_LEGGINGS,
+                NETHERITE_BOOTS
+            )
+        }
+
         if (FConfig.netherUpdate.chain)
-            items.register(ItemModeledBlock(FBlocks.CHAIN))
+            items.register(CHAIN)
+        if (FConfig.netherUpdate.netherite)
+            items.registerAll(NETHERITE_BLOCK, ANCIENT_DEBRIS)
 
         //register(ItemSeagrass(), FConfig.updateAquatic.seagrass)
 
+        registerOres()
+    }
+
+    private fun registerOres() {
         if (FConfig.villageAndPillage.dyes) {
             OreDictionary.registerOre("dyeWhite", ItemStack(DYES, 1, 0))
             OreDictionary.registerOre("dyeBlue", ItemStack(DYES, 1, 1))
@@ -209,41 +259,57 @@ object FItems {
             OreDictionary.registerOre("cropBamboo", BAMBOO)
         }
 
-
         if (FConfig.updateAquatic.strippedLogs.acacia)
-            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_ACACIA_LOG)
+            OreDictionary.registerOre("logWood", STRIPPED_ACACIA_LOG)
         if (FConfig.updateAquatic.strippedLogs.jungle)
-            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_JUNGLE_LOG)
+            OreDictionary.registerOre("logWood", STRIPPED_JUNGLE_LOG)
         if (FConfig.updateAquatic.strippedLogs.birch)
-            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_BIRCH_LOG)
+            OreDictionary.registerOre("logWood", STRIPPED_BIRCH_LOG)
         if (FConfig.updateAquatic.strippedLogs.oak)
-            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_OAK_LOG)
+            OreDictionary.registerOre("logWood", STRIPPED_OAK_LOG)
         if (FConfig.updateAquatic.strippedLogs.spruce)
-            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_SPRUCE_LOG)
+            OreDictionary.registerOre("logWood", STRIPPED_SPRUCE_LOG)
         if (FConfig.updateAquatic.strippedLogs.darkOak)
-            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_DARK_OAK_LOG)
+            OreDictionary.registerOre("logWood", STRIPPED_DARK_OAK_LOG)
 
         if (FConfig.updateAquatic.wood.strippedAcacia)
-            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_ACACIA_WOOD)
+            OreDictionary.registerOre("logWood", STRIPPED_ACACIA_WOOD)
         if (FConfig.updateAquatic.wood.strippedJungle)
-            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_JUNGLE_WOOD)
+            OreDictionary.registerOre("logWood", STRIPPED_JUNGLE_WOOD)
         if (FConfig.updateAquatic.wood.strippedBirch)
-            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_BIRCH_WOOD)
+            OreDictionary.registerOre("logWood", STRIPPED_BIRCH_WOOD)
         if (FConfig.updateAquatic.wood.strippedOak)
-            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_OAK_WOOD)
+            OreDictionary.registerOre("logWood", STRIPPED_OAK_WOOD)
         if (FConfig.updateAquatic.wood.strippedSpruce)
-            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_SPRUCE_WOOD)
+            OreDictionary.registerOre("logWood", STRIPPED_SPRUCE_WOOD)
         if (FConfig.updateAquatic.wood.strippedDarkOak)
-            OreDictionary.registerOre("logWood", FBlocks.STRIPPED_DARK_OAK_WOOD)
+            OreDictionary.registerOre("logWood", STRIPPED_DARK_OAK_WOOD)
         if (FConfig.updateAquatic.wood.acacia)
-            OreDictionary.registerOre("logWood", FBlocks.ACACIA_WOOD)
+            OreDictionary.registerOre("logWood", ACACIA_WOOD)
         if (FConfig.updateAquatic.wood.jungle)
-            OreDictionary.registerOre("logWood", FBlocks.JUNGLE_WOOD)
+            OreDictionary.registerOre("logWood", JUNGLE_WOOD)
         if (FConfig.updateAquatic.wood.oak)
-            OreDictionary.registerOre("logWood", FBlocks.BIRCH_WOOD)
+            OreDictionary.registerOre("logWood", BIRCH_WOOD)
         if (FConfig.updateAquatic.wood.spruce)
-            OreDictionary.registerOre("logWood", FBlocks.OAK_WOOD)
+            OreDictionary.registerOre("logWood", OAK_WOOD)
         if (FConfig.updateAquatic.wood.darkOak)
-            OreDictionary.registerOre("logWood", FBlocks.SPRUCE_WOOD)
+            OreDictionary.registerOre("logWood", SPRUCE_WOOD)
+        if (FConfig.villageAndPillage.newTrapdoors.acacia)
+            OreDictionary.registerOre("trapdoorWood", ACACIA_TRAPDOOR)
+        if (FConfig.villageAndPillage.newTrapdoors.jungle)
+            OreDictionary.registerOre("trapdoorWood", JUNGLE_TRAPDOOR)
+        if (FConfig.villageAndPillage.newTrapdoors.birch)
+            OreDictionary.registerOre("trapdoorWood", BIRCH_TRAPDOOR)
+        if (FConfig.villageAndPillage.newTrapdoors.spruce)
+            OreDictionary.registerOre("trapdoorWood", SPRUCE_TRAPDOOR)
+        if (FConfig.villageAndPillage.newTrapdoors.darkOak)
+            OreDictionary.registerOre("trapdoorWood", DARK_OAK_TRAPDOOR)
+
+        if (FConfig.netherUpdate.netherite) {
+            OreDictionary.registerOre("oreNetherite", ANCIENT_DEBRIS)
+            OreDictionary.registerOre("blockNetherite", NETHERITE_BLOCK)
+            OreDictionary.registerOre("ingotNetherite", NETHERITE_INGOT)
+            OreDictionary.registerOre("scrapNetherite", NETHERITE_SCRAP)
+        }
     }
 }

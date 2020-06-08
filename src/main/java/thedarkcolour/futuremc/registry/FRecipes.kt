@@ -3,15 +3,37 @@ package thedarkcolour.futuremc.registry
 import net.minecraft.init.Blocks
 import net.minecraft.init.MobEffects
 import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.FurnaceRecipes
 import net.minecraft.item.crafting.IRecipe
+import net.minecraft.item.crafting.Ingredient
+import net.minecraft.item.crafting.ShapedRecipes
 import net.minecraft.potion.PotionEffect
+import net.minecraft.util.NonNullList
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.common.registry.GameRegistry
+import net.minecraftforge.oredict.OreDictionary
+import net.minecraftforge.oredict.OreIngredient
+import net.minecraftforge.oredict.ShapelessOreRecipe
+import net.minecraftforge.registries.IForgeRegistry
 import net.minecraftforge.registries.IForgeRegistryModifiable
+import thedarkcolour.futuremc.compat.checkActuallyAdditions
+import thedarkcolour.futuremc.compat.checkHarvestCraft
+import thedarkcolour.futuremc.compat.checkPlants
+import thedarkcolour.futuremc.compat.checkQuark
+import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.item.SuspiciousStewItem
+import thedarkcolour.futuremc.recipe.BlacklistedOreIngredient
+import thedarkcolour.futuremc.recipe.SimpleRecipe
+import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes
 
-// todo register all recipes here
-//      including fmc modded recipes
+/**
+ * Object declaration that handles custom recipes and
+ * for some reason also mod compatibility for Future MC.
+ *
+ * TODO move mod compatibility to an object in thedarkcolour.futuremc.compat package
+ *
+ * @author TheDarkColour
+ */
 object FRecipes {
     fun registerRecipes(recipes: IForgeRegistryModifiable<IRecipe>) {
         SuspiciousStewItem.addRecipe(recipes, ItemStack(Blocks.RED_FLOWER, 1, 8), PotionEffect(MobEffects.REGENERATION, 140, 1))
@@ -32,7 +54,105 @@ object FRecipes {
         GameRegistry.addSmelting(ItemStack(Blocks.SANDSTONE), ItemStack(FBlocks.SMOOTH_SANDSTONE), 0.1f)
         GameRegistry.addSmelting(ItemStack(Blocks.QUARTZ_BLOCK), ItemStack(FBlocks.SMOOTH_QUARTZ), 0.1f)
         GameRegistry.addSmelting(ItemStack(Blocks.RED_SANDSTONE), ItemStack(FBlocks.SMOOTH_RED_SANDSTONE), 0.1f)
+        GameRegistry.addSmelting(ItemStack(FBlocks.ANCIENT_DEBRIS), ItemStack(FItems.NETHERITE_SCRAP), 2.0f)
 
         recipes.remove(ResourceLocation("minecraft:nether_brick_fence"))
+
+        if (checkQuark()?.hasVariedTrapdoors() == false) {
+            recipes.remove(ResourceLocation("minecraft:trapdoor"))
+
+            // see below extension function
+            recipes.addShapedRecipe(
+                id = "futuremc:oak_trapdoor",
+                result = ItemStack(Blocks.TRAPDOOR),
+                pattern = arrayOf("###", "###"),
+                key = mapOf('#' to BlacklistedOreIngredient("plankWood", ItemStack(Blocks.PLANKS)::isItemEqualIgnoreDurability))
+            )
+        }
+
+        // actually additions compat with bees
+        checkActuallyAdditions()?.registerPollinationTargets()
+        checkActuallyAdditions()?.registerPollinationHandlers()
+        // harvestcraft compat with bees
+        checkHarvestCraft()?.registerPollinationHandlers()
+        // plants compat with bees
+        checkPlants()?.registerPollinationTargets()
+
+        if (FConfig.netherUpdate.netherite) {
+            recipes.addShapelessRecipe(
+                "futuremc:netherite_ingot",
+                ItemStack(FItems.NETHERITE_INGOT),
+                charArrayOf('A','A','A','A','B','B','B','B'),
+                mapOf('A' to OreIngredient("scrapNetherite"), 'B' to OreIngredient("ingotGold"))
+            )
+        }
+    }
+
+    private fun IForgeRegistry<IRecipe>.addShapedRecipe(id: String, result: ItemStack, pattern: Array<String>, key: Map<Char, Ingredient>) {
+        val height = pattern.size
+
+        if (height > 3) {
+            throw IllegalArgumentException("Pattern must have =< 3 rows")
+        }
+
+        var width = -1
+
+        for (row in pattern) {
+            if (width == -1) {
+                width = row.length
+            } else {
+                if (row.length != width) {
+                    throw IllegalArgumentException("Pattern must be a rectangle")
+                }
+            }
+        }
+
+        val ingredients = NonNullList.create<Ingredient>()
+
+        for (row in pattern) {
+            for (character in row) {
+                ingredients.add(key[character])
+            }
+        }
+
+        val recipe = ShapedRecipes("", width, height, ingredients, result)
+        recipe.setRegistryName(id)
+
+        register(recipe)
+    }
+
+    private fun IForgeRegistry<IRecipe>.addShapelessRecipe(
+        id: String,
+        result: ItemStack,
+        pattern: CharArray,
+        key: Map<Char, Ingredient>
+    ) {
+        if (pattern.size > 9) {
+            throw IllegalArgumentException("Recipe must have 9 or less items")
+        }
+
+        val ingredients = Array(pattern.size) { i ->
+            key[pattern[i]] ?: error("No value for char '${pattern[i]}'")
+        }
+
+        val recipe = ShapelessOreRecipe(null, result, *ingredients)
+        recipe.setRegistryName(id)
+
+        register(recipe)
+    }
+
+    fun registerFMCRecipes() {
+        for (string in OreDictionary.getOreNames()) {
+            if (string.startsWith("ore") || string.startsWith("dust")) {
+                val ores = OreDictionary.getOres(string)
+
+                ores.forEach { stack ->
+                    val result = FurnaceRecipes.instance().getSmeltingResult(stack)
+                    if (!result.isEmpty) {
+                        BlastFurnaceRecipes.recipes.add(SimpleRecipe(stack, result))
+                    }
+                }
+            }
+        }
     }
 }

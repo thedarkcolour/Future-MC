@@ -2,9 +2,7 @@ package thedarkcolour.futuremc.recipe.campfire
 
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
-import net.minecraftforge.fml.common.registry.ForgeRegistries
 import thedarkcolour.futuremc.recipe.Recipes
-import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes
 
 object CampfireRecipes : Recipes<CampfireRecipe>() {
     override val recipes = arrayListOf(
@@ -20,13 +18,5 @@ object CampfireRecipes : Recipes<CampfireRecipe>() {
 
     fun addRecipe(input: ItemStack, output: ItemStack, duration: Int) {
         recipes.add(CampfireRecipe(input, output, duration))
-    }
-
-    override fun validate() {
-        val registry = ForgeRegistries.ITEMS
-
-        StonecutterRecipes.recipes.removeIf { recipe ->
-            !registry.containsValue(recipe.output.item) || !registry.containsValue(recipe.input.item)
-        }
     }
 }

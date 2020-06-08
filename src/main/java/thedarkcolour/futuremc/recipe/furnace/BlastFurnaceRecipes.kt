@@ -1,39 +1,43 @@
 package thedarkcolour.futuremc.recipe.furnace
 
 import net.minecraft.item.ItemStack
-import net.minecraft.item.crafting.FurnaceRecipes
-import net.minecraftforge.fml.common.registry.ForgeRegistries
-import net.minecraftforge.oredict.OreDictionary
 import thedarkcolour.futuremc.recipe.Recipes
 import thedarkcolour.futuremc.recipe.SimpleRecipe
-import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes
 import java.util.*
 
 object BlastFurnaceRecipes : Recipes<SimpleRecipe>() {
-    override val recipes = ArrayList<SimpleRecipe>().also { recipes ->
-        for (string in OreDictionary.getOreNames()) {
-            if (string.startsWith("ore") || string.startsWith("dust")) {
-                val ores = OreDictionary.getOres(string)
+    override val recipes = object : ArrayList<SimpleRecipe>() {
+        /**
+         * Appends the specified element to the end of this list.
+         *
+         * @param e element to be appended to this list
+         * @return <tt>true</tt> (as specified by [Collection.add])
+         */
+        override fun add(element: SimpleRecipe): Boolean {
+            println(element)
+            return super.add(element)
+        }
 
-                ores.forEach { stack ->
-                    val result = FurnaceRecipes.instance().getSmeltingResult(stack)
-                    if (!result.isEmpty) {
-                        recipes.add(SimpleRecipe(stack, result))
-                    }
-                }
-            }
+        /**
+         * Removes the first occurrence of the specified element from this list,
+         * if it is present.  If the list does not contain the element, it is
+         * unchanged.  More formally, removes the element with the lowest index
+         * <tt>i</tt> such that
+         * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>
+         * (if such an element exists).  Returns <tt>true</tt> if this list
+         * contained the specified element (or equivalently, if this list
+         * changed as a result of the call).
+         *
+         * @param o element to be removed from this list, if present
+         * @return <tt>true</tt> if this list contained the specified element
+         */
+        override fun remove(element: SimpleRecipe): Boolean {
+            println(element)
+            return super.remove(element)
         }
     }
 
     fun addRecipe(input: ItemStack, output: ItemStack) {
         recipes.add(SimpleRecipe(input, output))
-    }
-
-    override fun validate() {
-        val registry = ForgeRegistries.ITEMS
-
-        StonecutterRecipes.recipes.removeIf { recipe ->
-            !registry.containsValue(recipe.output.item) || !registry.containsValue(recipe.input.item)
-        }
     }
 }

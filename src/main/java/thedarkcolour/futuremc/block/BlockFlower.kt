@@ -16,6 +16,6 @@ abstract class BlockFlower(regName: String) : BlockBush() {
         soundType = SoundType.PLANT
     }
 
-    abstract fun isBiomeValid(biome: Biome): Boolean
+    abstract val validBiomes: Set<Biome>
     abstract val flowerChance: Double
 }

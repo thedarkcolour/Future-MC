@@ -24,9 +24,8 @@ class WitherRoseBlock : BlockFlower("wither_rose") {
 
     override fun onEntityCollision(worldIn: World, pos: BlockPos, state: IBlockState, entityIn: Entity) {
         if (FConfig.villageAndPillage.witherRose.damage) {
-            if (entityIn is EntityLivingBase) {
+            if (entityIn is EntityLivingBase && !entityIn.isEntityInvulnerable(DamageSource.WITHER)) {
                 entityIn.addPotionEffect(PotionEffect(MobEffects.WITHER, 40))
-                entityIn.attackEntityFrom(DamageSource.WITHER, 1.0f)
             }
         }
     }
@@ -35,6 +34,6 @@ class WitherRoseBlock : BlockFlower("wither_rose") {
         return super.canSustainBush(state) || state.block == Blocks.SOUL_SAND || state.block == Blocks.NETHERRACK
     }
 
-    override fun isBiomeValid(biome: Biome) = false
+    override val validBiomes = emptySet<Biome>()
     override val flowerChance = 0.0
 }

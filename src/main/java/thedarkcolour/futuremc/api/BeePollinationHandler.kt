@@ -18,8 +18,9 @@ import thedarkcolour.futuremc.registry.FBlocks
  * If you would like to add custom crop pollination behaviour,
  * use [BeePollinationHandler.registerHandler].
  *
- * You may include this class in your mod JAR.
  * @author TheDarkColour
+ *
+ * You may include this class in your mod JAR.
  */
 interface BeePollinationHandler {
     /**
@@ -36,20 +37,21 @@ interface BeePollinationHandler {
     fun pollinateCrop(worldIn: World, pos: BlockPos, state: IBlockState, beeEntity: EntityBee): Boolean
 
     companion object {
-        private val handlers = hashMapOf<Block, BeePollinationHandler?>().also { map ->
-            val blockCropsHandler = create { worldIn, pos, state, bee ->
-                if (worldIn.getBlockState(pos).getValue(BlockCrops.AGE) < 7) {
-                    bee.world.playEvent(WorldEvents.BONEMEAL_PARTICLES, pos, 0)
-                    bee.world.setBlockState(pos, state.withProperty(BlockCrops.AGE, state.getValue(BlockCrops.AGE) + 1))
-                    true
-                } else {
-                    false
-                }
+        val blockCropsHandler = create { worldIn, pos, state, bee ->
+            if (worldIn.getBlockState(pos).getValue(BlockCrops.AGE) < 7) {
+                bee.world.playEvent(WorldEvents.BONEMEAL_PARTICLES, pos, 0)
+                bee.world.setBlockState(pos, state.withProperty(BlockCrops.AGE, state.getValue(BlockCrops.AGE) + 1))
+                true
+            } else {
+                false
             }
+        }
+
+        private val handlers = hashMapOf<Block, BeePollinationHandler?>().also { map ->
             val beetRootsHandler = create { worldIn, pos, state, bee ->
-                if (worldIn.getBlockState(pos).getValue(BlockBeetroot.AGE) < 3) {
+                if (worldIn.getBlockState(pos).getValue(BlockBeetroot.BEETROOT_AGE) < 3) {
                     bee.world.playEvent(WorldEvents.BONEMEAL_PARTICLES, pos, 0)
-                    bee.world.setBlockState(pos, state.withProperty(BlockBeetroot.AGE, state.getValue(BlockBeetroot.AGE) + 1))
+                    bee.world.setBlockState(pos, state.withProperty(BlockBeetroot.BEETROOT_AGE, state.getValue(BlockBeetroot.BEETROOT_AGE) + 1))
                     true
                 } else {
                     false
@@ -103,6 +105,7 @@ interface BeePollinationHandler {
 
         /**
          * Factory function
+         * TODO make Kotlin for Forge in 1.12 and use `fun interface`
          */
         inline fun create(crossinline handler: (World, BlockPos, IBlockState, EntityBee) -> Boolean): BeePollinationHandler {
             return object : BeePollinationHandler {

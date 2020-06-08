@@ -7,8 +7,8 @@ import net.minecraft.world.World
 import java.util.stream.Stream
 
 abstract class EntityGroupFish(worldIn: World) : EntityFish(worldIn) {
-    var groupLeader: EntityGroupFish? = null
-    var groupSize = 1
+    private var groupLeader: EntityGroupFish? = null
+    private var groupSize = 1
     open val maxGroupSize
         get() = super.getMaxSpawnedInChunk()
 
@@ -43,11 +43,10 @@ abstract class EntityGroupFish(worldIn: World) : EntityFish(worldIn) {
                 }
                 else -> {
                     randomInt = this.genInt(fish)
-                    val predicate = { fish: EntityGroupFish? -> fish!!.canGroupGrow() || !fish.hasGroupLeader() }
                     val list = fish.world.getEntitiesWithinAABB(
                         fish::class.java,
                         fish.entityBoundingBox.grow(8.0, 8.0, 8.0),
-                        predicate::invoke
+                        FollowLeaderPredicate
                     )
                     val groupFish: EntityGroupFish =
                         list.stream().filter(EntityGroupFish::canGroupGrow).findAny().orElse(fish)
@@ -73,6 +72,12 @@ abstract class EntityGroupFish(worldIn: World) : EntityFish(worldIn) {
             if (--navigateTimer <= 0) {
                 navigateTimer = 10
                 fish.moveToGroupLeader()
+            }
+        }
+
+        object FollowLeaderPredicate : com.google.common.base.Predicate<EntityGroupFish?> {
+            override fun apply(t: EntityGroupFish?): Boolean {
+                return t?.canGroupGrow() == true || t?.hasGroupLeader() == false
             }
         }
     }

@@ -41,7 +41,6 @@ class BeeHiveTile : InteractionTile(), ITickable {
         private set
 
     fun isNearFire(): Boolean {
-        world ?: return false
         for (pos in BlockPos.getAllInBoxMutable(pos.add(-1, -1, -1), pos.add(1, 1, 1))) {
             if (world.getBlockState(pos).block is BlockFire) {
                 return true
@@ -371,28 +370,26 @@ class BeeHiveTile : InteractionTile(), ITickable {
     }
 
     private fun getBees(): NBTTagList {
-        val list = NBTTagList()
-
-        for (bee in bees) {
-            val tag = NBTTagCompound()
-            tag.setTag("EntityData", bee.data)
-            tag.setInteger("TicksInHive", bee.ticksInHive)
-            tag.setInteger("MinOccupationTicks", bee.minOccupationTicks)
-            list.appendTag(tag)
-        }
-
-        return list
+        return NBTTagList().also { bees.map(Bee::deserialize).forEach(it::appendTag) }
     }
 
     private class Bee constructor(val data: NBTTagCompound, var ticksInHive: Int, val minOccupationTicks: Int) {
         init {
             data.setBoolean("Leashed", false)
         }
+
+        fun deserialize(): NBTTagCompound {
+            val tag = NBTTagCompound()
+            tag.setTag("EntityData", data)
+            tag.setInteger("TicksInHive", ticksInHive)
+            tag.setInteger("MinOccupationTicks", minOccupationTicks)
+            return tag
+        }
     }
 
     enum class BeeState {
         HONEY_DELIVERED,
         BEE_RELEASED,
-        EMERGENCY
+        EMERGENCY,
     }
 }

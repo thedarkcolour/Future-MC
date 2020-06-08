@@ -1,3 +1,24 @@
+Version 0.2.3 - Bug fix + mod compatibility update:
+ *Actually Additions Compat* - Bees now seek out the Black Lotus for pollen and grow Canola, Flax, Rice, and Coffee crops.
+ *Better With Mods Compat* - Cauldrons now recognize campfires as a fire source.
+ *Fixed World Corruption* - When updating from 0.1.13 to 0.2.2, the world is no longer corrupted. Fixes #147
+ *Netherite Gear* - Lava resistant gear from 1.16 that is better than diamond.
+ *Pam's Harvestcraft Compatibility* - Bees now grow crops from Pam's Harvestcraft.
+ *Plants Compatibility* - Bees seek out the flowers from the Plants mod for pollen and grow the crops from Plants.
+ *Portuguese Translation* - Added Portuguese translation
+ *Smithing Table Functionality* - Smithing table can now be used to upgrade equipment. CraftTweaker compatibility!
+ Barrel, Blast Furnace, Smoker - Fixed a dupe glitch. Fixes #141
+ Bee - Fixed a crash with Beetroots. Fixes #142
+ Bee Nests - Changed default biome spawning to match 1.15.
+ Campfire - Fixed empty recipes not being removed.
+ Honey Blocks - No longer stick to slime blocks (even without Quark). Fixes #146
+ Lantern - Fixed placement a bit more to allow placement on trapdoors.
+ Soul Torch & Lantern - Changed names to match new snapshots.
+ Soul Torch - Fixed a particle that caused issues with mip maps.
+ Trapdoors - Now craftable without Quark. Fixes #145
+ Trapdoors - Added OreDictionary entries. Fixes #148
+ Wood blocks - Now strippable. Fixes #144
+
 Version 0.2.2 - Bug fix update:
  Bee - Fixed a crash with beetroots, pumpkins, and melons. Fixes #139
  Composter - Optimized item rarity map and reduced memory footprint by 3 bytes per compostable item

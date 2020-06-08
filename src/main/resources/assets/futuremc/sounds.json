@@ -1034,28 +1034,28 @@
     "iron_golem_repair": {
         "subtitle": "futuremc.subtitles.iron_golem_repair",
         "sounds": [
-            "futuremc:iron_golem/iron_golem_repair"
+            "futuremc:iron_golem/repair"
         ]
     },
     "pufferfish_inflate": {
         "subtitle": "futuremc.subtitles.pufferfish_inflate",
         "sounds": [
-            "blow_up1",
-            "blow_up2"
+            "futuremc:pufferfish/blow_up1",
+            "futuremc:pufferfish/blow_up2"
         ]
     },
     "pufferfish_deflate": {
         "subtitle": "futuremc.subtitles.pufferfish_deflate",
         "sounds": [
-            "blow_out1",
-            "blow_out2"
+            "futuremc:pufferfish/blow_out1",
+            "futuremc:pufferfish/blow_out2"
         ]
     },
     "pufferfish_sting":  {
         "subtitle": "futuremc.subtitles.pufferfish_sting",
         "sounds": [
-            "sting1",
-            "sting2"
+            "futuremc:pufferfish/sting1",
+            "futuremc:pufferfish/sting2"
         ]
     }
 }

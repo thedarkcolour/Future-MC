@@ -7,7 +7,6 @@ import net.minecraft.creativetab.CreativeTabs
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
 
-// todo just like BlockStrippedLog
 class BlockWood(regName: String) : BlockRotatedPillar(Material.WOOD) {
     init {
         blockHardness = 2.0f

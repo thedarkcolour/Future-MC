@@ -195,7 +195,7 @@ class CampfireBlock(properties: Properties) : InteractionBlock(properties) {
         }
 
         fun isLitInRange(worldIn: World, pos: BlockPos, range: Int): Boolean {
-            for (i in 0 until range) {
+            for (i in 0..range) {
                 val down = pos.down(i)
                 val state = worldIn.getBlockState(down)
                 if (isLitCampfire(state)) {

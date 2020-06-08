@@ -1,10 +1,7 @@
 package thedarkcolour.futuremc.event
 
-import net.minecraft.block.Block
+import net.minecraft.block.*
 import net.minecraft.block.BlockLog.EnumAxis
-import net.minecraft.block.BlockNewLog
-import net.minecraft.block.BlockOldLog
-import net.minecraft.block.BlockPlanks
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.IBlockState
@@ -19,10 +16,14 @@ import net.minecraft.init.Items
 import net.minecraft.init.SoundEvents
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemTool
+import net.minecraft.util.EnumHand
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
+import net.minecraft.world.World
 import net.minecraftforge.client.event.DrawBlockHighlightEvent
+import net.minecraftforge.client.event.ModelBakeEvent
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.common.config.Config
@@ -37,14 +38,17 @@ import net.minecraftforge.event.terraingen.BiomeEvent
 import net.minecraftforge.fml.client.event.ConfigChangedEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent
+import net.minecraftforge.fml.common.registry.ForgeRegistries
 import thedarkcolour.core.util.*
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.BlockStrippedLog
+import thedarkcolour.futuremc.block.BlockWood
 import thedarkcolour.futuremc.capability.hasSwimmingCap
 import thedarkcolour.futuremc.capability.isSwimming
 import thedarkcolour.futuremc.capability.lastSwimAnimation
 import thedarkcolour.futuremc.capability.swimAnimation
 import thedarkcolour.futuremc.client.color.WaterColor
+import thedarkcolour.futuremc.client.render.TridentBakedModel
 import thedarkcolour.futuremc.compat.checkDynamicTrees
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.config.FConfig.updateAquatic
@@ -68,20 +72,23 @@ import kotlin.math.min
 @Suppress("UNUSED_PARAMETER")
 object Events {
     fun registerEvents() {
-        addListener(this::onHoneyBottleEaten)
-        addListener(this::onLogStripped)
-        addListener(this::onWitherKillLiving)
-        addListener(this::onHoneyJump)
-        addListener(this::onConfigChanged)
+        addListener(::onHoneyBottleEaten)
+        addListener(::onLogStripped)
+        addListener(::onWitherKillLiving)
+        addListener(::onHoneyJump)
+        addListener(::onConfigChanged)
         // todo optimize into a coremod/mixin
         if (updateAquatic.newWaterColor)
-            addListener(this::onGetWaterColor)
-        addListener(this::onEntityInteract)
-        addListener(this::onModelRegistry)
+            addListener(::onGetWaterColor)
+        addListener(::onEntityInteract)
+        addListener(::onModelRegistry)
         if (TODO())
-            addListener(this::onPlayerTick)
+            addListener(::onPlayerTick)
         subscribe(RegistryEventHandler)
         subscribe(OldWorldHandler)
+
+        if (TODO())
+            addListener(::onModelBake)
 
         if (TODO())
             checkDynamicTrees()?.addListeners()
@@ -99,7 +106,7 @@ object Events {
 
     // stripping logs
     private fun onLogStripped(event: RightClickBlock) {
-        val world = event.world
+        val worldIn = event.world
         val pos = event.pos
         val player = event.entityPlayer
         val stack = event.itemStack
@@ -107,7 +114,7 @@ object Events {
             if (stack.item is ItemTool) {
                 val tool = stack.item as ItemTool
                 if (tool.getToolClasses(stack).contains("axe")) {
-                    val state = world.getBlockState(pos)
+                    val state = worldIn.getBlockState(pos)
                     val block = state.block
                     if (block == Blocks.LOG || block == Blocks.LOG2) {
                         var axis: IProperty<EnumAxis>? = null
@@ -124,18 +131,18 @@ object Events {
 
                         if (axis != null && variant != null) {
                             if (BlockStrippedLog.variants.contains(state.getValue(variant).toString())) {
-                                player.swingArm(event.hand)
-                                world.playSound(
-                                    player,
-                                    pos,
-                                    SoundEvents.BLOCK_WOOD_BREAK,
-                                    SoundCategory.BLOCKS,
-                                    1.0f,
-                                    1.0f
-                                )
-                                world.setBlockState(pos, getState(state, block).withProperty(axis, state.getValue(axis)))
-                                stack.damageItem(1, player)
+                                stripBlock(worldIn, pos, player, event.hand, stack, getState(state, block).withProperty(axis, state.getValue(axis)))
                             }
+                        }
+                    } else if (block is BlockWood) {
+                        val name = block.registryName!!.path
+
+                        if (!name.startsWith("stripped")) {
+                            val axis = state.getValue(BlockRotatedPillar.AXIS)
+                            val strippedBlock = ForgeRegistries.BLOCKS.getValue(ResourceLocation(FutureMC.ID, "stripped_$name"))
+                                ?: return
+
+                            stripBlock(worldIn, pos, player, event.hand, stack, strippedBlock.defaultState.withProperty(BlockRotatedPillar.AXIS, axis))
                         }
                     }
                 }
@@ -162,6 +169,20 @@ object Events {
             }
         }
         throw IllegalStateException("Invalid wood")
+    }
+
+    private fun stripBlock(
+        worldIn: World,
+        pos: BlockPos,
+        playerIn: EntityPlayer,
+        hand: EnumHand,
+        stack: ItemStack,
+        newState: IBlockState
+    ) {
+        playerIn.swingArm(hand)
+        worldIn.playSound(playerIn, pos, SoundEvents.BLOCK_WOOD_BREAK, SoundCategory.BLOCKS, 1.0f, 1.0f)
+        worldIn.setBlockState(pos, newState)
+        stack.damageItem(1, playerIn)
     }
 
     // wither rose spawn
@@ -295,5 +316,14 @@ object Events {
 
     private fun renderFancyBoundingBox(event: DrawBlockHighlightEvent) {
         event.isCanceled = true
+    }
+
+    private fun onModelBake(event: ModelBakeEvent) {
+        val registry = event.modelRegistry
+        val trident = ModelResourceLocation("futuremc:trident","inventory")
+        val inventory = registry.getObject(trident)!!
+        val hand = registry.getObject(ModelResourceLocation("futuremc:trident_in_hand","inventory"))!!
+
+        registry.putObject(trident, TridentBakedModel(hand, inventory))
     }
 }

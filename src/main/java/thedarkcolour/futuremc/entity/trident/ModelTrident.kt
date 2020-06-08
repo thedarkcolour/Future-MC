@@ -2,6 +2,8 @@ package thedarkcolour.futuremc.entity.trident
 
 import net.minecraft.client.model.ModelBase
 import net.minecraft.client.model.ModelRenderer
+import net.minecraft.util.ResourceLocation
+import thedarkcolour.futuremc.FutureMC
 
 class ModelTrident : ModelBase() {
     private val modelRenderer = ModelRenderer(this, 0, 0)
@@ -24,7 +26,12 @@ class ModelTrident : ModelBase() {
         modelRenderer.addChild(model2)
     }
 
-    fun renderer() {
+    fun renderAsBuiltin() {
         modelRenderer.render(0.0625f)
+    }
+
+    companion object {
+        @JvmField
+        val TEXTURE_LOCATION = ResourceLocation(FutureMC.ID, "textures/entity/trident/trident.png")
     }
 }

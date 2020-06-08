@@ -128,14 +128,6 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
         return !fromBucket && !hasCustomName()
     }
 
-    override fun despawnEntity() {
-        if (!fromBucket) {
-            super.despawnEntity()
-        } else {
-            idleTime = 0
-        }
-    }
-
     override fun getMaxSpawnedInChunk() = 8
 
     override fun canBreatheUnderwater() = true

@@ -20,7 +20,7 @@ object FConfig {
         get() = _Internal.useVanillaCreativeTabs
 
     class UpdateAquatic {
-        @Name("futuremc.config.blue_ice")
+        @Name("Blue Ice")
         @Comment("Whether Blue Ice is enabled.")
         @RequiresMcRestart
         @JvmField
@@ -52,6 +52,12 @@ object FConfig {
         //@JvmField
         @Ignore
         val newWaterColor = false
+
+        @Name("Seagrass")
+        @Comment("Whether (waterloggable, but glitchy) Seagrass is enabled.")
+        @RequiresMcRestart
+        @JvmField
+        var seagrass = false
 
         @Name("Stripped Logs")
         @Comment("Options for stripped logs")
@@ -265,7 +271,7 @@ object FConfig {
         @Comment("Whether the Bell is enabled.")
         @RequiresMcRestart
         @JvmField
-        var bell = false
+        var bell = true
 
         @Name("Blast Furnace")
         @Comment("Whether the Blast Furnace is enabled.")
@@ -598,12 +604,11 @@ object FConfig {
             @JvmField
             var enabled = true
 
-            //@Name("Functionality")
-            //@Comment("Whether this block's gui can be used.")
-            //@JvmField
-            //@RequiresMcRestart
-            @Ignore
-            val functionality = false
+            @Name("Functionality")
+            @Comment("Whether this block's gui can be used.")
+            @JvmField
+            @RequiresMcRestart
+            var functionality = true
         }
 
         class Stonecutter {
@@ -680,7 +685,17 @@ object FConfig {
         @Name("Bee Nest Biome Spawns")
         @Comment("The list of biomes that the Bee Nests will spawn in. Format (without quotes): \"mod:biome:decimal_spawn_rate\"")
         @JvmField
-        var validBiomesForBeeNest = arrayOf("minecraft:plains:0.05", "minecraft:sunflower_plains:0.05", "minecraft:mutated_forest:0.02")
+        var validBiomesForBeeNest = arrayOf(
+            "minecraft:plains:0.05",
+            "minecraft:sunflower_plains:0.05",
+            "minecraft:mutated_forest:0.02",
+            "minecraft:forest:0.002",
+            "minecraft:forest_hills:0.002",
+            "minecraft:birch_forest:0.002",
+            "minecraft:mutated_birch_forest:0.002",
+            "minecraft:birch_forest_hills:0.002",
+            "minecraft:mutated_birch_forest_hills:0.002"
+        )
 
         class Bee {
             @Name("Enabled")
@@ -736,5 +751,11 @@ object FConfig {
         @RequiresMcRestart
         @JvmField
         var chain = true
+
+        @Name("Netherite")
+        @Comment("Whether Netherite and Netherite equipment are enabled.")
+        @RequiresMcRestart
+        @JvmField
+        var netherite = true
     }
 }

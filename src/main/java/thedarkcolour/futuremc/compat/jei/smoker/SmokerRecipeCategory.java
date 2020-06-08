@@ -26,7 +26,7 @@ public class SmokerRecipeCategory implements IRecipeCategory<SimpleRecipeWrapper
         animatedFlame = helper.createAnimatedDrawable(staticFlame, 300, IDrawableAnimated.StartDirection.TOP, true);
 
         arrow = helper.drawableBuilder(new ResourceLocation("jei", "textures/gui/gui_vanilla.png"), 82, 128, 24, 17).buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
-        icon = helper.createDrawableIngredient(new ItemStack(FBlocks.INSTANCE.getSMOKER()));
+        icon = helper.createDrawableIngredient(new ItemStack(FBlocks.SMOKER));
         localizedName = I18n.format("gui.jei.category.smelting");
     }
 

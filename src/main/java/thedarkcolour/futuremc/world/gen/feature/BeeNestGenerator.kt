@@ -39,16 +39,13 @@ object BeeNestGenerator {
         worldIn: World,
         rand: Random,
         position: BlockPos,
-        height: Int,
-        trees: WorldGenAbstractTree?
+        height: Int
     ) {
         if (cannotGenerate(worldIn, rand, position)) return
 
         val offset = VALID_OFFSETS[rand.nextInt(3)]
         val pos = MutableBlockPos(position.x, position.y + height - 4, position.z).move(offset)
-        if (worldIn.isAir(pos) && worldIn.getBlockState(pos.move(EnumFacing.SOUTH)).block
-                .isAir(worldIn.getBlockState(pos), worldIn, pos)
-        ) {
+        if (worldIn.isAir(pos) && worldIn.isAir(pos.move(EnumFacing.SOUTH))) {
             placeBeeHive(worldIn, rand, pos.move(EnumFacing.NORTH))
         }
     }
