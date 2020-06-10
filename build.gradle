@@ -18,7 +18,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'kotlin'
 apply plugin: 'com.wynprice.cursemaven'
 
-version = "1.12.2-0.2.3"
+version = "1.12.2-0.2.3.2"
 group = "thedarkcolour.futuremc"
 archivesBaseName = "future-mc"
 
@@ -41,20 +41,28 @@ jar {
 
 repositories {
     maven {
-        name = "CraftTweaker/Quark/AutoRegLib maven"
-        url = "http://maven.blamejared.com"
+        name = 'CraftTweaker/Quark/AutoRegLib'
+        url = 'http://maven.blamejared.com'
     }
     maven {
-        name = "JEI maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
+        name = 'JEI'
+        url = 'https://dvs1.progwml6.com/files/maven/'
     }
     maven {
-        name = "Forgelin maven"
-        url = "http://maven.shadowfacts.net/"
+        name = 'Forgelin'
+        url = 'http://maven.shadowfacts.net/'
     }
     maven {
-        name "DynamicTrees maven"
-        url "https://minecraft.curseforge.com/api/maven/"
+        name = 'Tinkers Construct'
+        url = 'http://dvs1.progwml6.com/files/maven'
+    }
+    maven {
+        name = 'TeamCoFH mods'
+        url = 'https://maven.covers1624.net/'
+    }
+    maven {
+        name = 'ChickenBones'
+        url = 'http://chickenbones.net/maven/'
     }
     maven {
         name = "CurseForge"
@@ -63,22 +71,30 @@ repositories {
 }
 
 dependencies {
-    implementation "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548"
-    implementation "mezz.jei:jei_1.12.2:4.15.0.+"
-    implementation "net.shadowfacts:Forgelin:1.8.4"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.70"
-    implementation "vazkii.quark:Quark:r1.6-180.7"
-    implementation "vazkii.autoreglib:AutoRegLib:1.3-32.+"
-    implementation "curse.maven:dynamic-trees:2870267"
-    implementation "curse.maven:dynamic-trees-sources:2870269"
-    implementation "curse.maven:enchantment-descriptions:2689502"
-    implementation "curse.maven:enchantment-descriptions-sources:2689503"
-    implementation "curse.maven:pams-harvestcraft:2904825"
-    implementation "curse.maven:plants:2697165"
-    implementation "curse.maven:placebo:2694382"
-    implementation "curse.maven:actually-additions:2844115"
-    implementation "curse.maven:better-with-mods:2965308"
-    implementation "curse.maven:better-with-lib:2624990"
+    implementation 'CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548'
+    implementation 'mezz.jei:jei_1.12.2:4.15.0.+'
+    implementation 'net.shadowfacts:Forgelin:1.8.4'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.70'
+    implementation 'vazkii.quark:Quark:r1.6-180.7'
+    implementation 'vazkii.autoreglib:AutoRegLib:1.3-32.+'
+    implementation 'curse.maven:dynamic-trees:2870267'
+    implementation 'curse.maven:dynamic-trees-sources:2870269'
+    implementation 'curse.maven:enchantment-descriptions:2689502'
+    implementation 'curse.maven:enchantment-descriptions-sources:2689503'
+    implementation 'curse.maven:pams-harvestcraft:2904825'
+    implementation 'curse.maven:plants:2697165'
+    implementation 'curse.maven:placebo:2694382'
+    implementation 'curse.maven:actually-additions:2844115'
+    implementation 'curse.maven:better-with-mods:2965308'
+    implementation 'curse.maven:better-with-lib:2624990'
+    implementation 'slimeknights.mantle:Mantle:1.12-1.3.3.49'
+    implementation 'slimeknights:TConstruct:1.12.2-2.13.0.184'
+    implementation 'cofh:CoFHCore:1.12.2-4.6.3.27:universal'
+    implementation 'cofh:CoFHWorld:1.12.2-1.3.1.7:universal'
+    implementation 'cofh:ThermalFoundation:1.12.2-2.6.3.27:universal'
+    implementation 'cofh:ThermalExpansion:1.12.2-5.5.4.43:universal'
+    implementation 'cofh:RedstoneFlux:1.12-2.1.0.7:universal'
+    implementation 'codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal'
 }
 
 processResources {

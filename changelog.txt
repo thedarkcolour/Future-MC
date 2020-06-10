@@ -1,3 +1,14 @@
+Version 0.2.3.2 - Hotfix and more mod compat:
+ *Tinkers Construct Compat* - Tinkers axes can now strip logs
+ Netherite Block - Now has a crafting recipe. Fixes #151
+ Netherite - Fixed ore dictionary issues. Fixes #150
+ Fixed a server crash. Fixes #152
+ Quark Compat - Bark blocks are now strippable
+
+Version 0.2.3.1 - Hotfix:
+ Fix server crash (reportedly didn't actually fix it)
+ Hopefully fix Vivecraft incompatibility
+
 Version 0.2.3 - Bug fix + mod compatibility update:
  *Actually Additions Compat* - Bees now seek out the Black Lotus for pollen and grow Canola, Flax, Rice, and Coffee crops.
  *Better With Mods Compat* - Cauldrons now recognize campfires as a fire source.

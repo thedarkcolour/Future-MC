@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.client.render
 
 import net.minecraft.block.state.IBlockState
+import net.minecraft.client.model.ModelBiped
 import net.minecraft.client.renderer.block.model.BakedQuad
 import net.minecraft.client.renderer.block.model.IBakedModel
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType
@@ -8,6 +9,9 @@ import net.minecraft.client.renderer.block.model.ItemOverrideList
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.client.ForgeHooksClient
+import net.minecraftforge.common.util.EnumHelper
+import net.minecraftforge.fml.relauncher.Side
+import net.minecraftforge.fml.relauncher.SideOnly
 import org.apache.commons.lang3.tuple.Pair
 import javax.vecmath.Matrix4f
 
@@ -44,5 +48,12 @@ class TridentBakedModel(private val hand: IBakedModel, private val inventory: IB
             -> ForgeHooksClient.handlePerspective(hand, camera)
             else -> ForgeHooksClient.handlePerspective(inventory, camera)
         }
+    }
+
+    // todo fix trident rendering
+    companion object {
+        val TRIDENT_USE_ACTION = EnumHelper.addAction("SPEAR_FMC")!!
+        @SideOnly(Side.CLIENT)
+        val TRIDENT_ARM_POSE = EnumHelper.addEnum(ModelBiped.ArmPose::class.java, "SPEAR_FMC", emptyArray())!!
     }
 }

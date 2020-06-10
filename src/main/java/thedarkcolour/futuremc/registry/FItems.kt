@@ -168,8 +168,7 @@ object FItems {
         if (FConfig.villageAndPillage.cornflower.enabled) items.register(CORNFLOWER)
         if (FConfig.villageAndPillage.witherRose.enabled) items.register(WITHER_ROSE)
         if (FConfig.villageAndPillage.campfire.enabled) items.register(CAMPFIRE)
-        if (FutureMC.DEBUG)// FConfig.villageAndPillage.scaffolding
-            items.register(SCAFFOLDING)
+        if (FutureMC.DEBUG) items.register(SCAFFOLDING)
         if (FConfig.buzzyBees.bee.enabled) items.registerAll(BEE_NEST, BEEHIVE)
         if (FConfig.updateAquatic.strippedLogs.acacia) items.register(STRIPPED_ACACIA_LOG)
         if (FConfig.updateAquatic.strippedLogs.jungle) items.register(STRIPPED_JUNGLE_LOG)
@@ -306,10 +305,12 @@ object FItems {
             OreDictionary.registerOre("trapdoorWood", DARK_OAK_TRAPDOOR)
 
         if (FConfig.netherUpdate.netherite) {
-            OreDictionary.registerOre("oreNetherite", ANCIENT_DEBRIS)
             OreDictionary.registerOre("blockNetherite", NETHERITE_BLOCK)
             OreDictionary.registerOre("ingotNetherite", NETHERITE_INGOT)
-            OreDictionary.registerOre("scrapNetherite", NETHERITE_SCRAP)
+
+            // needed so that mod compat works properly
+            OreDictionary.registerOre("ingotAncientDebris", NETHERITE_SCRAP)
+            OreDictionary.registerOre("oreAncientDebris", ANCIENT_DEBRIS)
         }
     }
 }

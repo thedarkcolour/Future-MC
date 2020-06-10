@@ -83,7 +83,7 @@ object FRecipes {
                 "futuremc:netherite_ingot",
                 ItemStack(FItems.NETHERITE_INGOT),
                 charArrayOf('A','A','A','A','B','B','B','B'),
-                mapOf('A' to OreIngredient("scrapNetherite"), 'B' to OreIngredient("ingotGold"))
+                mapOf('A' to OreIngredient("ingotAncientDebris"), 'B' to OreIngredient("ingotGold"))
             )
         }
     }

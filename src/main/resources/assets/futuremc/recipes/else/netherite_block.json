@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "xxx",
+        "xxx",
+        "xxx"
+    ],
+    "key": {
+        "x": {
+            "type": "forge:ore_dict",
+            "ore": "ingotNetherite"
+        }
+    },
+    "result": {
+        "item": "futuremc:netherite_block"
+    }
+}

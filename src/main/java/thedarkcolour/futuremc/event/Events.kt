@@ -50,6 +50,8 @@ import thedarkcolour.futuremc.capability.swimAnimation
 import thedarkcolour.futuremc.client.color.WaterColor
 import thedarkcolour.futuremc.client.render.TridentBakedModel
 import thedarkcolour.futuremc.compat.checkDynamicTrees
+import thedarkcolour.futuremc.compat.checkQuark
+import thedarkcolour.futuremc.compat.checkTConstruct
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.config.FConfig.updateAquatic
 import thedarkcolour.futuremc.registry.FBlocks.HONEY_BLOCK
@@ -69,8 +71,17 @@ import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator
 import kotlin.math.max
 import kotlin.math.min
 
+/**
+ * Event handling for Future MC.
+ *
+ * @author TheDarkColour
+ */
 @Suppress("UNUSED_PARAMETER")
 object Events {
+    /**
+     * Registers event subscribers to the event bus
+     * using the [addListener] function in Util.kt.
+     */
     fun registerEvents() {
         addListener(::onHoneyBottleEaten)
         addListener(::onLogStripped)
@@ -94,7 +105,10 @@ object Events {
             checkDynamicTrees()?.addListeners()
     }
 
-    // honey bottle sounds
+    /**
+     * Changes the eating sound of honey bottle to
+     * the correct drinking sound from 1.15.
+     */
     private fun onHoneyBottleEaten(event: PlaySoundAtEntityEvent) {
         if (event.entity is EntityLivingBase) {
             val e = event.entity as EntityLivingBase
@@ -104,50 +118,59 @@ object Events {
         }
     }
 
-    // stripping logs
+    /**
+     * Strips logs with vanilla axes or
+     * axes from Tinkers Construct.
+     */
     private fun onLogStripped(event: RightClickBlock) {
         val worldIn = event.world
         val pos = event.pos
         val player = event.entityPlayer
         val stack = event.itemStack
         if (updateAquatic.strippedLogs.rightClickToStrip) {
-            if (stack.item is ItemTool) {
-                val tool = stack.item as ItemTool
-                if (tool.getToolClasses(stack).contains("axe")) {
-                    val state = worldIn.getBlockState(pos)
-                    val block = state.block
-                    if (block == Blocks.LOG || block == Blocks.LOG2) {
-                        var axis: IProperty<EnumAxis>? = null
-                        var variant: IProperty<BlockPlanks.EnumType>? = null
+            if (isVanillaAxe(stack) || checkTConstruct()?.isTinkersAxe(stack) == true) {
+                val state = worldIn.getBlockState(pos)
+                val block = state.block
+                if (block == Blocks.LOG || block == Blocks.LOG2) {
+                    var axis: IProperty<EnumAxis>? = null
+                    var variant: IProperty<BlockPlanks.EnumType>? = null
 
-                        @Suppress("UNCHECKED_CAST", "UsePropertyAccessSyntax")
-                        for (prop in state.propertyKeys) {
-                            if (prop.getName() == "axis") {
-                                axis = prop as IProperty<EnumAxis>
-                            } else if (prop.getName() == "variant") {
-                                variant = prop as IProperty<BlockPlanks.EnumType>
-                            }
-                        }
-
-                        if (axis != null && variant != null) {
-                            if (BlockStrippedLog.variants.contains(state.getValue(variant).toString())) {
-                                stripBlock(worldIn, pos, player, event.hand, stack, getState(state, block).withProperty(axis, state.getValue(axis)))
-                            }
-                        }
-                    } else if (block is BlockWood) {
-                        val name = block.registryName!!.path
-
-                        if (!name.startsWith("stripped")) {
-                            val axis = state.getValue(BlockRotatedPillar.AXIS)
-                            val strippedBlock = ForgeRegistries.BLOCKS.getValue(ResourceLocation(FutureMC.ID, "stripped_$name"))
-                                ?: return
-
-                            stripBlock(worldIn, pos, player, event.hand, stack, strippedBlock.defaultState.withProperty(BlockRotatedPillar.AXIS, axis))
+                    @Suppress("UNCHECKED_CAST", "UsePropertyAccessSyntax")
+                    for (prop in state.propertyKeys) {
+                        if (prop.getName() == "axis") {
+                            axis = prop as IProperty<EnumAxis>
+                        } else if (prop.getName() == "variant") {
+                            variant = prop as IProperty<BlockPlanks.EnumType>
                         }
                     }
+
+                    if (axis != null && variant != null) {
+                        if (BlockStrippedLog.variants.contains(state.getValue(variant).toString())) {
+                            stripBlock(worldIn, pos, player, event.hand, stack, getState(state, block).withProperty(axis, state.getValue(axis)))
+                        }
+                    }
+                } else if (block is BlockWood) {
+                    val name = block.registryName!!.path
+
+                    if (!name.startsWith("stripped")) {
+                        val axis = state.getValue(BlockRotatedPillar.AXIS)
+                        val strippedBlock = ForgeRegistries.BLOCKS.getValue(ResourceLocation(FutureMC.ID, "stripped_$name")) ?: return
+
+                        stripBlock(worldIn, pos, player, event.hand, stack, strippedBlock.defaultState.withProperty(BlockRotatedPillar.AXIS, axis))
+                    }
+                } else if (checkQuark()?.isBarkBlock(state) == true) {
+                    stripBlock(worldIn, pos, player, event.hand, stack, checkQuark()!!.getStrippedBark(state))
                 }
             }
         }
+    }
+
+    /**
+     * Returns true if this item is an
+     * axe according to vanilla minecraft.
+     */
+    private fun isVanillaAxe(stack: ItemStack): Boolean {
+        return stack.item is ItemTool && stack.item.getToolClasses(stack).contains("axe")
     }
 
     private fun getState(state: IBlockState, block: Block): IBlockState {
@@ -171,6 +194,9 @@ object Events {
         throw IllegalStateException("Invalid wood")
     }
 
+    /**
+     * Strips a vanilla or future mc log.
+     */
     private fun stripBlock(
         worldIn: World,
         pos: BlockPos,
@@ -182,7 +208,21 @@ object Events {
         playerIn.swingArm(hand)
         worldIn.playSound(playerIn, pos, SoundEvents.BLOCK_WOOD_BREAK, SoundCategory.BLOCKS, 1.0f, 1.0f)
         worldIn.setBlockState(pos, newState)
-        stack.damageItem(1, playerIn)
+
+        damageAxe(playerIn, stack)
+    }
+
+    /**
+     * Damages an axe item from either vanilla or Tinkers Construct.
+     */
+    private fun damageAxe(playerIn: EntityPlayer, stack: ItemStack) {
+        // do simpler check first
+        if (isVanillaAxe(stack)) {
+            stack.damageItem(1, playerIn)
+        } else {
+            // call API from nullable wrapper
+            checkTConstruct()?.damageTool(stack, 1, playerIn)
+        }
     }
 
     // wither rose spawn

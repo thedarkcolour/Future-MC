@@ -6,6 +6,7 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.*;
 import thedarkcolour.core.util.UtilKt;
+import thedarkcolour.futuremc.compat.Compat;
 import vazkii.quark.api.ClassTransformer;
 
 import javax.annotation.Nullable;
@@ -58,6 +59,9 @@ public final class CoreTransformer implements IClassTransformer {
     }
 
     private static byte[] patchEntityRenderer(byte[] basicClass) {
+        // fix incompatibility with vivecraft
+        if (Compat.checkVivecraft()) return basicClass;
+
         ClassNode classNode = createClassNode(basicClass);
         MethodNode method = findMethod(classNode, "func_175068_a", "renderWorldPass", null);
         MethodInsnNode target = findMethodInsn(method, "func_70055_a", "isInsideOfMaterial", null);
@@ -165,7 +169,7 @@ public final class CoreTransformer implements IClassTransformer {
         String actualName = isObfuscated ? srgName : mcpName;
 
         MethodNode method = CollectionsKt.firstOrNull(
-            CollectionsKt.filter(classNode.methods, (node) -> {
+            CollectionsKt.filter(classNode.methods, node -> {
                 return node.name.equals(actualName) && (desc == null || node.desc.equals(desc));
             })
         );
@@ -193,13 +197,13 @@ public final class CoreTransformer implements IClassTransformer {
      * @return the patched bytecode of the class
      */
     private static byte[] patchBeforeReturnTrue(ClassNode classNode, MethodNode method, InsnList toAdd) {
-        return patchBeforeInsn(classNode, method, toAdd, 1, (node) -> {
+        return patchBeforeInsn(classNode, method, toAdd, 1, node -> {
             return node.getOpcode() == IRETURN && node.getPrevious().getOpcode() == ICONST_1;
         });
     }
 
     /**
-     * Patches
+     * Patches before a minecraft method
      * @param classNode
      * @param method
      * @param toAdd
@@ -216,7 +220,7 @@ public final class CoreTransformer implements IClassTransformer {
             String mcpName,
             int occurrence
     ) {
-        return patchBeforeInsn(classNode, method, toAdd, occurrence, (node) -> {
+        return patchBeforeInsn(classNode, method, toAdd, occurrence, node -> {
             String actualName = isObfuscated ? srgName : mcpName;
 
             if (node instanceof MethodInsnNode) {

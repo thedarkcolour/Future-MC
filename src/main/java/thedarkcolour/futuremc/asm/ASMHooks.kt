@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumHand
 import net.minecraft.util.EnumHandSide
 import net.minecraftforge.client.ForgeHooksClient
-import thedarkcolour.futuremc.item.TridentItem
+import thedarkcolour.futuremc.client.render.TridentBakedModel
 import kotlin.math.PI
 
 object ASMHooks {
@@ -71,8 +71,8 @@ object ASMHooks {
             if (playerIn.itemInUseCount > 0) {
                 val action = stack.itemUseAction
 
-                if (action == TridentItem.TRIDENT_USE_ACTION) {
-                    return TridentItem.TRIDENT_ARM_POSE
+                if (action == TridentBakedModel.TRIDENT_USE_ACTION) {
+                    return TridentBakedModel.TRIDENT_ARM_POSE
                 }/* else if (action == CrossbowItem.CROSSBOW_USE_ACTION) {
                     pose = CrossbowItem.CROSSBOW_ARM_POSE
                 }
@@ -107,10 +107,10 @@ object ASMHooks {
         val rightPose = model.rightArmPose
         val leftPose = model.leftArmPose
 
-        if (rightPose == TridentItem.TRIDENT_ARM_POSE) {
+        if (rightPose == TridentBakedModel.TRIDENT_ARM_POSE) {
             model.bipedRightArm.rotateAngleX = model.bipedRightArm.rotateAngleX * 0.5f - PI.toFloat()
             model.bipedRightArm.rotateAngleY = 0.0f
-        } else if (leftPose == TridentItem.TRIDENT_ARM_POSE) {
+        } else if (leftPose == TridentBakedModel.TRIDENT_ARM_POSE) {
             model.bipedLeftArm.rotateAngleX = model.bipedLeftArm.rotateAngleX * 0.5f - PI.toFloat()
             model.bipedLeftArm.rotateAngleY = 0.0f
         }

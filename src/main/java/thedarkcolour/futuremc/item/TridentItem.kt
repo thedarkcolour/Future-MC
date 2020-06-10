@@ -4,7 +4,6 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import net.minecraft.block.state.IBlockState
 import net.minecraft.client.Minecraft
-import net.minecraft.client.model.ModelBiped
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
@@ -22,7 +21,6 @@ import net.minecraft.util.EnumHand
 import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import net.minecraftforge.common.util.EnumHelper
 import thedarkcolour.core.item.ModeledItem
 import thedarkcolour.futuremc.enchantment.EnchantHelper
 import thedarkcolour.futuremc.entity.trident.EntityTrident
@@ -205,9 +203,4 @@ class TridentItem : ModeledItem("trident"), ModeledItem.Builtin {
     override fun getItemEnchantability(): Int = 1
 
     override fun getItemStackLimit() = 1
-
-    companion object {
-        val TRIDENT_USE_ACTION = EnumHelper.addAction("SPEAR_FMC")!!
-        val TRIDENT_ARM_POSE = EnumHelper.addEnum(ModelBiped.ArmPose::class.java, "SPEAR_FMC", emptyArray())!!
-    }
 }

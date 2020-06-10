@@ -13,6 +13,10 @@ are never initialized.
 Actually Additions compat adds pollination targets and pollination handlers 
 for its flowers and crops.
 
+## Better With Mods
+Better With Mods compat adds the campfire to BWM's heat sources for use
+in the Cauldron cooking pot.
+
 ## CraftTweaker
 CraftTweaker compat exposes recipe systems used by Future MC to modpack makers
 so they can add their own recipes.
@@ -21,11 +25,11 @@ so they can add their own recipes.
 Dynamic Trees compat **will eventually** allow bee nests to spawn on trees
 from Dynamic Trees.
 
-## Pam's Harvestcraft
-Pam's Harvestcraft compat adds pollination handlers for its crops.
-
 ## Just Enough Items (JEI)
 Just Enough Items (JEI) allows players to see recipes added by Future MC.
+
+## Pam's Harvestcraft
+Pam's Harvestcraft compat adds pollination handlers for its crops.
 
 ## Plants
 Plants compat adds pollination targets and pollination handlers
@@ -36,3 +40,10 @@ Quark compat controls whether shared features in Future MC are enabled.
 For example, if Quark is installed, the Future MC coremod will not apply
 to the BlockPistonBase class. If Quark's trapdoors are enabled, Future MC
 will not override the vanilla trapdoor recipe.
+
+## Tinkers Construct
+Tinkers Construct compat allows TC axes to strip logs.
+Eventually there will be molten netherite and molten ancient metal.
+
+## Vivecraft
+Vivecraft compat fixes a bytecode conflict between FutureMC and Vivecraft.

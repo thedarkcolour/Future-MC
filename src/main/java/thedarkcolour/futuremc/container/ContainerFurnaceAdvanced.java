@@ -71,7 +71,11 @@ public class ContainerFurnaceAdvanced extends FContainer {
                     return ItemStack.EMPTY;
                 }
 
-                slot.onSlotChange(itemStack1, itemstack);
+                try {
+                    slot.onSlotChange(itemStack1, itemstack);
+                } catch (ClassCastException e) {
+                    // silences the special case error for mr. BLaKe 🙂 🙂 🙂 🙂 🙂
+                }
             } else if (index != 1 && index != 0) {
                 if (!FurnaceRecipes.instance().getSmeltingResult(itemStack1).isEmpty()) {
                     if (!this.mergeItemStack(itemStack1, 0, 1, false)) {
