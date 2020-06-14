@@ -20,8 +20,6 @@ import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.provider.BiomeProvider
 import net.minecraftforge.registries.ForgeRegistries
 import java.util.*
-import java.util.function.Function
-import kotlin.math.abs
 import kotlin.math.sqrt
 
 object LocateBiomeCommand {
@@ -30,9 +28,9 @@ object LocateBiomeCommand {
     }
 
     private val INVALID_EXCEPTION =
-        DynamicCommandExceptionType(Function { TranslationTextComponent("commands.futuremc.locatebiome.invalid", it) })
+        DynamicCommandExceptionType { TranslationTextComponent("commands.futuremc.locatebiome.invalid", it) }
     private val NOT_FOUND_EXCEPTION =
-        DynamicCommandExceptionType(Function { TranslationTextComponent("commands.futuremc.locatebiome.notFound", it) })
+        DynamicCommandExceptionType { TranslationTextComponent("commands.futuremc.locatebiome.notFound", it) }
 
     fun register(dispatcher: CommandDispatcher<CommandSource>) {
         dispatcher.register(Commands.literal("locatebiome").requires {
@@ -46,7 +44,7 @@ object LocateBiomeCommand {
     fun execute(source: CommandSource, biome: Biome): Int {
         val pos = BlockPos(source.pos)
         val world = source.world
-        val pos2 = world.chunkProvider.chunkGenerator.biomeProvider.findBiome(pos.x, pos.y, pos.z, 6400, 8, listOf(biome), world.rand)
+        val pos2 = world.chunkProvider.chunkGenerator.biomeProvider.locateBiome(pos.x, pos.y, pos.z, 6400, 8, setOf(biome), world.rand)
             ?: throw NOT_FOUND_EXCEPTION.create(TranslationTextComponent(biome.translationKey).formattedText)
 
         val posX = pos.x - pos2.x
@@ -62,51 +60,8 @@ object LocateBiomeCommand {
         return i
     }
 
-    private fun BiomeProvider.findBiome(i: Int, j: Int, k: Int, l: Int, m: Int, list: List<Biome>, random: Random, bl: Boolean = true): BlockPos? {
-        val n = i shr 2
-        val o = k shr 2
-        val p = l shr 2
-        val q = j shr 2
-        var pos: BlockPos? = null
-        val r = 0
-        var t = 0
-
-        while (t <= p) {
-            var u = -1
-
-            while (u <= t) {
-                val bl2 = abs(u) == t
-                var v = -t
-
-                while (v <= t) {
-                    if (bl2) {
-                        val bl3 = abs(v) == t
-
-                        if (!bl3 && !bl2) {
-                            continue
-                        }
-                    }
-                    val w = n + v
-                    val x = o + u
-
-                    if (list.contains(getBiomeForNoiseGen(w, q, x))) {
-                        if (pos == null || random.nextInt(r + 1) == 0) {
-                            pos = BlockPos(w shl 2, j, x shl 2)
-
-                            if (bl) {
-                                return pos
-                            }
-                        }
-                    }
-                    v += m
-                }
-
-                u += m
-            }
-            t += m
-        }
-
-        return pos
+    private fun BiomeProvider.locateBiome(x: Int, y: Int, z: Int, radius: Int, grid: Int, biomes: Set<Biome>, rand: Random, findFirst: Boolean = true): BlockPos? {
+        return BiomeLocator.locateBiome(this, x, y, z, radius, grid, biomes, rand, findFirst)
     }
 
     private fun suggestBiome(ctx: CommandContext<CommandSource>): Biome {
