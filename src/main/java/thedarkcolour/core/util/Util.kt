@@ -176,11 +176,6 @@ fun lerp(a: Double, b: Double, c: Double): Double {
     return b + a * (c - b)
 }
 
-// for some reason #defaultInstance is client only
-@Deprecated("Bad code style")
-val Item.stack: ItemStack
-    inline get() = ItemStack(this)
-
 fun <T> T.matchesAny(vararg any: T): Boolean {
     for (t in any) {
         if (this == t) {

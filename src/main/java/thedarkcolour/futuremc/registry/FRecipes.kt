@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.registry
 
 import net.minecraft.init.Blocks
+import net.minecraft.init.Items
 import net.minecraft.init.MobEffects
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.FurnaceRecipes
@@ -9,7 +10,6 @@ import net.minecraft.item.crafting.Ingredient
 import net.minecraft.item.crafting.ShapedRecipes
 import net.minecraft.potion.PotionEffect
 import net.minecraft.util.NonNullList
-import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.oredict.OreDictionary
 import net.minecraftforge.oredict.OreIngredient
@@ -19,11 +19,11 @@ import net.minecraftforge.registries.IForgeRegistryModifiable
 import thedarkcolour.futuremc.compat.checkActuallyAdditions
 import thedarkcolour.futuremc.compat.checkHarvestCraft
 import thedarkcolour.futuremc.compat.checkPlants
-import thedarkcolour.futuremc.compat.checkQuark
+import thedarkcolour.futuremc.compat.checkTConstruct
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.item.SuspiciousStewItem
-import thedarkcolour.futuremc.recipe.BlacklistedOreIngredient
 import thedarkcolour.futuremc.recipe.SimpleRecipe
+import thedarkcolour.futuremc.recipe.crafting.TrapdoorRecipe
 import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes
 
 /**
@@ -56,19 +56,17 @@ object FRecipes {
         GameRegistry.addSmelting(ItemStack(Blocks.RED_SANDSTONE), ItemStack(FBlocks.SMOOTH_RED_SANDSTONE), 0.1f)
         GameRegistry.addSmelting(ItemStack(FBlocks.ANCIENT_DEBRIS), ItemStack(FItems.NETHERITE_SCRAP), 2.0f)
 
-        recipes.remove(ResourceLocation("minecraft:nether_brick_fence"))
-
-        if (checkQuark()?.hasVariedTrapdoors() == false) {
-            recipes.remove(ResourceLocation("minecraft:trapdoor"))
-
-            // see below extension function
-            recipes.addShapedRecipe(
-                id = "futuremc:oak_trapdoor",
-                result = ItemStack(Blocks.TRAPDOOR),
-                pattern = arrayOf("###", "###"),
-                key = mapOf('#' to BlacklistedOreIngredient("plankWood", ItemStack(Blocks.PLANKS)::isItemEqualIgnoreDurability))
+        recipes.addShapedRecipe(
+            id = "minecraft:nether_brick_fence",
+            result = ItemStack(Blocks.NETHER_BRICK_FENCE),
+            pattern = arrayOf("#X#", "#X#"),
+            key = mapOf(
+                '#' to Ingredient.fromItem(Items.NETHERBRICK),
+                'X' to OreIngredient("ingotBrickNether")
             )
-        }
+        )
+
+        recipes.register(TrapdoorRecipe.create().setRegistryName("futuremc:wooden_trapdoor"))
 
         // actually additions compat with bees
         checkActuallyAdditions()?.registerPollinationTargets()
@@ -154,5 +152,7 @@ object FRecipes {
                 }
             }
         }
+
+        checkTConstruct()?.registerStonecutterRecipes()
     }
 }

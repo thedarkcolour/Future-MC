@@ -9,7 +9,7 @@ import net.minecraft.init.Blocks
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.common.util.Constants.WorldEvents
-import thedarkcolour.futuremc.block.SweetBerryBushBlock
+import thedarkcolour.futuremc.block.villagepillage.SweetBerryBushBlock
 import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.registry.FBlocks
 
@@ -69,7 +69,9 @@ interface BeePollinationHandler {
             val sweetBerryBushHandler = create { worldIn, pos, state, bee ->
                 if (worldIn.getBlockState(pos).getValue(SweetBerryBushBlock.AGE) < 3) {
                     bee.world.playEvent(WorldEvents.BONEMEAL_PARTICLES, pos, 0)
-                    bee.world.setBlockState(pos, state.withProperty(SweetBerryBushBlock.AGE, state.getValue(SweetBerryBushBlock.AGE) + 1))
+                    bee.world.setBlockState(pos, state.withProperty(
+                        SweetBerryBushBlock.AGE, state.getValue(
+                            SweetBerryBushBlock.AGE) + 1))
                     true
                 } else {
                     false

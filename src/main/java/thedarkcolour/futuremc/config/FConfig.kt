@@ -680,7 +680,7 @@ object FConfig {
         @Name("Iron Golem")
         @Comment("Options for Iron Golem")
         @JvmField
-        val ironGolems = IronGolem()
+        val ironGolem = IronGolem()
 
         @Name("Bee Nest Biome Spawns")
         @Comment("The list of biomes that the Bee Nests will spawn in. Format (without quotes): \"mod:biome:decimal_spawn_rate\"")
@@ -752,10 +752,88 @@ object FConfig {
         @JvmField
         var chain = true
 
+        @Name("Pigstep")
+        @Comment("Whether the (CREATIVE ONLY) Pigstep music disc is added.")
+        @RequiresMcRestart
+        @JvmField
+        var pigstep = true
+
         @Name("Netherite")
         @Comment("Whether Netherite and Netherite equipment are enabled.")
         @RequiresMcRestart
         @JvmField
         var netherite = true
+
+        @Name("Ancient Debris")
+        @Comment("Options for Ancient Debris generation")
+        @RequiresMcRestart
+        @JvmField
+        val ancientDebris = AncientDebris()
+
+        class AncientDebris {
+            @Name("Vein 1 (Normal)")
+            @Comment("Options for the normal vein of Ancient Debris in the nether")
+            @JvmField
+            val normalVein = NormalVein()
+
+            @Name("Vein 2 (Lapis-Style)")
+            @Comment("Options for the lapis-style vein of Ancient Debris in the nether")
+            @JvmField
+            val lapisStyleVein = LapisStyleVein()
+
+            class NormalVein {
+                @Name("Enabled")
+                @Comment("Whether this feature is enabled")
+                @JvmField
+                var enabled = true
+
+                @Name("Size")
+                @Comment("The maximum number of ores in this vein")
+                @JvmField
+                var size = 2
+
+                @Name("Vein count")
+                @Comment("The number of veins to generate per chunk")
+                @JvmField
+                var count = 1
+
+                @Name("Minimum Y level")
+                @Comment("The minimum Y level this ore can generate")
+                @JvmField
+                var minLevel = 16
+
+                @Name("Maximum Y level")
+                @Comment("The maximum Y level this ore can generate")
+                @JvmField
+                var maxLevel = 128
+            }
+
+            class LapisStyleVein {
+                @Name("Enabled")
+                @Comment("Whether this feature is enabled")
+                @JvmField
+                var enabled = true
+
+                @Name("Size")
+                @Comment("The maximum number of ores in this vein")
+                @JvmField
+                var size = 3
+
+                @Name("Vein count")
+                @Comment("The number of veins to generate per chunk")
+                @JvmField
+                var count = 1
+
+                @Name("Baseline")
+                @Comment("The average Y level this ore can generate")
+                @JvmField
+                var baseline = 16
+
+                @Name("Spread")
+                @Comment("The (positive and negative) Y spread from the baseline that the ore can generate at")
+                @JvmField
+                var spread = 8
+            }
+        }
     }
 }

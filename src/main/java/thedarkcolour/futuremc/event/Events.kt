@@ -67,6 +67,7 @@ import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.registry.FSounds.HONEY_BOTTLE_DRINK
 import thedarkcolour.futuremc.registry.RegistryEventHandler
 import thedarkcolour.futuremc.world.OldWorldHandler
+import thedarkcolour.futuremc.world.gen.feature.AncientDebrisWorldGen
 import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator
 import kotlin.math.max
 import kotlin.math.min
@@ -83,6 +84,9 @@ object Events {
      * using the [addListener] function in Util.kt.
      */
     fun registerEvents() {
+        // do not run during tests
+        if (FutureMC.TEST) return
+
         addListener(::onHoneyBottleEaten)
         addListener(::onLogStripped)
         addListener(::onWitherKillLiving)
@@ -269,6 +273,7 @@ object Events {
             ConfigManager.sync(FutureMC.ID, Config.Type.INSTANCE)
             // makes things reloadable
             BeeNestGenerator.refresh()
+            AncientDebrisWorldGen.refresh()
         }
     }
 
@@ -296,7 +301,7 @@ object Events {
 
     // iron golem healing
     private fun onEntityInteract(event: PlayerInteractEvent.EntityInteract) {
-        if (FConfig.buzzyBees.ironGolems.ironBarHealing) {
+        if (FConfig.buzzyBees.ironGolem.ironBarHealing) {
             val entity = event.target
             if (entity is EntityIronGolem && event.itemStack.item == Items.IRON_INGOT) {
                 val hp = entity.health

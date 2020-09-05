@@ -2,8 +2,10 @@ package thedarkcolour.futuremc.compat.harvestcraft
 
 import com.pam.harvestcraft.blocks.CropRegistry
 import com.pam.harvestcraft.blocks.growables.BlockPamCrop
+import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.Constants
 import thedarkcolour.futuremc.api.BeePollinationHandler
+import thedarkcolour.futuremc.block.villagepillage.ComposterBlock
 
 object HarvestCraftCompat {
     fun registerPollinationHandlers() {
@@ -20,6 +22,14 @@ object HarvestCraftCompat {
             val block = CropRegistry.getCrop(crop)
 
             BeePollinationHandler.registerHandler(block, handler)
+        }
+    }
+
+    fun addComposterEntries() {
+        val items = ComposterBlock.ItemsForComposter
+
+        for (seed in CropRegistry.getSeeds().values) {
+            items.add(ItemStack(seed), 30)
         }
     }
 }

@@ -5,6 +5,7 @@ import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.api.oredict.IOreDictEntry;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes;
@@ -20,8 +21,22 @@ public final class Stonecutter {
     }
 
     @ZenMethod
+    public static void addOutputs(IOreDictEntry input, IItemStack... outputs) {
+        for (IItemStack i : input.getItems()) {
+            Arrays.stream(outputs).forEach(output -> addOutput(i, output));
+        }
+    }
+
+    @ZenMethod
     public static void addOutput(IItemStack input, IItemStack output) {
         CraftTweakerAPI.apply(Action.of(() -> StonecutterRecipes.INSTANCE.addRecipe(CraftTweakerMC.getItemStack(input), CraftTweakerMC.getItemStack(output))));
+    }
+
+    @ZenMethod
+    public static void addOutputs(IOreDictEntry input, IItemStack output) {
+        for (IItemStack i : input.getItems()) {
+            addOutput(i, output);
+        }
     }
 
     @ZenMethod

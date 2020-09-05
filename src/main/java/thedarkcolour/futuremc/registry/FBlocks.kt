@@ -10,6 +10,10 @@ import thedarkcolour.core.block.FBlock
 import thedarkcolour.core.block.FBlock.Properties
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.*
+import thedarkcolour.futuremc.block.buzzybees.BeeHiveBlock
+import thedarkcolour.futuremc.block.buzzybees.HoneyBlockBlock
+import thedarkcolour.futuremc.block.netherupdate.NetherGoldOreBlock
+import thedarkcolour.futuremc.block.villagepillage.*
 import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.tile.*
@@ -29,10 +33,10 @@ object FBlocks {
     @JvmField val BARREL = BarrelBlock(Properties(Material.WOOD, "barrel").sound(SoundType.WOOD).hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS))
     @JvmField val SMOKER = BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.SMOKER, Properties(Material.ROCK, "smoker").hardnessAndResistance(3.5f).group(CreativeTabs.DECORATIONS))
     @JvmField val BLAST_FURNACE = BlockFurnaceAdvanced(BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE, Properties(Material.ROCK, "blast_furnace").hardnessAndResistance(3.5f).group(CreativeTabs.DECORATIONS))
-    val LOOM = VillageStationBlock(Properties(Material.WOOD, "loom").group(CreativeTabs.DECORATIONS), GuiType.LOOM, FConfig.villageAndPillage.loom.functionality)
-    val FLETCHING_TABLE = VillageStationBlock(Properties(Material.WOOD, "fletching_table").hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS), null, false)
-    val SMITHING_TABLE = VillageStationBlock(Properties(Material.WOOD, "smithing_table").hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS), GuiType.SMITHING_TABLE, FConfig.villageAndPillage.smithingTable.functionality)
-    val CARTOGRAPHY_TABLE = VillageStationBlock(Properties(Material.WOOD, "cartography_table").hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS), null, FConfig.villageAndPillage.cartographyTable.functionality)
+    val LOOM = VillageStationBlock(Properties(Material.WOOD, "loom").group(CreativeTabs.DECORATIONS).sound(SoundType.WOOD), GuiType.LOOM, FConfig.villageAndPillage.loom.functionality)
+    val FLETCHING_TABLE = VillageStationBlock(Properties(Material.WOOD, "fletching_table").sound(SoundType.WOOD).hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS), null, false)
+    val SMITHING_TABLE = VillageStationBlock(Properties(Material.WOOD, "smithing_table").sound(SoundType.WOOD).hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS), GuiType.SMITHING_TABLE, FConfig.villageAndPillage.smithingTable.functionality)
+    val CARTOGRAPHY_TABLE = VillageStationBlock(Properties(Material.WOOD, "cartography_table").sound(SoundType.WOOD).hardnessAndResistance(2.5f).group(CreativeTabs.DECORATIONS), null, FConfig.villageAndPillage.cartographyTable.functionality)
     val GRINDSTONE = BlockGrindstone(Properties(Material.ANVIL, "grindstone").color(MapColor.IRON).group(CreativeTabs.DECORATIONS).hardnessAndResistance(2.0F, 6.0F))
     val COMPOSTER = ComposterBlock(Properties(Material.WOOD, "composter").hardnessAndResistance(0.6F).sound(SoundType.WOOD).group(CreativeTabs.MISC))
     val HONEY_BLOCK = HoneyBlockBlock(Properties(Material.CLAY, "honey_block").color(MapColor.ADOBE).hardnessAndResistance(0.0f).sound(FSounds.HONEY_BLOCK).group(CreativeTabs.DECORATIONS))
@@ -84,12 +88,30 @@ object FBlocks {
     val SOUL_FIRE_LANTERN = LanternBlock(Properties(Material.IRON, "soul_fire_lantern").hardnessAndResistance(3.5f).sound(FSounds.LANTERN).light(10).group(CreativeTabs.DECORATIONS))
     val SOUL_FIRE_TORCH = BlockSoulFireTorch()
     val SOUL_SOIL = FBlock(Properties(Material.GROUND, "soul_soil").group(CreativeTabs.BUILDING_BLOCKS).sound(FSounds.SOUL_SOIL))
-    val CHAIN = ChainBlock(Properties(Material.IRON, "chain").hardnessAndResistance(5.0f, 6.0f).shape(FBlock.makeCube(6.5, 0.0, 6.5, 9.5, 16.0, 9.5)).group(CreativeTabs.DECORATIONS))
+    val CHAIN = ChainBlock(Properties(Material.IRON, "chain").sound(FSounds.CHAIN).hardnessAndResistance(5.0f, 6.0f).shape(FBlock.makeCube(6.5, 0.0, 6.5, 9.5, 16.0, 9.5)).group(CreativeTabs.DECORATIONS))
     val NETHERITE_BLOCK = FBlock(Properties(Material.IRON, "netherite_block").color(MapColor.BLACK).hardnessAndResistance(50.0f, 1200.0f).sound(FSounds.NETHERITE).usableBeaconBase())
     val ANCIENT_DEBRIS = FBlock(Properties(Material.IRON, "ancient_debris").color(MapColor.BLACK).hardnessAndResistance(30.0f, 1200.0f).sound(FSounds.ANCIENT_DEBRIS))
     // val WARPED_NYLIUM = NyliumBlock(Properties(Material.ROCK, "warped_nylium").color(MapColor.CYAN).hardnessAndResistance(1.0f).sound(FSounds.NYLIUM))
     // val CRIMSON_NYLIUM = NyliumBlock(Properties(Material.ROCK, "crimson_nylium").color(MapColor.RED))
     // val WARPED_WART_BLOCK = FBlock(Properties(Material.GRASS, "warped_wart_block").color(MapColor.CYAN))
+    val NETHER_GOLD_ORE = NetherGoldOreBlock(Properties(Material.ROCK, "nether_gold_ore").hardnessAndResistance(3.0f, 3.0f).sound(FSounds.NETHER_GOLD_ORE))
+    val BLACKSTONE = FBlock(Properties(Material.ROCK, "blackstone").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
+    val BLACKSTONE_STAIRS = StairsBlock(BLACKSTONE.defaultState).setRegistryName("blackstone_stairs")
+    val BLACKSTONE_WALL = BlockWall(Properties(Material.ROCK, "blackstone_wall").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
+    //val BLACKSTONE_SLAB = BlockPurpurSlab(Properties.from(BLACKSTONE).hardnessAndResistance(2.0F, 6.0F)).setRegistryKey("blackstone_slab")
+    //val POLISHED_BLACKSTONE = Block(Properties.from(BLACKSTONE).hardnessAndResistance(2.0F, 6.0F)).setRegistryKey("polished_blackstone")
+    //val POLISHED_BLACKSTONE_BRICKS = Block(Properties.from(POLISHED_BLACKSTONE).hardnessAndResistance(1.5F, 6.0F)).setRegistryKey("polished_blackstone_bricks")
+    //val CRACKED_POLISHED_BLACKSTONE_BRICKS = Block(Properties.from(POLISHED_BLACKSTONE_BRICKS)).setRegistryKey("cracked_polished_blackstone_bricks")
+    //val CHISELED_POLISHED_BLACKSTONE = Block(Properties.from(POLISHED_BLACKSTONE).hardnessAndResistance(1.5F, 6.0F)).setRegistryKey("chiseled_polished_blackstone")
+    //val POLISHED_BLACKSTONE_BRICK_SLAB = SlabBlock(Properties.from(POLISHED_BLACKSTONE_BRICKS).hardnessAndResistance(2.0F, 6.0F)).setRegistryKey("polished_blackstone_brick_slab")
+    //val POLISHED_BLACKSTONE_BRICK_STAIRS = StairsBlock(POLISHED_BLACKSTONE_BRICKS::getDefaultState, Properties.from(POLISHED_BLACKSTONE_BRICKS)).setRegistryKey("polished_blackstone_brick_stairs")
+    //val POLISHED_BLACKSTONE_BRICK_WALL = WallBlock(Properties.from(POLISHED_BLACKSTONE_BRICKS)).setRegistryKey("polished_blackstone_brick_wall")
+    //val GILDED_BLACKSTONE = Block(Properties.from(BLACKSTONE).sound(FSounds.GILDED_BLACKSTONE)).setRegistryKey("gilded_blackstone")
+    //val POLISHED_BLACKSTONE_STAIRS = StairsBlock(POLISHED_BLACKSTONE::getDefaultState, Properties.from(POLISHED_BLACKSTONE)).setRegistryKey("polished_blackstone_stairs")
+    //val POLISHED_BLACKSTONE_SLAB = SlabBlock(Properties.from(POLISHED_BLACKSTONE)).setRegistryKey("polished_blackstone_slab")
+    //val POLISHED_BLACKSTONE_PRESSURE_PLATE = PressurePlateBlock(Sensitivity.MOBS, Properties.create(Material.ROCK, MaterialColor.BLACK).doesNotBlockMovement().hardnessAndResistance(0.5f)).setRegistryKey("polished_blackstone_pressure_plate")
+    //val POLISHED_BLACKSTONE_BUTTON = StoneButtonBlock(Properties.create(Material.MISCELLANEOUS, MaterialColor.BLACK).doesNotBlockMovement().hardnessAndResistance(0.5f)).setRegistryKey("polished_blackstone_button")
+    //val POLISHED_BLACKSTONE_WALL = WallBlock(Properties.from(POLISHED_BLACKSTONE)).setRegistryKey("polished_blackstone_wall")
 
     val SEAGRASS = BlockSeaGrass()
     val SEAGRASS_FLOWING = SEAGRASS.flowing

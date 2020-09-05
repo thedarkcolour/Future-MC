@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
 import net.minecraft.util.EnumFacing
-import thedarkcolour.futuremc.block.CampfireBlock.Companion.FACING
+import thedarkcolour.futuremc.block.villagepillage.CampfireBlock.Companion.FACING
 import thedarkcolour.futuremc.tile.CampfireTile
 
 object CampfireRenderer : TileEntitySpecialRenderer<CampfireTile>() {

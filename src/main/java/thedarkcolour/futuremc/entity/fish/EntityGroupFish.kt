@@ -10,7 +10,7 @@ abstract class EntityGroupFish(worldIn: World) : EntityFish(worldIn) {
     private var groupLeader: EntityGroupFish? = null
     private var groupSize = 1
     open val maxGroupSize
-        get() = super.getMaxSpawnedInChunk()
+        get() = 8
 
     override fun initEntityAI() {
         super.initEntityAI()

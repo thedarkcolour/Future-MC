@@ -11,11 +11,11 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.TextComponentString
 import net.minecraft.world.World
 import thedarkcolour.core.block.RotatableBlock
-import thedarkcolour.futuremc.block.BlockBamboo
-import thedarkcolour.futuremc.block.BlockBamboo.EnumLeaves
-import thedarkcolour.futuremc.block.CampfireBlock
-import thedarkcolour.futuremc.block.ComposterBlock
-import thedarkcolour.futuremc.block.SweetBerryBushBlock
+import thedarkcolour.futuremc.block.villagepillage.BlockBamboo
+import thedarkcolour.futuremc.block.villagepillage.BlockBamboo.EnumLeaves
+import thedarkcolour.futuremc.block.villagepillage.CampfireBlock
+import thedarkcolour.futuremc.block.villagepillage.ComposterBlock
+import thedarkcolour.futuremc.block.villagepillage.SweetBerryBushBlock
 import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipes
 import thedarkcolour.futuremc.registry.FBlocks.BAMBOO

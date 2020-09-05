@@ -77,10 +77,7 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
     override fun initEntityAI() {
         super.initEntityAI()
         tasks.addTask(0, EntityAIPanic(this, 1.25))
-        tasks.addTask(
-            2,
-            EntityAIAvoidEntity(this, EntityPlayer::class.java, EntitySelectors.NOT_SPECTATING, 8F, 1.6, 1.4)
-        )
+        tasks.addTask(2, EntityAIAvoidEntity(this, EntityPlayer::class.java, EntitySelectors.NOT_SPECTATING, 8F, 1.6, 1.4))
         tasks.addTask(4, AISwim(this))
     }
 
@@ -120,9 +117,9 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
         }
     }
 
-    open fun shouldSwimAway(): Boolean = true
+    open fun shouldSwimAway() = true
 
-    override fun getEyeHeight(): Float = height * 0.65F
+    override fun getEyeHeight() = height * 0.65F
 
     override fun canDespawn(): Boolean {
         return !fromBucket && !hasCustomName()
@@ -132,7 +129,15 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
 
     override fun canBreatheUnderwater() = true
 
-    override fun getCanSpawnHere() = true
+    override fun getCanSpawnHere(): Boolean {
+        //if (!isModLoaded(RANDOM_TWEAKS) && !isModLoaded(RANDOM_PATCHES)) return true
+
+        val list = world.getEntitiesInAABBexcluding(this, this.entityBoundingBox.grow(16.0, 16.0, 16.0)) { entity ->
+            entity is EntityGroupFish
+        }
+
+        return list.size <= 4
+    }
 
     override fun isNotColliding(): Boolean {
         return world.checkNoEntityCollision(entityBoundingBox, this)

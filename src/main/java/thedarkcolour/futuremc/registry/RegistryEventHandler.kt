@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly
 import net.minecraftforge.registries.IForgeRegistryModifiable
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.FutureMC
-import thedarkcolour.futuremc.block.CampfireBlock
+import thedarkcolour.futuremc.block.villagepillage.CampfireBlock
 import thedarkcolour.futuremc.client.particle.CampfireParticle
 import thedarkcolour.futuremc.client.particle.SoulFlameParticle
 import thedarkcolour.futuremc.command.FastGiveCommand

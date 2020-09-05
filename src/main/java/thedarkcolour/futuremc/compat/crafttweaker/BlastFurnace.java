@@ -5,10 +5,13 @@ import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.api.oredict.IOreDictEntry;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes;
+
+import static thedarkcolour.futuremc.compat.crafttweaker.CraftTweakerUtilKt.applyAction;
 
 @ZenRegister
 @ZenClass("mods.futuremc.BlastFurnace")
@@ -25,6 +28,16 @@ public final class BlastFurnace {
     @ZenMethod
     public static void addRecipe(IItemStack input, IItemStack output) {
         CraftTweakerAPI.apply(new AddRecipe(input, output));
+    }
+
+    /**
+     * Overload that uses ores instead of item stacks
+     */
+    @ZenMethod
+    public static void addRecipe(IOreDictEntry input, IItemStack output) {
+        for (IItemStack a : input.getItems()) {
+            applyAction(new AddRecipe(a, output));
+        }
     }
 
     /**

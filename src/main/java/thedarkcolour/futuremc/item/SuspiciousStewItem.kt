@@ -15,7 +15,6 @@ import net.minecraft.util.NonNullList
 import net.minecraft.world.World
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.core.util.setItemModel
-import thedarkcolour.core.util.stack
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.registry.FItems
@@ -46,7 +45,7 @@ class SuspiciousStewItem : ItemFood(6, 0.6f, false) {
         fun addRecipe(registry: IForgeRegistry<IRecipe>, flower: ItemStack, effect: PotionEffect) {
             val r = ShapelessRecipes(
                 "",
-                PotionUtils.appendEffects(FItems.SUSPICIOUS_STEW.stack, listOf(effect)),
+                PotionUtils.appendEffects(ItemStack(FItems.SUSPICIOUS_STEW), listOf(effect)),
                 NonNullList.create<Ingredient>().also { ingredients ->
                     ingredients.addAll(
                         arrayOf(

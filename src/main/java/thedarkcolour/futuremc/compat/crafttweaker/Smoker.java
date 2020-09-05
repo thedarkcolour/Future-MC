@@ -5,12 +5,13 @@ import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.api.oredict.IOreDictEntry;
 import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Level;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.futuremc.FutureMC;
-import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
+import thedarkcolour.futuremc.block.villagepillage.BlockFurnaceAdvanced;
 import thedarkcolour.futuremc.recipe.furnace.SmokerRecipes;
 
 @ZenRegister
@@ -22,6 +23,13 @@ public final class Smoker {
             CraftTweakerAPI.apply(new AddRecipe(input, output));
         } else {
             FutureMC.LOGGER.log(Level.WARN, "Tried to add duplicate valid Smoker input for " + input.getDefinition().getId());
+        }
+    }
+
+    @ZenMethod
+    public static void addRecipe(IOreDictEntry input, IItemStack output) {
+        for (IItemStack i : input.getItems()) {
+            addRecipe(i, output);
         }
     }
 

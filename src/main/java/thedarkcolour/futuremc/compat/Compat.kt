@@ -5,7 +5,6 @@ package thedarkcolour.futuremc.compat
 
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap
 import net.minecraftforge.fml.common.Loader
-import thedarkcolour.futuremc.asm.CoreTransformer
 import thedarkcolour.futuremc.compat.actuallyadditions.ActuallyAdditionsCompat
 import thedarkcolour.futuremc.compat.betterwithmods.BetterWithModsCompat
 import thedarkcolour.futuremc.compat.dynamictrees.DynamicTreesCompat
@@ -22,6 +21,8 @@ const val JEI = "jei"
 const val PAMS_HARVESTCRAFT = "harvestcraft"
 const val PLANTS = "plants2"
 const val QUARK = "quark"
+const val RANDOM_TWEAKS = "randomtweaks"
+const val RANDOM_PATCHES = "random_patches"
 const val TCONSTRUCT = "tconstruct"
 const val VIVECRAFT = "vivecraftforgeextensionscore"
 
@@ -57,7 +58,7 @@ fun checkTConstruct(): TConstructCompat? {
 
 fun checkVivecraft(): Boolean {
     return try {
-        Class.forName("org.vivecraft.tweaker.MinecraftForgeTweaker", false, CoreTransformer::class.java.classLoader)
+        Class.forName("org.vivecraft.main.VivecraftMain")
         true
     } catch (e: ClassNotFoundException) {
         false

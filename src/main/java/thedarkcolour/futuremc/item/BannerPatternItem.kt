@@ -42,6 +42,7 @@ class BannerPatternItem : ModeledItem("banner_pattern") {
             2 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.skull"))
             3 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.thing"))
             4 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.globe"))
+            5 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.snout"))
             else -> tooltip.add(I18n.format("item.futuremc.banner_pattern.flower"))
         }
     }
@@ -61,10 +62,12 @@ class BannerPatternItem : ModeledItem("banner_pattern") {
                 2 -> BannerPattern.SKULL
                 3 -> BannerPattern.MOJANG
                 4 -> GLOBE
+                5 -> SNOUT
                 else -> BannerPattern.FLOWER
             }
         }
 
         lateinit var GLOBE: BannerPattern
+        lateinit var SNOUT: BannerPattern
     }
 }

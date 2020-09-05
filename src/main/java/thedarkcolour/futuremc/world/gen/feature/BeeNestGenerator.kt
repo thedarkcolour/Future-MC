@@ -15,7 +15,7 @@ import sun.reflect.Reflection
 import thedarkcolour.core.util.getDoubleOrDefault
 import thedarkcolour.core.util.isAir
 import thedarkcolour.core.util.offset
-import thedarkcolour.futuremc.block.BeeHiveBlock
+import thedarkcolour.futuremc.block.buzzybees.BeeHiveBlock
 import thedarkcolour.futuremc.config.FConfig.buzzyBees
 import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.registry.FBlocks

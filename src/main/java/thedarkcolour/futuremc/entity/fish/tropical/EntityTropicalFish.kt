@@ -11,7 +11,6 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.world.DifficultyInstance
 import net.minecraft.world.World
 import thedarkcolour.core.util.getOrCreateTag
-import thedarkcolour.core.util.stack
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.entity.fish.EntityGroupFish
 import thedarkcolour.futuremc.registry.FItems
@@ -51,7 +50,7 @@ class EntityTropicalFish(worldIn: World) : EntityGroupFish(worldIn) {
         nbt.setInteger("BucketVariant", variant)
     }
 
-    override val fishBucket = FItems.TROPICAL_FISH_BUCKET.stack
+    override val fishBucket = ItemStack(FItems.TROPICAL_FISH_BUCKET)
 
     override fun getDeathSound() = FSounds.TROPICAL_FISH_DEATH
     override fun getHurtSound(damageSourceIn: DamageSource?) = FSounds.TROPICAL_FISH_HURT

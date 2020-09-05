@@ -1,4 +1,6 @@
 package thedarkcolour.futuremc.world.biome
 
-class WarpedForestBiome : FBiome(TODO()) {
+import net.minecraft.world.biome.Biome
+
+class WarpedForestBiome : Biome(BiomeProperties("")) {
 }

@@ -4,13 +4,15 @@ import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.api.oredict.IOreDictEntry;
 import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Level;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.futuremc.FutureMC;
-import thedarkcolour.futuremc.block.ComposterBlock;
+import thedarkcolour.futuremc.block.villagepillage.ComposterBlock;
 import thedarkcolour.futuremc.tile.TileComposter;
 
 @ZenRegister
@@ -26,6 +28,13 @@ public final class Composter {
             }
         } else {
             FutureMC.LOGGER.log(Level.WARN, "Failed to add duplicate recipe for item " + stack.toCommandString());
+        }
+    }
+
+    @ZenMethod
+    public static void addValidItem(IOreDictEntry ore, int rarity) {
+        for (IItemStack a : ore.getItems()) {
+            addValidItem(a, rarity);
         }
     }
 

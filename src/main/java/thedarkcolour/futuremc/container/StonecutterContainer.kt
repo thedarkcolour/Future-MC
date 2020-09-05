@@ -13,6 +13,7 @@ import thedarkcolour.core.gui.FContainer
 import thedarkcolour.core.inventory.DarkInventory
 import thedarkcolour.core.inventory.DarkInventorySlot
 import thedarkcolour.futuremc.client.gui.StonecutterGui
+import thedarkcolour.futuremc.compat.checkQuark
 import thedarkcolour.futuremc.recipe.SimpleRecipe
 import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes
 import thedarkcolour.futuremc.registry.FBlocks
@@ -46,6 +47,11 @@ class StonecutterContainer(
 
         override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
             return slot == 0
+        }
+
+        override fun setStackInSlot(slot: Int, stack: ItemStack) {
+            if (checkQuark()?.isDrawingInvalidSlotsOverlay() == false)
+                super.setStackInSlot(slot, stack)
         }
 
         override fun onTake(playerIn: EntityPlayer, stack: ItemStack, slot: Int): ItemStack {

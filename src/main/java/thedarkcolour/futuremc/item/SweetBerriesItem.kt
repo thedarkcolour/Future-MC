@@ -19,7 +19,7 @@ import net.minecraftforge.common.EnumPlantType
 import net.minecraftforge.common.IPlantable
 import thedarkcolour.core.util.setItemModel
 import thedarkcolour.futuremc.FutureMC
-import thedarkcolour.futuremc.block.SweetBerryBushBlock
+import thedarkcolour.futuremc.block.villagepillage.SweetBerryBushBlock
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.registry.FBlocks
 

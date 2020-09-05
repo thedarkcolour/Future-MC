@@ -7,10 +7,10 @@ import net.minecraft.world.World
 import net.minecraft.world.biome.BiomeProvider
 import net.minecraft.world.gen.IChunkGenerator
 import net.minecraftforge.fml.common.registry.ForgeRegistries
-import thedarkcolour.futuremc.world.WorldGenPreview
 import thedarkcolour.futuremc.world.biome.FBiome
 import thedarkcolour.futuremc.world.gen.CarvingStage
 import thedarkcolour.futuremc.world.gen.DecorationStage
+import thedarkcolour.futuremc.world.gen.WorldGenPreview
 import thedarkcolour.futuremc.world.gen.structure.AbstractStructure
 import thedarkcolour.futuremc.world.gen.structure.WorldGenRandom
 

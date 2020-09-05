@@ -1057,5 +1057,64 @@
             "futuremc:pufferfish/sting1",
             "futuremc:pufferfish/sting2"
         ]
+    },
+    "pigstep": {
+        "category": "records",
+        "subtitle": "futuremc.subtitles.pigstep",
+        "sounds": [
+            {
+                "name": "futuremc:record/pigstep",
+                "stream": true
+            }
+        ]
+    },
+    "chain_break": {
+        "subtitle": "futuremc.subtitles.chain_break",
+        "sounds": [
+            "futuremc:chain/break1",
+            "futuremc:chain/break2",
+            "futuremc:chain/break3",
+            "futuremc:chain/break4"
+        ]
+    },
+    "chain_step": {
+        "subtitle": "futuremc.subtitles.chain_step",
+        "sounds": [
+            "futuremc:chain/step1",
+            "futuremc:chain/step2",
+            "futuremc:chain/step3",
+            "futuremc:chain/step4",
+            "futuremc:chain/step5",
+            "futuremc:chain/step6"
+        ]
+    },
+    "chain_place":  {
+        "subtitle": "futuremc.subtitles.chain_place",
+        "sounds": [
+            "futuremc:chain/break1",
+            "futuremc:chain/break2",
+            "futuremc:chain/break3",
+            "futuremc:chain/break4"
+        ]
+    },
+    "chain_hit": {
+        "subtitle": "futuremc.subtitles.chain_hit",
+        "sounds": [
+            "futuremc:chain/break1",
+            "futuremc:chain/break2",
+            "futuremc:chain/break3",
+            "futuremc:chain/break4"
+        ]
+    },
+    "chain_fall":  {
+        "subtitle": "futuremc.subtitles.chain_fall",
+        "sounds": [
+            "futuremc:chain/step1",
+            "futuremc:chain/step2",
+            "futuremc:chain/step3",
+            "futuremc:chain/step4",
+            "futuremc:chain/step5",
+            "futuremc:chain/step6"
+        ]
     }
 }

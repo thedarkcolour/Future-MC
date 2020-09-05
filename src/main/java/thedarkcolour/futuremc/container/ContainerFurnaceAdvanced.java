@@ -14,7 +14,7 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thedarkcolour.core.gui.FContainer;
-import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
+import thedarkcolour.futuremc.block.villagepillage.BlockFurnaceAdvanced;
 import thedarkcolour.futuremc.client.gui.GuiFurnaceAdvanced;
 import thedarkcolour.futuremc.registry.FBlocks;
 import thedarkcolour.futuremc.tile.TileFurnaceAdvanced;

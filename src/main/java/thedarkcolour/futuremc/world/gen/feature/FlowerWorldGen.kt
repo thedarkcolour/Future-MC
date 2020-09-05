@@ -5,7 +5,7 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldType
 import net.minecraft.world.chunk.IChunkProvider
 import net.minecraft.world.gen.IChunkGenerator
-import thedarkcolour.futuremc.block.BlockFlower
+import thedarkcolour.futuremc.block.villagepillage.BlockFlower
 import java.util.*
 
 class FlowerWorldGen(private val flower: BlockFlower) : FWorldGen {

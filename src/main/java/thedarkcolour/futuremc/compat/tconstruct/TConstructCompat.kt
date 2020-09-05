@@ -2,13 +2,13 @@ package thedarkcolour.futuremc.compat.tconstruct
 
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
-import slimeknights.tconstruct.library.TinkerRegistry
-import slimeknights.tconstruct.library.materials.Material
 import slimeknights.tconstruct.library.utils.ToolHelper
+import slimeknights.tconstruct.smeltery.TinkerSmeltery
 import slimeknights.tconstruct.tools.melee.item.BattleAxe
 import slimeknights.tconstruct.tools.tools.Hatchet
 import slimeknights.tconstruct.tools.tools.LumberAxe
 import slimeknights.tconstruct.tools.tools.Mattock
+import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes
 
 /**
  * Tinkers construct mod compatibility.
@@ -34,10 +34,14 @@ object TConstructCompat {
     }
 
     /**
-     * TConstruct specific registry. Just one function because there's so much API
-     * that it would get super messy to add wrapper functions for all of it.
+     * TConstruct specific stonecutter recipes.
      */
-    fun doRegistry() {
-        TinkerRegistry.addMaterial(Material("netherite", 0x4A2940))
+    fun registerStonecutterRecipes() {
+        // seared stone variants
+        val stack = ItemStack(TinkerSmeltery.searedBlock, 1, 32767)
+
+        for (i in 0..11) {
+            StonecutterRecipes.addRecipe(stack, ItemStack(TinkerSmeltery.searedBlock, 1, i))
+        }
     }
 }

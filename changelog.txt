@@ -1,5 +1,27 @@
+Version 0.2.4 - Bug fixes and more mod compat:
+ *Smithing Table JEI Compatibility* - Recipes for the Smithing Table are now visible in JEI. Should reduce a bit of confusion.
+ *Composter Table JEI Compatibility* - Items now show their chance of adding a layer of compost in JEI.
+ *Pigstep* - New music disc from 1.16. Creative only at the moment
+ Ancient Debris - Fixed generation only occurring in areas with positive X coordinates. Fixes #159
+ Ancient Debris - Now appears in creative menu. Fixes #181
+ Bamboo - Added a biome check to world generation to fix it from spreading out of Jungle biomes. Fixes #177
+ Barrels - Now open like in 1.14.
+ Barrels - Contents now save properly. Fixes #175
+ Chains - Now use the sounds from 1.16.
+ Fish - No longer spawn in insane numbers. Fixes #137
+ Lanterns - Improved placement to work underneath hoppers and in a few other cases where it would previously fail. Fixes #178
+ Lanterns - Can now be placed underneath and on top of trapdoors.
+ Pam's Harvestcraft - Seeds are now compostable.
+ Pufferfish - No longer kicks you from server. Fixes #182
+ Netherite Tools - Adjusted values to match 1.16. Fixes #163
+ Smooth Stone - Now correctly gives 6 slabs instead of 3 when crafting. #158
+ Stonecutter - Mossy stone now crafts into Mossy stone wall instead of Cobblestone wall. Fixes #170
+ Stonecutter - Added a few missing recipes. Fixes #172
+ Stonecutter - Added recipes for Seared Bricks when Tinkers Construct is installed.
+ Sweet Berry Bush - No longer drops berries when broken in creative mode. Fixes #167
+
 Version 0.2.3.2 - Hotfix and more mod compat:
- *Tinkers Construct Compat* - Tinkers axes can now strip logs
+ *Tinkers Construct Compat* - Tinkers axes can now strip logs.
  Netherite Block - Now has a crafting recipe. Fixes #151
  Netherite - Fixed ore dictionary issues. Fixes #150
  Fixed a server crash. Fixes #152

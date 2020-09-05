@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import thedarkcolour.core.gui.FContainer;
@@ -35,12 +34,14 @@ public class ContainerBarrel extends FContainer {
             throw e;
         }
 
+        this.te.openForPlayer(playerInv.player);
+
         addOwnSlots();
         addPlayerSlots(playerInv);
     }
 
     protected void addOwnSlots() {
-        IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+        IItemHandler itemHandler = te.getInventory();
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
                 int x = 8 + col * 18;
@@ -53,14 +54,14 @@ public class ContainerBarrel extends FContainer {
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
+        Slot slot = inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
             ItemStack itemStack1 = slot.getStack();
             itemstack = itemStack1.copy();
 
             if (index < 27) {
-                if (!this.mergeItemStack(itemStack1, 27, this.inventorySlots.size(), true)) {
+                if (!this.mergeItemStack(itemStack1, 27, inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.mergeItemStack(itemStack1, 0, 27, false)) {
@@ -74,6 +75,15 @@ public class ContainerBarrel extends FContainer {
             }
         }
         return itemstack;
+    }
+
+    /**
+     * Called when the container is closed.
+     */
+    @Override
+    public void onContainerClosed(EntityPlayer playerIn) {
+        super.onContainerClosed(playerIn);
+        te.closeForPlayer(playerIn);
     }
 
     @Override

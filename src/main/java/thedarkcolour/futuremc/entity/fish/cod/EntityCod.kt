@@ -1,9 +1,9 @@
 package thedarkcolour.futuremc.entity.fish.cod
 
+import net.minecraft.item.ItemStack
 import net.minecraft.util.DamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
-import thedarkcolour.core.util.stack
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.entity.fish.EntityGroupFish
 import thedarkcolour.futuremc.registry.FItems
@@ -19,7 +19,7 @@ class EntityCod(worldIn: World) : EntityGroupFish(worldIn) {
     override val flopSound = FSounds.COD_FLOP
     override fun getSwimSound() = FSounds.COD_SWIM
 
-    override val fishBucket = FItems.COD_BUCKET.stack
+    override val fishBucket = ItemStack(FItems.COD_BUCKET)
 
     override fun getLootTable() = LOOT_TABLE
 

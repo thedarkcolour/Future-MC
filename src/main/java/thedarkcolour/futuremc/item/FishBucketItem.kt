@@ -18,7 +18,6 @@ import net.minecraft.world.World
 import net.minecraftforge.event.ForgeEventFactory
 import thedarkcolour.core.item.ModeledItem
 import thedarkcolour.core.util.getOrCreateTag
-import thedarkcolour.core.util.stack
 import thedarkcolour.futuremc.entity.fish.EntityFish
 import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
 import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish.Companion.getBodyDyeColor
@@ -75,7 +74,7 @@ class FishBucketItem<E : EntityFish>(private val regName: String, private val fi
                             CriteriaTriggers.PLACED_BLOCK.trigger(playerIn, pos, stack)
                         }
                         return if (!playerIn.isCreative) {
-                            ActionResult(EnumActionResult.SUCCESS, Items.BUCKET.stack)
+                            ActionResult(EnumActionResult.SUCCESS, ItemStack(Items.BUCKET))
                         } else {
                             ActionResult(EnumActionResult.SUCCESS, stack)
                         }

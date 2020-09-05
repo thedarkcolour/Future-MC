@@ -13,7 +13,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import thedarkcolour.core.inventory.DarkInventory;
 import thedarkcolour.core.tile.InteractionTile;
-import thedarkcolour.futuremc.block.ComposterBlock;
+import thedarkcolour.futuremc.block.villagepillage.ComposterBlock;
 import thedarkcolour.futuremc.registry.FBlocks;
 import thedarkcolour.futuremc.registry.FSounds;
 

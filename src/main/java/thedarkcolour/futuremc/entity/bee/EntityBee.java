@@ -833,6 +833,12 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
         @Override
         public void startExecuting() {
             Vec3d vec3d = RandomPositionGenerator.findRandomTarget(bee, 8, 7);
+            if (bee.hivePos != null && bee.hivePos.distanceSq(bee.getPosition()) >= 484) {
+                vec3d = new Vec3d(bee.hivePos).subtract(new Vec3d(bee.getPosition())).normalize();
+
+                bee.navigator.tryMoveToXYZ(vec3d.x, vec3d.y, vec3d.z, 1.0D);
+                return;
+            }
             if (vec3d != null) {
                 bee.navigator.tryMoveToXYZ(vec3d.x, vec3d.y, vec3d.z, 1.0D);
             }

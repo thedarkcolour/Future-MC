@@ -4,12 +4,10 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.nbt.NBTTagList
-import net.minecraft.util.text.TextComponentTranslation
 import net.minecraftforge.common.util.Constants
 import net.minecraftforge.common.util.INBTSerializable
 import net.minecraftforge.items.IItemHandlerModifiable
 import net.minecraftforge.items.ItemHandlerHelper
-import thedarkcolour.core.gui.TextComponentStringHolder
 import java.util.*
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -17,16 +15,21 @@ import kotlin.reflect.KProperty
 /**
  * An iterable [net.minecraftforge.items.ItemStackHandler] with extra functionality.
  * Uses an array instead of a [net.minecraft.util.NonNullList]
+ *
+ * todo support nameable containers
  */
-open class DarkInventory @JvmOverloads constructor(size: Int, defaultName: String? = null) : IItemHandlerModifiable,
-    INBTSerializable<NBTTagCompound>, Iterable<ItemStack?> {
-    private var stacks: Array<ItemStack>
-    private val defaultName: TextComponentTranslation
-    private val displayName: TextComponentStringHolder? = null
+open class DarkInventory constructor(
+    size: Int//,
+    //defaultName: String? = null
+) : IItemHandlerModifiable, INBTSerializable<NBTTagCompound>, Iterable<ItemStack?> {
+    @JvmField
+    protected var stacks: Array<ItemStack>
+    //private val defaultName: TextComponentTranslation
+    //private val displayName: TextComponentStringHolder? = null
 
     init {
         stacks = Array(size) { ItemStack.EMPTY }
-        this.defaultName = TextComponentTranslation(defaultName ?: "")
+        //this.defaultName = TextComponentTranslation(defaultName ?: "")
     }
 
     private fun setSize(size: Int) {

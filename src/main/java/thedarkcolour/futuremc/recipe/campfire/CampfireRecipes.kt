@@ -2,6 +2,8 @@ package thedarkcolour.futuremc.recipe.campfire
 
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.FurnaceRecipes
+import net.minecraftforge.oredict.OreDictionary
 import thedarkcolour.futuremc.recipe.Recipes
 
 object CampfireRecipes : Recipes<CampfireRecipe>() {
@@ -15,6 +17,12 @@ object CampfireRecipes : Recipes<CampfireRecipe>() {
         CampfireRecipe(ItemStack(Items.RABBIT), ItemStack(Items.COOKED_RABBIT), 600),
         CampfireRecipe(ItemStack(Items.POTATO), ItemStack(Items.BAKED_POTATO), 600)
     )
+
+    init {
+        for (item in OreDictionary.getOres("listAllmeatraw").plus(OreDictionary.getOres("listAllfishraw"))) {
+            recipes.add(CampfireRecipe(item, FurnaceRecipes.instance().getSmeltingResult(item), 600))
+        }
+    }
 
     fun addRecipe(input: ItemStack, output: ItemStack, duration: Int) {
         recipes.add(CampfireRecipe(input, output, duration))

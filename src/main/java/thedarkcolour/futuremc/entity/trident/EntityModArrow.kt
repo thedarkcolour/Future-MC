@@ -32,16 +32,6 @@ import kotlin.experimental.or
 import kotlin.math.*
 
 abstract class EntityModArrow protected constructor(worldIn: World) : EntityArrow(worldIn), IProjectile {
-    private var xTile: Int = 0
-    private var yTile: Int = 0
-    private var zTile: Int = 0
-    private var inTile: Block? = null
-    private var inData: Byte = 0
-    private var ticksInGround: Int = 0
-    private var ticksInAir: Int = 0
-    private var damage: Double = 0.toDouble()
-    private var knockbackStrength: Int = 0
-
     protected open val waterDrag: Float
         get() = 0.6f
 
@@ -196,7 +186,7 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
         if (inGround) {
             val j = block.getMetaFromState(iblockstate)
 
-            if ((block != inTile || j.toByte() != inData) && !world.collidesWithAnyBlock(entityBoundingBox.grow(0.05))) {
+            if ((block != inTile || j != inData) && !world.collidesWithAnyBlock(entityBoundingBox.grow(0.05))) {
                 inGround = false
                 motionX *= (rand.nextFloat() * 0.2f).toDouble()
                 motionY *= (rand.nextFloat() * 0.2f).toDouble()
@@ -397,7 +387,7 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
             zTile = pos.z
             val state = world.getBlockState(pos)
             inTile = state.block
-            inData = inTile!!.getMetaFromState(state).toByte()
+            inData = inTile!!.getMetaFromState(state)
             motionX = (raytraceResultIn.hitVec.x - posX)
             motionY = (raytraceResultIn.hitVec.y - posY)
             motionZ = (raytraceResultIn.hitVec.z - posZ)
@@ -466,7 +456,7 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
         inTile?.let {
             compound.setString("inTile", it.registryName.toString())
         }
-        compound.setByte("inData", inData)
+        compound.setInteger("inData", inData)
         compound.setByte("shake", arrowShake.toByte())
         compound.setByte("inGround", (if (inGround) 1 else 0).toByte())
         compound.setByte("pickup", pickupStatus.ordinal.toByte())
@@ -486,7 +476,7 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
             null
         }
 
-        inData = compound.getByte("inData") and 255.toByte()
+        inData = compound.getInteger("inData") and 255
         arrowShake = compound.getByte("shake").toInt() and 255
         inGround = compound.getByte("inGround").toInt() == 1
 

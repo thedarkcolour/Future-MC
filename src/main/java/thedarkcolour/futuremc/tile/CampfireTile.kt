@@ -19,7 +19,7 @@ import net.minecraftforge.fluids.BlockFluidBase
 import thedarkcolour.core.inventory.DarkInventory
 import thedarkcolour.core.item.DebuggerItem
 import thedarkcolour.core.tile.InteractionTile
-import thedarkcolour.futuremc.block.CampfireBlock
+import thedarkcolour.futuremc.block.villagepillage.CampfireBlock
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipes
 
@@ -201,6 +201,9 @@ class CampfireTile : InteractionTile(), ITickable {
     }
 
     fun dropAllItems() {
+        // fix ghost items
+        if (world.isRemote) return
+
         for (i in 0..3) {
             InventoryHelper.spawnItemStack(
                 world,

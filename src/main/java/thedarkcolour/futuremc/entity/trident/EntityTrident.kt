@@ -24,7 +24,6 @@ import thedarkcolour.futuremc.registry.FSounds
 class EntityTrident : EntityModArrow {
     private var thrownStack = ItemStack.EMPTY
     private var hasChanneled = false
-    private var ticksInGround = 0
     private var isReturning = false
 
     override val waterDrag: Float

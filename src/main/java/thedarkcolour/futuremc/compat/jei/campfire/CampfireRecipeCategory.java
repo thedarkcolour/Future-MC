@@ -14,7 +14,7 @@ public class CampfireRecipeCategory implements IRecipeCategory<CampfireRecipeWra
     private final IDrawable background;
 
     public CampfireRecipeCategory(IGuiHelper helper) {
-        background = helper.createDrawable(FutureMCJEIPlugin.RECIPE_BACKGROUNDS, 0, 0, 73, 44);
+        background = helper.createDrawable(FutureMCJEIPlugin.RECIPE_BACKGROUNDS, 0, 0, 74, 44);
     }
 
     @Override

@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Enchantments
 import net.minecraft.init.Items
 import net.minecraft.init.SoundEvents
+import net.minecraft.item.ItemShears
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.nbt.NBTTagList
@@ -27,8 +28,8 @@ import net.minecraft.world.World
 import net.minecraft.world.chunk.storage.AnvilChunkLoader
 import sun.reflect.Reflection
 import thedarkcolour.core.tile.InteractionTile
-import thedarkcolour.futuremc.block.BeeHiveBlock
-import thedarkcolour.futuremc.block.CampfireBlock
+import thedarkcolour.futuremc.block.buzzybees.BeeHiveBlock
+import thedarkcolour.futuremc.block.villagepillage.CampfireBlock
 import thedarkcolour.futuremc.entity.bee.BeeEntity
 import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.registry.FItems
@@ -251,7 +252,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
         val stack = playerIn.getHeldItem(hand)
         var action = false
         if (isFullOfHoney()) {
-            if (stack.item == Items.SHEARS) {
+            if (stack.item is ItemShears) {
                 world.playSound(
                     null,
                     playerIn.posX,

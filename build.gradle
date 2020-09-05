@@ -3,14 +3,13 @@ buildscript {
         jcenter()
         mavenCentral()
         mavenLocal()
-        maven { url = "https://files.minecraftforge.net/maven" }
-        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url = "https://plugins.gradle.org/m2/" }
-        maven { url = 'https://dist.creeper.host/Sponge/maven' }
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        maven { url = 'https://plugins.gradle.org/m2/' }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.70"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.70'
         classpath group: 'com.wynprice.cursemaven', name: 'CurseMaven', version: '2.1.1'
     }
 }
@@ -18,24 +17,24 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'kotlin'
 apply plugin: 'com.wynprice.cursemaven'
 
-version = "1.12.2-0.2.3.2"
-group = "thedarkcolour.futuremc"
-archivesBaseName = "future-mc"
+version = '1.12.2-0.2.4.0'
+group = 'thedarkcolour.futuremc'
+archivesBaseName = 'future-mc'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = compileKotlin.kotlinOptions.jvmTarget = '1.8'
 
 minecraft {
-    version = "1.12.2-14.23.5.2847"
-    runDir = "run"
+    version = '1.12.2-14.23.5.2847'
+    runDir = 'run'
 
-    mappings = "stable_39"
+    mappings = 'stable_39'
 }
 
 jar {
     manifest.attributes(
-            "FMLCorePlugin": "thedarkcolour.futuremc.asm.CoreLoader",
-            "FMLCorePluginContainsFMLMod": "true",
-            "FMLAT": "futuremc_at.cfg"
+            'FMLCorePlugin': 'thedarkcolour.futuremc.asm.CoreLoader',
+            'FMLCorePluginContainsFMLMod': 'true',
+            'FMLAT': 'futuremc_at.cfg'
     )
 }
 
@@ -53,6 +52,10 @@ repositories {
         url = 'http://maven.shadowfacts.net/'
     }
     maven {
+        name = 'TOP'
+        url = 'http://maven.tterrag.com/'
+    }
+    maven {
         name = 'Tinkers Construct'
         url = 'http://dvs1.progwml6.com/files/maven'
     }
@@ -65,8 +68,8 @@ repositories {
         url = 'http://chickenbones.net/maven/'
     }
     maven {
-        name = "CurseForge"
-        url = "https://minecraft.curseforge.com/api/maven/"
+        name = 'CurseForge'
+        url = 'https://minecraft.curseforge.com/api/maven/'
     }
 }
 
@@ -75,31 +78,37 @@ dependencies {
     implementation 'mezz.jei:jei_1.12.2:4.15.0.+'
     implementation 'net.shadowfacts:Forgelin:1.8.4'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.70'
-    implementation 'vazkii.quark:Quark:r1.6-180.7'
-    implementation 'vazkii.autoreglib:AutoRegLib:1.3-32.+'
-    implementation 'curse.maven:dynamic-trees:2870267'
-    implementation 'curse.maven:dynamic-trees-sources:2870269'
-    implementation 'curse.maven:enchantment-descriptions:2689502'
-    implementation 'curse.maven:enchantment-descriptions-sources:2689503'
-    implementation 'curse.maven:pams-harvestcraft:2904825'
-    implementation 'curse.maven:plants:2697165'
-    implementation 'curse.maven:placebo:2694382'
-    implementation 'curse.maven:actually-additions:2844115'
-    implementation 'curse.maven:better-with-mods:2965308'
-    implementation 'curse.maven:better-with-lib:2624990'
-    implementation 'slimeknights.mantle:Mantle:1.12-1.3.3.49'
-    implementation 'slimeknights:TConstruct:1.12.2-2.13.0.184'
-    implementation 'cofh:CoFHCore:1.12.2-4.6.3.27:universal'
-    implementation 'cofh:CoFHWorld:1.12.2-1.3.1.7:universal'
-    implementation 'cofh:ThermalFoundation:1.12.2-2.6.3.27:universal'
-    implementation 'cofh:ThermalExpansion:1.12.2-5.5.4.43:universal'
-    implementation 'cofh:RedstoneFlux:1.12-2.1.0.7:universal'
-    implementation 'codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal'
+    provided 'vazkii.quark:Quark:r1.6-180.7'
+    compileOnly 'vazkii.autoreglib:AutoRegLib:1.3-32.+'
+    compileOnly 'curse.maven:dynamic-trees:2870267'
+    compileOnly 'curse.maven:dynamic-trees-sources:2870269'
+    compileOnly 'curse.maven:enchantment-descriptions:2689502'
+    compileOnly 'curse.maven:enchantment-descriptions-sources:2689503'
+    compileOnly 'curse.maven:pams-harvestcraft:2904825'
+    compileOnly 'curse.maven:plants:2697165'
+    compileOnly 'curse.maven:placebo:2694382'
+    compileOnly 'curse.maven:actually-additions:2844115'
+    compileOnly 'curse.maven:better-with-mods:2965308'
+    compileOnly 'curse.maven:better-with-lib:2624990'
+    compileOnly 'slimeknights.mantle:Mantle:1.12-1.3.3.49'
+    compileOnly 'slimeknights:TConstruct:1.12.2-2.13.0.184'
+    compileOnly 'cofh:CoFHCore:1.12.2-4.6.3.27:universal'
+    compileOnly 'cofh:CoFHWorld:1.12.2-1.3.1.7:universal'
+    compileOnly 'cofh:ThermalFoundation:1.12.2-2.6.3.27:universal'
+    compileOnly 'cofh:ThermalExpansion:1.12.2-5.5.4.43:universal'
+    compileOnly 'cofh:RedstoneFlux:1.12-2.1.0.7:universal'
+    compileOnly 'codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal'
+    //compileOnly 'curse.maven:just-enough-resources:2728585'
+    //compileOnly 'curse.maven:just-enough-resources-sources:2728587'
+    deobfCompile 'mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.28-17'
+
+    // Tests
+    testImplementation 'junit:junit:4.11'
 }
 
 processResources {
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+    inputs.property 'version', project.version
+    inputs.property 'mcversion', project.minecraft.version
 
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
@@ -115,6 +124,6 @@ processResources {
 
 compileKotlin {
     kotlinOptions {
-        freeCompilerArgs = ["-Xinline-classes", "-Xjvm-default=enable"]
+        freeCompilerArgs = ['-Xinline-classes', '-Xjvm-default=enable']
     }
 }

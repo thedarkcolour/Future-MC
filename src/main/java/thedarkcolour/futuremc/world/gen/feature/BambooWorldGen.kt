@@ -21,8 +21,14 @@ object BambooWorldGen : FWorldGen {
 
     private fun generate(worldIn: World, random: Random, pos: BlockPos) {
         val bamboo = FBlocks.BAMBOO
-        if (worldIn.getBlockState(pos).block.isReplaceable(worldIn, pos) && bamboo.canPlaceBlockAt(worldIn, pos)) {
+        if (
+            worldIn.getBlockState(pos).block.isReplaceable(worldIn, pos) &&
+            bamboo.canPlaceBlockAt(worldIn, pos) &&
+            isBiomeValid(worldIn.getBiome(pos))
+        ) {
             worldIn.setBlockState(pos, bamboo.defaultState)
+        } else {
+            return
         }
         for (j in 0..9) {
             if (worldIn.getBlockState(pos).block == bamboo

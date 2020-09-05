@@ -5,6 +5,7 @@ import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.api.oredict.IOreDictEntry;
 import org.apache.logging.log4j.Level;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -23,7 +24,14 @@ public final class Campfire {
         }
     }
 
-    private static class AddRecipe implements IAction {
+    @ZenMethod
+    public static void addRecipe(IOreDictEntry input, IItemStack output, int duration) {
+        for (IItemStack a : input.getItems()) {
+            addRecipe(a, output, duration);
+        }
+    }
+
+    private static final class AddRecipe implements IAction {
         private final IItemStack input;
         private final IItemStack output;
         private final int duration;
@@ -53,7 +61,7 @@ public final class Campfire {
         }
     }
 
-    private static class RemoveRecipe implements IAction {
+    private static final class RemoveRecipe implements IAction {
         private final IItemStack input;
 
         private RemoveRecipe(IItemStack input) {

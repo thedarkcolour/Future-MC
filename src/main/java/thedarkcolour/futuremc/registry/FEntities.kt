@@ -82,7 +82,7 @@ object FEntities {
             registerEntityModel(::RenderTropicalFish)
         }
         // of course they do :)
-        if (FConfig.buzzyBees.ironGolems.doCrack) {
+        if (FConfig.buzzyBees.ironGolem.doCrack) {
             registerEntityModel { manager ->
                 val renderer = RenderIronGolem(manager)
                 renderer.addLayer(LayerIronGolemCrack(renderer))

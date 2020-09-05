@@ -1,6 +1,5 @@
 package thedarkcolour.futuremc.entity.fish.pufferfish
 
-import net.minecraft.client.Minecraft
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.ai.EntityAIBase
 import net.minecraft.entity.monster.EntityMob
@@ -8,17 +7,16 @@ import net.minecraft.entity.passive.EntityWaterMob
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.init.MobEffects
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.datasync.DataParameter
 import net.minecraft.network.datasync.DataSerializers
 import net.minecraft.network.datasync.EntityDataManager
-import net.minecraft.network.play.server.SPacketChangeGameState
 import net.minecraft.potion.PotionEffect
 import net.minecraft.util.DamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.SoundCategory
 import net.minecraft.world.World
-import thedarkcolour.core.util.stack
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.entity.WaterCreature
 import thedarkcolour.futuremc.entity.fish.EntityFish
@@ -71,7 +69,7 @@ class EntityPufferfish(worldIn: World) : EntityFish(worldIn) {
         puffState = compound.getInteger("PuffState")
     }
 
-    override val fishBucket = FItems.PUFFERFISH_BUCKET.stack
+    override val fishBucket = ItemStack(FItems.PUFFERFISH_BUCKET)
 
     override fun initEntityAI() {
         super.initEntityAI()
@@ -132,40 +130,16 @@ class EntityPufferfish(worldIn: World) : EntityFish(worldIn) {
         }
     }
 
-    override fun onCollideWithPlayer(entityIn: EntityPlayer) {
+    override fun onCollideWithPlayer(playerIn: EntityPlayer) {
         val i: Int = puffState
-        if (entityIn is EntityPlayerMP && i > 0 && entityIn.attackEntityFrom(
+        if (playerIn is EntityPlayerMP && i > 0 && playerIn.attackEntityFrom(
                 DamageSource.causeMobDamage(this),
                 (1 + i).toFloat()
             )
         ) {
-            entityIn.connection.sendPacket(SPacketSting(0F))
-            entityIn.addPotionEffect(PotionEffect(MobEffects.POISON, 60 * i, 0))
-        }
-    }
-
-    // custom packet
-    private class SPacketSting(value: Float) : SPacketChangeGameState(9, value) {
-        // because we are a custom packet we can
-        // immediately play our event instead of
-        // waiting for an existing branch in the
-        // switch statement that this function's
-        // result is used in. We can return 9
-        // and not worry about anything else happening.
-        override fun getGameState(): Int {
-            val client = Minecraft.getMinecraft()
-            val player = client.player
-            client.world.playSound(
-                player,
-                player.posX,
-                player.posY,
-                player.posZ,
-                FSounds.PUFFERFISH_STING,
-                SoundCategory.NEUTRAL,
-                1F,
-                1F
-            )
-            return 9
+            //entityIn.connection.sendPacket(SPacketSting(0F))
+            playerIn.world.playSound(playerIn, playerIn.posX, playerIn.posY, playerIn.posZ, FSounds.PUFFERFISH_STING, SoundCategory.NEUTRAL, 1F, 1F)
+            playerIn.addPotionEffect(PotionEffect(MobEffects.POISON, 60 * i, 0))
         }
     }
 

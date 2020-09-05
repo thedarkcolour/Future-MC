@@ -50,7 +50,7 @@ object FItems {
     // see Util.kt for Item.setItemGroup
     val NETHERITE_INGOT = FireproofItem("netherite_ingot").setItemGroup(CreativeTabs.MATERIALS)
     val NETHERITE_SCRAP = FireproofItem("netherite_scrap").setItemGroup(CreativeTabs.MATERIALS)
-    val NETHERITE_AXE = FireproofAxeItem("netherite_axe", FToolMaterial.NETHERITE, 5.0f, -3.0f).setItemGroup(CreativeTabs.TOOLS)
+    val NETHERITE_AXE = FireproofAxeItem("netherite_axe", FToolMaterial.NETHERITE, 9.0f, -3.0f).setItemGroup(CreativeTabs.TOOLS)
     val NETHERITE_HOE = FireproofHoeItem("netherite_hoe", FToolMaterial.NETHERITE).setItemGroup(CreativeTabs.TOOLS)
     val NETHERITE_PICKAXE = FireproofPickaxeItem("netherite_pickaxe", FToolMaterial.NETHERITE).setItemGroup(CreativeTabs.TOOLS)
     val NETHERITE_SHOVEL = FireproofShovelItem("netherite_shovel", FToolMaterial.NETHERITE).setItemGroup(CreativeTabs.TOOLS)
@@ -128,6 +128,7 @@ object FItems {
     val CHAIN = ModeledItemBlock(FBlocks.CHAIN)
     val NETHERITE_BLOCK = FireproofItemBlock(FBlocks.NETHERITE_BLOCK)
     val ANCIENT_DEBRIS = FireproofItemBlock(FBlocks.ANCIENT_DEBRIS)
+    val RECORD_PIGSTEP = RecordItem("futuremc.pigstep", FSounds.RECORD_PIGSTEP).setCreativeTab(FutureMC.GROUP)
 
     fun registerItems(items: IForgeRegistry<Item>) {
         if (FConfig.villageAndPillage.dyes) items.register(DYES)
@@ -235,6 +236,8 @@ object FItems {
             items.register(CHAIN)
         if (FConfig.netherUpdate.netherite)
             items.registerAll(NETHERITE_BLOCK, ANCIENT_DEBRIS)
+        if (FConfig.netherUpdate.pigstep)
+            items.register(RECORD_PIGSTEP)
 
         //register(ItemSeagrass(), FConfig.updateAquatic.seagrass)
 

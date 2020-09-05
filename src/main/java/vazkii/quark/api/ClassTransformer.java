@@ -14,20 +14,17 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.*;
 
+import javax.annotation.Nonnull;
 import java.util.Iterator;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 import static org.objectweb.asm.Opcodes.*;
 
-// Note from TheDarkColour
-// I use this file because I don't want to "reinvent the wheel"
-// Obviously I did change things so that it only has what I need.
-// Thanks to the Vazkii dev team for creating this!
 public final class ClassTransformer {
     public static final String ASM_HOOKS = "vazkii/quark/api/ASMHooks";
 
-    public static byte[] transformBlockPistonBase(byte[] basicClass) {
+    public static byte[] transformBlockPistonBase(@Nonnull byte[] basicClass) {
         MethodSignature sig2 = new MethodSignature("doMove", "func_176319_a", "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing;Z)Z");
         MethodSignature sig3 = new MethodSignature("checkForMove", "func_176316_e", "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;)V");
 

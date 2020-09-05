@@ -23,7 +23,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import thedarkcolour.futuremc.FutureMC;
-import thedarkcolour.futuremc.block.BlockFurnaceAdvanced;
+import thedarkcolour.futuremc.block.villagepillage.BlockFurnaceAdvanced;
 import thedarkcolour.futuremc.container.ContainerFurnaceAdvanced;
 
 public class TileFurnaceAdvanced extends TileEntityLockable implements ITickable, ISidedInventory {

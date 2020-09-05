@@ -59,7 +59,7 @@ public final class CoreTransformer implements IClassTransformer {
     }
 
     private static byte[] patchEntityRenderer(byte[] basicClass) {
-        // fix incompatibility with vivecraft
+        // fix incompatibility with vivecraft?
         if (Compat.checkVivecraft()) return basicClass;
 
         ClassNode classNode = createClassNode(basicClass);
@@ -132,7 +132,7 @@ public final class CoreTransformer implements IClassTransformer {
 
     private static byte[] patchRenderItem(byte[] basicClass) {
         ClassNode classNode = createClassNode(basicClass);
-        MethodNode metohd = findMethod(
+        MethodNode method = findMethod(
                 classNode,
                 "func_181564_a",
                 "renderItem",

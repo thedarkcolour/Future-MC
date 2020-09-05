@@ -2,7 +2,7 @@ package thedarkcolour.futuremc.entity.bee.ai
 
 import net.minecraft.pathfinding.Path
 import net.minecraft.util.math.BlockPos
-import thedarkcolour.futuremc.block.BeeHiveBlock
+import thedarkcolour.futuremc.block.buzzybees.BeeHiveBlock
 import thedarkcolour.futuremc.entity.bee.BeeEntity
 import java.util.*
 

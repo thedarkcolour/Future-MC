@@ -1,11 +1,14 @@
 package thedarkcolour.futuremc.asm;
 
+
+import kotlin.jvm.functions.Function1;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
-import net.shadowfacts.forgelin.KotlinAdapter;
+import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
+import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.Name;
+import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
+import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.TransformerExclusions;
 
 import java.util.Map;
-
-import static net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.*;
 
 @Name("FutureMC")
 @MCVersion("1.12.2")
@@ -16,7 +19,7 @@ public class CoreLoader implements IFMLLoadingPlugin {
     public String[] getASMTransformerClass() {
         //noinspection CatchMayIgnoreException
         try {
-            KotlinAdapter.class.getName();
+            Function1.class.getName();
         } catch (Throwable any) {
             if (any instanceof ClassNotFoundException) {
                 System.out.println("***********************");
@@ -25,6 +28,8 @@ public class CoreLoader implements IFMLLoadingPlugin {
                 System.out.println("***********************");
                 throw any;
             }
+
+            return new String[0];
         }
         return new String[]{
                 "thedarkcolour.futuremc.asm.CoreTransformer"
@@ -43,7 +48,7 @@ public class CoreLoader implements IFMLLoadingPlugin {
 
     @Override
     public void injectData(Map<String, Object> data) {
-        CoreTransformer.isObfuscated = ((boolean) data.get("runtimeDeobfuscationEnabled"));
+        CoreTransformer.isObfuscated = (boolean) data.get("runtimeDeobfuscationEnabled");
     }
 
     @Override

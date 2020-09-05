@@ -186,9 +186,6 @@ class StonecutterGui(container: StonecutterContainer) : FGui<StonecutterContaine
     }
 
     companion object {
-        private val BACKGROUND = ResourceLocation(
-            FutureMC.ID,
-            "textures/gui/stonecutter.png"
-        )
+        private val BACKGROUND = ResourceLocation(FutureMC.ID, "textures/gui/stonecutter.png")
     }
 }

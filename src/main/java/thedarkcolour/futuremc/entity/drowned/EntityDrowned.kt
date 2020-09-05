@@ -27,7 +27,6 @@ import net.minecraft.world.DifficultyInstance
 import net.minecraft.world.EnumDifficulty
 import net.minecraft.world.World
 import thedarkcolour.core.util.lerp
-import thedarkcolour.core.util.stack
 import thedarkcolour.futuremc.entity.trident.EntityTrident
 import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FSounds
@@ -97,7 +96,7 @@ class EntityDrowned(world: World) : EntityZombie(world), IRangedAttackMob {
     override fun onInitialSpawn(difficulty: DifficultyInstance, livingdata: IEntityLivingData?): IEntityLivingData? {
         val entityData = super.onInitialSpawn(difficulty, livingdata)
         if (getItemStackFromSlot(EntityEquipmentSlot.OFFHAND).isEmpty && rand.nextFloat() < 0.03) {
-            setItemStackToSlot(EntityEquipmentSlot.OFFHAND, FItems.NAUTILUS_SHELL.stack)
+            setItemStackToSlot(EntityEquipmentSlot.OFFHAND, ItemStack(FItems.NAUTILUS_SHELL))
             inventoryHandsDropChances[EntityEquipmentSlot.OFFHAND.index] = 2.0f
         }
 
@@ -125,9 +124,9 @@ class EntityDrowned(world: World) : EntityZombie(world), IRangedAttackMob {
     override fun setEquipmentBasedOnDifficulty(difficulty: DifficultyInstance) {
         if (rand.nextFloat() > 0.9f) {
             if (rand.nextInt(16) < 10) {
-                setItemStackToSlot(EntityEquipmentSlot.MAINHAND, FItems.TRIDENT.stack)
+                setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack(FItems.TRIDENT))
             } else {
-                setItemStackToSlot(EntityEquipmentSlot.MAINHAND, Items.FISHING_ROD.stack)
+                setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack(Items.FISHING_ROD))
             }
         }
     }
@@ -418,7 +417,7 @@ class EntityDrowned(world: World) : EntityZombie(world), IRangedAttackMob {
     }
 
     override fun attackEntityWithRangedAttack(target: EntityLivingBase, distanceFactor: Float) {
-        val trident = EntityTrident(world, this, FItems.TRIDENT.stack)
+        val trident = EntityTrident(world, this, ItemStack(FItems.TRIDENT))
         val x = target.posX - posX
         val y = target.entityBoundingBox.minY + (target.height / 3.0f) - trident.posY
         val z = target.posZ - posZ

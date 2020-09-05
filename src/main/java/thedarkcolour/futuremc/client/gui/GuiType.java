@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import thedarkcolour.core.gui.FContainer;
 import thedarkcolour.futuremc.FutureMC;
+import thedarkcolour.futuremc.block.villagepillage.BarrelBlock;
 import thedarkcolour.futuremc.container.*;
 
 /**
@@ -19,7 +20,7 @@ import thedarkcolour.futuremc.container.*;
  *
  * @author TheDarkColour
  *
- * @see thedarkcolour.futuremc.block.BarrelBlock#onBlockActivated
+ * @see BarrelBlock#onBlockActivated
  */
 public enum GuiType {
     BARREL(ContainerBarrel::new),

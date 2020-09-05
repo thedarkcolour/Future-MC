@@ -5,7 +5,7 @@ import org.objectweb.asm.MethodVisitor
 import java.util.function.Consumer
 
 /**
- * Builds a new class.
+ * Builds a new class. TODO
  *
  * @author TheDarkColour
  */
@@ -30,9 +30,6 @@ class ClassBuilder(superClass: Class<*>) {
      */
     private object Loader : ClassLoader()
 
-    /**
-     * Add lines of code!
-     */
     interface Closure {
         fun loadVariable(variable: Int)
         fun invokeMethod(type: Int, caller: String, name: String, desc: String)

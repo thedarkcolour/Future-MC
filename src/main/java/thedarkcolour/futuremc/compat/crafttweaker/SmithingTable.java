@@ -3,6 +3,7 @@ package thedarkcolour.futuremc.compat.crafttweaker;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.oredict.IOreDictEntry;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -25,6 +26,18 @@ public final class SmithingTable {
     @ZenMethod
     public static void addRecipe(IItemStack input, IItemStack material, IItemStack result) {
         applyAction(new AddAction(input, material, result));
+    }
+
+    /**
+     * Overload that uses ores instead of item stacks
+     */
+    @ZenMethod
+    public static void addRecipe(IOreDictEntry input, IOreDictEntry material, IItemStack result) {
+        for (IItemStack a : input.getItems()) {
+            for (IItemStack b : material.getItems()) {
+                applyAction(new AddAction(a, b, result));
+            }
+        }
     }
 
     private static final class AddAction implements IAction {

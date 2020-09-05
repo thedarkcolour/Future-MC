@@ -1,11 +1,13 @@
 package thedarkcolour.futuremc.compat.quark
 
 import net.minecraft.block.state.IBlockState
+import sun.reflect.Reflection
 import thedarkcolour.futuremc.registry.FBlocks
 import vazkii.quark.automation.block.BlockColorSlime
 import vazkii.quark.base.module.ModuleLoader
 import vazkii.quark.building.block.BlockBark
 import vazkii.quark.building.feature.BarkBlocks
+import vazkii.quark.client.feature.ShowInvalidSlots
 import vazkii.quark.decoration.feature.VariedTrapdoors
 
 /**
@@ -64,5 +66,11 @@ object QuarkCompat {
                 else -> null!!
             }
         }
+    }
+
+    // returns true if we should ignore a change
+    // used in stonecutter to fix quark bug
+    fun isDrawingInvalidSlotsOverlay(): Boolean {
+        return Reflection.getCallerClass(4) == ShowInvalidSlots::class.java
     }
 }

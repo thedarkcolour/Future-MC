@@ -135,6 +135,7 @@ item.futuremc.banner_pattern.creeper=Creeper Charge
 item.futuremc.banner_pattern.skull=Skull Charge
 item.futuremc.banner_pattern.thing=Thing
 item.futuremc.banner_pattern.globe=Globe
+item.futuremc.banner_pattern.snout=Snout
 item.futuremc.honey_bottle.name=Honey Bottle
 item.futuremc.honeycomb.name=Honeycomb
 item.futuremc.nautilus_shell.name=Nautilus Shell
@@ -153,6 +154,8 @@ item.futuremc.netherite_chestplate.name=Netherite Chestplate
 item.futuremc.netherite_leggings.name=Netherite Leggings
 item.futuremc.netherite_boots.name=Netherite Boots
 item.futuremc.netherite_ingot.name=Netherite Ingot
+item.record.futuremc.pigstep.desc=Lena Raine - Pigstep
+item.futuremc.record_pigstep.name=Music Disc
 
 # GUI
 container.barrel=Barrel
@@ -189,10 +192,13 @@ itemGroup.futuremc=Future MC
 
 # JEI
 container.jei.futuremc.campfire.name=Campfire
-container.jei.futuremc.blast_furnace.name=Blast Furnace
-container.jei.futuremc.smoker.name=Smoker
-container.jei.futuremc.stonecutter.name=Stonecutter
+container.jei.futuremc.blast_furnace.name=Blasting
+container.jei.futuremc.smoker.name=Smoking
+container.jei.futuremc.stonecutter.name=Stonecutting
+container.jei.futuremc.smithing.name=Smithing
+container.jei.futuremc.composter.name=Composting
 container.jei.futuremc.campfire.duration=Duration
+container.jei.futuremc.composter.chance=Chance
 
 # Config
 futuremc.config.blue_ice=Blue Ice

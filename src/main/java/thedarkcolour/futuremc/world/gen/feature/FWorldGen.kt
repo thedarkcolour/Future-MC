@@ -6,7 +6,6 @@ import net.minecraft.world.World
 import net.minecraft.world.chunk.IChunkProvider
 import net.minecraft.world.gen.IChunkGenerator
 import net.minecraftforge.fml.common.IWorldGenerator
-import thedarkcolour.futuremc.world.gen.structure.IChunkPos
 import java.util.*
 
 /**
@@ -26,6 +25,10 @@ interface FWorldGen : IWorldGenerator {
         chunkGenerator: IChunkGenerator,
         chunkProvider: IChunkProvider
     )
+
+    fun decorate(worldIn: World, rand: Random, pos: BlockPos) {
+
+    }
 
     /**
      * Used for random patches (bamboo, flowers).
@@ -53,11 +56,11 @@ interface FWorldGen : IWorldGenerator {
      * @param placeFunction the feature placer
      */
     @JvmDefault
-    fun generateNormalOre(worldIn: World, rand: Random, pos: IChunkPos, veinCount: Int, minHeight: Int, maxHeight: Int, placeFunction: (World, Random, BlockPos) -> Unit) {
+    fun generateNormalOre(worldIn: World, rand: Random, chunkX: Int, chunkZ: Int, veinCount: Int, minHeight: Int, maxHeight: Int, placeFunction: (World, Random, BlockPos) -> Unit) {
         if (minHeight > 255 || maxHeight > 255) throw IllegalArgumentException("Height range must be in 0..255")
 
         for (i in 0 until veinCount) {
-            val position = BlockPos((pos.x * 16) + rand.nextInt(16), rand.nextInt(maxHeight - minHeight) + minHeight, (pos.z * 16) + rand.nextInt(16))
+            val position = BlockPos((chunkX * 16) + rand.nextInt(16), rand.nextInt(maxHeight - minHeight) + minHeight, (chunkZ * 16) + rand.nextInt(16))
             placeFunction(worldIn, rand, position)
         }
     }
@@ -66,9 +69,9 @@ interface FWorldGen : IWorldGenerator {
      * Places this feature like Lapis Lazuli
      */
     @JvmDefault
-    fun generateLapisStyleOre(worldIn: World, rand: Random, pos: IChunkPos, veinCount: Int, base: Int, spread: Int, placeFunction: (World, Random, BlockPos) -> Unit) {
+    fun generateLapisStyleOre(worldIn: World, rand: Random, chunkX: Int, chunkZ: Int, veinCount: Int, base: Int, spread: Int, placeFunction: (World, Random, BlockPos) -> Unit) {
         for (i in 0 until veinCount) {
-            val position = BlockPos((pos.x * 16) + rand.nextInt(16), rand.nextInt(spread) + rand.nextInt(spread) + base - spread, (pos.z * 16) + rand.nextInt(16))
+            val position = BlockPos((chunkX * 16) + rand.nextInt(16), rand.nextInt(spread) + rand.nextInt(spread) + base - spread, (chunkZ * 16) + rand.nextInt(16))
             placeFunction(worldIn, rand, position)
         }
     }
