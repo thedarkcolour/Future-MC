@@ -1,6 +1,6 @@
 {
-  "parent": "block/template_fence_gate",
-  "textures": {
-    "texture": "minecraft:block/warped_planks"
-  }
+    "parent": "block/template_fence_gate",
+    "textures": {
+        "texture": "futuremc:block/warped_planks"
+    }
 }

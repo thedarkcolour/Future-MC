@@ -1,6 +1,6 @@
 {
-  "parent": "block/fence_post",
-  "textures": {
-    "texture": "minecraft:block/warped_planks"
-  }
+    "parent": "block/fence_post",
+    "textures": {
+        "texture": "futuremc:block/warped_planks"
+    }
 }

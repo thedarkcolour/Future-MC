@@ -1,7 +1,7 @@
 {
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "minecraft:block/warped_stem",
-    "side": "minecraft:block/warped_stem"
-  }
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "futuremc:block/warped_stem",
+        "side": "futuremc:block/warped_stem"
+    }
 }

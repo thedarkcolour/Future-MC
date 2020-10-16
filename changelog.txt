@@ -1,9 +1,11 @@
 Future MC 1.15.2 1.1.0 - Nether biomes!
 *1.16 Nether World Type* - Generates the nether with new biomes from 1.16 snapshots.
+*Biomes O' Plenty Compatibility* - Generates 1.16 nether biomes in Biomes O' Plenty worlds.
 *Crimson Forest Biome* - 1.16 biome that generates in the nether. Has red foliage.
 *Warped Forest Biome* - 1.16 biome that generates in the nether. Has teal foliage.
 *Soul Sand Valley* - 1.16 biome that generates in the nether. Has soul soil and basalt pillars.
 *Nether Biomes* - Generate in the Biomes O' Plenty world type.
+Smithing Table - Updated the GUI to match current snapshot version.
 
 Future MC 1.15.2. 1.0.1 - Fix
 *CraftTweaker Support for Smithing Table* - Smithing table support for CraftTweaker. I will document soon. For now, just try and read thedarkcolour/futuremc/compat/crafttweaker/SmithingTable.kt

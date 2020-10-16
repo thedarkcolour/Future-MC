@@ -1,5 +1,7 @@
 {
     "variants": {
-        "": { "model": "futuremc:block/shroomlight" }
+        "": {
+            "model": "futuremc:block/shroomlight"
+        }
     }
 }

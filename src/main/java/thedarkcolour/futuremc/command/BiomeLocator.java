@@ -11,7 +11,7 @@ import java.util.Set;
 public class BiomeLocator {
 
     /**
-     * We need this because Kotlin doesn't allow for-i loops
+     * We need this because Kotlin is pretty limiting on for-i loops
      * and this would be horribly inefficient if it used {@code while} loops.
      *
      * @param biomes the biome(s) to look for when checking the world

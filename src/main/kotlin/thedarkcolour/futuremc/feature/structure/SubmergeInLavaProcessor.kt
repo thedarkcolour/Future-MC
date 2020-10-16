@@ -1,0 +1,3 @@
+package thedarkcolour.futuremc.feature.structure
+
+class SubmergeInLavaProcessor

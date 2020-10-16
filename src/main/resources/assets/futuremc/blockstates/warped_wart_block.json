@@ -1,5 +1,7 @@
 {
     "variants": {
-        "": { "model": "futuremc:block/warped_wart_block" }
+        "": {
+            "model": "futuremc:block/warped_wart_block"
+        }
     }
 }

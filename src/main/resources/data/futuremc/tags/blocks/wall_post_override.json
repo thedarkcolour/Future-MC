@@ -1,0 +1,12 @@
+{
+    "replace": false,
+    "values": [
+        "minecraft:torch",
+        "futuremc:soul_torch",
+        "minecraft:redstone_torch",
+        "minecraft:tripwire",
+        "#minecraft:signs",
+        "#minecraft:banners",
+        "#minecraft:wooden_pressure_plates"
+    ]
+}

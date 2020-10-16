@@ -1,7 +1,7 @@
 {
-  "parent": "block/door_top_rh",
-  "textures": {
-    "top": "minecraft:block/warped_door_top",
-    "bottom": "minecraft:block/warped_door_bottom"
-  }
+    "parent": "block/door_top_rh",
+    "textures": {
+        "top": "futuremc:block/warped_door_top",
+        "bottom": "futuremc:block/warped_door_bottom"
+    }
 }

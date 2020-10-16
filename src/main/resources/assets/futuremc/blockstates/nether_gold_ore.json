@@ -1,5 +1,7 @@
 {
     "variants": {
-        "": { "model": "futuremc:block/nether_gold_ore" }
+        "": {
+            "model": "futuremc:block/nether_gold_ore"
+        }
     }
 }

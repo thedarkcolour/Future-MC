@@ -1,6 +1,6 @@
 {
-  "parent": "block/fence_side",
-  "textures": {
-    "texture": "minecraft:block/crimson_planks"
-  }
+    "parent": "block/fence_side",
+    "textures": {
+        "texture": "futuremc:block/crimson_planks"
+    }
 }

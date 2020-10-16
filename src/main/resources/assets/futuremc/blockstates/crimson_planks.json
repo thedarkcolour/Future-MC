@@ -1,5 +1,7 @@
 {
     "variants": {
-        "": { "model": "futuremc:block/crimson_planks" }
+        "": {
+            "model": "futuremc:block/crimson_planks"
+        }
     }
 }

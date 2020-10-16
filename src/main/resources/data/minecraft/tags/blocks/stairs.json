@@ -1,0 +1,12 @@
+{
+    "replace": false,
+    "values": [
+        "futuremc:blackstone_stairs",
+        "futuremc:polished_blackstone_brick_stairs",
+        "futuremc:polished_blackstone_stairs"
+    ],
+    "_todo": [
+        "futuremc:crimson_stairs",
+        "futuremc:warped_stairs"
+    ]
+}

@@ -538,5 +538,301 @@
             "futuremc:block/shroomlight/step5",
             "futuremc:block/shroomlight/step6"
         ]
+    },
+    "gilded_blackstone_break": {
+        "subtitle": "futuremc.subtitles.gilded_blackstone_break",
+        "sounds": [
+            "futuremc:block/nether_ore/break1",
+            "futuremc:block/nether_ore/break2",
+            "futuremc:block/nether_ore/break3",
+            "futuremc:block/nether_ore/break4"
+        ]
+    },
+    "gilded_blackstone_step": {
+        "subtitle": "futuremc.subtitles.gilded_blackstone_step",
+        "sounds": [
+            "futuremc:block/nether_ore/step1",
+            "futuremc:block/nether_ore/step2",
+            "futuremc:block/nether_ore/step3",
+            "futuremc:block/nether_ore/step4",
+            "futuremc:block/nether_ore/step5"
+        ]
+    },
+    "gilded_blackstone_place": {
+        "subtitle": "futuremc.subtitles.gilded_blackstone_place",
+        "sounds": [
+            "futuremc:block/nether_ore/break1",
+            "futuremc:block/nether_ore/break2",
+            "futuremc:block/nether_ore/break3",
+            "futuremc:block/nether_ore/break4"
+        ]
+    },
+    "gilded_blackstone_hit": {
+        "subtitle": "futuremc.subtitles.gilded_blackstone_hit",
+        "sounds": [
+            "futuremc:block/nether_ore/break1",
+            "futuremc:block/nether_ore/break2",
+            "futuremc:block/nether_ore/break3",
+            "futuremc:block/nether_ore/break4"
+        ]
+    },
+    "gilded_blackstone_fall": {
+        "subtitle": "futuremc.subtitles.gilded_blackstone_fall",
+        "sounds": [
+            "futuremc:block/nether_ore/step1",
+            "futuremc:block/nether_ore/step2",
+            "futuremc:block/nether_ore/step3",
+            "futuremc:block/nether_ore/step4",
+            "futuremc:block/nether_ore/step5"
+        ]
+    },
+    "nether_gold_ore_break": {
+        "subtitle": "futuremc.subtitles.nether_gold_ore_break",
+        "sounds": [
+            "futuremc:block/nether_ore/break1",
+            "futuremc:block/nether_ore/break2",
+            "futuremc:block/nether_ore/break3",
+            "futuremc:block/nether_ore/break4"
+        ]
+    },
+    "nether_gold_ore_step": {
+        "subtitle": "futuremc.subtitles.nether_gold_ore_step",
+        "sounds": [
+            "futuremc:block/nether_ore/step1",
+            "futuremc:block/nether_ore/step2",
+            "futuremc:block/nether_ore/step3",
+            "futuremc:block/nether_ore/step4",
+            "futuremc:block/nether_ore/step5"
+        ]
+    },
+    "nether_gold_ore_place": {
+        "subtitle": "futuremc.subtitles.nether_gold_ore_place",
+        "sounds": [
+            "futuremc:block/nether_ore/break1",
+            "futuremc:block/nether_ore/break2",
+            "futuremc:block/nether_ore/break3",
+            "futuremc:block/nether_ore/break4"
+        ]
+    },
+    "nether_gold_ore_hit": {
+        "subtitle": "futuremc.subtitles.nether_gold_ore_hit",
+        "sounds": [
+            "futuremc:block/nether_ore/break1",
+            "futuremc:block/nether_ore/break2",
+            "futuremc:block/nether_ore/break3",
+            "futuremc:block/nether_ore/break4"
+        ]
+    },
+    "nether_gold_ore_fall": {
+        "subtitle": "futuremc.subtitles.nether_gold_ore_fall",
+        "sounds": [
+            "futuremc:block/nether_ore/step1",
+            "futuremc:block/nether_ore/step2",
+            "futuremc:block/nether_ore/step3",
+            "futuremc:block/nether_ore/step4",
+            "futuremc:block/nether_ore/step5"
+        ]
+    },
+    "chain_break": {
+        "subtitle": "futuremc.subtitles.chain_break",
+        "sounds": [
+            "futuremc:chain/break1",
+            "futuremc:chain/break2",
+            "futuremc:chain/break3",
+            "futuremc:chain/break4"
+        ]
+    },
+    "chain_step": {
+        "subtitle": "futuremc.subtitles.chain_step",
+        "sounds": [
+            "futuremc:chain/step1",
+            "futuremc:chain/step2",
+            "futuremc:chain/step3",
+            "futuremc:chain/step4",
+            "futuremc:chain/step5",
+            "futuremc:chain/step6"
+        ]
+    },
+    "chain_place":  {
+        "subtitle": "futuremc.subtitles.chain_place",
+        "sounds": [
+            "futuremc:chain/break1",
+            "futuremc:chain/break2",
+            "futuremc:chain/break3",
+            "futuremc:chain/break4"
+        ]
+    },
+    "chain_hit": {
+        "subtitle": "futuremc.subtitles.chain_hit",
+        "sounds": [
+            "futuremc:chain/break1",
+            "futuremc:chain/break2",
+            "futuremc:chain/break3",
+            "futuremc:chain/break4"
+        ]
+    },
+    "chain_fall":  {
+        "subtitle": "futuremc.subtitles.chain_fall",
+        "sounds": [
+            "futuremc:chain/step1",
+            "futuremc:chain/step2",
+            "futuremc:chain/step3",
+            "futuremc:chain/step4",
+            "futuremc:chain/step5",
+            "futuremc:chain/step6"
+        ]
+    },
+    "nether_brick_break": {
+        "subtitle": "futuremc.subtitles.nether_brick_break",
+        "sounds": [
+            "futuremc:nether_brick/break1",
+            "futuremc:nether_brick/break2",
+            "futuremc:nether_brick/break3",
+            "futuremc:nether_brick/break4",
+            "futuremc:nether_brick/break5",
+            "futuremc:nether_brick/break6"
+        ]
+    },
+    "nether_brick_step": {
+        "subtitle": "futuremc.subtitles.nether_brick_step",
+        "sounds": [
+            "futuremc:nether_brick/step1",
+            "futuremc:nether_brick/step2",
+            "futuremc:nether_brick/step3",
+            "futuremc:nether_brick/step4",
+            "futuremc:nether_brick/step5",
+            "futuremc:nether_brick/step6"
+        ]
+    },
+    "nether_brick_place":  {
+        "subtitle": "futuremc.subtitles.nether_brick_place",
+        "sounds": [
+            "futuremc:nether_brick/break1",
+            "futuremc:nether_brick/break2",
+            "futuremc:nether_brick/break3",
+            "futuremc:nether_brick/break4",
+            "futuremc:nether_brick/break5",
+            "futuremc:nether_brick/break6"
+        ]
+    },
+    "nether_brick_hit": {
+        "subtitle": "futuremc.subtitles.nether_brick_hit",
+        "sounds": [
+            "futuremc:nether_brick/break1",
+            "futuremc:nether_brick/break2",
+            "futuremc:nether_brick/break3",
+            "futuremc:nether_brick/break4",
+            "futuremc:nether_brick/break5",
+            "futuremc:nether_brick/break6"
+        ]
+    },
+    "nether_brick_fall":  {
+        "subtitle": "futuremc.subtitles.nether_brick_fall",
+        "sounds": [
+            "futuremc:nether_brick/step1",
+            "futuremc:nether_brick/step2",
+            "futuremc:nether_brick/step3",
+            "futuremc:nether_brick/step4",
+            "futuremc:nether_brick/step5",
+            "futuremc:nether_brick/step6"
+        ]
+    },
+    "weeping_vines_break": {
+        "subtitle": "futuremc.subtitles.weeping_vines_break",
+        "sounds": [
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
+        ]
+    },
+    "weeping_vines_step": {
+        "subtitle": "futuremc.subtitles.weeping_vines_step",
+        "sounds": [
+            "futuremc:block/roots/step1",
+            "futuremc:block/roots/step2",
+            "futuremc:block/roots/step3",
+            "futuremc:block/roots/step4",
+            "futuremc:block/roots/step5"
+        ]
+    },
+    "weeping_vines_place":  {
+        "subtitle": "futuremc.subtitles.weeping_vines_place",
+        "sounds": [
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
+        ]
+    },
+    "weeping_vines_hit": {
+        "subtitle": "futuremc.subtitles.weeping_vines_hit",
+        "sounds": [
+            "futuremc:block/roots/break1",
+            "futuremc:block/roots/break2",
+            "futuremc:block/roots/break3",
+            "futuremc:block/roots/break4",
+            "futuremc:block/roots/break5",
+            "futuremc:block/roots/break6"
+        ]
+    },
+    "weeping_vines_fall":  {
+        "subtitle": "futuremc.subtitles.weeping_vines_fall",
+        "sounds": [
+            "futuremc:block/roots/step1",
+            "futuremc:block/roots/step2",
+            "futuremc:block/roots/step3",
+            "futuremc:block/roots/step4",
+            "futuremc:block/roots/step5"
+        ]
+    },
+    "lodestone_break": {
+        "subtitle": "futuremc.subtitles.lodestone_break",
+        "sounds": [
+            "futuremc:block/lodestone/place1",
+            "futuremc:block/lodestone/place2",
+            "futuremc:block/lodestone/place3",
+            "futuremc:block/lodestone/place4"
+        ]
+    },
+    "lodestone_step": {
+        "subtitle": "futuremc.subtitles.lodestone_step",
+        "sounds": [
+            "futuremc:block/lodestone/place1",
+            "futuremc:block/lodestone/place2",
+            "futuremc:block/lodestone/place3",
+            "futuremc:block/lodestone/place4"
+        ]
+    },
+    "lodestone_place":  {
+        "subtitle": "futuremc.subtitles.lodestone_place",
+        "sounds": [
+            "futuremc:block/lodestone/place1",
+            "futuremc:block/lodestone/place2",
+            "futuremc:block/lodestone/place3",
+            "futuremc:block/lodestone/place4"
+        ]
+    },
+    "lodestone_hit": {
+        "subtitle": "futuremc.subtitles.lodestone_hit",
+        "sounds": [
+            "futuremc:block/lodestone/place1",
+            "futuremc:block/lodestone/place2",
+            "futuremc:block/lodestone/place3",
+            "futuremc:block/lodestone/place4"
+        ]
+    },
+    "lodestone_fall":  {
+        "subtitle": "futuremc.subtitles.lodestone_fall",
+        "sounds": [
+            "futuremc:block/lodestone/place1",
+            "futuremc:block/lodestone/place2",
+            "futuremc:block/lodestone/place3",
+            "futuremc:block/lodestone/place4"
+        ]
     }
 }

@@ -1,5 +1,7 @@
 {
     "variants": {
-        "": { "model": "futuremc:block/soul_soil" }
+        "": {
+            "model": "futuremc:block/soul_soil"
+        }
     }
 }

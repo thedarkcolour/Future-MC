@@ -1,6 +1,6 @@
 {
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "minecraft:block/warped_planks"
-  }
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "futuremc:block/warped_planks"
+    }
 }

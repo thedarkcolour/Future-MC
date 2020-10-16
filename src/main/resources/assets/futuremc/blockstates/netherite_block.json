@@ -1,5 +1,7 @@
 {
     "variants": {
-        "": { "model": "futuremc:block/netherite_block" }
+        "": {
+            "model": "futuremc:block/netherite_block"
+        }
     }
 }

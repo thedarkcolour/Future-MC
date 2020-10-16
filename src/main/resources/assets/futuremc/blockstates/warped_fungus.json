@@ -1,5 +1,7 @@
 {
     "variants": {
-        "": { "model": "futuremc:block/warped_fungus" }
+        "": {
+            "model": "futuremc:block/warped_fungus"
+        }
     }
 }

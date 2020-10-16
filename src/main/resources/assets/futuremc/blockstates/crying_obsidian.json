@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "": {
-      "model": "futuremc:block/crying_obsidian"
+    "variants": {
+        "": {
+            "model": "futuremc:block/crying_obsidian"
+        }
     }
-  }
 }

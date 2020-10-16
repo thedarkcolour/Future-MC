@@ -1,6 +1,6 @@
 {
-  "parent": "block/template_fence_gate_wall",
-  "textures": {
-    "texture": "minecraft:block/crimson_planks"
-  }
+    "parent": "block/template_fence_gate_wall",
+    "textures": {
+        "texture": "futuremc:block/crimson_planks"
+    }
 }

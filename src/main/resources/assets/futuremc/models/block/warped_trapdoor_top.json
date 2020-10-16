@@ -1,6 +1,6 @@
 {
-  "parent": "block/template_orientable_trapdoor_top",
-  "textures": {
-    "texture": "minecraft:block/warped_trapdoor"
-  }
+    "parent": "block/template_orientable_trapdoor_top",
+    "textures": {
+        "texture": "futuremc:block/warped_trapdoor"
+    }
 }

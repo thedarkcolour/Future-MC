@@ -1,0 +1,9 @@
+{
+    "replace": false,
+    "values": [
+        "futuremc:warped_stem",
+        "futuremc:stripped_warped_stem",
+        "futuremc:warped_hyphae",
+        "futuremc:stripped_warped_hyphae"
+    ]
+}

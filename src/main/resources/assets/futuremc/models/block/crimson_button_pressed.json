@@ -1,6 +1,6 @@
 {
-  "parent": "block/button_pressed",
-  "textures": {
-    "texture": "minecraft:block/crimson_planks"
-  }
+    "parent": "block/button_pressed",
+    "textures": {
+        "texture": "futuremc:block/crimson_planks"
+    }
 }

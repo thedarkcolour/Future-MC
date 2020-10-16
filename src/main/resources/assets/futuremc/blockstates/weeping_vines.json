@@ -1,5 +1,7 @@
 {
     "variants": {
-        "": { "model": "futuremc:block/weeping_vines" }
+        "": {
+            "model": "futuremc:block/weeping_vines"
+        }
     }
 }
