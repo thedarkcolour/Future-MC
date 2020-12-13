@@ -50,7 +50,7 @@ class StonecutterContainer(
         }
 
         override fun setStackInSlot(slot: Int, stack: ItemStack) {
-            if (checkQuark()?.isDrawingInvalidSlotsOverlay() == false)
+            if (checkQuark()?.isDrawingInvalidSlotsOverlay() != true)
                 super.setStackInSlot(slot, stack)
         }
 
@@ -188,13 +188,7 @@ class StonecutterContainer(
     }
 
     override fun getGuiContainer(): GuiContainer {
-        return StonecutterGui(
-            StonecutterContainer(
-                playerInv,
-                worldIn,
-                pos
-            )
-        )
+        return StonecutterGui(StonecutterContainer(playerInv, worldIn, pos))
     }
 
     override fun canInteractWith(playerIn: EntityPlayer): Boolean {

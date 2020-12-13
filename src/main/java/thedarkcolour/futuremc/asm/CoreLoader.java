@@ -17,7 +17,6 @@ import java.util.Map;
 public class CoreLoader implements IFMLLoadingPlugin {
     @Override
     public String[] getASMTransformerClass() {
-        //noinspection CatchMayIgnoreException
         try {
             Function1.class.getName();
         } catch (Throwable any) {

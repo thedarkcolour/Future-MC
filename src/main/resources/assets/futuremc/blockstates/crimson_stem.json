@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "axis=y": {
+            "model": "futuremc:block/crimson_stem"
+        },
+        "axis=z": {
+            "model": "futuremc:block/crimson_stem",
+            "x": 90
+        },
+        "axis=x": {
+            "model": "futuremc:block/crimson_stem",
+            "x": 90,
+            "y": 90
+        }
+    }
+}

@@ -3,10 +3,10 @@ package thedarkcolour.futuremc.recipe.crafting
 import net.minecraft.init.Blocks
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.IRecipe
 import net.minecraft.item.crafting.Ingredient
 import net.minecraft.item.crafting.ShapedRecipes
 import net.minecraft.util.NonNullList
-import net.minecraft.world.World
 import net.minecraftforge.oredict.OreIngredient
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.registry.FItems
@@ -45,49 +45,62 @@ class TrapdoorRecipe private constructor(ingredients: NonNullList<Ingredient>, r
         }
     }
 
-    /**
-     * Used to check if a recipe matches current crafting inventory
-     */
-    override fun matches(inv: InventoryCrafting, worldIn: World?): Boolean {
-        val ore = OreIngredient("plankWood")
-        var has1Row = false
-
-        rowLoop@ for (row in 0..2) {
-            for (col in 0..2) {
-                if (!ore.test(inv.getStackInRowAndColumn(col, row))) {
-                    has1Row = false
-                    continue@rowLoop
-                }
-            }
-
-            if (has1Row) {
-                return true
-            } else {
-                has1Row = true
-            }
-        }
-
-        return false
-    }
-
     companion object {
         // In case a trapdoor is disabled
-        private val OAK = ItemStack(Blocks.TRAPDOOR)
-        private val SPRUCE = if (FConfig.villageAndPillage.newTrapdoors.spruce) ItemStack(FItems.SPRUCE_TRAPDOOR) else OAK
-        private val BIRCH = if (FConfig.villageAndPillage.newTrapdoors.birch) ItemStack(FItems.BIRCH_TRAPDOOR) else OAK
-        private val JUNGLE = if (FConfig.villageAndPillage.newTrapdoors.jungle) ItemStack(FItems.JUNGLE_TRAPDOOR) else OAK
-        private val ACACIA = if (FConfig.villageAndPillage.newTrapdoors.acacia) ItemStack(FItems.ACACIA_TRAPDOOR) else OAK
-        private val DARK_OAK = if (FConfig.villageAndPillage.newTrapdoors.darkOak) ItemStack(FItems.DARK_OAK_TRAPDOOR) else OAK
+        private val OAK = ItemStack(Blocks.TRAPDOOR, 2)
+        private val SPRUCE = if (FConfig.villageAndPillage.newTrapdoors.spruce) ItemStack(FItems.SPRUCE_TRAPDOOR, 2) else OAK
+        private val BIRCH = if (FConfig.villageAndPillage.newTrapdoors.birch) ItemStack(FItems.BIRCH_TRAPDOOR, 2) else OAK
+        private val JUNGLE = if (FConfig.villageAndPillage.newTrapdoors.jungle) ItemStack(FItems.JUNGLE_TRAPDOOR, 2) else OAK
+        private val ACACIA = if (FConfig.villageAndPillage.newTrapdoors.acacia) ItemStack(FItems.ACACIA_TRAPDOOR, 2) else OAK
+        private val DARK_OAK = if (FConfig.villageAndPillage.newTrapdoors.darkOak) ItemStack(FItems.DARK_OAK_TRAPDOOR, 2) else OAK
 
         /**
          * Create method for annoying ingredient list and stuff.
          */
-        fun create(): TrapdoorRecipe {
+        fun create(): List<IRecipe> {
             val ore = OreIngredient("plankWood")
+            val spruce = Ingredient.fromStacks(ItemStack(Blocks.PLANKS, 1, 1))
+            val birch = Ingredient.fromStacks(ItemStack(Blocks.PLANKS, 1, 2))
+            val jungle = Ingredient.fromStacks(ItemStack(Blocks.PLANKS, 1, 3))
+            val acacia = Ingredient.fromStacks(ItemStack(Blocks.PLANKS, 1, 4))
+            val darkOak = Ingredient.fromStacks(ItemStack(Blocks.PLANKS, 1, 5))
             val list = NonNullList.create<Ingredient>()
-            list.addAll(listOf(ore, ore, ore, ore, ore, ore))
 
-            return TrapdoorRecipe(list, ItemStack(Blocks.TRAPDOOR))
+            for (i in 0 until 6) {
+                list.add(ore)
+            }
+
+            val spruceBool = FConfig.villageAndPillage.newTrapdoors.spruce
+            val birchBool = FConfig.villageAndPillage.newTrapdoors.birch
+            val jungleBool = FConfig.villageAndPillage.newTrapdoors.jungle
+            val acaciaBool = FConfig.villageAndPillage.newTrapdoors.acacia
+            val darkOakBool = FConfig.villageAndPillage.newTrapdoors.darkOak
+
+            val recipeList = arrayListOf<IRecipe>()
+
+            if (spruceBool || birchBool || jungleBool || acaciaBool || darkOakBool) {
+                recipeList.add(TrapdoorRecipe(list, OAK).setRegistryName("futuremc:oak_wooden_trapdoor"))
+            } else {
+                // skip ahead if all of em are disable
+                return emptyList()
+            }
+            if (spruceBool) {
+                recipeList.add(TrapdoorRecipe(NonNullList.create<Ingredient>().also { it.addAll(listOf(spruce, spruce, spruce, spruce, spruce, spruce)) }, SPRUCE).setRegistryName("futuremc:spruce_wooden_trapdoor"))
+            }
+            if (birchBool) {
+                recipeList.add(TrapdoorRecipe(NonNullList.create<Ingredient>().also { it.addAll(listOf(birch, birch, birch, birch, birch, birch)) }, BIRCH).setRegistryName("futuremc:birch_wooden_trapdoor"))
+            }
+            if (jungleBool) {
+                recipeList.add(TrapdoorRecipe(NonNullList.create<Ingredient>().also { it.addAll(listOf(jungle, jungle, jungle, jungle, jungle, jungle)) }, JUNGLE).setRegistryName("futuremc:jungle_wooden_trapdoor"))
+            }
+            if (acaciaBool) {
+                recipeList.add(TrapdoorRecipe(NonNullList.create<Ingredient>().also { it.addAll(listOf(acacia, acacia, acacia, acacia, acacia, acacia)) }, ACACIA).setRegistryName("futuremc:acacia_wooden_trapdoor"))
+            }
+            if (darkOakBool) {
+                recipeList.add(TrapdoorRecipe(NonNullList.create<Ingredient>().also { it.addAll(listOf(darkOak, darkOak, darkOak, darkOak, darkOak, darkOak)) }, DARK_OAK).setRegistryName("futuremc:dark_oak_wooden_trapdoor"))
+            }
+
+            return recipeList
         }
     }
 }

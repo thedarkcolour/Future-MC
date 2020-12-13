@@ -1,3 +1,11 @@
+Version 0.2.4.1 - Bug fixes:
+ Barrel - Fixed an issue that made opening animations and sounds weird in multiplayer.
+ Future MC - Fixed a crash with Forge Gradle 3.0.
+ Smithing Table - Fixed a multiplayer error with sounds.
+ Stonecutter - No longer deletes items if Quark is not installed.
+ Trapdoors - Now craft properly.
+ Wood - Fixed ore dictionary entries for wood blocks (6 sided bark blocks).
+
 Version 0.2.4 - Bug fixes and more mod compat:
  *Smithing Table JEI Compatibility* - Recipes for the Smithing Table are now visible in JEI. Should reduce a bit of confusion.
  *Composter Table JEI Compatibility* - Items now show their chance of adding a layer of compost in JEI.

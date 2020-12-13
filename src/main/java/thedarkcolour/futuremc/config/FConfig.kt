@@ -53,11 +53,11 @@ object FConfig {
         @Ignore
         val newWaterColor = false
 
-        @Name("Seagrass")
-        @Comment("Whether (waterloggable, but glitchy) Seagrass is enabled.")
-        @RequiresMcRestart
-        @JvmField
-        var seagrass = false
+        //@Name("Seagrass")
+        //@Comment("Whether (waterloggable, but glitchy) Seagrass is enabled.")
+        //@RequiresMcRestart
+        //@JvmField
+        //var seagrass = false
 
         @Name("Stripped Logs")
         @Comment("Options for stripped logs")

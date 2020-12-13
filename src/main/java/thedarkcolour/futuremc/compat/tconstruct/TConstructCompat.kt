@@ -18,6 +18,7 @@ import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes
  * @see thedarkcolour.futuremc.compat.checkTConstruct
  */
 object TConstructCompat {
+
     /**
      * Determines if the stack is an axe-like tool from Tinkers Construct. Used in log stripping.
      */

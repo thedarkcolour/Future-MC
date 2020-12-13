@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "powered=false": {
+            "model": "futuremc:block/warped_pressure_plate"
+        },
+        "powered=true": {
+            "model": "futuremc:block/warped_pressure_plate_down"
+        }
+    }
+}

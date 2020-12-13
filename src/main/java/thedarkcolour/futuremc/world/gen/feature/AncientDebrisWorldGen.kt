@@ -1,13 +1,12 @@
 package thedarkcolour.futuremc.world.gen.feature
 
 import net.minecraft.block.state.pattern.BlockMatcher
-import net.minecraft.init.Biomes
 import net.minecraft.init.Blocks
+import net.minecraft.world.DimensionType
 import net.minecraft.world.World
 import net.minecraft.world.chunk.IChunkProvider
 import net.minecraft.world.gen.IChunkGenerator
 import net.minecraft.world.gen.feature.WorldGenMinable
-import net.minecraftforge.common.BiomeDictionary
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.registry.FBlocks
 import java.util.*
@@ -25,13 +24,13 @@ object AncientDebrisWorldGen : FWorldGen {
         chunkProvider: IChunkProvider
     ) {
         generateNormalOre(worldIn, rand, chunkX, chunkZ, FConfig.netherUpdate.ancientDebris.normalVein.count, FConfig.netherUpdate.ancientDebris.normalVein.minLevel, FConfig.netherUpdate.ancientDebris.normalVein.maxLevel) { w, r, p ->
-            if (BiomeDictionary.areSimilar(w.getBiome(p), Biomes.HELL)) {
+            if (worldIn.provider.dimensionType == DimensionType.NETHER) {
                 normalGen.generate(w, r, p)
             }
         }
 
         generateLapisStyleOre(worldIn, rand, chunkX, chunkZ, FConfig.netherUpdate.ancientDebris.lapisStyleVein.count, FConfig.netherUpdate.ancientDebris.lapisStyleVein.baseline, FConfig.netherUpdate.ancientDebris.lapisStyleVein.spread) { w, r, p ->
-            if (BiomeDictionary.areSimilar(w.getBiome(p), Biomes.HELL)) {
+            if (worldIn.provider.dimensionType == DimensionType.NETHER) {
                 lapisStyleGen.generate(w, r, p)
             }
         }

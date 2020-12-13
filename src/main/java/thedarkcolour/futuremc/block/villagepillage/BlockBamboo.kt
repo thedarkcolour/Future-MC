@@ -42,12 +42,12 @@ open class BlockBamboo(properties: Properties) : FBlock(properties), IGrowable {
             worldIn.destroyBlock(pos, true)
         }
         if (worldIn.getBlockState(pos.up()).block == BAMBOO) {
-            if (worldIn.getBlockState(pos.up()).getValue(THICK) && !worldIn.getBlockState(pos).getValue(THICK)) {
+            if (worldIn.getBlockState(pos.up()).getValue(THICK) && !state.getValue(THICK)) {
                 worldIn.setBlockState(
                     pos, defaultState
                         .withProperty(THICK, true)
-                        .withProperty(MATURE, worldIn.getBlockState(pos).getValue(MATURE))
-                        .withProperty(LEAVES, worldIn.getBlockState(pos).getValue(LEAVES))
+                        .withProperty(MATURE, state.getValue(MATURE))
+                        .withProperty(LEAVES, state.getValue(LEAVES))
                 )
             }
         }

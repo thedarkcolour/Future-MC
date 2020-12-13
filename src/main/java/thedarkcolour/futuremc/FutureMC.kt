@@ -61,7 +61,6 @@ import thedarkcolour.futuremc.world.gen.feature.AncientDebrisWorldGen
 import thedarkcolour.futuremc.world.gen.feature.BambooWorldGen
 import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator
 import thedarkcolour.futuremc.world.gen.feature.FlowerWorldGen
-import thedarkcolour.futuremc.world.test.FutureWorldType
 
 @Suppress("MemberVisibilityCanBePrivate")
 @Mod(
@@ -75,7 +74,7 @@ import thedarkcolour.futuremc.world.test.FutureWorldType
 object FutureMC {
     const val ID = "futuremc"
     const val NAME = "Future MC"
-    const val VERSION = "0.2.4"
+    const val VERSION = "0.2.4.2"
     const val DEPENDENCIES = "required-after:forgelin;required-after:forge@[14.23.5.2847,)"
 
     // Blackboard is null when running tests
@@ -89,14 +88,15 @@ object FutureMC {
     // Sided delegate is null when running tests
     val CLIENT = FMLCommonHandler.instance().sidedDelegate?.side == Side.CLIENT
 
+    // whether the unit tests are running
     val TEST = Launch.blackboard == null
 
     init {
         Events.registerEvents()
 
-        if (DEBUG) {
-            FutureWorldType
-        }
+        //if (DEBUG) {
+        //    FutureWorldType
+        //}
     }
 
     @EventHandler

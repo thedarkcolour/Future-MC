@@ -92,9 +92,8 @@ object Events {
         addListener(::onWitherKillLiving)
         addListener(::onHoneyJump)
         addListener(::onConfigChanged)
-        // todo optimize into a coremod/mixin
-        if (updateAquatic.newWaterColor)
-            addListener(::onGetWaterColor)
+        //if (updateAquatic.newWaterColor)
+        //    addListener(::onGetWaterColor)
         addListener(::onEntityInteract)
         addListener(::onModelRegistry)
         if (TODO())
@@ -105,8 +104,7 @@ object Events {
         if (TODO())
             addListener(::onModelBake)
 
-        if (TODO())
-            checkDynamicTrees()?.addListeners()
+        checkDynamicTrees()?.addListeners()
     }
 
     /**

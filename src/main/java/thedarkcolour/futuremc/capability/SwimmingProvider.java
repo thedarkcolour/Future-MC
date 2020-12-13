@@ -12,7 +12,7 @@ public class SwimmingProvider implements ICapabilityProvider {
     private SwimmingCapability instance = SWIMMING_CAP.getDefaultInstance();
 
     @CapabilityInject(SwimmingCapability.class)
-    public static Capability<SwimmingCapability> SWIMMING_CAP = null;
+    public static Capability<SwimmingCapability> SWIMMING_CAP;
 
     @CapabilityInject(SwimmingCapability.class)
     public static void method(Capability<SwimmingCapability> cap) {

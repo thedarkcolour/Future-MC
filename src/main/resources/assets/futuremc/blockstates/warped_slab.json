@@ -1,0 +1,13 @@
+{
+    "variants": {
+        "type=bottom": {
+            "model": "futuremc:block/warped_slab"
+        },
+        "type=double": {
+            "model": "futuremc:block/warped_planks"
+        },
+        "type=top": {
+            "model": "futuremc:block/warped_slab_top"
+        }
+    }
+}

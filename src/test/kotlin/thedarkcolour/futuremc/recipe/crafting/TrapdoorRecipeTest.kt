@@ -6,19 +6,17 @@ import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import org.junit.Assert
-import org.junit.Test
 import thedarkcolour.futuremc.registry.FItems
 import java.util.*
 import java.util.function.IntFunction
 
 class TrapdoorRecipeTest {
-    @Test
     fun testGetCraftingResult() {
         // Register vanilla blocks and items
         Bootstrap.register()
 
         val inventory = InventoryCrafting(null, 3, 3)
-        val recipe = TrapdoorRecipe.create()
+        val recipe = TrapdoorRecipe.create()[0]
 
         // Default behaviour
         fillWithPlank(inventory, 0)

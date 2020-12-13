@@ -1,0 +1,13 @@
+{
+    "variants": {
+        "type=bottom": {
+            "model": "futuremc:block/blackstone_slab"
+        },
+        "type=double": {
+            "model": "futuremc:block/blackstone"
+        },
+        "type=top": {
+            "model": "futuremc:block/blackstone_slab_top"
+        }
+    }
+}

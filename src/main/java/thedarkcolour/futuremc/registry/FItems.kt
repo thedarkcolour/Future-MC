@@ -217,19 +217,7 @@ object FItems {
         if (FConfig.netherUpdate.soulSoil) items.register(SOUL_SOIL)
 
         if (FConfig.netherUpdate.netherite) {
-            items.registerAll(
-                NETHERITE_INGOT,
-                NETHERITE_SCRAP,
-                NETHERITE_AXE,
-                NETHERITE_HOE,
-                NETHERITE_PICKAXE,
-                NETHERITE_SHOVEL,
-                NETHERITE_SWORD,
-                NETHERITE_HELMET,
-                NETHERITE_CHESTPLATE,
-                NETHERITE_LEGGINGS,
-                NETHERITE_BOOTS
-            )
+            items.registerAll(NETHERITE_INGOT, NETHERITE_SCRAP, NETHERITE_AXE, NETHERITE_HOE, NETHERITE_PICKAXE, NETHERITE_SHOVEL, NETHERITE_SWORD, NETHERITE_HELMET, NETHERITE_CHESTPLATE, NETHERITE_LEGGINGS, NETHERITE_BOOTS)
         }
 
         if (FConfig.netherUpdate.chain)
@@ -290,12 +278,14 @@ object FItems {
             OreDictionary.registerOre("logWood", ACACIA_WOOD)
         if (FConfig.updateAquatic.wood.jungle)
             OreDictionary.registerOre("logWood", JUNGLE_WOOD)
-        if (FConfig.updateAquatic.wood.oak)
+        if (FConfig.updateAquatic.wood.birch)
             OreDictionary.registerOre("logWood", BIRCH_WOOD)
-        if (FConfig.updateAquatic.wood.spruce)
+        if (FConfig.updateAquatic.wood.oak)
             OreDictionary.registerOre("logWood", OAK_WOOD)
-        if (FConfig.updateAquatic.wood.darkOak)
+        if (FConfig.updateAquatic.wood.spruce)
             OreDictionary.registerOre("logWood", SPRUCE_WOOD)
+        if (FConfig.updateAquatic.wood.darkOak)
+            OreDictionary.registerOre("logWood", DARK_OAK_WOOD)
         if (FConfig.villageAndPillage.newTrapdoors.acacia)
             OreDictionary.registerOre("trapdoorWood", ACACIA_TRAPDOOR)
         if (FConfig.villageAndPillage.newTrapdoors.jungle)

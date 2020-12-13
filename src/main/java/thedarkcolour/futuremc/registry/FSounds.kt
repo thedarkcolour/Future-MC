@@ -348,10 +348,9 @@ object FSounds {
         // sounds.register(BLOCK_SHROOMLIGHT_PLACE)
         // sounds.register(BLOCK_SHROOMLIGHT_HIT)
         // sounds.register(BLOCK_SHROOMLIGHT_FALL)
-        sounds.register(BLOCK_ROOTS_BREAK)
-        sounds.register(BLOCK_ROOTS_STEP)
-        sounds.register(BLOCK_ROOTS_PLACE)
-        sounds.register(BLOCK_ROOTS_HIT)
-        sounds.register(BLOCK_ROOTS_FALL)
+        sounds.registerAll(BLOCK_ROOTS_BREAK, BLOCK_ROOTS_STEP, BLOCK_ROOTS_PLACE, BLOCK_ROOTS_HIT, BLOCK_ROOTS_FALL)
+
+        sounds.register(BLOCK_SMITHING_TABLE_USE)
+        sounds.registerAll(BLOCK_BARREL_OPEN, BLOCK_BARREL_CLOSE)
     }
 }

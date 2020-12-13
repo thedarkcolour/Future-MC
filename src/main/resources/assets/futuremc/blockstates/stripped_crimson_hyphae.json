@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "axis=x": {
+            "model": "futuremc:block/stripped_crimson_hyphae",
+            "x": 90,
+            "y": 90
+        },
+        "axis=y": {
+            "model": "futuremc:block/stripped_crimson_hyphae"
+        },
+        "axis=z": {
+            "model": "futuremc:block/stripped_crimson_hyphae",
+            "x": 90
+        }
+    }
+}

@@ -12,7 +12,6 @@ import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.*
 import thedarkcolour.futuremc.block.buzzybees.BeeHiveBlock
 import thedarkcolour.futuremc.block.buzzybees.HoneyBlockBlock
-import thedarkcolour.futuremc.block.netherupdate.NetherGoldOreBlock
 import thedarkcolour.futuremc.block.villagepillage.*
 import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.config.FConfig
@@ -94,24 +93,25 @@ object FBlocks {
     // val WARPED_NYLIUM = NyliumBlock(Properties(Material.ROCK, "warped_nylium").color(MapColor.CYAN).hardnessAndResistance(1.0f).sound(FSounds.NYLIUM))
     // val CRIMSON_NYLIUM = NyliumBlock(Properties(Material.ROCK, "crimson_nylium").color(MapColor.RED))
     // val WARPED_WART_BLOCK = FBlock(Properties(Material.GRASS, "warped_wart_block").color(MapColor.CYAN))
-    val NETHER_GOLD_ORE = NetherGoldOreBlock(Properties(Material.ROCK, "nether_gold_ore").hardnessAndResistance(3.0f, 3.0f).sound(FSounds.NETHER_GOLD_ORE))
-    val BLACKSTONE = FBlock(Properties(Material.ROCK, "blackstone").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
-    val BLACKSTONE_STAIRS = StairsBlock(BLACKSTONE.defaultState).setRegistryName("blackstone_stairs")
-    val BLACKSTONE_WALL = BlockWall(Properties(Material.ROCK, "blackstone_wall").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
-    //val BLACKSTONE_SLAB = BlockPurpurSlab(Properties.from(BLACKSTONE).hardnessAndResistance(2.0F, 6.0F)).setRegistryKey("blackstone_slab")
-    //val POLISHED_BLACKSTONE = Block(Properties.from(BLACKSTONE).hardnessAndResistance(2.0F, 6.0F)).setRegistryKey("polished_blackstone")
-    //val POLISHED_BLACKSTONE_BRICKS = Block(Properties.from(POLISHED_BLACKSTONE).hardnessAndResistance(1.5F, 6.0F)).setRegistryKey("polished_blackstone_bricks")
-    //val CRACKED_POLISHED_BLACKSTONE_BRICKS = Block(Properties.from(POLISHED_BLACKSTONE_BRICKS)).setRegistryKey("cracked_polished_blackstone_bricks")
-    //val CHISELED_POLISHED_BLACKSTONE = Block(Properties.from(POLISHED_BLACKSTONE).hardnessAndResistance(1.5F, 6.0F)).setRegistryKey("chiseled_polished_blackstone")
-    //val POLISHED_BLACKSTONE_BRICK_SLAB = SlabBlock(Properties.from(POLISHED_BLACKSTONE_BRICKS).hardnessAndResistance(2.0F, 6.0F)).setRegistryKey("polished_blackstone_brick_slab")
-    //val POLISHED_BLACKSTONE_BRICK_STAIRS = StairsBlock(POLISHED_BLACKSTONE_BRICKS::getDefaultState, Properties.from(POLISHED_BLACKSTONE_BRICKS)).setRegistryKey("polished_blackstone_brick_stairs")
-    //val POLISHED_BLACKSTONE_BRICK_WALL = WallBlock(Properties.from(POLISHED_BLACKSTONE_BRICKS)).setRegistryKey("polished_blackstone_brick_wall")
-    //val GILDED_BLACKSTONE = Block(Properties.from(BLACKSTONE).sound(FSounds.GILDED_BLACKSTONE)).setRegistryKey("gilded_blackstone")
-    //val POLISHED_BLACKSTONE_STAIRS = StairsBlock(POLISHED_BLACKSTONE::getDefaultState, Properties.from(POLISHED_BLACKSTONE)).setRegistryKey("polished_blackstone_stairs")
-    //val POLISHED_BLACKSTONE_SLAB = SlabBlock(Properties.from(POLISHED_BLACKSTONE)).setRegistryKey("polished_blackstone_slab")
-    //val POLISHED_BLACKSTONE_PRESSURE_PLATE = PressurePlateBlock(Sensitivity.MOBS, Properties.create(Material.ROCK, MaterialColor.BLACK).doesNotBlockMovement().hardnessAndResistance(0.5f)).setRegistryKey("polished_blackstone_pressure_plate")
-    //val POLISHED_BLACKSTONE_BUTTON = StoneButtonBlock(Properties.create(Material.MISCELLANEOUS, MaterialColor.BLACK).doesNotBlockMovement().hardnessAndResistance(0.5f)).setRegistryKey("polished_blackstone_button")
-    //val POLISHED_BLACKSTONE_WALL = WallBlock(Properties.from(POLISHED_BLACKSTONE)).setRegistryKey("polished_blackstone_wall")
+
+    //val NETHER_GOLD_ORE = NetherGoldOreBlock(Properties(Material.ROCK, "nether_gold_ore").hardnessAndResistance(3.0f, 3.0f).sound(FSounds.NETHER_GOLD_ORE))
+    //val BLACKSTONE = FBlock(Properties(Material.ROCK, "blackstone").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
+    //val BLACKSTONE_STAIRS = StairsBlock(BLACKSTONE.defaultState).setRegistryName("blackstone_stairs")
+    //val BLACKSTONE_WALL = BlockWall(Properties(Material.ROCK, "blackstone_wall").color(MapColor.BLACK).hardnessAndResistance(1.5f, 6.0f))
+    //val BLACKSTONE_SLAB = FSlabBlock(Properties(Material.ROCK, "blackstone_slab").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
+    //val POLISHED_BLACKSTONE = FBlock(Properties(Material.ROCK, "polished_blackstone").color(MapColor.BLACK).hardnessAndResistance(2.0F, 6.0F))
+    //val POLISHED_BLACKSTONE_BRICKS = FBlock(Properties(Material.ROCK, "polished_blackstone_bricks").color(MapColor.BLACK).hardnessAndResistance(1.5F, 6.0F))
+    //val CRACKED_POLISHED_BLACKSTONE_BRICKS = FBlock(Properties(Material.ROCK, "cracked_polished_blackstone_bricks"))
+    //val CHISELED_POLISHED_BLACKSTONE = FBlock(Properties(Material.ROCK, "chiseled_polished_blackstone").hardnessAndResistance(1.5F, 6.0F))
+    //val POLISHED_BLACKSTONE_BRICK_SLAB = FSlabBlock(Properties(Material.ROCK, "polished_blackstone_brick_slab")).hardnessAndResistance(2.0F, 6.0F))
+    //val POLISHED_BLACKSTONE_BRICK_STAIRS = StairsBlock(POLISHED_BLACKSTONE_BRICKS.getDefaultState, Properties(POLISHED_BLACKSTONE_BRICKS, "polished_blackstone_brick_stairs"))
+    //val POLISHED_BLACKSTONE_BRICK_WALL = BlockWall(Properties(POLISHED_BLACKSTONE_BRICKS, "polished_blackstone_brick_wall"))
+    //val GILDED_BLACKSTONE = FBlock(Properties(Material.ROCK, "gilded_blackstone").color(MapColor.BLACK).sound(FSounds.GILDED_BLACKSTONE)).setRegistryKey("gilded_blackstone")
+    //val POLISHED_BLACKSTONE_STAIRS = StairsBlock(POLISHED_BLACKSTONE.getDefaultState, Properties.from(POLISHED_BLACKSTONE)).setRegistryKey("polished_blackstone_stairs")
+    //val POLISHED_BLACKSTONE_SLAB = FSlabBlock(Properties.from(POLISHED_BLACKSTONE)).setRegistryKey("polished_blackstone_slab")
+    //val POLISHED_BLACKSTONE_PRESSURE_PLATE = BlockPressurePlate(BlockPressurePlate.Sensitivity.MOBS, Properties.create(Material.ROCK, MaterialColor.BLACK).doesNotBlockMovement().hardnessAndResistance(0.5f)).setRegistryKey("polished_blackstone_pressure_plate")
+    //val POLISHED_BLACKSTONE_BUTTON = BlockButtonStone(Material.CIRCUITS).setHardness(0.5f).setResistance(0.5f).setRegistryName(FutureMC.ID, "polished_blackstone_button")
+    //val POLISHED_BLACKSTONE_WALL = BlockWall(Properties.from(POLISHED_BLACKSTONE)).setRegistryKey("polished_blackstone_wall")
 
     val SEAGRASS = BlockSeaGrass()
     val SEAGRASS_FLOWING = SEAGRASS.flowing
@@ -259,7 +259,7 @@ object FBlocks {
             blocks.register(CHAIN)
         if (FConfig.netherUpdate.netherite)
             blocks.registerAll(NETHERITE_BLOCK, ANCIENT_DEBRIS)
-        if (FConfig.updateAquatic.seagrass)
+        if (FutureMC.DEBUG)
             blocks.registerAll(SEAGRASS, SEAGRASS_FLOWING)
 
         registerTE("futuremc:barrel", TileBarrel::class.java, FConfig.villageAndPillage.barrel)
@@ -270,7 +270,6 @@ object FBlocks {
         registerTE("futuremc:composter", TileComposter::class.java, FConfig.villageAndPillage.composter)
         registerTE("futuremc:campfire", CampfireTile::class.java, FConfig.villageAndPillage.campfire.enabled)
 
-        if (FConfig.updateAquatic.seagrass)
-            registerTE("futuremc:water_renderer", TileSeagrassRenderer::class.java, FConfig.updateAquatic.seagrass)
+        registerTE("futuremc:water_renderer", TileSeagrassRenderer::class.java, FutureMC.DEBUG)
     }
 }
