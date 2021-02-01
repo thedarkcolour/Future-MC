@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.enchantment
 
 import net.minecraft.enchantment.Enchantment
+import thedarkcolour.futuremc.registry.FEnchantments
 
 class EnchantmentRiptide : EnchantmentTridentBase(Rarity.RARE, "riptide") {
     override fun getMinEnchantability(enchantmentLevel: Int): Int {
@@ -16,6 +17,6 @@ class EnchantmentRiptide : EnchantmentTridentBase(Rarity.RARE, "riptide") {
     }
 
     override fun canApplyTogether(ench: Enchantment): Boolean {
-        return super.canApplyTogether(ench) && ench !== Enchantments.LEALTAD && ench !== Enchantments.CONDUCTIVIDAD
+        return super.canApplyTogether(ench) && ench !== FEnchantments.LEALTAD && ench !== FEnchantments.CONDUCTIVIDAD
     }
 }

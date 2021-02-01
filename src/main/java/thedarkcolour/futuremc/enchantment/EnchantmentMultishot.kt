@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.enchantment
 
 import net.minecraft.enchantment.Enchantment
+import thedarkcolour.futuremc.registry.FEnchantments
 
 class EnchantmentMultishot : EnchantmentCrossbowBase(Rarity.RARE, "multishot") {
     override fun getMinEnchantability(enchantmentLevel: Int): Int {
@@ -12,6 +13,6 @@ class EnchantmentMultishot : EnchantmentCrossbowBase(Rarity.RARE, "multishot") {
     }
 
     override fun canApplyTogether(ench: Enchantment): Boolean {
-        return super.canApplyTogether(ench) && ench !== Enchantments.PIERCING
+        return super.canApplyTogether(ench) && ench !== FEnchantments.PIERCING
     }
 }

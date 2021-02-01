@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "xxx",
+        "xax",
+        "xxx"
+    ],
+    "key": {
+        "x": {
+            "item": "minecraft:iron_nugget"
+        },
+        "a": {
+            "item": "soul_fire_torch"
+        }
+    },
+    "result": {
+        "item": "soul_fire_lantern"
+    }
+}

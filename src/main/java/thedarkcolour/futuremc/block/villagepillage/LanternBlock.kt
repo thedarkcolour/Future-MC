@@ -61,6 +61,7 @@ class LanternBlock(properties: Properties) : FBlock(properties) {
         val bounds = arrayListOf<AxisAlignedBB>()
         state.addCollisionBoxToList(worldIn, BlockPos.ORIGIN, AxisAlignedBB(BlockPos.ORIGIN), bounds, null, false)
 
+        // whether this was meant to be a hanging lantern
         val up = facing == EnumFacing.UP
         val offsetState = worldIn.getBlockState(pos.offset(if (up) facing else EnumFacing.DOWN))
 
@@ -140,7 +141,7 @@ class LanternBlock(properties: Properties) : FBlock(properties) {
     }
 
     private fun isTrapdoorValid(state: IBlockState, facing: EnumFacing): Boolean {
-        return (facing == EnumFacing.UP && state.getValue(BlockTrapDoor.HALF) == BlockTrapDoor.DoorHalf.TOP || facing == EnumFacing.DOWN && state.getValue(BlockTrapDoor.HALF) == BlockTrapDoor.DoorHalf.BOTTOM) && !state.getValue(BlockTrapDoor.OPEN)
+        return state.properties.containsKey(BlockTrapDoor.HALF) && (facing == EnumFacing.UP && state.getValue(BlockTrapDoor.HALF) == BlockTrapDoor.DoorHalf.TOP || facing == EnumFacing.DOWN && state.getValue(BlockTrapDoor.HALF) == BlockTrapDoor.DoorHalf.BOTTOM) && !state.getValue(BlockTrapDoor.OPEN)
     }
 
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromPos: BlockPos) {

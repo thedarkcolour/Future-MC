@@ -69,7 +69,7 @@ object RegistryEventHandler {
     }
 
     @SubscribeEvent
-    fun registerEnchantments(event: RegistryEvent.Register<Enchantment>) = FEnchantments.init()
+    fun registerEnchantments(event: RegistryEvent.Register<Enchantment>) = FEnchantments.registerEnchantments(event)
 
     // Go after other biomes so we can add fish to them
     @SubscribeEvent(priority = EventPriority.LOWEST)

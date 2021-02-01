@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.enchantment
 
 import net.minecraft.enchantment.Enchantment
+import thedarkcolour.futuremc.registry.FEnchantments
 
 class EnchantmentPiercing : EnchantmentCrossbowBase(Rarity.COMMON, "piercing") {
     override fun getMaxLevel(): Int {
@@ -12,6 +13,6 @@ class EnchantmentPiercing : EnchantmentCrossbowBase(Rarity.COMMON, "piercing") {
     }
 
     override fun canApplyTogether(ench: Enchantment): Boolean {
-        return super.canApplyTogether(ench) && ench !== Enchantments.MULTISHOT
+        return super.canApplyTogether(ench) && ench !== FEnchantments.MULTISHOT
     }
 }

@@ -1,7 +1,7 @@
 package thedarkcolour.futuremc.world.test
 
 /**
- * Testing my world generation system.
+ * Testing new worldgen
  */
 /*object FutureWorldType : WorldType("FMCWorld") {
     override fun getChunkGenerator(world: World, generatorOptions: String): IChunkGenerator {

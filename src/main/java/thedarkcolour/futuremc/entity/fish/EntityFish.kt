@@ -28,7 +28,6 @@ import kotlin.math.atan2
 import kotlin.math.sqrt
 
 abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreature {
-    abstract val flopSound: SoundEvent
     var fromBucket: Boolean
         get() = dataManager[FROM_BUCKET]
         set(value) {
@@ -38,6 +37,12 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
     init {
         moveHelper = MoveHelper(this)
     }
+
+    override fun getEyeHeight() = height * 0.65F
+
+    override fun canDespawn() = !fromBucket && !hasCustomName()
+
+    abstract val flopSound: SoundEvent
 
     private class MoveHelper(private val fish: EntityFish) : EntityMoveHelper(fish) {
         override fun onUpdateMoveHelper() {
@@ -119,12 +124,6 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
 
     open fun shouldSwimAway() = true
 
-    override fun getEyeHeight() = height * 0.65F
-
-    override fun canDespawn(): Boolean {
-        return !fromBucket && !hasCustomName()
-    }
-
     override fun getMaxSpawnedInChunk() = 8
 
     override fun canBreatheUnderwater() = true
@@ -151,7 +150,7 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
 
     abstract override fun getSwimSound(): SoundEvent
 
-    override fun onEntityUpdate() {
+    override fun onLivingUpdate() {
         if (!isInWater && onGround && collidedVertically) {
             motionX += (rand.nextFloat() * 2.0F - 1.0F) * 0.05F
             motionY += 0.4
@@ -161,6 +160,10 @@ abstract class EntityFish(worldIn: World) : EntityCreature(worldIn), WaterCreatu
             playSound(flopSound, soundVolume, soundPitch)
         }
 
+        super.onLivingUpdate()
+    }
+
+    override fun onEntityUpdate() {
         var i = air
         super.onEntityUpdate()
 

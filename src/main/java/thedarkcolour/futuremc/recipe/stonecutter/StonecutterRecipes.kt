@@ -16,10 +16,16 @@ object StonecutterRecipes : Recipes<SimpleRecipe>() {
         val stone = ItemStack(Blocks.STONE)
         val smoothStone = ItemStack(FBlocks.SMOOTH_STONE)
         val stoneBricks = ItemStack(Blocks.STONEBRICK)
+        val sandstone = ItemStack(Blocks.SANDSTONE)
         val redSandstone = ItemStack(Blocks.RED_SANDSTONE)
         val andesite = ItemStack(Blocks.STONE, 1, 5)
         val diorite = ItemStack(Blocks.STONE, 1, 3)
         val granite = ItemStack(Blocks.STONE, 1, 1)
+        val quartz = ItemStack(Blocks.QUARTZ_BLOCK)
+        val cobblestone = ItemStack(Blocks.COBBLESTONE)
+        val purpur = ItemStack(Blocks.PURPUR_BLOCK)
+        val bricks = ItemStack(Blocks.BRICK_BLOCK)
+        val netherBrick = ItemStack(Blocks.NETHER_BRICK)
 
         recipes = arrayListOf(
             SimpleRecipe(stone, ItemStack(Blocks.STONE_SLAB, 2)),
@@ -39,33 +45,34 @@ object StonecutterRecipes : Recipes<SimpleRecipe>() {
             SimpleRecipe(diorite, ItemStack(Blocks.STONE, 1, 4)),
             SimpleRecipe(andesite, ItemStack(FBlocks.ANDESITE_WALL)),
             SimpleRecipe(andesite, ItemStack(Blocks.STONE, 1, 6)),
-            SimpleRecipe(ItemStack(Blocks.COBBLESTONE), ItemStack(Blocks.STONE_SLAB, 2, 3)),
-            SimpleRecipe(ItemStack(Blocks.COBBLESTONE), ItemStack(Blocks.STONE_STAIRS)),
-            SimpleRecipe(ItemStack(Blocks.COBBLESTONE), ItemStack(Blocks.COBBLESTONE_WALL)),
+            SimpleRecipe(cobblestone, ItemStack(Blocks.STONE_SLAB, 2, 3)),
+            SimpleRecipe(cobblestone, ItemStack(Blocks.STONE_STAIRS)),
+            SimpleRecipe(cobblestone, ItemStack(Blocks.COBBLESTONE_WALL)),
             SimpleRecipe(ItemStack(Blocks.MOSSY_COBBLESTONE), ItemStack(Blocks.COBBLESTONE_WALL, 1, 1)),
-            SimpleRecipe(ItemStack(Blocks.SANDSTONE), ItemStack(Blocks.STONE_SLAB, 2, 1)),
-            SimpleRecipe(ItemStack(Blocks.SANDSTONE), ItemStack(Blocks.SANDSTONE_STAIRS)),
-            SimpleRecipe(ItemStack(Blocks.SANDSTONE), ItemStack(FBlocks.SANDSTONE_WALL)),
-            SimpleRecipe(ItemStack(Blocks.SANDSTONE), ItemStack(Blocks.SANDSTONE, 1, 2)),
-            SimpleRecipe(ItemStack(Blocks.SANDSTONE), ItemStack(Blocks.SANDSTONE, 1, 1)),
+            SimpleRecipe(sandstone, ItemStack(Blocks.STONE_SLAB, 2, 1)),
+            SimpleRecipe(sandstone, ItemStack(Blocks.SANDSTONE_STAIRS)),
+            SimpleRecipe(sandstone, ItemStack(FBlocks.SANDSTONE_WALL)),
+            SimpleRecipe(sandstone, ItemStack(Blocks.SANDSTONE, 1, 2)),
+            SimpleRecipe(sandstone, ItemStack(Blocks.SANDSTONE, 1, 1)),
             SimpleRecipe(redSandstone, ItemStack(Blocks.STONE_SLAB2, 2)),
-            SimpleRecipe(ItemStack(Blocks.RED_SANDSTONE), ItemStack(Blocks.RED_SANDSTONE_STAIRS)),
-            SimpleRecipe(ItemStack(Blocks.RED_SANDSTONE), ItemStack(FBlocks.RED_SANDSTONE_WALL)),
-            SimpleRecipe(ItemStack(Blocks.RED_SANDSTONE), ItemStack(Blocks.RED_SANDSTONE, 1, 2)),
-            SimpleRecipe(ItemStack(Blocks.RED_SANDSTONE), ItemStack(Blocks.RED_SANDSTONE, 1, 1)),
+            SimpleRecipe(redSandstone, ItemStack(Blocks.RED_SANDSTONE_STAIRS)),
+            SimpleRecipe(redSandstone, ItemStack(FBlocks.RED_SANDSTONE_WALL)),
+            SimpleRecipe(redSandstone, ItemStack(Blocks.RED_SANDSTONE, 1, 2)),
+            SimpleRecipe(redSandstone, ItemStack(Blocks.RED_SANDSTONE, 1, 1)),
             SimpleRecipe(ItemStack(Blocks.PRISMARINE), ItemStack(FBlocks.PRISMARINE_WALL)),
-            SimpleRecipe(ItemStack(Blocks.QUARTZ_BLOCK), ItemStack(Blocks.STONE_SLAB, 1, 7)),
-            SimpleRecipe(ItemStack(Blocks.QUARTZ_BLOCK), ItemStack(Blocks.QUARTZ_STAIRS)),
-            SimpleRecipe(ItemStack(Blocks.QUARTZ_BLOCK), ItemStack(Blocks.QUARTZ_BLOCK, 1, 1)),
-            SimpleRecipe(ItemStack(Blocks.QUARTZ_BLOCK), ItemStack(Blocks.QUARTZ_BLOCK, 1, 2)),
-            SimpleRecipe(ItemStack(Blocks.PURPUR_BLOCK), ItemStack(Blocks.PURPUR_SLAB, 2)),
-            SimpleRecipe(ItemStack(Blocks.PURPUR_BLOCK), ItemStack(Blocks.PURPUR_STAIRS)),
-            SimpleRecipe(ItemStack(Blocks.PURPUR_BLOCK), ItemStack(Blocks.PURPUR_PILLAR)),
-            SimpleRecipe(ItemStack(Blocks.BRICK_BLOCK), ItemStack(Blocks.STONE_SLAB, 2, 4)),
-            SimpleRecipe(ItemStack(Blocks.BRICK_BLOCK), ItemStack(Blocks.BRICK_STAIRS)),
-            SimpleRecipe(ItemStack(Blocks.NETHER_BRICK), ItemStack(Blocks.STONE_SLAB, 2, 6)),
-            SimpleRecipe(ItemStack(Blocks.NETHER_BRICK), ItemStack(Blocks.NETHER_BRICK_STAIRS)),
-            SimpleRecipe(ItemStack(Blocks.NETHER_BRICK), ItemStack(FBlocks.NETHER_BRICK_WALL)),
+            SimpleRecipe(quartz, ItemStack(Blocks.STONE_SLAB, 1, 7)),
+            SimpleRecipe(quartz, ItemStack(Blocks.QUARTZ_STAIRS)),
+            SimpleRecipe(quartz, ItemStack(Blocks.QUARTZ_BLOCK, 1, 1)),
+            SimpleRecipe(quartz, ItemStack(Blocks.QUARTZ_BLOCK, 1, 2)),
+            SimpleRecipe(purpur, ItemStack(Blocks.PURPUR_SLAB, 2)),
+            SimpleRecipe(purpur, ItemStack(Blocks.PURPUR_STAIRS)),
+            SimpleRecipe(purpur, ItemStack(Blocks.PURPUR_PILLAR)),
+            SimpleRecipe(bricks, ItemStack(Blocks.STONE_SLAB, 2, 4)),
+            SimpleRecipe(bricks, ItemStack(Blocks.BRICK_STAIRS)),
+            SimpleRecipe(bricks, ItemStack(FBlocks.BRICK_WALL)),
+            SimpleRecipe(netherBrick, ItemStack(Blocks.STONE_SLAB, 2, 6)),
+            SimpleRecipe(netherBrick, ItemStack(Blocks.NETHER_BRICK_STAIRS)),
+            SimpleRecipe(netherBrick, ItemStack(FBlocks.NETHER_BRICK_WALL)),
             SimpleRecipe(ItemStack(Blocks.RED_NETHER_BRICK), ItemStack(FBlocks.RED_NETHER_BRICK_WALL)),
             SimpleRecipe(ItemStack(Blocks.END_BRICKS), ItemStack(FBlocks.END_STONE_BRICK_WALL)),
             SimpleRecipe(ItemStack(Blocks.END_STONE), ItemStack(Blocks.END_BRICKS)),

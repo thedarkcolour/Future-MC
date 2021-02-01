@@ -91,7 +91,7 @@ class EntityTrident : EntityModArrow {
                     prevRotationYaw += 180.0f
 
                     if (!hasChanneled && !thrownStack.isEmpty) { // Enchantment handling
-                        if (EnchantHelper.hasChanneling(thrownStack)) {
+                        if (EnchantHelper.getChanneling(thrownStack)) {
                             if (world.isThundering) {
                                 shootingEntity!!.world.addWeatherEffect(
                                     EntityLightningBolt(
@@ -129,7 +129,7 @@ class EntityTrident : EntityModArrow {
 
             playSound(FSounds.TRIDENT_IMPACT, 1.0f, 1.0f)
 
-            if (!hasChanneled && EnchantHelper.hasChanneling(thrownStack)) { // Enchantment handling
+            if (!hasChanneled && EnchantHelper.getChanneling(thrownStack)) { // Enchantment handling
                 val living = if (shootingEntity == null) this else shootingEntity
                 living.world.addWeatherEffect(EntityLightningBolt(living.world, posX, posY, posZ, false))
                 playSound(FSounds.TRIDENT_CONDUCTIVIDAD, 5.0f, 1.0f)

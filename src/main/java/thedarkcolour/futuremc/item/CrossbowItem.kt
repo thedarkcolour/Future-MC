@@ -21,10 +21,10 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent
 import thedarkcolour.core.item.ModeledItem
 import thedarkcolour.core.util.getOrCreateTag
 import thedarkcolour.futuremc.enchantment.EnchantHelper
-import thedarkcolour.futuremc.enchantment.Enchantments
 import thedarkcolour.futuremc.entity.horizontal_firework.EntityHorizontalFireworksRocket
 import thedarkcolour.futuremc.entity.trident.EntityModArrow
 import thedarkcolour.futuremc.entity.trident.EntityPiercingArrow
+import thedarkcolour.futuremc.registry.FEnchantments
 import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FSounds
 import java.util.*
@@ -108,7 +108,7 @@ class CrossbowItem : ModeledItem("crossbow") {
     }
 
     private fun hasAmmo(entityIn: EntityLivingBase, crossbow: ItemStack): Boolean {
-        val i = EnchantmentHelper.getEnchantmentLevel(Enchantments.MULTISHOT, crossbow)
+        val i = EnchantmentHelper.getEnchantmentLevel(FEnchantments.MULTISHOT, crossbow)
         val j = if (i == 0) 1 else 3
         val isCreative = entityIn is EntityPlayer && entityIn.capabilities.isCreativeMode
         var itemstack = findAmmo(entityIn)
@@ -276,7 +276,7 @@ class CrossbowItem : ModeledItem("crossbow") {
         }
 
         modArrow.func_213865_o(true)
-        val i = EnchantmentHelper.getEnchantmentLevel(Enchantments.PIERCING, crossbow)
+        val i = EnchantmentHelper.getEnchantmentLevel(FEnchantments.PIERCING, crossbow)
         if (i > 0) {
             modArrow.setPierceLevel(i.toByte())
         }

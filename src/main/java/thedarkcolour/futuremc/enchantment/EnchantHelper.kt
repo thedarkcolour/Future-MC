@@ -2,54 +2,31 @@ package thedarkcolour.futuremc.enchantment
 
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.item.ItemStack
+import thedarkcolour.futuremc.registry.FEnchantments
 
 object EnchantHelper {
-    fun hasChanneling(stack: ItemStack?): Boolean {
-        return if (stack == null) {
-            false
-        } else EnchantmentHelper.getEnchantmentLevel(
-            Enchantments.CONDUCTIVIDAD,
-            stack
-        ) > 0
+    fun getChanneling(stack: ItemStack): Boolean {
+        return EnchantmentHelper.getEnchantmentLevel(FEnchantments.CONDUCTIVIDAD, stack) > 0
     }
 
-    fun getImpaling(stack: ItemStack?): Int {
-        return if (stack == null) {
-            0
-        } else EnchantmentHelper.getEnchantmentLevel(
-            Enchantments.EMPALAMIENTO,
-            stack
-        )
+    fun getImpaling(stack: ItemStack): Int {
+        return EnchantmentHelper.getEnchantmentLevel(FEnchantments.EMPALAMIENTO, stack)
     }
 
-    fun getLoyalty(stack: ItemStack?): Int {
-        return if (stack == null) {
-            0
-        } else EnchantmentHelper.getEnchantmentLevel(Enchantments.LEALTAD, stack)
+    fun getLoyalty(stack: ItemStack): Int {
+        return EnchantmentHelper.getEnchantmentLevel(FEnchantments.LEALTAD, stack)
     }
 
-    fun getRiptide(stack: ItemStack?): Int {
-        return if (stack == null) {
-            0
-        } else EnchantmentHelper.getEnchantmentLevel(Enchantments.RIPTIDE, stack)
+    fun getRiptide(stack: ItemStack): Int {
+        return EnchantmentHelper.getEnchantmentLevel(FEnchantments.RIPTIDE, stack)
     }
 
-    fun getQuickCharge(stack: ItemStack?): Int {
-        return if (stack == null) {
-            0
-        } else EnchantmentHelper.getEnchantmentLevel(
-            Enchantments.QUICK_CHARGE,
-            stack
-        )
+    fun getQuickCharge(stack: ItemStack): Int {
+        return EnchantmentHelper.getEnchantmentLevel(FEnchantments.QUICK_CHARGE, stack)
     }
 
-    fun hasMultishot(stack: ItemStack?): Boolean {
-        return if (stack == null) {
-            false
-        } else EnchantmentHelper.getEnchantmentLevel(
-            Enchantments.MULTISHOT,
-            stack
-        ) > 0
+    fun getMultishot(stack: ItemStack): Boolean {
+        return EnchantmentHelper.getEnchantmentLevel(FEnchantments.MULTISHOT, stack) > 0
     }
 
     fun isCursed(stack: ItemStack): Boolean {

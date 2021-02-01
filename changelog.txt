@@ -1,3 +1,14 @@
+Version 0.2.5 - Bug fixes and minor additions:
+ Seagrass - Removed from config file. Fixes #195
+ Smoker - Now works properly with CraftTweaker. Fixes #217
+ Soul Torch & Soul Lantern - Now craftable in survival. Fixes #200
+ Stonecutter - Added some missing default recipes. Fixes #209
+ Stripped Wood - Attempting to strip a log whose stripped variant is disabled in the config no longer causes a crash. Fixes #216
+ Suspicious Stew - No longer causes a crash when disabled in the config. Fixes #194
+ Trident - Drops from Elder Guardians as intended. Fixes #198
+ Trident - Enchantments now work correctly. Fixes #212
+ World Type - No longer shows test world type. Fixes #208
+
 Version 0.2.4.1 - Bug fixes:
  Barrel - Fixed an issue that made opening animations and sounds weird in multiplayer.
  Future MC - Fixed a crash with Forge Gradle 3.0.

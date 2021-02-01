@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.boss.EntityWither
 import net.minecraft.entity.item.EntityItem
+import net.minecraft.entity.monster.EntityElderGuardian
 import net.minecraft.entity.monster.EntityIronGolem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
@@ -63,6 +64,7 @@ import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_OAK_LOG
 import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_SPRUCE_LOG
 import thedarkcolour.futuremc.registry.FBlocks.WITHER_ROSE
 import thedarkcolour.futuremc.registry.FItems.HONEY_BOTTLE
+import thedarkcolour.futuremc.registry.FItems.TRIDENT
 import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.registry.FSounds.HONEY_BOTTLE_DRINK
 import thedarkcolour.futuremc.registry.RegistryEventHandler
@@ -87,17 +89,17 @@ object Events {
         // do not run during tests
         if (FutureMC.TEST) return
 
-        addListener(::onHoneyBottleEaten)
+        addListener(::onHoneyBottleConsumed)
         addListener(::onLogStripped)
-        addListener(::onWitherKillLiving)
-        addListener(::onHoneyJump)
+        addListener(::spawnWitherRoseOrDropTrident)
+        addListener(::preventHoneyJump)
         addListener(::onConfigChanged)
         //if (updateAquatic.newWaterColor)
         //    addListener(::onGetWaterColor)
-        addListener(::onEntityInteract)
+        addListener(::healIronGolem)
         addListener(::onModelRegistry)
         if (TODO())
-            addListener(::onPlayerTick)
+            addListener(::updateSwimAnimation)
         subscribe(RegistryEventHandler)
         subscribe(OldWorldHandler)
 
@@ -111,7 +113,7 @@ object Events {
      * Changes the eating sound of honey bottle to
      * the correct drinking sound from 1.15.
      */
-    private fun onHoneyBottleEaten(event: PlaySoundAtEntityEvent) {
+    private fun onHoneyBottleConsumed(event: PlaySoundAtEntityEvent) {
         if (event.entity is EntityLivingBase) {
             val e = event.entity as EntityLivingBase
             if (e.activeItemStack.item == HONEY_BOTTLE) {
@@ -148,7 +150,8 @@ object Events {
 
                     if (axis != null && variant != null) {
                         if (BlockStrippedLog.variants.contains(state.getValue(variant).toString())) {
-                            stripBlock(worldIn, pos, player, event.hand, stack, getState(state, block).withProperty(axis, state.getValue(axis)))
+                            val strippedLog = getState(state, block) ?: return
+                            stripBlock(worldIn, pos, player, event.hand, stack, strippedLog.withProperty(axis, state.getValue(axis)))
                         }
                     }
                 } else if (block is BlockWood) {
@@ -175,7 +178,7 @@ object Events {
         return stack.item is ItemTool && stack.item.getToolClasses(stack).contains("axe")
     }
 
-    private fun getState(state: IBlockState, block: Block): IBlockState {
+    private fun getState(state: IBlockState, block: Block): IBlockState? {
         var variant: String? = null
         if (block == Blocks.LOG) {
             variant = state.getValue(BlockOldLog.VARIANT).getName()
@@ -185,15 +188,15 @@ object Events {
         }
         if (variant != null) {
             when (variant) {
-                "acacia" -> return STRIPPED_ACACIA_LOG.defaultState
-                "jungle" -> return STRIPPED_JUNGLE_LOG.defaultState
-                "birch" -> return STRIPPED_BIRCH_LOG.defaultState
-                "oak" -> return STRIPPED_OAK_LOG.defaultState
-                "spruce" -> return STRIPPED_SPRUCE_LOG.defaultState
-                "dark_oak" -> return STRIPPED_DARK_OAK_LOG.defaultState
+                "acacia" -> return if (updateAquatic.strippedLogs.acacia) STRIPPED_ACACIA_LOG.defaultState else null
+                "jungle" -> return if (updateAquatic.strippedLogs.jungle) STRIPPED_JUNGLE_LOG.defaultState else null
+                "birch" -> return if (updateAquatic.strippedLogs.birch) STRIPPED_BIRCH_LOG.defaultState else null
+                "oak" -> return if (updateAquatic.strippedLogs.oak) STRIPPED_OAK_LOG.defaultState else null
+                "spruce" -> return if (updateAquatic.strippedLogs.spruce) STRIPPED_SPRUCE_LOG.defaultState else null
+                "dark_oak" -> return if (updateAquatic.strippedLogs.darkOak) STRIPPED_DARK_OAK_LOG.defaultState else null
             }
         }
-        throw IllegalStateException("Invalid wood")
+        return null
     }
 
     /**
@@ -227,10 +230,11 @@ object Events {
         }
     }
 
-    // wither rose spawn
-    private fun onWitherKillLiving(event: LivingDeathEvent) {
+    // wither rose spawn + elder guardian thing
+    private fun spawnWitherRoseOrDropTrident(event: LivingDeathEvent) {
         val entityIn = event.entityLiving
         val worldIn = entityIn.world
+
         if (!entityIn.isDead) {
             if (!worldIn.isRemote) {
                 if (event.source.trueSource is EntityWither) {
@@ -244,16 +248,23 @@ object Events {
                         }
                     }
 
-                    val item = EntityItem(worldIn, entityIn.posX, entityIn.posY, entityIn.posZ)
-                    item.item = ItemStack(WITHER_ROSE)
-                    worldIn.spawnEntity(item)
+                    val witherRose = EntityItem(worldIn, entityIn.posX, entityIn.posY, entityIn.posZ)
+                    witherRose.item = ItemStack(WITHER_ROSE)
+                    worldIn.spawnEntity(witherRose)
+                }
+
+                // elder guardian drop
+                if (entityIn is EntityElderGuardian) {
+                    val trident = EntityItem(worldIn, entityIn.posX, entityIn.posY, entityIn.posZ)
+                    trident.item = ItemStack(TRIDENT)
+                    worldIn.spawnEntity(trident)
                 }
             }
         }
     }
 
     // honey jump stickiness
-    private fun onHoneyJump(event: LivingJumpEvent) {
+    private fun preventHoneyJump(event: LivingJumpEvent) {
         val entity = event.entityLiving
         val x = MathHelper.floor(entity.posX)
         val y = MathHelper.floor(entity.posY - 0.20000000298023224)
@@ -298,7 +309,7 @@ object Events {
     }*/
 
     // iron golem healing
-    private fun onEntityInteract(event: PlayerInteractEvent.EntityInteract) {
+    private fun healIronGolem(event: PlayerInteractEvent.EntityInteract) {
         if (FConfig.buzzyBees.ironGolem.ironBarHealing) {
             val entity = event.target
             if (entity is EntityIronGolem && event.itemStack.item == Items.IRON_INGOT) {
@@ -329,7 +340,7 @@ object Events {
         }
     }
 
-    private fun onPlayerTick(event: PlayerTickEvent) {
+    private fun updateSwimAnimation(event: PlayerTickEvent) {
         if (event.phase == Phase.END) {
             val player = event.player
 
