@@ -12,11 +12,14 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.BlockPos.MutableBlockPos
 import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
+import thedarkcolour.core.util.getDoubleOrDefault
+import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.buzzybees.BeeHiveBlock
 import thedarkcolour.futuremc.compat.DYNAMIC_TREES
 import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.tile.BeeHiveTile
 import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator
+import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator.BIOMES_AND_CHANCES
 
 object BeeHiveFeature : IPostGenFeature {
     val OAK = Species.REGISTRY.getValue(ResourceLocation(DYNAMIC_TREES, "oak"))
@@ -84,12 +87,18 @@ object BeeHiveFeature : IPostGenFeature {
         // we are only doing oak
         val treePos = rootPos.up()
 
+        //println(rand.nextDouble())
+
         if (
             (species == OAK || species == BIRCH) &&
-            BeeNestGenerator.BIOMES_AND_CHANCES.getDouble(worldIn.getBiome(treePos)) != 0.0
+            rand.nextDouble() <= getDoubleOrDefault(BIOMES_AND_CHANCES, worldIn.getBiome(treePos).registryName!!, 0.0)
         ) {
             val offset = MutableBlockPos(treePos.offset(BeeNestGenerator.VALID_OFFSETS[rand.nextInt(3)]))
             var state = worldIn.getBlockState(offset)
+
+            if (FutureMC.DEBUG) {
+                println(rootPos)
+            }
 
             while (state.block.isAir(run {
                     state = worldIn.getBlockState(offset.move(EnumFacing.UP))

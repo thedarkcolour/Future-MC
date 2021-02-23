@@ -7,10 +7,8 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.BlockPos.MutableBlockPos
 import net.minecraft.world.World
-import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.BiomeDecorator
 import net.minecraft.world.gen.feature.WorldGenAbstractTree
-import net.minecraftforge.fml.common.registry.ForgeRegistries
 import sun.reflect.Reflection
 import thedarkcolour.core.util.getDoubleOrDefault
 import thedarkcolour.core.util.isAir
@@ -27,7 +25,7 @@ object BeeNestGenerator {
         FBlocks.BEE_NEST.defaultState.withProperty(BeeHiveBlock.FACING, EnumFacing.SOUTH)
     val VALID_OFFSETS =
         arrayOf(EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST)
-    val BIOMES_AND_CHANCES: Object2DoubleMap<Biome?> = Object2DoubleOpenHashMap()
+    val BIOMES_AND_CHANCES: Object2DoubleMap<ResourceLocation?> = Object2DoubleOpenHashMap()
 
     /**
      * Called with ASM.
@@ -95,7 +93,7 @@ object BeeNestGenerator {
             return true
         }
         val biome = worldIn.getBiome(pos)
-        if (rand.nextDouble() > getDoubleOrDefault(BIOMES_AND_CHANCES, biome, 0.0)) {
+        if (rand.nextDouble() > getDoubleOrDefault(BIOMES_AND_CHANCES, biome.registryName, 0.0)) {
             return true
         }
         return false
@@ -137,9 +135,7 @@ object BeeNestGenerator {
         for (entry in buzzyBees.validBiomesForBeeNest) {
             val parts = entry.split(":".toRegex()).toTypedArray()
             val loc = ResourceLocation(parts[0], parts[1])
-            val biome = ForgeRegistries.BIOMES.getValue(loc)
-            val chance = parts[2].toDouble()
-            BIOMES_AND_CHANCES[biome] = chance
+            BIOMES_AND_CHANCES[loc] = parts[2].toDouble()
         }
     }
 }

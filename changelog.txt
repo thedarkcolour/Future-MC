@@ -1,3 +1,9 @@
+Version 0.2.6.1 - Bug fix:
+ Beehives - Fixed excessive beehive spawning. Fixes #220
+
+Version 0.2.6 - Bug fix:
+ Beehives - Removed broken Dynamic Trees compat
+
 Version 0.2.5 - Bug fixes and minor additions:
  Seagrass - Removed from config file. Fixes #195
  Smoker - Now works properly with CraftTweaker. Fixes #217

@@ -11,7 +11,7 @@ object DynamicTreesCompat {
 
     private fun modifyOakSpecies(event: RegistryEvent.Register<Species>) {
         for (species in Species.REGISTRY) {
-            species.addGenFeature(BeeHiveFeature)
+            //species.addGenFeature(BeeHiveFeature)
         }
     }
 }
