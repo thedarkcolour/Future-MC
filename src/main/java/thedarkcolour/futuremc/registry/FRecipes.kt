@@ -162,6 +162,7 @@ object FRecipes {
 
                 ores.forEach { stack ->
                     val result = FurnaceRecipes.instance().getSmeltingResult(stack)
+
                     if (!result.isEmpty) {
                         BlastFurnaceRecipes.recipes.add(SimpleRecipe(stack, result))
                     }

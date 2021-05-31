@@ -16,8 +16,12 @@ abstract class Recipe<out T : Recipe<T>> {
     /**
      * Returns if the input matches the requirements of this recipe.
      */
-    open fun matches(input: ItemStack): Boolean {
-        return doesInputMatch(this.input, input)
+    open fun matchesInput(input: ItemStack): Boolean {
+        return doesItemMatch(this.input, input)
+    }
+
+    open fun matchesOutput(output: ItemStack): Boolean {
+        return doesItemMatch(this.output, output)
     }
 
     /**
@@ -26,20 +30,19 @@ abstract class Recipe<out T : Recipe<T>> {
      * @see thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes
      */
     fun matches(input: ItemStack, output: ItemStack): Boolean {
-        return doesInputMatch(this.input, input) && doesInputMatch(this.output, output)
+        return doesItemMatch(this.input, input) && doesItemMatch(this.output, output)
     }
 
     /**
-     * Determines if the other item matches the specified input.
+     * Determines if the other item matches the specified item.
      *
-     * @param recipeInput the required input
+     * @param item the item to check for matching
      * @param other the item to test against the recipe input
      *
-     * @return if [other] is the same item as [recipeInput] and has an equal or greater amount.
+     * @return if [other] is the same item as [item] and has an equal or greater amount.
      */
-    fun doesInputMatch(recipeInput: ItemStack, other: ItemStack): Boolean {
-        return other.item == recipeInput.item && (recipeInput.metadata == 32767 || other.metadata == recipeInput.metadata) &&
-                other.count >= recipeInput.count
+    fun doesItemMatch(item: ItemStack, other: ItemStack): Boolean {
+        return other.item == item.item && (item.metadata == 32767 || other.metadata == item.metadata) && other.count >= item.count
     }
 
     /**
@@ -47,16 +50,18 @@ abstract class Recipe<out T : Recipe<T>> {
      *
      * If the item is not a tool, then normal equality checking is used.
      */
-    fun doesInputMatchIgnoreDurability(recipeInput: ItemStack, other: ItemStack): Boolean {
-        return (if (recipeInput.maxDamage == 0) {
-            doesInputMatch(recipeInput, other)
-        } else other.item == recipeInput.item)
+    fun doesItemMatchIgnoreDurability(recipeInput: ItemStack, other: ItemStack): Boolean {
+        return if (recipeInput.maxDamage == 0) {
+            doesItemMatch(recipeInput, other)
+        } else {
+            other.item == recipeInput.item
+        }
     }
 
     /**
      * Returns a string representation of the object.
      */
     override fun toString(): String {
-        return "CampfireRecipe(input = $input, output = $output)"
+        return javaClass.simpleName + "(input = $input, output = $output)"
     }
 }

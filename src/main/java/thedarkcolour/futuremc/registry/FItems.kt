@@ -28,6 +28,7 @@ import thedarkcolour.futuremc.item.*
 @Suppress("MemberVisibilityCanBePrivate", "HasPlatformType", "DuplicatedCode")
 object FItems {
     val DEBUGGER = DebuggerItem()
+    val AGRO = AgroItem() // at the request of mr youtuber
 
     val NAUTILUS_SHELL = ModeledItem("nautilus_shell").setCreativeTab(CreativeTabs.MISC)
     val SCUTE = ModeledItem("scute").setCreativeTab(CreativeTabs.MATERIALS)
@@ -150,6 +151,7 @@ object FItems {
         if (FConfig.updateAquatic.nautilusShell) items.register(NAUTILUS_SHELL)
 
         if (FutureMC.DEBUG) items.register(DEBUGGER)
+        //items.register(AGRO)
 
         if (FConfig.villageAndPillage.lantern) items.register(LANTERN)
         if (FConfig.villageAndPillage.stonecutter.enabled) items.register(STONECUTTER)

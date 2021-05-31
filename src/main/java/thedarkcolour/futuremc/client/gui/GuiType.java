@@ -77,6 +77,14 @@ public enum GuiType {
         return getContainer(playerInv, te).getGuiContainer();
     }
 
+    //private FContainer getContainer(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
+    //    if (isTile()) {
+    //        return container.get(playerInv, worldIn.getTileEntity(pos));
+    //    } else {
+    //        return container.get(playerInv, worldIn, pos);
+    //    }
+    //}
+
     /**
      * Used internally in the {@link Handler} for opening a container on the server.
      *

@@ -23,6 +23,8 @@ object CampfireRecipes : Recipes<CampfireRecipe>() {
             recipes.add(CampfireRecipe(item, FurnaceRecipes.instance().getSmeltingResult(item), 600))
         }
     }
+    @Deprecated("Use `duration` version", level = DeprecationLevel.ERROR)
+    override fun addRecipe(input: ItemStack, output: ItemStack) {}
 
     fun addRecipe(input: ItemStack, output: ItemStack, duration: Int) {
         recipes.add(CampfireRecipe(input, output, duration))

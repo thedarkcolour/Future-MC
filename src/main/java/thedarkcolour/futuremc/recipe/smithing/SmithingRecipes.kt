@@ -44,7 +44,7 @@ object SmithingRecipes : Recipes<SmithingRecipe>() {
      * Ignores if the recipe doesn't exist.
      */
     @Deprecated("Use overload with material parameter", level = DeprecationLevel.ERROR)
-    override fun removeRecipe(input: ItemStack) {}
+    override fun removeRecipeForInput(input: ItemStack) {}
 
     fun removeRecipe(input: ItemStack, material: ItemStack) {
         val iterator = recipes.iterator()
@@ -52,9 +52,14 @@ object SmithingRecipes : Recipes<SmithingRecipe>() {
         while (iterator.hasNext()) {
             val a = iterator.next()
 
-            if (a.doesInputMatchIgnoreDurability(a.input, input) && a.doesInputMatch(a.material, material)) {
+            if (a.doesItemMatchIgnoreDurability(a.input, input) && a.doesItemMatch(a.material, material)) {
                 iterator.remove()
             }
         }
+    }
+
+    @Deprecated(level = DeprecationLevel.ERROR, message = "do not use")
+    override fun addRecipe(input: ItemStack, output: ItemStack) {
+        TODO("not implemented")
     }
 }

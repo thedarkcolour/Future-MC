@@ -80,7 +80,7 @@ object StonecutterRecipes : Recipes<SimpleRecipe>() {
         )
     }
 
-    fun addRecipe(input: ItemStack, output: ItemStack) {
+    override fun addRecipe(input: ItemStack, output: ItemStack) {
         recipes.add(SimpleRecipe(input, output))
     }
 

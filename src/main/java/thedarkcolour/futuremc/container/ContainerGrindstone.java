@@ -109,11 +109,13 @@ public class ContainerGrindstone extends FContainer {
 
         // Disenchants an item
         else if (input.anyMatch(ItemStack::isItemEnchanted)) {
-            int slot = input.getStackInSlot(0).isEmpty() ? 1 : 0;
-            ItemStack stack = input.getStackInSlot(slot);
+            // Pick the item to disenchant
+            ItemStack stack = input.getStackInSlot(input.getStackInSlot(0).isEmpty() ? 1 : 0);
 
             ItemStack outItem = stack.copy();
             outItem.setTagInfo("ench", new NBTTagList());
+
+            // what the fuck is even this
             if (stack.isItemEqual(input.getStackInSlot(input.getStackInSlot(0).isEmpty() ? 0 : 1))) {
                 int sum = (stack.getMaxDamage() - stack.getItemDamage()) + (stack.getMaxDamage() - input.getStackInSlot(1).getItemDamage());
 

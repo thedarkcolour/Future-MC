@@ -1,11 +1,9 @@
 package thedarkcolour.futuremc.compat.crafttweaker;
 
-import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
-import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.oredict.IOreDictEntry;
 import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Level;
@@ -15,14 +13,17 @@ import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.block.villagepillage.ComposterBlock;
 import thedarkcolour.futuremc.tile.TileComposter;
 
+import static thedarkcolour.futuremc.compat.crafttweaker.RecipeUtil.applyAction;
+import static thedarkcolour.futuremc.compat.crafttweaker.RecipeUtil.toItemStack;
+
 @ZenRegister
 @ZenClass("mods.futuremc.Composter")
 public final class Composter {
     @ZenMethod
     public static void addValidItem(IIngredient stack, int rarity) {
-        if (ComposterBlock.ItemsForComposter.getChance(CraftTweakerMC.getItemStack(stack)) == -1) {
-            if (!TileComposter.isBoneMeal(CraftTweakerMC.getItemStack(stack))) {
-                CraftTweakerAPI.apply(new Add(stack, rarity));
+        if (ComposterBlock.ItemsForComposter.getChance(toItemStack(stack)) == -1) {
+            if (!TileComposter.isBoneMeal(toItemStack(stack))) {
+                applyAction(new Add(stack, rarity));
             } else {
                 FutureMC.LOGGER.log(Level.ERROR, "Cannot add bone meal to compostable item!");
             }
@@ -43,7 +44,7 @@ public final class Composter {
         private final int rarity;
 
         private Add(IIngredient stack, int rarity) {
-            this.stack = CraftTweakerMC.getItemStack(stack);
+            this.stack = toItemStack(stack);
             this.rarity = rarity;
         }
 
@@ -60,14 +61,14 @@ public final class Composter {
 
     @ZenMethod
     public static void removeValidItem(IIngredient stack) {
-        if (ComposterBlock.ItemsForComposter.getChance(CraftTweakerMC.getItemStack(stack)) != -1) {
-            CraftTweakerAPI.apply(new Remove(CraftTweakerMC.getItemStack(stack)));
+        if (ComposterBlock.ItemsForComposter.getChance(toItemStack(stack)) != -1) {
+            applyAction(new Remove(toItemStack(stack)));
         } else {
             FutureMC.LOGGER.log(Level.WARN, "Cannot remove non-existent item from valid composter item " + stack.toCommandString());
         }
     }
 
-    private static class Remove implements IAction {
+    private static final class Remove implements IAction {
         private final ItemStack stack;
 
         private Remove(ItemStack stack) {
@@ -87,15 +88,15 @@ public final class Composter {
 
     @ZenMethod
     public static void replaceValidItemChance(IIngredient stack, int newRarity) {
-        if (ComposterBlock.ItemsForComposter.getChance(CraftTweakerMC.getItemStack(stack)) != -1) {
-            CraftTweakerAPI.apply(new ReplaceItemChance(CraftTweakerMC.getItemStack(stack), newRarity));
+        if (ComposterBlock.ItemsForComposter.getChance(toItemStack(stack)) != -1) {
+            applyAction(new ReplaceItemChance(toItemStack(stack), newRarity));
         } else {
             FutureMC.LOGGER.log(Level.WARN, "Cannot change chance for invalid item " + stack.toCommandString() +
                     " If you wish to make the item valid, use mods.futuremc.Composter.addValidItem");
         }
     }
 
-    private static class ReplaceItemChance implements IAction {
+    private static final class ReplaceItemChance implements IAction {
         private final ItemStack stack;
         private final int newRarity, oldRarity;
 

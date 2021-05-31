@@ -12,7 +12,7 @@ import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.villagepillage.ComposterBlock
 import thedarkcolour.futuremc.client.gui.GuiFurnaceAdvanced
 import thedarkcolour.futuremc.client.gui.SmithingGui
-import thedarkcolour.futuremc.client.gui.StonecutterGui
+import thedarkcolour.futuremc.client.gui.StonecutterScreen
 import thedarkcolour.futuremc.compat.jei.blastfurnace.BlastFurnaceRecipeCategory
 import thedarkcolour.futuremc.compat.jei.campfire.CampfireRecipeCategory
 import thedarkcolour.futuremc.compat.jei.campfire.CampfireRecipeWrapper
@@ -94,7 +94,7 @@ class FutureMCJEIPlugin : IModPlugin {
             registry.handleRecipes(SimpleRecipe::class.java, ::SimpleRecipeWrapper, StonecutterRecipeCategory.NAME)
             registry.addRecipes(StonecutterRecipes.recipes, StonecutterRecipeCategory.NAME)
             if (villageAndPillage.stonecutter.recipeButton) {
-                registry.addRecipeClickArea(StonecutterGui::class.java, 143, 8, 16, 16, StonecutterRecipeCategory.NAME)
+                registry.addRecipeClickArea(StonecutterScreen::class.java, 143, 8, 16, 16, StonecutterRecipeCategory.NAME)
             }
             registry.addRecipeCatalyst(ItemStack(STONECUTTER), StonecutterRecipeCategory.NAME)
         }

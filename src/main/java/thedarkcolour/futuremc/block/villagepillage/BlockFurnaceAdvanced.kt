@@ -29,6 +29,10 @@ import thedarkcolour.futuremc.tile.TileFurnaceAdvanced.TileSmoker
 import java.util.*
 
 class BlockFurnaceAdvanced(private val type: FurnaceType, properties: Properties) : FBlock(properties), ITileEntityProvider {
+    init {
+        defaultState = defaultState.withProperty(FACING, EnumFacing.NORTH).withProperty(LIT, false)
+    }
+
     override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity? {
         if (type == FurnaceType.SMOKER) {
             return TileSmoker()

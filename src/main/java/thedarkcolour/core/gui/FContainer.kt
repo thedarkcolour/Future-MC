@@ -25,6 +25,7 @@ abstract class FContainer(val playerInv: InventoryPlayer) : Container() {
         }
     }
 
+    // Add these at the end after custom slots have been added
     protected fun addPlayerSlots(playerInv: InventoryPlayer) {
         for (row in 0..2) {
             for (col in 0..8) {

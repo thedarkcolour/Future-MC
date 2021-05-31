@@ -8,6 +8,6 @@ class SmithingRecipe(override val input: ItemStack, val material: ItemStack, ove
      * Checks if the inventory has enough material to upgrade
      */
     fun matchesMaterial(input: ItemStack, material: ItemStack): Boolean {
-        return doesInputMatchIgnoreDurability(this.input, input) && doesInputMatch(this.material, material)
+        return doesItemMatchIgnoreDurability(this.input, input) && doesItemMatch(this.material, material)
     }
 }

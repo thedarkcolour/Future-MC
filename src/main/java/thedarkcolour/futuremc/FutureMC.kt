@@ -50,6 +50,7 @@ import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.entity.trident.EntityTrident
 import thedarkcolour.futuremc.event.Events
 import thedarkcolour.futuremc.item.BannerPatternItem
+import thedarkcolour.futuremc.network.NetworkHandler
 import thedarkcolour.futuremc.registry.FBlocks
 import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FParticles
@@ -93,6 +94,8 @@ object FutureMC {
 
     init {
         Events.registerEvents()
+
+        NetworkHandler.registerPackets()
 
         //if (DEBUG) {
         //    FutureWorldType

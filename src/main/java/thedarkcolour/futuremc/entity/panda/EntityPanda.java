@@ -75,44 +75,44 @@ public class EntityPanda extends EntityAnimal {
         return getPandaFlag(2);
     }
 
+    public void setSneezing(boolean flag) {
+        setPandaFlag(2, flag);
+
+        if (!flag) {
+            setSneezeTicks(0);
+        }
+    }
+
     public boolean isSitting() {
         return getPandaFlag(8);
     }
 
-    public void setIsScared(boolean flag) {
-        setPandaFlag(8, flag);
+    public void setSitting(boolean sitting) {
+        setPandaFlag(8, sitting);
     }
 
     public boolean isLazing() {
         return getPandaFlag(16);
     }
 
-    public void func_213542_s(boolean p_213542_1_) {
-        setPandaFlag(16, p_213542_1_);
+    public void setIsLazing(boolean lazing) {
+        setPandaFlag(16, lazing);
     }
 
     public boolean isEating() {
         return dataManager.get(EATING_TICKS) > 0;
     }
 
-    public void setIsEating(boolean p_213534_1_) {
-        dataManager.set(EATING_TICKS, p_213534_1_ ? 1 : 0);
+    public void setIsEating(boolean isEating) {
+        dataManager.set(EATING_TICKS, isEating ? 1 : 0);
     }
 
     private int getEatingTicks() {
         return dataManager.get(EATING_TICKS);
     }
 
-    private void setEatingTicks(int p_213571_1_) {
-        dataManager.set(EATING_TICKS, p_213571_1_);
-    }
-
-    public void func_213581_u(boolean flag) {
-        setPandaFlag(2, flag);
-        if (!flag) {
-            setSneezeTicks(0);
-        }
-
+    private void setEatingTicks(int eatingTicks) {
+        dataManager.set(EATING_TICKS, eatingTicks);
     }
 
     public int getSneezeTicks() {
@@ -196,13 +196,13 @@ public class EntityPanda extends EntityAnimal {
 
     @Override
     public EntityAgeable createChild(EntityAgeable ageable) {
-        EntityPanda EntityPanda = new EntityPanda(world);
+        EntityPanda panda = new EntityPanda(world);
         if (ageable instanceof EntityPanda) {
-            EntityPanda.func_213545_a(this, (EntityPanda) ageable);
+            panda.chooseGenes(this, (EntityPanda) ageable);
         }
 
-        EntityPanda.adjustTraits();
-        return EntityPanda;
+        panda.adjustTraits();
+        return panda;
     }
 
     @Override
@@ -262,7 +262,7 @@ public class EntityPanda extends EntityAnimal {
 
     @Override
     public boolean attackEntityAsMob(Entity entityIn) {
-        playSound(FSounds.INSTANCE.getPANDA_BITE(), 1.0F, 1.0F);
+        playSound(FSounds.PANDA_BITE, 1.0F, 1.0F);
         if (!isAggressive()) {
             attacked = true;
         }
@@ -285,10 +285,10 @@ public class EntityPanda extends EntityAnimal {
 
         if (isWorried()) {
             if (world.isThundering() && !isInWater()) {
-                setIsScared(true);
+                setSitting(true);
                 setIsEating(false);
             } else if (!isEating()) {
-                setIsScared(false);
+                setSitting(false);
             }
         }
 
@@ -303,7 +303,7 @@ public class EntityPanda extends EntityAnimal {
             }
 
             if (getHungryTicks() == 29 || getHungryTicks() == 14) {
-                playSound(FSounds.INSTANCE.getPANDA_CANNOT_BREED(), 1.0F, 1.0F);
+                playSound(FSounds.PANDA_CANNOT_BREED, 1.0F, 1.0F);
             }
 
             setHungryTicks(getHungryTicks() - 1);
@@ -312,7 +312,7 @@ public class EntityPanda extends EntityAnimal {
         if (isSneezing()) {
             setSneezeTicks(getSneezeTicks() + 1);
             if (getSneezeTicks() > 20) {
-                func_213581_u(false);
+                setSneezing(false);
                 sneeze();
             } else if (getSneezeTicks() == 1) {
                 playSound(FSounds.INSTANCE.getPANDA_PRE_SNEEZE(), 1.0F, 1.0F);
@@ -358,7 +358,7 @@ public class EntityPanda extends EntityAnimal {
                         setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
                     }
 
-                    setIsScared(false);
+                    setSitting(false);
                 }
 
                 setIsEating(false);
@@ -372,7 +372,7 @@ public class EntityPanda extends EntityAnimal {
 
     private void playEatingAnimation() {
         if (getEatingTicks() % 5 == 0) {
-            playSound(FSounds.INSTANCE.getPANDA_EAT(), 0.5F + 0.5F * (float) rand.nextInt(2), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
+            playSound(FSounds.PANDA_EAT, 0.5F + 0.5F * (float) rand.nextInt(2), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
 
             for (int i = 0; i < 6; ++i) {
                 Vec3d vec3d = new Vec3d(((double) rand.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, ((double) rand.nextFloat() - 0.5D) * 0.1D);
@@ -454,7 +454,7 @@ public class EntityPanda extends EntityAnimal {
     }
 
     private void sneeze() {
-        playSound(FSounds.INSTANCE.getPANDA_SNEEZE(), 1.0F, 1.0F);
+        playSound(FSounds.PANDA_SNEEZE, 1.0F, 1.0F);
 
         for (EntityPanda entityPanda : world.getEntitiesWithinAABB(EntityPanda.class, getEntityBoundingBox().grow(10.0D))) {
             if (!entityPanda.isChild() && entityPanda.onGround && !entityPanda.isInWater() && entityPanda.isOccupied()) {
@@ -480,7 +480,7 @@ public class EntityPanda extends EntityAnimal {
 
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        setIsScared(false);
+        setSitting(false);
         return super.attackEntityFrom(source, amount);
     }
 
@@ -501,7 +501,7 @@ public class EntityPanda extends EntityAnimal {
         return data;
     }
 
-    private void func_213545_a(EntityPanda entityPanda, EntityPanda ageable) {
+    private void chooseGenes(EntityPanda entityPanda, EntityPanda ageable) {
         if (ageable == null) {
             if (rand.nextBoolean()) {
                 setMainGene(entityPanda.pickMainOrHiddenGene());
@@ -546,9 +546,8 @@ public class EntityPanda extends EntityAnimal {
         if (!isInWater()) {
             setMoveForward(0.0F);
             getNavigator().clearPath();
-            setIsScared(true);
+            setSitting(true);
         }
-
     }
 
     @Override
@@ -559,7 +558,7 @@ public class EntityPanda extends EntityAnimal {
         } else if (isFrightened()) {
             return false;
         } else if (isLazing()) {
-            func_213542_s(false);
+            setIsLazing(false);
             return true;
         } else if (isBreedingItem(itemstack)) {
             if (getAttackTarget() != null) {
@@ -601,15 +600,15 @@ public class EntityPanda extends EntityAnimal {
     @Override
     protected SoundEvent getAmbientSound() {
         if (isAggressive()) {
-            return FSounds.INSTANCE.getPANDA_AGGRESSIVE_AMBIENT();
+            return FSounds.PANDA_AGGRESSIVE_AMBIENT;
         } else {
-            return isWorried() ? FSounds.INSTANCE.getPANDA_WORRIED_AMBIENT() : FSounds.INSTANCE.getPANDA_AMBIENT();
+            return isWorried() ? FSounds.PANDA_WORRIED_AMBIENT : FSounds.PANDA_AMBIENT;
         }
     }
 
     @Override
     protected void playStepSound(BlockPos pos, Block blockIn) {
-        playSound(FSounds.INSTANCE.getPANDA_STEP(), 0.15F, 1.0F);
+        playSound(FSounds.PANDA_STEP, 0.15F, 1.0F);
     }
 
     @Override
@@ -623,12 +622,12 @@ public class EntityPanda extends EntityAnimal {
 
     @Override
     protected SoundEvent getDeathSound() {
-        return FSounds.INSTANCE.getPANDA_DEATH();
+        return FSounds.PANDA_DEATH;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return FSounds.INSTANCE.getPANDA_HURT();
+        return FSounds.PANDA_HURT;
     }
 
     public boolean isOccupied() {
@@ -690,7 +689,7 @@ public class EntityPanda extends EntityAnimal {
         }
 
         public void startExecuting() {
-            entityPanda.func_213581_u(true);
+            entityPanda.setSneezing(true);
         }
     }
 
@@ -715,12 +714,12 @@ public class EntityPanda extends EntityAnimal {
         }
 
         public void startExecuting() {
-            field_220828_a.func_213542_s(true);
+            field_220828_a.setIsLazing(true);
             field_220829_b = 0;
         }
 
         public void resetTask() {
-            field_220828_a.func_213542_s(false);
+            field_220828_a.setIsLazing(false);
             field_220829_b = field_220828_a.ticksExisted + 200;
         }
     }
@@ -997,7 +996,7 @@ public class EntityPanda extends EntityAnimal {
                 field_220832_b = panda.ticksExisted + i * 20;
             }
 
-            panda.setIsScared(false);
+            panda.setSitting(false);
         }
     }
 

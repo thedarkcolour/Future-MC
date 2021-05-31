@@ -48,13 +48,13 @@ public final class Stonecutter {
 
     @ZenMethod
     public static void removeRecipe(IItemStack input) {
-        CraftTweakerAPI.apply(Action.of(() -> StonecutterRecipes.INSTANCE.removeRecipe(CraftTweakerMC.getItemStack(input))));
+        CraftTweakerAPI.apply(Action.of(() -> StonecutterRecipes.INSTANCE.removeRecipeForInput(CraftTweakerMC.getItemStack(input))));
     }
 
     // todo turn into overloaded version of #removeOutputs and add separate functionality for #removeRecipe
     @ZenMethod
     public static void removeAllOutputsForInput(IItemStack input) {
-        CraftTweakerAPI.apply(Action.of(() -> StonecutterRecipes.INSTANCE.removeRecipe(CraftTweakerMC.getItemStack(input))));
+        CraftTweakerAPI.apply(Action.of(() -> StonecutterRecipes.INSTANCE.removeRecipeForInput(CraftTweakerMC.getItemStack(input))));
     }
 
     @ZenMethod

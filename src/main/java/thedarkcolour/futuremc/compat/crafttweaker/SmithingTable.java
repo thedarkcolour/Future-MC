@@ -10,8 +10,8 @@ import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.futuremc.recipe.smithing.SmithingRecipe;
 import thedarkcolour.futuremc.recipe.smithing.SmithingRecipes;
 
-import static thedarkcolour.futuremc.compat.crafttweaker.CraftTweakerUtilKt.applyAction;
-import static thedarkcolour.futuremc.compat.crafttweaker.CraftTweakerUtilKt.toItemStack;
+import static thedarkcolour.futuremc.compat.crafttweaker.RecipeUtil.applyAction;
+import static thedarkcolour.futuremc.compat.crafttweaker.RecipeUtil.toItemStack;
 
 @ZenRegister
 @ZenClass("mods.futuremc.SmithingTable")

@@ -477,7 +477,11 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
     }
 
     public boolean setBeeAttacker(Entity entity) {
-        setAnger(400 + rand.nextInt(400));
+        return setBeeAttacker(entity, 400);
+    }
+
+    public boolean setBeeAttacker(Entity entity, int angerTicks) {
+        setAnger(angerTicks + rand.nextInt(400));
         if (entity instanceof EntityLivingBase) {
             setRevengeTarget((EntityLivingBase) entity);
         }

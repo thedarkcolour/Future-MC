@@ -70,7 +70,7 @@ public final class Campfire {
 
         @Override
         public void apply() {
-            CampfireRecipes.INSTANCE.removeRecipe(CraftTweakerMC.getItemStack(input));
+            CampfireRecipes.INSTANCE.removeRecipeForInput(CraftTweakerMC.getItemStack(input));
         }
 
         @Override

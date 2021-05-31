@@ -111,11 +111,11 @@ class SweetBerryBushBlock : BlockFlower("sweet_berry_bush"), IGrowable, IPlantab
     }
 
     override fun getPickBlock(
-        state: IBlockState,
-        target: RayTraceResult,
-        world: World,
-        pos: BlockPos,
-        player: EntityPlayer
+        state: IBlockState?,
+        target: RayTraceResult?,
+        world: World?,
+        pos: BlockPos?,
+        player: EntityPlayer?
     ): ItemStack {
         return ItemStack(SWEET_BERRIES)
     }

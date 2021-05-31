@@ -12,7 +12,7 @@ import net.minecraft.world.World
 import thedarkcolour.core.gui.FContainer
 import thedarkcolour.core.inventory.DarkInventory
 import thedarkcolour.core.inventory.DarkInventorySlot
-import thedarkcolour.futuremc.client.gui.StonecutterGui
+import thedarkcolour.futuremc.client.gui.StonecutterScreen
 import thedarkcolour.futuremc.compat.checkQuark
 import thedarkcolour.futuremc.recipe.SimpleRecipe
 import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes
@@ -188,7 +188,7 @@ class StonecutterContainer(
     }
 
     override fun getGuiContainer(): GuiContainer {
-        return StonecutterGui(StonecutterContainer(playerInv, worldIn, pos))
+        return StonecutterScreen(StonecutterContainer(playerInv, worldIn, pos))
     }
 
     override fun canInteractWith(playerIn: EntityPlayer): Boolean {

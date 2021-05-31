@@ -5,10 +5,11 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.FurnaceRecipes
 import thedarkcolour.futuremc.recipe.Recipes
 import thedarkcolour.futuremc.recipe.SimpleRecipe
-import java.util.*
 
 object SmokerRecipes : Recipes<SimpleRecipe>() {
-    override val recipes = ArrayList<SimpleRecipe>().also { recipes ->
+    override val recipes = ArrayList<SimpleRecipe>()
+
+    init {
         for ((key, value) in FurnaceRecipes.instance().smeltingList) {
             if (key.item is ItemFood || value.item is ItemFood) {
                 recipes.add(SimpleRecipe(key, value))
@@ -16,7 +17,7 @@ object SmokerRecipes : Recipes<SimpleRecipe>() {
         }
     }
 
-    fun addRecipe(input: ItemStack, output: ItemStack) {
+    override fun addRecipe(input: ItemStack, output: ItemStack) {
         recipes.add(SimpleRecipe(input, output))
     }
 }

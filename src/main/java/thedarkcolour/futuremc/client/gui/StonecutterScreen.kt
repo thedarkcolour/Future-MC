@@ -16,7 +16,7 @@ import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.container.StonecutterContainer
 import kotlin.math.sign
 
-class StonecutterGui(container: StonecutterContainer) : FGui<StonecutterContainer>(container) {
+class StonecutterScreen(container: StonecutterContainer) : FGui<StonecutterContainer>(container) {
     private var sliderProgress = 0.0f
     private var clickedOnScroll = false
     private var recipeIndexOffset = 0
@@ -123,13 +123,7 @@ class StonecutterGui(container: StonecutterContainer) : FGui<StonecutterContaine
                 val y = mouseY - (j + i1 / 4 * 18).toDouble()
 
                 if (x >= 0.0 && y >= 0.0 && x < 16.0 && y < 18.0 && container.enchantItem(mc.player, l)) {
-                    Minecraft.getMinecraft().soundHandler
-                        .playSound(
-                            PositionedSoundRecord.getMasterRecord(
-                                SoundEvents.UI_BUTTON_CLICK,
-                                1.0f
-                            )
-                        )
+                    Minecraft.getMinecraft().soundHandler.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0f))
                     mc.playerController.sendEnchantPacket(container.windowId, l)
                     return
                 }
@@ -162,11 +156,12 @@ class StonecutterGui(container: StonecutterContainer) : FGui<StonecutterContaine
 
     override fun handleMouseInput() {
         super.handleMouseInput()
-        var i = Mouse.getEventDWheel()
-        if (i != 0 && canScroll()) {
-            i = sign(i.toFloat()).toInt()
+
+        var delta = Mouse.getEventDWheel()
+        if (delta != 0 && canScroll()) {
+            delta = sign(delta.toFloat()).toInt()
             val h = getHiddenRows()
-            sliderProgress = (sliderProgress.toDouble() - i / h.toDouble()).toFloat()
+            sliderProgress = (sliderProgress.toDouble() - delta / h.toDouble()).toFloat()
             sliderProgress = MathHelper.clamp(sliderProgress, 0.0f, 1.0f)
             recipeIndexOffset = ((sliderProgress * h.toFloat()).toDouble() + 0.5).toInt() shl 2
         }
