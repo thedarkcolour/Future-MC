@@ -20,7 +20,7 @@ tile.futuremc.stripped_birch_log.name=Tronco de abedul sin corteza
 tile.futuremc.stripped_jungle_log.name=Tronco de jungla sin corteza
 tile.futuremc.stripped_acacia_log.name=Tronco de acacia sin corteza
 tile.futuremc.stripped_dark_oak_log.name=Tronco de roble oscuro sin corteza
-death.attack.sweet_berry_bush=%1$s fue cagado a muerte por arbusto de bayas dulces
+death.attack.berryBush=%1$s fue cagado a muerte por arbusto de bayas dulces
 
 # Paredes
 tile.futuremc.brick_wall.name=Pared de ladrillos
