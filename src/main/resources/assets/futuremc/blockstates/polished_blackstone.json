@@ -1,7 +1,7 @@
 {
     "variants": {
-        "": {
-            "model": "futuremc:block/polished_blackstone"
+        "normal": {
+            "model": "futuremc:polished_blackstone"
         }
     }
 }

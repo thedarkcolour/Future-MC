@@ -28,7 +28,6 @@ import thedarkcolour.futuremc.item.*
 @Suppress("MemberVisibilityCanBePrivate", "HasPlatformType", "DuplicatedCode")
 object FItems {
     val DEBUGGER = DebuggerItem()
-    val AGRO = AgroItem() // at the request of mr youtuber
 
     val NAUTILUS_SHELL = ModeledItem("nautilus_shell").setCreativeTab(CreativeTabs.MISC)
     val SCUTE = ModeledItem("scute").setCreativeTab(CreativeTabs.MATERIALS)
@@ -56,10 +55,10 @@ object FItems {
     val NETHERITE_PICKAXE = FireproofPickaxeItem("netherite_pickaxe", FToolMaterial.NETHERITE).setItemGroup(CreativeTabs.TOOLS)
     val NETHERITE_SHOVEL = FireproofShovelItem("netherite_shovel", FToolMaterial.NETHERITE).setItemGroup(CreativeTabs.TOOLS)
     val NETHERITE_SWORD = FireproofSwordItem("netherite_sword", FToolMaterial.NETHERITE).setItemGroup(CreativeTabs.COMBAT)
-    val NETHERITE_HELMET = FireproofArmorItem("netherite_helmet", FArmorMaterial.NETHERITE, EntityEquipmentSlot.HEAD).setItemGroup(CreativeTabs.COMBAT)
-    val NETHERITE_CHESTPLATE = FireproofArmorItem("netherite_chestplate", FArmorMaterial.NETHERITE, EntityEquipmentSlot.CHEST).setItemGroup(CreativeTabs.COMBAT)
-    val NETHERITE_LEGGINGS = FireproofArmorItem("netherite_leggings", FArmorMaterial.NETHERITE, EntityEquipmentSlot.LEGS).setItemGroup(CreativeTabs.COMBAT)
-    val NETHERITE_BOOTS = FireproofArmorItem("netherite_boots", FArmorMaterial.NETHERITE, EntityEquipmentSlot.FEET).setItemGroup(CreativeTabs.COMBAT)
+    val NETHERITE_HELMET = NetheriteArmorItem("netherite_helmet", FArmorMaterial.NETHERITE, EntityEquipmentSlot.HEAD).setItemGroup(CreativeTabs.COMBAT)
+    val NETHERITE_CHESTPLATE = NetheriteArmorItem("netherite_chestplate", FArmorMaterial.NETHERITE, EntityEquipmentSlot.CHEST).setItemGroup(CreativeTabs.COMBAT)
+    val NETHERITE_LEGGINGS = NetheriteArmorItem("netherite_leggings", FArmorMaterial.NETHERITE, EntityEquipmentSlot.LEGS).setItemGroup(CreativeTabs.COMBAT)
+    val NETHERITE_BOOTS = NetheriteArmorItem("netherite_boots", FArmorMaterial.NETHERITE, EntityEquipmentSlot.FEET).setItemGroup(CreativeTabs.COMBAT)
 
     val LANTERN = ModeledItemBlock(FBlocks.LANTERN)
     val STONECUTTER = ModeledItemBlock(FBlocks.STONECUTTER)
@@ -123,6 +122,24 @@ object FItems {
     val SPRUCE_TRAPDOOR = ModeledItemBlock(FBlocks.SPRUCE_TRAPDOOR)
     val DARK_OAK_TRAPDOOR = ModeledItemBlock(FBlocks.DARK_OAK_TRAPDOOR)
 
+    val NETHER_GOLD_ORE = ModeledItemBlock(FBlocks.NETHER_GOLD_ORE)
+    val BLACKSTONE = ModeledItemBlock(FBlocks.BLACKSTONE)
+    val BLACKSTONE_STAIRS = ModeledItemBlock(FBlocks.BLACKSTONE_STAIRS)
+    val BLACKSTONE_WALL = ModeledItemBlock(FBlocks.BLACKSTONE_WALL)
+    val BLACKSTONE_SLAB = ModeledItemBlock(FBlocks.BLACKSTONE_SLAB)
+    val POLISHED_BLACKSTONE = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE)
+    val POLISHED_BLACKSTONE_BRICKS = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BRICKS)
+    val CRACKED_POLISHED_BLACKSTONE_BRICKS = ModeledItemBlock(FBlocks.CRACKED_POLISHED_BLACKSTONE_BRICKS)
+    val CHISELED_POLISHED_BLACKSTONE = ModeledItemBlock(FBlocks.CHISELED_POLISHED_BLACKSTONE)
+    val POLISHED_BLACKSTONE_BRICK_SLAB = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BRICK_SLAB)
+    val POLISHED_BLACKSTONE_BRICK_STAIRS = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BRICK_STAIRS)
+    val POLISHED_BLACKSTONE_BRICK_WALL = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BRICK_WALL)
+    val GILDED_BLACKSTONE = ModeledItemBlock(FBlocks.GILDED_BLACKSTONE)
+    val POLISHED_BLACKSTONE_STAIRS = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_STAIRS)
+    val POLISHED_BLACKSTONE_SLAB = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_SLAB)
+    val POLISHED_BLACKSTONE_BUTTON = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_BUTTON)
+    val POLISHED_BLACKSTONE_WALL = ModeledItemBlock(FBlocks.POLISHED_BLACKSTONE_WALL)
+
     val SOUL_FIRE_LANTERN = ModeledItemBlock(FBlocks.SOUL_FIRE_LANTERN)
     val SOUL_FIRE_TORCH = ModeledItemBlock(FBlocks.SOUL_FIRE_TORCH)
     val SOUL_SOIL = ModeledItemBlock(FBlocks.SOUL_SOIL)
@@ -152,6 +169,27 @@ object FItems {
 
         if (FutureMC.DEBUG) items.register(DEBUGGER)
         //items.register(AGRO)
+
+        // todo add config
+        if (FutureMC.DEBUG) {
+            items.register(NETHER_GOLD_ORE)
+            items.register(BLACKSTONE)
+            items.register(BLACKSTONE_STAIRS)
+            items.register(BLACKSTONE_WALL)
+            items.register(BLACKSTONE_SLAB)
+            items.register(POLISHED_BLACKSTONE)
+            items.register(POLISHED_BLACKSTONE_BRICKS)
+            items.register(CRACKED_POLISHED_BLACKSTONE_BRICKS)
+            items.register(CHISELED_POLISHED_BLACKSTONE)
+            items.register(POLISHED_BLACKSTONE_BRICK_SLAB)
+            items.register(POLISHED_BLACKSTONE_BRICK_STAIRS)
+            items.register(POLISHED_BLACKSTONE_BRICK_WALL)
+            items.register(GILDED_BLACKSTONE)
+            items.register(POLISHED_BLACKSTONE_STAIRS)
+            items.register(POLISHED_BLACKSTONE_SLAB)
+            items.register(POLISHED_BLACKSTONE_BUTTON)
+            items.register(POLISHED_BLACKSTONE_WALL)
+        }
 
         if (FConfig.villageAndPillage.lantern) items.register(LANTERN)
         if (FConfig.villageAndPillage.stonecutter.enabled) items.register(STONECUTTER)

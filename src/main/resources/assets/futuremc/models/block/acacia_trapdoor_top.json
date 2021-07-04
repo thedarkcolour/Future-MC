@@ -1,5 +1,5 @@
 {
-    "parent": "block/trapdoor_top",
+    "parent": "futuremc:block/template_trapdoor_top",
     "textures": {
         "texture": "futuremc:block/acacia_trapdoor"
     }

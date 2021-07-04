@@ -1,0 +1,271 @@
+# Chinese simplified translations thanks to yilangyo
+
+# Functional Block
+tile.futuremc.lantern.name=灯笼
+tile.futuremc.barrel.name=木桶
+tile.futuremc.loom.name=织布机
+tile.futuremc.stonecutter.name=碎石机
+tile.futuremc.blast_furnace.name=高炉
+tile.futuremc.smoker.name=烟熏炉
+tile.futuremc.grindstone.name=磨石
+tile.futuremc.composter.name=堆肥桶
+tile.futuremc.cartography_table.name=制图台
+
+# Plant
+tile.futuremc.lily_of_the_valley.name=铃兰
+tile.futuremc.wither_rose.name=凋零玫瑰
+tile.futuremc.cornflower.name=矢车菊
+tile.futuremc.sweet_berry_bush.name=甜浆果
+tile.futuremc.campfire.name=营火
+tile.futuremc.stripped_oak_log.name=去皮橡木原木
+tile.futuremc.stripped_spruce_log.name=去皮云杉原木
+tile.futuremc.stripped_birch_log.name=去皮白桦原木
+tile.futuremc.stripped_jungle_log.name=去皮丛林原木
+tile.futuremc.stripped_acacia_log.name=去皮金合欢原木
+tile.futuremc.stripped_dark_oak_log.name=去皮深色橡木原木
+death.attack.berryBush=%1$s 被甜浆果灌木刺死
+death.attack.sting=%1$s 被蛰死了
+death.attack.trident=%1$s 被 %2$s 刺穿
+death.attack.trident.item=%1$s 被刺穿 %2$s 和 %3$s 刺穿
+
+# Wall
+tile.futuremc.brick_wall.name=砖块墙
+tile.futuremc.andesite_wall.name=安山岩墙
+tile.futuremc.diorite_wall.name=闪长岩墙
+tile.futuremc.granite_wall.name=花岗岩石砖墙
+tile.futuremc.prismarine_wall.name=海晶石墙
+tile.futuremc.stone_brick_wall.name=石砖墙
+tile.futuremc.mossy_stone_brick_wall.name=苔石砖墙
+tile.futuremc.end_stone_brick_wall.name=末地石砖墙
+tile.futuremc.nether_brick_wall.name=下界砖墙
+tile.futuremc.sandstone_wall.name=砂岩墙
+tile.futuremc.red_sandstone_wall.name=红砂岩墙
+tile.futuremc.red_nether_brick_wall.name=红色下界砖墙
+
+# Slab
+tile.futuremc.granite_slab.name=花岗岩台阶
+tile.futuremc.andesite_slab.name=安山岩台阶
+tile.futuremc.diorite_slab.name=闪长岩台阶
+tile.futuremc.polished_granite_slab.name=磨制花岗岩台阶
+tile.futuremc.polished_andesite_slab.name=磨制安山岩台阶
+tile.futuremc.polished_diorite_slab.name=磨制闪长岩台阶
+tile.futuremc.stone_slab.name=石台阶
+tile.futuremc.prismarine_slab.name=海晶石台阶
+tile.futuremc.dark_prismarine_slab.name=深色海晶石台阶
+tile.futuremc.prismarine_brick_slab.name=海晶石砖台阶
+tile.futuremc.smooth_red_sandstone_slab.name=平滑红砂岩台阶
+tile.futuremc.smooth_sandstone_slab.name=平滑砂岩台阶
+tile.futuremc.mossy_stone_brick_slab.name=苔石砖台阶
+tile.futuremc.mossy_stone_slab.name=苔藓石台阶
+tile.futuremc.smooth_quartz_slab.name=平滑石英台阶
+tile.futuremc.red_nether_brick_slab.name=红色地狱砖台阶
+tile.futuremc.end_stone_brick_slab.name=末地石砖台阶
+tile.futuremc.bamboo.name=竹子
+tile.futuremc.bee_nest.name=蜂巢
+tile.futuremc.beehive.name=巨型蜂巢
+tile.futuremc.honey_block.name=蜂蜜块
+tile.futuremc.honeycomb_block.name=蜜脾块
+
+# Decorative Block
+tile.futuremc.smooth_stone.name=平滑石
+tile.futuremc.smooth_sandstone.name=平滑砂岩
+tile.futuremc.smooth_red_sandstone.name=平滑红砂岩
+tile.futuremc.smooth_quartz.name=平滑石英块
+tile.futuremc.soul_soil.name=灵魂土
+tile.futuremc.fletching_table.name=制箭台
+tile.futuremc.smithing_table.name=锻造台
+tile.futuremc.blue_ice.name=蓝冰
+tile.futuremc.soul_fire_torch.name=灵魂火把
+tile.futuremc.soul_fire_lantern.name=灵魂灯笼
+tile.futuremc.acacia_trapdoor.name=金合欢木活板门
+tile.futuremc.jungle_trapdoor.name=丛林木活板门
+tile.futuremc.birch_trapdoor.name=白桦木活板门
+tile.futuremc.spruce_trapdoor.name=云杉木活板门
+tile.futuremc.dark_oak_trapdoor.name=深色橡木活板门
+tile.futuremc.bell.name=钟
+tile.futuremc.acacia_wood.name=金合欢木
+tile.futuremc.jungle_wood.name=丛林木
+tile.futuremc.birch_wood.name=白桦木
+tile.futuremc.oak_wood.name=橡木
+tile.futuremc.spruce_wood.name=云杉木
+tile.futuremc.dark_oak_wood.name=深色橡木
+tile.futuremc.stripped_acacia_wood.name=去皮金合欢木
+tile.futuremc.stripped_jungle_wood.name=去皮丛林木
+tile.futuremc.stripped_birch_wood.name=去皮白桦木
+tile.futuremc.stripped_oak_wood.name=去皮橡木
+tile.futuremc.stripped_spruce_wood.name=去皮云杉木
+tile.futuremc.stripped_dark_oak_wood.name=去皮深色橡木
+tile.futuremc.chain.name=锁链
+tile.futuremc.ancient_debris.name=远古残骸
+tile.futuremc.netherite_block.name=下界合金块
+entity.ItemFrame.name=物品展示框
+
+# Banner
+item.banner.globe.black=Black Globe
+item.banner.globe.red=Red Globe
+item.banner.globe.green=Green Globe
+item.banner.globe.brown=Brown Globe
+item.banner.globe.blue=Blue Globe
+item.banner.globe.purple=Purple Globe
+item.banner.globe.cyan=Cyan Globe
+item.banner.globe.silver=Light Gray Globe
+item.banner.globe.gray=Gray Globe
+item.banner.globe.pink=Pink Globe
+item.banner.globe.lime=Lime Globe
+item.banner.globe.yellow=Yellow Globe
+item.banner.globe.lightBlue=Light Blue Globe
+item.banner.globe.magenta=Magenta Globe
+item.banner.globe.orange=Orange Globe
+item.banner.globe.white=White Globe
+
+# Crafting Materials
+item.futuremc.dye.0.name=白色染料
+item.futuremc.dye.1.name=蓝色染料
+item.futuremc.dye.2.name=棕色染料
+item.futuremc.dye.3.name=黑色染料
+
+# Item
+item.futuremc.trident.name=三叉戟
+item.futuremc.crossbow.name=十字弩
+item.futuremc.crossbow_loaded.name=填装好的十字弩
+item.futuremc.suspicious_stew.name=谜之炖菜
+item.futuremc.sweet_berries.name=甜浆果
+item.futuremc.bamboo.name=竹子
+item.futuremc.banner_pattern.name=旗帜图案
+item.futuremc.banner_pattern.flower=花朵印花
+item.futuremc.banner_pattern.creeper=爬行者印花
+item.futuremc.banner_pattern.skull=骷髅印花
+item.futuremc.banner_pattern.thing=玩意儿
+item.futuremc.banner_pattern.globe=球装物
+item.futuremc.banner_pattern.snout=象鼻虫
+item.futuremc.honey_bottle.name=蜂蜜瓶
+item.futuremc.honeycomb.name=蜂窝
+item.futuremc.nautilus_shell.name=鹦鹉螺壳
+item.futuremc.pufferfish_bucket.name=河豚桶
+item.futuremc.salmon_bucket.name=鲑鱼桶
+item.futuremc.cod_bucket.name=鳕鱼桶
+item.futuremc.tropical_fish_bucket.name=热带鱼桶
+item.futuremc.netherite_axe.name=下界合金斧
+item.futuremc.netherite_hoe.name=下界合金锄
+item.futuremc.netherite_pickaxe.name=下界合金镐
+item.futuremc.netherite_shovel.name=下界合金锹
+item.futuremc.netherite_sword.name=下界合金剑
+item.futuremc.netherite_scrap.name=下界合金剑碎片
+item.futuremc.netherite_helmet.name=下界合金头盔
+item.futuremc.netherite_chestplate.name=下界合金胸甲
+item.futuremc.netherite_leggings.name=下界合金护腿
+item.futuremc.netherite_boots.name=下界合金靴子
+item.futuremc.netherite_ingot.name=下界合金锭
+item.record.futuremc.pigstep.desc=Lena Raine - Pigstep
+item.futuremc.record_pigstep.name=Music Disc
+
+# GUI
+container.barrel=木桶
+container.blast_furnace=高炉
+container.smoker=烟熏炉
+container.grindstone=修复 & 分解
+container.stonecutter=切石机
+container.loom=织布机
+container.smithing=升级齿轮
+
+# Entity
+entity.futuremc:trident.name=三叉戟
+entity.futuremc:panda.name=熊猫
+entity.futuremc:bee.name=蜜蜂
+entity.futuremc:cod.name=鳕鱼
+entity.futuremc:pufferfish.name=河豚
+entity.futuremc:salmon.name=鲑鱼
+entity.futuremc:tropical_fish.name=热带鱼
+
+# Enchantment
+enchantment.loyalty=忠诚
+enchantment.futuremc.loyalty.desc=三叉戟被扔后返回,较高的级别可以减少返回时间
+enchantment.channeling=引雷
+enchantment.futuremc.channeling.desc=三叉戟向被击中的实体引导闪电,仅在雷暴天气以及目标不受不透明块的阻碍时才起作用
+enchantment.riptide=激流
+enchantment.futuremc.riptide.desc=三叉戟被抛出时玩家飞得更高更远,仅在水或雨中起作用
+enchantment.impaling=穿刺
+enchantment.futuremc.impaling.desc=对自然海洋中的生物造成额外的伤害
+enchantment.quick_charge=快速填装
+enchantment.futuremc.quick_charge.desc=减少十字弩的填装时间
+
+# Creative Tab
+itemGroup.futuremc=Future MC
+
+# JEI
+container.jei.futuremc.campfire.name=campfire
+container.jei.futuremc.blast_furnace.name=Blasting
+container.jei.futuremc.smoker.name=Smoking
+container.jei.futuremc.stonecutter.name=Stonecutting
+container.jei.futuremc.smithing.name=Smithing
+container.jei.futuremc.composter.name=Composting
+container.jei.futuremc.campfire.duration=Duration
+container.jei.futuremc.composter.chance=Chance
+
+# Config
+futuremc.config.blue_ice=Blue Ice
+
+# Vanilla Override
+tile.sandStone.smooth.name=Cut Sandstone
+tile.redSandStone.smooth.name=Cut Red Sandstone
+
+# Subtitles
+futuremc.subtitles.barrel_close=Barrel closes
+futuremc.subtitle.barrel_open=Barrel opens
+futuremc.subtitle.trident_throw=Trident clangs
+futuremc.subtitle.trident_pierce=Trident stabs
+futuremc.subtitle.trident_ground_impact=Trident vibrates
+futuremc.subtitle.trident_channeling=Trident thunder cracks
+futuremc.subtitle.trident_loyalty=Trident returns
+futuremc.subtitle.riptide_trident=Trident zooms
+futuremc.subtitle.crossbow_charge=Crossbow charges up
+futuremc.subtitle.crossbow_shoot=Crossbow fires
+futuremc.subtitle.grindstone_use=Grindstone used
+futuremc.subtitles.panda_aggressive_ambient=Panda huffs
+futuremc.subtitles.panda_ambient=Panda pants
+futuremc.subtitles.panda_bite=Panda bites
+futuremc.subtitles.panda_cannot_breed=Panda bleats
+futuremc.subtitles.panda_death=Panda dies
+futuremc.subtitles.panda_eat=Panda eats
+futuremc.subtitles.panda_hurt=Panda hurts
+futuremc.subtitles.panda_pre_sneeze=Panda's nose tickles
+futuremc.subtitles.panda_sneeze=Panda sneezes
+futuremc.subtitles.panda_step=Panda steps
+futuremc.subtitles.panda_worried_ambient=Panda whimpers
+futuremc.subtitles.campfire_crackle=Campfire crackles
+futuremc.subtitles.bell_ring=Bell rings
+futuremc.subtitles.bell_resonate=Bell resonates
+futuremc.subtitles.bee_enter_hive=Bee enters hive
+futuremc.subtitles.bee_exit_hive=Bee leaves hive
+futuremc.subtitles.bee_sting=Bee stings
+futuremc.subtitles.bee_death=Bee dies
+futuremc.subtitles.bee_hurt=Bee hurts
+futuremc.subtitles.bee_pollinate=Bee buzzes happily
+futuremc.subtitles.bee_work=Bees work
+futuremc.subtitles.bee_aggressive=Bee buzzes angrily
+futuremc.subtitles.bee_passive=Bee buzzes
+futuremc.subtitles.honey_bottle_drink=Honey gulping
+futuremc.subtitles.shear_hive=Shears scrape
+futuremc.subtitles.honey_block_slide=Sliding down a honey block
+futuremc.subtitles.equip_netherite=Netherite armor clanks
+futuremc.subtitles.smithing_table_use=Smithing table used
+futuremc.subtitles.cod_swim=Cod swims
+futuremc.subtitles.cod_hurt=Cod hurts
+futuremc.subtitles.cod_death=Cod dies
+futuremc.subtitles.cod_flop=Cod flops
+futuremc.subtitles.salmon_swim=Salmon swims
+futuremc.subtitles.salmon_hurt=Salmon hurts
+futuremc.subtitles.salmon_death=Salmon dies
+futuremc.subtitles.salmon_flop=Salmon flops
+futuremc.subtitles.pufferfish_swim=Pufferfish swims
+futuremc.subtitles.pufferfish_hurt=Pufferfish hurts
+futuremc.subtitles.pufferfish_death=Pufferfish dies
+futuremc.subtitles.pufferfish_flop=Pufferfish flops
+futuremc.subtitles.tropical_fish_swim=Tropical fish swims
+futuremc.subtitles.tropical_fish_hurt=Tropical fish hurts
+futuremc.subtitles.tropical_fish_death=Tropical fish dies
+futuremc.subtitles.tropical_fish_flop=Tropical fish flops
+futuremc.subtitles.iron_golem_repair=Iron golem repaired
+futuremc.subtitles.pufferfish_inflate=Pufferfish inflates
+futuremc.subtitles.pufferfish_deflate=Pufferfish deflates
+futuremc.subtitles.pufferfish_sting=Pufferfish stings

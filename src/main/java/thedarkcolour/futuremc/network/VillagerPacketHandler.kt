@@ -14,7 +14,7 @@ class VillagerPacketHandler : IMessageHandler<VillagerTradePacket, IMessage?> {
             val container = playerIn.openContainer
 
             if (container is ContainerVillager) {
-                container.setTradeIndex(tradeIndex)
+                container.setCurrentRecipeIndex(tradeIndex)
                 container.moveAroundItems(tradeIndex)
             }
         }

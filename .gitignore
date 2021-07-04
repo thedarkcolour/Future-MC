@@ -25,3 +25,4 @@ classes
 *.jar
 *.zip
 wiki
+/src/main/java/net/minecraft/

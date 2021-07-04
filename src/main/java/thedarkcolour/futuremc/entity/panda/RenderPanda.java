@@ -39,8 +39,8 @@ public class RenderPanda extends RenderLiving<EntityPanda> {
     protected void applyRotations(EntityPanda entityLiving, float ageInTicks, float rotationYaw, float partialTicks) {
         super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks);
 
-        if (entityLiving.field_213608_bz > 0) {
-            int i = entityLiving.field_213608_bz;
+        if (entityLiving.rolls > 0) {
+            int i = entityLiving.rolls;
             int j = i + 1;
             float f1 = entityLiving.isChild() ? 0.3F : 0.8F;
             if (i < 8) {

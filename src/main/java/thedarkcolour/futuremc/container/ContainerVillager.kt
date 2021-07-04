@@ -5,21 +5,35 @@ import net.minecraft.entity.IMerchant
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.entity.player.InventoryPlayer
-import net.minecraft.inventory.IInventory
-import net.minecraft.inventory.InventoryMerchant
+import net.minecraft.inventory.ContainerMerchant
 import net.minecraft.inventory.Slot
 import net.minecraft.inventory.SlotMerchantResult
 import net.minecraft.item.ItemStack
-import thedarkcolour.core.gui.FContainer
+import net.minecraft.world.World
 import thedarkcolour.futuremc.client.gui.GuiVillager
 
-class ContainerVillager(playerInv: InventoryPlayer, val merchant: IMerchant) : FContainer(playerInv) {
-    val merchantInventory = InventoryMerchant(playerInv.player, merchant)
-
+class ContainerVillager(val playerInv: InventoryPlayer, merchant: IMerchant, world: World?) : ContainerMerchant(playerInv, merchant, world) {
     init {
-        addSlotToContainer(Slot(merchantInventory, 0, 136, 37))
-        addSlotToContainer(Slot(merchantInventory, 1, 162, 37))
-        addSlotToContainer(SlotMerchantResult(playerInv.player, merchant, merchantInventory, 2, 220, 37))
+        inventorySlots.clear()
+        inventoryItemStacks.clear()
+        // Modify existing slots
+        //getSlot(0).xPos = 136
+        //getSlot(0).yPos = 37
+
+        //getSlot(1).xPos = 162
+        //getSlot(1).yPos = 37
+
+        // Add to listeners
+        val player = playerInv.player
+        if (player is EntityPlayerMP) {
+            listeners.add(player)
+        }
+
+        var index = 0
+
+        addSlotToContainer(Slot(merchantInventory, index++, 136, 37))
+        addSlotToContainer(Slot(merchantInventory, index++, 162, 37))
+        addSlotToContainer(SlotMerchantResult(playerInv.player, merchant, merchantInventory, index++, 220, 37))
 
         for (row in 0..2) {
             for (col in 0..8) {
@@ -35,63 +49,18 @@ class ContainerVillager(playerInv: InventoryPlayer, val merchant: IMerchant) : F
         }
     }
 
-    override fun onCraftMatrixChanged(inventoryIn: IInventory) {
-        merchantInventory.resetRecipeAndSlots()
-        super.onCraftMatrixChanged(inventoryIn)
-    }
-
-    fun setTradeIndex(currentRecipe: Int) {
-        merchantInventory.setCurrentRecipeIndex(currentRecipe)
-    }
-
-    override fun canInteractWith(playerIn: EntityPlayer): Boolean {
-        return merchant.customer == playerIn
-    }
-
     override fun canMergeSlot(stack: ItemStack, slotIn: Slot): Boolean {
         return false
     }
 
-    // Same as 1.12
-    override fun transferStackInSlot(playerIn: EntityPlayer, index: Int): ItemStack {
-        var itemstack = ItemStack.EMPTY
-        val slot = inventorySlots[index]
+    override fun onContainerClosed(playerIn: EntityPlayer) {
+        val playerInv = playerInv
 
-        if (slot != null && slot.hasStack) {
-            val itemstack1 = slot.stack
-            itemstack = itemstack1.copy()
-            if (index == 2) {
-                if (!mergeItemStack(itemstack1, 3, 39, true)) {
-                    return ItemStack.EMPTY
-                }
-                slot.onSlotChange(itemstack1, itemstack)
-            } else if (index != 0 && index != 1) {
-                if (index in 3..29) {
-                    if (!mergeItemStack(itemstack1, 30, 39, false)) {
-                        return ItemStack.EMPTY
-                    }
-                } else if (index in 30..38 && !mergeItemStack(itemstack1, 3, 30, false)) {
-                    return ItemStack.EMPTY
-                }
-            } else if (!mergeItemStack(itemstack1, 3, 39, false)) {
-                return ItemStack.EMPTY
-            }
-            if (itemstack1.isEmpty) {
-                slot.putStack(ItemStack.EMPTY)
-            } else {
-                slot.onSlotChanged()
-            }
-            if (itemstack1.count == itemstack.count) {
-                return ItemStack.EMPTY
-            }
-            slot.onTake(playerIn, itemstack1)
+        if (!playerInv.itemStack.isEmpty) {
+            playerIn.dropItem(playerInv.itemStack, false)
+            playerInv.itemStack = ItemStack.EMPTY
         }
 
-        return itemstack
-    }
-
-    override fun onContainerClosed(playerIn: EntityPlayer) {
-        super.onContainerClosed(playerIn)
         merchant.customer = null
 
         if (!merchant.world.isRemote) {
@@ -114,8 +83,8 @@ class ContainerVillager(playerInv: InventoryPlayer, val merchant: IMerchant) : F
         }
     }
 
-    override fun getGuiContainer(): GuiContainer {
-        return GuiVillager(ContainerVillager(playerInv, merchant))
+    fun getGuiContainer(): GuiContainer {
+        return GuiVillager(ContainerVillager(playerInv, merchant, null))
     }
 
     fun moveAroundItems(tradeIndex: Int) {

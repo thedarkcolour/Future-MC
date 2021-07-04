@@ -1,0 +1,7 @@
+{
+    "parent": "block/fire_floor",
+    "textures": {
+        "particle": "futuremc:block/soul_fire_1",
+        "fire": "futuremc:block/soul_fire_1"
+    }
+}

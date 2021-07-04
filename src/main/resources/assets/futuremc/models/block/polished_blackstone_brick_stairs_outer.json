@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "futuremc:block/polished_blackstone_bricks",
+    "top": "futuremc:block/polished_blackstone_bricks",
+    "side": "futuremc:block/polished_blackstone_bricks"
+  }
+}

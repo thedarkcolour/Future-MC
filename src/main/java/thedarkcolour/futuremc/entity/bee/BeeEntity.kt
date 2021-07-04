@@ -43,6 +43,7 @@ import kotlin.experimental.or
 import kotlin.math.max
 import kotlin.math.min
 
+// UNUSED
 class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
     private var lastHurtBy: UUID? = null
     private var rollAmount = 0.0f

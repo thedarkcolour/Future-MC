@@ -1,0 +1,7 @@
+{
+    "parent": "block/door_bottom_rh",
+    "textures": {
+        "top": "futuremc:block/crimson_door_top",
+        "bottom": "futuremc:block/crimson_door_bottom"
+    }
+}

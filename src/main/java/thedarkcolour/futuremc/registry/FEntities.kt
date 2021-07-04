@@ -28,6 +28,12 @@ object FEntities {
     fun registerEntities() {
         if (FConfig.updateAquatic.trident) {
             registerEntity("trident", EntityTrident::class.java, 32, 1)
+
+            //EntityRegistry.instance().lookupModSpawn(TestTrident::class.java, false)!!.setCustomSpawning({ message ->
+            //    TestTrident(message.)
+            //}, false)
+
+            //EntityRegistry.registerModEntity(ResourceLocation(FutureMC.ID, "trident"), TestTrident::class.java, "trident", 1, FutureMC, 32, 1, true)
         }
         //if (updateAquatic.drowned) {
         //    registerEntity("drowned", EntityDrowned::class.java, 36, 2, 9433559, 7969893)

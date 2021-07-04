@@ -81,14 +81,14 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
         shooter: Entity,
         pitch: Float,
         yaw: Float,
-        p_184547_4_: Float,
+        zero: Float,
         velocity: Float,
         inaccuracy: Float
     ) {
-        val f = -sin(yaw * 0.017453292f) * cos(pitch * 0.017453292f)
-        val f1 = -sin(pitch * 0.017453292f)
-        val f2 = cos(yaw * 0.017453292f) * cos(pitch * 0.017453292f)
-        shoot(f.toDouble(), f1.toDouble(), f2.toDouble(), velocity, inaccuracy)
+        val f = -sin(Math.toDegrees(yaw.toDouble())) * cos(Math.toDegrees(pitch.toDouble()))
+        val f1 = -sin(Math.toDegrees((pitch + zero).toDouble()))
+        val f2 = cos(Math.toDegrees(yaw.toDouble())) * cos(Math.toDegrees(pitch.toDouble()))
+        shoot(f, f1, f2, velocity, inaccuracy)
         motionX += shooter.motionX
         motionZ += shooter.motionZ
 

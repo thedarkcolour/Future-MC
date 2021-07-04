@@ -161,9 +161,9 @@ class LanternBlock(properties: Properties) : FBlock(properties) {
         changedBlockPos: BlockPos
     ) {
         if (changedBlock is BlockTrapDoor) {
-            val state = worldIn.getBlockState(changedBlockPos)
             val facing = if (observerState.getValue(HANGING)) EnumFacing.UP else EnumFacing.DOWN
-            if (!isTrapdoorValid(state, facing)) {
+
+            if (!isValidPos(worldIn, observerPos, facing)) {
                 dropBlockAsItem(worldIn, observerPos, observerState, 0)
                 worldIn.setBlockToAir(observerPos)
             }

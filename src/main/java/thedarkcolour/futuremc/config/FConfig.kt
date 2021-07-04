@@ -770,6 +770,12 @@ object FConfig {
         @JvmField
         val ancientDebris = AncientDebris()
 
+        @Name("Blackstone")
+        @Comment("Options for Blackstone and Blackstone generation")
+        @RequiresMcRestart
+        @JvmField
+        val blackstone = Blackstone()
+
         class AncientDebris {
             @Name("Vein 1 (Normal)")
             @Comment("Options for the normal vein of Ancient Debris in the nether")
@@ -834,6 +840,18 @@ object FConfig {
                 @JvmField
                 var spread = 8
             }
+        }
+
+        class Blackstone {
+            @Name("Enabled")
+            @Comment("Whether this feature is enabled")
+            @JvmField
+            var enabled = true
+
+            @Name("Generation")
+            @Comment("Generation options for Blackstone")
+            @JvmField
+            val generation = AncientDebris.NormalVein()
         }
     }
 }

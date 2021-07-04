@@ -31,7 +31,6 @@ import thedarkcolour.futuremc.registry.FItems.SWEET_BERRIES
 import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.tile.TileComposter
 import java.util.*
-import kotlin.experimental.and
 
 class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
     init {
@@ -170,7 +169,7 @@ class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
 
         @JvmStatic
         fun add(stack: ItemStack, rarity: Int) {
-            VALID_ITEMS[stack] = 100.toByte() and rarity.toByte()
+            VALID_ITEMS[stack] = rarity.toByte().coerceAtMost(100)
         }
 
         @Suppress("ReplacePutWithAssignment")

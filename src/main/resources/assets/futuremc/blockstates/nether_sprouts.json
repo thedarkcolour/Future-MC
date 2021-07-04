@@ -1,7 +1,7 @@
 {
     "variants": {
-        "": {
-            "model": "futuremc:block/nether_sprouts"
+        "normal": {
+            "model": "futuremc:nether_sprouts"
         }
     }
 }

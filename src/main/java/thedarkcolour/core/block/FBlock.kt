@@ -34,7 +34,7 @@ open class FBlock(properties: Properties) : Block(properties.material, propertie
         needsRandomTick = properties.randomTick
         slipperiness = properties.slipperiness
         shape = properties.shape ?: FULL_BLOCK_AABB
-        @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+
         creativeTab = if (FConfig.useVanillaCreativeTabs) {
             val group = properties.group
             if (group == null && FutureMC.DEBUG)

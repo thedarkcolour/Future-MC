@@ -30,12 +30,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.relauncher.Side
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import thedarkcolour.core.block.IProjectileDispenserBehaviour
 import thedarkcolour.core.command.GenerateCommand
 import thedarkcolour.core.command.HealCommand
 import thedarkcolour.core.command.ModeToggleCommand
 import thedarkcolour.core.util.TODO
-import thedarkcolour.core.util.registerDispenserBehaviour
 import thedarkcolour.core.util.registerServerDispenserBehaviour
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.block.buzzybees.ShearDispenserBehaviour
@@ -47,7 +45,6 @@ import thedarkcolour.futuremc.command.FastGiveCommand
 import thedarkcolour.futuremc.compat.QUARK
 import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.entity.trident.EntityTrident
 import thedarkcolour.futuremc.event.Events
 import thedarkcolour.futuremc.item.BannerPatternItem
 import thedarkcolour.futuremc.network.NetworkHandler
@@ -76,7 +73,7 @@ object FutureMC {
     const val ID = "futuremc"
     const val NAME = "Future MC"
     const val VERSION = "0.2.6"
-    const val DEPENDENCIES = "required-after:forgelin;required-after:forge@[14.23.5.2847,)"
+    const val DEPENDENCIES = "required-after:forgelin;required-after:forge@[14.23.5.2847]"
 
     // Blackboard is null when running tests
     @JvmField
@@ -125,7 +122,8 @@ object FutureMC {
         GuiType.registerGuiHandler()
 
         if (FConfig.updateAquatic.trident) {
-            registerDispenserBehaviour(FItems.TRIDENT, IProjectileDispenserBehaviour(::EntityTrident))
+            // todo add separate option for this cause this feature is not actually in Vanilla
+            //registerDispenserBehaviour(FItems.TRIDENT, IProjectileDispenserBehaviour(::EntityTrident))
         }
         if (FConfig.buzzyBees.bee.enabled) {
             for (item in ForgeRegistries.ITEMS) {

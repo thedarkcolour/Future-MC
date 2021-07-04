@@ -21,25 +21,30 @@ abstract class FGui<T : Container>(@JvmField protected var container: T) : GuiCo
 
     }
 
-    // Parity for newer versions
 
-    fun blit(x: Int, y: Int, z: Float, uOffset: Float, vOffset: Float, uWidth: Int, vHeight: Int, textureHeight: Int, textureWidth: Int) {
-        innerBlit(x, x + uWidth, y, y + vHeight, z.toInt(), uWidth, vHeight, uOffset, vOffset, textureWidth, textureHeight)
-    }
+    companion object {
+        // Parity for newer versions
 
-    private fun innerBlit(x1: Int, x2: Int, y1: Int, y2: Int, z: Int, uWidth: Int, vHeight: Int, uOffset: Float, vOffset: Float, textureWidth: Int, textureHeight: Int) {
-        innerBlit(x1, x2, y1, y2, z, uOffset / textureWidth, (uOffset + uWidth) / textureWidth, vOffset / textureHeight, (vOffset + vHeight) / textureHeight)
-    }
+        fun blit(
+            x: Int, y: Int, z: Float, uOffset: Float, vOffset: Float, uWidth: Int, vHeight: Int, textureHeight: Int, textureWidth: Int) {
+            innerBlit(x, x + uWidth, y, y + vHeight, z.toInt(), uWidth, vHeight, uOffset, vOffset, textureWidth, textureHeight)
+        }
 
-    private fun innerBlit(x1: Int, x2: Int, y1: Int, y2: Int, z: Int, minU: Float, maxU: Float, minV: Float, maxV: Float) {
-        val tessellator = Tessellator.getInstance()
-        val builder = tessellator.buffer
+        private fun innerBlit(
+            x1: Int, x2: Int, y1: Int, y2: Int, z: Int, uWidth: Int, vHeight: Int, uOffset: Float, vOffset: Float, textureWidth: Int, textureHeight: Int) {
+            innerBlit(x1, x2, y1, y2, z, uOffset / textureWidth, (uOffset + uWidth) / textureWidth, vOffset / textureHeight, (vOffset + vHeight) / textureHeight)
+        }
 
-        builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX)
-        builder.pos(x1.toDouble(), y2.toDouble(), z.toDouble()).tex(minU.toDouble(), maxV.toDouble()).endVertex()
-        builder.pos(x2.toDouble(), y2.toDouble(), z.toDouble()).tex(maxU.toDouble(), maxV.toDouble()).endVertex()
-        builder.pos(x2.toDouble(), y1.toDouble(), z.toDouble()).tex(maxU.toDouble(), minV.toDouble()).endVertex()
-        builder.pos(x1.toDouble(), y1.toDouble(), z.toDouble()).tex(minU.toDouble(), minV.toDouble()).endVertex()
-        tessellator.draw()
+        private fun innerBlit(x1: Int, x2: Int, y1: Int, y2: Int, z: Int, minU: Float, maxU: Float, minV: Float, maxV: Float) {
+            val tessellator = Tessellator.getInstance()
+            val builder = tessellator.buffer
+
+            builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX)
+            builder.pos(x1.toDouble(), y2.toDouble(), z.toDouble()).tex(minU.toDouble(), maxV.toDouble()).endVertex()
+            builder.pos(x2.toDouble(), y2.toDouble(), z.toDouble()).tex(maxU.toDouble(), maxV.toDouble()).endVertex()
+            builder.pos(x2.toDouble(), y1.toDouble(), z.toDouble()).tex(maxU.toDouble(), minV.toDouble()).endVertex()
+            builder.pos(x1.toDouble(), y1.toDouble(), z.toDouble()).tex(minU.toDouble(), minV.toDouble()).endVertex()
+            tessellator.draw()
+        }
     }
 }

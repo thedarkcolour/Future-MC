@@ -6,6 +6,7 @@ import net.minecraft.util.EnumParticleTypes
 import net.minecraftforge.common.util.EnumHelper
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.client.particle.CampfireParticle
+import thedarkcolour.futuremc.client.particle.PandaSneezeParticle
 import thedarkcolour.futuremc.client.particle.SoulFlameParticle
 
 object FParticles {
@@ -13,6 +14,7 @@ object FParticles {
     lateinit var CAMPFIRE_SIGNAL_SMOKE: EnumParticleTypes
     lateinit var SOUL_FLAME: EnumParticleTypes
     lateinit var FALLING_BEE_NECTAR: EnumParticleTypes
+    lateinit var PANDA_SNEEZE: EnumParticleTypes
 
     fun registerParticles() {
         CAMPFIRE_COSY_SMOKE = registerParticle(
@@ -39,6 +41,12 @@ object FParticles {
             false,
             BeeParticle::FallingNectarFactory
         )*/
+        PANDA_SNEEZE = registerParticle(
+            "PANDA_SNEEZE",
+            "pandaSneeze",
+            false,
+            PandaSneezeParticle::Factory
+        )
     }
 
     // Registers a particle

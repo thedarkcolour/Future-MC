@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "futuremc:block/warped_planks",
+        "top": "futuremc:block/warped_planks",
+        "side": "futuremc:block/warped_planks"
+    }
+}
