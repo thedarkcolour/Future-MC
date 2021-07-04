@@ -33,24 +33,8 @@ class BlockSoulFireTorch : BlockTorch() {
 
         if (facing.axis.isHorizontal) {
             val opposite = facing.opposite
-            worldIn.spawnParticle(
-                EnumParticleTypes.SMOKE_NORMAL,
-                d0 + d4 * opposite.xOffset,
-                d1 + d3,
-                d2 + d4 * opposite.zOffset,
-                0.0,
-                0.0,
-                0.0
-            )
-            worldIn.spawnParticle(
-                FParticles.SOUL_FLAME,
-                d0 + d4 * opposite.xOffset,
-                d1 + d3,
-                d2 + d4 * opposite.zOffset,
-                0.0,
-                0.0,
-                0.0
-            )
+            worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4 * opposite.xOffset, d1 + d3, d2 + d4 * opposite.zOffset, 0.0, 0.0, 0.0)
+            worldIn.spawnParticle(FParticles.SOUL_FLAME, d0 + d4 * opposite.xOffset, d1 + d3, d2 + d4 * opposite.zOffset, 0.0, 0.0, 0.0)
         } else {
             worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, 0.0, 0.0, 0.0)
             worldIn.spawnParticle(FParticles.SOUL_FLAME, d0, d1, d2, 0.0, 0.0, 0.0)

@@ -5,6 +5,7 @@ import org.objectweb.asm.MethodVisitor
 import java.util.function.Consumer
 
 /**
+ * ignore this idk why i made it
  * Builds a new class. TODO
  *
  * @author TheDarkColour

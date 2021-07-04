@@ -1,7 +1,10 @@
 package thedarkcolour.futuremc.item
 
+import com.google.common.collect.Multimap
 import net.minecraft.block.Block
 import net.minecraft.entity.FireproofItemLogic
+import net.minecraft.entity.SharedMonsterAttributes
+import net.minecraft.entity.ai.attributes.AttributeModifier
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.*
@@ -89,7 +92,7 @@ class FireproofSwordItem(regName: String, material: ToolMaterial) : ItemSword(ma
     }
 }
 
-class FireproofArmorItem(
+class NetheriteArmorItem(
     regName: String,
     materialIn: ArmorMaterial,
     equipmentSlotIn: EntityEquipmentSlot
@@ -97,6 +100,16 @@ class FireproofArmorItem(
     init {
         setItemName(this, regName)
         setItemModel(this, 0)
+    }
+
+    override fun getItemAttributeModifiers(slot: EntityEquipmentSlot): Multimap<String, AttributeModifier> {
+        val map = super.getItemAttributeModifiers(slot)
+
+        if (slot == equipmentSlot) {
+            map.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.name, AttributeModifier(ARMOR_MODIFIERS[slot.index], "Armor knockback resistance", 0.1, 0))
+        }
+
+        return map
     }
 
     override fun onEntityItemUpdate(entity: EntityItem): Boolean {

@@ -5,6 +5,8 @@ import net.minecraft.block.BlockLog.EnumAxis
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.IBlockState
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiMerchant
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.boss.EntityWither
@@ -12,9 +14,11 @@ import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.monster.EntityElderGuardian
 import net.minecraft.entity.monster.EntityIronGolem
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.init.SoundEvents
+import net.minecraft.inventory.ContainerMerchant
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemTool
 import net.minecraft.util.EnumHand
@@ -24,6 +28,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
 import net.minecraftforge.client.event.DrawBlockHighlightEvent
+import net.minecraftforge.client.event.GuiOpenEvent
 import net.minecraftforge.client.event.ModelBakeEvent
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.client.model.ModelLoader
@@ -33,6 +38,7 @@ import net.minecraftforge.event.ForgeEventFactory
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent
+import net.minecraftforge.event.entity.player.PlayerContainerEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock
 import net.minecraftforge.event.terraingen.BiomeEvent
@@ -49,12 +55,14 @@ import thedarkcolour.futuremc.capability.isSwimming
 import thedarkcolour.futuremc.capability.lastSwimAnimation
 import thedarkcolour.futuremc.capability.swimAnimation
 import thedarkcolour.futuremc.client.color.WaterColor
+import thedarkcolour.futuremc.client.gui.GuiVillager
 import thedarkcolour.futuremc.client.render.TridentBakedModel
 import thedarkcolour.futuremc.compat.checkDynamicTrees
 import thedarkcolour.futuremc.compat.checkQuark
 import thedarkcolour.futuremc.compat.checkTConstruct
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.config.FConfig.updateAquatic
+import thedarkcolour.futuremc.container.ContainerVillager
 import thedarkcolour.futuremc.registry.FBlocks.HONEY_BLOCK
 import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_ACACIA_LOG
 import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_BIRCH_LOG
@@ -97,6 +105,8 @@ object Events {
         //if (updateAquatic.newWaterColor)
         //    addListener(::onGetWaterColor)
         addListener(::healIronGolem)
+        addListener(::onGuiOpen)
+        addListener(::onContainerOpen)
         addListener(::onModelRegistry)
         if (TODO())
             addListener(::updateSwimAnimation)
@@ -325,6 +335,28 @@ object Events {
                     }
                 }
             }
+        }
+    }
+
+    private fun onGuiOpen(event: GuiOpenEvent) {
+        val gui = event.gui
+        if (gui is GuiMerchant && gui !is GuiVillager) {
+            event.gui = GuiVillager(ContainerVillager(Minecraft.getMinecraft().player.inventory, gui.merchant, null))
+        }
+    }
+
+    private fun onContainerOpen(event: PlayerContainerEvent.Open) {
+        val container = event.container
+
+        if (container is ContainerMerchant && container !is ContainerVillager) {
+            // We are guaranteed to be serverside unless another mod fucks around
+            val player = event.entityPlayer as EntityPlayerMP
+            val newContainer = ContainerVillager(player.inventory, container.merchant, null)
+
+            container.removeListener(player)
+            //newContainer.addListener(player)
+            newContainer.windowId = container.windowId
+            player.openContainer = newContainer
         }
     }
 

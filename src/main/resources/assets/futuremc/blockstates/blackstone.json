@@ -1,7 +1,7 @@
 {
     "variants": {
-        "": {
-            "model": "futuremc:block/blackstone"
+        "normal": {
+            "model": "futuremc:blackstone"
         }
     }
 }

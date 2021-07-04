@@ -1,0 +1,6 @@
+{
+    "parent": "futuremc:block/template_trapdoor_open",
+    "textures": {
+        "texture": "futuremc:block/warped_trapdoor"
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "futuremc:block/template_trapdoor_bottom",
+    "textures": {
+        "texture": "futuremc:block/crimson_trapdoor"
+    }
+}

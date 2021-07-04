@@ -1,16 +1,7 @@
 {
     "variants": {
-        "axis=x": {
-            "model": "futuremc:block/basalt",
-            "x": 90,
-            "y": 90
-        },
-        "axis=y": {
-            "model": "futuremc:block/basalt"
-        },
-        "axis=z": {
-            "model": "futuremc:block/basalt",
-            "x": 90
-        }
+        "axis=y": { "model": "futuremc:basalt" },
+        "axis=z": { "model": "futuremc:basalt", "x": 90 },
+        "axis=x": { "model": "futuremc:basalt", "x": 90, "y": 90 }
     }
 }

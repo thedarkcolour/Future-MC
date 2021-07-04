@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "futuremc:block/blackstone_top",
+    "top": "futuremc:block/blackstone_top",
+    "side": "futuremc:block/blackstone"
+  }
+}

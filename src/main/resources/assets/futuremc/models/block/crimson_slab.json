@@ -1,0 +1,8 @@
+{
+    "parent": "block/slab",
+    "textures": {
+        "bottom": "futuremc:block/crimson_planks",
+        "top": "futuremc:block/crimson_planks",
+        "side": "futuremc:block/crimson_planks"
+    }
+}

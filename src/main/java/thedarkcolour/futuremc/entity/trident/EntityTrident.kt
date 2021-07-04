@@ -7,17 +7,16 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.MoverType
 import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.item.EntityItem
+import net.minecraft.entity.monster.EntityEnderman
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.network.play.server.SPacketChangeGameState
 import net.minecraft.util.DamageSource
 import net.minecraft.util.EntityDamageSourceIndirect
-import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
+import net.minecraft.world.WorldServer
 import thedarkcolour.futuremc.enchantment.EnchantHelper
 import thedarkcolour.futuremc.registry.FSounds
 
@@ -32,6 +31,7 @@ class EntityTrident : EntityModArrow {
     @Suppress("unused")
     constructor(world: World) : super(world)
 
+    // Dispenser callback
     constructor(world: World, pos: IPosition, stack: ItemStack) : super(world, pos.x, pos.y, pos.z) {
         thrownStack = stack
         pickupStatus = PickupStatus.ALLOWED
@@ -57,8 +57,48 @@ class EntityTrident : EntityModArrow {
         }
     }
 
-    override fun onHit(raytraceResultIn: RayTraceResult) {
-        val entity = raytraceResultIn.entityHit
+    override fun onHit(result: RayTraceResult) {
+        val target = result.entityHit
+        var f = 8.0f
+        if (target is EntityLivingBase) {
+            f += EnchantmentHelper.getModifierForCreature(thrownStack, target.creatureAttribute)
+        }
+
+        val shooter = shootingEntity
+        val source = causeTridentDamage(this, (shooter ?: this))
+        //dealtDamage = true
+        val hitSound = FSounds.TRIDENT_IMPACT
+
+        if (target.attackEntityFrom(source, f)) {
+            if (target is EntityEnderman) {
+                return
+            }
+            if (target is EntityLivingBase) {
+                if (shooter is EntityLivingBase) {
+                    EnchantmentHelper.applyThornEnchantments(target, shooter)
+                    EnchantmentHelper.applyArthropodEnchantments(shooter, target)
+                }
+                arrowHit(target)
+            }
+        }
+
+        motionX *= -0.01
+        motionY *= -0.1
+        motionZ *= -0.01
+
+        var f1 = 1.0f
+
+        if (world is WorldServer && world.isThundering && EnchantHelper.getChanneling(thrownStack)) {
+            val blockpos = target.position
+            if (world.canSeeSky(blockpos)) {
+                world.addWeatherEffect(EntityLightningBolt(world, posX, posY, posZ, false))
+                playSound(FSounds.TRIDENT_CONDUCTIVIDAD, 5.0f, 1.0f)
+                f1 = 5.0f
+            }
+        }
+
+        playSound(hitSound, f1, 1.0f)
+        /*val entity = result.entityHit
 
         if (entity != null) {
 
@@ -93,15 +133,7 @@ class EntityTrident : EntityModArrow {
                     if (!hasChanneled && !thrownStack.isEmpty) { // Enchantment handling
                         if (EnchantHelper.getChanneling(thrownStack)) {
                             if (world.isThundering) {
-                                shootingEntity!!.world.addWeatherEffect(
-                                    EntityLightningBolt(
-                                        shootingEntity!!.world,
-                                        posX,
-                                        posY,
-                                        posZ,
-                                        false
-                                    )
-                                )
+                                shootingEntity!!.world.addWeatherEffect(EntityLightningBolt(shootingEntity!!.world, posX, posY, posZ, false))
                                 playSound(FSounds.TRIDENT_CONDUCTIVIDAD, 5.0f, 1.0f)
                                 hasChanneled = true
                             }
@@ -135,7 +167,7 @@ class EntityTrident : EntityModArrow {
                 playSound(FSounds.TRIDENT_CONDUCTIVIDAD, 5.0f, 1.0f)
                 hasChanneled = true
             }
-        }
+        }*/
     }
 
     override fun onUpdate() {

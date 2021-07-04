@@ -1,0 +1,7 @@
+{
+    "parent": "block/campfire",
+    "textures": {
+        "fire": "futuremc:block/soul_campfire_fire",
+        "litlog": "futuremc:block/soul_campfire_log_lit"
+    }
+}

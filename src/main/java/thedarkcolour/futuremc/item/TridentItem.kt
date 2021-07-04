@@ -91,14 +91,7 @@ class TridentItem : ModeledItem("trident"), ModeledItem.Builtin {
                         stack.damageItem(1, entityLiving)
                         if (j == 0) {
                             val trident = EntityTrident(worldIn, entityLiving, stack)
-                            trident.shoot(
-                                entityLiving,
-                                entityLiving.rotationPitch,
-                                entityLiving.rotationYaw,
-                                0.0f,
-                                2.5f + j.toFloat() * 0.5f,
-                                1.0f
-                            )
+                            trident.shoot(entityLiving, entityLiving.rotationPitch, entityLiving.rotationYaw, 0.0f, 2.5f + j.toFloat() * 0.5f, 1.0f)
                             if (entityLiving.capabilities.isCreativeMode) {
                                 trident.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY
                             }
@@ -136,16 +129,7 @@ class TridentItem : ModeledItem("trident"), ModeledItem.Builtin {
                             entityLiving.move(MoverType.SELF, 0.0, 1.1999999, 0.0)
                         }
                     }
-                    worldIn.playSound(
-                        null,
-                        entityLiving.posX,
-                        entityLiving.posY,
-                        entityLiving.posZ,
-                        sound,
-                        SoundCategory.PLAYERS,
-                        1.0f,
-                        1.0f
-                    )
+                    worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, sound, SoundCategory.PLAYERS, 1.0f, 1.0f)
                 }
             }
         }

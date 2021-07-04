@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "futuremc:block/basalt_top",
+        "side": "futuremc:block/basalt_side"
+    }
+}

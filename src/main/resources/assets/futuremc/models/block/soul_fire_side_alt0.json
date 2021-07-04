@@ -1,0 +1,7 @@
+{
+    "parent": "block/fire_side_alt",
+    "textures": {
+        "particle": "futuremc:block/soul_fire_0",
+        "fire": "futuremc:block/soul_fire_0"
+    }
+}

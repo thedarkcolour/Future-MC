@@ -165,6 +165,12 @@ container.grindstone=Repair & Disenchant
 container.stonecutter=Stonecutter
 container.loom=Loom
 container.smithing=Upgrade Gear
+container.fmc_villager.trades=Trades
+container.fmc_villager.novice=Novice
+container.fmc_villager.apprentice=Apprentice
+container.fmc_villager.journeyman=Journeyman
+container.fmc_villager.expert=Expert
+container.fmc_villager.master=Master
 
 # Entity
 entity.futuremc:trident.name=Trident

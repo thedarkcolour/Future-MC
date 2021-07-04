@@ -1,0 +1,7 @@
+{
+    "parent": "block/lantern",
+    "textures": {
+        "particle": "futuremc:block/soul_lantern",
+        "all": "futuremc:block/soul_lantern"
+    }
+}

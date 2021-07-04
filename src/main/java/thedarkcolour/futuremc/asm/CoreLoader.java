@@ -47,7 +47,7 @@ public class CoreLoader implements IFMLLoadingPlugin {
 
     @Override
     public void injectData(Map<String, Object> data) {
-        CoreTransformer.isObfuscated = (boolean) data.get("runtimeDeobfuscationEnabled");
+        ASMUtil.isObfuscated = (boolean) data.get("runtimeDeobfuscationEnabled");
     }
 
     @Override
