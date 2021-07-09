@@ -15,7 +15,7 @@ jobs:
       - name: Gradle build
         uses: eskatos/gradle-command-action@v1
         with:
-          arguments: setupCIWorkspace build --no-daemon
+          arguments: build --no-daemon
           wrapper-cache-enabled: true
           dependencies-cache-enabled: true
           configuration-cache-enabled: true

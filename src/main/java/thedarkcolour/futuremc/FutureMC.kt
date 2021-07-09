@@ -73,7 +73,7 @@ object FutureMC {
     const val ID = "futuremc"
     const val NAME = "Future MC"
     const val VERSION = "0.2.6"
-    const val DEPENDENCIES = "required-after:forgelin;required-after:forge@[14.23.5.2847]"
+    const val DEPENDENCIES = "required-after:forgelin;required-after:forge@[14.23.5.2847,)"
 
     // Blackboard is null when running tests
     @JvmField
