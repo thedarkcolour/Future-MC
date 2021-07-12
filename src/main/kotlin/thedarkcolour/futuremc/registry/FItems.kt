@@ -9,7 +9,7 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.item.WallOrFloorItem
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.futuremc.FutureMC
-import thedarkcolour.futuremc.config.Config
+import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.item.*
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -128,19 +128,19 @@ object FItems {
             items.register(POLISHED_BLACKSTONE_BUTTON)
             items.register(POLISHED_BLACKSTONE_WALL)
         }
-        items.registerIf(ANCIENT_DEBRIS, Config.ancientDebrisEnabled)
-        items.registerIf(NETHERITE_BLOCK, Config.netherite)
+        items.registerIf(ANCIENT_DEBRIS, FConfig.ancientDebrisEnabled)
+        items.registerIf(NETHERITE_BLOCK, FConfig.netherite)
 
-        items.registerIf(NETHERITE_HELMET, Config.netherite)
-        items.registerIf(NETHERITE_CHESTPLATE, Config.netherite)
-        items.registerIf(NETHERITE_LEGGINGS, Config.netherite)
-        items.registerIf(NETHERITE_BOOTS, Config.netherite)
-        items.registerIf(NETHERITE_INGOT, Config.netherite)
-        items.registerIf(NETHERITE_SCRAP, Config.netherite)
-        items.registerIf(NETHERITE_AXE, Config.netherite)
-        items.registerIf(NETHERITE_HOE, Config.netherite)
-        items.registerIf(NETHERITE_PICKAXE, Config.netherite)
-        items.registerIf(NETHERITE_SHOVEL, Config.netherite)
-        items.registerIf(NETHERITE_SWORD, Config.netherite)
+        items.registerIf(NETHERITE_HELMET, FConfig.netherite)
+        items.registerIf(NETHERITE_CHESTPLATE, FConfig.netherite)
+        items.registerIf(NETHERITE_LEGGINGS, FConfig.netherite)
+        items.registerIf(NETHERITE_BOOTS, FConfig.netherite)
+        items.registerIf(NETHERITE_INGOT, FConfig.netherite)
+        items.registerIf(NETHERITE_SCRAP, FConfig.netherite)
+        items.registerIf(NETHERITE_AXE, FConfig.netherite)
+        items.registerIf(NETHERITE_HOE, FConfig.netherite)
+        items.registerIf(NETHERITE_PICKAXE, FConfig.netherite)
+        items.registerIf(NETHERITE_SHOVEL, FConfig.netherite)
+        items.registerIf(NETHERITE_SWORD, FConfig.netherite)
     }
 }

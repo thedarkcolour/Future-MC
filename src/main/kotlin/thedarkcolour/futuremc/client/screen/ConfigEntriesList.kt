@@ -3,13 +3,13 @@ package thedarkcolour.futuremc.client.screen
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.widget.list.ExtendedList
 import net.minecraft.client.resources.I18n
-import thedarkcolour.futuremc.config.Config
+import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.config.option.Option
 
 class ConfigEntriesList(parent: ConfigScreen, mcIn: Minecraft, widthIn: Int, heightIn: Int, topIn: Int, bottomIn: Int, slotHeightIn: Int) :
         ExtendedList<ConfigEntriesList.Entry>(mcIn, widthIn, heightIn, topIn, bottomIn, slotHeightIn) {
     fun refresh() {
-        Config.netherUpdate.getOptions()
+        FConfig.netherUpdate.getOptions()
     }
 
     class Entry(private val screen: ConfigScreen, private val option: Option<*>) : AbstractListEntry<Entry>() {

@@ -4,7 +4,6 @@ import mezz.jei.api.recipe.category.IRecipeCategory
 import mezz.jei.util.ErrorUtil
 import net.minecraft.client.Minecraft
 import net.minecraft.item.crafting.IRecipe
-import net.minecraft.item.crafting.Ingredient
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.recipe.SmithingRecipe
 import thedarkcolour.futuremc.registry.FRecipes
@@ -46,23 +45,6 @@ object RecipeValidator {
 
         private fun getInfo(recipe: T): String {
             return ErrorUtil.getInfoFromRecipe(recipe, recipeCategory)
-        }
-
-        private fun getInputCount(ingredientList: List<Ingredient?>): Int {
-            var inputCount = 0
-            val var2: Iterator<*> = ingredientList.iterator()
-            while (var2.hasNext()) {
-                val ingredient = var2.next() as Ingredient
-                val input = ingredient.matchingStacks ?: return -1
-                ++inputCount
-            }
-            return inputCount
-        }
-
-        private companion object {
-            private const val INVALID_COUNT = -1
-
-
         }
     }
 }

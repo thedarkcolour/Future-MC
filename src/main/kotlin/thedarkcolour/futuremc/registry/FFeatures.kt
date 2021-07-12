@@ -13,7 +13,7 @@ import net.minecraft.world.gen.placement.FrequencyConfig
 import net.minecraft.world.gen.placement.Placement
 import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.futuremc.FutureMC
-import thedarkcolour.futuremc.config.Config
+import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.feature.*
 
 // todo fix vines
@@ -62,7 +62,7 @@ object FFeatures {
         biome.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Feature.ORE.configure(OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, FBlocks.NETHER_GOLD_ORE.defaultState, 10)).createDecoratedFeature(Placement.COUNT_RANGE.configure(CountRangeConfig(a, 10, 20, 128))))
         biome.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Feature.ORE.configure(OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, Blocks.NETHER_QUARTZ_ORE.defaultState, 14)).createDecoratedFeature(Placement.COUNT_RANGE.configure(CountRangeConfig(b, 10, 20, 128))))
         // TODO Add NO_SURFACE_ORE
-        if (Config.ancientDebrisGenerates.value) {
+        if (FConfig.ancientDebrisGenerates.value) {
             biome.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Feature.ORE.configure(OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, FBlocks.ANCIENT_DEBRIS.defaultState, 2)).createDecoratedFeature(Placement.COUNT_RANGE.configure(CountRangeConfig(1, 8, 16, 128))))
             biome.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Feature.ORE.configure(OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, FBlocks.ANCIENT_DEBRIS.defaultState, 3)).createDecoratedFeature(Placement.COUNT_DEPTH_AVERAGE.configure(DepthAverageConfig(1, 16, 8))))
         }

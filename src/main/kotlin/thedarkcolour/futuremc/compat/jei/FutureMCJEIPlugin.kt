@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.util.ResourceLocation
 import thedarkcolour.futuremc.client.screen.SmithingScreen
-import thedarkcolour.futuremc.config.Config
+import thedarkcolour.futuremc.config.FConfig
 
 @JeiPlugin
 class FutureMCJEIPlugin : IModPlugin {
@@ -23,7 +23,7 @@ class FutureMCJEIPlugin : IModPlugin {
     override fun registerCategories(registration: IRecipeCategoryRegistration) {
         val helper = registration.jeiHelpers.guiHelper
 
-        if (Config.smithingTable.value) {
+        if (FConfig.smithingTable.value) {
             smithingRecipeCategory = SmithingRecipeCategory(helper)
 
             registration.addRecipeCategories(smithingRecipeCategory)
@@ -31,7 +31,7 @@ class FutureMCJEIPlugin : IModPlugin {
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {
-        if (Config.smithingTable.value) {
+        if (FConfig.smithingTable.value) {
             val results = RecipeValidator.getResults(smithingRecipeCategory)
 
             registration.addRecipes(results.smithingRecipes, SmithingRecipeCategory.NAME)

@@ -8,7 +8,7 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent
 import thedarkcolour.futuremc.command.LocateBiomeCommand
-import thedarkcolour.futuremc.config.Config
+import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.container.SmithingContainer
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 
@@ -21,7 +21,7 @@ object Events {
     }
 
     private fun openSmithingScreen(event: PlayerInteractEvent.RightClickBlock) {
-        if (Config.smithingTable.value) {
+        if (FConfig.smithingTable.value) {
             val world = event.world
             val pos = event.pos
             val player = event.player
@@ -39,7 +39,7 @@ object Events {
     }
 
     private fun onServerStart(event: FMLServerStartingEvent) {
-        if (Config.locateBiomeCommand.value) {
+        if (FConfig.locateBiomeCommand.value) {
             LocateBiomeCommand.register(event.commandDispatcher)
         }
     }

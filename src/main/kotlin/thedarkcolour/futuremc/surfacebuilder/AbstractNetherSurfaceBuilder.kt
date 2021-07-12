@@ -2,10 +2,8 @@ package thedarkcolour.futuremc.surfacebuilder
 
 import com.mojang.datafixers.Dynamic
 import it.unimi.dsi.fastutil.ints.IntRBTreeSet
-import kotlinx.coroutines.withTimeoutOrNull
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
-import net.minecraft.util.Direction
 import net.minecraft.util.SharedSeedRandom
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.biome.Biome

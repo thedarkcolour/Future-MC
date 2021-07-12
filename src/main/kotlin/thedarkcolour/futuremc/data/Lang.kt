@@ -3,6 +3,7 @@ package thedarkcolour.futuremc.data
 import net.minecraft.block.Block
 import net.minecraft.data.DataGenerator
 import net.minecraft.item.BlockItem
+import net.minecraft.item.Item
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.data.LanguageProvider
 import net.minecraftforge.registries.ForgeRegistries
@@ -10,8 +11,8 @@ import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.registry.FBlocks
 
 class Lang(gen: DataGenerator) : LanguageProvider(gen, FutureMC.ID, "en_us") {
-    private val blocks = ForgeRegistries.BLOCKS.values.filter { b -> b.registryName!!.namespace == FutureMC.ID }
-    private val items = ForgeRegistries.ITEMS.values.filter { b -> b.registryName!!.namespace == FutureMC.ID && b !is BlockItem }
+    private val blocks = ForgeRegistries.BLOCKS.values.filter { b -> b.registryName!!.namespace == FutureMC.ID }.toMutableList()
+    private val items = ForgeRegistries.ITEMS.values.filter { b -> b.registryName!!.namespace == FutureMC.ID && b !is BlockItem }.toMutableList()
 
     override fun addTranslations() {
         add("container.jei.futuremc.smithing", "Smithing")
@@ -30,7 +31,6 @@ class Lang(gen: DataGenerator) : LanguageProvider(gen, FutureMC.ID, "en_us") {
         add(FBlocks.BASALT, "Basalt")
         add(FBlocks.POLISHED_BASALT, "Polished Basalt")
         add(FBlocks.SOUL_TORCH, "Soul Torch")
-        add(FBlocks.SOUL_WALL_TORCH, "Soul Wall Torch")
         add(FBlocks.SOUL_FIRE_LANTERN, "Soul Fire Lantern")
         add(FBlocks.WARPED_STEM, "Warped Stem")
         add(FBlocks.STRIPPED_WARPED_STEM, "Stripped Warped Stem")
@@ -80,11 +80,24 @@ class Lang(gen: DataGenerator) : LanguageProvider(gen, FutureMC.ID, "en_us") {
                 }
             }
 
-            throw IllegalStateException("FutureMC is missing block/item translations")
+            FutureMC.LOGGER.error("FutureMC is missing block/item translations")
+
+            for (t in missingBlocks) {
+                FutureMC.LOGGER.error(t)
+            }
+            for (t in missingItems) {
+                FutureMC.LOGGER.error(t)
+            }
         }
     }
 
     override fun add(key: Block, name: String) {
+        blocks.remove(key)
+        super.add(key, name)
+    }
+
+    override fun add(key: Item?, name: String?) {
+        items.remove(key)
         super.add(key, name)
     }
 }

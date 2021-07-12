@@ -4,7 +4,7 @@ package thedarkcolour.futuremc.config
 
 import thedarkcolour.futuremc.config.option.OptionType
 
-object Config {
+object FConfig {
     val netherUpdate = OptionType.CATEGORY
         .configure("nether_update")
         .description("Options for the Nether Update")

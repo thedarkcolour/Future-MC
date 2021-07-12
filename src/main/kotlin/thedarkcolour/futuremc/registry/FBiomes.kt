@@ -13,7 +13,7 @@ import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.biome.*
 import thedarkcolour.futuremc.biome.provider.NoisePoint
 import thedarkcolour.futuremc.compat.checkBiomesOPlenty
-import thedarkcolour.futuremc.config.Config
+import thedarkcolour.futuremc.config.FConfig
 import java.util.*
 import java.util.function.ToDoubleFunction
 
@@ -24,7 +24,7 @@ object FBiomes {
     val BASALT_DELTAS = BasaltDeltasBiome().setRegistryKey("basalt_deltas")
 
     fun onBiomeRegistry(biomes: IForgeRegistry<Biome>) {
-        if (Config.ancientDebrisGenerates.value) {
+        if (FConfig.ancientDebrisGenerates.value) {
             // lapis-style generation
             Biomes.NETHER.addFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Feature.ORE.configure(OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, FBlocks.ANCIENT_DEBRIS.defaultState, 3)).createDecoratedFeature(Placement.COUNT_DEPTH_AVERAGE.configure(DepthAverageConfig(1, 16, 8))))
             // normal generation
@@ -39,15 +39,15 @@ object FBiomes {
     }
 
     private fun registerBiomes(biomes: IForgeRegistry<Biome>) {
-        if (Config.warpedForest.value) {
+        if (FConfig.warpedForest.value) {
             biomes.register(WARPED_FOREST)
             checkBiomesOPlenty()?.addNetherBiome(WARPED_FOREST)
         }
-        if (Config.crimsonForest.value) {
+        if (FConfig.crimsonForest.value) {
             biomes.register(CRIMSON_FOREST)
             checkBiomesOPlenty()?.addNetherBiome(CRIMSON_FOREST)
         }
-        if (Config.soulSandValley.value) {
+        if (FConfig.soulSandValley.value) {
             biomes.register(SOUL_SAND_VALLEY)
             checkBiomesOPlenty()?.addNetherBiome(SOUL_SAND_VALLEY)
         }

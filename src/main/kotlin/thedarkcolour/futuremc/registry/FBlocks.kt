@@ -20,7 +20,7 @@ import thedarkcolour.futuremc.block.vine.TwistingVinesBlock
 import thedarkcolour.futuremc.block.vine.TwistingVinesPlantBlock
 import thedarkcolour.futuremc.block.vine.WeepingVinesBlock
 import thedarkcolour.futuremc.block.vine.WeepingVinesPlantBlock
-import thedarkcolour.futuremc.config.Config
+import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.feature.HugeFungusFeatureConfig
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate")
@@ -67,7 +67,7 @@ object FBlocks {
     val WARPED_SLAB = SlabBlock(Properties.from(WARPED_PLANKS)).setRegistryKey("warped_slab")
     val CRIMSON_PRESSURE_PLATE = PressurePlateBlock(Sensitivity.EVERYTHING, Properties.create(NETHER_WOOD, MaterialColor.NETHERRACK).doesNotBlockMovement().hardnessAndResistance(0.5f).sound(SoundType.WOOD)).setRegistryKey("crimson_pressure_plate")
     val WARPED_PRESSURE_PLATE = PressurePlateBlock(Sensitivity.EVERYTHING, Properties.create(NETHER_WOOD, MaterialColor.CYAN).doesNotBlockMovement().hardnessAndResistance(0.5f).sound(SoundType.WOOD)).setRegistryKey("warped_pressure_plate")
-    //val CRIMSON_FENCE = FenceBlock()
+    //val CRIMSON_FENCE = FenceBlock() todo
     val NETHERITE_BLOCK = BeaconBaseBlock(Properties.create(Material.IRON, MaterialColor.BLACK).hardnessAndResistance(50.0f, 1200.0f).sound(FSounds.NETHERITE)).setRegistryKey("netherite_block")
     val ANCIENT_DEBRIS = Block(Properties.create(Material.IRON, MaterialColor.BLACK).hardnessAndResistance(30.0f, 1200.0f).sound(FSounds.ANCIENT_DEBRIS)).setRegistryKey("ancient_debris")
     val BLACKSTONE = Block(Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(1.5f, 6.0f)).setRegistryKey("blackstone")
@@ -134,26 +134,28 @@ object FBlocks {
         blocks.register(WARPED_SLAB)
         blocks.register(CRIMSON_PRESSURE_PLATE)
         blocks.register(WARPED_PRESSURE_PLATE)
-        blocks.register(BLACKSTONE)
-        blocks.register(BLACKSTONE_STAIRS)
-        blocks.register(BLACKSTONE_WALL)
-        blocks.register(BLACKSTONE_SLAB)
-        blocks.register(POLISHED_BLACKSTONE)
-        blocks.register(POLISHED_BLACKSTONE_BRICKS)
-        blocks.register(CRACKED_POLISHED_BLACKSTONE_BRICKS)
-        blocks.register(CHISELED_POLISHED_BLACKSTONE)
-        blocks.register(POLISHED_BLACKSTONE_BRICK_SLAB)
-        blocks.register(POLISHED_BLACKSTONE_BRICK_STAIRS)
-        blocks.register(POLISHED_BLACKSTONE_BRICK_WALL)
-        blocks.register(GILDED_BLACKSTONE)
-        blocks.register(POLISHED_BLACKSTONE_STAIRS)
-        blocks.register(POLISHED_BLACKSTONE_SLAB)
-        blocks.register(POLISHED_BLACKSTONE_PRESSURE_PLATE)
-        blocks.register(POLISHED_BLACKSTONE_BUTTON)
-        blocks.register(POLISHED_BLACKSTONE_WALL)
+        if (FConfig.blackstone.value) {
+            blocks.register(BLACKSTONE)
+            blocks.register(BLACKSTONE_STAIRS)
+            blocks.register(BLACKSTONE_WALL)
+            blocks.register(BLACKSTONE_SLAB)
+            blocks.register(POLISHED_BLACKSTONE)
+            blocks.register(POLISHED_BLACKSTONE_BRICKS)
+            blocks.register(CRACKED_POLISHED_BLACKSTONE_BRICKS)
+            blocks.register(CHISELED_POLISHED_BLACKSTONE)
+            blocks.register(POLISHED_BLACKSTONE_BRICK_SLAB)
+            blocks.register(POLISHED_BLACKSTONE_BRICK_STAIRS)
+            blocks.register(POLISHED_BLACKSTONE_BRICK_WALL)
+            blocks.register(GILDED_BLACKSTONE)
+            blocks.register(POLISHED_BLACKSTONE_STAIRS)
+            blocks.register(POLISHED_BLACKSTONE_SLAB)
+            blocks.register(POLISHED_BLACKSTONE_PRESSURE_PLATE)
+            blocks.register(POLISHED_BLACKSTONE_BUTTON)
+            blocks.register(POLISHED_BLACKSTONE_WALL)
+        }
 
-        blocks.registerIf(NETHERITE_BLOCK, Config.netherite)
-        blocks.registerIf(ANCIENT_DEBRIS, Config.ancientDebrisEnabled)
+        blocks.registerIf(NETHERITE_BLOCK, FConfig.netherite)
+        blocks.registerIf(ANCIENT_DEBRIS, FConfig.ancientDebrisEnabled)
     }
 
     fun setRenderLayers() {
