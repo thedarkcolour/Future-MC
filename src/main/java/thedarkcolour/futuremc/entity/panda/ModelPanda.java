@@ -49,9 +49,9 @@ public class ModelPanda extends ModelQuadruped {
     @Override
     public void setLivingAnimations(EntityLivingBase entityLiving, float limbSwing, float limbSwingAmount, float partialTickTime) {
         super.setLivingAnimations(entityLiving, limbSwing, limbSwingAmount, partialTickTime);
-        this.field_217164_l = ((EntityPanda) entityLiving).func_213561_v(partialTickTime);
-        this.field_217165_m = ((EntityPanda) entityLiving).func_213583_w(partialTickTime);
-        this.field_217166_n = entityLiving.isChild() ? 0.0F : ((EntityPanda) entityLiving).func_213591_x(partialTickTime);
+        this.field_217164_l = ((EntityPanda) entityLiving).getScaredAnimation(partialTickTime);
+        this.field_217165_m = ((EntityPanda) entityLiving).getLazyAnimation(partialTickTime);
+        this.field_217166_n = entityLiving.isChild() ? 0.0F : ((EntityPanda) entityLiving).getRollingAnimation(partialTickTime);
     }
 
     @Override

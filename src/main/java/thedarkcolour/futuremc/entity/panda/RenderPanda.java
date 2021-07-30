@@ -5,25 +5,20 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
+import thedarkcolour.core.util.UtilKt;
 
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class RenderPanda extends RenderLiving<EntityPanda> {
-    private static final Map<EntityPanda.Type, ResourceLocation> textures = make(Maps.newEnumMap(EntityPanda.Type.class), (map) -> {
-        map.put(EntityPanda.Type.NORMAL, new ResourceLocation("futuremc:textures/entity/panda/panda.png"));
-        map.put(EntityPanda.Type.LAZY, new ResourceLocation("futuremc:textures/entity/panda/lazy_panda.png"));
-        map.put(EntityPanda.Type.WORRIED, new ResourceLocation("futuremc:textures/entity/panda/worried_panda.png"));
-        map.put(EntityPanda.Type.PLAYFUL, new ResourceLocation("futuremc:textures/entity/panda/playful_panda.png"));
-        map.put(EntityPanda.Type.BROWN, new ResourceLocation("futuremc:textures/entity/panda/brown_panda.png"));
-        map.put(EntityPanda.Type.WEAK, new ResourceLocation("futuremc:textures/entity/panda/weak_panda.png"));
-        map.put(EntityPanda.Type.AGGRESSIVE, new ResourceLocation("futuremc:textures/entity/panda/aggressive_panda.png"));
+    private static final Map<EntityPanda.PandaType, ResourceLocation> textures = UtilKt.make(Maps.newHashMap(), map -> {
+        map.put(EntityPanda.PandaType.NORMAL, new ResourceLocation("futuremc:textures/entity/panda/panda.png"));
+        map.put(EntityPanda.PandaType.LAZY, new ResourceLocation("futuremc:textures/entity/panda/lazy_panda.png"));
+        map.put(EntityPanda.PandaType.WORRIED, new ResourceLocation("futuremc:textures/entity/panda/worried_panda.png"));
+        map.put(EntityPanda.PandaType.PLAYFUL, new ResourceLocation("futuremc:textures/entity/panda/playful_panda.png"));
+        map.put(EntityPanda.PandaType.BROWN, new ResourceLocation("futuremc:textures/entity/panda/brown_panda.png"));
+        map.put(EntityPanda.PandaType.WEAK, new ResourceLocation("futuremc:textures/entity/panda/weak_panda.png"));
+        map.put(EntityPanda.PandaType.AGGRESSIVE, new ResourceLocation("futuremc:textures/entity/panda/aggressive_panda.png"));
     });
-
-    private static <T> T make(T clazz, Consumer<T> consumer) {
-        consumer.accept(clazz);
-        return clazz;
-    }
 
     public RenderPanda(RenderManager manager) {
         super(manager, new ModelPanda(9, 0.0F), 0.9F);
@@ -32,7 +27,7 @@ public class RenderPanda extends RenderLiving<EntityPanda> {
 
     @Override
     protected ResourceLocation getEntityTexture(EntityPanda entity) {
-        return textures.getOrDefault(entity.getPandaType(), textures.get(EntityPanda.Type.NORMAL));
+        return textures.getOrDefault(entity.getPandaType(), textures.get(EntityPanda.PandaType.NORMAL));
     }
 
     @Override
@@ -75,10 +70,10 @@ public class RenderPanda extends RenderLiving<EntityPanda> {
             GlStateManager.rotate(0.0F, 1.0F, 0.0F, 0.0F);
         }
 
-        float f6 = entityLiving.func_213561_v(partialTicks);
+        float f6 = entityLiving.getScaredAnimation(partialTicks);
         if (f6 > 0.0F) {
             GlStateManager.translate(0.0F, 0.8F * f6, 0.0F);
-            GlStateManager.rotate(EntityPanda.func_219799_g(f6, entityLiving.rotationPitch, entityLiving.rotationPitch + 90.0F), 1.0F, 0.0F, 0.0F);
+            GlStateManager.rotate(UtilKt.lerp(f6, entityLiving.rotationPitch, entityLiving.rotationPitch + 90.0F), 1.0F, 0.0F, 0.0F);
             GlStateManager.translate(0.0F, -1.0F * f6, 0.0F);
             if (entityLiving.isFrightened()) {
                 float f7 = (float) (Math.cos((double) entityLiving.ticksExisted * 1.25D) * Math.PI * (double) 0.05F);
@@ -89,15 +84,15 @@ public class RenderPanda extends RenderLiving<EntityPanda> {
             }
         }
 
-        float f8 = entityLiving.func_213583_w(partialTicks);
+        float f8 = entityLiving.getLazyAnimation(partialTicks);
         if (f8 > 0.0F) {
             float f9 = entityLiving.isChild() ? 0.5F : 1.3F;
             GlStateManager.translate(0.0F, f9 * f8, 0.0F);
-            GlStateManager.rotate(EntityPanda.func_219799_g(f8, entityLiving.rotationPitch, entityLiving.rotationPitch + 180.0F), 1.0F, 0.0F, 0.0F);
+            GlStateManager.rotate(UtilKt.lerp(f8, entityLiving.rotationPitch, entityLiving.rotationPitch + 180.0F), 1.0F, 0.0F, 0.0F);
         }
     }
 
     private float func_217775_a(float p_217775_1_, float p_217775_2_, int p_217775_3_, float partialTicks, float p_217775_5_) {
-        return (float) p_217775_3_ < p_217775_5_ ? EntityPanda.func_219799_g(partialTicks, p_217775_1_, p_217775_2_) : p_217775_1_;
+        return (float) p_217775_3_ < p_217775_5_ ? UtilKt.lerp(partialTicks, p_217775_1_, p_217775_2_) : p_217775_1_;
     }
 }

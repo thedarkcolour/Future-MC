@@ -10,7 +10,7 @@
         },
         {
             "when": {
-                "north": "low"
+                "north": "true"
             },
             "apply": {
                 "model": "futuremc:polished_blackstone_wall_side",
@@ -19,7 +19,7 @@
         },
         {
             "when": {
-                "east": "low"
+                "east": "true"
             },
             "apply": {
                 "model": "futuremc:polished_blackstone_wall_side",
@@ -29,7 +29,7 @@
         },
         {
             "when": {
-                "south": "low"
+                "south": "true"
             },
             "apply": {
                 "model": "futuremc:polished_blackstone_wall_side",
@@ -39,49 +39,10 @@
         },
         {
             "when": {
-                "west": "low"
+                "west": "true"
             },
             "apply": {
                 "model": "futuremc:polished_blackstone_wall_side",
-                "y": 270,
-                "uvlock": true
-            }
-        },
-        {
-            "when": {
-                "north": "tall"
-            },
-            "apply": {
-                "model": "futuremc:polished_blackstone_wall_side_tall",
-                "uvlock": true
-            }
-        },
-        {
-            "when": {
-                "east": "tall"
-            },
-            "apply": {
-                "model": "futuremc:polished_blackstone_wall_side_tall",
-                "y": 90,
-                "uvlock": true
-            }
-        },
-        {
-            "when": {
-                "south": "tall"
-            },
-            "apply": {
-                "model": "futuremc:polished_blackstone_wall_side_tall",
-                "y": 180,
-                "uvlock": true
-            }
-        },
-        {
-            "when": {
-                "west": "tall"
-            },
-            "apply": {
-                "model": "futuremc:polished_blackstone_wall_side_tall",
                 "y": 270,
                 "uvlock": true
             }

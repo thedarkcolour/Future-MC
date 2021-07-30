@@ -37,8 +37,11 @@ open class FBlock(properties: Properties) : Block(properties.material, propertie
 
         creativeTab = if (FConfig.useVanillaCreativeTabs) {
             val group = properties.group
-            if (group == null && FutureMC.DEBUG)
-                println(("No creative tab for block ${toString()}"))
+
+            if (group == null && FutureMC.DEBUG) {
+                FutureMC.LOGGER.debug("No creative tab for block ${toString()}")
+            }
+
             group
         } else FutureMC.GROUP
     }
@@ -60,7 +63,7 @@ open class FBlock(properties: Properties) : Block(properties.material, propertie
     }
 
     companion object {
-        fun makeCube(
+        fun cube(
             startX: Double, startY: Double, startZ: Double,
             endX: Double, endY: Double, endZ: Double
         ): AxisAlignedBB {

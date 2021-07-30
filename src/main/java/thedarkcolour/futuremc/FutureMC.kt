@@ -81,6 +81,7 @@ object FutureMC {
     @JvmField
     val LOGGER: Logger = LogManager.getLogger()
 
+    // Creative tab
     lateinit var GROUP: CreativeTabs
 
     // Sided delegate is null when running tests
@@ -94,9 +95,11 @@ object FutureMC {
 
         NetworkHandler.registerPackets()
 
-        //if (DEBUG) {
-        //    FutureWorldType
-        //}
+        if (isModLoaded("ido")) {
+            LOGGER.info("Hello Ido!")
+        } else {
+            LOGGER.info("Ido is gone...")
+        }
     }
 
     @EventHandler

@@ -5,83 +5,44 @@
                 "up": "true"
             },
             "apply": {
-                "model": "futuremc:block/blackstone_wall_post"
+                "model": "futuremc:blackstone_wall_post"
             }
         },
         {
             "when": {
-                "north": "low"
+                "north": "true"
             },
             "apply": {
-                "model": "futuremc:block/blackstone_wall_side",
+                "model": "futuremc:blackstone_wall_side",
                 "uvlock": true
             }
         },
         {
             "when": {
-                "east": "low"
+                "east": "true"
             },
             "apply": {
-                "model": "futuremc:block/blackstone_wall_side",
+                "model": "futuremc:blackstone_wall_side",
                 "y": 90,
                 "uvlock": true
             }
         },
         {
             "when": {
-                "south": "low"
+                "south": "true"
             },
             "apply": {
-                "model": "futuremc:block/blackstone_wall_side",
+                "model": "futuremc:blackstone_wall_side",
                 "y": 180,
                 "uvlock": true
             }
         },
         {
             "when": {
-                "west": "low"
+                "west": "true"
             },
             "apply": {
-                "model": "futuremc:block/blackstone_wall_side",
-                "y": 270,
-                "uvlock": true
-            }
-        },
-        {
-            "when": {
-                "north": "tall"
-            },
-            "apply": {
-                "model": "futuremc:block/blackstone_wall_side_tall",
-                "uvlock": true
-            }
-        },
-        {
-            "when": {
-                "east": "tall"
-            },
-            "apply": {
-                "model": "futuremc:block/blackstone_wall_side_tall",
-                "y": 90,
-                "uvlock": true
-            }
-        },
-        {
-            "when": {
-                "south": "tall"
-            },
-            "apply": {
-                "model": "futuremc:block/blackstone_wall_side_tall",
-                "y": 180,
-                "uvlock": true
-            }
-        },
-        {
-            "when": {
-                "west": "tall"
-            },
-            "apply": {
-                "model": "futuremc:block/blackstone_wall_side_tall",
+                "model": "futuremc:blackstone_wall_side",
                 "y": 270,
                 "uvlock": true
             }

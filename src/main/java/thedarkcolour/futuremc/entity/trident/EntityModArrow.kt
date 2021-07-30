@@ -583,8 +583,8 @@ abstract class EntityModArrow protected constructor(worldIn: World) : EntityArro
         }
     }
 
-    fun func_213865_o(p_213865_1_: Boolean) {
-        setArrowFlag(4, p_213865_1_)
+    fun setPiercing(piercing: Boolean) {
+        setArrowFlag(4, piercing)
     }
 
     companion object {

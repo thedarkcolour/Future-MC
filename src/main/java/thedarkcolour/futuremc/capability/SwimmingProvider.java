@@ -14,12 +14,6 @@ public class SwimmingProvider implements ICapabilityProvider {
     @CapabilityInject(SwimmingCapability.class)
     public static Capability<SwimmingCapability> SWIMMING_CAP;
 
-    @CapabilityInject(SwimmingCapability.class)
-    public static void method(Capability<SwimmingCapability> cap) {
-        SWIMMING_CAP = cap;
-        System.out.println("CAPABILITY ASSIGNED HOPEFULLY");
-    }
-
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
         return capability == SWIMMING_CAP;

@@ -204,8 +204,8 @@ class LanternBlock(properties: Properties) : FBlock(properties) {
 
     companion object {
         private val HANGING = PropertyBool.create("hanging")
-        private val SITTING_AABB = makeCube(5.0, 0.0, 5.0, 11.0, 9.0, 11.0)
-        private val HANGING_AABB = makeCube(5.0, 1.0, 5.0, 11.0, 10.0, 11.0)
+        private val SITTING_AABB = cube(5.0, 0.0, 5.0, 11.0, 9.0, 11.0)
+        private val HANGING_AABB = cube(5.0, 1.0, 5.0, 11.0, 10.0, 11.0)
         private val INVALID_FACE_SHAPES = EnumSet.of(BlockFaceShape.BOWL, BlockFaceShape.UNDEFINED)
         private val validBoundsDown = AxisAlignedBB(0.4375, 0.0, 0.4375, 0.5625, 0.0, 0.5625)
         private val validBoundsUp = AxisAlignedBB(0.4375, 0.0, 0.4375, 0.5625, 0.0, 0.5625)

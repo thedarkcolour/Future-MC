@@ -4,7 +4,6 @@ import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.init.MobEffects
 import net.minecraft.item.ItemStack
-import net.minecraft.item.crafting.FurnaceRecipes
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.item.crafting.Ingredient
 import net.minecraft.item.crafting.ShapedRecipes
@@ -12,7 +11,6 @@ import net.minecraft.potion.PotionEffect
 import net.minecraft.util.NonNullList
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.common.registry.GameRegistry
-import net.minecraftforge.oredict.OreDictionary
 import net.minecraftforge.oredict.OreIngredient
 import net.minecraftforge.oredict.ShapelessOreRecipe
 import net.minecraftforge.registries.IForgeRegistry
@@ -23,9 +21,7 @@ import thedarkcolour.futuremc.compat.checkPlants
 import thedarkcolour.futuremc.compat.checkTConstruct
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.item.SuspiciousStewItem
-import thedarkcolour.futuremc.recipe.SimpleRecipe
 import thedarkcolour.futuremc.recipe.crafting.TrapdoorRecipe
-import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes
 
 /**
  * Object declaration that handles custom recipes and
@@ -156,20 +152,6 @@ object FRecipes {
     }
 
     fun registerFMCRecipes() {
-        for (string in OreDictionary.getOreNames()) {
-            if (string.startsWith("ore") || string.startsWith("dust")) {
-                val ores = OreDictionary.getOres(string)
-
-                ores.forEach { stack ->
-                    val result = FurnaceRecipes.instance().getSmeltingResult(stack)
-
-                    if (!result.isEmpty) {
-                        BlastFurnaceRecipes.recipes.add(SimpleRecipe(stack, result))
-                    }
-                }
-            }
-        }
-
         checkTConstruct()?.registerStonecutterRecipes()
     }
 }

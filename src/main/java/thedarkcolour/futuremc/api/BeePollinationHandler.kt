@@ -107,7 +107,6 @@ interface BeePollinationHandler {
 
         /**
          * Factory function
-         * TODO make Kotlin for Forge in 1.12 and use `fun interface`
          */
         inline fun create(crossinline handler: (World, BlockPos, IBlockState, EntityBee) -> Boolean): BeePollinationHandler {
             return object : BeePollinationHandler {

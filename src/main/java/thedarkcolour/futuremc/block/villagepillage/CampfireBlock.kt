@@ -160,7 +160,7 @@ class CampfireBlock(properties: Properties) : InteractionBlock(properties) {
     }
 
     companion object {
-        private val BOUNDING_BOX = makeCube(0.0, 0.0, 0.0, 16.0, 7.0, 16.0) //new AxisAlignedBB(0,0,0,1,0.375,1);
+        private val BOUNDING_BOX = cube(0.0, 0.0, 0.0, 16.0, 7.0, 16.0) //new AxisAlignedBB(0,0,0,1,0.375,1);
         val FACING: PropertyDirection = BlockHorizontal.FACING
         val LIT: PropertyBool = PropertyBool.create("lit")
         val SIGNAL: PropertyBool = PropertyBool.create("signal")

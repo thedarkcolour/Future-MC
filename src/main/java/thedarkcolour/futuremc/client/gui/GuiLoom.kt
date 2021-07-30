@@ -172,6 +172,7 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
 
     private fun onInventoryUpdate() {
         val stack = container.output
+
         preview = if (stack.isEmpty) {
             null
         } else {

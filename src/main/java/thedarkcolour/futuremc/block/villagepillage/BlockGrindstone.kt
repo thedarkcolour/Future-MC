@@ -173,14 +173,14 @@ class BlockGrindstone(properties: Properties) : FBlock(properties) {
         private val FACING = BlockHorizontal.FACING
 
         fun createBoundingBox(attachment: EnumAttachment, facing: EnumFacing): AxisAlignedBB? {
-            val floorX = makeCube(2.0, 4.0, 4.0, 14.0, 16.0, 12.0)
-            val floorZ = makeCube(4.0, 4.0, 2.0, 12.0, 16.0, 14.0)
-            val ceilingX = makeCube(2.0, 0.0, 4.0, 14.0, 12.0, 12.0)
-            val ceilingZ = makeCube(4.0, 0.0, 2.0, 12.0, 12.0, 14.0)
-            val wallNorth = makeCube(4.0, 2.0, 0.0, 12.0, 14.0, 12.0)
-            val wallWest = makeCube(0.0, 2.0, 4.0, 12.0, 14.0, 12.0)
-            val wallSouth = makeCube(4.0, 2.0, 4.0, 12.0, 14.0, 16.0)
-            val wallEast = makeCube(4.0, 2.0, 4.0, 16.0, 14.0, 12.0)
+            val floorX = cube(2.0, 4.0, 4.0, 14.0, 16.0, 12.0)
+            val floorZ = cube(4.0, 4.0, 2.0, 12.0, 16.0, 14.0)
+            val ceilingX = cube(2.0, 0.0, 4.0, 14.0, 12.0, 12.0)
+            val ceilingZ = cube(4.0, 0.0, 2.0, 12.0, 12.0, 14.0)
+            val wallNorth = cube(4.0, 2.0, 0.0, 12.0, 14.0, 12.0)
+            val wallWest = cube(0.0, 2.0, 4.0, 12.0, 14.0, 12.0)
+            val wallSouth = cube(4.0, 2.0, 4.0, 12.0, 14.0, 16.0)
+            val wallEast = cube(4.0, 2.0, 4.0, 16.0, 14.0, 12.0)
 
             return when (attachment) {
                 EnumAttachment.FLOOR -> {

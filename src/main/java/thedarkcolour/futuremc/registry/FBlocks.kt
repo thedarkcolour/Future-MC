@@ -88,7 +88,7 @@ object FBlocks {
     val SOUL_FIRE_LANTERN = LanternBlock(Properties(Material.IRON, "soul_fire_lantern").hardnessAndResistance(3.5f).sound(FSounds.LANTERN).light(10).group(CreativeTabs.DECORATIONS))
     val SOUL_FIRE_TORCH = BlockSoulFireTorch()
     val SOUL_SOIL = FBlock(Properties(Material.GROUND, "soul_soil").group(CreativeTabs.BUILDING_BLOCKS).sound(FSounds.SOUL_SOIL))
-    val CHAIN = ChainBlock(Properties(Material.IRON, "chain").sound(FSounds.CHAIN).hardnessAndResistance(5.0f, 6.0f).shape(FBlock.makeCube(6.5, 0.0, 6.5, 9.5, 16.0, 9.5)).group(CreativeTabs.DECORATIONS))
+    val CHAIN = ChainBlock(Properties(Material.IRON, "chain").sound(FSounds.CHAIN).hardnessAndResistance(5.0f, 6.0f).shape(FBlock.cube(6.5, 0.0, 6.5, 9.5, 16.0, 9.5)).group(CreativeTabs.DECORATIONS))
     val NETHERITE_BLOCK = FBlock(Properties(Material.IRON, "netherite_block").color(MapColor.BLACK).hardnessAndResistance(50.0f, 1200.0f).sound(FSounds.NETHERITE).usableBeaconBase())
     val ANCIENT_DEBRIS = FBlock(Properties(Material.IRON, "ancient_debris").color(MapColor.BLACK).hardnessAndResistance(30.0f, 1200.0f).sound(FSounds.ANCIENT_DEBRIS))
     // val WARPED_NYLIUM = NyliumBlock(Properties(Material.ROCK, "warped_nylium").color(MapColor.CYAN).hardnessAndResistance(1.0f).sound(FSounds.NYLIUM))

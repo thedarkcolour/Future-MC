@@ -191,14 +191,14 @@ class BlockBell(properties: Properties) : RotatableBlock(properties) {
 
     companion object {
         val ATTACHMENT: PropertyEnum<BellAttachment> = PropertyEnum.create("attachment", BellAttachment::class.java)
-        val FLOOR_X = makeCube(4.0, 0.0, 0.0, 12.0, 16.0, 16.0)
-        val FLOOR_Z = makeCube(0.0, 0.0, 4.0, 16.0, 16.0, 12.0)
-        val DOUBLE_WALL_X = makeCube(0.0, 4.0, 4.0, 16.0, 16.0, 12.0)
-        val DOUBLE_WALL_Z = makeCube(4.0, 4.0, 0.0, 12.0, 16.0, 16.0)
-        val CEILING = makeCube(4.0, 4.0, 4.0, 12.0, 13.0, 12.0)
-        val SINGLE_WALL_N = makeCube(4.0, 4.0, 0.0, 12.0, 15.0, 13.0)
-        val SINGLE_WALL_S = makeCube(4.0, 4.0, 3.0, 12.0, 15.0, 16.0)
-        val SINGLE_WALL_W = makeCube(0.0, 4.0, 4.0, 13.0, 15.0, 12.0)
-        val SINGLE_WALL_E = makeCube(3.0, 4.0, 4.0, 16.0, 15.0, 12.0)
+        val FLOOR_X = cube(4.0, 0.0, 0.0, 12.0, 16.0, 16.0)
+        val FLOOR_Z = cube(0.0, 0.0, 4.0, 16.0, 16.0, 12.0)
+        val DOUBLE_WALL_X = cube(0.0, 4.0, 4.0, 16.0, 16.0, 12.0)
+        val DOUBLE_WALL_Z = cube(4.0, 4.0, 0.0, 12.0, 16.0, 16.0)
+        val CEILING = cube(4.0, 4.0, 4.0, 12.0, 13.0, 12.0)
+        val SINGLE_WALL_N = cube(4.0, 4.0, 0.0, 12.0, 15.0, 13.0)
+        val SINGLE_WALL_S = cube(4.0, 4.0, 3.0, 12.0, 15.0, 16.0)
+        val SINGLE_WALL_W = cube(0.0, 4.0, 4.0, 13.0, 15.0, 12.0)
+        val SINGLE_WALL_E = cube(3.0, 4.0, 4.0, 16.0, 15.0, 12.0)
     }
 }

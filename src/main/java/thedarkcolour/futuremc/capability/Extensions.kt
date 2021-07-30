@@ -18,12 +18,14 @@ var EntityPlayer.swimAnimation
         getSwimmingCap().swimAnimation = value
     }
 
+// lerp frame smoothing
 var EntityPlayer.lastSwimAnimation
     get() = getCapability(SwimmingProvider.SWIMMING_CAP, null)!!.lastSwimAnimation
     set(value) {
         getSwimmingCap().lastSwimAnimation = value
     }
 
+// Whether the player has swimming movement speed + animations
 var EntityPlayer.isSwimming
     get() = getCapability(SwimmingProvider.SWIMMING_CAP, null)?.isSwimming ?: false
     set(value) {

@@ -46,6 +46,8 @@ fancyGradle (Action {
 
 repositories {
     jcenter()
+
+    maven { url = uri("https://jitpack.io") }
     maven {
         name = "CraftTweaker/Quark/AutoRegLib"
         url = uri("https://maven.blamejared.com")
@@ -96,9 +98,10 @@ dependencies {
     api (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version = "1.3.50")
     api (group = "org.jetbrains.kotlin", name = "kotlin-reflect", version = "1.3.50")
 
-    compileOnly(fg.deobf(curse("dynamic_trees", 252818, 3260881)))
     implementation(fg.deobf(curse("enchantment_descriptions", 250419, 2689502)))
     implementation(fg.deobf(curse("enchantment_descriptions_sources", 250419, 2689503)))
+    implementation(fg.deobf(curse("fluidlogged_api", 485654, 3384016)))
+    compileOnly(fg.deobf(curse("dynamic_trees", 252818, 3260881)))
     compileOnly(curse("pams_harvestcraft", 221857, 2904825))
     compileOnly(fg.deobf(curse("plants", 257229, 2697165)))
     compileOnly(fg.deobf(curse("placebo", 283644, 2694382)))
@@ -106,6 +109,9 @@ dependencies {
     compileOnly(fg.deobf(curse("better_with_mods", 246760, 2965308)))
     compileOnly(fg.deobf(curse("better_with_lib", 294335, 2624990)))
     compileOnly(fg.deobf(curse("obfuscate", 289380, 2916310)))
+
+    // todo fix this cause guy really uploaded a deobf library
+    //compileOnly(fg.deobf("com.github.jbredwards:Fluidlogged-API:f5187ed7e3"))
 
     implementation("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548")
     implementation(fg.deobf("mezz.jei:jei_1.12.2:4.15.0.+"))

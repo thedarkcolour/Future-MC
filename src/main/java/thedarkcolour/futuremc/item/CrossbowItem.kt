@@ -21,7 +21,6 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent
 import thedarkcolour.core.item.ModeledItem
 import thedarkcolour.core.util.getOrCreateTag
 import thedarkcolour.futuremc.enchantment.EnchantHelper
-import thedarkcolour.futuremc.entity.horizontal_firework.EntityHorizontalFireworksRocket
 import thedarkcolour.futuremc.entity.trident.EntityModArrow
 import thedarkcolour.futuremc.entity.trident.EntityPiercingArrow
 import thedarkcolour.futuremc.registry.FEnchantments
@@ -29,7 +28,6 @@ import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FSounds
 import java.util.*
 import kotlin.math.PI
-import kotlin.math.cos
 
 class CrossbowItem : ModeledItem("crossbow") {
     private var isLoadingStart = false
@@ -223,13 +221,14 @@ class CrossbowItem : ModeledItem("crossbow") {
             val isFireworks = projectile.item == Items.FIREWORKS
             val a: IProjectile
             if (isFireworks) {
-                a = EntityHorizontalFireworksRocket(
-                    worldIn,
-                    projectile,
-                    shooter.posX,
-                    shooter.posY + shooter.eyeHeight.toDouble() - 0.15f.toDouble(),
-                    shooter.posZ
-                )
+                TODO()
+                //a = EntityHorizontalFireworksRocket(
+                //    worldIn,
+                //    projectile,
+                //    shooter.posX,
+                //    shooter.posY + shooter.eyeHeight.toDouble() - 0.15f.toDouble(),
+                //    shooter.posZ
+                //)
             } else {
                 a = createArrow(worldIn, shooter, crossbow, projectile)
                 if (isCreative || projectileAngle != 0.0F) {
@@ -237,15 +236,9 @@ class CrossbowItem : ModeledItem("crossbow") {
                 }
             }
 
-            // Used for Pillagers
-            //
-            //if (shooter is ICrossbowUser) {
-            //    val icrossbowuser = shooter as ICrossbowUser
-            //    icrossbowuser.shoot(icrossbowuser.getAttackTarget(), crossbow, a, projectileAngle)
-            //} else {
             val vec3d = shooter.getLook(1.0F)
             val f = projectileAngle * (PI / 180)
-            vec3d.func214905a(vec3d.x * f, vec3d.y * f, vec3d.z * f, cos(f))
+            //vec3d.apply(vec3d.x * f, vec3d.y * f, vec3d.z * f, cos(f))
             a.shoot(vec3d.x, vec3d.y, vec3d.z, velocity, inaccuracy)
             //}
 
@@ -275,7 +268,7 @@ class CrossbowItem : ModeledItem("crossbow") {
             modArrow.isCritical = true
         }
 
-        modArrow.func_213865_o(true)
+        modArrow.setPiercing(true)
         val i = EnchantmentHelper.getEnchantmentLevel(FEnchantments.PIERCING, crossbow)
         if (i > 0) {
             modArrow.setPierceLevel(i.toByte())

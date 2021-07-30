@@ -40,6 +40,6 @@ class BlockBambooSapling(properties: Properties) : FBlock(properties) {
     }
 
     companion object {
-        private val AABB = makeCube(4.0, 0.0, 4.0, 12.0, 12.0, 12.0)
+        private val AABB = cube(4.0, 0.0, 4.0, 12.0, 12.0, 12.0)
     }
 }

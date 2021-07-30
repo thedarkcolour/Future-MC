@@ -158,21 +158,21 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
     private companion object {
         private val DISTANCE: PropertyInteger = PropertyInteger.create("distance", 0, 7)
         private val BOTTOM: PropertyBool = PropertyBool.create("bottom")
-        private val BOTTOM_AABB = makeCube(0.0, 0.0, 0.0, 16.0, 2.0, 16.0)
-        private val TOP_AABB = makeCube(0.0, 14.0, 0.0, 16.0, 16.0, 16.0)
+        private val BOTTOM_AABB = cube(0.0, 0.0, 0.0, 16.0, 2.0, 16.0)
+        private val TOP_AABB = cube(0.0, 14.0, 0.0, 16.0, 16.0, 16.0)
 
         private var bottomCollisionBoxes = arrayOf(
-            makeCube(0.0, 0.0, 0.0, 2.0, 2.0, 16.0),
-            makeCube(14.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-            makeCube(0.0, 0.0, 14.0, 16.0, 2.0, 16.0),
-            makeCube(0.0, 0.0, 0.0, 16.0, 2.0, 2.0)
+            cube(0.0, 0.0, 0.0, 2.0, 2.0, 16.0),
+            cube(14.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+            cube(0.0, 0.0, 14.0, 16.0, 2.0, 16.0),
+            cube(0.0, 0.0, 0.0, 16.0, 2.0, 2.0)
         )
         private var noBottomCollisionBoxes = arrayOf(
-            makeCube(0.0, 14.0, 0.0, 16.0, 16.0, 16.0),
-            makeCube(0.0, 0.0, 0.0, 2.0, 16.0, 2.0),
-            makeCube(14.0, 0.0, 0.0, 16.0, 16.0, 2.0),
-            makeCube(0.0, 0.0, 14.0, 2.0, 16.0, 16.0),
-            makeCube(14.0, 0.0, 14.0, 16.0, 16.0, 16.0)
+            cube(0.0, 14.0, 0.0, 16.0, 16.0, 16.0),
+            cube(0.0, 0.0, 0.0, 2.0, 16.0, 2.0),
+            cube(14.0, 0.0, 0.0, 16.0, 16.0, 2.0),
+            cube(0.0, 0.0, 14.0, 2.0, 16.0, 16.0),
+            cube(14.0, 0.0, 14.0, 16.0, 16.0, 16.0)
         )
     }
 }

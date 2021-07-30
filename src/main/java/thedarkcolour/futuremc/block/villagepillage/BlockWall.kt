@@ -1,5 +1,6 @@
 package thedarkcolour.futuremc.block.villagepillage
 
+import git.jbredwards.fluidlogged_api.common.block.IFluidloggable
 import net.minecraft.block.Block
 import net.minecraft.block.BlockFenceGate
 import net.minecraft.block.SoundType
@@ -15,9 +16,11 @@ import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
+import net.minecraftforge.fml.common.Optional
 import thedarkcolour.core.block.FBlock
 
-class BlockWall(properties: Properties) : FBlock(properties) {
+@Optional.Interface(iface = "git.jbredwards.fluidlogged_api.common.block.IFluidloggable", modid = "fluidlogged_api")
+class BlockWall(properties: Properties) : FBlock(properties), IFluidloggable {
     init {
         defaultState = defaultState.withProperty(UP, false).withProperty(NORTH, false).withProperty(EAST, false).withProperty(
             SOUTH, false).withProperty(WEST, false)
