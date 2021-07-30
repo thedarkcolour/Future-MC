@@ -198,7 +198,7 @@ public class ContainerGrindstone extends FContainer {
     private void handleOutput() {
         awardEXP(input);
         world.playSound(pos.getX(), pos.getY(), pos.getZ(), FSounds.INSTANCE.getGRINDSTONE_USE(), SoundCategory.BLOCKS, 1.0F, 1.0F, false);
-        clearInput(); // Clear it last, otherwise XP doesn't work
+        consumeInput(); // Clear it last, otherwise XP doesn't work
     }
 
     private void awardEXP(DarkInventory inventory) {
@@ -228,9 +228,10 @@ public class ContainerGrindstone extends FContainer {
         return enchantment.getMinEnchantability(enchantLevel);
     }
 
-    private void clearInput() {
+    private void consumeInput() {
         for (int i = 0; i < input.getSlots(); i++) {
             input.getStackInSlot(i).shrink(1);
+            input.onContentsChanged(i);
         }
     }
 
