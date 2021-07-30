@@ -85,6 +85,7 @@ public class ContainerGrindstone extends FContainer {
 
             ItemStack outItem = stack.copy();
             outItem.setItemDamage(stack.getMaxDamage() - sum);
+            outItem.setCount(1);
             outItem.setTagInfo("Enchantments", new NBTTagList());
 
             Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
@@ -113,6 +114,7 @@ public class ContainerGrindstone extends FContainer {
             ItemStack stack = input.getStackInSlot(input.getStackInSlot(0).isEmpty() ? 1 : 0);
 
             ItemStack outItem = stack.copy();
+            outItem.setCount(1);
             outItem.setTagInfo("ench", new NBTTagList());
 
             // what the fuck is even this
@@ -145,6 +147,7 @@ public class ContainerGrindstone extends FContainer {
             ItemStack outBook;
             if (isCursed) {
                 outBook = book.copy();
+                outBook.setCount(1);
                 outBook.setTagInfo("StoredEnchantments", new NBTTagList());
                 Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(book);
 
