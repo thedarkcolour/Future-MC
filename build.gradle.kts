@@ -4,25 +4,25 @@ import wtf.gofancy.fancygradle.script.extensions.curse
 import java.time.LocalDateTime
 
 plugins {
-    kotlin("jvm") version "1.3.50"
+    kotlin("jvm") version "1.5.31" // For build script syntax
     java
     idea
     id("net.minecraftforge.gradle") version "5.0.+"
-    id("wtf.gofancy.fancygradle") version "1.0.1"
+    id("wtf.gofancy.fancygradle") version "1.0.1" // For using FG5
 }
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 idea.module.inheritOutputDirs = true
 
-version = "1.0.0"
+version = "2.7.0"
 group = "thedarkcolour.futuremc"
 
-minecraft (Action {
+minecraft {
     mappings("stable", "39-1.12")
 
     accessTransformer("src/main/resources/META-INF/futuremc_at.cfg")
 
-    runs(Action {
+    runs {
         val config = Action<RunConfig> {
             properties(mapOf(
                 "forge.logging.markers" to "COREMODLOG",
@@ -35,14 +35,14 @@ minecraft (Action {
 
         create("client", config)
         create("server", config)
-    })
-})
+    }
+}
 
-fancyGradle (Action {
-    patches ( Action {
+fancyGradle {
+    patches {
         patch(Patch.RESOURCES, Patch.COREMODS, Patch.CODE_CHICKEN_LIB, Patch.ASM)
-    })
-})
+    }
+}
 
 repositories {
     jcenter()
@@ -98,9 +98,16 @@ dependencies {
     api (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version = "1.3.50")
     api (group = "org.jetbrains.kotlin", name = "kotlin-reflect", version = "1.3.50")
 
+    // Stuff I care about
     implementation(fg.deobf(curse("enchantment_descriptions", 250419, 2689502)))
     implementation(fg.deobf(curse("enchantment_descriptions_sources", 250419, 2689503)))
     implementation(fg.deobf(curse("fluidlogged_api", 485654, 3384016)))
+    implementation(fg.deobf(curse("biomes_o_plenty", 220318, 2842510)))
+    implementation("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548")
+    implementation(fg.deobf("mezz.jei:jei_1.12.2:4.15.0.+"))
+    api("net.shadowfacts:Forgelin:1.8.4")
+
+    // Optional mod compat
     compileOnly(fg.deobf(curse("dynamic_trees", 252818, 3260881)))
     compileOnly(curse("pams_harvestcraft", 221857, 2904825))
     compileOnly(fg.deobf(curse("plants", 257229, 2697165)))
@@ -109,13 +116,6 @@ dependencies {
     compileOnly(fg.deobf(curse("better_with_mods", 246760, 2965308)))
     compileOnly(fg.deobf(curse("better_with_lib", 294335, 2624990)))
     compileOnly(fg.deobf(curse("obfuscate", 289380, 2916310)))
-
-    // todo fix this cause guy really uploaded a deobf library
-    //compileOnly(fg.deobf("com.github.jbredwards:Fluidlogged-API:f5187ed7e3"))
-
-    implementation("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548")
-    implementation(fg.deobf("mezz.jei:jei_1.12.2:4.15.0.+"))
-    api("net.shadowfacts:Forgelin:1.8.4")
     compileOnly(fg.deobf("vazkii.quark:Quark:r1.6-180.7"))
     compileOnly(fg.deobf("vazkii.autoreglib:AutoRegLib:1.3-32.+"))
     compileOnly(fg.deobf("slimeknights.mantle:Mantle:1.12-1.3.3.49"))

@@ -1,5 +1,6 @@
 package thedarkcolour.futuremc.block.villagepillage
 
+import git.jbredwards.fluidlogged_api.common.block.IFluidloggable
 import net.minecraft.block.Block
 import net.minecraft.block.BlockHopper
 import net.minecraft.block.BlockTrapDoor
@@ -13,13 +14,14 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Vec3d
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
+import net.minecraftforge.fml.common.Optional
 import thedarkcolour.core.block.FBlock
 import java.util.*
 
-class LanternBlock(properties: Properties) : FBlock(properties) {
+@Optional.Interface(iface = "git.jbredwards.fluidlogged_api.common.block.IFluidloggable", modid = "fluidlogged_api")
+class LanternBlock(properties: Properties) : FBlock(properties), IFluidloggable {
     init {
         // todo check to see if i should add to FBlock
         setHarvestLevel("pickaxe", 0)
@@ -49,7 +51,7 @@ class LanternBlock(properties: Properties) : FBlock(properties) {
     }
 
     private fun isValidPosition(worldIn: World, pos: BlockPos): Boolean {
-        return isValidPos(worldIn, pos, EnumFacing.DOWN) || isValidPos(worldIn, pos, EnumFacing.UP)//!(isBlockInvalid(worldIn, pos, EnumFacing.DOWN) && isBlockInvalid(worldIn, pos, EnumFacing.UP))
+        return isValidPos(worldIn, pos, EnumFacing.DOWN) || isValidPos(worldIn, pos, EnumFacing.UP)
     }
 
     private fun isValidPos(worldIn: World, pos: BlockPos, facing: EnumFacing): Boolean {
@@ -102,44 +104,6 @@ class LanternBlock(properties: Properties) : FBlock(properties) {
         return false
     }
 
-    /**
-     * Checks if a lantern should not be place-able here.
-     *
-     * @param facing the offset of the block to check
-     */
-    private fun isBlockInvalid(worldIn: World, pos: BlockPos, facing: EnumFacing): Boolean {
-        val pos1 = pos.offset(facing)
-        val state = worldIn.getBlockState(pos1)
-        val faceShape = state.getBlockFaceShape(worldIn, pos1, facing.opposite)
-        val a = faceShape in INVALID_FACE_SHAPES
-        val b = (state.block is BlockTrapDoor && isTrapdoorValid(state, facing))
-        val c = blockBoundsFit(worldIn, state, facing)
-        return a || b || c
-    }
-
-    private fun blockBoundsFit(worldIn: World, state: IBlockState, facing: EnumFacing): Boolean {
-        val list = arrayListOf<AxisAlignedBB>()
-        val validBounds = if (facing == EnumFacing.UP) validBoundsUp else validBoundsDown
-
-        println(state)
-
-        state.addCollisionBoxToList(worldIn, BlockPos.ORIGIN, AxisAlignedBB(BlockPos.ORIGIN), list, null, true)
-
-        val p = Vec3d(validBounds.minX, validBounds.minY, validBounds.minZ)
-        val p1 = Vec3d(validBounds.maxX, validBounds.maxY, validBounds.maxZ)
-
-        for (box in list) {
-            print("$box")
-            if (box.contains(p) || box.contains(p1)) {
-                print(" collides with $validBounds \n")
-                return true
-            }
-            print(" does not collide with $validBounds \n")
-        }
-
-        return false
-    }
-
     private fun isTrapdoorValid(state: IBlockState, facing: EnumFacing): Boolean {
         return state.properties.containsKey(BlockTrapDoor.HALF) && (facing == EnumFacing.UP && state.getValue(BlockTrapDoor.HALF) == BlockTrapDoor.DoorHalf.TOP || facing == EnumFacing.DOWN && state.getValue(BlockTrapDoor.HALF) == BlockTrapDoor.DoorHalf.BOTTOM) && !state.getValue(BlockTrapDoor.OPEN)
     }
@@ -173,7 +137,7 @@ class LanternBlock(properties: Properties) : FBlock(properties) {
     override fun createBlockState() = BlockStateContainer(this, HANGING)
 
     override fun getStateFromMeta(meta: Int): IBlockState {
-        return defaultState.withProperty(HANGING, meta != 1)
+        return defaultState.withProperty(HANGING, meta == 1)
     }
 
     override fun getMetaFromState(state: IBlockState): Int {

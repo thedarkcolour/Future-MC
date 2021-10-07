@@ -1,13 +1,19 @@
-##Version 0.2.7 - Villager Gui and Nether Blocks:
+##Version 0.2.7 - Villager Gui and more translations:
 - Composter - Fixed a bug with CraftTweaker that messed with assigned chances
+- CraftTweaker - Fixed bugs with Blast Furnace and Smoker
+- Fluidlogged - Walls are now fluidloggable
+- Grindstone - Fixed a dupe glitch with stackable enchanted items. Fixes #252
+- Lantern - Fixed a bug with lanterns switching position, does this fix #?
 - Nether Blocks - Added Blackstone, Basalt, and other nether blocks from 1.16.
 - Netherite Armor - Now has Knockback Resistance.
 - Panda - Fixed breeding bug
 - Villager Gui - Trading with any villager will now use the gui screen from 1.14.
 - Wooden Trapdoors - Fixed textures on the Spruce, Birch, Jungle, and Acacia variants.
+- Soul Fire Torch - Fixed broken recipe. Fixes #237
 - Stripped Wood - Fixed stripped logs not being craftable into planks.
 - Stripped Wood - Fixed stripped logs not being smeltable into charcoal.
- 
+- Translations! Future MC can now be played in: Argentinian Spanish, Venezuelan Spanish, Colombian Spanish, Japanese, Chinese simplified, and Russian.
+- Thanks to Lucian, Sasha, Robolightning, daifucu, and yilangyo for making all the translations
 
 ##Version 0.2.6.1 - Bug fix:
 - Beehives - Fixed excessive beehive spawning. Fixes #220

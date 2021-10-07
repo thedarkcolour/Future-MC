@@ -27,6 +27,7 @@ import thedarkcolour.futuremc.entity.bee.BeeEntity
 import thedarkcolour.futuremc.registry.FBlocks.SWEET_BERRY_BUSH
 import thedarkcolour.futuremc.registry.FItems.SWEET_BERRIES
 import java.util.*
+import kotlin.math.abs
 
 class SweetBerryBushBlock : BlockFlower("sweet_berry_bush"), IGrowable, IPlantable {
     init {
@@ -79,15 +80,16 @@ class SweetBerryBushBlock : BlockFlower("sweet_berry_bush"), IGrowable, IPlantab
     }
 
     override fun onEntityCollision(worldIn: World, pos: BlockPos, state: IBlockState, entityIn: Entity) {
-        if (entityIn is EntityLivingBase && entityIn !is BeeEntity) {
+        if (!worldIn.isRemote && entityIn is EntityLivingBase && entityIn !is BeeEntity) {
             entityIn.fallDistance = 0.0f
             entityIn.motionX *= 0.800000011920929
             entityIn.motionY *= 0.75
             entityIn.motionZ *= 0.800000011920929
-            if (!worldIn.isRemote && state.getValue(AGE) > 0 && (entityIn.prevPosX != entityIn.posX || entityIn.prevPosZ != entityIn.posZ)) {
-                val double_1 = Math.abs(entityIn.posX - entityIn.prevPosX)
-                val double_2 = Math.abs(entityIn.posZ - entityIn.prevPosZ)
-                if (double_1 >= 0.003000000026077032 || double_2 >= 0.003000000026077032) {
+
+            if (state.getValue(AGE) > 0 && (entityIn.prevPosX != entityIn.posX || entityIn.prevPosZ != entityIn.posZ)) {
+                val dx = abs(entityIn.posX - entityIn.prevPosX)
+                val dz = abs(entityIn.posZ - entityIn.prevPosZ)
+                if (dx >= 0.003 || dz >= 0.003) {
                     entityIn.attackEntityFrom(BERRY_BUSH_DAMAGE, 1.0f)
                 }
             }

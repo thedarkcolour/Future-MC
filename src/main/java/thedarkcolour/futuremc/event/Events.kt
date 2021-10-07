@@ -105,9 +105,9 @@ object Events {
         //if (updateAquatic.newWaterColor)
         //    addListener(::onGetWaterColor)
         addListener(::healIronGolem)
-        addListener(::onGuiOpen)
+        runOnClient { addListener(::onGuiOpen) }
         addListener(::onContainerOpen)
-        addListener(::onModelRegistry)
+        runOnClient { addListener(::onModelRegistry) }
         if (TODO())
             addListener(::updateSwimAnimation)
         subscribe(RegistryEventHandler)
@@ -212,19 +212,12 @@ object Events {
     /**
      * Strips a vanilla or future mc log.
      */
-    private fun stripBlock(
-        worldIn: World,
-        pos: BlockPos,
-        playerIn: EntityPlayer,
-        hand: EnumHand,
-        stack: ItemStack,
-        newState: IBlockState
-    ) {
-        playerIn.swingArm(hand)
-        worldIn.playSound(playerIn, pos, SoundEvents.BLOCK_WOOD_BREAK, SoundCategory.BLOCKS, 1.0f, 1.0f)
-        worldIn.setBlockState(pos, newState)
+    private fun stripBlock(level: World, pos: BlockPos, player: EntityPlayer, hand: EnumHand, stack: ItemStack, state: IBlockState) {
+        player.swingArm(hand)
+        level.playSound(player, pos, SoundEvents.BLOCK_WOOD_BREAK, SoundCategory.BLOCKS, 1.0f, 1.0f)
+        level.setBlockState(pos, state)
 
-        damageAxe(playerIn, stack)
+        damageAxe(player, stack)
     }
 
     /**
@@ -247,7 +240,7 @@ object Events {
 
         if (!entityIn.isDead) {
             if (!worldIn.isRemote) {
-                if (event.source.trueSource is EntityWither) {
+                if (FConfig.villageAndPillage.witherRose.enabled && event.source.trueSource is EntityWither) {
                     if (ForgeEventFactory.getMobGriefingEvent(worldIn, entityIn)) {
                         val pos = BlockPos(entityIn.posX, entityIn.posY, entityIn.posZ)
                         val state = worldIn.getBlockState(pos)
@@ -264,7 +257,7 @@ object Events {
                 }
 
                 // elder guardian drop
-                if (entityIn is EntityElderGuardian) {
+                if (updateAquatic.trident && entityIn is EntityElderGuardian) {
                     val trident = EntityItem(worldIn, entityIn.posX, entityIn.posY, entityIn.posZ)
                     trident.item = ItemStack(TRIDENT)
                     worldIn.spawnEntity(trident)
@@ -361,14 +354,8 @@ object Events {
     }
 
     private fun onModelRegistry(event: ModelRegistryEvent) {
-        runOnClient {
-            for (item in models) {
-                ModelLoader.setCustomModelResourceLocation(
-                    item.first,
-                    item.second,
-                    ModelResourceLocation(item.third, "inventory")
-                )
-            }
+        for (item in models) {
+            ModelLoader.setCustomModelResourceLocation(item.first, item.second, ModelResourceLocation(item.third, "inventory"))
         }
     }
 

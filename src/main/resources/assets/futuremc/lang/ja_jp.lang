@@ -1,0 +1,270 @@
+# Japanese translations thanks to daifucu
+
+# Functional Block
+tile.futuremc.lantern.name=ランタン
+tile.futuremc.barrel.name=樽
+tile.futuremc.loom.name=機織機
+tile.futuremc.stonecutter.name=石切台
+tile.futuremc.blast_furnace.name=溶鉱炉
+tile.futuremc.smoker.name=燻製器
+tile.futuremc.grindstone.name=砥石
+tile.futuremc.composter.name=コンポスター
+tile.futuremc.cartography_table.name=製図台
+
+# Plant
+tile.futuremc.lily_of_the_valley.name=スズラン
+tile.futuremc.wither_rose.name=ウィザーローズ
+tile.futuremc.cornflower.name=ヤグルマギク
+tile.futuremc.sweet_berry_bush.name=スイートベリーの茂み
+tile.futuremc.campfire.name=焚き火
+tile.futuremc.stripped_oak_log.name=樹皮を剥いだオークの丸太
+tile.futuremc.stripped_spruce_log.name=樹皮を剥いだマツの丸太
+tile.futuremc.stripped_birch_log.name=樹皮を剥いだシラカバの丸太
+tile.futuremc.stripped_jungle_log.name=樹皮を剥いだジャングルの丸太
+tile.futuremc.stripped_acacia_log.name=樹皮を剥いだアカシアの丸太
+tile.futuremc.stripped_dark_oak_log.name=樹皮を剥いだダークオークの丸太
+death.attack.sweet_berry_bush=%1$s was poked to death by a スイートベリーの茂み
+death.attack.sting=%1$s was stung to death
+death.attack.trident=%1$s was impaled by %2$s
+death.attack.trident.item=%1$s was impaled by %2$s with %3$s
+
+# Wall
+tile.futuremc.brick_wall.name=レンガの壁
+tile.futuremc.andesite_wall.name=安山岩の壁
+tile.futuremc.diorite_wall.name=閃緑岩の壁
+tile.futuremc.granite_wall.name=花崗岩の壁
+tile.futuremc.prismarine_wall.name=プリズマリンの壁
+tile.futuremc.stone_brick_wall.name=石レンガの壁
+tile.futuremc.mossy_stone_brick_wall.name=苔むした石レンガの壁
+tile.futuremc.end_stone_brick_wall.name=エンドストーンレンガの壁
+tile.futuremc.nether_brick_wall.name=ネザーレンガの壁
+tile.futuremc.sandstone_wall.name=砂岩の壁
+tile.futuremc.red_sandstone_wall.name=赤い砂岩の壁
+tile.futuremc.red_nether_brick_wall.name=赤いネザーレンガの壁
+
+# Slab
+tile.futuremc.granite_slab.name=花崗岩のハーフブロック
+tile.futuremc.andesite_slab.name=安山岩のハーフブロック
+tile.futuremc.diorite_slab.name=閃緑岩のハーフブロック
+tile.futuremc.polished_granite_slab.name=磨かれた花崗岩のハーフブロック
+tile.futuremc.polished_andesite_slab.name=磨かれた安山岩のハーフブロック
+tile.futuremc.polished_diorite_slab.name=磨かれた閃緑岩のハーフブロック
+tile.futuremc.stone_slab.name=石のハーフブロック
+tile.futuremc.prismarine_slab.name=プリズマリンのハーフブロック
+tile.futuremc.dark_prismarine_slab.name=ダークプリズマリンのハーフブロック
+tile.futuremc.prismarine_brick_slab.name=プリズマリンのレンガのハーフブロック
+tile.futuremc.smooth_red_sandstone_slab.name=滑らかな赤い砂岩のハーフブロック
+tile.futuremc.smooth_sandstone_slab.name=滑らかな砂岩のハーフブロック
+tile.futuremc.mossy_stone_brick_slab.name=苔むした石レンガのハーフブロック
+tile.futuremc.mossy_stone_slab.name=苔むした石のハーフブロック
+tile.futuremc.smooth_quartz_slab.name=滑らかなクォーツのハーフブロック
+tile.futuremc.red_nether_brick_slab.name=赤いネザーレンガのハーフブロック
+tile.futuremc.end_stone_brick_slab.name=エンドストーンレンガのハーフブロック
+tile.futuremc.bamboo.name=竹
+tile.futuremc.bee_nest.name=ハチの巣
+tile.futuremc.beehive.name=養蜂箱
+tile.futuremc.honey_block.name=ハチミツブロック
+tile.futuremc.honeycomb_block.name=ハニカムブロック
+
+# Decorative Block
+tile.futuremc.smooth_stone.name=滑らかな石
+tile.futuremc.smooth_sandstone.name=滑らかな砂岩
+tile.futuremc.smooth_red_sandstone.name=滑らかな赤い砂岩
+tile.futuremc.smooth_quartz.name=滑らかなクォーツ
+tile.futuremc.soul_soil.name=ソウルソイル
+tile.futuremc.fletching_table.name=矢細工台
+tile.futuremc.smithing_table.name=鍛冶台
+tile.futuremc.blue_ice.name=青氷
+tile.futuremc.soul_fire_torch.name=魂の松明
+tile.futuremc.soul_fire_lantern.name=魂のランタン
+tile.futuremc.acacia_trapdoor.name=アカシアのトラップドア
+tile.futuremc.jungle_trapdoor.name=ジャングルのトラップドア
+tile.futuremc.birch_trapdoor.name=シラカバのトラップドア
+tile.futuremc.spruce_trapdoor.name=マツのトラップドア
+tile.futuremc.dark_oak_trapdoor.name=ダークオークのトラップドア
+tile.futuremc.bell.name=鐘
+tile.futuremc.acacia_wood.name=アカシアの木
+tile.futuremc.jungle_wood.name=ジャングルの木
+tile.futuremc.birch_wood.name=シラカバの木
+tile.futuremc.oak_wood.name=オークの木
+tile.futuremc.spruce_wood.name=マツの木
+tile.futuremc.dark_oak_wood.name=ダークオークの木
+tile.futuremc.stripped_acacia_wood.name=樹皮を剥いだアカシアの木
+tile.futuremc.stripped_jungle_wood.name=樹皮を剥いだジャングルの木
+tile.futuremc.stripped_birch_wood.name=樹皮を剥いだシラカバの木
+tile.futuremc.stripped_oak_wood.name=樹皮を剥いだオークの木
+tile.futuremc.stripped_spruce_wood.name=樹皮を剥いだマツの木
+tile.futuremc.stripped_dark_oak_wood.name=樹皮を剥いだダークオークの木
+tile.futuremc.chain.name=鎖
+tile.futuremc.ancient_debris.name=古代の残骸
+tile.futuremc.netherite_block.name=ネザライトブロック
+entity.ItemFrame.name=額縁
+
+# Banner
+item.banner.globe.black=黒色の地球
+item.banner.globe.red=赤色の地球
+item.banner.globe.green=緑色の地球
+item.banner.globe.brown=茶色の地球
+item.banner.globe.blue=青色の地球
+item.banner.globe.purple=紫色の地球
+item.banner.globe.cyan=青緑色の地球
+item.banner.globe.silver=薄灰色の地球
+item.banner.globe.gray=灰色の地球
+item.banner.globe.pink=桃色の地球
+item.banner.globe.lime=黄緑色の地球
+item.banner.globe.yellow=黄色の地球
+item.banner.globe.lightBlue=空色の地球
+item.banner.globe.magenta=赤紫色の地球
+item.banner.globe.orange=橙色の地球
+item.banner.globe.white=白色の地球
+
+# Crafting Materials
+item.futuremc.dye.0.name=白色の染料
+item.futuremc.dye.1.name=青色の染料
+item.futuremc.dye.2.name=茶色の染料
+item.futuremc.dye.3.name=黒色の染料
+
+# Item
+item.futuremc.trident.name=トライデント
+item.futuremc.crossbow.name=クロスボウ
+item.futuremc.crossbow_loaded.name=矢を装填したクロスボウ
+item.futuremc.suspicious_stew.name=怪しいシチュー
+item.futuremc.sweet_berries.name=スイートベリー
+item.futuremc.bamboo.name=竹
+item.futuremc.banner_pattern.name=旗の模様
+item.futuremc.banner_pattern.flower=花模様
+item.futuremc.banner_pattern.creeper=クリーパー模様
+item.futuremc.banner_pattern.skull=骸骨模様
+item.futuremc.banner_pattern.thing=何かの模様
+item.futuremc.banner_pattern.globe=地球
+item.futuremc.banner_pattern.snout=ブタの鼻の模様
+item.futuremc.honey_bottle.name=ハチミツ入りの瓶
+item.futuremc.honeycomb.name=ハニカム
+item.futuremc.nautilus_shell.name=オウムガイの殻
+item.futuremc.pufferfish_bucket.name=フグ入りバケツ
+item.futuremc.salmon_bucket.name=サケ入りバケツ
+item.futuremc.cod_bucket.name=タラ入りバケツ
+item.futuremc.tropical_fish_bucket.name=熱帯魚入りバケツ
+item.futuremc.netherite_axe.name=ネザライトの斧
+item.futuremc.netherite_hoe.name=ネザライトのクワ
+item.futuremc.netherite_pickaxe.name=ネザライトのツルハシ
+item.futuremc.netherite_shovel.name=ネザライトのシャベル
+item.futuremc.netherite_sword.name=ネザライトの剣
+item.futuremc.netherite_scrap.name=ネザライトの欠片
+item.futuremc.netherite_helmet.name=ネザライトのヘルメット
+item.futuremc.netherite_chestplate.name=ネザライトのチェストプレート
+item.futuremc.netherite_leggings.name=ネザライトのレギンス
+item.futuremc.netherite_boots.name=ネザライトのブーツ
+item.futuremc.netherite_ingot.name=ネザライトインゴット
+item.record.futuremc.pigstep.desc=Lena Raine - Pigstep
+item.futuremc.record_pigstep.name=Music Disc
+
+# GUI
+container.barrel=樽
+container.blast_furnace=溶鉱炉
+container.smoker=燻製器
+container.grindstone=修理&エンチャント解除
+container.stonecutter=石切台
+container.loom=機織機
+container.smithing=Upgrade Gear
+
+# Entity
+entity.futuremc:trident.name=トライデント
+entity.futuremc:panda.name=パンダ
+entity.futuremc:bee.name=ハチ
+entity.futuremc:cod.name=タラ
+entity.futuremc:pufferfish.name=フグ
+entity.futuremc:salmon.name=サケ
+entity.futuremc:tropical_fish.name=熱帯魚
+
+# Enchantment
+enchantment.loyalty=忠誠
+enchantment.futuremc.loyalty.desc=投げたトライデントが戻ってくる。レベルが高いほど、戻ってくる時間が早くなる。
+enchantment.channeling=召雷
+enchantment.futuremc.channeling.desc=トライデントが当たったモブに雷が落ちる。天候が雷雨の時、かつ対象のモブが空の下にいる時のみ使用できる。
+enchantment.riptide=激流
+enchantment.futuremc.riptide.desc=トライデントを投げると、プレイヤーも同時に突進する。雨天時か水中でのみ使える。
+enchantment.impaling=水生特効
+enchantment.futuremc.impaling.desc=海に自然スポーンするモブに追加ダメージを与える。
+enchantment.quick_charge=高速装填
+enchantment.futuremc.quick_charge.desc=装填時間が短くなる。
+# Creative Tab
+itemGroup.futuremc=Future MC
+
+# JEI
+container.jei.futuremc.campfire.name=Campfire
+container.jei.futuremc.blast_furnace.name=Blasting
+container.jei.futuremc.smoker.name=Smoking
+container.jei.futuremc.stonecutter.name=Stonecutting
+container.jei.futuremc.smithing.name=Smithing
+container.jei.futuremc.composter.name=Composting
+container.jei.futuremc.campfire.duration=Duration
+container.jei.futuremc.composter.chance=Chance
+
+# Config
+futuremc.config.blue_ice=Blue Ice
+
+# Vanilla Override
+tile.sandStone.smooth.name=滑らかな砂岩
+tile.redSandStone.smooth.name=滑らかな赤い砂岩
+
+# Subtitles
+futuremc.subtitles.barrel_close=Barrel closes
+futuremc.subtitle.barrel_open=Barrel opens
+futuremc.subtitle.trident_throw=Trident clangs
+futuremc.subtitle.trident_pierce=Trident stabs
+futuremc.subtitle.trident_ground_impact=Trident vibrates
+futuremc.subtitle.trident_channeling=Trident thunder cracks
+futuremc.subtitle.trident_loyalty=Trident returns
+futuremc.subtitle.riptide_trident=Trident zooms
+futuremc.subtitle.crossbow_charge=Crossbow charges up
+futuremc.subtitle.crossbow_shoot=Crossbow fires
+futuremc.subtitle.grindstone_use=Grindstone used
+futuremc.subtitles.panda_aggressive_ambient=Panda huffs
+futuremc.subtitles.panda_ambient=Panda pants
+futuremc.subtitles.panda_bite=Panda bites
+futuremc.subtitles.panda_cannot_breed=Panda bleats
+futuremc.subtitles.panda_death=Panda dies
+futuremc.subtitles.panda_eat=Panda eats
+futuremc.subtitles.panda_hurt=Panda hurts
+futuremc.subtitles.panda_pre_sneeze=Panda's nose tickles
+futuremc.subtitles.panda_sneeze=Panda sneezes
+futuremc.subtitles.panda_step=Panda steps
+futuremc.subtitles.panda_worried_ambient=Panda whimpers
+futuremc.subtitles.campfire_crackle=Campfire crackles
+futuremc.subtitles.bell_ring=Bell rings
+futuremc.subtitles.bell_resonate=Bell resonates
+futuremc.subtitles.bee_enter_hive=Bee enters hive
+futuremc.subtitles.bee_exit_hive=Bee leaves hive
+futuremc.subtitles.bee_sting=Bee stings
+futuremc.subtitles.bee_death=Bee dies
+futuremc.subtitles.bee_hurt=Bee hurts
+futuremc.subtitles.bee_pollinate=Bee buzzes happily
+futuremc.subtitles.bee_work=Bees work
+futuremc.subtitles.bee_aggressive=Bee buzzes angrily
+futuremc.subtitles.bee_passive=Bee buzzes
+futuremc.subtitles.honey_bottle_drink=Honey gulping
+futuremc.subtitles.shear_hive=Shears scrape
+futuremc.subtitles.honey_block_slide=Sliding down a honey block
+futuremc.subtitles.equip_netherite=ネザライトのarmor clanks
+futuremc.subtitles.smithing_table_use=Smithing table used
+futuremc.subtitles.cod_swim=Cod swims
+futuremc.subtitles.cod_hurt=Cod hurts
+futuremc.subtitles.cod_death=Cod dies
+futuremc.subtitles.cod_flop=Cod flops
+futuremc.subtitles.salmon_swim=Salmon swims
+futuremc.subtitles.salmon_hurt=Salmon hurts
+futuremc.subtitles.salmon_death=Salmon dies
+futuremc.subtitles.salmon_flop=Salmon flops
+futuremc.subtitles.pufferfish_swim=Pufferfish swims
+futuremc.subtitles.pufferfish_hurt=Pufferfish hurts
+futuremc.subtitles.pufferfish_death=Pufferfish dies
+futuremc.subtitles.pufferfish_flop=Pufferfish flops
+futuremc.subtitles.tropical_fish_swim=Tropical fish swims
+futuremc.subtitles.tropical_fish_hurt=Tropical fish hurts
+futuremc.subtitles.tropical_fish_death=Tropical fish dies
+futuremc.subtitles.tropical_fish_flop=Tropical fish flops
+futuremc.subtitles.iron_golem_repair=Iron golem repaired
+futuremc.subtitles.pufferfish_inflate=Pufferfish inflates
+futuremc.subtitles.pufferfish_deflate=Pufferfish deflates
+futuremc.subtitles.pufferfish_sting=Pufferfish stings

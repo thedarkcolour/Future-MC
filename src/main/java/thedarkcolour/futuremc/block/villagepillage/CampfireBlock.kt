@@ -94,6 +94,7 @@ class CampfireBlock(properties: Properties) : InteractionBlock(properties) {
 
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromPos: BlockPos) {
         val block = worldIn.getBlockState(pos.up()).block
+
         if (state.getValue(LIT) && (block is BlockFluidBase || block is BlockLiquid)) {
             setLit(worldIn, pos, false)
 
