@@ -1,0 +1,272 @@
+# Functional Block
+tile.futuremc.lantern.name=Lanterne
+tile.futuremc.barrel.name=Tonneau
+tile.futuremc.loom.name=Métier à Tisser
+tile.futuremc.stonecutter.name=Tailleur de Pierre
+tile.futuremc.blast_furnace.name=Haut Fourneau
+tile.futuremc.smoker.name=Fumoir
+tile.futuremc.grindstone.name=Meule
+tile.futuremc.composter.name=Composte
+tile.futuremc.cartography_table.name=Table de Cartographe
+
+
+
+# Plant
+tile.futuremc.lily_of_the_valley.name=Muguet des Vallée
+tile.futuremc.wither_rose.name=Rose du Wither
+tile.futuremc.cornflower.name=Bleuet
+tile.futuremc.sweet_berry_bush.name=Buisson de Baies Sucrées
+tile.futuremc.campfire.name=Feu de Camp
+tile.futuremc.stripped_oak_log.name=Buche de Chêne Écorcé
+tile.futuremc.stripped_spruce_log.name=Buche de Sapin Écorcé
+tile.futuremc.stripped_birch_log.name=Buche de Bouleau Écorcé
+tile.futuremc.stripped_jungle_log.name=Buche d'Acajou Écorcé
+tile.futuremc.stripped_acacia_log.name=Buche d'Acacia Écorcé
+tile.futuremc.stripped_dark_oak_log.name=Buche de Chêne Noir Écorcé
+death.attack.berryBush=%1$s a été piqué à mort par un buisson de baies sucrées.
+death.attack.sting=%1$s a été piqué à mort
+death.attack.trident=%1$s a été empalé par %2$s
+death.attack.trident.item=%1$s a été empalé par %2$s avec %3$s
+
+
+# Wall
+tile.futuremc.brick_wall.name=Mur en Briques
+tile.futuremc.andesite_wall.name=Mur en Andesite
+tile.futuremc.diorite_wall.name=Mur en Diorite
+tile.futuremc.granite_wall.name=Mur en Granite
+tile.futuremc.prismarine_wall.name=Mur en Prismarine
+tile.futuremc.stone_brick_wall.name=Mur en Briques de Pierre
+tile.futuremc.mossy_stone_brick_wall.name=Mur en Briques de Pierre Moussue
+tile.futuremc.end_stone_brick_wall.name=Mur en Briques de Pierre de l'End
+tile.futuremc.nether_brick_wall.name=Mur en Briques du Nether
+tile.futuremc.sandstone_wall.name=Mur en Grès
+tile.futuremc.red_sandstone_wall.name=Mur en Grès Rouge
+tile.futuremc.red_nether_brick_wall.name=Mur en Briques du Nether Rouge
+
+# Slab
+tile.futuremc.granite_slab.name=Dalle en Granite
+tile.futuremc.andesite_slab.name=Dalle en Andesite
+tile.futuremc.diorite_slab.name=Dalle en Diorite
+tile.futuremc.polished_granite_slab.name=Dalle en Granite Poli
+tile.futuremc.polished_andesite_slab.name=Dalle en Andesite Poli
+tile.futuremc.polished_diorite_slab.name=Dalle en Diorite Poli
+tile.futuremc.stone_slab.name=Dalle en Roche
+tile.futuremc.prismarine_slab.name=Dalle en Prismarine
+tile.futuremc.dark_prismarine_slab.name=Dalle en Prismarine Sombre
+tile.futuremc.prismarine_brick_slab.name=Dalle en Briques de Prismarine
+tile.futuremc.smooth_red_sandstone_slab.name=Dalle en Grès Rouge Lisse
+tile.futuremc.smooth_sandstone_slab.name=Dalle en Grès Lisse
+tile.futuremc.mossy_stone_brick_slab.name=Dalle en Briques de Pierre Moussue
+tile.futuremc.mossy_stone_slab.name=Dalle en Pierre Moussue
+tile.futuremc.smooth_quartz_slab.name=Dalle en Quartz Lisse
+tile.futuremc.red_nether_brick_slab.name=Dalle en Briques Rouge du Nether
+tile.futuremc.end_stone_brick_slab.name=Dalle en Briques de Pierre de l'End
+tile.futuremc.bamboo.name=Bambou
+tile.futuremc.bee_nest.name=Nid d'Abeille
+tile.futuremc.beehive.name=Ruche d'Abeille
+tile.futuremc.honey_block.name=Bloc de Miel
+tile.futuremc.honeycomb_block.name=Bloc de Rayon de Miel
+
+# Decorative Block
+tile.futuremc.smooth_stone.name=Roche Lisse
+tile.futuremc.smooth_sandstone.name=Grès Lisse
+tile.futuremc.smooth_red_sandstone.name=Grès Lisse Rouge
+tile.futuremc.smooth_quartz.name=Quartz Lisse
+tile.futuremc.soul_soil.name=Terre des Âmes
+tile.futuremc.fletching_table.name=Table d'Archerie
+tile.futuremc.smithing_table.name=Table de Forgeron
+tile.futuremc.soul_fire_torch.name=Torche des Âmes
+tile.futuremc.soul_fire_lantern.name=Lanterne des Âmes
+tile.futuremc.blue_ice.name=Glace Bleu
+tile.futuremc.bell.name=Cloche
+tile.futuremc.acacia_wood.name=Bois d'Acacia
+tile.futuremc.jungle_wood.name=Bois d'Acajou
+tile.futuremc.birch_wood.name=Bois de Bouleau
+tile.futuremc.oak_wood.name=Bois de Chêne
+tile.futuremc.spruce_wood.name=Bois de Sapin
+tile.futuremc.dark_oak_wood.name=Bois de Chêne Noir
+tile.futuremc.stripped_acacia_wood.name=Bois d'Acacia Écorcé
+tile.futuremc.stripped_jungle_wood.name=Bois d'Acajou Écorcé
+tile.futuremc.stripped_birch_wood.name=Bois de Bouleau Écorcé
+tile.futuremc.stripped_oak_wood.name=Bois de Chêne Écorcé
+tile.futuremc.stripped_spruce_wood.name=Bois de Sapin Écorcé
+tile.futuremc.stripped_dark_oak_wood.name=Bois de Chêne Noir Écorcé
+tile.futuremc.ancient_debris.name=Ancient Débris
+tile.futuremc.netherite_block.name=Bloc de Netherite
+tile.futuremc.acacia_trapdoor.name=Trappe en Acacia
+tile.futuremc.jungle_trapdoor.name=Trappe en Acajou
+tile.futuremc.birch_trapdoor.name=Trappe en Bouleau
+tile.futuremc.spruce_trapdoor.name=Trappe en Sapin
+tile.futuremc.dark_oak_trapdoor.name=Trappe en Chêne Noir
+tile.futuremc.chain.name=Chaine
+
+# Banner
+item.banner.globe.black=Globe Noir
+item.banner.globe.red=Globe Rouge
+item.banner.globe.green=Globe Vert
+item.banner.globe.brown=Globe Marron
+item.banner.globe.blue=Globe Bleu
+item.banner.globe.purple=Globe Violet
+item.banner.globe.cyan=Globe Cyan
+item.banner.globe.silver=Globe Gris Clair
+item.banner.globe.gray=Globe Gris
+item.banner.globe.pink=Globe Rose
+item.banner.globe.lime=Globe Lime
+item.banner.globe.yellow=Globe Jaune
+item.banner.globe.lightBlue=Globe Bleu Clair
+item.banner.globe.magenta=Globe Magenta
+item.banner.globe.orange=Globe Orange
+item.banner.globe.white=Globe Blanc
+
+# Crafting Materials
+item.futuremc.dye.0.name=Teinture Blanche
+item.futuremc.dye.1.name=Teinture Bleu
+item.futuremc.dye.2.name=Teinture Marron
+item.futuremc.dye.3.name=Teinture Noir
+
+# Item
+item.futuremc.trident.name=Trident
+item.futuremc.crossbow.name=Arbalète
+item.futuremc.crossbow_loaded.name=Arbalète chargée de flèches
+item.futuremc.suspicious_stew.name=Soupe Suspecte
+item.futuremc.sweet_berries.name=Baies Sucrées
+item.futuremc.bamboo.name=Bambou
+item.futuremc.banner_pattern.name=Motif de Bannière
+item.futuremc.banner_pattern.flower=Charge de Fleur
+item.futuremc.banner_pattern.creeper=Charge de Creeper
+item.futuremc.banner_pattern.skull=Charge de Crâne
+item.futuremc.banner_pattern.thing=Chose
+item.futuremc.banner_pattern.globe=Globe
+item.futuremc.banner_pattern.snout=Museau
+item.futuremc.honey_bottle.name=Fiole de Miel
+item.futuremc.honeycomb.name=Rayon de Miel
+item.futuremc.nautilus_shell.name=Coquille de Nautile
+item.futuremc.pufferfish_bucket.name=Poisson-Globe dans un Sceau
+item.futuremc.salmon_bucket.name=Saumon dans un Sceau
+item.futuremc.cod_bucket.name=Cod Bucket Morue dans un Sceau
+item.futuremc.tropical_fish_bucket.name=Poisson Tropical dans un Sceau
+item.futuremc.netherite_axe.name=Hache en Netherite
+item.futuremc.netherite_hoe.name=Houe en Netherite
+item.futuremc.netherite_pickaxe.name=Pioche en Netherite
+item.futuremc.netherite_shovel.name=Pelle en Netherite
+item.futuremc.netherite_sword.name=Épée en Netherite
+item.futuremc.netherite_scrap.name=Fragments de Netherite
+item.futuremc.netherite_helmet.name=Casque en Netherite
+item.futuremc.netherite_chestplate.name=Plastron en Netherite
+item.futuremc.netherite_leggings.name=Jambière en Netherite
+item.futuremc.netherite_boots.name=Bottes en Netherite
+item.futuremc.netherite_ingot.name=Lingot de Netherite
+item.record.futuremc.pigstep.desc=Lena Raine - Pigstep
+item.futuremc.record_pigstep.name=Disque de Musique
+
+# GUI
+container.barrel=Tonneau
+container.blast_furnace=Haut Fourneau
+container.smoker=Fumoir
+container.grindstone=Réparer et Désenchanter
+container.stonecutter=Tailleur de Pierre
+container.loom=Métier à Tisser
+container.smithing=Mise à Niveau de l'Équipement
+container.fmc_villager.trades=Échanges
+container.fmc_villager.novice=Novice
+container.fmc_villager.apprentice=Apprentie
+container.fmc_villager.journeyman=Compagnon
+container.fmc_villager.expert=Expert
+container.fmc_villager.master=Maître
+
+# Entity
+entity.futuremc:trident.name=Trident
+entity.futuremc:panda.name=Panda
+entity.futuremc:cod.name=Morue
+entity.futuremc:pufferfish.name=Poisson-Globe
+entity.futuremc:salmon.name=Saumon
+entity.futuremc:tropical_fish.name=Poisson Tropical
+entity.futuremc:bee.name=Abeille
+
+# JEI
+container.jei.futuremc.campfire.name=Feu de Camp
+container.jei.futuremc.campfire.duration=Durée
+container.jei.futuremc.blast_furnace.name=Fonderie
+container.jei.futuremc.smoker.name=Cuisson
+container.jei.futuremc.stonecutter.name=Tailleur de Pierre
+container.jei.futuremc.smithing.name=Smithing
+container.jei.futuremc.composter.name=Composting
+container.jei.futuremc.campfire.duration=Durée
+container.jei.futuremc.composter.chance=Chance
+
+# Enchantment
+enchantment.loyalty=Loyauté
+enchantment.futuremc.loyalty.desc=Le trident revient après avoir été lancé. Les niveaux supérieurs réduisent le temps de retour.
+enchantment.channeling=Canalisation
+enchantment.futuremc.channeling.desc=Le trident canalise un éclair vers une entité touchée. Ne fonctionne que pendant les orages et si la cible n'est pas obstruée par des blocs opaques.
+enchantment.riptide=Impulsion
+enchantment.futuremc.riptide.desc=Le trident lance le joueur lorsqu'il est lancé. Ne fonctionne que dans l'eau ou sous la pluie.
+enchantment.impaling=Empaler
+enchantment.futuremc.impaling.desc=Inflige des dégâts supplémentaires aux monstres qui apparaissent naturellement dans l'océan.
+enchantment.quick_charge=Charge Rapide
+enchantment.futuremc.quick_charge.desc=Diminue le temps de charge.
+
+# Vanilla Override
+tile.sandStone.smooth.name=Grès Taillé	
+tile.redSandStone.smooth.name=Grès Taillé Rouge
+
+# Subtitles
+futuremc.subtitles.barrel_close=Barrel closes
+futuremc.subtitle.barrel_open=Barrel opens
+futuremc.subtitle.trident_throw=Trident clangs
+futuremc.subtitle.trident_pierce=Trident stabs
+futuremc.subtitle.trident_ground_impact=Trident vibrates
+futuremc.subtitle.trident_channeling=Trident thunder cracks
+futuremc.subtitle.trident_loyalty=Trident returns
+futuremc.subtitle.riptide_trident=Trident zooms
+futuremc.subtitle.crossbow_charge=Crossbow charges up
+futuremc.subtitle.crossbow_shoot=Crossbow fires
+futuremc.subtitle.grindstone_use=Grindstone used
+futuremc.subtitles.panda_aggressive_ambient=Panda huffs
+futuremc.subtitles.panda_ambient=Panda pants
+futuremc.subtitles.panda_bite=Panda bites
+futuremc.subtitles.panda_cannot_breed=Panda bleats
+futuremc.subtitles.panda_death=Panda dies
+futuremc.subtitles.panda_eat=Panda eats
+futuremc.subtitles.panda_hurt=Panda hurts
+futuremc.subtitles.panda_pre_sneeze=Panda's nose tickles
+futuremc.subtitles.panda_sneeze=Panda sneezes
+futuremc.subtitles.panda_step=Panda steps
+futuremc.subtitles.panda_worried_ambient=Panda whimpers
+futuremc.subtitles.campfire_crackle=Campfire crackles
+futuremc.subtitles.bell_ring=Bell rings
+futuremc.subtitles.bell_resonate=Bell resonates
+futuremc.subtitles.bee_enter_hive=Bee enters hive
+futuremc.subtitles.bee_exit_hive=Bee leaves hive
+futuremc.subtitles.bee_sting=Bee stings
+futuremc.subtitles.bee_death=Bee dies
+futuremc.subtitles.bee_hurt=Bee hurts
+futuremc.subtitles.bee_pollinate=Bee buzzes happily
+futuremc.subtitles.bee_work=Bees work
+futuremc.subtitles.bee_aggressive=Bee buzzes angrily
+futuremc.subtitles.bee_passive=Bee buzzes
+futuremc.subtitles.honey_bottle_drink=Honey gulping
+futuremc.subtitles.shear_hive=Shears scrape
+futuremc.subtitles.honey_block_slide=Sliding down a honey block
+futuremc.subtitles.equip_netherite=Netherite armor clanks
+futuremc.subtitles.smithing_table_use=Smithing table used
+futuremc.subtitles.cod_swim=Cod swims
+futuremc.subtitles.cod_hurt=Cod hurts
+futuremc.subtitles.cod_death=Cod dies
+futuremc.subtitles.cod_flop=Cod flops
+futuremc.subtitles.salmon_swim=Salmon swims
+futuremc.subtitles.salmon_hurt=Salmon hurts
+futuremc.subtitles.salmon_death=Salmon dies
+futuremc.subtitles.salmon_flop=Salmon flops
+futuremc.subtitles.pufferfish_swim=Pufferfish swims
+futuremc.subtitles.pufferfish_hurt=Pufferfish hurts
+futuremc.subtitles.pufferfish_death=Pufferfish dies
+futuremc.subtitles.pufferfish_flop=Pufferfish flops
+futuremc.subtitles.tropical_fish_swim=Tropical fish swims
+futuremc.subtitles.tropical_fish_hurt=Tropical fish hurts
+futuremc.subtitles.tropical_fish_death=Tropical fish dies
+futuremc.subtitles.tropical_fish_flop=Tropical fish flops
+futuremc.subtitles.iron_golem_repair=Iron golem repaired
+futuremc.subtitles.pufferfish_inflate=Pufferfish inflates
+futuremc.subtitles.pufferfish_deflate=Pufferfish deflates
+futuremc.subtitles.pufferfish_sting=Pufferfish stings
