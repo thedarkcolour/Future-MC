@@ -1,3 +1,6 @@
+##Version 0.2.7.2 - Bugfix:
+- Fixed a server crash with netherite
+
 ##Version 0.2.7.1 - Bugfix:
 - Added config option to disable 1.14 villager screen if another mod you prefer overrides it
 - Fixed crashes with Loom and Stonecutter

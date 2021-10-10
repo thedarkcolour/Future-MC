@@ -105,7 +105,7 @@ class NetheriteArmorItem(
     override fun getItemAttributeModifiers(slot: EntityEquipmentSlot): Multimap<String, AttributeModifier> {
         val map = super.getItemAttributeModifiers(slot)
 
-        if (slot == equipmentSlot) {
+        if (slot == armorType) {
             map.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.name, AttributeModifier(ARMOR_MODIFIERS[slot.index], "Armor knockback resistance", 0.1, 0))
         }
 
