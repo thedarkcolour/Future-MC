@@ -9,11 +9,6 @@ class SmithingRecipeWrapper(recipe: SmithingRecipe) : IRecipeWrapper {
     val inputs = listOf(listOf(recipe.input), listOf(recipe.material))
     val output = recipe.output
 
-    /**
-     * Gets all the recipe's ingredients by filling out an instance of [IIngredients].
-     *
-     * @since JEI 3.11.0
-     */
     override fun getIngredients(ingredients: IIngredients) {
         ingredients.setInputLists(VanillaTypes.ITEM, inputs)
         ingredients.setOutput(VanillaTypes.ITEM, output)

@@ -39,6 +39,30 @@ public final class Composter {
         }
     }
 
+    @ZenMethod
+    public static void removeValidItem(IIngredient stack) {
+        if (ComposterBlock.ItemsForComposter.getChance(toItemStack(stack)) != -1) {
+            applyAction(new Remove(toItemStack(stack)));
+        } else {
+            FutureMC.LOGGER.log(Level.WARN, "Cannot remove non-existent item from valid composter item " + stack.toCommandString());
+        }
+    }
+
+    @ZenMethod
+    public static void replaceValidItemChance(IIngredient stack, int newRarity) {
+        if (ComposterBlock.ItemsForComposter.getChance(toItemStack(stack)) != -1) {
+            applyAction(new ReplaceItemChance(toItemStack(stack), newRarity));
+        } else {
+            FutureMC.LOGGER.log(Level.WARN, "Cannot change chance for invalid item " + stack.toCommandString() +
+                    " If you wish to make the item valid, use mods.futuremc.Composter.addValidItem");
+        }
+    }
+
+    @ZenMethod
+    public static void clearValidItems() {
+        ComposterBlock.ItemsForComposter.clear();
+    }
+
     private static final class Add implements IAction {
         private final ItemStack stack;
         private final int rarity;
@@ -59,15 +83,6 @@ public final class Composter {
         }
     }
 
-    @ZenMethod
-    public static void removeValidItem(IIngredient stack) {
-        if (ComposterBlock.ItemsForComposter.getChance(toItemStack(stack)) != -1) {
-            applyAction(new Remove(toItemStack(stack)));
-        } else {
-            FutureMC.LOGGER.log(Level.WARN, "Cannot remove non-existent item from valid composter item " + stack.toCommandString());
-        }
-    }
-
     private static final class Remove implements IAction {
         private final ItemStack stack;
 
@@ -83,16 +98,6 @@ public final class Composter {
         @Override
         public String describe() {
             return "Removed item " + stack.getItem().getRegistryName() + " from the list of valid Composter item.";
-        }
-    }
-
-    @ZenMethod
-    public static void replaceValidItemChance(IIngredient stack, int newRarity) {
-        if (ComposterBlock.ItemsForComposter.getChance(toItemStack(stack)) != -1) {
-            applyAction(new ReplaceItemChance(toItemStack(stack), newRarity));
-        } else {
-            FutureMC.LOGGER.log(Level.WARN, "Cannot change chance for invalid item " + stack.toCommandString() +
-                    " If you wish to make the item valid, use mods.futuremc.Composter.addValidItem");
         }
     }
 
@@ -116,10 +121,5 @@ public final class Composter {
         public String describe() {
             return "Changed Composter value for item " + stack.getItem().getRegistryName() + " from " + oldRarity + " to " + newRarity;
         }
-    }
-
-    @ZenMethod
-    public static void clearValidItems() {
-        ComposterBlock.ItemsForComposter.clear();
     }
 }

@@ -1,3 +1,8 @@
+##Version 0.2.7.3 - Bugfix:
+- Fixed a bug that disabled Smithing table and Composter guis when stonecutter was disabled. Fixes #260
+- Fixed a crash with Pandas
+- Added Spanish (Spain) translations thanks to jahirtrap
+
 ##Version 0.2.7.2 - Bugfix:
 - Fixed a server crash with netherite
 

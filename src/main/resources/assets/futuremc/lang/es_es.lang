@@ -1,0 +1,275 @@
+# Bloques funcionales
+tile.futuremc.lantern.name=Farol
+tile.futuremc.barrel.name=Barril
+tile.futuremc.loom.name=Telar
+tile.futuremc.stonecutter.name=Cortapiedras
+tile.futuremc.blast_furnace.name=Alto Horno
+tile.futuremc.smoker.name=Ahumador
+tile.futuremc.grindstone.name=Afiladora
+tile.futuremc.composter.name=Compostador
+tile.futuremc.cartography_table.name=Mesa de cartografía
+
+# Plantas
+tile.futuremc.lily_of_the_valley.name=Convalaria
+tile.futuremc.wither_rose.name=Rosa de Wither
+tile.futuremc.cornflower.name=Aciano
+tile.futuremc.sweet_berry_bush.name=Bayas dulces
+tile.futuremc.campfire.name=Hoguera
+tile.futuremc.stripped_oak_log.name=Tronco de roble sin corteza
+tile.futuremc.stripped_spruce_log.name=Tronco de abeto sin corteza
+tile.futuremc.stripped_birch_log.name=Tronco de abedul sin corteza
+tile.futuremc.stripped_jungle_log.name=Tronco de jungla sin corteza
+tile.futuremc.stripped_acacia_log.name=Tronco de acacia sin corteza
+tile.futuremc.stripped_dark_oak_log.name=Tronco de roble oscuro sin corteza
+death.attack.berryBush=%1$s ha muerto entre espinas en un arbusto de bayas dulces
+death.attack.sting=%1$s ha muerto por una picadura de abeja
+death.attack.trident=%1$s ha sido empalado/a por %2$s
+death.attack.trident.item=%1$s ha sido empalado/a por %2$s y su %3$s
+
+# Muros
+tile.futuremc.brick_wall.name=Muro de ladrillos
+tile.futuremc.andesite_wall.name=Muro de andesita
+tile.futuremc.diorite_wall.name=Muro de diorita
+tile.futuremc.granite_wall.name=Muro de granito
+tile.futuremc.prismarine_wall.name=Muro de prismarina
+tile.futuremc.stone_brick_wall.name=Muro de ladrillos de piedra
+tile.futuremc.mossy_stone_brick_wall.name=Muro de ladrillos de piedra musgosos
+tile.futuremc.end_stone_brick_wall.name=Muro de ladrillos de piedra del End
+tile.futuremc.nether_brick_wall.name=Muro de ladrillos del Nether
+tile.futuremc.sandstone_wall.name=Muro de arenisca
+tile.futuremc.red_sandstone_wall.name=Muro de arenisca roja
+tile.futuremc.red_nether_brick_wall.name=Muro de ladrillos del Nether rojos
+
+# Losas
+tile.futuremc.granite_slab.name=Losa de granito
+tile.futuremc.andesite_slab.name=Losa de andesita
+tile.futuremc.diorite_slab.name=Losa de diorita
+tile.futuremc.polished_granite_slab.name=Losa de granito pulido
+tile.futuremc.polished_andesite_slab.name=Losa de andesita pulida
+tile.futuremc.polished_diorite_slab.name=Losa de diorita pulida
+tile.futuremc.stone_slab.name=Losa de piedra
+tile.futuremc.prismarine_slab.name=Losa de prismarina
+tile.futuremc.dark_prismarine_slab.name=Losa de prismarina oscura
+tile.futuremc.prismarine_brick_slab.name=Losa de ladrillos de prismarina
+tile.futuremc.smooth_red_sandstone_slab.name=Losa de arenisca roja lisa
+tile.futuremc.smooth_sandstone_slab.name=Losa de arenisca lisa
+tile.futuremc.mossy_stone_brick_slab.name=Losa de ladrillos de piedra musgosa
+tile.futuremc.mossy_stone_slab.name=Losa de roca musgosa
+tile.futuremc.smooth_quartz_slab.name=Losa de cuarzo liso
+tile.futuremc.red_nether_brick_slab.name=Losa de ladrillos del Nether rojos
+tile.futuremc.end_stone_brick_slab.name=Losa de ladrillos de piedra del End
+tile.futuremc.bamboo.name=Bambú
+tile.futuremc.bee_nest.name=Colmena
+tile.futuremc.beehive.name=Apiario
+tile.futuremc.honey_block.name=Bloque de miel
+tile.futuremc.honeycomb_block.name=Bloque de panal
+
+# Bloques decorativos
+tile.futuremc.smooth_stone.name=Piedra lisa
+tile.futuremc.smooth_sandstone.name=Arenisca lisa
+tile.futuremc.smooth_red_sandstone.name=Arenisca roja lisa
+tile.futuremc.smooth_quartz.name=Cuarzo liso
+tile.futuremc.soul_soil.name=Tierra de almas
+tile.futuremc.fletching_table.name=Mesa de flechas
+tile.futuremc.smithing_table.name=Mesa de herrería
+tile.futuremc.blue_ice.name=Hielo azul
+tile.futuremc.soul_fire_torch.name=Antorcha de almas
+tile.futuremc.soul_fire_lantern.name=Farol de almas
+tile.futuremc.acacia_trapdoor.name=Trampilla de acacia
+tile.futuremc.jungle_trapdoor.name=Trampilla de jungla
+tile.futuremc.birch_trapdoor.name=Trampilla de abedul
+tile.futuremc.spruce_trapdoor.name=Trampilla de abeto
+tile.futuremc.dark_oak_trapdoor.name=Trampilla de roble oscuro
+tile.futuremc.bell.name=Campana
+tile.futuremc.acacia_wood.name=Leño de acacia
+tile.futuremc.jungle_wood.name=Leño de jungla
+tile.futuremc.birch_wood.name=Leño de abedul
+tile.futuremc.oak_wood.name=Leño de roble
+tile.futuremc.spruce_wood.name=Leño de abeto
+tile.futuremc.dark_oak_wood.name=Leño de roble oscuro
+tile.futuremc.stripped_acacia_wood.name=Leño de acacia sin corteza
+tile.futuremc.stripped_jungle_wood.name=Leño de jungla sin corteza
+tile.futuremc.stripped_birch_wood.name=Leño de abedul sin corteza
+tile.futuremc.stripped_oak_wood.name=Leño de roble sin corteza
+tile.futuremc.stripped_spruce_wood.name=Leño de abeto sin corteza
+tile.futuremc.stripped_dark_oak_wood.name=Leño de roble oscuro sin corteza
+tile.futuremc.chain.name=Cadena
+tile.futuremc.ancient_debris.name=Escombros ancestrales
+tile.futuremc.netherite_block.name=Bloque de netherita
+entity.ItemFrame.name=Marco
+
+# Estandarte
+item.banner.globe.black=Planeta negro
+item.banner.globe.red=Planeta rojo
+item.banner.globe.green=Planeta verde
+item.banner.globe.brown=Planeta marrón
+item.banner.globe.blue=Planeta azul
+item.banner.globe.purple=Planeta morado
+item.banner.globe.cyan=Planeta cian
+item.banner.globe.silver=Planeta gris claro
+item.banner.globe.gray=Planeta gris
+item.banner.globe.pink=Planeta rosa
+item.banner.globe.lime=Planeta verde lima
+item.banner.globe.yellow=Planeta amarillo
+item.banner.globe.lightBlue=Planeta azul claro
+item.banner.globe.magenta=Planeta magenta
+item.banner.globe.orange=Planeta naranja
+item.banner.globe.white=Planeta blanco
+
+# Materiales de elaboración
+item.futuremc.dye.0.name=Tinte blanco
+item.futuremc.dye.1.name=Tinte azul
+item.futuremc.dye.2.name=Tinte marrón
+item.futuremc.dye.3.name=Tinte negro
+
+# Objetos
+item.futuremc.trident.name=Tridente
+item.futuremc.crossbow.name=Ballesta
+item.futuremc.crossbow_loaded.name=ballesta con flecha
+item.futuremc.suspicious_stew.name=Estofado sospechoso
+item.futuremc.sweet_berries.name=Bayas dulces
+item.futuremc.bamboo.name=Bambú
+item.futuremc.banner_pattern.name=Diseño de estandarte
+item.futuremc.banner_pattern.flower=Estampado de flor
+item.futuremc.banner_pattern.creeper=Estampado de creeper
+item.futuremc.banner_pattern.skull=Estampado de calavera
+item.futuremc.banner_pattern.thing=Estampado de Mojang
+item.futuremc.banner_pattern.globe=Estampado de planeta
+item.futuremc.banner_pattern.snout=Estampado de hocico
+item.futuremc.honey_bottle.name=Frasco con miel
+item.futuremc.honeycomb.name=Panal
+item.futuremc.nautilus_shell.name=Caparazón de nautilo
+item.futuremc.pufferfish_bucket.name=Cubo con pez globo
+item.futuremc.salmon_bucket.name=Cubo con salmón
+item.futuremc.cod_bucket.name=Cubo con bacalao
+item.futuremc.tropical_fish_bucket.name=Cubo con pez tropical
+item.futuremc.netherite_axe.name=Hacha de netherita
+item.futuremc.netherite_hoe.name=Azada de netherita
+item.futuremc.netherite_pickaxe.name=Pico de netherita
+item.futuremc.netherite_shovel.name=Pala de netherita
+item.futuremc.netherite_sword.name=Espada de netherita
+item.futuremc.netherite_scrap.name=Fragmentos de netherita
+item.futuremc.netherite_helmet.name=Casco de netherita
+item.futuremc.netherite_chestplate.name=Peto de netherita
+item.futuremc.netherite_leggings.name=Grebas de netherita
+item.futuremc.netherite_boots.name=Botas de netherita
+item.futuremc.netherite_ingot.name=Lingote de netherita
+item.record.futuremc.pigstep.desc=Lena Raine - Pigstep
+item.futuremc.record_pigstep.name=Disco de música
+
+# GUI
+container.barrel=Barril
+container.blast_furnace=Alto Horno
+container.smoker=Ahumador
+container.grindstone=Reparar y desencantar
+container.stonecutter=Cortapiedras
+container.loom=Telar
+container.smithing=Mejorar equipamento
+container.fmc_villager.trades=Comercios
+container.fmc_villager.novice=Novato
+container.fmc_villager.apprentice=Aprendiz
+container.fmc_villager.journeyman=Oficial
+container.fmc_villager.expert=Experto
+container.fmc_villager.master=Maestro
+
+# Entidades
+entity.futuremc:trident.name=Tridente
+entity.futuremc:panda.name=Panda
+entity.futuremc:bee.name=Abeja
+entity.futuremc:cod.name=Bacalao
+entity.futuremc:pufferfish.name=Pez globo
+entity.futuremc:salmon.name=Salmón
+entity.futuremc:tropical_fish.name=Pez tropical
+
+# Encantamientos
+enchantment.loyalty=Lealtad
+enchantment.futuremc.loyalty.desc=El tridente vuelve después de ser arrojado. Los niveles más altos reducen el tiempo de regreso.
+enchantment.channeling=Conductividad
+enchantment.futuremc.channeling.desc=El tridente conduce un rayo hacia una entidad golpeada. Funciona solo durante tormentas eléctricas y si el objetivo no está obstruido con bloques opacos.
+enchantment.riptide=Propulsión acuática
+enchantment.futuremc.riptide.desc=El tridente lanza al jugador cuando se lanza. Funciona solo en agua o lluvia.
+enchantment.impaling=Empalamiento
+enchantment.futuremc.impaling.desc=Inflige daño adicional a los mobs que se generan naturalmente en el océano.
+enchantment.quick_charge=Carga rápida
+enchantment.futuremc.quick_charge.desc=Disminuye el tiempo de carga.
+
+# Pestaña creativa
+itemGroup.futuremc=Future MC
+
+# JEI
+container.jei.futuremc.campfire.name=Hoguera
+container.jei.futuremc.blast_furnace.name=Alto horno
+container.jei.futuremc.smoker.name=Ahumador
+container.jei.futuremc.stonecutter.name=Cortar piedra
+container.jei.futuremc.smithing.name=Herrería
+container.jei.futuremc.composter.name=Compostar
+container.jei.futuremc.campfire.duration=Duración
+container.jei.futuremc.composter.chance=Probabilidad
+
+# Configuración
+futuremc.config.blue_ice=Hielo azul
+
+# Vanilla Override
+tile.sandStone.smooth.name=Losa de arenisca cortada
+tile.redSandStone.smooth.name=Losa de arenisca roja cortada 
+
+# Subtitulos
+futuremc.subtitles.barrel_close=Barril cerrado
+futuremc.subtitle.barrel_open=Barril abierto
+futuremc.subtitle.trident_throw=Tridente lanzado
+futuremc.subtitle.trident_pierce=Tridente apuñala
+futuremc.subtitle.trident_ground_impact=Tridente vibra
+futuremc.subtitle.trident_channeling=Tridente truena
+futuremc.subtitle.trident_loyalty=Tridente vuelve
+futuremc.subtitle.riptide_trident=Tridente zumba
+futuremc.subtitle.crossbow_charge=Ballesta cargando
+futuremc.subtitle.crossbow_shoot=Disparo de ballesta
+futuremc.subtitle.grindstone_use=Afiladora usada
+futuremc.subtitles.panda_aggressive_ambient=Panda jadea
+futuremc.subtitles.panda_ambient=Panda resuella
+futuremc.subtitles.panda_bite=Panda muerde
+futuremc.subtitles.panda_cannot_breed=Gemido de panda
+futuremc.subtitles.panda_death=Panda muere
+futuremc.subtitles.panda_eat=Panda come
+futuremc.subtitles.panda_hurt=Panda herido
+futuremc.subtitles.panda_pre_sneeze=Cosquilleo en la nariz del panda
+futuremc.subtitles.panda_sneeze=Panda estornuda
+futuremc.subtitles.panda_step=Pasos de panda
+futuremc.subtitles.panda_worried_ambient=Gruñido de panda
+futuremc.subtitles.campfire_crackle=Chisporroteo de hoguera
+futuremc.subtitles.bell_ring=Campanadas
+futuremc.subtitles.bell_resonate=Campana resuena
+futuremc.subtitles.bee_enter_hive=Abeja entra a la colmena
+futuremc.subtitles.bee_exit_hive=Abeja sale de la colmena
+futuremc.subtitles.bee_sting=Abeja pica
+futuremc.subtitles.bee_death=Abeja muere
+futuremc.subtitles.bee_hurt=Abeja herida
+futuremc.subtitles.bee_pollinate=Zumbido de abeja feliz
+futuremc.subtitles.bee_work=Abejas trabajando
+futuremc.subtitles.bee_aggressive=Zumbido de abeja furiosa
+futuremc.subtitles.bee_passive=Zumbido de abeja
+futuremc.subtitles.honey_bottle_drink=Tragando
+futuremc.subtitles.shear_hive=Corte de tijeras
+futuremc.subtitles.honey_block_slide=Deslizándose por un bloque de miel
+futuremc.subtitles.equip_netherite=Rechine de la armadura de netherita
+futuremc.subtitles.smithing_table_use=Mesa de herrería usada
+futuremc.subtitles.cod_swim=Bacalao nadando
+futuremc.subtitles.cod_hurt=Bacalao herido
+futuremc.subtitles.cod_death=Bacalao muere
+futuremc.subtitles.cod_flop=Bacalao chapotea
+futuremc.subtitles.salmon_swim=Salmón nadando
+futuremc.subtitles.salmon_hurt=Salmón herido
+futuremc.subtitles.salmon_death=Salmón muere
+futuremc.subtitles.salmon_flop=Salmón chapotea
+futuremc.subtitles.pufferfish_swim=Pez globo nadando
+futuremc.subtitles.pufferfish_hurt=Pez globo herido
+futuremc.subtitles.pufferfish_death=Pez globo muere
+futuremc.subtitles.pufferfish_flop=Pez globo chapotea
+futuremc.subtitles.tropical_fish_swim=Pez tropical nadando
+futuremc.subtitles.tropical_fish_hurt=Pez tropical herido
+futuremc.subtitles.tropical_fish_death=Pez tropical muere
+futuremc.subtitles.tropical_fish_flop=Pez tropical chapotea
+futuremc.subtitles.iron_golem_repair=Gólem de hierro reparado
+futuremc.subtitles.pufferfish_inflate=Pez globo se infla
+futuremc.subtitles.pufferfish_deflate=Pez globo se desinfla
+futuremc.subtitles.pufferfish_sting=Pez globo pica

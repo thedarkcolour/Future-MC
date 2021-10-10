@@ -6,6 +6,8 @@ import mezz.jei.api.IModRegistry
 import mezz.jei.api.JEIPlugin
 import mezz.jei.api.recipe.IRecipeCategoryRegistration
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid
+import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry
+import net.minecraft.block.Block
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
 import thedarkcolour.futuremc.FutureMC
@@ -13,21 +15,19 @@ import thedarkcolour.futuremc.block.villagepillage.ComposterBlock
 import thedarkcolour.futuremc.client.gui.GuiFurnaceAdvanced
 import thedarkcolour.futuremc.client.gui.SmithingGui
 import thedarkcolour.futuremc.client.gui.StonecutterScreen
-import thedarkcolour.futuremc.compat.jei.blastfurnace.BlastFurnaceRecipeCategory
 import thedarkcolour.futuremc.compat.jei.campfire.CampfireRecipeCategory
 import thedarkcolour.futuremc.compat.jei.campfire.CampfireRecipeWrapper
 import thedarkcolour.futuremc.compat.jei.composter.ComposterRecipeCategory
 import thedarkcolour.futuremc.compat.jei.composter.ComposterRecipeWrapper
+import thedarkcolour.futuremc.compat.jei.furnace.AdvancedFurnaceRecipeCategory
 import thedarkcolour.futuremc.compat.jei.smithing.SmithingRecipeCategory
 import thedarkcolour.futuremc.compat.jei.smithing.SmithingRecipeWrapper
-import thedarkcolour.futuremc.compat.jei.smoker.SmokerRecipeCategory
 import thedarkcolour.futuremc.compat.jei.stonecutter.StonecutterRecipeCategory
 import thedarkcolour.futuremc.config.FConfig.villageAndPillage
 import thedarkcolour.futuremc.container.ContainerFurnaceAdvanced
 import thedarkcolour.futuremc.recipe.SimpleRecipe
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipe
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipes
-import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes
 import thedarkcolour.futuremc.recipe.furnace.SmokerRecipes
 import thedarkcolour.futuremc.recipe.smithing.SmithingRecipe
 import thedarkcolour.futuremc.recipe.smithing.SmithingRecipes
@@ -45,16 +45,13 @@ class FutureMCJEIPlugin : IModPlugin {
         val helper = registry.jeiHelpers.guiHelper
 
         if (villageAndPillage.smoker) {
-            registry.addRecipeCategories(SmokerRecipeCategory(helper))
+            registry.addRecipeCategories(AdvancedFurnaceRecipeCategory(helper, AdvancedFurnaceRecipeCategory.SMOKING, SMOKER))
         }
         if (villageAndPillage.blastFurnace) {
-            registry.addRecipeCategories(BlastFurnaceRecipeCategory(helper))
+            registry.addRecipeCategories(AdvancedFurnaceRecipeCategory(helper, AdvancedFurnaceRecipeCategory.BLASTING, BLAST_FURNACE))
         }
         if (villageAndPillage.campfire.enabled) {
             registry.addRecipeCategories(CampfireRecipeCategory(helper))
-        }
-        if (villageAndPillage.stonecutter.enabled) {
-            registry.addRecipeCategories(StonecutterRecipeCategory(helper))
         }
         if (villageAndPillage.smithingTable.enabled) {
             registry.addRecipeCategories(SmithingRecipeCategory(helper))
@@ -62,35 +59,26 @@ class FutureMCJEIPlugin : IModPlugin {
         if (villageAndPillage.composter) {
             registry.addRecipeCategories(ComposterRecipeCategory(helper))
         }
+        if (villageAndPillage.stonecutter.enabled) {
+            registry.addRecipeCategories(StonecutterRecipeCategory(helper))
+        }
     }
 
     override fun register(registry: IModRegistry) {
         val recipeTransferRegistry = registry.recipeTransferRegistry
 
         if (villageAndPillage.smoker) {
-            registry.handleRecipes(SimpleRecipe::class.java, ::SimpleRecipeWrapper, SmokerRecipeCategory.NAME)
-            registry.addRecipes(SmokerRecipes.recipes, SmokerRecipeCategory.NAME)
-            registry.addRecipeClickArea(GuiFurnaceAdvanced.BlastFurnace::class.java, 78, 32, 28, 23, BlastFurnaceRecipeCategory.NAME, VanillaRecipeCategoryUid.FUEL)
-            recipeTransferRegistry.addRecipeTransferHandler(ContainerFurnaceAdvanced::class.java, SmokerRecipeCategory.NAME, 0, 1, 3, 36)
-            val stack = ItemStack(SMOKER)
-            registry.addRecipeCatalyst(stack, SmokerRecipeCategory.NAME)
-            registry.addRecipeCatalyst(stack, VanillaRecipeCategoryUid.FUEL)
+            registerAdvancedFurnace(GuiFurnaceAdvanced.Smoker::class.java, AdvancedFurnaceRecipeCategory.SMOKING, SMOKER, registry, recipeTransferRegistry)
         }
         if (villageAndPillage.blastFurnace) {
-            registry.handleRecipes(SimpleRecipe::class.java, ::SimpleRecipeWrapper, BlastFurnaceRecipeCategory.NAME)
-            registry.addRecipes(BlastFurnaceRecipes.recipes, BlastFurnaceRecipeCategory.NAME)
-            registry.addRecipeClickArea(GuiFurnaceAdvanced.Smoker::class.java, 78, 32, 28, 23, SmokerRecipeCategory.NAME, VanillaRecipeCategoryUid.FUEL)
-            recipeTransferRegistry.addRecipeTransferHandler(ContainerFurnaceAdvanced::class.java, BlastFurnaceRecipeCategory.NAME, 0, 1, 3, 36)
-            val stack = ItemStack(BLAST_FURNACE)
-            registry.addRecipeCatalyst(stack, BlastFurnaceRecipeCategory.NAME)
-            registry.addRecipeCatalyst(stack, VanillaRecipeCategoryUid.FUEL)
+            registerAdvancedFurnace(GuiFurnaceAdvanced.BlastFurnace::class.java, AdvancedFurnaceRecipeCategory.BLASTING, BLAST_FURNACE, registry, recipeTransferRegistry)
         }
-        if (villageAndPillage.campfire.functionality) {
+        if (villageAndPillage.campfire.enabled && villageAndPillage.campfire.functionality) {
             registry.handleRecipes(CampfireRecipe::class.java, ::CampfireRecipeWrapper, CampfireRecipeCategory.NAME)
             registry.addRecipes(CampfireRecipes.recipes, CampfireRecipeCategory.NAME)
             registry.addRecipeCatalyst(ItemStack(CAMPFIRE), CampfireRecipeCategory.NAME)
         }
-        if (villageAndPillage.stonecutter.functionality) {
+        if (villageAndPillage.stonecutter.enabled && villageAndPillage.stonecutter.functionality) {
             registry.handleRecipes(SimpleRecipe::class.java, ::SimpleRecipeWrapper, StonecutterRecipeCategory.NAME)
             registry.addRecipes(StonecutterRecipes.recipes, StonecutterRecipeCategory.NAME)
             if (villageAndPillage.stonecutter.recipeButton) {
@@ -98,7 +86,7 @@ class FutureMCJEIPlugin : IModPlugin {
             }
             registry.addRecipeCatalyst(ItemStack(STONECUTTER), StonecutterRecipeCategory.NAME)
         }
-        if (villageAndPillage.smithingTable.functionality) {
+        if (villageAndPillage.smithingTable.enabled && villageAndPillage.smithingTable.functionality) {
             registry.handleRecipes(SmithingRecipe::class.java, ::SmithingRecipeWrapper, SmithingRecipeCategory.NAME)
             registry.addRecipes(SmithingRecipes.recipes, SmithingRecipeCategory.NAME)
             registry.addRecipeCatalyst(ItemStack(SMITHING_TABLE), SmithingRecipeCategory.NAME)
@@ -113,6 +101,22 @@ class FutureMCJEIPlugin : IModPlugin {
         if (villageAndPillage.smoker || villageAndPillage.blastFurnace) {
             recipeTransferRegistry.addRecipeTransferHandler(ContainerFurnaceAdvanced::class.java, VanillaRecipeCategoryUid.FUEL, 1, 1, 3, 36)
         }
+    }
+
+    private fun registerAdvancedFurnace(
+        guiClass: Class<out GuiFurnaceAdvanced>,
+        title: String,
+        block: Block,
+        registry: IModRegistry,
+        recipeTransferRegistry: IRecipeTransferRegistry
+    ) {
+        registry.handleRecipes(SimpleRecipe::class.java, ::SimpleRecipeWrapper, title)
+        registry.addRecipes(SmokerRecipes.recipes, title)
+        registry.addRecipeClickArea(guiClass, 78, 32, 28, 23, title, VanillaRecipeCategoryUid.FUEL)
+        recipeTransferRegistry.addRecipeTransferHandler(ContainerFurnaceAdvanced::class.java, title, 0, 1, 3, 36)
+        val stack = ItemStack(block)
+        registry.addRecipeCatalyst(stack, AdvancedFurnaceRecipeCategory.SMOKING)
+        registry.addRecipeCatalyst(stack, VanillaRecipeCategoryUid.FUEL)
     }
 
     companion object {

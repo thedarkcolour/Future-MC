@@ -1,33 +1,34 @@
-package thedarkcolour.futuremc.compat.jei.smoker;
+package thedarkcolour.futuremc.compat.jei.furnace;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.*;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.compat.jei.SimpleRecipeWrapper;
-import thedarkcolour.futuremc.registry.FBlocks;
 
-public class SmokerRecipeCategory implements IRecipeCategory<SimpleRecipeWrapper> {
-    public static final String NAME = "container.jei.futuremc.smoker.name";
+public class AdvancedFurnaceRecipeCategory implements IRecipeCategory<SimpleRecipeWrapper> {
+    public static final String SMOKING = "container.jei.futuremc.smoker.name";
+    public static final String BLASTING = "container.jei.futuremc.blast_furnace.name";
+
+    private final String title;
     private final IDrawable background;
     private final IDrawableAnimated animatedFlame;
     private final IDrawableAnimated arrow;
     private final IDrawable icon;
-    private final String localizedName;
 
-    public SmokerRecipeCategory(IGuiHelper helper) {
-        background = helper.createDrawable(new ResourceLocation("jei", "textures/gui/gui_vanilla.png"), 0, 114, 82, 54);
-        IDrawableStatic staticFlame = helper.createDrawable(new ResourceLocation("jei", "textures/gui/gui_vanilla.png"), 82, 114, 14, 14);
-        animatedFlame = helper.createAnimatedDrawable(staticFlame, 300, IDrawableAnimated.StartDirection.TOP, true);
+    public AdvancedFurnaceRecipeCategory(IGuiHelper helper, String title, Block block) {
+        this.title = title;
 
-        arrow = helper.drawableBuilder(new ResourceLocation("jei", "textures/gui/gui_vanilla.png"), 82, 128, 24, 17).buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
-        icon = helper.createDrawableIngredient(new ItemStack(FBlocks.SMOKER));
-        localizedName = I18n.format("gui.jei.category.smelting");
+        this.background = helper.createDrawable(new ResourceLocation("jei", "textures/gui/gui_vanilla.png"), 0, 114, 82, 54);
+        this.animatedFlame = helper.createAnimatedDrawable(helper.createDrawable(new ResourceLocation("jei", "textures/gui/gui_vanilla.png"), 82, 114, 14, 14), 300, IDrawableAnimated.StartDirection.TOP, true);
+        this.arrow = helper.drawableBuilder(new ResourceLocation("jei", "textures/gui/gui_vanilla.png"), 82, 128, 24, 17).buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
+        this.icon = helper.createDrawableIngredient(new ItemStack(block));
     }
 
     @Override
@@ -48,12 +49,12 @@ public class SmokerRecipeCategory implements IRecipeCategory<SimpleRecipeWrapper
 
     @Override
     public String getUid() {
-        return NAME;
+        return title;
     }
 
     @Override
     public String getTitle() {
-        return localizedName;
+        return I18n.format(title);
     }
 
     @Override

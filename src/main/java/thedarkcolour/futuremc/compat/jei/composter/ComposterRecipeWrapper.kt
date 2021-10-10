@@ -12,11 +12,6 @@ class ComposterRecipeWrapper(entry: Object2ByteMap.Entry<ItemStack>) : IRecipeWr
     val input = entry.key
     val chance = entry.byteValue
 
-    /**
-     * Gets all the recipe's ingredients by filling out an instance of [IIngredients].
-     *
-     * @since JEI 3.11.0
-     */
     override fun getIngredients(ingredients: IIngredients) {
         ingredients.setInput(VanillaTypes.ITEM, input)
     }
