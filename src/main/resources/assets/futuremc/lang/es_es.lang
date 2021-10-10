@@ -210,8 +210,8 @@ container.jei.futuremc.composter.chance=Probabilidad
 futuremc.config.blue_ice=Hielo azul
 
 # Vanilla Override
-tile.sandStone.smooth.name=Losa de arenisca cortada
-tile.redSandStone.smooth.name=Losa de arenisca roja cortada 
+tile.sandStone.smooth.name=Arenisca cortada
+tile.redSandStone.smooth.name=Arenisca roja cortada
 
 # Subtitulos
 futuremc.subtitles.barrel_close=Barril cerrado
