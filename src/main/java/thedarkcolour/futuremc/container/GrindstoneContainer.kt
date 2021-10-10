@@ -1,6 +1,5 @@
 package thedarkcolour.futuremc.container
 
-import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
@@ -107,7 +106,7 @@ class GrindstoneContainer(
 
     }
 
-    override fun getGuiContainer(): GuiContainer {
+    override fun createGui(): Any {
         return TODO()
     }
 

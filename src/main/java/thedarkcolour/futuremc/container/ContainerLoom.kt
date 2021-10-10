@@ -233,7 +233,7 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
     }
 
     @SideOnly(Side.CLIENT)
-    override fun getGuiContainer(): GuiLoom {
+    override fun createGui(): Any {
         return GuiLoom(ContainerLoom(playerInv, world, pos))
     }
 

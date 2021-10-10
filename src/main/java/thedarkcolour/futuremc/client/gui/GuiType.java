@@ -1,6 +1,5 @@
 package thedarkcolour.futuremc.client.gui;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -62,8 +61,8 @@ public enum GuiType {
      * @param pos the position of this block or tile entity
      * @return a new GuiContainer for this {@link GuiType}
      */
-    private GuiContainer getGui(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
-        return getContainer(playerInv, worldIn, pos).getGuiContainer();
+    private Object createGui(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
+        return createContainer(playerInv, worldIn, pos).createGui();
     }
 
     /**
@@ -73,28 +72,24 @@ public enum GuiType {
      * @param te the TileEntity that has World and BlockPos references
      * @return a new GuiContainer for this {@link GuiType}
      */
-    private GuiContainer getGui(InventoryPlayer playerInv, TileEntity te) {
-        return getContainer(playerInv, te).getGuiContainer();
+    private Object createGui(InventoryPlayer playerInv, TileEntity te) {
+        return createContainer(playerInv, te).createGui();
     }
 
-    //private FContainer getContainer(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
-    //    if (isTile()) {
-    //        return container.get(playerInv, worldIn.getTileEntity(pos));
-    //    } else {
-    //        return container.get(playerInv, worldIn, pos);
-    //    }
-    //}
-
     /**
-     * Used internally in the {@link Handler} for opening a container on the server.
+     * Used in the {@link Handler} for opening a container on the server.
      *
      * @param playerInv the inventory of the player
      * @param worldIn the World
      * @param pos the position of this block or tile entity
      * @return a new FContainer for this {@link GuiType}
      */
-    private FContainer getContainer(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
-        return container.get(playerInv, worldIn, pos);
+    private FContainer createContainer(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
+        if (isTile()) {
+            return container.get(playerInv, worldIn.getTileEntity(pos));
+        } else {
+            return container.get(playerInv, worldIn, pos);
+        }
     }
 
     /**
@@ -104,7 +99,7 @@ public enum GuiType {
      * @param te the TileEntity that has World and BlockPos references
      * @return a new FContainer for this {@link GuiType}
      */
-    private FContainer getContainer(InventoryPlayer playerInv, TileEntity te) {
+    private FContainer createContainer(InventoryPlayer playerInv, TileEntity te) {
         return container.get(playerInv, te);
     }
 
@@ -156,9 +151,9 @@ public enum GuiType {
             GuiType guiType = values()[ID];
 
             if (guiType.isTile()) {
-                return guiType.getContainer(playerIn.inventory, worldIn.getTileEntity(pos));
+                return guiType.createContainer(playerIn.inventory, worldIn.getTileEntity(pos));
             } else {
-                return guiType.getContainer(playerIn.inventory, worldIn, pos);
+                return guiType.createContainer(playerIn.inventory, worldIn, pos);
             }
         }
 
@@ -181,9 +176,9 @@ public enum GuiType {
             GuiType guiType = values()[ID];
 
             if (guiType.isTile()) {
-                return guiType.getGui(playerIn.inventory, worldIn.getTileEntity(pos));
+                return guiType.createGui(playerIn.inventory, worldIn.getTileEntity(pos));
             } else {
-                return guiType.getGui(playerIn.inventory, worldIn, pos);
+                return guiType.createGui(playerIn.inventory, worldIn, pos);
             }
         }
     }

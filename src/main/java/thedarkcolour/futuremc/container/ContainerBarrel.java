@@ -1,7 +1,6 @@
 package thedarkcolour.futuremc.container;
 
 import invtweaks.api.container.ChestContainer;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -11,8 +10,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 import thedarkcolour.core.gui.FContainer;
 import thedarkcolour.futuremc.FutureMC;
+import thedarkcolour.futuremc.client.gui.FGui;
 import thedarkcolour.futuremc.client.gui.GuiBarrel;
 import thedarkcolour.futuremc.registry.FBlocks;
 import thedarkcolour.futuremc.tile.TileBarrel;
@@ -91,8 +92,9 @@ public class ContainerBarrel extends FContainer {
         return isTileInRange(te, playerIn) && isBlockInRange(FBlocks.BARREL, te.getWorld(), te.getPos(), playerIn);
     }
 
+    @NotNull
     @SideOnly(Side.CLIENT)
-    public GuiContainer getGuiContainer() {
+    public Object createGui() {
         return new GuiBarrel(new ContainerBarrel(getPlayerInv(), te));
     }
 }

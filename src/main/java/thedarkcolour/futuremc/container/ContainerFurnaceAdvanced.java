@@ -1,6 +1,5 @@
 package thedarkcolour.futuremc.container;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -13,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 import thedarkcolour.core.gui.FContainer;
 import thedarkcolour.futuremc.block.villagepillage.BlockFurnaceAdvanced;
 import thedarkcolour.futuremc.client.gui.GuiFurnaceAdvanced;
@@ -118,8 +118,9 @@ public class ContainerFurnaceAdvanced extends FContainer {
         );
     }
 
+    @NotNull
     @SideOnly(Side.CLIENT)
-    public GuiContainer getGuiContainer() {
+    public Object createGui() {
         return te.getType() == BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE ?
                 new GuiFurnaceAdvanced.BlastFurnace(new ContainerFurnaceAdvanced(getPlayerInv(), te)) :
                 new GuiFurnaceAdvanced.Smoker(new ContainerFurnaceAdvanced(getPlayerInv(), te));

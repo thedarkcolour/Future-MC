@@ -332,9 +332,12 @@ object Events {
     }
 
     private fun onGuiOpen(event: GuiOpenEvent) {
-        val gui = event.gui
-        if (gui is GuiMerchant && gui !is GuiVillager) {
-            event.gui = GuiVillager(ContainerVillager(Minecraft.getMinecraft().player.inventory, gui.merchant, null))
+        if (FConfig.villageAndPillage.newVillagerGui) {
+            val gui = event.gui
+
+            if (gui is GuiMerchant && gui !is GuiVillager) {
+                event.gui = GuiVillager(ContainerVillager(Minecraft.getMinecraft().player.inventory, gui.merchant, null))
+            }
         }
     }
 

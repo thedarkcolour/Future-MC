@@ -4,7 +4,7 @@ import wtf.gofancy.fancygradle.script.extensions.curse
 import java.time.LocalDateTime
 
 plugins {
-    kotlin("jvm") version "1.5.31" // For build script syntax
+    kotlin("jvm") version "1.3.50" // For build script syntax
     java
     idea
     id("net.minecraftforge.gradle") version "5.0.+"

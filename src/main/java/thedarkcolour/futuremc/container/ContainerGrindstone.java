@@ -1,6 +1,5 @@
 package thedarkcolour.futuremc.container;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -19,8 +18,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 import thedarkcolour.core.gui.FContainer;
 import thedarkcolour.core.inventory.DarkInventory;
+import thedarkcolour.futuremc.client.gui.FGui;
 import thedarkcolour.futuremc.client.gui.GuiGrindstone;
 import thedarkcolour.futuremc.enchantment.EnchantHelper;
 import thedarkcolour.futuremc.registry.FBlocks;
@@ -272,8 +273,9 @@ public class ContainerGrindstone extends FContainer {
         return isBlockInRange(FBlocks.INSTANCE.getGRINDSTONE(), world, pos, playerIn);
     }
 
+    @NotNull
     @SideOnly(Side.CLIENT)
-    public GuiContainer getGuiContainer() {
+    public Object createGui() {
         return new GuiGrindstone(new ContainerGrindstone(getPlayerInv(), world, pos));
     }
 }

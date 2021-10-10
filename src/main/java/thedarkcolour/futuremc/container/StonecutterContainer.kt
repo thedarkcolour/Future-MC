@@ -1,6 +1,5 @@
 package thedarkcolour.futuremc.container
 
-import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.entity.player.InventoryPlayer
@@ -187,7 +186,7 @@ class StonecutterContainer(
         return stack
     }
 
-    override fun getGuiContainer(): GuiContainer {
+    override fun createGui(): Any {
         return StonecutterScreen(StonecutterContainer(playerInv, worldIn, pos))
     }
 

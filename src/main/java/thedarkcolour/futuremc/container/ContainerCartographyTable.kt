@@ -1,6 +1,5 @@
 package thedarkcolour.futuremc.container
 
-import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.util.math.BlockPos
@@ -18,7 +17,7 @@ class ContainerCartographyTable(
         addPlayerSlots(playerInv)
     }
 
-    override fun getGuiContainer(): GuiContainer {
+    override fun createGui(): Any {
         return GuiCartographyTable(ContainerCartographyTable(playerInv, world, pos))
     }
 

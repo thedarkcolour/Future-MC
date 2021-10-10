@@ -1,7 +1,6 @@
 package thedarkcolour.core.gui
 
 import net.minecraft.block.Block
-import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.inventory.Container
@@ -9,13 +8,9 @@ import net.minecraft.inventory.Slot
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import net.minecraftforge.fml.relauncher.Side
-import net.minecraftforge.fml.relauncher.SideOnly
 
 abstract class FContainer(val playerInv: InventoryPlayer) : Container() {
-    // todo check if removing this is safe
-    @SideOnly(Side.CLIENT)
-    abstract fun getGuiContainer(): GuiContainer
+    abstract fun createGui(): Any
 
     fun isBlockInRange(block: Block, worldIn: World, pos: BlockPos, playerIn: EntityPlayer): Boolean {
         return if (worldIn.getBlockState(pos).block != block) {

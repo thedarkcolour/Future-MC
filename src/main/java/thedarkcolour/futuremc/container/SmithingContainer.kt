@@ -1,6 +1,5 @@
 package thedarkcolour.futuremc.container
 
-import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.entity.player.InventoryPlayer
@@ -78,7 +77,7 @@ class SmithingContainer(playerInv: InventoryPlayer, private val worldIn: World, 
         return isBlockInRange(FBlocks.SMITHING_TABLE, worldIn, pos, playerIn)
     }
 
-    override fun getGuiContainer(): GuiContainer {
+    override fun createGui(): Any {
         return SmithingGui(SmithingContainer(playerInv, worldIn, pos))
     }
 
