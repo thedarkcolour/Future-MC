@@ -345,12 +345,9 @@ object Events {
         val container = event.container
 
         if (container is ContainerMerchant && container !is ContainerVillager) {
-            // We are guaranteed to be serverside unless another mod fucks around
             val player = event.entityPlayer as EntityPlayerMP
             val newContainer = ContainerVillager(player.inventory, container.merchant, null)
 
-            container.removeListener(player)
-            //newContainer.addListener(player)
             newContainer.windowId = container.windowId
             player.openContainer = newContainer
         }
