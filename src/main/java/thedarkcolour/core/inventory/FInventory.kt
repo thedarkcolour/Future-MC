@@ -18,7 +18,7 @@ import kotlin.reflect.KProperty
  *
  * todo support nameable containers
  */
-open class DarkInventory constructor(
+open class FInventory constructor(
     size: Int//,
     //defaultName: String? = null
 ) : IItemHandlerModifiable, INBTSerializable<NBTTagCompound>, Iterable<ItemStack?> {
@@ -112,7 +112,7 @@ open class DarkInventory constructor(
     override fun getSlotLimit(slot: Int) = 64
 
     /**
-     * Handles [DarkInventorySlot.isItemValid]
+     * Handles [FInventorySlot.isItemValid]
      */
     override fun isItemValid(slot: Int, stack: ItemStack) = true
 
@@ -187,9 +187,9 @@ open class DarkInventory constructor(
     }
 
     /**
-     * [ReadWriteProperty] delegate to a slot in a [DarkInventory].
+     * [ReadWriteProperty] delegate to a slot in a [FInventory].
      */
-    private class DarkInventoryDelegate(private val inventory: DarkInventory, private val slot: Int) : ReadWriteProperty<Any?, ItemStack> {
+    private class DarkInventoryDelegate(private val inventory: FInventory, private val slot: Int) : ReadWriteProperty<Any?, ItemStack> {
         override fun getValue(thisRef: Any?, property: KProperty<*>): ItemStack {
             return inventory[slot]
         }

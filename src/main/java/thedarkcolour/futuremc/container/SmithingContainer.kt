@@ -8,8 +8,8 @@ import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.core.gui.FContainer
-import thedarkcolour.core.inventory.DarkInventory
-import thedarkcolour.core.inventory.DarkInventorySlot
+import thedarkcolour.core.inventory.FInventory
+import thedarkcolour.core.inventory.FInventorySlot
 import thedarkcolour.futuremc.client.gui.SmithingGui
 import thedarkcolour.futuremc.recipe.smithing.SmithingRecipe
 import thedarkcolour.futuremc.recipe.smithing.SmithingRecipes
@@ -18,7 +18,7 @@ import thedarkcolour.futuremc.registry.FSounds
 
 class SmithingContainer(playerInv: InventoryPlayer, private val worldIn: World, private val pos: BlockPos) : FContainer(playerInv) {
     private var recipe: SmithingRecipe? = null
-    private val inventory = object : DarkInventory(3) {
+    private val inventory = object : FInventory(3) {
         override fun onContentsChanged(slot: Int) {
             if (slot != 2) {
                 detectAndSendChanges()
@@ -43,9 +43,9 @@ class SmithingContainer(playerInv: InventoryPlayer, private val worldIn: World, 
     }
 
     private fun addOwnSlots() {
-        addSlotToContainer(DarkInventorySlot(inventory, 0, 27, 47))
-        addSlotToContainer(DarkInventorySlot(inventory, 1, 76, 47))
-        addSlotToContainer(DarkInventorySlot(inventory, 2, 134, 47).alwaysTakeAll(true))
+        addSlotToContainer(FInventorySlot(inventory, 0, 27, 47))
+        addSlotToContainer(FInventorySlot(inventory, 1, 76, 47))
+        addSlotToContainer(FInventorySlot(inventory, 2, 134, 47).alwaysTakeAll(true))
     }
 
     private fun updateResult() {

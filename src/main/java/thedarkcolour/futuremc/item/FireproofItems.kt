@@ -1,5 +1,6 @@
 package thedarkcolour.futuremc.item
 
+import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import net.minecraft.block.Block
 import net.minecraft.entity.FireproofItemLogic
@@ -92,7 +93,24 @@ class FireproofSwordItem(regName: String, material: ToolMaterial) : ItemSword(ma
     }
 }
 
-class NetheriteArmorItem(
+/**
+ *
+ */
+@Deprecated(level = DeprecationLevel.WARNING, message = "This is only here for MIA compat")
+class FireproofArmorItem(regName: String, materialIn: ArmorMaterial, equipmentSlotIn: EntityEquipmentSlot) : NetheriteArmorItem(regName, materialIn, equipmentSlotIn) {
+    override fun getItemAttributeModifiers(slot: EntityEquipmentSlot): Multimap<String, AttributeModifier> {
+        val map = HashMultimap.create<String, AttributeModifier>()
+
+        if (equipmentSlot == armorType) {
+            map.put(SharedMonsterAttributes.ARMOR.name, AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.index], "Armor modifier", damageReduceAmount.toDouble(), 0))
+            map.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.name, AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.index], "Armor toughness", toughness.toDouble(), 0))
+        }
+
+        return map
+    }
+}
+
+open class NetheriteArmorItem(
     regName: String,
     materialIn: ArmorMaterial,
     equipmentSlotIn: EntityEquipmentSlot

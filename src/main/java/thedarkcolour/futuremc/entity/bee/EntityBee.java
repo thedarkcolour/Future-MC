@@ -1,7 +1,9 @@
 package thedarkcolour.futuremc.entity.bee;
 
+import com.google.common.collect.Lists;
 import kotlin.collections.CollectionsKt;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFlower.EnumFlowerType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.*;
@@ -37,6 +39,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.NotNull;
 import thedarkcolour.futuremc.api.BeePollinationHandler;
 import thedarkcolour.futuremc.api.BeePollinationHandlerJVM;
+import thedarkcolour.futuremc.registry.FBlocks;
 import thedarkcolour.futuremc.registry.FSounds;
 import thedarkcolour.futuremc.tile.BeeHiveTile;
 
@@ -51,6 +54,20 @@ import java.util.function.ToDoubleFunction;
 public class EntityBee extends EntityAnimal implements EntityFlying {
     private static final DataParameter<Byte> BEE_FLAGS = EntityDataManager.createKey(EntityBee.class, DataSerializers.BYTE);
     private static final DataParameter<Integer> ANGER = EntityDataManager.createKey(EntityBee.class, DataSerializers.VARINT);
+    public static final List<IBlockState> FLOWERS = Lists.newArrayList(
+            FBlocks.CORNFLOWER.getDefaultState(), FBlocks.LILY_OF_THE_VALLEY.getDefaultState(), FBlocks.WITHER_ROSE.getDefaultState(),
+            Blocks.YELLOW_FLOWER.getDefaultState().withProperty(Blocks.YELLOW_FLOWER.getTypeProperty(), EnumFlowerType.DANDELION),
+            Blocks.RED_FLOWER.getDefaultState().withProperty(Blocks.RED_FLOWER.getTypeProperty(), EnumFlowerType.POPPY),
+            Blocks.RED_FLOWER.getDefaultState().withProperty(Blocks.RED_FLOWER.getTypeProperty(), EnumFlowerType.BLUE_ORCHID),
+            Blocks.RED_FLOWER.getDefaultState().withProperty(Blocks.RED_FLOWER.getTypeProperty(), EnumFlowerType.ALLIUM),
+            Blocks.RED_FLOWER.getDefaultState().withProperty(Blocks.RED_FLOWER.getTypeProperty(), EnumFlowerType.HOUSTONIA),
+            Blocks.RED_FLOWER.getDefaultState().withProperty(Blocks.RED_FLOWER.getTypeProperty(), EnumFlowerType.RED_TULIP),
+            Blocks.RED_FLOWER.getDefaultState().withProperty(Blocks.RED_FLOWER.getTypeProperty(), EnumFlowerType.ORANGE_TULIP),
+            Blocks.RED_FLOWER.getDefaultState().withProperty(Blocks.RED_FLOWER.getTypeProperty(), EnumFlowerType.WHITE_TULIP),
+            Blocks.RED_FLOWER.getDefaultState().withProperty(Blocks.RED_FLOWER.getTypeProperty(), EnumFlowerType.PINK_TULIP),
+            Blocks.RED_FLOWER.getDefaultState().withProperty(Blocks.RED_FLOWER.getTypeProperty(), EnumFlowerType.OXEYE_DAISY)
+    );
+
     private UUID targetPlayer;
     private float currentPitch;
     private float lastPitch;
@@ -77,7 +94,7 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
     }
 
     public static boolean isFlowerValid(IBlockState state) {
-        return BeeEntity.FLOWERS.contains(state);
+        return FLOWERS.contains(state);
     }
 
     @Override

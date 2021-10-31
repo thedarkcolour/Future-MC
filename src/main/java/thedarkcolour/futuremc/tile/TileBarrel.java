@@ -13,14 +13,14 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
-import thedarkcolour.core.inventory.DarkInventory;
+import thedarkcolour.core.inventory.FInventory;
 import thedarkcolour.futuremc.block.villagepillage.BarrelBlock;
 import thedarkcolour.futuremc.container.ContainerBarrel;
 import thedarkcolour.futuremc.registry.FBlocks;
 import thedarkcolour.futuremc.registry.FSounds;
 
 public class TileBarrel extends TileEntity {
-    private final DarkInventory inventory = new DarkInventory(27) {
+    private final FInventory inventory = new FInventory(27) {
         @Override
         public void onContentsChanged(int slot) {
             markDirty();
@@ -62,7 +62,7 @@ public class TileBarrel extends TileEntity {
         return super.getCapability(capability, facing);
     }
 
-    public DarkInventory getInventory() {
+    public FInventory getInventory() {
         return inventory;
     }
 

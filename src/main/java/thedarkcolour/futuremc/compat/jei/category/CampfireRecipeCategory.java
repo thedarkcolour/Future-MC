@@ -1,4 +1,4 @@
-package thedarkcolour.futuremc.compat.jei.campfire;
+package thedarkcolour.futuremc.compat.jei.category;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -8,6 +8,7 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.compat.jei.FutureMCJEIPlugin;
+import thedarkcolour.futuremc.compat.jei.recipe.CampfireRecipeWrapper;
 
 public class CampfireRecipeCategory implements IRecipeCategory<CampfireRecipeWrapper> {
     public static final String NAME = "container.jei.futuremc.campfire.name";

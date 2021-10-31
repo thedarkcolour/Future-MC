@@ -3,10 +3,10 @@ package thedarkcolour.futuremc.tile;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import thedarkcolour.core.inventory.DarkInventory;
+import thedarkcolour.core.inventory.FInventory;
 
 public class TileLectern extends TileEntity {
-    public DarkInventory inventory = new DarkInventory(1);
+    public FInventory inventory = new FInventory(1);
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {

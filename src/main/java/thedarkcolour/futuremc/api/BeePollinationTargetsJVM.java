@@ -1,12 +1,12 @@
 package thedarkcolour.futuremc.api;
 
 import net.minecraft.block.state.IBlockState;
-import thedarkcolour.futuremc.entity.bee.BeeEntity;
+import thedarkcolour.futuremc.entity.bee.EntityBee;
 
 /**
  * Class to add/remove pollination targets for the bee.
  *
- * Although the {@link BeeEntity#FLOWERS} field is static,
+ * Although the {@link EntityBee#FLOWERS} field is static,
  * it is probably better to have Java methods here
  * to have everything in one place.
  *
@@ -20,7 +20,7 @@ public final class BeePollinationTargetsJVM {
      * @param state the state of the pollination target to be added
      */
     public static void addPollinationTarget(IBlockState state) {
-        BeeEntity.FLOWERS.add(state);
+        EntityBee.FLOWERS.add(state);
     }
 
     /**
@@ -41,7 +41,7 @@ public final class BeePollinationTargetsJVM {
      * @return if the list was changed
      */
     public static boolean removePollinationTarget(IBlockState state) {
-        return BeeEntity.FLOWERS.remove(state);
+        return EntityBee.FLOWERS.remove(state);
     }
 
     /**

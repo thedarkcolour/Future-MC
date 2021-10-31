@@ -29,11 +29,6 @@ import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
 import java.util.function.Consumer
 
-@Suppress("UNCHECKED_CAST")
-fun <T> cast(obj: Any): T {
-    return obj as T
-}
-
 @Suppress("SpellCheckingInspection")
 fun <T> make(obj: T, consumer: Consumer<T>): T {
     consumer.accept(obj)

@@ -1,4 +1,4 @@
-package thedarkcolour.futuremc.compat.jei
+package thedarkcolour.futuremc.compat.jei.category
 
 import mezz.jei.api.IGuiHelper
 import mezz.jei.api.recipe.IRecipeCategory

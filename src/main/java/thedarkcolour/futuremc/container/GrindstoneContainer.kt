@@ -10,7 +10,7 @@ import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
 import net.minecraftforge.items.SlotItemHandler
 import thedarkcolour.core.gui.FContainer
-import thedarkcolour.core.inventory.DarkInventory
+import thedarkcolour.core.inventory.FInventory
 
 
 class GrindstoneContainer(
@@ -114,14 +114,14 @@ class GrindstoneContainer(
         return TODO()
     }
 
-    private inner class OutputSlot(inv: DarkInventory, index: Int, x: Int, y: Int) : SlotItemHandler(inv, index, x, y) {
+    private inner class OutputSlot(inv: FInventory, index: Int, x: Int, y: Int) : SlotItemHandler(inv, index, x, y) {
         override fun onTake(thePlayer: EntityPlayer, stack: ItemStack): ItemStack {
             //handleOutput() todo
             return stack
         }
     }
 
-    private inner class Inventory : DarkInventory(2) {
+    private inner class Inventory : FInventory(2) {
         override fun onContentsChanged(slot: Int) {
             if (slot != 2) {
                 handleCrafting()

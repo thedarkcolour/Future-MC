@@ -20,8 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 import thedarkcolour.core.gui.FContainer;
-import thedarkcolour.core.inventory.DarkInventory;
-import thedarkcolour.futuremc.client.gui.FGui;
+import thedarkcolour.core.inventory.FInventory;
 import thedarkcolour.futuremc.client.gui.GuiGrindstone;
 import thedarkcolour.futuremc.enchantment.EnchantHelper;
 import thedarkcolour.futuremc.registry.FBlocks;
@@ -33,14 +32,14 @@ public class ContainerGrindstone extends FContainer {
     private final World world;
     private final BlockPos pos;
 
-    public DarkInventory input = new DarkInventory(2) {
+    public FInventory input = new FInventory(2) {
         @Override
         public void onContentsChanged(int slot) {
             handleCrafting();
             detectAndSendChanges();
         }
     };
-    public DarkInventory output = new DarkInventory(1) {
+    public FInventory output = new FInventory(1) {
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
             return false;
@@ -202,7 +201,7 @@ public class ContainerGrindstone extends FContainer {
         consumeInput(); // Clear it last, otherwise XP doesn't work
     }
 
-    private void awardEXP(DarkInventory inventory) {
+    private void awardEXP(FInventory inventory) {
         int exp = 0;
         for (ItemStack stack : inventory) {
             if (stack.isEmpty()) continue;

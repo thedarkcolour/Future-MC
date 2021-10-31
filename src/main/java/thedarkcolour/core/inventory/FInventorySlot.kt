@@ -7,12 +7,12 @@ import net.minecraftforge.items.SlotItemHandler
 /**
  * Delegates some logic to DarkInventory to keep everything organized.
  *
- * @property inv the [DarkInventory] that this slot delegates some logic to
+ * @property inv the [FInventory] that this slot delegates some logic to
  * @property alwaysTakeAll whether right click function should be same as default
  *
  * @author TheDarkColour
  */
-open class DarkInventorySlot(private val inv: DarkInventory, i: Int, x: Int, y: Int) : SlotItemHandler(inv, i, x, y) {
+open class FInventorySlot(private val inv: FInventory, i: Int, x: Int, y: Int) : SlotItemHandler(inv, i, x, y) {
     private var alwaysTakeAll = false
 
     override fun canTakeStack(playerIn: EntityPlayer): Boolean {
@@ -34,7 +34,7 @@ open class DarkInventorySlot(private val inv: DarkInventory, i: Int, x: Int, y: 
      * Specify whether "right click" behaviour should work normally
      * or if its behaviour is the same as "left click" behaviour.
      */
-    fun alwaysTakeAll(alwaysTakeAll: Boolean): DarkInventorySlot {
+    fun alwaysTakeAll(alwaysTakeAll: Boolean): FInventorySlot {
         this.alwaysTakeAll = alwaysTakeAll
         return this
     }

@@ -11,7 +11,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
-import thedarkcolour.core.inventory.DarkInventory;
+import thedarkcolour.core.inventory.FInventory;
 import thedarkcolour.core.tile.InteractionTile;
 import thedarkcolour.futuremc.block.villagepillage.ComposterBlock;
 import thedarkcolour.futuremc.registry.FBlocks;
@@ -20,7 +20,7 @@ import thedarkcolour.futuremc.registry.FSounds;
 import javax.annotation.Nonnull;
 
 public class TileComposter extends InteractionTile {
-    private final DarkInventory inventory = new DarkInventory(1) {
+    private final FInventory inventory = new FInventory(1) {
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
             return ComposterBlock.Companion.canCompost(stack, world.getBlockState(pos));
@@ -145,7 +145,7 @@ public class TileComposter extends InteractionTile {
         world.playSound(null, pos, FSounds.INSTANCE.getCOMPOSTER_EMPTY(), SoundCategory.BLOCKS, 1F, 1F);
     }
 
-    public DarkInventory getInventory() {
+    public FInventory getInventory() {
         return inventory;
     }
 }

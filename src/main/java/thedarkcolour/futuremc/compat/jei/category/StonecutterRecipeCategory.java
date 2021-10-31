@@ -1,4 +1,4 @@
-package thedarkcolour.futuremc.compat.jei.stonecutter;
+package thedarkcolour.futuremc.compat.jei.category;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -9,7 +9,7 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.compat.jei.FutureMCJEIPlugin;
-import thedarkcolour.futuremc.compat.jei.SimpleRecipeWrapper;
+import thedarkcolour.futuremc.compat.jei.recipe.SimpleRecipeWrapper;
 
 public class StonecutterRecipeCategory implements IRecipeCategory<SimpleRecipeWrapper> {
     public static final String NAME = "container.jei.futuremc.stonecutter.name";

@@ -20,8 +20,8 @@ import thedarkcolour.futuremc.registry.FBlocks;
 import thedarkcolour.futuremc.tile.TileFurnaceAdvanced;
 
 public class ContainerFurnaceAdvanced extends FContainer {
-    public final TileFurnaceAdvanced te;
     protected int fuelLeft, progress, currentItemBurnTime;
+    public final TileFurnaceAdvanced te;
 
     public ContainerFurnaceAdvanced(InventoryPlayer playerInv, TileEntity te) {
         super(playerInv);
@@ -74,7 +74,7 @@ public class ContainerFurnaceAdvanced extends FContainer {
                 try {
                     slot.onSlotChange(itemStack1, itemstack);
                 } catch (ClassCastException e) {
-                    // silences the special case error for mr. BLaKe 🙂 🙂 🙂 🙂 🙂
+                    // no idea why but this fixes a bug 😊
                 }
             } else if (index != 1 && index != 0) {
                 if (!FurnaceRecipes.instance().getSmeltingResult(itemStack1).isEmpty()) {
@@ -112,10 +112,7 @@ public class ContainerFurnaceAdvanced extends FContainer {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        return isTileInRange(te, playerIn) && (
-                isBlockInRange(FBlocks.SMOKER, te.getWorld(), te.getPos(), playerIn) ||
-                isBlockInRange(FBlocks.BLAST_FURNACE, te.getWorld(), te.getPos(), playerIn)
-        );
+        return isTileInRange(te, playerIn) && (isBlockInRange(FBlocks.SMOKER, te.getWorld(), te.getPos(), playerIn) || isBlockInRange(FBlocks.BLAST_FURNACE, te.getWorld(), te.getPos(), playerIn));
     }
 
     @NotNull

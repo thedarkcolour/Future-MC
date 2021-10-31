@@ -9,8 +9,8 @@ import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.core.gui.FContainer
-import thedarkcolour.core.inventory.DarkInventory
-import thedarkcolour.core.inventory.DarkInventorySlot
+import thedarkcolour.core.inventory.FInventory
+import thedarkcolour.core.inventory.FInventorySlot
 import thedarkcolour.futuremc.client.gui.StonecutterScreen
 import thedarkcolour.futuremc.compat.checkQuark
 import thedarkcolour.futuremc.recipe.SimpleRecipe
@@ -35,8 +35,8 @@ class StonecutterContainer(
     // ran on the client to refresh the possible output list
     var inventoryUpdateListener = {}
 
-    // item handler. i understand it's a bit messy, i'll probably organize into separate methods.
-    private val darkInventory = object : DarkInventory(2) {
+    // item handler
+    private val inventory = object : FInventory(2) {
         override fun onContentsChanged(slot: Int) {
             if (slot == 0) {
                 updateRecipeList()
@@ -83,25 +83,25 @@ class StonecutterContainer(
     }
 
     private fun addOwnSlots() {
-        addSlotToContainer(DarkInventorySlot(darkInventory, 0, 20, 33))
-        addSlotToContainer(DarkInventorySlot(darkInventory, 1, 143, 33).alwaysTakeAll(true))
+        addSlotToContainer(FInventorySlot(inventory, 0, 20, 33))
+        addSlotToContainer(FInventorySlot(inventory, 1, 143, 33).alwaysTakeAll(true))
     }
 
     private fun updateRecipeList() {
-        val recipes = StonecutterRecipes.getRecipes(darkInventory[0])
+        val recipes = StonecutterRecipes.getRecipes(inventory[0])
 
         if (recipes.isNotEmpty()) {
             if (recipeList != recipes) {
                 recipeList = recipes
                 selectedIndex = -1
 
-                darkInventory.remove(1)
+                inventory.remove(1)
 
                 detectAndSendChanges()
             }
         } else {
             recipeList = emptyList()
-            darkInventory.remove(1)
+            inventory.remove(1)
 
             detectAndSendChanges()
         }
@@ -109,9 +109,9 @@ class StonecutterContainer(
 
     private fun updateResult() {
         if (recipeList.isNotEmpty() && selectedIndex > -1) {
-            darkInventory.setStackInSlot(1, recipeList[selectedIndex].output.copy())
+            inventory.setStackInSlot(1, recipeList[selectedIndex].output.copy())
         } else {
-            darkInventory.setStackInSlot(1, ItemStack.EMPTY)
+            inventory.setStackInSlot(1, ItemStack.EMPTY)
         }
 
         detectAndSendChanges()
@@ -133,7 +133,7 @@ class StonecutterContainer(
 
     override fun onContainerClosed(playerIn: EntityPlayer) {
         super.onContainerClosed(playerIn)
-        val stack = darkInventory.getStackInSlot(0)
+        val stack = inventory.getStackInSlot(0)
 
         if (!playerIn.isEntityAlive || playerIn is EntityPlayerMP && playerIn.hasDisconnected()) {
             if (!stack.isEmpty) {

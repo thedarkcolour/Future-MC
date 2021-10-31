@@ -15,14 +15,11 @@ import thedarkcolour.futuremc.block.villagepillage.ComposterBlock
 import thedarkcolour.futuremc.client.gui.GuiFurnaceAdvanced
 import thedarkcolour.futuremc.client.gui.SmithingGui
 import thedarkcolour.futuremc.client.gui.StonecutterScreen
-import thedarkcolour.futuremc.compat.jei.campfire.CampfireRecipeCategory
-import thedarkcolour.futuremc.compat.jei.campfire.CampfireRecipeWrapper
-import thedarkcolour.futuremc.compat.jei.composter.ComposterRecipeCategory
-import thedarkcolour.futuremc.compat.jei.composter.ComposterRecipeWrapper
-import thedarkcolour.futuremc.compat.jei.furnace.AdvancedFurnaceRecipeCategory
-import thedarkcolour.futuremc.compat.jei.smithing.SmithingRecipeCategory
-import thedarkcolour.futuremc.compat.jei.smithing.SmithingRecipeWrapper
-import thedarkcolour.futuremc.compat.jei.stonecutter.StonecutterRecipeCategory
+import thedarkcolour.futuremc.compat.jei.category.*
+import thedarkcolour.futuremc.compat.jei.recipe.CampfireRecipeWrapper
+import thedarkcolour.futuremc.compat.jei.recipe.ComposterRecipeWrapper
+import thedarkcolour.futuremc.compat.jei.recipe.SimpleRecipeWrapper
+import thedarkcolour.futuremc.compat.jei.recipe.SmithingRecipeWrapper
 import thedarkcolour.futuremc.config.FConfig.villageAndPillage
 import thedarkcolour.futuremc.container.ContainerFurnaceAdvanced
 import thedarkcolour.futuremc.recipe.SimpleRecipe
@@ -45,13 +42,29 @@ class FutureMCJEIPlugin : IModPlugin {
         val helper = registry.jeiHelpers.guiHelper
 
         if (villageAndPillage.smoker) {
-            registry.addRecipeCategories(AdvancedFurnaceRecipeCategory(helper, AdvancedFurnaceRecipeCategory.SMOKING, SMOKER))
+            registry.addRecipeCategories(
+                AdvancedFurnaceRecipeCategory(
+                    helper,
+                    AdvancedFurnaceRecipeCategory.SMOKING,
+                    SMOKER
+                )
+            )
         }
         if (villageAndPillage.blastFurnace) {
-            registry.addRecipeCategories(AdvancedFurnaceRecipeCategory(helper, AdvancedFurnaceRecipeCategory.BLASTING, BLAST_FURNACE))
+            registry.addRecipeCategories(
+                AdvancedFurnaceRecipeCategory(
+                    helper,
+                    AdvancedFurnaceRecipeCategory.BLASTING,
+                    BLAST_FURNACE
+                )
+            )
         }
         if (villageAndPillage.campfire.enabled) {
-            registry.addRecipeCategories(CampfireRecipeCategory(helper))
+            registry.addRecipeCategories(
+                CampfireRecipeCategory(
+                    helper
+                )
+            )
         }
         if (villageAndPillage.smithingTable.enabled) {
             registry.addRecipeCategories(SmithingRecipeCategory(helper))
@@ -115,7 +128,7 @@ class FutureMCJEIPlugin : IModPlugin {
         registry.addRecipeClickArea(guiClass, 78, 32, 28, 23, title, VanillaRecipeCategoryUid.FUEL)
         recipeTransferRegistry.addRecipeTransferHandler(ContainerFurnaceAdvanced::class.java, title, 0, 1, 3, 36)
         val stack = ItemStack(block)
-        registry.addRecipeCatalyst(stack, AdvancedFurnaceRecipeCategory.SMOKING)
+        registry.addRecipeCatalyst(stack, title)
         registry.addRecipeCatalyst(stack, VanillaRecipeCategoryUid.FUEL)
     }
 

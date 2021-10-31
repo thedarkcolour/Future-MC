@@ -1,10 +1,10 @@
-package thedarkcolour.futuremc.compat.jei.smithing
+package thedarkcolour.futuremc.compat.jei.category
 
 import mezz.jei.api.IGuiHelper
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.config.Constants
-import thedarkcolour.futuremc.compat.jei.FRecipeCategory
+import thedarkcolour.futuremc.compat.jei.recipe.SmithingRecipeWrapper
 
 class SmithingRecipeCategory(helper: IGuiHelper) : FRecipeCategory<SmithingRecipeWrapper>(helper, Constants.RECIPE_GUI_VANILLA, NAME, 0, 168, 125, 18) {
     override fun setRecipe(

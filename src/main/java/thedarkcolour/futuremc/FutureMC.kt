@@ -24,16 +24,11 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent
 import net.minecraftforge.fml.common.registry.ForgeRegistries
 import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.relauncher.Side
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import thedarkcolour.core.command.GenerateCommand
-import thedarkcolour.core.command.HealCommand
-import thedarkcolour.core.command.ModeToggleCommand
-import thedarkcolour.core.util.TODO
 import thedarkcolour.core.util.registerServerDispenserBehaviour
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.block.buzzybees.ShearDispenserBehaviour
@@ -41,7 +36,6 @@ import thedarkcolour.futuremc.capability.SwimmingCapability
 import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.client.tesr.bell.BellTileEntityRenderer
 import thedarkcolour.futuremc.client.tesr.campfire.CampfireRenderer
-import thedarkcolour.futuremc.command.FastGiveCommand
 import thedarkcolour.futuremc.compat.QUARK
 import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
@@ -226,16 +220,6 @@ object FutureMC {
         }
         if (FConfig.netherUpdate.netherite) {
             GameRegistry.registerWorldGenerator(AncientDebrisWorldGen, 0)
-        }
-    }
-
-    @EventHandler
-    fun onServerStart(event: FMLServerStartingEvent) {
-        event.registerServerCommand(FastGiveCommand)
-        if (TODO()) {
-            event.registerServerCommand(HealCommand())
-            event.registerServerCommand(ModeToggleCommand())
-            event.registerServerCommand(GenerateCommand())
         }
     }
 }

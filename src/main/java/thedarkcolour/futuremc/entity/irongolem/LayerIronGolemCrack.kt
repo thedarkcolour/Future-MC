@@ -19,35 +19,21 @@ class LayerIronGolemCrack(val renderer: RenderIronGolem) : LayerRenderer<EntityI
     ) {
         if (!entitylivingbaseIn.isInvisible) {
             when {
-                entitylivingbaseIn.health < 25 -> {
-                    renderer.bindTexture(CRACK_TEXTURES[2])
-                }
-                entitylivingbaseIn.health < 50 -> {
-                    renderer.bindTexture(CRACK_TEXTURES[1])
-                }
-                entitylivingbaseIn.health < 75 -> {
-                    renderer.bindTexture(CRACK_TEXTURES[0])
-                }
-                else -> {
-                    return
-                }
+                entitylivingbaseIn.health < 25 -> renderer.bindTexture(CRACK_TEXTURES[2])
+                entitylivingbaseIn.health < 50 -> renderer.bindTexture(CRACK_TEXTURES[1])
+                entitylivingbaseIn.health < 75 -> renderer.bindTexture(CRACK_TEXTURES[0])
+                else -> return
+
             }
 
-            renderer.mainModel.render(
-                entitylivingbaseIn,
-                limbSwing,
-                limbSwingAmount,
-                ageInTicks,
-                netHeadYaw,
-                headPitch,
-                scale
-            )
+            renderer.mainModel.render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale)
         }
     }
 
     override fun shouldCombineTextures(): Boolean = true
 
     companion object {
+        // Low, Medium, High crack textures
         private val CRACK_TEXTURES = arrayOf(
             ResourceLocation(FutureMC.ID, "textures/entity/iron_golem/iron_golem_crackiness_low.png"),
             ResourceLocation(FutureMC.ID, "textures/entity/iron_golem/iron_golem_crackiness_medium.png"),

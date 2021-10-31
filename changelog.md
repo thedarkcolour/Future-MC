@@ -1,3 +1,7 @@
+##Version 0.2.7.4 - Bugfix:
+- Fixed a crash with villager trading crashing servers
+- Try to fix a bug with MIA
+
 ##Version 0.2.7.3 - Bugfix:
 - Fixed a bug that disabled Smithing table and Composter guis when stonecutter was disabled. Fixes #260
 - Fixed a crash with Pandas

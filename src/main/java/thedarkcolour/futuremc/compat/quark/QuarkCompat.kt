@@ -8,7 +8,7 @@ import vazkii.quark.base.module.ModuleLoader
 import vazkii.quark.building.block.BlockBark
 import vazkii.quark.building.feature.BarkBlocks
 import vazkii.quark.client.feature.ShowInvalidSlots
-import vazkii.quark.decoration.feature.VariedTrapdoors
+import vazkii.quark.decoration.feature.MoreBanners
 
 /**
  * Inter-mod compatibility with Quark.
@@ -30,13 +30,10 @@ object QuarkCompat {
     }
 
     /**
-     * Checks if Quark's wooden trapdoor variants are
-     * enabled in the Quark config.
-     *
-     * Used in `FRecipes` to override vanilla's trapdoor recipe.
+     * Checks if Quark's More Banners are enabled.
      */
-    fun hasVariedTrapdoors(): Boolean {
-        return ModuleLoader.isFeatureEnabled(VariedTrapdoors::class.java)
+    fun hasMoreBanners(): Boolean {
+        return ModuleLoader.isFeatureEnabled(MoreBanners::class.java)
     }
 
     fun isBarkBlock(state: IBlockState): Boolean {
@@ -51,8 +48,8 @@ object QuarkCompat {
      * Because Quark bark blocks don't have rotation,
      * we return the default state of the bark block.
      *
-     * Future MC's wood blocks have more functionality so I
-     * recommend using those instead of Quark's bark whenever possible.
+     * Future MC's wood blocks have direction, so I
+     * recommend using those over Quark's bark blocks.
      */
     fun getStrippedBark(state: IBlockState): IBlockState {
         return BARK_2_STRIPPED_WOOD.computeIfAbsent(state) { key ->
@@ -68,8 +65,9 @@ object QuarkCompat {
         }
     }
 
-    // returns true if we should ignore a change
-    // used in stonecutter to fix quark bug
+    /**
+     * Fixes a bug with Quark's Show Invalid Slots feature that caused items to disappear
+     */
     fun isDrawingInvalidSlotsOverlay(): Boolean {
         return Reflection.getCallerClass(4) == ShowInvalidSlots::class.java
     }

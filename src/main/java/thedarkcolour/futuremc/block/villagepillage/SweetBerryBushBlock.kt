@@ -23,7 +23,7 @@ import net.minecraft.world.World
 import net.minecraftforge.common.ForgeHooks
 import net.minecraftforge.common.IPlantable
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.entity.bee.BeeEntity
+import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.registry.FBlocks.SWEET_BERRY_BUSH
 import thedarkcolour.futuremc.registry.FItems.SWEET_BERRIES
 import java.util.*
@@ -80,7 +80,7 @@ class SweetBerryBushBlock : BlockFlower("sweet_berry_bush"), IGrowable, IPlantab
     }
 
     override fun onEntityCollision(worldIn: World, pos: BlockPos, state: IBlockState, entityIn: Entity) {
-        if (!worldIn.isRemote && entityIn is EntityLivingBase && entityIn !is BeeEntity) {
+        if (!worldIn.isRemote && entityIn is EntityLivingBase && entityIn !is EntityBee) {
             entityIn.fallDistance = 0.0f
             entityIn.motionX *= 0.800000011920929
             entityIn.motionY *= 0.75

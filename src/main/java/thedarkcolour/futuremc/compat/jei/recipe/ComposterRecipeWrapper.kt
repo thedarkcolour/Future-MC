@@ -1,4 +1,4 @@
-package thedarkcolour.futuremc.compat.jei.composter
+package thedarkcolour.futuremc.compat.jei.recipe
 
 import it.unimi.dsi.fastutil.objects.Object2ByteMap
 import mezz.jei.api.ingredients.IIngredients

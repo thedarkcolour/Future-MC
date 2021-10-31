@@ -58,7 +58,7 @@ class EntityTrident : EntityModArrow {
     }
 
     override fun onHit(result: RayTraceResult) {
-        val target = result.entityHit
+        val target = result.entityHit ?: return
         var f = 8.0f
         if (target is EntityLivingBase) {
             f += EnchantmentHelper.getModifierForCreature(thrownStack, target.creatureAttribute)

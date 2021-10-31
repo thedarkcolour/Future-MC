@@ -16,7 +16,7 @@ import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.ITickable
 import net.minecraft.util.math.MathHelper
 import net.minecraftforge.fluids.BlockFluidBase
-import thedarkcolour.core.inventory.DarkInventory
+import thedarkcolour.core.inventory.FInventory
 import thedarkcolour.core.item.DebuggerItem
 import thedarkcolour.core.tile.InteractionTile
 import thedarkcolour.futuremc.block.villagepillage.CampfireBlock
@@ -27,7 +27,7 @@ class CampfireTile : InteractionTile(), ITickable {
     val cookingTimes = IntArray(4)
     val cookingTotalTimes = IntArray(4)
 
-    val inventory = object : DarkInventory(4) {
+    val inventory = object : FInventory(4) {
         override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
             return CampfireRecipes.getRecipe(stack) != null
         }

@@ -165,7 +165,7 @@ class BlockFurnaceAdvanced(private val type: FurnaceType, properties: Properties
             }
         }
 
-        fun getOutput(stack: ItemStack): ItemStack? {
+        fun getResult(stack: ItemStack): ItemStack? {
             return if (this == BLAST_FURNACE) {
                 BlastFurnaceRecipes.getRecipe(stack)?.output
             } else {

@@ -7,10 +7,12 @@ import net.minecraft.item.EnumRarity
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.BannerPattern
 import net.minecraft.util.NonNullList
+import net.minecraft.util.text.TextFormatting
 import net.minecraft.world.World
 import net.minecraftforge.common.IRarity
 import thedarkcolour.core.item.ModeledItem
 import thedarkcolour.core.util.setItemModel
+import thedarkcolour.futuremc.compat.checkQuark
 
 class BannerPatternItem : ModeledItem("banner_pattern") {
     init {
@@ -18,7 +20,7 @@ class BannerPatternItem : ModeledItem("banner_pattern") {
         maxDamage = 0
         setCreativeTab(CreativeTabs.MISC)
 
-        for (i in 1..4) {
+        for (i in 1..5) {
             setItemModel(this, i)
         }
     }
@@ -26,7 +28,7 @@ class BannerPatternItem : ModeledItem("banner_pattern") {
     override fun getForgeRarity(stack: ItemStack): IRarity {
         return when (stack.itemDamage) {
             1, 2 -> EnumRarity.UNCOMMON
-            3, 4 -> EnumRarity.EPIC
+            3 -> EnumRarity.EPIC
             else -> super.getForgeRarity(stack)
         }
     }
@@ -38,20 +40,31 @@ class BannerPatternItem : ModeledItem("banner_pattern") {
         flagIn: ITooltipFlag?
     ) {
         when (stack.metadata) {
+            // Future MC
+            0 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.flower"))
             1 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.creeper"))
             2 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.skull"))
             3 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.thing"))
             4 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.globe"))
             5 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.snout"))
-            else -> tooltip.add(I18n.format("item.futuremc.banner_pattern.flower"))
+
+            // Quark
+            10 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.quark_dragon"))
+            11 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.quark_eye_of_ender"))
+            12 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.quark_sword"))
+            13 -> tooltip.add(I18n.format("item.futuremc.banner_pattern.quark_shield"))
+
+            else -> tooltip.add(TextFormatting.RED.toString() + "Unknown Banner Pattern")
         }
     }
 
     override fun getSubItems(tab: CreativeTabs, items: NonNullList<ItemStack>) {
         if (this.isInCreativeTab(tab)) {
-            for (i in 0..4) {
+            for (i in 0..5) {
                 items.add(ItemStack(this, 1, i))
             }
+
+            checkQuark()?.hasMoreBanners()
         }
     }
 

@@ -30,7 +30,6 @@ import sun.reflect.Reflection
 import thedarkcolour.core.tile.InteractionTile
 import thedarkcolour.futuremc.block.buzzybees.BeeHiveBlock
 import thedarkcolour.futuremc.block.villagepillage.CampfireBlock
-import thedarkcolour.futuremc.entity.bee.BeeEntity
 import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FSounds
@@ -61,7 +60,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
         if (playerIn != null) {
             for (bee in bees) {
                 if (playerIn.squaredDistanceTo(bee) <= 16.0) {
-                    if (!isSmoked()) {
+                    if (!isHiveSmoked()) {
                         bee.setBeeAttacker(playerIn)
                     } else {
                         bee.setCannotEnterHiveTicks(400)
@@ -79,9 +78,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
 
     fun getBeeCount() = bees.size
 
-    private fun isSmoked() = CampfireBlock.isLitInRange(world, pos, 5)
-
-    fun tryEnterHive(entityIn: BeeEntity, isDelivering: Boolean, i: Int = 0): Nothing = TODO("DARK! FIX THE TILE ENTITY!")
+    private fun isHiveSmoked() = CampfireBlock.isLitInRange(world, pos, 5)
 
     fun tryEnterHive(entityIn: EntityBee, isDelivering: Boolean, i: Int = 0) {
         if (bees.size < 3) {

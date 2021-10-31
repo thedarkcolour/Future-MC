@@ -17,7 +17,6 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.registry.EntityEntry
 import net.minecraftforge.fml.common.registry.EntityRegistry
-import net.minecraftforge.fml.common.registry.ForgeRegistries
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import net.minecraftforge.registries.IForgeRegistryModifiable
@@ -26,7 +25,6 @@ import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.villagepillage.CampfireBlock
 import thedarkcolour.futuremc.client.particle.CampfireParticle
 import thedarkcolour.futuremc.client.particle.SoulFlameParticle
-import thedarkcolour.futuremc.command.FastGiveCommand
 import thedarkcolour.futuremc.compat.checkBetterWithMods
 import thedarkcolour.futuremc.config.FConfig.updateAquatic
 import thedarkcolour.futuremc.config.FConfig.useVanillaCreativeTabs
@@ -54,13 +52,6 @@ object RegistryEventHandler {
 
     @SubscribeEvent
     fun onItemRegistry(event: RegistryEvent.Register<Item>) = FItems.registerItems(event.registry)
-
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    fun postItemRegistry(event: RegistryEvent.Register<Item>) {
-        for (location in ForgeRegistries.ITEMS.keys) {
-            FastGiveCommand.registryKeys.getOrPut(location.path, location::toString)
-        }
-    }
 
     @SubscribeEvent
     fun onEntityRegistry(event: RegistryEvent.Register<EntityEntry>) {

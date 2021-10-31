@@ -6,7 +6,8 @@ import net.minecraft.client.renderer.BannerTextures
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.resources.I18n
 import net.minecraft.init.SoundEvents
-import net.minecraft.item.EnumDyeColor
+import net.minecraft.item.EnumDyeColor.GRAY
+import net.minecraft.item.EnumDyeColor.WHITE
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.BannerPattern
 import net.minecraft.tileentity.TileEntityBanner
@@ -71,39 +72,42 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
         }
 
         if (bannerSlot.hasStack) {
+            val listLeft = i + 60
+            val listTop = j + 13
+
             if (isCrafting) {
-                val l = i + 60
-                val i1 = j + 13
-                val j1 = recipeIndexOffset + 16
-                var k1 = recipeIndexOffset
-                while (k1 < j1 && k1 <= ContainerLoom.BASIC_PATTERNS.size) {
-                    val l1 = k1 - recipeIndexOffset
-                    val i2 = l + l1 % 4 * 14
-                    val j2 = i1 + l1 / 4 * 14
+                val lastVisibleItem = recipeIndexOffset + 16
+                var index = recipeIndexOffset
+
+                while (index < lastVisibleItem && index <= ContainerLoom.BASIC_PATTERNS.size) {
+                    val listIndex = index - recipeIndexOffset
+                    val slotLeft = listLeft + listIndex % 4 * 14
+                    val slotTop = listTop + listIndex / 4 * 14
+
                     mc.textureManager.bindTexture(BACKGROUND)
                     var k2 = ySize
-                    if (k1 == container.getSelectedIndex()) {
+                    if (index == container.getSelectedIndex()) {
                         k2 += 14
-                    } else if (mouseX >= i2 && mouseY >= j2 && mouseX < i2 + 14 && mouseY < j2 + 14) {
+                    } else if (((mouseX - slotLeft) in 0..14) && ((mouseY - slotTop) in 0..14)) {
                         k2 += 28
                     }
-                    drawTexturedModalRect(i2, j2, 0, k2, 14, 14)
+                    drawTexturedModalRect(slotLeft, slotTop, 0, k2, 14, 14)
 
-                    if (BASIC_TEXTURES[k1 - 1] != null) {
-                        mc.textureManager.bindTexture(BASIC_TEXTURES[k1 - 1]!!)
-                        drawScaledCustomSizeModalRect(i2 + 4, j2 + 2, 1f, 1f, 20, 40, 5, 10, 64.0f, 64.0f)
+                    if (BASIC_TEXTURES[index - 1] != null) {
+                        mc.textureManager.bindTexture(BASIC_TEXTURES[index - 1]!!)
+                        drawScaledCustomSizeModalRect(slotLeft + 4, slotTop + 2, 1f, 1f, 20, 40, 5, 10, 64.0f, 64.0f)
                     }
-                    ++k1
+                    ++index
                 }
             } else if (hasBannerPattern) {
-                val l2 = i + 60
-                val i3 = j + 13
+                val index = container.getSelectedIndex()
+
                 mc.textureManager.bindTexture(BACKGROUND)
-                drawTexturedModalRect(l2, i3, 0, ySize, 14, 14)
-                val j3 = container.getSelectedIndex()
-                if (PATTERN_TEXTURES[j3] != null) {
-                    mc.textureManager.bindTexture(PATTERN_TEXTURES[j3]!!)
-                    drawScaledCustomSizeModalRect(l2 + 4, i3 + 2, 1f, 1f, 20, 40, 5, 10, 64f, 64f)
+                drawTexturedModalRect(listLeft, listTop, 0, ySize, 14, 14)
+
+                if (PATTERN_TEXTURES[index] != null) {
+                    mc.textureManager.bindTexture(PATTERN_TEXTURES[index]!!)
+                    drawScaledCustomSizeModalRect(listLeft + 4, listTop + 2, 1f, 1f, 20, 40, 5, 10, 64f, 64f)
                 }
             }
         }
@@ -111,28 +115,26 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
 
     override fun mouseClicked(mouseX: Int, mouseY: Int, mouseButton: Int) {
         clickedOnScroll = false
+
         if (isCrafting) {
-            var i = guiLeft + 60
-            var j = guiTop + 13
-            val k = recipeIndexOffset + 16
-            for (l in recipeIndexOffset until k) {
-                val i1 = l - recipeIndexOffset
-                val d0 = mouseX - (i + i1 % 4 * 14).toDouble()
-                val d1 = mouseY - (j + i1 / 4 * 14).toDouble()
-                if (d0 >= 0.0 && d1 >= 0.0 && d0 < 14.0 && d1 < 14.0 && container.enchantItem(mc.player, l)) {
-                    Minecraft.getMinecraft().soundHandler.playSound(
-                        PositionedSoundRecord.getMasterRecord(
-                            SoundEvents.UI_BUTTON_CLICK,
-                            1.0f
-                        )
-                    )
-                    mc.playerController.sendEnchantPacket(container.windowId, l)
+            var listLeft = guiLeft + 60
+            var listTop = guiTop + 13
+            val lastVisibleItem = recipeIndexOffset + 16
+
+            for (i in recipeIndexOffset until lastVisibleItem) {
+                val listIndex = i - recipeIndexOffset
+                val mX = mouseX - (listLeft + listIndex % 4 * 14).toDouble()
+                val mY = mouseY - (listTop + listIndex / 4 * 14).toDouble()
+
+                if (mX in 0.0..14.0 && mY in 0.0..14.0 && container.enchantItem(mc.player, i)) {
+                    Minecraft.getMinecraft().soundHandler.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0f))
+                    mc.playerController.sendEnchantPacket(container.windowId, i)
                     return
                 }
             }
-            i = guiLeft + 119
-            j = guiTop + 9
-            if (mouseX >= i.toDouble() && mouseX < (i + 12) && mouseY >= j.toDouble() && mouseY < (j + 56).toDouble()) {
+            listLeft = guiLeft + 119
+            listTop = guiTop + 9
+            if (mouseX >= listLeft.toDouble() && mouseX < (listLeft + 12) && mouseY >= listTop.toDouble() && mouseY < (listTop + 56).toDouble()) {
                 clickedOnScroll = true
             }
         }
@@ -203,18 +205,30 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
     companion object {
         private val BACKGROUND = ResourceLocation(FutureMC.ID, "textures/gui/loom.png")
         private val ROWS = ceil(ContainerLoom.BASIC_PATTERNS.size / 4.0f).toInt()
-        private val GREY = EnumDyeColor.GRAY
-        private val WHITE = EnumDyeColor.WHITE
-        private val PALETTE = listOf(GREY, WHITE)
-        private val PATTERN_TEXTURES = BannerPattern.values().map { pattern ->
-            val s = "b" + GREY.metadata
-            val s1 = pattern.hashname + WHITE.metadata
-            BannerTextures.BANNER_DESIGNS.getResourceLocation(s + s1, listOf(BannerPattern.BASE, pattern), PALETTE)
-        }.toTypedArray()
-        private val BASIC_TEXTURES = ContainerLoom.BASIC_PATTERNS.map { pattern ->
-            val s = "b" + GREY.metadata
-            val s1 = pattern.hashname + WHITE.metadata
-            BannerTextures.BANNER_DESIGNS.getResourceLocation(s + s1, listOf(BannerPattern.BASE, pattern), PALETTE)
-        }.toTypedArray()
+        // Used for previews in the list
+        private val PALETTE = listOf(GRAY, WHITE)
+
+        // Contains all pattern textures
+        private val PATTERN_TEXTURES = arrayListOf<ResourceLocation?>()
+        // Contains only regular textures
+        private val BASIC_TEXTURES = arrayListOf<ResourceLocation?>()
+
+        init {
+            for (pattern in BannerPattern.values()) {
+                val s = "b" + GRAY.metadata
+                val s1 = pattern.hashname + WHITE.metadata
+
+                val texture = BannerTextures.BANNER_DESIGNS.getResourceLocation(s + s1, listOf(BannerPattern.BASE, pattern), PALETTE)
+
+                if (texture == null) {
+                    FutureMC.LOGGER.error("Failed to load texture for banner pattern: $pattern")
+                }
+
+                PATTERN_TEXTURES.add(texture)
+                if (ContainerLoom.BASIC_PATTERNS.contains(pattern)) {
+                    BASIC_TEXTURES.add(texture)
+                }
+            }
+        }
     }
 }

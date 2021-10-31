@@ -15,8 +15,8 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import thedarkcolour.core.gui.FContainer
-import thedarkcolour.core.inventory.DarkInventory
-import thedarkcolour.core.inventory.DarkInventorySlot
+import thedarkcolour.core.inventory.FInventory
+import thedarkcolour.core.inventory.FInventorySlot
 import thedarkcolour.core.util.anyMatch
 import thedarkcolour.core.util.getOreNames
 import thedarkcolour.core.util.janyMatch
@@ -26,7 +26,7 @@ import thedarkcolour.futuremc.item.BannerPatternItem.Companion.getBannerPattern
 import thedarkcolour.futuremc.registry.FBlocks.LOOM
 
 class ContainerLoom(playerInv: InventoryPlayer, private val world: World, private val pos: BlockPos) : FContainer(playerInv) {
-    private val handler = object : DarkInventory(4) {
+    private val handler = object : FInventory(4) {
         override fun onContentsChanged(slot: Int) {
             if (slot != 3) {
                 handleCrafting()
@@ -64,10 +64,10 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
     }
 
     private fun addOwnSlots() {
-        bannerSlot = addSlotToContainer(DarkInventorySlot(handler, 0, 13, 26))
-        dyeSlot = addSlotToContainer(DarkInventorySlot(handler, 1, 33, 26))
-        patternSlot = addSlotToContainer(DarkInventorySlot(handler, 2, 23, 45))
-        resultSlot = addSlotToContainer(DarkInventorySlot(handler, 3, 143, 57))
+        bannerSlot = addSlotToContainer(FInventorySlot(handler, 0, 13, 26))
+        dyeSlot = addSlotToContainer(FInventorySlot(handler, 1, 33, 26))
+        patternSlot = addSlotToContainer(FInventorySlot(handler, 2, 23, 45))
+        resultSlot = addSlotToContainer(FInventorySlot(handler, 3, 143, 57))
     }
 
     // delegates
@@ -91,7 +91,7 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
     }
 
     override fun enchantItem(playerIn: EntityPlayer, id: Int): Boolean {
-        if (id in BASIC_PATTERNS.indices) {
+        if (id in 0 .. BASIC_PATTERNS.size) {
             selectedIndex = id
             updateRecipeResultSlot()
             return true
@@ -242,42 +242,8 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
     }
 
     companion object {
-        val BASIC_PATTERNS = arrayOf(
-            BannerPattern.SQUARE_BOTTOM_LEFT,
-            BannerPattern.SQUARE_BOTTOM_RIGHT,
-            BannerPattern.SQUARE_TOP_LEFT,
-            BannerPattern.SQUARE_TOP_RIGHT,
-            BannerPattern.STRIPE_BOTTOM,
-            BannerPattern.STRIPE_TOP,
-            BannerPattern.STRIPE_LEFT,
-            BannerPattern.STRIPE_RIGHT,
-            BannerPattern.STRIPE_CENTER,
-            BannerPattern.STRIPE_MIDDLE,
-            BannerPattern.STRIPE_DOWNRIGHT,
-            BannerPattern.STRIPE_DOWNLEFT,
-            BannerPattern.STRIPE_SMALL,
-            BannerPattern.CROSS,
-            BannerPattern.STRAIGHT_CROSS,
-            BannerPattern.TRIANGLE_BOTTOM,
-            BannerPattern.TRIANGLE_TOP,
-            BannerPattern.TRIANGLES_BOTTOM,
-            BannerPattern.TRIANGLES_TOP,
-            BannerPattern.DIAGONAL_LEFT,
-            BannerPattern.DIAGONAL_RIGHT,
-            BannerPattern.DIAGONAL_LEFT_MIRROR,
-            BannerPattern.DIAGONAL_RIGHT_MIRROR,
-            BannerPattern.CIRCLE_MIDDLE,
-            BannerPattern.RHOMBUS_MIDDLE,
-            BannerPattern.HALF_VERTICAL,
-            BannerPattern.HALF_HORIZONTAL,
-            BannerPattern.HALF_VERTICAL_MIRROR,
-            BannerPattern.HALF_HORIZONTAL_MIRROR,
-            BannerPattern.BORDER,
-            BannerPattern.CURLY_BORDER,
-            BannerPattern.GRADIENT,
-            BannerPattern.GRADIENT_UP,
-            BannerPattern.BRICKS
-        )
+        // Vanilla banner patterns that don't require a pattern to create
+        val BASIC_PATTERNS = arrayOf(BannerPattern.SQUARE_BOTTOM_LEFT, BannerPattern.SQUARE_BOTTOM_RIGHT, BannerPattern.SQUARE_TOP_LEFT, BannerPattern.SQUARE_TOP_RIGHT, BannerPattern.STRIPE_BOTTOM, BannerPattern.STRIPE_TOP, BannerPattern.STRIPE_LEFT, BannerPattern.STRIPE_RIGHT, BannerPattern.STRIPE_CENTER, BannerPattern.STRIPE_MIDDLE, BannerPattern.STRIPE_DOWNRIGHT, BannerPattern.STRIPE_DOWNLEFT, BannerPattern.STRIPE_SMALL, BannerPattern.CROSS, BannerPattern.STRAIGHT_CROSS, BannerPattern.TRIANGLE_BOTTOM, BannerPattern.TRIANGLE_TOP, BannerPattern.TRIANGLES_BOTTOM, BannerPattern.TRIANGLES_TOP, BannerPattern.DIAGONAL_LEFT, BannerPattern.DIAGONAL_RIGHT, BannerPattern.DIAGONAL_LEFT_MIRROR, BannerPattern.DIAGONAL_RIGHT_MIRROR, BannerPattern.CIRCLE_MIDDLE, BannerPattern.RHOMBUS_MIDDLE, BannerPattern.HALF_VERTICAL, BannerPattern.HALF_HORIZONTAL, BannerPattern.HALF_VERTICAL_MIRROR, BannerPattern.HALF_HORIZONTAL_MIRROR, BannerPattern.BORDER, BannerPattern.CURLY_BORDER, BannerPattern.GRADIENT, BannerPattern.GRADIENT_UP, BannerPattern.BRICKS)
 
         fun isDye(stack: ItemStack): Boolean {
             return getOreNames(stack).anyMatch { it.startsWith("dye") }

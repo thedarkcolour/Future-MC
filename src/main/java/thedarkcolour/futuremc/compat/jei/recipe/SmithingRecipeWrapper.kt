@@ -1,4 +1,4 @@
-package thedarkcolour.futuremc.compat.jei.smithing
+package thedarkcolour.futuremc.compat.jei.recipe
 
 import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.api.ingredients.VanillaTypes

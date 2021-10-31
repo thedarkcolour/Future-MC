@@ -215,6 +215,12 @@ futuremc.config.blue_ice=Blue Ice
 tile.sandStone.smooth.name=Cut Sandstone
 tile.redSandStone.smooth.name=Cut Red Sandstone
 
+# Quark Compatibility
+item.futuremc.banner_pattern.quark_dragon=Dragon Charge
+item.futuremc.banner_pattern.quark_eye_of_ender=Eye Charge
+item.futuremc.banner_pattern.quark_sword=Sword Charge
+item.futuremc.banner_pattern.quark_shield=Shield Charge
+
 # Subtitles
 futuremc.subtitles.barrel_close=Barrel closes
 futuremc.subtitle.barrel_open=Barrel opens
