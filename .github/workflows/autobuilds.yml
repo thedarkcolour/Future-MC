@@ -52,7 +52,7 @@ jobs: # Define build and release
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
           color: "#6a00ff"
           message: "New jar: https://github.com/Macleykun/Future-MC/releases/tag/latest ${{ github.event.head_commit.message }}"
-          #file: "${{ env.FILE }}" It's to big :( 8MB is max
+          #file: "${{ env.CFILELOC }}" It's to big :( 8MB is max
   release: # When a release is made, this part will be triggerd to make a release based on the commit: Release 0.2.7.3 alpha
     name: Create pubilc releases #                                                                    Trigger^ ^Version^Release type
     runs-on: ubuntu-latest
