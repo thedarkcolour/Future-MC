@@ -1,46 +1,107 @@
 name: Autobuild Future-MC
 
-on: [push, pull_request]
+on: # Triggers the workflow on push events to only main
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
 
-jobs:
+jobs: # Define build and release
   build:
     name: Build on ubuntu-latest
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 8
-        uses: actions/setup-java@v1
+    steps: # The purpose of this part is to build the file and include it as a build artifact on GitHub and notify trough Discord
+      - name: Get repo files
+        uses: actions/checkout@v2
+      - name: Adding patches
+        run: wget ${{ secrets.PATCHES }}
+      - uses: TonyBogdanov/zip@1.0
         with:
+          args: unzip -qq -o ./assets.zip -d ./src/main/resources/assets/futuremc/
+      - name: Setup build env
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
           java-version: '8'
-      - name: Gradle build
-        uses: eskatos/gradle-command-action@v1
-        with:
-          arguments: build --no-daemon
-          wrapper-cache-enabled: true
-          dependencies-cache-enabled: true
-          configuration-cache-enabled: true
-      - name: Remove unneeded compiled files
+          cache: 'gradle'
+          java-package: jdk
+          check-latest: true
+      - name: Compile the best mod for Minecraft?
+        run: ./gradlew build --no-daemon
+      - name: Remove sources files and get specific jar # We never need the sources jar's and only grep what we want
         run: |
           find -type f -path './build/libs/*' -name '*sources*' -delete
-      - uses: actions/upload-artifact@v2
+          echo "CFILELOC=$(find ./build/libs/* | grep .jar | head -1)" >> $GITHUB_ENV
+      - name: Upload to Github Artifacts tab
+        uses: actions/upload-artifact@v2
         with:
-          name: Future-MC Build
-          path: build/libs/*
-  release:
-    name: Create pubilc releases
-    runs-on: ubuntu-latest
-    needs: build
-    if: "startsWith(github.event.head_commit.message, 'Release')"
-    steps:
-      - name: Get artifacts
-        uses: actions/download-artifact@v2
-      - name: Get version from commit
-        run: echo "VERSION=$(echo ${{ github.event.commits[0].message }} | awk '{print $2}')" >> $GITHUB_ENV 
-      - name: Release public builds
+          name: FutureMC # This is the name that will appear in the Artifacts tab
+          path: "${{ env.CFILELOC }}"
+      - name: Release public builds # This will make in GitHub a tag and include a changelog based on the commits and can include the compiled jar
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "${{ env.VERSION }}"
+          automatic_release_tag: "latest"
           prerelease: true
-          draft: true
-          files: "**"
+          draft: false
+          files: "${{ env.CFILELOC }}"
+      - name: Notify Discord channel # Sends commit message and url to latest tag
+        uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          color: "#6a00ff"
+          message: "New jar: https://github.com/Macleykun/Future-MC/releases/tag/latest ${{ github.event.head_commit.message }}"
+          #file: "${{ env.CFILELOC }}" It's to big :( 8MB is max
+  release: # When a release is made, this part will be triggerd to make a release based on the commit: Release 0.2.7.3 alpha
+    name: Create pubilc releases #                                                                    Trigger^ ^Version^Release type
+    runs-on: ubuntu-latest
+    needs: build
+    if: "startsWith(github.event.head_commit.message, 'Release')" # Important! This checks if the commit starts with Release. Then we know when to start this second part
+    steps: # Get repo files, compiled jar and create env vars from commit, changelog.md and compiled file loc to upload everything to CurseForge and let Discord server know
+      - name: Get repo files
+        uses: actions/checkout@v2
+      - name: Get artifacts # Easier then just recompiling
+        uses: actions/download-artifact@v2
+        id: download # Needed to refer to ${{steps.download.outputs.download-path}}
+        with:
+          path: ./download # Needed so that finding artefacts is more reliable
+      - name: Get needed env vars from commit and downloaded jar # Get version from second word, get release type from third word to env variables
+        run: |
+          echo "CFILELOC=$(find ${{steps.download.outputs.download-path}} | grep .jar | head -1)" >> $GITHUB_ENV
+          echo "VERSION=$(echo ${{ github.event.commits[0].message }} | awk '{print $2}')" >> $GITHUB_ENV
+          echo "RTYPE=$(echo ${{ github.event.commits[0].message }} | awk '{print $3}')" >> $GITHUB_ENV
+      - name: Get changelog and place it into a env var for CF action
+        run: | # This part will make a multi-lined env variable named CHANGELOG which uses EOF ending's to save the output of the awk command that only grabs the changelog of the given version from the commit
+          echo 'CHANGELOG<<EOF' >> $GITHUB_ENV
+          awk -v version='${{ env.VERSION }}' '/## Version / {printit = $3 == version}; printit;' 'changelog.md' | awk '!/^$/' >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+      - name: "CF upload"
+        id: upload
+        uses: itsmeow/curseforge-upload@v3
+        with:
+          changelog: "${{ env.CHANGELOG }}"
+          changelog_type: markdown
+          display_name: "Future MC 1.12.2 ${{ env.VERSION }}"
+          file_path: "${{ env.CFILELOC }}" # ${{steps.download.outputs.download-path}}/*.jar See https://github.com/itsmeow/curseforge-upload/issues/7
+          game_endpoint: minecraft
+          game_versions: minecraft-1-12:1.12.2,2:Java 8,Forge
+          relations: bwm-suite:optionalDependency,crafttweaker:optionalDependency,jei:optionalDependency,pams-harvestcraft:optionalDependency,quark:optionalDependency,tinkers-construct:optionalDependency,shadowfacts-forgelin:requiredDependency
+          project_id: 547469
+          release_type: ${{ env.RTYPE}} # Must be release, beta or alpha
+          token: "${{ secrets.CF_API_TOKEN }}"
+      - name: "Build Success" # The final steps notify if the above upload worked out, so that we know when to debug CF/this workflow/the jar itself
+        uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          color: "#1cfc03"
+          message: New official release! Check it out @ https://www.curseforge.com/minecraft/mc-mods/notfmcplease/files/${{ steps.upload.outputs.id }} # Refers to the exact uploaded file on CF
+      - name: "Build Fail"
+        if: failure()
+        uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          color: "#f20018"
+          message: Error! It seems that something went wrong with uploading the above jar to Curseforge! Ping the admin to manually update to CF!
