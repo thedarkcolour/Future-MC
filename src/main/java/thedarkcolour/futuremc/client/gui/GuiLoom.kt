@@ -37,7 +37,7 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
         fontRenderer.drawString(I18n.format("container.loom"), 8, 4, 4210752)
-        fontRenderer.drawString(container.playerInv.displayName.unformattedText, 8, ySize - 94, 4210752)
+        fontRenderer.drawString(getContainer().playerInv.displayName.unformattedText, 8, ySize - 94, 4210752)
     }
 
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
@@ -46,10 +46,10 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
         val i = guiLeft
         val j = guiTop
         drawTexturedModalRect(i, j, 0, 0, xSize, ySize)
-        val bannerSlot = container.getLoomSlot(0)
-        val dyeSlot = container.getLoomSlot(1)
-        val patternSlot = container.getLoomSlot(2)
-        val outputSlot = container.getLoomSlot(3)
+        val bannerSlot = getContainer().getLoomSlot(0)
+        val dyeSlot = getContainer().getLoomSlot(1)
+        val patternSlot = getContainer().getLoomSlot(2)
+        val outputSlot = getContainer().getLoomSlot(3)
         if (!bannerSlot.hasStack) {
             drawTexturedModalRect(i + bannerSlot.xPos, j + bannerSlot.yPos, xSize, 0, 16, 16)
         }
@@ -86,7 +86,7 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
 
                     mc.textureManager.bindTexture(BACKGROUND)
                     var k2 = ySize
-                    if (index == container.getSelectedIndex()) {
+                    if (index == getContainer().getSelectedIndex()) {
                         k2 += 14
                     } else if (((mouseX - slotLeft) in 0..14) && ((mouseY - slotTop) in 0..14)) {
                         k2 += 28
@@ -100,7 +100,7 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
                     ++index
                 }
             } else if (hasBannerPattern) {
-                val index = container.getSelectedIndex()
+                val index = getContainer().getSelectedIndex()
 
                 mc.textureManager.bindTexture(BACKGROUND)
                 drawTexturedModalRect(listLeft, listTop, 0, ySize, 14, 14)
@@ -126,9 +126,9 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
                 val mX = mouseX - (listLeft + listIndex % 4 * 14).toDouble()
                 val mY = mouseY - (listTop + listIndex / 4 * 14).toDouble()
 
-                if (mX in 0.0..14.0 && mY in 0.0..14.0 && container.enchantItem(mc.player, i)) {
+                if (mX in 0.0..14.0 && mY in 0.0..14.0 && getContainer().enchantItem(mc.player, i)) {
                     Minecraft.getMinecraft().soundHandler.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0f))
-                    mc.playerController.sendEnchantPacket(container.windowId, i)
+                    mc.playerController.sendEnchantPacket(getContainer().windowId, i)
                     return
                 }
             }
@@ -173,7 +173,7 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
     }
 
     private fun onInventoryUpdate() {
-        val stack = container.output
+        val stack = getContainer().output
 
         preview = if (stack.isEmpty) {
             null
@@ -183,9 +183,9 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
             BannerTextures.BANNER_DESIGNS.getResourceLocation(tile.patternResourceLocation, tile.patternList, tile.colorList)
         }
 
-        val banner = container.banner
-        val color = container.color
-        val pattern = container.pattern
+        val banner = getContainer().banner
+        val color = getContainer().color
+        val pattern = getContainer().pattern
         val nbt = banner.getOrCreateSubCompound("BlockEntityTag")
         cannotFitPatterns = nbt.hasKey("Pattern", 9) && !banner.isEmpty && nbt.getTagList("Patterns", 10).tagCount() >= 6
         if (cannotFitPatterns) {

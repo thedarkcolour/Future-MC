@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.asm;
 
 import net.minecraft.launchwrapper.IClassTransformer;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.tree.*;
 import thedarkcolour.futuremc.compat.Compat;
 import vazkii.quark.api.ClassTransformer;
@@ -47,12 +48,38 @@ public final class CoreTransformer implements IClassTransformer {
                     }
                     // use Quark's coremod
                     return basicClass;
+
+                case "com.pg85.otg.customobjects.bo3.BO3Loader":
+                    return transformBO3Loader(basicClass);
             }
         } catch (NoClassDefFoundError e) {
             return basicClass;
         }
 
         return basicClass;
+    }
+
+    private static byte[] transformBO3Loader(byte[] basicClass) {
+        ClassNode classNode = ASMUtil.createClassNode(basicClass);
+        MethodNode mv = ASMUtil.findMethod(classNode, "loadFromFile", "loadFromFile", null);
+
+        mv.instructions = new InsnList();
+
+        Label l0 = new Label();
+        mv.visitLabel(l0);
+        mv.visitLineNumber(58, l0);
+        mv.visitVarInsn(ALOAD, 1);
+        mv.visitVarInsn(ALOAD, 2);
+        mv.visitMethodInsn(INVOKESTATIC, "thedarkcolour/futuremc/compat/otg/OTGCompat", "patchBO3", "(Ljava/lang/String;Ljava/io/File;)Lcom/pg85/otg/customobjects/bo3/BO3;", false);
+        mv.visitInsn(ARETURN);
+        Label l1 = new Label();
+        mv.visitLabel(l1);
+        mv.visitLocalVariable("this", "Lcom/pg85/otg/customobjects/bo3/BO3Loader;", null, l0, l1, 0);
+        mv.visitLocalVariable("objectName", "Ljava/lang/String;", null, l0, l1, 1);
+        mv.visitLocalVariable("file", "Ljava/io/File;", null, l0, l1, 2);
+        mv.visitMaxs(2, 3);
+
+        return ASMUtil.compile(classNode);
     }
 
     private static byte[] patchEntityRenderer(byte[] basicClass) {

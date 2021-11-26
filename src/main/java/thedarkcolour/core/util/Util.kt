@@ -143,7 +143,7 @@ fun subscribe(target: Any) {
 /**
  * Registers a function to the event bus like in 1.13+.
  */
-inline fun <reified E : Event> addListener(crossinline consumer: (E) -> Unit, priority: EventPriority = EventPriority.NORMAL) {
+inline fun <reified E : Event> addListener(crossinline consumer: (E) -> Unit, priority: EventPriority = EventPriority.NORMAL, bus: EventBus = MinecraftForge.EVENT_BUS) {
     val constructor = E::class.java.getConstructor()
     constructor.isAccessible = true
     val event = constructor.newInstance()

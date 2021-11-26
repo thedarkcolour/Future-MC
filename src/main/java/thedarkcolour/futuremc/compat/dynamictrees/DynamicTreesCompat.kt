@@ -2,14 +2,16 @@ package thedarkcolour.futuremc.compat.dynamictrees
 
 import com.ferreusveritas.dynamictrees.trees.Species
 import net.minecraftforge.event.RegistryEvent
-import thedarkcolour.core.util.addListener
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 object DynamicTreesCompat {
     fun addListeners() {
-        addListener(this::modifyOakSpecies)
+        // todo
+        //MinecraftForge.EVENT_BUS.register(this)
     }
 
-    private fun modifyOakSpecies(event: RegistryEvent.Register<Species>) {
+    @SubscribeEvent
+    fun modifyOakSpecies(event: RegistryEvent.Register<Species>) {
         for (species in Species.REGISTRY) {
             //species.addGenFeature(BeeHiveFeature)
         }

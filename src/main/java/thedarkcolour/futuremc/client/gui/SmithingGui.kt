@@ -13,9 +13,9 @@ class SmithingGui(container: SmithingContainer) : FGui<SmithingContainer>(contai
         val i = guiLeft
         val j = guiTop
         drawTexturedModalRect(i, j, 0, 0, 176, 166)
-        drawTexturedModalRect(i + 59, j + 20, 0, 166 + (if (container.inventory[0].isEmpty) 0 else 16), 110, 16)
+        drawTexturedModalRect(i + 59, j + 20, 0, 166 + (if (getContainer().inventory[0].isEmpty) 0 else 16), 110, 16)
 
-        if ((!container.inventory[0].isEmpty || !container.inventory[1].isEmpty) && container.inventory[2].isEmpty) {
+        if ((!getContainer().inventory[0].isEmpty || !getContainer().inventory[1].isEmpty) && getContainer().inventory[2].isEmpty) {
             drawTexturedModalRect(i + 99, j + 45, 176, 0, 28, 21)
         }
     }
@@ -25,7 +25,7 @@ class SmithingGui(container: SmithingContainer) : FGui<SmithingContainer>(contai
 
         GlStateManager.disableBlend()
         fontRenderer.drawString(s, 60, 20, 4210752)
-        fontRenderer.drawString(container.playerInv.displayName.formattedText, 8, 72, 4210752)
+        fontRenderer.drawString(getContainer().playerInv.displayName.formattedText, 8, 72, 4210752)
     }
 
     companion object {
