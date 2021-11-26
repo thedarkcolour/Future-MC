@@ -10,11 +10,12 @@ jobs: # Define build and release
     steps: # The purpose of this part is to build the file and include it as a build artifact on GitHub and notify trough Discord
       - name: Get repo files
         uses: actions/checkout@v2
-      - name: Adding patches
-        run: wget ${{ secrets.PATCHES }}
-      - uses: TonyBogdanov/zip@1.0
-        with:
-          args: unzip -qq -o ./assets.zip -d ./src/main/resources/assets/futuremc/
+      # Can't pass secrets to forks/pulls! So when testing, add your own assets!
+      #- name: Adding patches
+      #  run: wget ${{ secrets.PATCHES }}
+      #- uses: TonyBogdanov/zip@1.0
+      #  with:
+      #    args: unzip -qq -o ./assets.zip -d ./src/main/resources/assets/futuremc/
       - name: Setup build env
         uses: actions/setup-java@v2
         with:
