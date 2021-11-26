@@ -9,6 +9,7 @@ import thedarkcolour.futuremc.compat.actuallyadditions.ActuallyAdditionsCompat
 import thedarkcolour.futuremc.compat.betterwithmods.BetterWithModsCompat
 import thedarkcolour.futuremc.compat.dynamictrees.DynamicTreesCompat
 import thedarkcolour.futuremc.compat.harvestcraft.HarvestCraftCompat
+import thedarkcolour.futuremc.compat.otg.OTGCompat
 import thedarkcolour.futuremc.compat.plants.PlantsCompat
 import thedarkcolour.futuremc.compat.quark.QuarkCompat
 import thedarkcolour.futuremc.compat.tconstruct.TConstructCompat
@@ -19,6 +20,7 @@ const val CRAFTTWEAKER = "crafttweaker"
 const val DYNAMIC_TREES = "dynamictrees"
 const val FLUIDLOGGED_API = "fluidlogged_api"
 const val JEI = "jei"
+const val OTG = "openterraingenerator"
 const val PAMS_HARVESTCRAFT = "harvestcraft"
 const val PLANTS = "plants2"
 const val QUARK = "quark"
@@ -77,7 +79,5 @@ private inline fun <T> checkModCompat(modid: String, mod: T): T? {
 }
 
 fun isModLoaded(modid: String): Boolean {
-    return LOADED_MODS.computeIfAbsent(modid) { key ->
-        Loader.isModLoaded(key)
-    }
+    return LOADED_MODS.computeIfAbsent(modid, { Loader.isModLoaded(modid) })
 }

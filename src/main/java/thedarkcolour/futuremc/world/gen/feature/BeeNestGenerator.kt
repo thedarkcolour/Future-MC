@@ -12,7 +12,7 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree
 import sun.reflect.Reflection
 import thedarkcolour.core.util.getDoubleOrDefault
 import thedarkcolour.core.util.isAir
-import thedarkcolour.core.util.offset
+import thedarkcolour.core.util.move
 import thedarkcolour.futuremc.block.buzzybees.BeeHiveBlock
 import thedarkcolour.futuremc.config.FConfig.buzzyBees
 import thedarkcolour.futuremc.entity.bee.EntityBee
@@ -21,10 +21,9 @@ import thedarkcolour.futuremc.tile.BeeHiveTile
 import java.util.*
 
 object BeeNestGenerator {
-    val BEE_NEST =
-        FBlocks.BEE_NEST.defaultState.withProperty(BeeHiveBlock.FACING, EnumFacing.SOUTH)
-    val VALID_OFFSETS =
-        arrayOf(EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST)
+    val BEE_NEST = FBlocks.BEE_NEST.defaultState.withProperty(BeeHiveBlock.FACING, EnumFacing.SOUTH)
+    // south, west, east
+    val VALID_OFFSETS = arrayOf(EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST)
     val BIOMES_AND_CHANCES: Object2DoubleMap<ResourceLocation?> = Object2DoubleOpenHashMap()
 
     /**
@@ -63,33 +62,31 @@ object BeeNestGenerator {
     ) {
         if (cannotGenerate(worldIn, rand, position)) return
 
-        val offset = VALID_OFFSETS[rand.nextInt(3)]
+        val direction = VALID_OFFSETS[rand.nextInt(3)]
         // base trunk position
-        val pos = MutableBlockPos(position.offset(offset))
+        val pos = MutableBlockPos(position.offset(direction))
         for (i in 0 until height) {
             // move pos in this air check
-            if (worldIn.isAir(pos.offset(0, 1, 0))) {
+            if (worldIn.isAir(pos.move(0, 1, 0))) {
                 continue
             }
 
             // move back down when checking
             // see core.util.Extensions.kt
             // first down, then south
-            if (tree.isReplaceable(worldIn, pos.offset(0, -1, 0)) && tree.isReplaceable(worldIn, pos.offset(0, 0, 1))) {
+            if (tree.isReplaceable(worldIn, pos.move(0, -1, 0)) && tree.isReplaceable(worldIn, pos.move(0, 0, 1))) {
                 // set to air at the front position
                 worldIn.setBlockToAir(pos)
 
                 // move back north to bee hive position
-                placeBeeHive(worldIn, rand, pos.offset(0, 0, -1))
+                placeBeeHive(worldIn, rand, pos.move(0, 0, -1))
             }
         }
     }
 
-    private fun cannotGenerate(worldIn: World, rand: Random, pos: BlockPos): Boolean {
+    // Skips reflection and flower checks because this is only called during w orldgen
+    fun fastCannotGenerate(worldIn: World, rand: Random, pos: BlockPos): Boolean {
         if (!buzzyBees.bee.enabled) {
-            return true
-        }
-        if (Reflection.getCallerClass(4) != BiomeDecorator::class.java && hasNoFlowersNearby(worldIn, pos)) {
             return true
         }
         val biome = worldIn.getBiome(pos)
@@ -97,6 +94,14 @@ object BeeNestGenerator {
             return true
         }
         return false
+    }
+
+    fun cannotGenerate(worldIn: World, rand: Random, pos: BlockPos): Boolean {
+        // ensure this is called either during worldgen or when there are flowers nearby
+        if (Reflection.getCallerClass(4) != BiomeDecorator::class.java && hasNoFlowersNearby(worldIn, pos)) {
+            return true
+        }
+        return fastCannotGenerate(worldIn, rand, pos)
     }
 
     private fun hasNoFlowersNearby(worldIn: World, pos: BlockPos): Boolean {
@@ -118,7 +123,7 @@ object BeeNestGenerator {
         return true
     }
 
-    private fun placeBeeHive(worldIn: World, rand: Random, pos: MutableBlockPos) {
+    fun placeBeeHive(worldIn: World, rand: Random, pos: BlockPos) {
         worldIn.setBlockState(pos, BEE_NEST)
         val te = worldIn.getTileEntity(pos)
 

@@ -256,8 +256,6 @@ class GuiVillager(val container: ContainerVillager) : GuiMerchant(container.play
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f)
         GlStateManager.enableRescaleNormal()
         hoveredSlot = null
-        val k = 240
-        val l = 240
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0f, 240.0f)
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f)
 

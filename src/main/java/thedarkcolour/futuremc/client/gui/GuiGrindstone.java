@@ -23,7 +23,7 @@ public class GuiGrindstone extends FGui<ContainerGrindstone> {
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String s = I18n.format("container.grindstone");
         fontRenderer.drawString(s, 8, 6, 4210752);
-        fontRenderer.drawString(container.getPlayerInv().getDisplayName().getUnformattedText(), 8, ySize - 93, 4210752);
+        fontRenderer.drawString(getContainer().playerInv.getDisplayName().getUnformattedText(), 8, ySize - 93, 4210752);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class GuiGrindstone extends FGui<ContainerGrindstone> {
 
         drawTexturedModalRect(i, j, 0, 0, xSize, ySize);
 
-        if (container.isRecipeInvalid()) {
+        if (getContainer().isRecipeInvalid()) {
             drawTexturedModalRect(i + 92, j + 31, 176, 0, 28, 21);
         }
     }

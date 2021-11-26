@@ -21,7 +21,7 @@ class GuiBarrel(container: ContainerBarrel) : FGui<ContainerBarrel>(container) {
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
         fontRenderer.drawString(I18n.format("container.barrel"), 8, 6, 4210752)
-        fontRenderer.drawString(container.playerInv.displayName.unformattedText, 8, ySize - 95, 4210752)
+        fontRenderer.drawString(getContainer().playerInv.displayName.unformattedText, 8, ySize - 95, 4210752)
     }
 
     companion object {

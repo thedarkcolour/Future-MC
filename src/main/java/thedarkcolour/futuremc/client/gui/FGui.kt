@@ -9,13 +9,15 @@ import org.lwjgl.opengl.GL11
 /**
  * [T] should probably extend [thedarkcolour.core.gui.FContainer]
  */
-abstract class FGui<T : Container>(@JvmField protected var container: T) : GuiContainer(container) {
+abstract class FGui<T : Container>(private var container: Container) : GuiContainer(container) {
     final override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
         drawDefaultBackground()
         super.drawScreen(mouseX, mouseY, partialTicks)
         render(mouseX, mouseY, partialTicks)
         renderHoveredToolTip(mouseX, mouseY)
     }
+
+    fun getContainer(): T = container as T
 
     open fun render(mouseX: Int, mouseY: Int, partialTicks: Float) {
 

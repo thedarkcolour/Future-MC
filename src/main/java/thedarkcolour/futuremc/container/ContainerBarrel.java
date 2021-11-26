@@ -13,7 +13,6 @@ import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 import thedarkcolour.core.gui.FContainer;
 import thedarkcolour.futuremc.FutureMC;
-import thedarkcolour.futuremc.client.gui.FGui;
 import thedarkcolour.futuremc.client.gui.GuiBarrel;
 import thedarkcolour.futuremc.registry.FBlocks;
 import thedarkcolour.futuremc.tile.TileBarrel;
@@ -95,6 +94,6 @@ public class ContainerBarrel extends FContainer {
     @NotNull
     @SideOnly(Side.CLIENT)
     public Object createGui() {
-        return new GuiBarrel(new ContainerBarrel(getPlayerInv(), te));
+        return new GuiBarrel(new ContainerBarrel(playerInv, te));
     }
 }

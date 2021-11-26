@@ -9,7 +9,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-abstract class FContainer(val playerInv: InventoryPlayer) : Container() {
+abstract class FContainer(@JvmField val playerInv: InventoryPlayer) : Container() {
     abstract fun createGui(): Any
 
     fun isBlockInRange(block: Block, worldIn: World, pos: BlockPos, playerIn: EntityPlayer): Boolean {

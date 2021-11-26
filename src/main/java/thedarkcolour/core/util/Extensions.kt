@@ -17,7 +17,7 @@ fun IBlockAccess.isAir(pos: BlockPos): Boolean {
     return getBlockState(pos).isAir(this, pos)
 }
 
-fun MutableBlockPos.offset(x: Int, y: Int, z: Int): MutableBlockPos {
+fun MutableBlockPos.move(x: Int, y: Int, z: Int): MutableBlockPos {
     return setPos(this.x + x, this.y + y, this.z + z)
 }
 

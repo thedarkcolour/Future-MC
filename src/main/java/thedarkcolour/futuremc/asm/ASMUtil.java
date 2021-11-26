@@ -38,7 +38,7 @@ public final class ASMUtil {
      * @param classNode the class to search
      * @param srgName the srg name of the method
      * @param mcpName the human readable name of the method
-     * @param desc the method signature (empty if method signature should be ignored)
+     * @param desc the method signature (empty if method signature can be ignored)
      * @return the method that matches the name and description if it is provided
      *
      * @throws NoSuchMethodError if no matching method was found

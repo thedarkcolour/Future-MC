@@ -34,7 +34,7 @@ public class ContainerFurnaceAdvanced extends FContainer {
     private void addOwnSlots() {
         addSlotToContainer(new Slot(te, 0, 56, 17));
         addSlotToContainer(new SlotFurnaceFuel(te, 1, 56, 53));
-        addSlotToContainer(new SlotFurnaceOutput(getPlayerInv().player, te, 2, 116, 35));
+        addSlotToContainer(new SlotFurnaceOutput(playerInv.player, te, 2, 116, 35));
     }
 
     @Override
@@ -119,7 +119,7 @@ public class ContainerFurnaceAdvanced extends FContainer {
     @SideOnly(Side.CLIENT)
     public Object createGui() {
         return te.getType() == BlockFurnaceAdvanced.FurnaceType.BLAST_FURNACE ?
-                new GuiFurnaceAdvanced.BlastFurnace(new ContainerFurnaceAdvanced(getPlayerInv(), te)) :
-                new GuiFurnaceAdvanced.Smoker(new ContainerFurnaceAdvanced(getPlayerInv(), te));
+                new GuiFurnaceAdvanced.BlastFurnace(new ContainerFurnaceAdvanced(playerInv, te)) :
+                new GuiFurnaceAdvanced.Smoker(new ContainerFurnaceAdvanced(playerInv, te));
     }
 }

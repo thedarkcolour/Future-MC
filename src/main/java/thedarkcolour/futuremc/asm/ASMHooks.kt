@@ -1,5 +1,6 @@
 package thedarkcolour.futuremc.asm
 
+import com.pg85.otg.customobjects.CustomObject
 import net.minecraft.client.entity.AbstractClientPlayer
 import net.minecraft.client.model.ModelBiped
 import net.minecraft.client.renderer.ItemModelMesher

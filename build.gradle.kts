@@ -4,7 +4,7 @@ import wtf.gofancy.fancygradle.script.extensions.curse
 import java.time.LocalDateTime
 
 plugins {
-    kotlin("jvm") version "1.3.50" // For build script syntax
+    kotlin("jvm") version "1.6.0" // For build script syntax
     java
     idea
     id("net.minecraftforge.gradle") version "5.0.+"
@@ -88,15 +88,19 @@ repositories {
         name = "IC2"
         url = uri("https://maven.ic2.player.to/")
     }
+
+    maven {   // Worldedit API
+        url = uri("https://maven.sk89q.com/repo/")
+    }
 }
 
 dependencies {
     minecraft(group = "net.minecraftforge", name = "forge", version = "1.12.2-14.23.5.2855")
 
-    api (group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = "1.3.50")
-    api (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version = "1.3.50")
-    api (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version = "1.3.50")
-    api (group = "org.jetbrains.kotlin", name = "kotlin-reflect", version = "1.3.50")
+    implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = "1.3.50")
+    implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version = "1.3.50")
+    implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version = "1.3.50")
+    implementation (group = "org.jetbrains.kotlin", name = "kotlin-reflect", version = "1.3.50")
 
     // Stuff I care about
     implementation(fg.deobf(curse("enchantment_descriptions", 250419, 2689502)))
@@ -106,6 +110,17 @@ dependencies {
     implementation("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548")
     implementation(fg.deobf("mezz.jei:jei_1.12.2:4.15.0.+"))
     api("net.shadowfacts:Forgelin:1.8.4")
+
+    // OTG
+    implementation(fg.deobf(curse("otg", 265894, 3151431)))
+    compileOnly("com.sk89q.worldedit:worldedit-forge-mc1.11:6.1.6") {
+        exclude("com.google.guava")
+        exclude("com.google.gson")
+    }
+    compileOnly("com.sk89q.worldedit:worldedit-core:6.1") {
+        exclude("com.google.guava")
+        exclude("com.google.gson")
+    }
 
     // Optional mod compat
     compileOnly(fg.deobf(curse("dynamic_trees", 252818, 3260881)))
@@ -159,9 +174,6 @@ tasks {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xinline-classes", "-Xjvm-default=enable")
             jvmTarget = "1.8"
-            // wat
-            //noReflect = false
-            //noStdlib = false
         }
     }
 }
