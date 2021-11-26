@@ -198,11 +198,11 @@ itemGroup.futuremc=Future MC
 
 # JEI
 container.jei.futuremc.campfire.name=Hoguera
-container.jei.futuremc.blast_furnace.name=Alto horno
-container.jei.futuremc.smoker.name=Ahumador
-container.jei.futuremc.stonecutter.name=Cortar piedra
+container.jei.futuremc.blast_furnace.name=Fundición
+container.jei.futuremc.smoker.name=Ahumado
+container.jei.futuremc.stonecutter.name=Corte de piedra
 container.jei.futuremc.smithing.name=Herrería
-container.jei.futuremc.composter.name=Compostar
+container.jei.futuremc.composter.name=Compostaje
 container.jei.futuremc.campfire.duration=Duración
 container.jei.futuremc.composter.chance=Probabilidad
 
@@ -210,8 +210,8 @@ container.jei.futuremc.composter.chance=Probabilidad
 futuremc.config.blue_ice=Hielo azul
 
 # Vanilla Override
-tile.sandStone.smooth.name=Losa de arenisca cortada
-tile.redSandStone.smooth.name=Losa de arenisca roja cortada 
+tile.sandStone.smooth.name=Arenisca cortada
+tile.redSandStone.smooth.name=Arenisca roja cortada
 
 # Subtitulos
 futuremc.subtitles.barrel_close=Barril cerrado
