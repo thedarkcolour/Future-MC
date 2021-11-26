@@ -1,20 +1,20 @@
-##Version 0.2.7.4 - Bugfix:
+## Version 0.2.7.4 - Bugfix:
 - Fixed a crash with villager trading crashing servers
 - Try to fix a bug with MIA
 
-##Version 0.2.7.3 - Bugfix:
+## Version 0.2.7.3 - Bugfix:
 - Fixed a bug that disabled Smithing table and Composter guis when stonecutter was disabled. Fixes #260
 - Fixed a crash with Pandas
 - Added Spanish (Spain) translations thanks to jahirtrap
 
-##Version 0.2.7.2 - Bugfix:
+## Version 0.2.7.2 - Bugfix:
 - Fixed a server crash with netherite
 
-##Version 0.2.7.1 - Bugfix:
+## Version 0.2.7.1 - Bugfix:
 - Added config option to disable 1.14 villager screen if another mod you prefer overrides it
 - Fixed crashes with Loom and Stonecutter
 
-##Version 0.2.7 - Villager Gui, Fluidlogging compat, and more translations:
+## Version 0.2.7 - Villager Gui, Fluidlogging compat, and more translations:
 - Composter - Fixed a bug with CraftTweaker that messed with assigned chances
 - CraftTweaker - Fixed bugs with Blast Furnace and Smoker
 - Fluidlogged - Walls are now fluidloggable
@@ -30,13 +30,13 @@
 - Translations! Future MC can now be played in: Argentinian Spanish, Venezuelan Spanish, Colombian Spanish, Japanese, French, Chinese simplified, and Russian.
 - Thanks to Lucian, Sasha, Robolightning, daifucu, Samlegamer, and yilangyo for making all the translations
 
-##Version 0.2.6.1 - Bug fix:
+## Version 0.2.6.1 - Bug fix:
 - Beehives - Fixed excessive beehive spawning. Fixes #220
 
-##Version 0.2.6 - Bug fix:
+## Version 0.2.6 - Bug fix:
  Beehives - Removed broken Dynamic Trees compat
 
-##Version 0.2.5 - Bug fixes and minor additions:
+## Version 0.2.5 - Bug fixes and minor additions:
  Seagrass - Removed from config file. Fixes #195
  Smoker - Now works properly with CraftTweaker. Fixes #217
  Soul Torch & Soul Lantern - Now craftable in survival. Fixes #200
@@ -47,7 +47,7 @@
  Trident - Enchantments now work correctly. Fixes #212
  World Type - No longer shows test world type. Fixes #208
 
-##Version 0.2.4.1 - Bug fixes:
+## Version 0.2.4.1 - Bug fixes:
  Barrel - Fixed an issue that made opening animations and sounds weird in multiplayer.
  Future MC - Fixed a crash with Forge Gradle 3.0.
  Smithing Table - Fixed a multiplayer error with sounds.
@@ -55,7 +55,7 @@
  Trapdoors - Now craft properly.
  Wood - Fixed ore dictionary entries for wood blocks (6 sided bark blocks).
 
-##Version 0.2.4 - Bug fixes and more mod compat:
+## Version 0.2.4 - Bug fixes and more mod compat:
  *Smithing Table JEI Compatibility* - Recipes for the Smithing Table are now visible in JEI. Should reduce a bit of confusion.
  *Composter Table JEI Compatibility* - Items now show their chance of adding a layer of compost in JEI.
  *Pigstep* - New music disc from 1.16. Creative only at the moment
@@ -77,18 +77,18 @@
  Stonecutter - Added recipes for Seared Bricks when Tinkers Construct is installed.
  Sweet Berry Bush - No longer drops berries when broken in creative mode. Fixes #167
 
-##Version 0.2.3.2 - Hotfix and more mod compat:
+## Version 0.2.3.2 - Hotfix and more mod compat:
  *Tinkers Construct Compat* - Tinkers axes can now strip logs.
  Netherite Block - Now has a crafting recipe. Fixes #151
  Netherite - Fixed ore dictionary issues. Fixes #150
  Fixed a server crash. Fixes #152
  Quark Compat - Bark blocks are now strippable
 
-##Version 0.2.3.1 - Hotfix:
+## Version 0.2.3.1 - Hotfix:
  Fix server crash (reportedly didn't actually fix it)
  Hopefully fix Vivecraft incompatibility
 
-##Version 0.2.3 - Bug fix + mod compatibility update:
+## Version 0.2.3 - Bug fix + mod compatibility update:
 - *Actually Additions Compat* - Bees now seek out the Black Lotus for pollen and grow Canola, Flax, Rice, and Coffee crops.
 - *Better With Mods Compat* - Cauldrons now recognize campfires as a fire source.
 - *Fixed World Corruption* - When updating from 0.1.13 to 0.2.2, the world is no longer corrupted. Fixes #147
@@ -109,7 +109,7 @@
 - Trapdoors - Added OreDictionary entries. Fixes #148
 - Wood blocks - Now strippable. Fixes #144
 
-##Version 0.2.2 - Bug fix update:
+## Version 0.2.2 - Bug fix update:
 - Bee - Fixed a crash with beetroots, pumpkins, and melons. Fixes #139
 - Composter - Optimized item rarity map and reduced memory footprint by 3 bytes per compostable item
 - Future MC - Fixed the old remapper.
@@ -117,7 +117,7 @@
 - Stonecutter - Fixed a dupe glitch
 - Stonecutter - Fixed a glitch that allowed players to not take the entire output, deleting the remaining items
 
-##Version 0.2.1 - MAJOR UPDATE ALERT!!!! - New things:
+## Version 0.2.1 - MAJOR UPDATE ALERT!!!! - New things:
 - *Banner Patterns* - Banner patterns can be used in the Loom.
 - *Bell* - Rings just like in 1.14. Creative only at the moment because villagers don't trade them.
 - *Cartography Table* - Decorative only.
@@ -165,7 +165,7 @@
 - Wither Rose - Now drops correctly.
 - Wither Rose - Now places on the correct blocks again.
 
-##Version 0.2.03 - Bug fix update:
+## Version 0.2.03 - Bug fix update:
  Trapdoors - No longer have strange rotations.
  Fixed CraftTweaker issues when using remove functions on certain blocks
  Readjusted attributes of several blocks to be consistent with 1.13+
@@ -174,13 +174,13 @@
  Added Smooth Sandstone and Smooth Red Sandstone
  Changed block id of Mossy Stone Brick Wall and End Stone Brick Wall to be consistent with 1.13+
 
-##Version 0.2.02 - Bug fix update:
+## Version 0.2.02 - Bug fix update:
  Bark blocks - Fixed models
  Campfire - Fixed missing crackle particles
  Trident - No longer passes through entities
  Fixed missing translation keys on some items
 
-##Version 0.2.01 - Test update:
+## Version 0.2.01 - Test update:
  Some things from the 0.2.0 update...
  Cod, Pufferfish, Salmon, Tropical Fish, Trapdoors, Loom functionality,
  Soul fire torch/lantern/soil, bamboo fixes, blast furnace/smoker changes,
@@ -190,7 +190,7 @@
 
  Note that Bee AI has been broken in this test update.
 
-##Version 0.2.0 - Big update! New things:
+## Version 0.2.0 - Big update! New things:
  *Cod* - Fish from 1.13 that spawns in ocean biomes.
  *Pufferfish* - Fish from 1.13 that spawns in deep ocean biomes and puffs up when threatened.
  *Salmon* - Fish from 1.13 that spawns in river and deep ocean biomes.
@@ -238,7 +238,7 @@
 
  Future MC now depends on Shadowfacts' Forgelin.
 
-##Version 0.1.13 - Patch update:
+## Version 0.1.13 - Patch update:
  Barrel - Fixed placement rotation that I messed up around 0.1.11.
  Bees, Blast Furnace, Campfire, Composter, Smoker, Stonecutter - Added removeAll functions. They aren't all called removeAll, so check the Wiki for the names.
  Bee Nests - Added config option to allow the nests to spawn in more biomes.
@@ -246,7 +246,7 @@
  Stonecutter - CraftTweaker compatibility!
  Stonecutter - JEI compatibility!
 
-##Version 0.1.12 - Campfire Functionality and Honey Blocks! New things:
+## Version 0.1.12 - Campfire Functionality and Honey Blocks! New things:
  *Honey Block* - A super sticky block from 1.15 that limits movement. You can also slide down the sides of it!
  *Honeycomb Block* - A decorative/storage block for Honeycombs.
  Campfire - Can now cook items.
@@ -265,7 +265,7 @@
 
  Future MC now uses a coremod. It places hives on trees.
 
-##Version 0.1.11 - Bees? New things:
+## Version 0.1.11 - Bees? New things:
  *Bees* - Cute flying insects from 1.15 snapshots that pollinate crops. Possible flower targets can be added and removed with CraftTweaker scripts.
  *Honeycomb* - Resource from 1.15 snapshot obtained from beehives.
  *Bee Hive and Bee House* - Blocks from 1.15 where bees come to make honey.
@@ -278,26 +278,26 @@
  Bamboo - Fixed hitbox bug with OptiFine.
  Added more language support.
 
-##Version 0.1.10 - It's been a while:
+## Version 0.1.10 - It's been a while:
  *Blue Ice* - Most slippery type of ice in the game.
  Dyes - Fixed names being switched between blue dye and white dye.
  Composter - CraftTweaker now uses IIngredients instead of IItemStacks.
 
-##Version 0.1.9b - Patch Update:
+## Version 0.1.9b - Patch Update:
  Grindstone - Actually fixed the dupe glitch this time.
  Panda - Now retaliates like in 1.14.
 
-##Version 0.1.9 - Patch Update:
+## Version 0.1.9 - Patch Update:
  Grindstone - Fixed dupe glitch.
  Grindstone - Fixed durability issue with enchanted items.
  Trident - Fixed NPE when disabled.
  Trident - Tweaked Channeling enchantment to behave like in 1.13.
  Added a way to show incomplete features of the mod, such as the Scaffolding block and Loom guiType. Check the README on GitHub!
 
-##Version 0.1.8b - Quick Patch:
+## Version 0.1.8b - Quick Patch:
  Bamboo Jungle - Added config option to re-enable the old Bamboo Jungles.
 
-##Version 0.1.8 - Patch Update:
+## Version 0.1.8 - Patch Update:
  Bamboo - Now has its sounds from 1.14.
  Campfire - Now has crackling sounds.
  Composter - Now works on servers.
@@ -307,14 +307,14 @@
  Grindstone - Awards the correct amount of xp for enchantments, like in 1.14.
  Pandas - Now properly attacks.
 
-##Version 0.1.7 - Pandas! New things:
+## Version 0.1.7 - Pandas! New things:
  *Pandas* - Rare animal from 1.14 whose favorite food is bamboo.
  *Riptide* - Added the riptide enchantment to the Trident.
  Trident Enchantments - Now only work when the user is wet, just like in 1.13.
  Blast Furnace and Smoker - CraftTweaker compatibility!
  Composter - Items can now be inserted through automation, and bonemeal can also be collected through automation.
 
-##Version 0.1.6 - Patch update:
+## Version 0.1.6 - Patch update:
  Composter - Adjusted the default list of valid items.
  Composter - CraftTweaker compatibility!
  Composter - Fixed NullPointerException with composter sounds.
@@ -333,18 +333,18 @@
  Bamboo Forest - Will be re-added in the future to be more like 1.14 Bamboo Forest.
  Barrel - Fixed an issue with the order of slots.
 
-##Version 0.1.5 - Composter! New things:
+## Version 0.1.5 - Composter! New things:
  *Composter* - Block from 1.14 that allows you to compost things into bonemeal.
  *Vanilla Tabs* - New Config option! If enabled, Future MC items go into Vanilla Creative tabs instead of the Future MC tab.
  Berry Bush - Tweaked the bush damage.
  Stonecutter - Removed a GUI that was not supposed to be there.
  Loom - Fixed a crash with FoamFix.
 
-##Version 0.1.4 - Patch update:
+## Version 0.1.4 - Patch update:
  Grindstone - Now works properly and Curses persist. Got rid of ghost client EXP orbs.
  Berry Bush - Now does damage when it has berries.
 
-##Version 0.1.3 - Bamboo! New things:
+## Version 0.1.3 - Bamboo! New things:
  *Bamboo* - Plant from 1.14 that spawns in Bamboo Jungles.
  *Bamboo Jungle* - Biome from 1.14 where Bamboo can be found.
  *Grindstone* - Block from 1.14 that disenchants and repairs items.
@@ -364,15 +364,15 @@
  *Deutsch* - Added German language support.
  *Pусский* - Added Russian language support, thanks to Mr_Krab on GitHub.
 
-##Version 0.1.2c - Quick Patch:
+## Version 0.1.2c - Quick Patch:
  Fixed Campfire not burning out in rain when config option was enabled
  Allowed usage of mod in versions as old as Forge 14.23.5.2776
  Fixed config not working in game
 
-##Version 0.1.2b - Quick Patch:
+## Version 0.1.2b - Quick Patch:
  Fixed stonecutter model config
 
-##Version 0.1.2 - Better Furnaces! New things:
+## Version 0.1.2 - Better Furnaces! New things:
  *Blast Furnace* - Block from 1.14 that smelts ores at twice the speed of a furnace, and uses half the fuel! (efficient fuel is toggleable in config)
  *Smoker* - Block from 1.14 that cooks food at twice the speed of a furnace, and uses half the fuel! (efficient fuel is toggleable in config)
  *Smithing Table* - Decorative block from 1.14.
@@ -384,13 +384,13 @@
  Sweet Berries - Added proper OreDictionary entries to work with Thermal Expansions' Phytogenic Insolator.
  *Español* - Things from this mod will now translate into Mexican Spanish.
 
-##Version 0.1.1 - Tridents! New things:
+## Version 0.1.1 - Tridents! New things:
  *Throw-able Tridents* - Tridents can now be thrown as ranged weapons.
  *Trident Enchantments* - Tridents now have 3 special enchantments: Loyalty, Channeling, and Impaling.
  Flowers - Adjusted natural generation to generate in rarer patches, because lonely flowers in every chunk was odd-looking.
  I will now have wiki pages for this mod's content.
 
-##Version 0.1.0 - Planned changes:
+## Version 0.1.0 - Planned changes:
  *Stonecutter Functionality* - Stonecutter will now be able to craft blocks.
  *New Config file* - Config file is now a proper Forge annotated config file that can be edited through Mod Options.
  Lanterns - Changed block placement to use a more efficient boolean property, and if possible, will hang from the ceiling block if the   below block is broken.
@@ -401,31 +401,31 @@
  Stripped Logs - Updated texture to use current log textures.
  ...more may be added! I am close to finishing the update.
 
-##Version 0.0.9 - New things:
+## Version 0.0.9 - New things:
  *Walls* - Walls that were added in 1.14 are now craftable decorative blocks. 12 new wall variants!
  Trident - Animation now properly disabled by default.
  Stonecutter - Preparing to add functionality.
 
-##Version 0.0.8 - Big update! New things:
+## Version 0.0.8 - Big update! New things:
   *Stripped Logs* - A wooden log that gets its fancy new look when activated with an Axe.
   Campfire - Patched this block, as it was broken before. Now works as intended!
   Trident - Preparing to add some functionality, might come in a few updates or so.
 
-##Version 0.0.7 - Campfire! New things:
+## Version 0.0.7 - Campfire! New things:
    *Campfire* - A decorative block that emits a small amount of light and smoke. Cheap to craft, early game light source.
    Stonecutter - Now renders correctly when placed next to solid blocks. Torches can no longer be placed on top of the stonecutter.
    Sorry this update took so long, I spent too long trying to add custom particles to the Campfire. I failed :(
 
-##Version 0.0.6 - Berry Bushes! New things:
+## Version 0.0.6 - Berry Bushes! New things:
     *Sweet Berry Bush* - Generates in Taiga biomes, grows berries that can be harvested and eaten.
     *Sweet Berries* - New food item that can restore 2 hunger points, just like a Melon slice. Can be harvested from Sweet Berry Bushes.
 
-##Version 0.0.5 - New things:
+## Version 0.0.5 - New things:
     Lily of the Valley - Now generates in forest biomes.
     Cornflower - Now generates in the Plains biome.
     *Loom* - New block that does not have functionality.
 
-##Version 0.0.4 - Finally Done! New things:
+## Version 0.0.4 - Finally Done! New things:
     Server Proxy - Exists once again. Fixes issue # 1.
     Wither Rose - Now has an option in the config to toggle whether it does damage or not. Now placeable on soul sand.
     Barrel - Now craftable: Can store items like the one from 1.14 as well! Drops inventory when destroyed.
@@ -434,14 +434,14 @@
     Trident - Now has durability and deals damage.
     *Suspicious stew* - Food item that gives a potion effect when consumed. Now fully implemented!
 
-##Version 0.0.3 - An update! New things:
+## Version 0.0.3 - An update! New things:
     Lantern - No longer placeable on plants. Planning to limit placement even further so it cannot be placeable on slabs or stairs.
     Wither Rose - Now deals damage and inflicts Wither effect. Now emits particles.
     Dyes - Now craftable from their respective flowers and equivalents.
     *New Config File* - All features are toggleable in this config file.
     Many small refactors all around to accomadate config file.
     
-##Version 0.0.2 - An update! New things:
+## Version 0.0.2 - An update! New things:
     Lantern - Now properly hangs from blocks like the fence.
     *Trident* - A non-functional combat item that is planned to deal 9 damage and have an attack speed
                 of 1.1.
@@ -453,6 +453,6 @@
                     Planned to be crafted into Black Dye.
     *Black Dye* - A substitute for Ink Sacs in recipes that require a black dye.
 
-##Version 0.0.1 - First version! Blocks added:
+## Version 0.0.1 - First version! Blocks added:
     *Lantern* - An upgraded light source that can hang on the ceiling or sit on the floor.
     *Stonecutter* - A decorative block. Recipe not yet implemented.
