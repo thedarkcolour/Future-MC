@@ -16,7 +16,7 @@ public class GuiFurnaceAdvanced extends FGui<ContainerFurnaceAdvanced> {
 
     private GuiFurnaceAdvanced(ContainerFurnaceAdvanced container) {
         super(container);
-        playerInv = container.getPlayerInv();
+        playerInv = container.playerInv;
         te = container.te;
     }
 

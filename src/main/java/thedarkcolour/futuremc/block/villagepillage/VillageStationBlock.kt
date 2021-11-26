@@ -14,9 +14,8 @@ open class VillageStationBlock(properties: Properties, private val guiType: GuiT
         worldIn: World, pos: BlockPos, state: IBlockState, playerIn: EntityPlayer,
         hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float
     ): Boolean {
-        if (functionalityOption) {
-            return guiType?.open(playerIn, worldIn, pos) ?: false
-        }
-        return false
+        return if (functionalityOption && guiType != null) {
+            guiType.open(playerIn, worldIn, pos)
+        } else false
     }
 }

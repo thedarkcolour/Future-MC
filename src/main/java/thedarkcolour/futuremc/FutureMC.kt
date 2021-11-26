@@ -4,19 +4,13 @@ package thedarkcolour.futuremc
 
 import net.minecraft.block.BlockDispenser
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.dispenser.BehaviorDefaultDispenseItem
-import net.minecraft.dispenser.IBehaviorDispenseItem
-import net.minecraft.dispenser.IBlockSource
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.item.ItemShears
-import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.ShapedRecipes
 import net.minecraft.launchwrapper.Launch
 import net.minecraft.tileentity.BannerPattern
-import net.minecraft.tileentity.TileEntityDispenser
-import net.minecraft.world.World
 import net.minecraftforge.common.util.EnumHelper
 import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.FMLCommonHandler
@@ -29,8 +23,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.relauncher.Side
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import thedarkcolour.core.util.registerServerDispenserBehaviour
+import thedarkcolour.core.util.registerDispenserBehaviour
 import thedarkcolour.core.util.runOnClient
+import thedarkcolour.futuremc.block.buzzybees.BottleDispenserBehavior
 import thedarkcolour.futuremc.block.buzzybees.ShearDispenserBehaviour
 import thedarkcolour.futuremc.capability.SwimmingCapability
 import thedarkcolour.futuremc.client.gui.GuiType
@@ -43,10 +38,8 @@ import thedarkcolour.futuremc.event.Events
 import thedarkcolour.futuremc.item.BannerPatternItem
 import thedarkcolour.futuremc.network.NetworkHandler
 import thedarkcolour.futuremc.registry.FBlocks
-import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FParticles
 import thedarkcolour.futuremc.registry.FRecipes
-import thedarkcolour.futuremc.tile.BeeHiveTile
 import thedarkcolour.futuremc.tile.BellTileEntity
 import thedarkcolour.futuremc.tile.CampfireTile
 import thedarkcolour.futuremc.world.gen.feature.AncientDebrisWorldGen
@@ -124,13 +117,19 @@ object FutureMC {
         }
         if (FConfig.buzzyBees.bee.enabled) {
             for (item in ForgeRegistries.ITEMS) {
+                // Add the action for every type of shears
                 if (item is ItemShears) {
-                    registerServerDispenserBehaviour(item) { worldIn, source, stack, existing ->
-                        ShearDispenserBehaviour().dispense(source, stack)
+                    val existing = BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.getObject(item)
+
+                    registerDispenserBehaviour(item) { source, stack ->
+                        ShearDispenserBehaviour.dispense(source.world, source, stack, existing)
                     }
                 }
             }
-            registerServerDispenserBehaviour(Items.GLASS_BOTTLE, ::glassBottleBehaviour)
+            val existing = BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.getObject(Items.GLASS_BOTTLE)
+            registerDispenserBehaviour(Items.GLASS_BOTTLE) { source, stack ->
+                BottleDispenserBehavior.dispense(source.world, source, stack, existing)
+            }
         }
 
         if (FConfig.villageAndPillage.loom.enabled) {
@@ -149,57 +148,7 @@ object FutureMC {
         runOnClient {
             ClientRegistry.bindTileEntitySpecialRenderer(BellTileEntity::class.java, BellTileEntityRenderer())
             ClientRegistry.bindTileEntitySpecialRenderer(CampfireTile::class.java, CampfireRenderer)
-            //ClientRegistry.bindTileEntitySpecialRenderer(TileSeagrassRenderer::class.java, TESRSeagrassRenderer)
-
-            /*(Minecraft.getMinecraft().resourceManager as IReloadableResourceManager).registerReloadListener(
-                ISelectiveResourceReloadListener { _, predicate ->
-                    if (predicate.test(VanillaResourceType.TEXTURES)) {
-                        val field = Fluid::class.java.getDeclaredField("color")
-                        field.isAccessible = true
-                        field.set(FluidRegistry.WATER, 0x3f76e4)
-
-                        // fix crash before getting to load screen
-
-                        kotlin.runCatching {
-                            if (FConfig.updateAquatic.newWaterColor) {
-                                val textures =
-                                    ObfuscationReflectionHelper.getPrivateValue<Array<TextureAtlasSprite>, BlockFluidRenderer>(
-                                        BlockFluidRenderer::class.java,
-                                        Minecraft.getMinecraft().blockRendererDispatcher.fluidRenderer,
-                                        "field_178271_b"
-                                    )
-
-                                val map = Minecraft.getMinecraft().textureMapBlocks
-
-                                textures[0] = map.getAtlasSprite("futuremc:blocks/water_still")
-                                textures[1] = map.getAtlasSprite("futuremc:blocks/water_flow")
-                            }
-                        }
-                    }
-                }
-            )*/
         }
-    }
-
-    private fun glassBottleBehaviour(worldIn: World, source: IBlockSource, stack: ItemStack, existing: IBehaviorDispenseItem?): ItemStack {
-        val pos = source.blockPos.offset(source.blockState.getValue(BlockDispenser.FACING))
-        val te = worldIn.getTileEntity(pos)
-
-        if (te is BeeHiveTile && te.honeyLevel >= 5) {
-            te.emptyHoney(worldIn, pos, null)
-            stack.shrink(1)
-
-            if (stack.isEmpty) {
-                return stack
-            } else {
-                if (source.getBlockTileEntity<TileEntityDispenser>().addItemStack(ItemStack(FItems.HONEY_BOTTLE)) < 0) {
-                    BehaviorDefaultDispenseItem().dispense(source, stack)
-                }
-
-                return ItemStack(FItems.HONEY_BOTTLE)
-            }
-
-        } else return existing?.dispense(source, stack) ?: stack
     }
 
     private fun registerWorldGen() {
@@ -213,7 +162,7 @@ object FutureMC {
             GameRegistry.registerWorldGenerator(FlowerWorldGen(FBlocks.SWEET_BERRY_BUSH), 0)
         }
         if (FConfig.villageAndPillage.bamboo.enabled) {
-            GameRegistry.registerWorldGenerator(BambooWorldGen, 0)
+            GameRegistry.registerWorldGenerator(BambooWorldGen, 0,)
         }
         if (FConfig.buzzyBees.bee.enabled) {
             BeeNestGenerator.refresh()

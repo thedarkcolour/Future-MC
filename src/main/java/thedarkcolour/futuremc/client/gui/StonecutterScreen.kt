@@ -28,7 +28,7 @@ class StonecutterScreen(container: StonecutterContainer) : FGui<StonecutterConta
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
         fontRenderer.drawString(I18n.format("container.stonecutter"), 8, 6, 4210752)
-        fontRenderer.drawString(container.playerInv.displayName.unformattedText, 8, ySize - 94, 4210752)
+        fontRenderer.drawString(getContainer().playerInv.displayName.unformattedText, 8, ySize - 94, 4210752)
     }
 
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
@@ -42,7 +42,7 @@ class StonecutterScreen(container: StonecutterContainer) : FGui<StonecutterConta
         drawTexturedModalRect(i + 119, j + 15 + scrollY, 176 + if (canScroll()) 0 else 12, 0, 12, 15)
         drawRecipeButton(mouseX, mouseY, i, j)
 
-        if (container.recipeList.isNotEmpty()) {
+        if (getContainer().recipeList.isNotEmpty()) {
             val x = guiLeft + 52
             val y = guiTop + 14
             val k = recipeIndexOffset + 12
@@ -52,7 +52,7 @@ class StonecutterScreen(container: StonecutterContainer) : FGui<StonecutterConta
     }
 
     private fun canScroll(): Boolean {
-        return hasInput && container.recipeList.size > 12
+        return hasInput && getContainer().recipeList.size > 12
     }
 
     /**
@@ -75,13 +75,13 @@ class StonecutterScreen(container: StonecutterContainer) : FGui<StonecutterConta
      */
     private fun drawResultBackgrounds(mouseX: Int, mouseY: Int, left: Int, top: Int, maxOffset: Int) {
         var i = recipeIndexOffset
-        while (i < maxOffset && i < container.recipeList.size) {
+        while (i < maxOffset && i < getContainer().recipeList.size) {
             val j = i - recipeIndexOffset
             val k = left + j % 4 * 16
             val l = j / 4
             val i1 = top + l * 18 + 2
             var j1 = ySize
-            if (i == container.selectedIndex) {
+            if (i == getContainer().selectedIndex) {
                 j1 += 18
             } else if (mouseX >= k && mouseY >= i1 && mouseX < k + 16 && mouseY < i1 + 18) {
                 j1 += 36
@@ -96,10 +96,10 @@ class StonecutterScreen(container: StonecutterContainer) : FGui<StonecutterConta
      */
     private fun drawResultItems(left: Int, top: Int, maxOffset: Int) {
         RenderHelper.enableGUIStandardItemLighting()
-        val recipes = container.recipeList
+        val recipes = getContainer().recipeList
         var i = recipeIndexOffset
 
-        while (i < maxOffset && i < container.recipeList.size) {
+        while (i < maxOffset && i < getContainer().recipeList.size) {
             val j = i - recipeIndexOffset
             val k = left + j % 4 * 16
             val l = j / 4
@@ -122,9 +122,9 @@ class StonecutterScreen(container: StonecutterContainer) : FGui<StonecutterConta
                 val x = mouseX - (i + i1 % 4 * 16).toDouble()
                 val y = mouseY - (j + i1 / 4 * 18).toDouble()
 
-                if (x >= 0.0 && y >= 0.0 && x < 16.0 && y < 18.0 && container.enchantItem(mc.player, l)) {
+                if (x >= 0.0 && y >= 0.0 && x < 16.0 && y < 18.0 && getContainer().enchantItem(mc.player, l)) {
                     Minecraft.getMinecraft().soundHandler.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0f))
-                    mc.playerController.sendEnchantPacket(container.windowId, l)
+                    mc.playerController.sendEnchantPacket(getContainer().windowId, l)
                     return
                 }
             }
@@ -168,11 +168,11 @@ class StonecutterScreen(container: StonecutterContainer) : FGui<StonecutterConta
     }
 
     private fun getHiddenRows(): Int {
-        return (container.recipeList.size + 4 - 1) / 4 - 3
+        return (getContainer().recipeList.size + 4 - 1) / 4 - 3
     }
 
     private fun onInventoryUpdate() {
-        hasInput = container.recipeList.isNotEmpty()
+        hasInput = getContainer().recipeList.isNotEmpty()
 
         if (!hasInput) {
             sliderProgress = 0.0f

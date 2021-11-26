@@ -1,4 +1,4 @@
-package thedarkcolour.futuremc.compat.jei.furnace;
+package thedarkcolour.futuremc.compat.jei.category;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.*;
@@ -10,7 +10,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import thedarkcolour.futuremc.FutureMC;
-import thedarkcolour.futuremc.compat.jei.SimpleRecipeWrapper;
+import thedarkcolour.futuremc.compat.jei.recipe.SimpleRecipeWrapper;
 
 public class AdvancedFurnaceRecipeCategory implements IRecipeCategory<SimpleRecipeWrapper> {
     public static final String SMOKING = "container.jei.futuremc.smoker.name";

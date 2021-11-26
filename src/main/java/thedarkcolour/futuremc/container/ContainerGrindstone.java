@@ -188,7 +188,7 @@ public class ContainerGrindstone extends FContainer {
             } else {
                 for (int i = 0; i < input.getSlots(); i++) {
                     if (!input.getStackInSlot(i).isEmpty()) {
-                        getPlayerInv().placeItemBackInInventory(world, input.getStackInSlot(i));
+                        playerInv.placeItemBackInInventory(world, input.getStackInSlot(i));
                     }
                 }
             }
@@ -275,6 +275,6 @@ public class ContainerGrindstone extends FContainer {
     @NotNull
     @SideOnly(Side.CLIENT)
     public Object createGui() {
-        return new GuiGrindstone(new ContainerGrindstone(getPlayerInv(), world, pos));
+        return new GuiGrindstone(new ContainerGrindstone(playerInv, world, pos));
     }
 }

@@ -53,8 +53,7 @@ class BeeHiveBlock(properties: Properties) : InteractionBlock(properties) {
     }
 
     override fun getStateFromMeta(meta: Int): IBlockState {
-        return defaultState.withProperty(IS_FULL, meta and 4 != 0)
-            .withProperty(FACING, EnumFacing.byHorizontalIndex(meta and -5))
+        return defaultState.withProperty(IS_FULL, meta and 4 != 0).withProperty(FACING, EnumFacing.byHorizontalIndex(meta and -5))
     }
 
     override fun getMetaFromState(state: IBlockState): Int {
