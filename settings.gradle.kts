@@ -20,4 +20,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "FutureMC"
+rootProject.name = "future-mc"

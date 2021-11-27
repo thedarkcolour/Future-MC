@@ -4,7 +4,7 @@ import wtf.gofancy.fancygradle.script.extensions.curse
 import java.time.LocalDateTime
 
 plugins {
-    kotlin("jvm") version "1.6.0" // For build script syntax
+    kotlin("jvm") version "1.5.10" // For build script syntax
     java
     idea
     id("net.minecraftforge.gradle") version "5.0.+"
@@ -174,6 +174,7 @@ tasks {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xinline-classes", "-Xjvm-default=enable")
             jvmTarget = "1.8"
+            languageVersion = "1.3"
         }
     }
 }

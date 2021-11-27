@@ -4,6 +4,7 @@ package thedarkcolour.futuremc
 
 import net.minecraft.block.BlockDispenser
 import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.dispenser.IBehaviorDispenseItem
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.Item
@@ -121,15 +122,15 @@ object FutureMC {
                 if (item is ItemShears) {
                     val existing = BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.getObject(item)
 
-                    registerDispenserBehaviour(item) { source, stack ->
+                    registerDispenserBehaviour(item, IBehaviorDispenseItem { source, stack ->
                         ShearDispenserBehaviour.dispense(source.world, source, stack, existing)
-                    }
+                    })
                 }
             }
             val existing = BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.getObject(Items.GLASS_BOTTLE)
-            registerDispenserBehaviour(Items.GLASS_BOTTLE) { source, stack ->
+            registerDispenserBehaviour(Items.GLASS_BOTTLE, IBehaviorDispenseItem { source, stack ->
                 BottleDispenserBehavior.dispense(source.world, source, stack, existing)
-            }
+            })
         }
 
         if (FConfig.villageAndPillage.loom.enabled) {
@@ -162,7 +163,7 @@ object FutureMC {
             GameRegistry.registerWorldGenerator(FlowerWorldGen(FBlocks.SWEET_BERRY_BUSH), 0)
         }
         if (FConfig.villageAndPillage.bamboo.enabled) {
-            GameRegistry.registerWorldGenerator(BambooWorldGen, 0,)
+            GameRegistry.registerWorldGenerator(BambooWorldGen, 0)
         }
         if (FConfig.buzzyBees.bee.enabled) {
             BeeNestGenerator.refresh()

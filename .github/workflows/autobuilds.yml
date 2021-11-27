@@ -51,7 +51,7 @@ jobs: # Define build and release
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
           color: "#6a00ff"
-          message: "New jar: https://github.com/Macleykun/Future-MC/releases/tag/latest ${{ github.event.head_commit.message }}"
+          message: "New jar: https://github.com/thedarkcolour/Future-MC/releases/tag/latest ${{ github.event.head_commit.message }}"
           #file: "${{ env.CFILELOC }}" It's to big :( 8MB is max
   release: # When a release is made, this part will be triggerd to make a release based on the commit: Release 0.2.7.3 alpha
     name: Create pubilc releases #                                                                    Trigger^ ^Version^Release type
@@ -61,7 +61,7 @@ jobs: # Define build and release
     steps: # Get repo files, compiled jar and create env vars from commit, changelog.md and compiled file loc to upload everything to CurseForge and let Discord server know
       - name: Get repo files
         uses: actions/checkout@v2
-      - name: Get artifacts # Easier then just recompiling
+      - name: Get artifacts # Easier than just recompiling
         uses: actions/download-artifact@v2
         id: download # Needed to refer to ${{steps.download.outputs.download-path}}
         with:
@@ -96,7 +96,7 @@ jobs: # Define build and release
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
           color: "#1cfc03"
-          message: New official release! Check it out @ https://www.curseforge.com/minecraft/mc-mods/notfmcplease/files/${{ steps.upload.outputs.id }} # Refers to the exact uploaded file on CF
+          message: New official release! Check it out @ https://www.curseforge.com/minecraft/mc-mods/future-mc/files/${{ steps.upload.outputs.id }} # Refers to the exact uploaded file on CF
       - name: "Build Fail"
         if: failure()
         uses: appleboy/discord-action@master

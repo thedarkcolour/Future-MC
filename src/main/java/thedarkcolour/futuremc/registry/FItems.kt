@@ -20,8 +20,7 @@ import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
 import thedarkcolour.futuremc.item.*
 
 /**
- * Object declaration containing references
- * to all items and block items in Future MC.
+ * All items and block items in Future MC
  *
  * @author TheDarkColour
  */
@@ -29,8 +28,8 @@ import thedarkcolour.futuremc.item.*
 object FItems {
     val DEBUGGER = DebuggerItem()
 
-    val NAUTILUS_SHELL = ModeledItem("nautilus_shell").setCreativeTab(CreativeTabs.MISC)
-    val SCUTE = ModeledItem("scute").setCreativeTab(CreativeTabs.MATERIALS)
+    val NAUTILUS_SHELL = ModeledItem("nautilus_shell").setItemGroup(CreativeTabs.MISC)
+    val SCUTE = ModeledItem("scute").setItemGroup(CreativeTabs.MATERIALS)
     val TRIDENT = TridentItem()
     val PUFFERFISH_BUCKET = FishBucketItem("pufferfish_bucket", ::EntityPufferfish)
     val COD_BUCKET = FishBucketItem("cod_bucket", ::EntityCod)
@@ -44,7 +43,7 @@ object FItems {
     val SUSPICIOUS_STEW = SuspiciousStewItem()
     val BAMBOO = BambooItem()
 
-    val HONEYCOMB = ModeledItem("honeycomb").setCreativeTab(CreativeTabs.MISC)
+    val HONEYCOMB = ModeledItem("honeycomb").setItemGroup(CreativeTabs.MISC)
     val HONEY_BOTTLE = HoneyBottleItem()
 
     // see Util.kt for Item.setItemGroup
@@ -146,7 +145,7 @@ object FItems {
     val CHAIN = ModeledItemBlock(FBlocks.CHAIN)
     val NETHERITE_BLOCK = FireproofItemBlock(FBlocks.NETHERITE_BLOCK)
     val ANCIENT_DEBRIS = FireproofItemBlock(FBlocks.ANCIENT_DEBRIS)
-    val RECORD_PIGSTEP = RecordItem("futuremc.pigstep", FSounds.RECORD_PIGSTEP).setCreativeTab(FutureMC.GROUP)
+    val RECORD_PIGSTEP = RecordItem("futuremc.pigstep", FSounds.RECORD_PIGSTEP).setItemGroup(CreativeTabs.MISC)
 
     fun registerItems(items: IForgeRegistry<Item>) {
         if (FConfig.villageAndPillage.dyes) items.register(DYES)
