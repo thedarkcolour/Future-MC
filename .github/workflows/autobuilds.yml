@@ -3,7 +3,7 @@ name: Autobuild Future-MC
 on: # Triggers the workflow on push events to only main
   push:
     branches:
-      - main
+      - master
   workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
 
 jobs: # Define build and release
