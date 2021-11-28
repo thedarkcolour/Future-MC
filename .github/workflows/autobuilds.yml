@@ -87,7 +87,7 @@ jobs: # Define build and release
           game_endpoint: minecraft
           game_versions: minecraft-1-12:1.12.2,2:Java 8,Forge
           relations: bwm-suite:optionalDependency,crafttweaker:optionalDependency,jei:optionalDependency,pams-harvestcraft:optionalDependency,quark:optionalDependency,tinkers-construct:optionalDependency,shadowfacts-forgelin:requiredDependency
-          project_id: 547469
+          project_id: 310059
           release_type: ${{ env.RTYPE}} # Must be release, beta or alpha
           token: "${{ secrets.CF_API_TOKEN }}"
       - name: "Build Success" # The final steps notify if the above upload worked out, so that we know when to debug CF/this workflow/the jar itself
