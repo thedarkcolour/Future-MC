@@ -2,6 +2,7 @@ name: Compile Future-MC for PR
 
 on: # Triggers the workflow on pull requests to any branch
   pull_request:
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
 
 jobs: # Define build and release
   build:
