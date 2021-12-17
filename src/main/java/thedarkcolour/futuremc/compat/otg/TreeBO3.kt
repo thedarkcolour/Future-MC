@@ -45,6 +45,7 @@ class TreeBO3(obj: BO3) : BO3(nameField.get(obj) as String, fileField.get(obj) a
 
         for (block in settings.getBlocks(rotation.rotationId)) {
             // Skip all non-log blocks
+            if (block == null || block !is ForgeMaterialData) continue
             if ((block.material as ForgeMaterialData).internalBlock().block is BlockLog) {
                 val rotationDir = random.nextInt(3)
                 val dir = BeeNestGenerator.VALID_OFFSETS[rotationDir]
