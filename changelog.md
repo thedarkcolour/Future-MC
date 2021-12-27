@@ -1,3 +1,6 @@
+## Version 0.2.8 - OTG compatibility:
+- Beehives now spawn on all trees added by Biome Bundle and should work for other biome packs on OpenTerrainGenerator
+
 ## Version 0.2.7.4 - Bugfix:
 - Fixed a crash with villager trading crashing servers
 - Try to fix a bug with MIA

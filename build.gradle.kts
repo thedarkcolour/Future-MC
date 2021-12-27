@@ -14,7 +14,7 @@ plugins {
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 idea.module.inheritOutputDirs = true
 
-version = "0.2.7.4"
+version = "0.2.8"
 group = "thedarkcolour.futuremc"
 
 minecraft {
@@ -88,7 +88,6 @@ repositories {
         name = "IC2"
         url = uri("https://maven.ic2.player.to/")
     }
-
     maven {   // Worldedit API
         url = uri("https://maven.sk89q.com/repo/")
     }
@@ -112,7 +111,7 @@ dependencies {
     api("net.shadowfacts:Forgelin:1.8.4")
 
     // OTG
-    implementation(fg.deobf(curse("otg", 265894, 3151431)))
+    compileOnly(fg.deobf(curse("otg", 265894, 3151431)))
     compileOnly("com.sk89q.worldedit:worldedit-forge-mc1.11:6.1.6") {
         exclude("com.google.guava")
         exclude("com.google.gson")
