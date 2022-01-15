@@ -1,7 +1,5 @@
 package thedarkcolour.futuremc.asm
 
-import com.pg85.otg.customobjects.CustomObject
-import net.minecraft.client.entity.AbstractClientPlayer
 import net.minecraft.client.model.ModelBiped
 import net.minecraft.client.renderer.ItemModelMesher
 import net.minecraft.client.renderer.RenderItem
@@ -10,10 +8,8 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformT
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumHand
-import net.minecraft.util.EnumHandSide
 import net.minecraftforge.client.ForgeHooksClient
 import thedarkcolour.futuremc.client.render.TridentBakedModel
-import kotlin.math.PI
 
 object ASMHooks {
     /**
@@ -39,7 +35,7 @@ object ASMHooks {
      *
      * Adds functionality for the custom Arm Poses that Future MC adds.
      */
-    @JvmStatic
+    /*@JvmStatic
     fun setCustomArmPoses(player: AbstractClientPlayer, model: ModelBiped) {
         val mainItem = player.heldItemMainhand
         val offItem = player.heldItemMainhand
@@ -54,7 +50,7 @@ object ASMHooks {
             model.leftArmPose = a
             model.rightArmPose = b
         }
-    }
+    }*/
 
     /**
      * If the player has a Trident (or eventually a Crossbow)
@@ -103,7 +99,7 @@ object ASMHooks {
      * Rotates the player's arms if the poses of those arms are
      * custom Future MC arm poses.
      */
-    @JvmStatic
+    /*@JvmStatic
     fun rotateByPose(model: ModelBiped) {
         val rightPose = model.rightArmPose
         val leftPose = model.leftArmPose
@@ -115,5 +111,5 @@ object ASMHooks {
             model.bipedLeftArm.rotateAngleX = model.bipedLeftArm.rotateAngleX * 0.5f - PI.toFloat()
             model.bipedLeftArm.rotateAngleY = 0.0f
         }
-    }
+    }*/
 }

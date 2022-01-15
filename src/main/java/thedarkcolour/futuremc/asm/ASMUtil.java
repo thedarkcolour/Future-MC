@@ -6,7 +6,6 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.*;
 
 import javax.annotation.Nullable;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import static org.objectweb.asm.Opcodes.ICONST_1;
@@ -23,10 +22,12 @@ public final class ASMUtil {
         return classNode;
     }
 
-    public static InsnList createInsnList(Consumer<InsnList> fill) {
+    public static InsnList createInsnList(AbstractInsnNode... fill) {
         InsnList list = new InsnList();
 
-        fill.accept(list);
+        for (AbstractInsnNode abstractInsnNode : fill) {
+            list.add(abstractInsnNode);
+        }
 
         return list;
     }
@@ -67,15 +68,15 @@ public final class ASMUtil {
     }
 
     /**
-     * Patches before a line that returns true.
+     * Patches before the first occurrence of [ICONST_1, IRETURN].
+     * Modifies the classNode, so using this return value is optional.
      *
      * @param classNode the class to patch
      * @param method the method to patch
      * @param toAdd the patch to apply
-     * @return the patched bytecode of the class
      */
-    public static byte[] patchBeforeReturnTrue(ClassNode classNode, MethodNode method, InsnList toAdd) {
-        return patchBeforeInsn(classNode, method, toAdd, 1, node -> {
+    public static void patchBeforeReturnTrue(ClassNode classNode, MethodNode method, InsnList toAdd) {
+        patchBeforeInsn(classNode, method, toAdd, 1, node -> {
             return node.getOpcode() == IRETURN && node.getPrevious().getOpcode() == ICONST_1;
         });
     }
@@ -88,9 +89,8 @@ public final class ASMUtil {
      * @param srgName
      * @param mcpName
      * @param occurrence
-     * @return
      */
-    public static byte[] patchBeforeMcMethod(
+    public static void patchBeforeMcMethod(
             ClassNode classNode,
             MethodNode method,
             InsnList toAdd,
@@ -98,7 +98,7 @@ public final class ASMUtil {
             String mcpName,
             int occurrence
     ) {
-        return patchBeforeInsn(classNode, method, toAdd, occurrence, node -> {
+        patchBeforeInsn(classNode, method, toAdd, occurrence, node -> {
             String actualName = isObfuscated ? srgName : mcpName;
 
             if (node instanceof MethodInsnNode) {
@@ -119,19 +119,17 @@ public final class ASMUtil {
      * @param toAdd the patch to apply
      * @param occurrence if there are multiple nodes, which of them to patch before
      * @param condition the condition to check when finding a patch location
-     * @return the patched bytecode
      */
-    public static byte[] patchBeforeInsn(ClassNode classNode, MethodNode method, InsnList toAdd, int occurrence, Predicate<AbstractInsnNode> condition) {
+    public static void patchBeforeInsn(ClassNode classNode, MethodNode method, InsnList toAdd, int occurrence, Predicate<AbstractInsnNode> condition) {
         int[] occurrences = { 0 };
 
+        // And condition: only runs when condition is true, increments and checks if occurrence matches
         AbstractInsnNode insn = findInsn(method, condition.and(node -> {
             occurrences[0] = ++occurrences[0];
             return occurrences[0] == occurrence;
         }));
 
         method.instructions.insertBefore(insn, toAdd);
-
-        return compile(classNode);
     }
 
     /**
@@ -172,21 +170,12 @@ public final class ASMUtil {
         throw new RuntimeException("Could not find matching instruction in bytecode");
     }
 
+    /**
+     * Compiles the class node into JVM bytecode. Terminal operation
+     */
     public static byte[] compile(ClassNode classNode) {
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
         classNode.accept(cw);
-        return cw.toByteArray();
-    }
-
-    // args because some stuff is dumb
-    public static byte[] compile(ClassNode classNode, int args) {
-        ClassWriter cw = new ClassWriter(args);
-        try {
-            classNode.accept(cw);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            throw t;
-        }
         return cw.toByteArray();
     }
 }

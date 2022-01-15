@@ -84,6 +84,16 @@ object BeeNestGenerator {
         }
     }
 
+    fun generateBeeNestsForSwampTrees(
+        worldIn: World,
+        rand: Random,
+        position: BlockPos,
+        height: Int,
+        tree: WorldGenAbstractTree
+    ) {
+        if (cannotGenerate(worldIn, rand, position)) return
+    }
+
     // Skips reflection and flower checks because this is only called during w orldgen
     fun fastCannotGenerate(worldIn: World, rand: Random, pos: BlockPos): Boolean {
         if (!buzzyBees.bee.enabled) {

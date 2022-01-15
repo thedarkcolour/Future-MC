@@ -87,8 +87,6 @@ object BeeHiveFeature : IPostGenFeature {
         // we are only doing oak
         val treePos = rootPos.up()
 
-        //println(rand.nextDouble())
-
         if (
             (species == OAK || species == BIRCH) &&
             rand.nextDouble() <= getDoubleOrDefault(BIOMES_AND_CHANCES, worldIn.getBiome(treePos).registryName!!, 0.0)

@@ -122,7 +122,7 @@ dependencies {
     }
 
     // Optional mod compat
-    compileOnly(fg.deobf(curse("dynamic_trees", 252818, 3260881)))
+    implementation(fg.deobf(curse("dynamic_trees", 252818, 3260881)))
     compileOnly(curse("pams_harvestcraft", 221857, 2904825))
     compileOnly(fg.deobf(curse("plants", 257229, 2697165)))
     compileOnly(fg.deobf(curse("placebo", 283644, 2694382)))
