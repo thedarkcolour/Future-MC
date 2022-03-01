@@ -16,6 +16,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.WorldServer
 import net.minecraftforge.event.ForgeEventFactory
+import net.minecraftforge.fml.common.Loader
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.floor
@@ -143,6 +144,10 @@ object FireproofItemLogic {
 
         entity.spawnRunningParticles()
         entity.handleWaterMovement()
+
+        if (entity.posY < -64.0 && !Loader.isModLoaded("cubicchunks")) {
+            entity.outOfWorld()
+        }
 
         entity.firstUpdate = false
         entity.world.profiler.endSection()
