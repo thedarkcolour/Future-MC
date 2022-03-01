@@ -144,10 +144,6 @@ object FireproofItemLogic {
         entity.spawnRunningParticles()
         entity.handleWaterMovement()
 
-        if (entity.posY < -64.0) {
-            entity.outOfWorld()
-        }
-
         entity.firstUpdate = false
         entity.world.profiler.endSection()
     }
