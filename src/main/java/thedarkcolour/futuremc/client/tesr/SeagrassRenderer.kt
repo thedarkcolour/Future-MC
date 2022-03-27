@@ -1,4 +1,4 @@
-package thedarkcolour.futuremc.client.tesr.water
+package thedarkcolour.futuremc.client.tesr
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.BufferBuilder

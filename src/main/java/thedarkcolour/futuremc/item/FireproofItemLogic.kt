@@ -53,11 +53,7 @@ object FireproofItemLogic {
             entity.noClip = if (entity.world.isRemote) {
                 false
             } else {
-                entity.pushOutOfBlocks(
-                    entity.posX,
-                    (entity.entityBoundingBox.minY + entity.entityBoundingBox.maxY) / 2.0,
-                    entity.posZ
-                )
+                entity.pushOutOfBlocks(entity.posX, (entity.entityBoundingBox.minY + entity.entityBoundingBox.maxY) / 2.0, entity.posZ)
             }
 
             entity.customEntityMove(MoverType.SELF, entity.motionX, entity.motionY, entity.motionZ)
@@ -144,6 +140,7 @@ object FireproofItemLogic {
         entity.spawnRunningParticles()
         entity.handleWaterMovement()
 
+        // todo replace with call to ICubicWorld.getMinHeight - 64.0
         if (entity.posY < -64.0) {
             entity.outOfWorld()
         }

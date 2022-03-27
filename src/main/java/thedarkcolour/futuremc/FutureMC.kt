@@ -30,8 +30,9 @@ import thedarkcolour.futuremc.block.buzzybees.BottleDispenserBehavior
 import thedarkcolour.futuremc.block.buzzybees.ShearDispenserBehaviour
 import thedarkcolour.futuremc.capability.SwimmingCapability
 import thedarkcolour.futuremc.client.gui.GuiType
-import thedarkcolour.futuremc.client.tesr.bell.BellTileEntityRenderer
-import thedarkcolour.futuremc.client.tesr.campfire.CampfireRenderer
+import thedarkcolour.futuremc.client.tesr.BellTileEntityRenderer
+import thedarkcolour.futuremc.client.tesr.CampfireRenderer
+import thedarkcolour.futuremc.client.tesr.WoodenSignRenderer
 import thedarkcolour.futuremc.compat.QUARK
 import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
@@ -43,6 +44,7 @@ import thedarkcolour.futuremc.registry.FParticles
 import thedarkcolour.futuremc.registry.FRecipes
 import thedarkcolour.futuremc.tile.BellTileEntity
 import thedarkcolour.futuremc.tile.CampfireTile
+import thedarkcolour.futuremc.tile.WoodenSignTile
 import thedarkcolour.futuremc.world.gen.feature.AncientDebrisWorldGen
 import thedarkcolour.futuremc.world.gen.feature.BambooWorldGen
 import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator
@@ -148,6 +150,7 @@ object FutureMC {
         // TESR registering
         runOnClient {
             ClientRegistry.bindTileEntitySpecialRenderer(BellTileEntity::class.java, BellTileEntityRenderer())
+            ClientRegistry.bindTileEntitySpecialRenderer(WoodenSignTile::class.java, WoodenSignRenderer())
             ClientRegistry.bindTileEntitySpecialRenderer(CampfireTile::class.java, CampfireRenderer)
         }
     }

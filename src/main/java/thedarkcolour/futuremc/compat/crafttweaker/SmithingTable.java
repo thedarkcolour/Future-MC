@@ -2,16 +2,16 @@ package thedarkcolour.futuremc.compat.crafttweaker;
 
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
+import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
-import crafttweaker.api.oredict.IOreDictEntry;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.futuremc.recipe.smithing.SmithingRecipe;
 import thedarkcolour.futuremc.recipe.smithing.SmithingRecipes;
 
-import static thedarkcolour.futuremc.compat.crafttweaker.RecipeUtil.applyAction;
-import static thedarkcolour.futuremc.compat.crafttweaker.RecipeUtil.toItemStack;
+import static thedarkcolour.futuremc.compat.crafttweaker.RecipeUtil.*;
 
 @ZenRegister
 @ZenClass("mods.futuremc.SmithingTable")
@@ -19,35 +19,23 @@ public final class SmithingTable {
     /**
      * Adds a recipe.
      *
-     * @param input the type of item, id and meta (ignores tool durability)
-     * @param material the material and how much of it (id, metadata, quantity)
+     * @param input the type of item (ignores tool durability)
+     * @param material the material and how much of it
      * @param result the result item with NBT from input (id)
      */
     @ZenMethod
-    public static void addRecipe(IItemStack input, IItemStack material, IItemStack result) {
+    public static void addRecipe(IIngredient input, IIngredient material, IItemStack result) {
         applyAction(new AddAction(input, material, result));
     }
 
-    /**
-     * Overload that uses ores instead of item stacks
-     */
-    @ZenMethod
-    public static void addRecipe(IOreDictEntry input, IOreDictEntry material, IItemStack result) {
-        for (IItemStack a : input.getItems()) {
-            for (IItemStack b : material.getItems()) {
-                applyAction(new AddAction(a, b, result));
-            }
-        }
-    }
-
     private static final class AddAction implements IAction {
-        private final ItemStack input;
-        private final ItemStack material;
+        private final Ingredient input;
+        private final Ingredient material;
         private final ItemStack result;
 
-        private AddAction(IItemStack input, IItemStack material, IItemStack result) {
-            this.input = toItemStack(input);
-            this.material = toItemStack(material);
+        private AddAction(IIngredient input, IIngredient material, IItemStack result) {
+            this.input = toIngredient(input);
+            this.material = toIngredient(material);
             this.result = toItemStack(result);
         }
 

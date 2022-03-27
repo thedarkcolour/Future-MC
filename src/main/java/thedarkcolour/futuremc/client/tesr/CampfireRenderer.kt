@@ -1,4 +1,4 @@
-package thedarkcolour.futuremc.client.tesr.campfire
+package thedarkcolour.futuremc.client.tesr
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager

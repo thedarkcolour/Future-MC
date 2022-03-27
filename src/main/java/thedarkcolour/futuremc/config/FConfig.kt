@@ -348,6 +348,11 @@ object FConfig {
         @JvmField
         val newTrapdoors = NewTrapdoors()
 
+        @Name("New Signs")
+        @Comment("Enable/disable any of the new signs from 1.14")
+        @JvmField
+        val newSigns = NewTrapdoors()
+
         @Name("New Villager Gui Screen")
         @Comment("Whether the 1.12 villager screen is replaced by FutureMC's 1.14 villager screen")
         @JvmField

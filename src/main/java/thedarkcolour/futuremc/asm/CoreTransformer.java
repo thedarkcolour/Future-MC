@@ -52,8 +52,8 @@ public final class CoreTransformer implements IClassTransformer {
                 case "com.pg85.otg.customobjects.bo3.BO3Loader":
                     return transformBO3Loader(basicClass);
 
-                //case "biomesoplenty.common.world.generator.tree.GeneratorTreeBase":
-                //    return transformBOPTree(basicClass);
+                case "biomesoplenty.common.world.generator.tree.GeneratorTreeBase":
+                    return transformBOPTree(basicClass);
             }
         } catch (NoClassDefFoundError e) {
             return basicClass;

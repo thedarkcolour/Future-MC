@@ -79,18 +79,30 @@ object FBlocks {
     val OAK_WOOD = BlockWood("oak_wood")
     val SPRUCE_WOOD = BlockWood("spruce_wood")
     val DARK_OAK_WOOD = BlockWood("dark_oak_wood")
+
     val ACACIA_TRAPDOOR = BlockWoodTrapdoor("acacia_trapdoor")
     val JUNGLE_TRAPDOOR = BlockWoodTrapdoor("jungle_trapdoor")
     val BIRCH_TRAPDOOR = BlockWoodTrapdoor("birch_trapdoor")
     val SPRUCE_TRAPDOOR = BlockWoodTrapdoor("spruce_trapdoor")
     val DARK_OAK_TRAPDOOR = BlockWoodTrapdoor("dark_oak_trapdoor")
 
+    val ACACIA_STANDING_SIGN = FSignBlock.Standing("acacia")
+    val JUNGLE_STANDING_SIGN = FSignBlock.Standing("jungle")
+    val BIRCH_STANDING_SIGN = FSignBlock.Standing("birch")
+    val SPRUCE_STANDING_SIGN = FSignBlock.Standing("spruce")
+    val DARK_OAK_STANDING_SIGN = FSignBlock.Standing("dark_oak")
+    val ACACIA_WALL_SIGN = FSignBlock.Wall("acacia")
+    val JUNGLE_WALL_SIGN = FSignBlock.Wall("jungle")
+    val BIRCH_WALL_SIGN = FSignBlock.Wall("birch")
+    val SPRUCE_WALL_SIGN = FSignBlock.Wall("spruce")
+    val DARK_OAK_WALL_SIGN = FSignBlock.Wall("dark_oak")
+
     val SOUL_FIRE_LANTERN = LanternBlock(Properties(Material.IRON, "soul_fire_lantern").hardnessAndResistance(3.5f).sound(FSounds.LANTERN).light(10).group(CreativeTabs.DECORATIONS))
     val SOUL_FIRE_TORCH = BlockSoulFireTorch()
     val SOUL_SOIL = FBlock(Properties(Material.GROUND, "soul_soil").group(CreativeTabs.BUILDING_BLOCKS).sound(FSounds.SOUL_SOIL))
     val CHAIN = ChainBlock(Properties(Material.IRON, "chain").sound(FSounds.CHAIN).hardnessAndResistance(5.0f, 6.0f).shape(FBlock.cube(6.5, 0.0, 6.5, 9.5, 16.0, 9.5)).group(CreativeTabs.DECORATIONS))
-    val NETHERITE_BLOCK = FBlock(Properties(Material.IRON, "netherite_block").color(MapColor.BLACK).hardnessAndResistance(50.0f, 1200.0f).sound(FSounds.NETHERITE).usableBeaconBase())
-    val ANCIENT_DEBRIS = FBlock(Properties(Material.IRON, "ancient_debris").color(MapColor.BLACK).hardnessAndResistance(30.0f, 1200.0f).sound(FSounds.ANCIENT_DEBRIS))
+    val NETHERITE_BLOCK = FBlock(Properties(Material.IRON, "netherite_block").color(MapColor.BLACK).hardnessAndResistance(50.0f, 1200.0f).sound(FSounds.NETHERITE).group(CreativeTabs.BUILDING_BLOCKS).usableBeaconBase())
+    val ANCIENT_DEBRIS = FBlock(Properties(Material.IRON, "ancient_debris").color(MapColor.BLACK).hardnessAndResistance(30.0f, 1200.0f).sound(FSounds.ANCIENT_DEBRIS).group(CreativeTabs.BUILDING_BLOCKS))
     // val WARPED_NYLIUM = NyliumBlock(Properties(Material.ROCK, "warped_nylium").color(MapColor.CYAN).hardnessAndResistance(1.0f).sound(FSounds.NYLIUM))
     // val CRIMSON_NYLIUM = NyliumBlock(Properties(Material.ROCK, "crimson_nylium").color(MapColor.RED))
     // val WARPED_WART_BLOCK = FBlock(Properties(Material.GRASS, "warped_wart_block").color(MapColor.CYAN))
@@ -283,6 +295,14 @@ object FBlocks {
             blocks.register(POLISHED_BLACKSTONE_WALL)
         }
 
+        val newSigns = FConfig.villageAndPillage.newSigns
+
+        if (newSigns.acacia) { blocks.registerAll(ACACIA_STANDING_SIGN, ACACIA_WALL_SIGN) }
+        if (newSigns.birch) { blocks.registerAll(BIRCH_STANDING_SIGN, BIRCH_WALL_SIGN) }
+        if (newSigns.darkOak) { blocks.registerAll(DARK_OAK_STANDING_SIGN, DARK_OAK_WALL_SIGN) }
+        if (newSigns.jungle) { blocks.registerAll(JUNGLE_STANDING_SIGN, JUNGLE_WALL_SIGN) }
+        if (newSigns.spruce) { blocks.registerAll(SPRUCE_STANDING_SIGN, SPRUCE_WALL_SIGN) }
+
         registerTE("futuremc:barrel", TileBarrel::class.java, FConfig.villageAndPillage.barrel)
         registerTE("futuremc:blast_furnace", TileFurnaceAdvanced.TileBlastFurnace::class.java, FConfig.villageAndPillage.blastFurnace)
         registerTE("futuremc:beehive", BeeHiveTile::class.java, FConfig.buzzyBees.bee.enabled)
@@ -290,6 +310,7 @@ object FBlocks {
         registerTE("futuremc:smoker", TileFurnaceAdvanced.TileSmoker::class.java, FConfig.villageAndPillage.smoker)
         registerTE("futuremc:composter", TileComposter::class.java, FConfig.villageAndPillage.composter)
         registerTE("futuremc:campfire", CampfireTile::class.java, FConfig.villageAndPillage.campfire.enabled)
+        registerTE("futuremc:sign", WoodenSignTile::class.java, newSigns.acacia || newSigns.birch || newSigns.darkOak || newSigns.jungle || newSigns.spruce)
 
         registerTE("futuremc:water_renderer", TileSeagrassRenderer::class.java, FutureMC.DEBUG)
     }

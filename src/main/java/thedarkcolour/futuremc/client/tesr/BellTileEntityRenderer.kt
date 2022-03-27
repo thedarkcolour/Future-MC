@@ -1,4 +1,4 @@
-package thedarkcolour.futuremc.client.tesr.bell
+package thedarkcolour.futuremc.client.tesr
 
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer
