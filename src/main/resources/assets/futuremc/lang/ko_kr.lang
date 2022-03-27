@@ -1,0 +1,283 @@
+# Korean translations thanks to 야옹/여름_1
+
+# Functional Block
+tile.futuremc.lantern.name=랜턴
+tile.futuremc.barrel.name=통
+tile.futuremc.loom.name=베틀
+tile.futuremc.stonecutter.name=석재 절단기
+tile.futuremc.blast_furnace.name=용광로
+tile.futuremc.smoker.name=훈연기
+tile.futuremc.grindstone.name=숫돌
+tile.futuremc.composter.name=퇴비통
+tile.futuremc.cartography_table.name=지도 제작대
+
+# Plant
+tile.futuremc.lily_of_the_valley.name=은방울꽃
+tile.futuremc.wither_rose.name=위더 장미
+tile.futuremc.cornflower.name=수레국화
+tile.futuremc.sweet_berry_bush.name=달콤한 열매 덤불
+tile.futuremc.campfire.name=모닥불
+tile.futuremc.stripped_oak_log.name=껍질을 벗긴 참나무 원목
+tile.futuremc.stripped_spruce_log.name=껍질을 벗긴 가문비나무 원목
+tile.futuremc.stripped_birch_log.name=껍질을 벗긴 자작나무 원목
+tile.futuremc.stripped_jungle_log.name=껍질을 벗긴 정글나무 원목
+tile.futuremc.stripped_acacia_log.name=껍질을 벗긴 아카시아나무 원목
+tile.futuremc.stripped_dark_oak_log.name=껍질을 벗긴 짙은 참나무 원목
+death.attack.berryBush=%1$s 이(가) 달콤한 열매 덤불에 찔려 만신창이가 되었습니다.
+death.attack.sting=%1$s 이(가) 벌에 쏘여 죽었습니다.
+death.attack.trident=%1$s 이(가) %2$s 의 창에 의해 관통당했습니다.
+death.attack.trident.item=%1$s was impaled by %2$s with %3$s
+
+# Wall
+tile.futuremc.brick_wall.name=벽돌 담장
+tile.futuremc.andesite_wall.name=안산암 담장
+tile.futuremc.diorite_wall.name=섬록암 담장
+tile.futuremc.granite_wall.name=화강암 담장
+tile.futuremc.prismarine_wall.name=프리즈마린 담장
+tile.futuremc.stone_brick_wall.name=석재 벽돌 담장
+tile.futuremc.mossy_stone_brick_wall.name=이끼 낀 석재 벽돌 담장
+tile.futuremc.end_stone_brick_wall.name=엔드 돌 담장
+tile.futuremc.nether_brick_wall.name=네더 벽돌 담장
+tile.futuremc.sandstone_wall.name=사암 담장
+tile.futuremc.red_sandstone_wall.name=붉은 사암 담장
+tile.futuremc.red_nether_brick_wall.name=붉은 네더 벽돌 담장
+
+# Slab
+tile.futuremc.granite_slab.name=화강암 반블록
+tile.futuremc.andesite_slab.name=안산암 반블록
+tile.futuremc.diorite_slab.name=섬록암 반블록
+tile.futuremc.polished_granite_slab.name=매끄러운 화강암 반블록
+tile.futuremc.polished_andesite_slab.name=매끄러운 안산암 반블록
+tile.futuremc.polished_diorite_slab.name=매끄러운 섬록암 반블록
+tile.futuremc.stone_slab.name=돌 반블록
+tile.futuremc.prismarine_slab.name=프리즈마린 반블록
+tile.futuremc.dark_prismarine_slab.name=어두운 프리즈마린 반블록
+tile.futuremc.prismarine_brick_slab.name=프리즈마린 벽돌 반블록
+tile.futuremc.smooth_red_sandstone_slab.name=매끄러운 붉은 사암 반블록
+tile.futuremc.smooth_sandstone_slab.name=매끄러운 사암 반블록
+tile.futuremc.mossy_stone_brick_slab.name=이끼 낀 석재 벽돌 반블록
+tile.futuremc.mossy_stone_slab.name=이끼 낀 돌 반블록
+tile.futuremc.smooth_quartz_slab.name=매끄러운 석영 반블록
+tile.futuremc.red_nether_brick_slab.name=붉은 네더 벽돌 반블록
+tile.futuremc.end_stone_brick_slab.name=엔드 벽돌 반블록
+tile.futuremc.bamboo.name=대나무
+tile.futuremc.bee_nest.name=벌집
+tile.futuremc.beehive.name=벌통
+tile.futuremc.honey_block.name=꿀 블록
+tile.futuremc.honeycomb_block.name=벌집 블록
+
+# Decorative Block
+tile.futuremc.smooth_stone.name=매끄러운 돌
+tile.futuremc.smooth_sandstone.name=매끄러운 사암
+tile.futuremc.smooth_red_sandstone.name=매끄러운 붉은 사암
+tile.futuremc.smooth_quartz.name=매끄러운 석영
+tile.futuremc.soul_soil.name=영혼 흙
+tile.futuremc.fletching_table.name=화살 작업대
+tile.futuremc.smithing_table.name=대장장이 작업대
+tile.futuremc.blue_ice.name=푸른 얼음
+tile.futuremc.soul_fire_torch.name=영혼 횃불
+tile.futuremc.soul_fire_lantern.name=영혼 랜턴
+tile.futuremc.acacia_trapdoor.name=아카시아나무 다락문
+tile.futuremc.jungle_trapdoor.name=정글나무 다락문
+tile.futuremc.birch_trapdoor.name=자작나무 다락문
+tile.futuremc.spruce_trapdoor.name=가문비나무 다락문
+tile.futuremc.dark_oak_trapdoor.name=짙은 참나무 다락문
+tile.futuremc.bell.name=종
+tile.futuremc.acacia_wood.name=아카시아나무
+tile.futuremc.jungle_wood.name=정글나무
+tile.futuremc.birch_wood.name=자작나무
+tile.futuremc.oak_wood.name=참나무
+tile.futuremc.spruce_wood.name=가문비나무
+tile.futuremc.dark_oak_wood.name=짙은 참나무
+tile.futuremc.stripped_acacia_wood.name=껍질 벗긴 아카시아나무 원목
+tile.futuremc.stripped_jungle_wood.name=껍질 벗긴 정글나무 원목
+tile.futuremc.stripped_birch_wood.name=껍질 벗긴 자작나무 원목
+tile.futuremc.stripped_oak_wood.name=껍질 벗긴 참나무 원목
+tile.futuremc.stripped_spruce_wood.name=껍질 벗긴 가문비나무 원목
+tile.futuremc.stripped_dark_oak_wood.name=껍질 벗긴 짙은 참나무 원목
+tile.futuremc.chain.name=사슬
+tile.futuremc.ancient_debris.name=고대 잔해
+tile.futuremc.netherite_block.name=네더라이트 블록
+entity.ItemFrame.name=아이템 액자
+
+# Banner
+item.banner.globe.black=Black Globe
+item.banner.globe.red=Red Globe
+item.banner.globe.green=Green Globe
+item.banner.globe.brown=Brown Globe
+item.banner.globe.blue=Blue Globe
+item.banner.globe.purple=Purple Globe
+item.banner.globe.cyan=Cyan Globe
+item.banner.globe.silver=Light Gray Globe
+item.banner.globe.gray=Gray Globe
+item.banner.globe.pink=Pink Globe
+item.banner.globe.lime=Lime Globe
+item.banner.globe.yellow=Yellow Globe
+item.banner.globe.lightBlue=Light Blue Globe
+item.banner.globe.magenta=Magenta Globe
+item.banner.globe.orange=Orange Globe
+item.banner.globe.white=White Globe
+
+# Crafting Materials
+item.futuremc.dye.0.name=하얀색 염료
+item.futuremc.dye.1.name=파란색 염료
+item.futuremc.dye.2.name=갈색 염료
+item.futuremc.dye.3.name=검은색 염료
+
+# Item
+item.futuremc.trident.name=삼지창
+item.futuremc.crossbow.name=쇠뇌
+item.futuremc.crossbow_loaded.name=장전된 쇠뇌
+item.futuremc.suspicious_stew.name=수상한 스튜
+item.futuremc.sweet_berries.name=달콤한 열매
+item.futuremc.bamboo.name=대나무
+item.futuremc.banner_pattern.name=배너 모양
+item.futuremc.banner_pattern.flower=꽃 모양
+item.futuremc.banner_pattern.creeper=크리퍼 모양
+item.futuremc.banner_pattern.skull=해골 모양
+item.futuremc.banner_pattern.thing=Thing
+item.futuremc.banner_pattern.globe=Globe
+item.futuremc.banner_pattern.snout=Snout
+item.futuremc.honey_bottle.name=꿀이 담긴 병
+item.futuremc.honeycomb.name=벌집
+item.futuremc.nautilus_shell.name=앵무조개 껍데기
+item.futuremc.pufferfish_bucket.name=복어가 담긴 양동이
+item.futuremc.salmon_bucket.name=연어가 담긴 양동이
+item.futuremc.cod_bucket.name=대구가 담긴 양동이
+item.futuremc.tropical_fish_bucket.name=열대어가 담긴 양동이
+item.futuremc.netherite_axe.name=네더라이트 도끼
+item.futuremc.netherite_hoe.name=네더라이트 괭이
+item.futuremc.netherite_pickaxe.name=네더라이트 곡괭이
+item.futuremc.netherite_shovel.name=네더라이트 삽
+item.futuremc.netherite_sword.name=네더라이트 검
+item.futuremc.netherite_scrap.name=네더라이트 파편
+item.futuremc.netherite_helmet.name=네더라이트 투구
+item.futuremc.netherite_chestplate.name=네더라이트 갑옷
+item.futuremc.netherite_leggings.name=네더라이트 각반
+item.futuremc.netherite_boots.name=네더라이트 부츠
+item.futuremc.netherite_ingot.name=네더라이트 주괴
+item.record.futuremc.pigstep.desc=Lena Raine - Pigstep
+item.futuremc.record_pigstep.name=Music Disc
+
+# GUI
+container.barrel=통
+container.blast_furnace=용광로
+container.smoker=훈연기
+container.grindstone=수리 & 인챈트 제거
+container.stonecutter=석재 절단기
+container.loom=베틀
+container.smithing=Upgrade Gear
+container.fmc_villager.trades=Trades
+container.fmc_villager.novice=Novice
+container.fmc_villager.apprentice=Apprentice
+container.fmc_villager.journeyman=Journeyman
+container.fmc_villager.expert=전문가
+container.fmc_villager.master=마스터
+
+# Entity
+entity.futuremc:trident.name=Trident
+entity.futuremc:panda.name=Panda
+entity.futuremc:bee.name=Bee
+entity.futuremc:cod.name=Cod
+entity.futuremc:pufferfish.name=Pufferfish
+entity.futuremc:salmon.name=Salmon
+entity.futuremc:tropical_fish.name=Tropical Fish
+
+# Enchantment
+enchantment.loyalty=충절
+enchantment.futuremc.loyalty.desc=삼지창을 던지면 다시 돌아옵니다.
+enchantment.channeling=집전
+enchantment.futuremc.channeling.desc=뇌우가 올 때에 던진 삼지창에 맞은 몹에게 벼락이 내리칩니다.
+enchantment.riptide=급류
+enchantment.futuremc.riptide.desc=물에 닿거나 비를 맞을 때만 삼지창을 던질 수 있으며, 던지면 창과 플레이어가 함께 날아갑니다.
+enchantment.impaling=찌르기
+enchantment.futuremc.impaling.desc=수생 몬스터에게 추가 피해를 줍니다.
+enchantment.quick_charge=빠른 장전
+enchantment.futuremc.quick_charge.desc=재장전 시간을 (인챈트 레벨)*0.25초 씩 줄여줍니다.
+
+# Creative Tab
+itemGroup.futuremc=Future MC
+
+# JEI
+container.jei.futuremc.campfire.name=모닥불
+container.jei.futuremc.blast_furnace.name=용광로
+container.jei.futuremc.smoker.name=훈연기
+container.jei.futuremc.stonecutter.name=석재 절단기
+container.jei.futuremc.smithing.name=대장장이 작업대
+container.jei.futuremc.composter.name=퇴비통
+container.jei.futuremc.campfire.duration=내구도
+container.jei.futuremc.composter.chance=확률
+
+# Config
+futuremc.config.blue_ice=푸른 얼음
+
+# Vanilla Override
+tile.sandStone.smooth.name=Cut Sandstone
+tile.redSandStone.smooth.name=Cut Red Sandstone
+
+# Quark Compatibility
+item.futuremc.banner_pattern.quark_dragon=Dragon Charge
+item.futuremc.banner_pattern.quark_eye_of_ender=Eye Charge
+item.futuremc.banner_pattern.quark_sword=Sword Charge
+item.futuremc.banner_pattern.quark_shield=Shield Charge
+
+# Subtitles
+futuremc.subtitles.barrel_close=Barrel closes
+futuremc.subtitle.barrel_open=Barrel opens
+futuremc.subtitle.trident_throw=Trident clangs
+futuremc.subtitle.trident_pierce=Trident stabs
+futuremc.subtitle.trident_ground_impact=Trident vibrates
+futuremc.subtitle.trident_channeling=Trident thunder cracks
+futuremc.subtitle.trident_loyalty=Trident returns
+futuremc.subtitle.riptide_trident=Trident zooms
+futuremc.subtitle.crossbow_charge=Crossbow charges up
+futuremc.subtitle.crossbow_shoot=Crossbow fires
+futuremc.subtitle.grindstone_use=Grindstone used
+futuremc.subtitles.panda_aggressive_ambient=Panda huffs
+futuremc.subtitles.panda_ambient=Panda pants
+futuremc.subtitles.panda_bite=Panda bites
+futuremc.subtitles.panda_cannot_breed=Panda bleats
+futuremc.subtitles.panda_death=Panda dies
+futuremc.subtitles.panda_eat=Panda eats
+futuremc.subtitles.panda_hurt=Panda hurts
+futuremc.subtitles.panda_pre_sneeze=Panda's nose tickles
+futuremc.subtitles.panda_sneeze=Panda sneezes
+futuremc.subtitles.panda_step=Panda steps
+futuremc.subtitles.panda_worried_ambient=Panda whimpers
+futuremc.subtitles.campfire_crackle=Campfire crackles
+futuremc.subtitles.bell_ring=Bell rings
+futuremc.subtitles.bell_resonate=Bell resonates
+futuremc.subtitles.bee_enter_hive=Bee enters hive
+futuremc.subtitles.bee_exit_hive=Bee leaves hive
+futuremc.subtitles.bee_sting=Bee stings
+futuremc.subtitles.bee_death=Bee dies
+futuremc.subtitles.bee_hurt=Bee hurts
+futuremc.subtitles.bee_pollinate=Bee buzzes happily
+futuremc.subtitles.bee_work=Bees work
+futuremc.subtitles.bee_aggressive=Bee buzzes angrily
+futuremc.subtitles.bee_passive=Bee buzzes
+futuremc.subtitles.honey_bottle_drink=Honey gulping
+futuremc.subtitles.shear_hive=Shears scrape
+futuremc.subtitles.honey_block_slide=Sliding down a honey block
+futuremc.subtitles.equip_netherite=Netherite armor clanks
+futuremc.subtitles.smithing_table_use=Smithing table used
+futuremc.subtitles.cod_swim=Cod swims
+futuremc.subtitles.cod_hurt=Cod hurts
+futuremc.subtitles.cod_death=Cod dies
+futuremc.subtitles.cod_flop=Cod flops
+futuremc.subtitles.salmon_swim=Salmon swims
+futuremc.subtitles.salmon_hurt=Salmon hurts
+futuremc.subtitles.salmon_death=Salmon dies
+futuremc.subtitles.salmon_flop=Salmon flops
+futuremc.subtitles.pufferfish_swim=Pufferfish swims
+futuremc.subtitles.pufferfish_hurt=Pufferfish hurts
+futuremc.subtitles.pufferfish_death=Pufferfish dies
+futuremc.subtitles.pufferfish_flop=Pufferfish flops
+futuremc.subtitles.tropical_fish_swim=Tropical fish swims
+futuremc.subtitles.tropical_fish_hurt=Tropical fish hurts
+futuremc.subtitles.tropical_fish_death=Tropical fish dies
+futuremc.subtitles.tropical_fish_flop=Tropical fish flops
+futuremc.subtitles.iron_golem_repair=Iron golem repaired
+futuremc.subtitles.pufferfish_inflate=Pufferfish inflates
+futuremc.subtitles.pufferfish_deflate=Pufferfish deflates
+futuremc.subtitles.pufferfish_sting=Pufferfish stings

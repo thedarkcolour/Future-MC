@@ -104,7 +104,7 @@ dependencies {
     // Stuff I care about
     implementation(fg.deobf(curse("enchantment_descriptions", 250419, 2689502)))
     implementation(fg.deobf(curse("enchantment_descriptions_sources", 250419, 2689503)))
-    implementation(fg.deobf(curse("fluidlogged_api", 485654, 3384016)))
+    implementation(fg.deobf(curse("fluidlogged_api", 485654, 3698755)))
     implementation(fg.deobf(curse("biomes_o_plenty", 220318, 2842510)))
     implementation("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548")
     implementation(fg.deobf("mezz.jei:jei_1.12.2:4.15.0.+"))
@@ -122,7 +122,7 @@ dependencies {
     }
 
     // Optional mod compat
-    compileOnly(fg.deobf(curse("dynamic_trees", 252818, 3260881)))
+    implementation(fg.deobf(curse("dynamic_trees", 252818, 3260881)))
     compileOnly(curse("pams_harvestcraft", 221857, 2904825))
     compileOnly(fg.deobf(curse("plants", 257229, 2697165)))
     compileOnly(fg.deobf(curse("placebo", 283644, 2694382)))

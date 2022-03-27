@@ -1,6 +1,6 @@
 package thedarkcolour.futuremc.block.villagepillage
 
-import git.jbredwards.fluidlogged_api.common.block.IFluidloggable
+import git.jbredwards.fluidlogged_api.api.block.IFluidloggable
 import net.minecraft.block.Block
 import net.minecraft.block.BlockHopper
 import net.minecraft.block.BlockTrapDoor
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Optional
 import thedarkcolour.core.block.FBlock
 import java.util.*
 
-@Optional.Interface(iface = "git.jbredwards.fluidlogged_api.common.block.IFluidloggable", modid = "fluidlogged_api")
+@Optional.Interface(iface = "git.jbredwards.fluidlogged_api.api.block.IFluidloggable", modid = "fluidlogged_api")
 class LanternBlock(properties: Properties) : FBlock(properties), IFluidloggable {
     init {
         // todo check to see if i should add to FBlock

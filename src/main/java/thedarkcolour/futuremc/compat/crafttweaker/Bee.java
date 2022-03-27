@@ -1,7 +1,6 @@
 package thedarkcolour.futuremc.compat.crafttweaker;
 
 import crafttweaker.CraftTweakerAPI;
-import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.block.IBlockState;
 import crafttweaker.api.minecraft.CraftTweakerMC;
@@ -17,29 +16,11 @@ public final class Bee {
     @ZenMethod
     public static void addFlower(IBlockState block) {
         net.minecraft.block.state.IBlockState state = CraftTweakerMC.getBlockState(block);
+
         if (!EntityBee.FLOWERS.contains(state)) {
-            CraftTweakerAPI.apply(AddFlower.of(() -> EntityBee.FLOWERS.add(state)));
+            CraftTweakerAPI.apply(new RecipeUtil.NamedAction("Added flower as bee pollination target", () -> EntityBee.FLOWERS.add(state)));
         } else {
             FutureMC.LOGGER.log(Level.WARN, "Tried to add duplicate flower block to bee: " + state);
-        }
-    }
-
-    private interface AddFlower extends IAction {
-        @Override
-        void apply();
-
-        /**
-         * Get rid of ugly casting
-         * @param runnable the remove action
-         * @return the remove action
-         */
-        static IAction of(AddFlower runnable) {
-            return runnable;
-        }
-
-        @Override
-        default String describe() {
-            return "Added valid flower for bee pollination";
         }
     }
 
@@ -48,28 +29,9 @@ public final class Bee {
         net.minecraft.block.state.IBlockState state = CraftTweakerMC.getBlockState(block);
 
         if (EntityBee.FLOWERS.contains(state)) {
-            CraftTweakerAPI.apply(RemoveFlower.of(() -> EntityBee.FLOWERS.remove(state)));
+            CraftTweakerAPI.apply(new RecipeUtil.NamedAction("Removed flower from bee pollination targets", () -> EntityBee.FLOWERS.remove(state)));
         } else {
             FutureMC.LOGGER.log(Level.WARN, "Tried to remove non pollinateable flower block to bee " + state);
-        }
-    }
-
-    private interface RemoveFlower extends IAction {
-        @Override
-        void apply();
-
-        /**
-         * Get rid of ugly casting
-         * @param runnable the remove action
-         * @return the remove action
-         */
-        static IAction of(RemoveFlower runnable) {
-            return runnable;
-        }
-
-        @Override
-        default String describe() {
-            return "Removed a valid flower for bee pollination";
         }
     }
 
@@ -78,16 +40,6 @@ public final class Bee {
      */
     @ZenMethod
     public static void clearValidFlowers() {
-        CraftTweakerAPI.apply(new IAction() {
-            @Override
-            public void apply() {
-                EntityBee.FLOWERS.clear();
-            }
-
-            @Override
-            public String describe() {
-                return "Cleared pollinateable flowers";
-            }
-        });
+        CraftTweakerAPI.apply(new RecipeUtil.NamedAction("Cleared bee pollination targets", EntityBee.FLOWERS::clear));
     }
 }

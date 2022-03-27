@@ -102,15 +102,8 @@ class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
             val d3 = random.nextGaussian() * 0.02
             val d4 = random.nextGaussian() * 0.02
             val d5 = random.nextGaussian() * 0.02
-            worldIn.spawnParticle(
-                EnumParticleTypes.VILLAGER_HAPPY,
-                pos.x + d1 + d2 * random.nextFloat().toDouble(),
-                pos.y.toDouble() + d0 + random.nextFloat().toDouble() * (1.0 - d0),
-                pos.z.toDouble() + d1 + d2 * random.nextFloat().toDouble(),
-                d3,
-                d4,
-                d5
-            )
+
+            worldIn.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.x + d1 + d2 * random.nextFloat().toDouble(), pos.y.toDouble() + d0 + random.nextFloat().toDouble() * (1.0 - d0), pos.z.toDouble() + d1 + d2 * random.nextFloat().toDouble(), d3, d4, d5)
         }
     }
 

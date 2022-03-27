@@ -3,7 +3,6 @@ package thedarkcolour.core.item
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import org.jetbrains.annotations.Contract
 import thedarkcolour.core.util.setBuiltinRenderer
 import thedarkcolour.core.util.setItemModel
 import thedarkcolour.core.util.setItemName
@@ -26,7 +25,6 @@ open class ModeledItem(regName: String) : Item() {
         }
     }
 
-    @Contract("_->this")
     override fun setCreativeTab(tab: CreativeTabs): ModeledItem {
         super.setCreativeTab(if (FConfig.useVanillaCreativeTabs) tab else FutureMC.GROUP)
         return this

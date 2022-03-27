@@ -1,15 +1,13 @@
 package thedarkcolour.futuremc.compat.crafttweaker;
 
+import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
-import crafttweaker.api.oredict.IOreDictEntry;
 import net.minecraft.item.ItemStack;
-import org.apache.logging.log4j.Level;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
-import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.block.villagepillage.ComposterBlock;
 import thedarkcolour.futuremc.tile.TileComposter;
 
@@ -21,105 +19,90 @@ import static thedarkcolour.futuremc.compat.crafttweaker.RecipeUtil.toItemStack;
 public final class Composter {
     @ZenMethod
     public static void addValidItem(IIngredient stack, int rarity) {
-        if (ComposterBlock.ItemsForComposter.getChance(toItemStack(stack)) == -1) {
-            if (!TileComposter.isBoneMeal(toItemStack(stack))) {
-                applyAction(new Add(stack, rarity));
-            } else {
-                FutureMC.LOGGER.log(Level.ERROR, "Cannot add bone meal to compostable item!");
-            }
-        } else {
-            FutureMC.LOGGER.log(Level.WARN, "Failed to add duplicate recipe for item " + stack.toCommandString());
-        }
-    }
-
-    @ZenMethod
-    public static void addValidItem(IOreDictEntry ore, int rarity) {
-        for (IItemStack a : ore.getItems()) {
-            addValidItem(a, rarity);
-        }
+        applyAction(new Add(stack, rarity, false));
     }
 
     @ZenMethod
     public static void removeValidItem(IIngredient stack) {
-        if (ComposterBlock.ItemsForComposter.getChance(toItemStack(stack)) != -1) {
-            applyAction(new Remove(toItemStack(stack)));
-        } else {
-            FutureMC.LOGGER.log(Level.WARN, "Cannot remove non-existent item from valid composter item " + stack.toCommandString());
-        }
+        applyAction(new Remove(stack));
     }
 
     @ZenMethod
     public static void replaceValidItemChance(IIngredient stack, int newRarity) {
-        if (ComposterBlock.ItemsForComposter.getChance(toItemStack(stack)) != -1) {
-            applyAction(new ReplaceItemChance(toItemStack(stack), newRarity));
-        } else {
-            FutureMC.LOGGER.log(Level.WARN, "Cannot change chance for invalid item " + stack.toCommandString() +
-                    " If you wish to make the item valid, use mods.futuremc.Composter.addValidItem");
-        }
+        applyAction(new Add(stack, newRarity, true));
     }
 
     @ZenMethod
     public static void clearValidItems() {
-        ComposterBlock.ItemsForComposter.clear();
+        applyAction(new RecipeUtil.NamedAction("Cleared composter recipes", ComposterBlock.ItemsForComposter::clear));
     }
 
     private static final class Add implements IAction {
-        private final ItemStack stack;
+        private final IIngredient ingredient;
         private final int rarity;
+        private final boolean replace;
 
-        private Add(IIngredient stack, int rarity) {
-            this.stack = toItemStack(stack);
+        private Add(IIngredient ingredient, int rarity, boolean replace) {
+            this.ingredient = ingredient;
             this.rarity = rarity;
+            this.replace = replace;
         }
 
         @Override
         public void apply() {
-            ComposterBlock.ItemsForComposter.add(stack, rarity);
+            for (IItemStack item : ingredient.getItems()) {
+                ItemStack stack = toItemStack(item);
+
+                if (TileComposter.isBoneMeal(stack)) {
+                    CraftTweakerAPI.logWarning("Cannot add bone meal as compostable item!");
+                } else {
+                    if (ComposterBlock.ItemsForComposter.getChance(stack) == -1) {
+                        if (!replace) {
+                            CraftTweakerAPI.logWarning("Failed to add duplicate recipe for item " + item.toCommandString());
+                            continue;
+                        }
+                    } else {
+                        if (replace) {
+                            CraftTweakerAPI.logWarning("Tried change chance for invalid item " + item.toCommandString() +
+                                    " If you wish to add a chance to the item, use mods.futuremc.Composter.addValidItem");
+                            continue;
+                        }
+                    }
+
+                    ComposterBlock.ItemsForComposter.add(stack, rarity);
+                }
+            }
         }
 
         @Override
         public String describe() {
-            return "Adding recipe for item " + stack.getDisplayName();
+            return "Adding recipe for item " + ingredient.toCommandString();
         }
     }
 
     private static final class Remove implements IAction {
-        private final ItemStack stack;
+        private final IIngredient ingredient;
 
-        private Remove(ItemStack stack) {
-            this.stack = stack;
+        private Remove(IIngredient ingredient) {
+            this.ingredient = ingredient;
         }
 
         @Override
         public void apply() {
-            ComposterBlock.ItemsForComposter.remove(stack);
+            for (IItemStack item : ingredient.getItems()) {
+                ItemStack stack = toItemStack(item);
+
+                if (ComposterBlock.ItemsForComposter.getChance(stack) != -1) {
+                    ComposterBlock.ItemsForComposter.remove(stack);
+                } else {
+                    CraftTweakerAPI.logWarning("Tried to remove non-existent item from valid composter items: " + item.toCommandString());
+                }
+            }
         }
 
         @Override
         public String describe() {
-            return "Removed item " + stack.getItem().getRegistryName() + " from the list of valid Composter item.";
-        }
-    }
-
-    private static final class ReplaceItemChance implements IAction {
-        private final ItemStack stack;
-        private final int newRarity, oldRarity;
-
-        private ReplaceItemChance(ItemStack stack, int newRarity) {
-            this.newRarity = newRarity;
-            this.stack = stack;
-            this.oldRarity = ComposterBlock.ItemsForComposter.getChance(stack);
-        }
-
-        @Override
-        public void apply() {
-            ComposterBlock.ItemsForComposter.remove(stack);
-            ComposterBlock.ItemsForComposter.add(stack, newRarity);
-        }
-
-        @Override
-        public String describe() {
-            return "Changed Composter value for item " + stack.getItem().getRegistryName() + " from " + oldRarity + " to " + newRarity;
+            return "Removed item " + ingredient.toCommandString() + " from the list of valid Composter item.";
         }
     }
 }

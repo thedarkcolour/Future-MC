@@ -51,12 +51,56 @@ public final class CoreTransformer implements IClassTransformer {
 
                 case "com.pg85.otg.customobjects.bo3.BO3Loader":
                     return transformBO3Loader(basicClass);
+
+                case "biomesoplenty.common.world.generator.tree.GeneratorTreeBase":
+                    return transformBOPTree(basicClass);
             }
         } catch (NoClassDefFoundError e) {
             return basicClass;
         }
 
         return basicClass;
+    }
+
+    private static byte[] transformBOPTree(byte[] basicClass) {
+        ClassNode classNode = ASMUtil.createClassNode(basicClass);
+        String fmcFieldName = "_fmc_has_placed_beehive";
+        String className = "biomesoplenty/common/world/generator/tree/GeneratorTreeBase";
+
+        // PATCH 1
+        // set to true during generate and then set to false after a tree is done generating
+        classNode.visitField(ACC_PRIVATE, fmcFieldName, "Z", null, false); // value is "false" by default
+
+        // PATCH 2
+        InsnList toAddGetScatterY = ASMUtil.createInsnList(
+                new VarInsnNode(ALOAD, 0), // load instance
+                new InsnNode(ICONST_0), // FALSE
+                new FieldInsnNode(PUTFIELD, className, fmcFieldName, "Z") // set instance field to FALSE
+        );
+        // patch at the beginning of the method
+        ASMUtil.patchBeforeInsn(classNode, ASMUtil.findMethod(classNode, "getScatterY", "getScatterY", null), toAddGetScatterY, 1, node -> {
+            return node.getOpcode() == ALOAD;
+        });
+
+        // PATCH 3
+        LabelNode l7 = new LabelNode(new Label());
+        InsnList toAddSetLog = ASMUtil.createInsnList(
+                new VarInsnNode(ALOAD, 0),
+                new FieldInsnNode(GETFIELD, className, fmcFieldName, "Z"),
+                new JumpInsnNode(IFNE, l7),
+                new VarInsnNode(ALOAD, 0), // load instance to set field
+                new VarInsnNode(ALOAD, 1), // load world
+                new VarInsnNode(ALOAD, 2), // load pos
+                // method call + pop vars 1 and 2 off of the stack
+                new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/compat/biomesoplenty/BiomesOPlentyCompat", "placeBeehive", "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)Z"),
+                // set field of remaining instance var 0
+                new FieldInsnNode(PUTFIELD, className, fmcFieldName, "Z"),
+                l7,
+                new FrameNode(F_APPEND, 1, new Object[]{"net/minecraft/block/state/IBlockState"}, 0, null)
+        );
+        ASMUtil.patchBeforeReturnTrue(classNode, ASMUtil.findMethod(classNode, "setLog", "setLog", "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing$Axis;)Z"), toAddSetLog);
+
+        return ASMUtil.compile(classNode);
     }
 
     private static byte[] transformBO3Loader(byte[] basicClass) {
@@ -107,14 +151,16 @@ public final class CoreTransformer implements IClassTransformer {
                 "generate",
                 "(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;)Z"
         );
-        InsnList toAdd = ASMUtil.createInsnList(list -> {
-            list.add(new VarInsnNode(ALOAD, 1));
-            list.add(new VarInsnNode(ALOAD, 2));
-            list.add(new VarInsnNode(ALOAD, 3));
-            list.add(new VarInsnNode(ILOAD, 4));
-            list.add(new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/world/gen/feature/BeeNestGenerator", "generateBeeNestsForSmallTrees", "(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;I)V", false));
-        });
-        return ASMUtil.patchBeforeReturnTrue(classNode, method, toAdd);
+        InsnList toAdd = ASMUtil.createInsnList(
+            new VarInsnNode(ALOAD, 1),
+            new VarInsnNode(ALOAD, 2),
+            new VarInsnNode(ALOAD, 3),
+            new VarInsnNode(ILOAD, 4),
+            new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/world/gen/feature/BeeNestGenerator", "generateBeeNestsForSmallTrees", "(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;I)V", false)
+        );
+        ASMUtil.patchBeforeReturnTrue(classNode, method, toAdd);
+
+        return ASMUtil.compile(classNode);
     }
 
     private static byte[] patchWorldGenBigTree(byte[] basicClass) {
@@ -126,16 +172,18 @@ public final class CoreTransformer implements IClassTransformer {
                 "(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;)Z"
         );
 
-        InsnList toAdd = ASMUtil.createInsnList(list -> {
-            list.add(new VarInsnNode(ALOAD, 1));
-            list.add(new VarInsnNode(ALOAD, 2));
-            list.add(new VarInsnNode(ALOAD, 3));
-            list.add(new VarInsnNode(ALOAD, 0));
-            list.add(new FieldInsnNode(GETFIELD, "net/minecraft/world/gen/feature/WorldGenBigTree", ASMUtil.isObfuscated ? "field_76501_f" : "height", "I"));
-            list.add(new VarInsnNode(ALOAD, 0));
-            list.add(new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/world/gen/feature/BeeNestGenerator", "generateBeeNestsForBigTrees", "(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;ILnet/minecraft/world/gen/feature/WorldGenAbstractTree;)V", false));
-        });
-        return ASMUtil.patchBeforeReturnTrue(classNode, method, toAdd);
+        InsnList toAdd = ASMUtil.createInsnList(
+            new VarInsnNode(ALOAD, 1),
+            new VarInsnNode(ALOAD, 2),
+            new VarInsnNode(ALOAD, 3),
+            new VarInsnNode(ALOAD, 0),
+            new FieldInsnNode(GETFIELD, "net/minecraft/world/gen/feature/WorldGenBigTree", ASMUtil.isObfuscated ? "field_76501_f" : "height", "I"),
+            new VarInsnNode(ALOAD, 0),
+            new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/world/gen/feature/BeeNestGenerator", "generateBeeNestsForBigTrees", "(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;ILnet/minecraft/world/gen/feature/WorldGenAbstractTree;)V", false)
+        );
+        ASMUtil.patchBeforeReturnTrue(classNode, method, toAdd);
+
+        return ASMUtil.compile(classNode);
     }
 
     private static byte[] patchModelBiped(byte[] basicClass) {
@@ -147,11 +195,13 @@ public final class CoreTransformer implements IClassTransformer {
                 "(FFFFFFLnet/minecraft/entity/Entity;)V"
         );
 
-        InsnList toAdd = ASMUtil.createInsnList(list -> {
-            list.add(new VarInsnNode(ALOAD, 0));
-            list.add(new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/event/Events", "setPlayerRotations", "(Lnet/minecraft/client/model/ModelBiped;)V", false));
-        });
-        return ASMUtil.patchBeforeMcMethod(classNode, method, toAdd, "func_178685_a", "copyModelAngles", 1);
+        InsnList toAdd = ASMUtil.createInsnList(
+            new VarInsnNode(ALOAD, 0),
+            new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/event/Events", "setPlayerRotations", "(Lnet/minecraft/client/model/ModelBiped;)V", false)
+        );
+        ASMUtil.patchBeforeMcMethod(classNode, method, toAdd, "func_178685_a", "copyModelAngles", 1);
+
+        return ASMUtil.compile(classNode);
     }
 
     private static byte[] patchRenderItem(byte[] basicClass) {

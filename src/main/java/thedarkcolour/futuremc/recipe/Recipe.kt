@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.recipe
 
 import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.Ingredient
 
 /**
  * The base class for a recipe with an input and an output.
@@ -10,26 +11,15 @@ import net.minecraft.item.ItemStack
  * @property T the type of [Recipe] this is
  */
 abstract class Recipe<out T : Recipe<T>> {
-    abstract val input: ItemStack
+    abstract val input: Ingredient
     abstract val output: ItemStack
-
-    /**
-     * Returns if the input matches the requirements of this recipe.
-     */
-    open fun matchesInput(input: ItemStack): Boolean {
-        return doesItemMatch(this.input, input)
-    }
-
-    open fun matchesOutput(output: ItemStack): Boolean {
-        return doesItemMatch(this.output, output)
-    }
 
     /**
      * Returns if the input and output match the requirements of this recipe.
      *
      * @see thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes
      */
-    fun matches(input: ItemStack, output: ItemStack): Boolean {
+    fun isSameRecipe(input: ItemStack, output: ItemStack): Boolean {
         return doesItemMatch(this.input, input) && doesItemMatch(this.output, output)
     }
 

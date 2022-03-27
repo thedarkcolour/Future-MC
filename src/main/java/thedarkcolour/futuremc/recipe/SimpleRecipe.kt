@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.recipe
 
 import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.Ingredient
 
 /**
  * Simple recipe with one input and one output.
@@ -10,4 +11,4 @@ import net.minecraft.item.ItemStack
  *
  * @author TheDarkColour
  */
-open class SimpleRecipe(override val input: ItemStack, override val output: ItemStack) : Recipe<SimpleRecipe>()
+open class SimpleRecipe(override val input: Ingredient, override val output: ItemStack) : Recipe<SimpleRecipe>()

@@ -2,6 +2,7 @@ package thedarkcolour.futuremc.recipe.stonecutter
 
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.Ingredient
 import thedarkcolour.futuremc.recipe.Recipes
 import thedarkcolour.futuremc.recipe.SimpleRecipe
 import thedarkcolour.futuremc.registry.FBlocks
@@ -80,11 +81,11 @@ object StonecutterRecipes : Recipes<SimpleRecipe>() {
         )
     }
 
-    override fun addRecipe(input: ItemStack, output: ItemStack) {
+    override fun addRecipe(input: Ingredient, output: ItemStack) {
         recipes.add(SimpleRecipe(input, output))
     }
 
     fun removeRecipe(input: ItemStack, output: ItemStack) {
-        recipes.removeIf { recipe -> recipe.matches(input, output) }
+        recipes.removeIf { recipe -> recipe.isSameRecipe(input, output) }
     }
 }

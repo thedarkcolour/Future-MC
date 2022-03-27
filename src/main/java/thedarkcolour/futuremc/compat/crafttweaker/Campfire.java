@@ -3,41 +3,29 @@ package thedarkcolour.futuremc.compat.crafttweaker;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
+import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
-import crafttweaker.api.oredict.IOreDictEntry;
-import org.apache.logging.log4j.Level;
+import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
-import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipes;
 
 @ZenRegister
 @ZenClass("mods.futuremc.Campfire")
 public final class Campfire {
     @ZenMethod
-    public static void addRecipe(IItemStack input, IItemStack output, int duration) {
-        if (CampfireRecipes.INSTANCE.getRecipe(CraftTweakerMC.getItemStack(input)) == null) {
-            CraftTweakerAPI.apply(new AddRecipe(input, output, duration));
-        } else {
-            FutureMC.LOGGER.log(Level.WARN, "Cannot add duplicate recipe for " + input.getDefinition().getId());
-        }
-    }
-
-    @ZenMethod
-    public static void addRecipe(IOreDictEntry input, IItemStack output, int duration) {
-        for (IItemStack a : input.getItems()) {
-            addRecipe(a, output, duration);
-        }
+    public static void addRecipe(IIngredient input, IItemStack output, int duration) {
+        CraftTweakerAPI.apply(new AddRecipe(input, output, duration));
     }
 
     private static final class AddRecipe implements IAction {
-        private final IItemStack input;
+        private final IIngredient input;
         private final IItemStack output;
         private final int duration;
         //private final int experience; Seems to not be given to the player
 
-        private AddRecipe(IItemStack input, IItemStack output, int duration) {
+        private AddRecipe(IIngredient input, IItemStack output, int duration) {
             this.input = input;
             this.output = output;
             this.duration = duration;
@@ -45,12 +33,20 @@ public final class Campfire {
 
         @Override
         public void apply() {
-            CampfireRecipes.INSTANCE.addRecipe(CraftTweakerMC.getItemStack(input), CraftTweakerMC.getItemStack(output), duration);
+            ItemStack output = CraftTweakerMC.getItemStack(this.output);
+
+            for (IItemStack item : input.getItems()) {
+                if (CampfireRecipes.INSTANCE.getRecipe(CraftTweakerMC.getItemStack(input)) != null) {
+                    CraftTweakerAPI.logWarning("Cannot add duplicate recipe for " + input.toCommandString());
+                } else {
+                    CampfireRecipes.INSTANCE.addRecipe(CraftTweakerMC.getItemStack(item), output, duration);
+                }
+            }
         }
 
         @Override
         public String describe() {
-            return "Added recipe for" + input.getDefinition().getId();
+            return "Added recipe for " + input.toCommandString();
         }
     }
 

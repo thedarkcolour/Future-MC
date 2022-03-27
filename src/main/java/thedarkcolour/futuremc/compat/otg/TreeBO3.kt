@@ -45,23 +45,22 @@ class TreeBO3(obj: BO3) : BO3(nameField.get(obj) as String, fileField.get(obj) a
 
         for (block in settings.getBlocks(rotation.rotationId)) {
             // Skip all non-log blocks
-            if (block == null || block !is ForgeMaterialData) continue
-            if ((block.material as ForgeMaterialData).internalBlock().block is BlockLog) {
-                val rotationDir = random.nextInt(3)
-                val dir = BeeNestGenerator.VALID_OFFSETS[rotationDir]
-                val sidePos = BlockPos(block.x + x, block.y + y, block.z + z).offset(dir)
-                // on the side of a log
-                val worldState = worldIn.getBlockState(sidePos)
+            val material = block.material
 
-                // Extension function
-                // If the block below is air and pos is replaceable, and leaves are above
-                if (worldState.block.isReplaceable(
-                        worldIn,
-                        sidePos
-                    ) && worldIn.isAir(sidePos.down()) && worldIn.getBlockState(sidePos.up()).block is BlockLeaves
-                ) {
-                    BeeNestGenerator.placeBeeHive(worldIn, random, sidePos)
-                    break
+            if (material is ForgeMaterialData) {
+                if (material.internalBlock().block is BlockLog) {
+                    val rotationDir = random.nextInt(3)
+                    val dir = BeeNestGenerator.VALID_OFFSETS[rotationDir]
+                    val sidePos = BlockPos(block.x + x, block.y + y, block.z + z).offset(dir)
+                    // on the side of the log
+                    val worldState = worldIn.getBlockState(sidePos)
+
+                    // Extension function
+                    // If the block below is air and pos is replaceable, and leaves are above
+                    if (worldState.block.isReplaceable(worldIn, sidePos) && worldIn.isAir(sidePos.down()) && worldIn.getBlockState(sidePos.up()).block is BlockLeaves) {
+                        BeeNestGenerator.placeBeeHive(worldIn, random, sidePos)
+                        break
+                    }
                 }
             }
         }
