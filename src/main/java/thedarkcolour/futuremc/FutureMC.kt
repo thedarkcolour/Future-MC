@@ -165,7 +165,7 @@ object FutureMC {
     @EventHandler
     fun postInit(event: FMLPostInitializationEvent) {
         EntityBee.FLOWERS.removeIf { state ->
-            state.material == Material.AIR // try to fix #281
+            state.material == Material.AIR || !ForgeRegistries.BLOCKS.containsValue(state.block) // try to fix #281
         }
 
         Biomes.PLAINS.addFlower(FBlocks.CORNFLOWER.defaultState, 5)

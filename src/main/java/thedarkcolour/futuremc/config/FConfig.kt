@@ -356,7 +356,7 @@ object FConfig {
         @Name("New Villager Gui Screen")
         @Comment("Whether the 1.12 villager screen is replaced by FutureMC's 1.14 villager screen")
         @JvmField
-        val newVillagerGui = true
+        var newVillagerGui = true
 
         @Name("New Walls")
         @Comment("Enable/disable any of the new walls from 1.14")

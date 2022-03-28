@@ -39,6 +39,9 @@ public final class CoreTransformer implements IClassTransformer {
                 //case "net.minecraft.client.renderer.RenderItem":
                 //    return ASMUtil.patchRenderItem(basicClass);
 
+                case "com.fuzs.gamblingstyle.handler.OpenContainerHandler":
+                    return transformOpenContainerHandler(basicClass);
+
                 case "net.minecraft.block.BlockPistonBase":
                     try {
                         Class.forName("vazkii.quark.base.asm.LoadingPlugin");
@@ -122,6 +125,34 @@ public final class CoreTransformer implements IClassTransformer {
         mv.visitLocalVariable("objectName", "Ljava/lang/String;", null, l0, l1, 1);
         mv.visitLocalVariable("file", "Ljava/io/File;", null, l0, l1, 2);
         mv.visitMaxs(2, 3);
+
+        return ASMUtil.compile(classNode);
+    }
+
+    private static byte[] transformOpenContainerHandler(byte[] basicClass) {
+        ClassNode classNode = ASMUtil.createClassNode(basicClass);
+        MethodNode mv = ASMUtil.findMethod(classNode, "onContainerOpen", "onContainerOpen", null);
+
+        LabelNode label = null;
+
+        try {
+            label = (LabelNode) mv.instructions.getFirst();
+        } catch (ClassCastException e) {
+            for (int i = 0; i < 10; i++) {
+                AbstractInsnNode insn = mv.instructions.get(i);
+                System.out.println(insn.getClass() + ": " + insn.getOpcode());
+            }
+        }
+
+        InsnList list = new InsnList();
+        list.add(new LabelNode(new Label()));
+        list.add(new FieldInsnNode(GETSTATIC, "thedarkcolour/futuremc/config/FConfig", "INSTANCE", "Lthedarkcolour/futuremc/config/FConfig;"));
+        list.add(new MethodInsnNode(INVOKEVIRTUAL, "thedarkcolour/futuremc/config/FConfig", "getVillageAndPillage", "()Lthedarkcolour/futuremc/config/FConfig$VillageAndPillage;", false));
+        list.add(new FieldInsnNode(GETFIELD, "thedarkcolour/futuremc/config/FConfig$VillageAndPillage", "newVillagerGui", "Z"));
+        list.add(new JumpInsnNode(IFEQ, label));
+        list.add(new InsnNode(RETURN));
+
+        mv.instructions.insertBefore(label, list);
 
         return ASMUtil.compile(classNode);
     }

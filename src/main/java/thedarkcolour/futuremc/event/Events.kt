@@ -43,6 +43,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock
 import net.minecraftforge.event.terraingen.BiomeEvent
 import net.minecraftforge.fml.client.event.ConfigChangedEvent
+import net.minecraftforge.fml.common.eventhandler.EventPriority
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent
 import net.minecraftforge.fml.common.registry.ForgeRegistries
@@ -106,7 +107,7 @@ object Events {
         //    addListener(::onGetWaterColor)
         addListener(::healIronGolem)
         runOnClient { addListener(::onGuiOpen) }
-        addListener(::onContainerOpen)
+        addListener(::onContainerOpen, priority = EventPriority.HIGHEST)
         runOnClient { addListener(::onModelRegistry) }
         if (TODO())
             addListener(::updateSwimAnimation)
@@ -342,14 +343,16 @@ object Events {
     }
 
     private fun onContainerOpen(event: PlayerContainerEvent.Open) {
-        val container = event.container
+        if (FConfig.villageAndPillage.newVillagerGui) {
+            val container = event.container
 
-        if (container is ContainerMerchant && container !is ContainerVillager) {
-            val player = event.entityPlayer as EntityPlayerMP
-            val newContainer = ContainerVillager(player.inventory, container.merchant, null)
+            if (container is ContainerMerchant && container !is ContainerVillager) {
+                val player = event.entityPlayer as EntityPlayerMP
+                val newContainer = ContainerVillager(player.inventory, container.merchant, null)
 
-            newContainer.windowId = container.windowId
-            player.openContainer = newContainer
+                newContainer.windowId = container.windowId
+                player.openContainer = newContainer
+            }
         }
     }
 
