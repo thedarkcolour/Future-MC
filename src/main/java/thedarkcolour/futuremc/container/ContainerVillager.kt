@@ -142,7 +142,7 @@ class ContainerVillager(val playerInv: InventoryPlayer, merchant: IMerchant, wor
     }
 
     private fun areItemStacksEqual(stack1: ItemStack, stack2: ItemStack): Boolean {
-        return stack1.item === stack2.item && ItemStack.areItemStackTagsEqual(stack1, stack2)
+        return stack1.item == stack2.item && stack1.metadata == stack2.metadata && ItemStack.areItemStackTagsEqual(stack1, stack2)
     }
 
 }

@@ -24,7 +24,7 @@ public class FSignItem extends ModeledItem {
     private final FSignBlock.Wall wall;
 
     public FSignItem(FSignBlock.Standing standing, FSignBlock.Wall wall) {
-        super();
+        super(""); // todo
 
         this.standing = standing;
         this.wall = wall;

@@ -1,15 +1,26 @@
 package thedarkcolour.futuremc.world.gen.feature
 
+import net.minecraft.block.state.IBlockState
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraft.world.WorldType
 import net.minecraft.world.chunk.IChunkProvider
 import net.minecraft.world.gen.IChunkGenerator
 import thedarkcolour.futuremc.block.villagepillage.BlockFlower
+import thedarkcolour.futuremc.block.villagepillage.SweetBerryBushBlock
+import thedarkcolour.futuremc.config.FConfig
 import java.util.*
 
 class FlowerWorldGen(private val flower: BlockFlower) : FWorldGen {
-    private val state = flower.defaultState
+    private val state: IBlockState
+
+    init {
+        if (flower is SweetBerryBushBlock && FConfig.villageAndPillage.sweetBerryBush.spawnWithBerries) {
+            this.state = flower.defaultState.withProperty(SweetBerryBushBlock.AGE, 3)
+        } else {
+            this.state = flower.defaultState
+        }
+    }
 
     private fun generate(worldIn: World, random: Random, targetPos: BlockPos) {
         for (i in 0..63) {

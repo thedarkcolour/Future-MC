@@ -64,7 +64,7 @@ class SmithingContainer(playerInv: InventoryPlayer, private val worldIn: World, 
 
     private fun consumeInputs() {
         if (!worldIn.isRemote) {
-            inventory[1].shrink(recipe?.material?.count ?: return)
+            inventory[1].shrink(1)
             inventory[0].shrink(1)
 
             detectAndSendChanges()

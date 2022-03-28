@@ -1,19 +1,20 @@
 package thedarkcolour.futuremc.compat.jei.recipe
 
 import it.unimi.dsi.fastutil.objects.Object2ByteMap
+import mezz.jei.api.IJeiHelpers
 import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.api.ingredients.VanillaTypes
 import mezz.jei.api.recipe.IRecipeWrapper
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.I18n
-import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.Ingredient
 
-class ComposterRecipeWrapper(entry: Object2ByteMap.Entry<ItemStack>) : IRecipeWrapper {
-    val input = entry.key
+class ComposterRecipeWrapper(helpers: IJeiHelpers, entry: Object2ByteMap.Entry<Ingredient>) : IRecipeWrapper {
+    val input = listOf(helpers.stackHelper.toItemStackList(entry.key))
     val chance = entry.byteValue
 
     override fun getIngredients(ingredients: IIngredients) {
-        ingredients.setInput(VanillaTypes.ITEM, input)
+        ingredients.setInputLists(VanillaTypes.ITEM, input)
     }
 
     override fun drawInfo(minecraft: Minecraft, recipeWidth: Int, recipeHeight: Int, mouseX: Int, mouseY: Int) {

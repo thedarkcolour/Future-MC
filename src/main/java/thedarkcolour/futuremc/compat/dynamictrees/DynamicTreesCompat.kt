@@ -13,7 +13,9 @@ object DynamicTreesCompat {
     @SubscribeEvent
     fun modifyOakSpecies(event: RegistryEvent.Register<Species>) {
         for (species in Species.REGISTRY) {
-            species.addGenFeature(BeeHiveFeature)
+            if (species.registryName!!.path == "oak" || species.registryName!!.path == "birch") {
+                species.addGenFeature(BeeHiveFeature)
+            }
         }
     }
 }

@@ -1,7 +1,9 @@
 package thedarkcolour.futuremc.compat.tconstruct
 
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.item.ItemBlock
 import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.Ingredient
 import slimeknights.tconstruct.library.utils.ToolHelper
 import slimeknights.tconstruct.smeltery.TinkerSmeltery
 import slimeknights.tconstruct.tools.melee.item.BattleAxe
@@ -39,7 +41,7 @@ object TConstructCompat {
      */
     fun registerStonecutterRecipes() {
         // seared stone variants
-        val stack = ItemStack(TinkerSmeltery.searedBlock, 1, 32767)
+        val stack = Ingredient.fromItem(ItemBlock.getItemFromBlock(TinkerSmeltery.searedBlock))
 
         for (i in 0..11) {
             StonecutterRecipes.addRecipe(stack, ItemStack(TinkerSmeltery.searedBlock, 1, i))

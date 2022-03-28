@@ -30,6 +30,7 @@ import sun.reflect.Reflection
 import thedarkcolour.core.tile.InteractionTile
 import thedarkcolour.futuremc.block.buzzybees.BeeHiveBlock
 import thedarkcolour.futuremc.block.villagepillage.CampfireBlock
+import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FSounds
@@ -369,6 +370,14 @@ class BeeHiveTile : InteractionTile(), ITickable {
 
     private fun getBees(): NBTTagList {
         return NBTTagList().also { bees.map(Bee::deserialize).forEach(it::appendTag) }
+    }
+
+    override fun getUpdateTag(): NBTTagCompound {
+        return if (FConfig.buzzyBees.bee.enabled) {
+            super.getUpdateTag()
+        } else {
+            NBTTagCompound() // Fix #218
+        }
     }
 
     private class Bee constructor(val data: NBTTagCompound, var ticksInHive: Int, val minOccupationTicks: Int) {

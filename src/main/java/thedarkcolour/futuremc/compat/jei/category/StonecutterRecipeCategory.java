@@ -5,8 +5,10 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import thedarkcolour.futuremc.FutureMC;
 import thedarkcolour.futuremc.compat.jei.FutureMCJEIPlugin;
 import thedarkcolour.futuremc.compat.jei.recipe.SimpleRecipeWrapper;
@@ -16,7 +18,7 @@ public class StonecutterRecipeCategory implements IRecipeCategory<SimpleRecipeWr
     private final IDrawable background;
 
     public StonecutterRecipeCategory(IGuiHelper helper) {
-        background = helper.createDrawable(FutureMCJEIPlugin.RECIPE_BACKGROUNDS, 0, 45, 84, 44);
+        this.background = helper.createDrawable(FutureMCJEIPlugin.RECIPE_BACKGROUNDS, 0, 45, 84, 44);
     }
 
     @Override
@@ -43,12 +45,13 @@ public class StonecutterRecipeCategory implements IRecipeCategory<SimpleRecipeWr
     public void setRecipe(IRecipeLayout recipeLayout, SimpleRecipeWrapper recipeWrapper, IIngredients ingredients) {
         IGuiItemStackGroup group = recipeLayout.getItemStacks();
         group.init(0, true, 2, 13);
-        group.set(0, recipeWrapper.getInput());
-
         group.init(1, false, 60, 13);
-        group.set(1, recipeWrapper.getOutput());
-
         group.init(2, false, 27, 2);
-        group.set(2, recipeWrapper.getOutput());
+
+        group.set(0, ingredients.getInputs(VanillaTypes.ITEM).get(0));
+
+        ItemStack output = ingredients.getOutputs(VanillaTypes.ITEM).get(0).get(0);
+        group.set(1, output);
+        group.set(2, output);
     }
 }

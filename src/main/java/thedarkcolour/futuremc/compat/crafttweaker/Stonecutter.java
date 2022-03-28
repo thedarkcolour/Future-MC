@@ -3,6 +3,7 @@ package thedarkcolour.futuremc.compat.crafttweaker;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
+import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.oredict.IOreDictEntry;
@@ -28,8 +29,8 @@ public final class Stonecutter {
     }
 
     @ZenMethod
-    public static void addOutput(IItemStack input, IItemStack output) {
-        CraftTweakerAPI.apply(Action.of(() -> StonecutterRecipes.INSTANCE.addRecipe(CraftTweakerMC.getItemStack(input), CraftTweakerMC.getItemStack(output))));
+    public static void addOutput(IIngredient input, IItemStack output) {
+        CraftTweakerAPI.apply(Action.of(() -> StonecutterRecipes.INSTANCE.addRecipe(CraftTweakerMC.getIngredient(input), CraftTweakerMC.getItemStack(output))));
     }
 
     @ZenMethod

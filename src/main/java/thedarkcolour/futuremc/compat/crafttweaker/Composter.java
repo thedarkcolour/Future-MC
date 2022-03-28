@@ -5,73 +5,57 @@ import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.minecraft.CraftTweakerMC;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.futuremc.block.villagepillage.ComposterBlock;
 import thedarkcolour.futuremc.tile.TileComposter;
 
-import static thedarkcolour.futuremc.compat.crafttweaker.RecipeUtil.applyAction;
-import static thedarkcolour.futuremc.compat.crafttweaker.RecipeUtil.toItemStack;
-
 @ZenRegister
 @ZenClass("mods.futuremc.Composter")
 public final class Composter {
     @ZenMethod
     public static void addValidItem(IIngredient stack, int rarity) {
-        applyAction(new Add(stack, rarity, false));
+        CraftTweakerAPI.apply(new Add(stack, rarity));
     }
 
     @ZenMethod
     public static void removeValidItem(IIngredient stack) {
-        applyAction(new Remove(stack));
+        CraftTweakerAPI.apply(new Remove(stack));
     }
 
     @ZenMethod
     public static void replaceValidItemChance(IIngredient stack, int newRarity) {
-        applyAction(new Add(stack, newRarity, true));
+        CraftTweakerAPI.apply(new Add(stack, newRarity));
     }
 
     @ZenMethod
     public static void clearValidItems() {
-        applyAction(new RecipeUtil.NamedAction("Cleared composter recipes", ComposterBlock.ItemsForComposter::clear));
+        CraftTweakerAPI.apply(new RecipeUtil.NamedAction("Cleared composter recipes", ComposterBlock.ItemsForComposter::clear));
     }
 
     private static final class Add implements IAction {
         private final IIngredient ingredient;
-        private final int rarity;
-        private final boolean replace;
+        private final byte rarity;
 
-        private Add(IIngredient ingredient, int rarity, boolean replace) {
+        private Add(IIngredient ingredient, int rarity) {
             this.ingredient = ingredient;
-            this.rarity = rarity;
-            this.replace = replace;
+            this.rarity = (byte) rarity;
         }
 
         @Override
         public void apply() {
             for (IItemStack item : ingredient.getItems()) {
-                ItemStack stack = toItemStack(item);
+                ItemStack stack = CraftTweakerMC.getItemStack(item);
 
                 if (TileComposter.isBoneMeal(stack)) {
                     CraftTweakerAPI.logWarning("Cannot add bone meal as compostable item!");
-                } else {
-                    if (ComposterBlock.ItemsForComposter.getChance(stack) == -1) {
-                        if (!replace) {
-                            CraftTweakerAPI.logWarning("Failed to add duplicate recipe for item " + item.toCommandString());
-                            continue;
-                        }
-                    } else {
-                        if (replace) {
-                            CraftTweakerAPI.logWarning("Tried change chance for invalid item " + item.toCommandString() +
-                                    " If you wish to add a chance to the item, use mods.futuremc.Composter.addValidItem");
-                            continue;
-                        }
-                    }
-
-                    ComposterBlock.ItemsForComposter.add(stack, rarity);
+                    return;
                 }
             }
+
+            ComposterBlock.ItemsForComposter.INSTANCE.add(CraftTweakerMC.getIngredient(ingredient), rarity);
         }
 
         @Override
@@ -90,13 +74,9 @@ public final class Composter {
         @Override
         public void apply() {
             for (IItemStack item : ingredient.getItems()) {
-                ItemStack stack = toItemStack(item);
+                ItemStack stack = CraftTweakerMC.getItemStack(item);
 
-                if (ComposterBlock.ItemsForComposter.getChance(stack) != -1) {
-                    ComposterBlock.ItemsForComposter.remove(stack);
-                } else {
-                    CraftTweakerAPI.logWarning("Tried to remove non-existent item from valid composter items: " + item.toCommandString());
-                }
+                ComposterBlock.ItemsForComposter.remove(stack);
             }
         }
 

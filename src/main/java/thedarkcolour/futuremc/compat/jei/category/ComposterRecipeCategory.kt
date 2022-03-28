@@ -3,6 +3,7 @@ package thedarkcolour.futuremc.compat.jei.category
 import mezz.jei.api.IGuiHelper
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.ingredients.IIngredients
+import mezz.jei.api.ingredients.VanillaTypes
 import thedarkcolour.futuremc.compat.jei.FutureMCJEIPlugin
 import thedarkcolour.futuremc.compat.jei.recipe.ComposterRecipeWrapper
 
@@ -15,7 +16,7 @@ class ComposterRecipeCategory(helper: IGuiHelper) :
         ingredients: IIngredients
     ) {
         recipeLayout.itemStacks.init(0, true, 20, 13)
-        recipeLayout.itemStacks.set(0, recipeWrapper.input)
+        recipeLayout.itemStacks.set(0, ingredients.getInputs(VanillaTypes.ITEM)[0])
     }
 
     companion object {

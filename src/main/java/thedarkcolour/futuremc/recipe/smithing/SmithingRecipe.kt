@@ -2,9 +2,9 @@ package thedarkcolour.futuremc.recipe.smithing
 
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.Ingredient
-import thedarkcolour.futuremc.recipe.Recipe
+import thedarkcolour.futuremc.recipe.SimpleRecipe
 
-class SmithingRecipe(override val input: Ingredient, val material: Ingredient, override val output: ItemStack) : Recipe<SmithingRecipe>() {
+class SmithingRecipe(input: Ingredient, val material: Ingredient, output: ItemStack) : SimpleRecipe(input, output) {
     /**
      * Checks if the inventory has enough material to upgrade
      */

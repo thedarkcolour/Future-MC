@@ -1,7 +1,8 @@
 package thedarkcolour.futuremc.recipe.campfire
 
 import net.minecraft.item.ItemStack
-import thedarkcolour.futuremc.recipe.Recipe
+import net.minecraft.item.crafting.Ingredient
+import thedarkcolour.futuremc.recipe.SimpleRecipe
 
 /**
  * Recipe class used for the campfire.
@@ -12,7 +13,9 @@ import thedarkcolour.futuremc.recipe.Recipe
  *
  * @author TheDarkColour
  */
-class CampfireRecipe(override val input: ItemStack, override val output: ItemStack, val duration: Int) : Recipe<CampfireRecipe>() {
+class CampfireRecipe(input: Ingredient, output: ItemStack, val duration: Int) : SimpleRecipe(input, output) {
+    constructor(stack: ItemStack, output: ItemStack, duration: Int) : this(Ingredient.fromStacks(stack), output, duration)
+
     /**
      * Returns a string representation of the object.
      */

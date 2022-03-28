@@ -652,6 +652,12 @@ object FConfig {
             @SlidingOption
             @JvmField
             var spawnRate = 0.5
+
+            @Name("Spawn with Berries")
+            @Comment("Wheter Sweet Berry Bushes spawned in the world will already have berries on them.")
+            @RequiresMcRestart
+            @JvmField
+            var spawnWithBerries = false
         }
 
         class WitherRose {

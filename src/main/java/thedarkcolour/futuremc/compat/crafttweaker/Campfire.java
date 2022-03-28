@@ -23,7 +23,6 @@ public final class Campfire {
         private final IIngredient input;
         private final IItemStack output;
         private final int duration;
-        //private final int experience; Seems to not be given to the player
 
         private AddRecipe(IIngredient input, IItemStack output, int duration) {
             this.input = input;
@@ -35,13 +34,7 @@ public final class Campfire {
         public void apply() {
             ItemStack output = CraftTweakerMC.getItemStack(this.output);
 
-            for (IItemStack item : input.getItems()) {
-                if (CampfireRecipes.INSTANCE.getRecipe(CraftTweakerMC.getItemStack(input)) != null) {
-                    CraftTweakerAPI.logWarning("Cannot add duplicate recipe for " + input.toCommandString());
-                } else {
-                    CampfireRecipes.INSTANCE.addRecipe(CraftTweakerMC.getItemStack(item), output, duration);
-                }
-            }
+            CampfireRecipes.INSTANCE.addRecipe(CraftTweakerMC.getIngredient(input), output, duration);
         }
 
         @Override

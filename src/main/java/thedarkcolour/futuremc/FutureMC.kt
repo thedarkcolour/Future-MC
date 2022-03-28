@@ -3,8 +3,10 @@
 package thedarkcolour.futuremc
 
 import net.minecraft.block.BlockDispenser
+import net.minecraft.block.material.Material
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.dispenser.IBehaviorDispenseItem
+import net.minecraft.init.Biomes
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.Item
@@ -18,6 +20,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.registry.ForgeRegistries
 import net.minecraftforge.fml.common.registry.GameRegistry
@@ -36,6 +39,7 @@ import thedarkcolour.futuremc.client.tesr.WoodenSignRenderer
 import thedarkcolour.futuremc.compat.QUARK
 import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
+import thedarkcolour.futuremc.entity.bee.EntityBee
 import thedarkcolour.futuremc.event.Events
 import thedarkcolour.futuremc.item.BannerPatternItem
 import thedarkcolour.futuremc.network.NetworkHandler
@@ -134,6 +138,9 @@ object FutureMC {
                 BottleDispenserBehavior.dispense(source.world, source, stack, existing)
             })
         }
+        if (FConfig.villageAndPillage.campfire.enabled) {
+            // todo campfire lighting with flint steel and burnout with shovel
+        }
 
         if (FConfig.villageAndPillage.loom.enabled) {
             val params = arrayOf(String::class.java, String::class.java)
@@ -152,6 +159,19 @@ object FutureMC {
             ClientRegistry.bindTileEntitySpecialRenderer(BellTileEntity::class.java, BellTileEntityRenderer())
             ClientRegistry.bindTileEntitySpecialRenderer(WoodenSignTile::class.java, WoodenSignRenderer())
             ClientRegistry.bindTileEntitySpecialRenderer(CampfireTile::class.java, CampfireRenderer)
+        }
+    }
+
+    @EventHandler
+    fun postInit(event: FMLPostInitializationEvent) {
+        EntityBee.FLOWERS.removeIf { state ->
+            state.material == Material.AIR // try to fix #281
+        }
+
+        Biomes.PLAINS.addFlower(FBlocks.CORNFLOWER.defaultState, 5)
+        for (biome in listOf(Biomes.FOREST, Biomes.BIRCH_FOREST_HILLS, Biomes.BIRCH_FOREST, Biomes.FOREST_HILLS, Biomes.MUTATED_BIRCH_FOREST, Biomes.MUTATED_BIRCH_FOREST_HILLS, Biomes.MUTATED_FOREST)) {
+            Biomes.PLAINS.addFlower(FBlocks.CORNFLOWER.defaultState, 5)
+            Biomes.PLAINS.addFlower(FBlocks.LILY_OF_THE_VALLEY.defaultState, 5)
         }
     }
 

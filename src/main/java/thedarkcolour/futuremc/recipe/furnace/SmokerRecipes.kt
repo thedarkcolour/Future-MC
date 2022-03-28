@@ -3,6 +3,7 @@ package thedarkcolour.futuremc.recipe.furnace
 import net.minecraft.item.ItemFood
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.FurnaceRecipes
+import net.minecraft.item.crafting.Ingredient
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.recipe.Recipes
 import thedarkcolour.futuremc.recipe.SimpleRecipe
@@ -20,7 +21,7 @@ object SmokerRecipes : Recipes<SimpleRecipe>() {
         }
     }
 
-    override fun addRecipe(input: ItemStack, output: ItemStack) {
+    override fun addRecipe(input: Ingredient, output: ItemStack) {
         recipes.add(SimpleRecipe(input, output))
     }
 }

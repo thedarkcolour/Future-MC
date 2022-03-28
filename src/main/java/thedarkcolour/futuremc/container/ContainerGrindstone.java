@@ -130,7 +130,7 @@ public class ContainerGrindstone extends FContainer {
 
             Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
             for (Enchantment e : map.keySet()) {
-                if (e.isCurse()) {
+                if (e != null && e.isCurse()) { // null check for no reason!! Fix #295
                     outItem.addEnchantment(e, 1);
                 }
             }
@@ -209,7 +209,7 @@ public class ContainerGrindstone extends FContainer {
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 
             for (Enchantment enchantment : enchantments.keySet()) {
-                if (!enchantment.isCurse()) {
+                if (!enchantment.isCurse() && enchantment.isAllowedOnBooks()) { // Fix #264
                     exp += getEnchantmentEXP(enchantment, enchantments.get(enchantment));
                 }
             }

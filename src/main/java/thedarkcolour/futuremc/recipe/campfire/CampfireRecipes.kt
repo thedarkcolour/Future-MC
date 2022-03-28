@@ -3,6 +3,7 @@ package thedarkcolour.futuremc.recipe.campfire
 import net.minecraft.init.Items
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.FurnaceRecipes
+import net.minecraft.item.crafting.Ingredient
 import net.minecraftforge.oredict.OreDictionary
 import thedarkcolour.futuremc.recipe.Recipes
 
@@ -23,10 +24,11 @@ object CampfireRecipes : Recipes<CampfireRecipe>() {
             recipes.add(CampfireRecipe(item, FurnaceRecipes.instance().getSmeltingResult(item), 600))
         }
     }
-    @Deprecated("Use `duration` version", level = DeprecationLevel.ERROR)
-    override fun addRecipe(input: ItemStack, output: ItemStack) {}
 
-    fun addRecipe(input: ItemStack, output: ItemStack, duration: Int) {
+    @Deprecated("Use `duration` version", level = DeprecationLevel.ERROR)
+    override fun addRecipe(input: Ingredient, output: ItemStack) {}
+
+    fun addRecipe(input: Ingredient, output: ItemStack, duration: Int) {
         recipes.add(CampfireRecipe(input, output, duration))
     }
 }

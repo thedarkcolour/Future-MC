@@ -2,6 +2,7 @@ package thedarkcolour.futuremc.recipe.furnace
 
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.FurnaceRecipes
+import net.minecraft.item.crafting.Ingredient
 import net.minecraftforge.oredict.OreDictionary
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.recipe.Recipes
@@ -28,7 +29,7 @@ object BlastFurnaceRecipes : Recipes<SimpleRecipe>() {
         }
     }
 
-    override fun addRecipe(input: ItemStack, output: ItemStack) {
+    override fun addRecipe(input: Ingredient, output: ItemStack) {
         recipes.add(SimpleRecipe(input, output))
     }
 }

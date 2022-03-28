@@ -1,10 +1,13 @@
 package thedarkcolour.futuremc.compat.crafttweaker;
 
+import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
+import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
-import crafttweaker.api.oredict.IOreDictEntry;
+import crafttweaker.api.minecraft.CraftTweakerMC;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.futuremc.recipe.Recipes;
@@ -12,28 +15,18 @@ import thedarkcolour.futuremc.recipe.SimpleRecipe;
 import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes;
 import thedarkcolour.futuremc.recipe.furnace.SmokerRecipes;
 
-import static thedarkcolour.futuremc.compat.crafttweaker.RecipeUtil.applyAction;
-import static thedarkcolour.futuremc.compat.crafttweaker.RecipeUtil.toItemStack;
-
 public class SmokerAndBlastFurnace {
     @ZenRegister
     @ZenClass("mods.futuremc.Smoker")
     public static final class Smoker {
         @ZenMethod
-        public static void addRecipe(IItemStack input, IItemStack output) {
-            applyAction(new AddRecipe(SmokerRecipes.INSTANCE, input, output));
-        }
-
-        @ZenMethod
-        public static void addRecipe(IOreDictEntry input, IItemStack output) {
-            for (IItemStack i : input.getItems()) {
-                addRecipe(i, output);
-            }
+        public static void addRecipe(IIngredient input, IItemStack output) {
+            CraftTweakerAPI.apply(new AddRecipe(SmokerRecipes.INSTANCE, input, output));
         }
 
         @ZenMethod
         public static void removeRecipe(IItemStack input) {
-            applyAction(new RemoveRecipeForInput(SmokerRecipes.INSTANCE, input));
+            CraftTweakerAPI.apply(new RemoveRecipeForInput(SmokerRecipes.INSTANCE, input));
         }
 
         // Alias for more clarity if people prefer
@@ -44,7 +37,7 @@ public class SmokerAndBlastFurnace {
 
         @ZenMethod
         public static void removeRecipeForOutput(IItemStack output) {
-            applyAction(new RemoveRecipeForOutput(SmokerRecipes.INSTANCE, output));
+            CraftTweakerAPI.apply(new RemoveRecipeForOutput(SmokerRecipes.INSTANCE, output));
         }
 
         @ZenMethod
@@ -57,20 +50,13 @@ public class SmokerAndBlastFurnace {
     @ZenClass("mods.futuremc.BlastFurnace")
     public static final class BlastFurnace {
         @ZenMethod
-        public static void addRecipe(IItemStack input, IItemStack output) {
-            applyAction(new AddRecipe(BlastFurnaceRecipes.INSTANCE, input, output));
-        }
-
-        @ZenMethod
-        public static void addRecipe(IOreDictEntry input, IItemStack output) {
-            for (IItemStack i : input.getItems()) {
-                addRecipe(i, output);
-            }
+        public static void addRecipe(IIngredient input, IItemStack output) {
+            CraftTweakerAPI.apply(new AddRecipe(BlastFurnaceRecipes.INSTANCE, input, output));
         }
 
         @ZenMethod
         public static void removeRecipe(IItemStack input) {
-            applyAction(new RemoveRecipeForInput(BlastFurnaceRecipes.INSTANCE, input));
+            CraftTweakerAPI.apply(new RemoveRecipeForInput(BlastFurnaceRecipes.INSTANCE, input));
         }
 
         // Alias for more clarity if people prefer
@@ -81,7 +67,7 @@ public class SmokerAndBlastFurnace {
 
         @ZenMethod
         public static void removeRecipeForOutput(IItemStack output) {
-            applyAction(new RemoveRecipeForOutput(BlastFurnaceRecipes.INSTANCE, output));
+            CraftTweakerAPI.apply(new RemoveRecipeForOutput(BlastFurnaceRecipes.INSTANCE, output));
         }
 
         @ZenMethod
@@ -92,12 +78,13 @@ public class SmokerAndBlastFurnace {
 
     private static final class AddRecipe implements IAction {
         private final Recipes<SimpleRecipe> recipes;
-        private final ItemStack input, output;
+        private final Ingredient input;
+        private final ItemStack output;
 
-        private AddRecipe(Recipes<SimpleRecipe> recipes, IItemStack input, IItemStack output) {
+        private AddRecipe(Recipes<SimpleRecipe> recipes, IIngredient input, IItemStack output) {
             this.recipes = recipes;
-            this.input   = toItemStack(input);
-            this.output  = toItemStack(output);
+            this.input   = CraftTweakerMC.getIngredient(input);
+            this.output  = CraftTweakerMC.getItemStack(output);
         }
 
         @Override
@@ -117,7 +104,7 @@ public class SmokerAndBlastFurnace {
 
         private RemoveRecipeFor(Recipes<SimpleRecipe> recipes, IItemStack item) {
             this.recipes = recipes;
-            this.item = toItemStack(item);
+            this.item = CraftTweakerMC.getItemStack(item);
         }
 
         @Override

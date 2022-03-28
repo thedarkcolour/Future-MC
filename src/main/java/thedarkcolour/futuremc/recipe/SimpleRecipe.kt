@@ -4,11 +4,52 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.Ingredient
 
 /**
- * Simple recipe with one input and one output.
+ * The base class for a recipe with an input and an output.
  *
- * @param input the input item requirement of this recipe
- * @param output the result of this recipe
- *
- * @author TheDarkColour
+ * @property input the input item requirement of this recipe
+ * @property output the result of this recipe
  */
-open class SimpleRecipe(override val input: Ingredient, override val output: ItemStack) : Recipe<SimpleRecipe>()
+open class SimpleRecipe(val input: Ingredient, val output: ItemStack) {
+    constructor(stack: ItemStack, output: ItemStack) : this(Ingredient.fromStacks(stack), output)
+
+    /**
+     * Returns if the input and output match the requirements of this recipe.
+     *
+     * @see thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes
+     */
+    fun isSameRecipe(input: ItemStack, output: ItemStack): Boolean {
+        return this.input.test(input) && doesItemMatch(this.output, output)
+    }
+
+    /**
+     * Determines if the other item matches the specified item.
+     *
+     * @param item the item to check for matching
+     * @param other the item to test against the recipe input
+     *
+     * @return if [other] is the same item as [item] and has an equal or greater amount.
+     */
+    fun doesItemMatch(item: ItemStack, other: ItemStack): Boolean {
+        return other.item == item.item && (item.metadata == 32767 || other.metadata == item.metadata) && other.count >= item.count
+    }
+
+    /**
+     * Tests equality between tools ignoring durability **if they are damageable.**
+     *
+     * If the item is not a tool, then normal equality checking is used.
+     */
+    fun doesItemMatchIgnoreDurability(recipeInput: ItemStack, other: ItemStack): Boolean {
+        return if (recipeInput.maxDamage == 0) {
+            doesItemMatch(recipeInput, other)
+        } else {
+            other.item == recipeInput.item
+        }
+    }
+
+    /**
+     * Returns a string representation of the object.
+     */
+    override fun toString(): String {
+        return javaClass.simpleName + "(input = $input, output = $output)"
+    }
+}

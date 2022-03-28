@@ -12,8 +12,12 @@ import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.Ingredient
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.*
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.EnumHand
+import net.minecraft.util.EnumParticleTypes
+import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -141,36 +145,37 @@ class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
     }
 
     object ItemsForComposter {
-        private val VALID_ITEMS = Object2ByteOpenHashMap<ItemStack>()
-        val entries: Object2ByteMap.FastEntrySet<ItemStack>
+        private val VALID_ITEMS = Object2ByteOpenHashMap<Ingredient>()
+        val entries: Object2ByteMap.FastEntrySet<Ingredient>
             get() = VALID_ITEMS.object2ByteEntrySet()
 
-        private fun add(registryObject: IForgeRegistryEntry<*>, rarity: ComposterRarity) {
+        private fun add(registryObject: IForgeRegistryEntry<*>, rarity: Byte) {
             if (registryObject is Block) {
-                add(ItemStack(registryObject), rarity)
+                add(Ingredient.fromItem(Item.getItemFromBlock(registryObject)), rarity)
             } else {
-                add(ItemStack(registryObject as Item), rarity)
+                add(Ingredient.fromItem(registryObject as Item), rarity)
             }
         }
 
-        fun add(stack: ItemStack, rarity: ComposterRarity) {
-            add(stack, rarity.chance)
+        @Suppress("ReplacePutWithAssignment")
+        fun add(ingredient: Ingredient, rarity: Byte) {
+            VALID_ITEMS.put(ingredient, rarity)
         }
 
         @JvmStatic
         fun add(stack: ItemStack, rarity: Int) {
-            VALID_ITEMS[stack] = rarity.toByte().coerceAtMost(100)
+            add(stack, rarity.toByte().coerceAtMost(100))
         }
 
         @Suppress("ReplacePutWithAssignment")
         fun add(stack: ItemStack, rarity: Byte) {
-            VALID_ITEMS.put(stack, rarity)
+            VALID_ITEMS.put(Ingredient.fromStacks(stack), rarity)
         }
 
         @JvmStatic
         fun getChance(stack: ItemStack): Byte {
             if (stack.isEmpty) return -1
-            val item = VALID_ITEMS.keys.firstOrNull(stack::isItemEqual)
+            val item = VALID_ITEMS.keys.firstOrNull { it.test(stack) }
             return VALID_ITEMS[item] ?: -1
         }
 
@@ -188,22 +193,12 @@ class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
             if (FConfig.villageAndPillage.composter) {
                 // COMMON
                 add(ItemStack(Blocks.TALLGRASS, 1, 1), ComposterRarity.COMMON)
-                add(ItemStack(Blocks.LEAVES, 1, 0), ComposterRarity.COMMON)
-                add(ItemStack(Blocks.LEAVES, 1, 1), ComposterRarity.COMMON)
-                add(ItemStack(Blocks.LEAVES, 1, 2), ComposterRarity.COMMON)
-                add(ItemStack(Blocks.LEAVES, 1, 3), ComposterRarity.COMMON)
-                add(ItemStack(Blocks.LEAVES2, 1, 0), ComposterRarity.COMMON)
-                add(ItemStack(Blocks.LEAVES2, 1, 1), ComposterRarity.COMMON)
+                add(Blocks.LEAVES, ComposterRarity.COMMON)
                 add(Items.MELON_SEEDS, ComposterRarity.COMMON)
                 add(Items.PUMPKIN_SEEDS, ComposterRarity.COMMON)
                 add(Items.WHEAT_SEEDS, ComposterRarity.COMMON)
                 add(Items.BEETROOT_SEEDS, ComposterRarity.COMMON)
-                add(ItemStack(Blocks.SAPLING, 1, 0), ComposterRarity.COMMON)
-                add(ItemStack(Blocks.SAPLING, 1, 1), ComposterRarity.COMMON)
-                add(ItemStack(Blocks.SAPLING, 1, 2), ComposterRarity.COMMON)
-                add(ItemStack(Blocks.SAPLING, 1, 3), ComposterRarity.COMMON)
-                add(ItemStack(Blocks.SAPLING, 1, 4), ComposterRarity.COMMON)
-                add(ItemStack(Blocks.SAPLING, 1, 5), ComposterRarity.COMMON)
+                add(Blocks.SAPLING, ComposterRarity.COMMON)
                 add(SWEET_BERRIES, ComposterRarity.COMMON)
                 // UNCOMMON
                 add(Items.MELON, ComposterRarity.UNCOMMON)
@@ -218,9 +213,7 @@ class ComposterBlock(properties: Properties) : InteractionBlock(properties) {
                 add(ItemStack(Items.DYE, 1, 3), ComposterRarity.RARE)
                 add(ItemStack(Blocks.TALLGRASS, 1, 2), ComposterRarity.RARE)
                 add(ItemStack(Blocks.DOUBLE_PLANT, 1, 3), ComposterRarity.RARE)
-                val subFlowers = NonNullList.create<ItemStack>()
-                Blocks.RED_FLOWER.getSubBlocks(null, subFlowers)
-                for (f in subFlowers) add(f, ComposterRarity.RARE)
+                add(Blocks.RED_FLOWER, ComposterRarity.RARE)
                 add(Blocks.YELLOW_FLOWER, ComposterRarity.RARE)
                 add(LILY_OF_THE_VALLEY, ComposterRarity.RARE)
                 add(CORNFLOWER, ComposterRarity.RARE)
