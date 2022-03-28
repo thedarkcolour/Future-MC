@@ -21,7 +21,7 @@ public final class Composter {
     }
 
     @ZenMethod
-    public static void removeValidItem(IIngredient stack) {
+    public static void removeValidItem(IItemStack stack) {
         CraftTweakerAPI.apply(new Remove(stack));
     }
 
@@ -65,24 +65,20 @@ public final class Composter {
     }
 
     private static final class Remove implements IAction {
-        private final IIngredient ingredient;
+        private final IItemStack stack;
 
-        private Remove(IIngredient ingredient) {
-            this.ingredient = ingredient;
+        private Remove(IItemStack stack) {
+            this.stack = stack;
         }
 
         @Override
         public void apply() {
-            for (IItemStack item : ingredient.getItems()) {
-                ItemStack stack = CraftTweakerMC.getItemStack(item);
-
-                ComposterBlock.ItemsForComposter.remove(stack);
-            }
+            ComposterBlock.ItemsForComposter.remove(CraftTweakerMC.getItemStack(stack));
         }
 
         @Override
         public String describe() {
-            return "Removed item " + ingredient.toCommandString() + " from the list of valid Composter item.";
+            return "Removed item " + stack.toCommandString() + " from the list of valid Composter item.";
         }
     }
 }
