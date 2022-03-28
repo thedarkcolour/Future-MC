@@ -1,6 +1,6 @@
 package thedarkcolour.futuremc.block
 
-import git.jbredwards.fluidlogged_api.common.block.IFluidloggable
+import git.jbredwards.fluidlogged_api.api.block.IFluidloggable
 import net.minecraft.block.state.BlockFaceShape
 import net.minecraft.block.state.IBlockState
 import net.minecraft.util.BlockRenderLayer
@@ -10,7 +10,7 @@ import net.minecraft.world.IBlockAccess
 import net.minecraftforge.fml.common.Optional
 import thedarkcolour.core.block.FBlock
 
-@Optional.Interface(iface = "git.jbredwards.fluidlogged_api.common.block.IFluidloggable", modid = "fluidlogged_api")
+@Optional.Interface(iface = "git.jbredwards.fluidlogged_api.api.block.IFluidloggable", modid = "fluidlogged_api")
 class ChainBlock(properties: Properties) : FBlock(properties), IFluidloggable {
     override fun isPassable(worldIn: IBlockAccess?, pos: BlockPos?) = false
     override fun getRenderLayer() = BlockRenderLayer.CUTOUT
