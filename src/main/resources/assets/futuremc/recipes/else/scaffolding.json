@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "xax",
+        "x x",
+        "x x"
+    ],
+    "key": {
+        "x": {
+            "item": "futuremc:bamboo"
+        },
+        "a": {
+            "type": "forge:ore_dict",
+            "ore": "string"
+        }
+    },
+    "result": {
+        "item": "futuremc:scaffolding",
+        "count": 6
+    }
+}

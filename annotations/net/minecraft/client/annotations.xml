@@ -1,8 +1,0 @@
-<root>
-    <item name='net.minecraft.client.Minecraft net.minecraft.client.Minecraft getMinecraft()'>
-        <annotation name='org.jetbrains.annotations.Contract'>
-            <val name="value" val="&quot;-&gt;!null&quot;"/>
-            <val name="pure" val="true"/>
-        </annotation>
-    </item>
-</root>

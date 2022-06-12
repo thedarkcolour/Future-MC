@@ -19,12 +19,10 @@ object OTGCompat {
             return TreeBO3(ret)
         }
 
-        ret.onEnable()
-
-        if (ret.canSpawnAsTree()) {
-            return TreeBO3(ret)
+        return if (ret.onEnable() && ret.canSpawnAsTree()) {
+            TreeBO3(ret)
         } else {
-            return ret
+            ret
         }
     }
 }

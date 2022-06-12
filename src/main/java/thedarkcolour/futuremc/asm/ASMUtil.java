@@ -6,6 +6,9 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.*;
 
 import javax.annotation.Nullable;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import static org.objectweb.asm.Opcodes.ICONST_1;
@@ -117,7 +120,7 @@ public final class ASMUtil {
      * @param classNode the class to patch
      * @param method the method to patch
      * @param toAdd the patch to apply
-     * @param occurrence if there are multiple nodes, which of them to patch before
+     * @param occurrence if there are multiple nodes, which of them to patch before (1 is the first occurrence)
      * @param condition the condition to check when finding a patch location
      */
     public static void patchBeforeInsn(ClassNode classNode, MethodNode method, InsnList toAdd, int occurrence, Predicate<AbstractInsnNode> condition) {
@@ -169,6 +172,36 @@ public final class ASMUtil {
 
         throw new RuntimeException("Could not find matching instruction in bytecode");
     }
+    public static byte[] patch(byte[] basicClass, Consumer<ClassNode> patch) {
+        return patch(basicClass, patch, ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
+    }
+
+    public static byte[] patch(byte[] basicClass, Consumer<ClassNode> patch, int flags) {
+        ClassNode classNode = new ClassNode();
+        ClassReader classReader = new ClassReader(basicClass);
+        classReader.accept(classNode, 0);
+        patch.accept(classNode);
+
+        ClassWriter cw = new ClassWriter(classReader, flags);
+        classNode.accept(cw);
+
+        byte[] bytes = cw.toByteArray();
+
+        // change when needed
+        if (true) {
+            try {
+                String replace = classNode.name.substring(classNode.name.lastIndexOf('/') + 1) + ".class";
+                FileOutputStream output = new FileOutputStream("asm_dump\\" + replace);
+                output.write(bytes);
+                output.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return bytes;
+    }
 
     /**
      * Compiles the class node into JVM bytecode. Terminal operation
@@ -176,6 +209,23 @@ public final class ASMUtil {
     public static byte[] compile(ClassNode classNode) {
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
         classNode.accept(cw);
-        return cw.toByteArray();
+
+        byte[] bytes = cw.toByteArray();
+
+        // change when needed
+        if (false) {
+            try {
+                String replace = classNode.name.substring(classNode.name.lastIndexOf('/') + 1) + ".class";
+                FileOutputStream output = new FileOutputStream("C:\\Things\\mods\\future-mc\\asm_dump\\" + replace);
+                output.write(bytes);
+                output.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return bytes;
     }
 }

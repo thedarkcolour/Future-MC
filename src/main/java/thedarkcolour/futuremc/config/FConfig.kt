@@ -369,6 +369,12 @@ object FConfig {
         @JvmField
         var panda = true
 
+        @Name("Scaffolding")
+        @Comment("Whether the Scaffolding block is enabled.")
+        @RequiresMcRestart
+        @JvmField
+        var scaffolding = true
+
         @Name("Smithing Table")
         @Comment("Options for Smithing Table")
         @RequiresMcRestart

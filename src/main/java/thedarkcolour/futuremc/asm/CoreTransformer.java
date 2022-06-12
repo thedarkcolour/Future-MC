@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.asm;
 
 import net.minecraft.launchwrapper.IClassTransformer;
+import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.tree.*;
 import thedarkcolour.futuremc.compat.Compat;
@@ -19,12 +20,15 @@ public final class CoreTransformer implements IClassTransformer {
         try {
             switch (transformedName) {
                 case "net.minecraft.client.renderer.EntityRenderer":
-                    return patchEntityRenderer(basicClass);
+                    return ASMUtil.patch(basicClass, CoreTransformer::patchEntityRenderer);
 
                 case "net.minecraft.world.gen.feature.WorldGenTrees":
-                    return patchWorldGenTrees(basicClass);
+                    return ASMUtil.patch(basicClass, CoreTransformer::patchWorldGenTrees);
                 case "net.minecraft.world.gen.feature.WorldGenBigTree":
-                    return patchWorldGenBigTree(basicClass);
+                    return ASMUtil.patch(basicClass, CoreTransformer::patchWorldGenBigTree);
+
+                case "net.minecraft.entity.EntityLivingBase":
+                    return ASMUtil.patch(basicClass, CoreTransformer::patchEntityLivingBase, ClassWriter.COMPUTE_MAXS); // my frames are correct thanks
 
                 //case "net.minecraft.entity.player.EntityPlayerMP":
                 //    return patchEntityPlayerMP(basicClass);
@@ -40,7 +44,7 @@ public final class CoreTransformer implements IClassTransformer {
                 //    return ASMUtil.patchRenderItem(basicClass);
 
                 case "com.fuzs.gamblingstyle.handler.OpenContainerHandler":
-                    return transformOpenContainerHandler(basicClass);
+                    return ASMUtil.patch(basicClass, CoreTransformer::transformOpenContainerHandler);
 
                 case "net.minecraft.block.BlockPistonBase":
                     try {
@@ -53,10 +57,10 @@ public final class CoreTransformer implements IClassTransformer {
                     return basicClass;
 
                 case "com.pg85.otg.customobjects.bo3.BO3Loader":
-                    return transformBO3Loader(basicClass);
+                    return ASMUtil.patch(basicClass, CoreTransformer::transformBO3Loader);
 
                 case "biomesoplenty.common.world.generator.tree.GeneratorTreeBase":
-                    return transformBOPTree(basicClass);
+                    return ASMUtil.patch(basicClass, CoreTransformer::transformBOPTree);
             }
         } catch (NoClassDefFoundError e) {
             return basicClass;
@@ -65,8 +69,52 @@ public final class CoreTransformer implements IClassTransformer {
         return basicClass;
     }
 
-    private static byte[] transformBOPTree(byte[] basicClass) {
-        ClassNode classNode = ASMUtil.createClassNode(basicClass);
+    private static void patchEntityLivingBase(ClassNode classNode) {
+        MethodNode travelNode = ASMUtil.findMethod(classNode, "func_191986_a", "travel", null);
+
+        String collidedHorizontallyFieldName = ASMUtil.isObfuscated ? "field_70123_F" : "collidedHorizontally";
+        String isJumpingFieldName = ASMUtil.isObfuscated ? "field_70703_bu" : "isJumping";
+
+        for (AbstractInsnNode node : travelNode.instructions.toArray()) {
+            int flagLoc = ASMUtil.isObfuscated ? 21 : 9; // I have no idea why this is different
+
+            if (node.getOpcode() == ISTORE && ((VarInsnNode) node).var == flagLoc) {
+                travelNode.instructions.insert(node, ASMUtil.createInsnList(
+                        new VarInsnNode(ILOAD, flagLoc),
+                        new VarInsnNode(ALOAD, 0),
+                        new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "scaffoldFallThrough", "(ZLnet/minecraft/entity/EntityLivingBase;)Z"),
+                        new VarInsnNode(ISTORE, flagLoc)
+                ));
+                break;
+            }
+        }
+
+        int occurrence = 0;
+
+        // easier to iterate array than to use the built-in iterator
+        for (AbstractInsnNode node : travelNode.instructions.toArray()) {
+            if (node.getOpcode() == GETFIELD && ((FieldInsnNode) node).name.equals(collidedHorizontallyFieldName)) {
+                // want the second occurrence
+                if (occurrence++ == 1) {
+                    LabelNode l74 = new LabelNode(new Label());
+
+                    travelNode.instructions.insert(node.getNext(), ASMUtil.createInsnList(
+                            l74,
+                            new FrameNode(F_SAME, 0, null, 0, null)
+                    ));
+                    travelNode.instructions.insert(node, ASMUtil.createInsnList(
+                            new JumpInsnNode(IFNE, l74),
+                            new VarInsnNode(ALOAD, 0),
+                            new FieldInsnNode(GETFIELD, "net/minecraft/entity/EntityLivingBase", isJumpingFieldName, "Z")
+                    ));
+
+                    break;
+                }
+            }
+        }
+    }
+
+    private static void transformBOPTree(ClassNode classNode) {
         String fmcFieldName = "_fmc_has_placed_beehive";
         String className = "biomesoplenty/common/world/generator/tree/GeneratorTreeBase";
 
@@ -102,12 +150,9 @@ public final class CoreTransformer implements IClassTransformer {
                 new FrameNode(F_APPEND, 1, new Object[]{"net/minecraft/block/state/IBlockState"}, 0, null)
         );
         ASMUtil.patchBeforeReturnTrue(classNode, ASMUtil.findMethod(classNode, "setLog", "setLog", "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing$Axis;)Z"), toAddSetLog);
-
-        return ASMUtil.compile(classNode);
     }
 
-    private static byte[] transformBO3Loader(byte[] basicClass) {
-        ClassNode classNode = ASMUtil.createClassNode(basicClass);
+    private static void transformBO3Loader(ClassNode classNode) {
         MethodNode mv = ASMUtil.findMethod(classNode, "loadFromFile", "loadFromFile", null);
 
         mv.instructions = new InsnList();
@@ -125,12 +170,9 @@ public final class CoreTransformer implements IClassTransformer {
         mv.visitLocalVariable("objectName", "Ljava/lang/String;", null, l0, l1, 1);
         mv.visitLocalVariable("file", "Ljava/io/File;", null, l0, l1, 2);
         mv.visitMaxs(2, 3);
-
-        return ASMUtil.compile(classNode);
     }
 
-    private static byte[] transformOpenContainerHandler(byte[] basicClass) {
-        ClassNode classNode = ASMUtil.createClassNode(basicClass);
+    private static void transformOpenContainerHandler(ClassNode classNode) {
         MethodNode mv = ASMUtil.findMethod(classNode, "onContainerOpen", "onContainerOpen", null);
 
         LabelNode label = null;
@@ -153,15 +195,14 @@ public final class CoreTransformer implements IClassTransformer {
         list.add(new InsnNode(RETURN));
 
         mv.instructions.insertBefore(label, list);
-
-        return ASMUtil.compile(classNode);
     }
 
-    private static byte[] patchEntityRenderer(byte[] basicClass) {
+    private static void patchEntityRenderer(ClassNode classNode) {
         // fix incompatibility with vivecraft?
-        if (Compat.checkVivecraft()) return basicClass;
+        if (Compat.checkVivecraft()) {
+            return;
+        }
 
-        ClassNode classNode = ASMUtil.createClassNode(basicClass);
         MethodNode method = ASMUtil.findMethod(classNode, "func_175068_a", "renderWorldPass", null);
         MethodInsnNode target = ASMUtil.findMethodInsn(method, "func_70055_a", "isInsideOfMaterial", null);
 
@@ -169,13 +210,9 @@ public final class CoreTransformer implements IClassTransformer {
         method.instructions.remove(target.getPrevious());
         method.instructions.remove(method.instructions.get(method.instructions.indexOf(target) + 1));
         method.instructions.remove(target);
-
-        return ASMUtil.compile(classNode);
     }
 
-    private static byte[] patchWorldGenTrees(byte[] basicClass) {
-        ClassNode classNode = ASMUtil.createClassNode(basicClass);
-
+    private static void patchWorldGenTrees(ClassNode classNode) {
         MethodNode method = ASMUtil.findMethod(
                 classNode,
                 "func_180709_b",
@@ -190,19 +227,15 @@ public final class CoreTransformer implements IClassTransformer {
             new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/world/gen/feature/BeeNestGenerator", "generateBeeNestsForSmallTrees", "(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;I)V", false)
         );
         ASMUtil.patchBeforeReturnTrue(classNode, method, toAdd);
-
-        return ASMUtil.compile(classNode);
     }
 
-    private static byte[] patchWorldGenBigTree(byte[] basicClass) {
-        ClassNode classNode = ASMUtil.createClassNode(basicClass);
+    private static void patchWorldGenBigTree(ClassNode classNode) {
         MethodNode method = ASMUtil.findMethod(
                 classNode,
                 "func_180709_b",
                 "generate",
                 "(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;)Z"
         );
-
         InsnList toAdd = ASMUtil.createInsnList(
             new VarInsnNode(ALOAD, 1),
             new VarInsnNode(ALOAD, 2),
@@ -213,30 +246,23 @@ public final class CoreTransformer implements IClassTransformer {
             new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/world/gen/feature/BeeNestGenerator", "generateBeeNestsForBigTrees", "(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;ILnet/minecraft/world/gen/feature/WorldGenAbstractTree;)V", false)
         );
         ASMUtil.patchBeforeReturnTrue(classNode, method, toAdd);
-
-        return ASMUtil.compile(classNode);
     }
 
-    private static byte[] patchModelBiped(byte[] basicClass) {
-        ClassNode classNode = ASMUtil.createClassNode(basicClass);
+    private static void patchModelBiped(ClassNode classNode) {
         MethodNode method = ASMUtil.findMethod(
                 classNode,
                 "func_78087_a",
                 "setRotationAngles",
                 "(FFFFFFLnet/minecraft/entity/Entity;)V"
         );
-
         InsnList toAdd = ASMUtil.createInsnList(
             new VarInsnNode(ALOAD, 0),
             new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/event/Events", "setPlayerRotations", "(Lnet/minecraft/client/model/ModelBiped;)V", false)
         );
         ASMUtil.patchBeforeMcMethod(classNode, method, toAdd, "func_178685_a", "copyModelAngles", 1);
-
-        return ASMUtil.compile(classNode);
     }
 
-    private static byte[] patchRenderItem(byte[] basicClass) {
-        ClassNode classNode = ASMUtil.createClassNode(basicClass);
+    private static void patchRenderItem(ClassNode classNode) {
         MethodNode method = ASMUtil.findMethod(
                 classNode,
                 "func_181564_a",
@@ -248,6 +274,5 @@ public final class CoreTransformer implements IClassTransformer {
             list.add(new VarInsnNode(ALOAD, 0));
             list.add;
         });*/
-        return basicClass;
     }
 }

@@ -1,17 +1,36 @@
 package thedarkcolour.futuremc.asm
 
+import net.minecraft.block.state.IBlockState
 import net.minecraft.client.model.ModelBiped
 import net.minecraft.client.renderer.ItemModelMesher
 import net.minecraft.client.renderer.RenderItem
 import net.minecraft.client.renderer.block.model.IBakedModel
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumHand
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.MathHelper
 import net.minecraftforge.client.ForgeHooksClient
 import thedarkcolour.futuremc.client.render.TridentBakedModel
+import thedarkcolour.futuremc.registry.FBlocks
 
 object ASMHooks {
+    /**
+     * Prevents crouching in scaffold blocks to allow the player to fall through
+     */
+    @JvmStatic
+    fun scaffoldFallThrough(flag: Boolean, entity: EntityLivingBase): Boolean {
+        return flag && getBlockAtBase(entity).block != FBlocks.SCAFFOLDING
+    }
+
+    @JvmStatic
+    private fun getBlockAtBase(entity: EntityLivingBase): IBlockState {
+        val pos = BlockPos(MathHelper.floor(entity.posX), MathHelper.floor(entity.entityBoundingBox.minY), MathHelper.floor(entity.posZ))
+        return entity.world.getBlockState(pos)
+    }
+
     /**
      * Called in [RenderItem.renderItem]. Part of the Trident coremod.
      *

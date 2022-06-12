@@ -129,7 +129,7 @@ object FBlocks {
     val SEAGRASS = BlockSeaGrass()
     val SEAGRASS_FLOWING = SEAGRASS.flowing
 
-    val SCAFFOLDING = ScaffoldingBlock(Properties(Material.CIRCUITS, "scaffolding").sound(FSounds.SCAFFOLDING))
+    val SCAFFOLDING = ScaffoldingBlock(Properties(Material.CIRCUITS, "scaffolding").sound(FSounds.SCAFFOLDING).group(CreativeTabs.DECORATIONS))
     val BELL = BlockBell(Properties(Material.IRON, "bell").hardnessAndResistance(5.0f).sound(SoundType.ANVIL).group(CreativeTabs.DECORATIONS))
 
     fun registerBlocks(blocks: IForgeRegistry<Block>) {
@@ -157,7 +157,7 @@ object FBlocks {
             blocks.register(COMPOSTER)
         if (FConfig.villageAndPillage.bell)
             blocks.register(BELL)
-        if (FutureMC.DEBUG)// FConfig.villageAndPillage.scaffolding
+        if (FConfig.villageAndPillage.scaffolding)
             blocks.register(SCAFFOLDING)
         if (FConfig.buzzyBees.honeyBlock.enabled)
             blocks.register(HONEY_BLOCK)

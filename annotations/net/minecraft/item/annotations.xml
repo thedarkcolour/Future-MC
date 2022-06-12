@@ -1,7 +1,0 @@
-<root>
-    <item name='net.minecraft.item.ItemArmor.ArmorMaterial net.minecraft.item.ItemArmor.ArmorMaterial setRepairItem(net.minecraft.item.ItemStack)'>
-        <annotation name='org.jetbrains.annotations.Contract'>
-            <val val="&quot;_-&gt;this&quot;"/>
-        </annotation>
-    </item>
-</root>

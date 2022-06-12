@@ -1,4 +1,9 @@
-## Version 0.2.8 - OTG compatibility, Dynamic Trees compat, bug fixes:
+## Version 0.2.10 - Scaffolding + fix a crash:
+- *Scaffolding* - Now craftable and works like in vanilla
+- Vines can now be climbed without a block behind them like in vanilla
+- Fixed #300
+
+## Version 0.2.9 - OTG compatibility, Dynamic Trees compat, bug fixes:
 - Beehives now spawn on all trees added by Biome Bundle and should work for other biome packs on OpenTerrainGenerator
 - CraftTweaker functions now use IIngredient instead of IItemStack wherever applicable
 - Fixed (I hope): #86, #201, #202, #207, #218, #232, #250, #259, #263, #264, #266, #269, #286, #292, #295, #296
