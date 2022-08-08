@@ -11,7 +11,7 @@ import thedarkcolour.futuremc.registry.FBlocks
 import java.util.*
 
 object BambooWorldGen : FWorldGen {
-    private val VALID_BIOMES = setOf(
+    private val VALID_BIOMES = hashSetOf(
         Biomes.JUNGLE,
         Biomes.JUNGLE_EDGE,
         Biomes.JUNGLE_HILLS,
@@ -31,9 +31,7 @@ object BambooWorldGen : FWorldGen {
             return
         }
         for (j in 0..9) {
-            if (worldIn.getBlockState(pos).block == bamboo
-                && bamboo.canGrow(worldIn, pos, worldIn.getBlockState(pos), false)
-            ) {
+            if (worldIn.getBlockState(pos).block == bamboo && bamboo.canGrow(worldIn, pos, worldIn.getBlockState(pos), false)) {
                 bamboo.grow(worldIn, random, pos, worldIn.getBlockState(pos))
             }
         }
@@ -50,12 +48,10 @@ object BambooWorldGen : FWorldGen {
         val x = chunkX + rand.nextInt(16) + 8
         val z = chunkZ + rand.nextInt(16) + 8
         val position = BlockPos(x, 0, z)
-        if (!worldIn.isBlockLoaded(position))
-            return
         val biome = worldIn.getBiomeForCoordsBody(position)
         val chunkPos = worldIn.getChunk(chunkX, chunkZ).pos
         if (isBiomeValid(biome) && worldIn.worldType != WorldType.FLAT) {
-            placeAround(worldIn, rand, chunkPos, 0..12, ::generate)
+            FWorldGen.placeAround(worldIn, rand, chunkPos, 0..12, ::generate)
         }
     }
 

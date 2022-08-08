@@ -73,7 +73,7 @@ object FutureMC {
     @JvmField
     val DEBUG = Launch.blackboard?.get("fml.deobfuscatedEnvironment") == true
     @JvmField
-    val LOGGER: Logger = LogManager.getLogger()
+    val LOGGER: Logger = LogManager.getLogger("FutureMC")
 
     // Creative tab
     lateinit var GROUP: CreativeTabs

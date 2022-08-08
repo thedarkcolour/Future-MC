@@ -13,12 +13,15 @@ object SmokerRecipes : Recipes<SimpleRecipe>() {
 
     init {
         FutureMC.LOGGER.debug("Initializing default Smoker recipes")
+        val start = System.currentTimeMillis()
 
         for ((key, value) in FurnaceRecipes.instance().smeltingList) {
             if (key.item is ItemFood || value.item is ItemFood) {
                 recipes.add(SimpleRecipe(key, value))
             }
         }
+
+        FutureMC.LOGGER.debug("Completed adding default Smoker recipes in {}ms", System.currentTimeMillis() - start)
     }
 
     override fun addRecipe(input: Ingredient, output: ItemStack) {

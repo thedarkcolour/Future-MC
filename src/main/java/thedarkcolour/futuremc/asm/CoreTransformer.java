@@ -30,6 +30,12 @@ public final class CoreTransformer implements IClassTransformer {
                 case "net.minecraft.entity.EntityLivingBase":
                     return ASMUtil.patch(basicClass, CoreTransformer::patchEntityLivingBase, ClassWriter.COMPUTE_MAXS); // my frames are correct thanks
 
+                //case "net.minecraft.entity.player.EntityPlayer":
+                //    return ASMUtil.patch(basicClass, CoreTransformer::patchEntityPlayer, ClassWriter.COMPUTE_MAXS);
+
+                case "net.minecraft.item.Item":
+                    return ASMUtil.patch(basicClass, CoreTransformer::patchItem);
+
                 //case "net.minecraft.entity.player.EntityPlayerMP":
                 //    return patchEntityPlayerMP(basicClass);
                 //case "net.minecraft.client.entity.EntityPlayerSP":
@@ -67,6 +73,50 @@ public final class CoreTransformer implements IClassTransformer {
         }
 
         return basicClass;
+    }
+
+    private static void patchEntityPlayer(ClassNode classNode) {
+        MethodNode canEat = ASMUtil.findMethod(classNode, "func_71043_e", "canEat", null);
+
+        InsnList instructions = canEat.instructions;
+        int labels = 0;
+        LabelNode l1 = null;
+        VarInsnNode iload0 = null;
+
+        // get labels from existing bytecode
+        for (int i = 0; i < instructions.size(); i++) {
+            AbstractInsnNode node = instructions.get(i);
+
+            if (l1 == null && node.getClass() == LabelNode.class) {
+                l1 = (LabelNode)node;
+            } else if (iload0 == null && node.getClass() == VarInsnNode.class) {
+                VarInsnNode n = (VarInsnNode) node;
+                if (n.var == 1) {
+                    iload0 = n;
+                }
+            }
+        }
+
+        InsnList insertion = ASMUtil.createInsnList(
+                new VarInsnNode(ALOAD, 0),
+                new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "creativeEat", "(Lnet/minecraft/entity/player/EntityPlayer;Z)Z"),
+                new JumpInsnNode(IFEQ, l1),
+                new LabelNode(new Label()),
+                new InsnNode(ICONST_1),
+                new InsnNode(IRETURN)
+        );
+        instructions.insertBefore(instructions.getFirst(), insertion);
+        instructions.insertBefore(iload0, new FrameNode(F_SAME, 0, null, 0, null));
+    }
+
+    private static void patchItem(ClassNode classNode) {
+        MethodNode method = ASMUtil.findMethod(classNode, "func_77613_e", "getRarity", null);
+        method.instructions = ASMUtil.createInsnList(
+                new VarInsnNode(ALOAD, 0),
+                new VarInsnNode(ALOAD, 1),
+                new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "getEnchantmentRarity", "(Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/EnumRarity;"),
+                new InsnNode(ARETURN)
+        );
     }
 
     private static void patchEntityLivingBase(ClassNode classNode) {

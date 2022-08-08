@@ -1116,5 +1116,35 @@
             "futuremc:chain/step5",
             "futuremc:chain/step6"
         ]
+    },
+    "scaffold_break": {
+        "subtitle": "futuremc.subtitles.scaffold_break",
+        "sounds": [
+
+        ]
+    },
+    "scaffold_step": {
+        "subtitle": "futuremc.subtitles.scaffold_step",
+        "sounds": [
+
+        ]
+    },
+    "scaffold_place": {
+        "subtitle": "futuremc.subtitles.scaffold_step",
+        "sounds": [
+
+        ]
+    },
+    "scaffold_hit": {
+        "subtitle": "futuremc.subtitles.scaffold_hit",
+        "sounds": [
+
+        ]
+    },
+    "scaffold_fall": {
+        "subtitle": "futuremc.subtitles.scaffold_fall",
+        "sounds": [
+
+        ]
     }
 }

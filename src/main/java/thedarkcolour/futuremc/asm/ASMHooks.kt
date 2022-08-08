@@ -8,6 +8,10 @@ import net.minecraft.client.renderer.block.model.IBakedModel
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Blocks
+import net.minecraft.init.Items
+import net.minecraft.item.EnumRarity
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumHand
 import net.minecraft.util.math.BlockPos
@@ -17,12 +21,55 @@ import thedarkcolour.futuremc.client.render.TridentBakedModel
 import thedarkcolour.futuremc.registry.FBlocks
 
 object ASMHooks {
+    @JvmStatic
+    private val BEACON_ITEM = Item.getItemFromBlock(Blocks.BEACON)
+    @JvmStatic
+    private val COMMAND_BLOCK_ITEM = Item.getItemFromBlock(Blocks.COMMAND_BLOCK)
+    @JvmStatic
+    private val CHAIN_COMMAND_BLOCK_ITEM = Item.getItemFromBlock(Blocks.CHAIN_COMMAND_BLOCK)
+    @JvmStatic
+    private val REPEATING_COMMAND_BLOCK_ITEM = Item.getItemFromBlock(Blocks.REPEATING_COMMAND_BLOCK)
+    @JvmStatic
+    private val DRAGON_EGG_ITEM = Item.getItemFromBlock(Blocks.DRAGON_EGG)
+    @JvmStatic
+    private val STRUCTURE_BLOCK_ITEM = Item.getItemFromBlock(Blocks.STRUCTURE_BLOCK)
+    @JvmStatic
+    private val STRUCTURE_VOID_ITEM = Item.getItemFromBlock(Blocks.STRUCTURE_VOID)
+    @JvmStatic
+    private val SPAWNER_ITEM = Item.getItemFromBlock(Blocks.MOB_SPAWNER)
+    @JvmStatic
+    private val BARRIER_ITEM = Item.getItemFromBlock(Blocks.BARRIER)
+
+    @JvmStatic
+    private val UNCOMMON_ITEMS = hashSetOf(Items.EXPERIENCE_BOTTLE, Items.DRAGON_BREATH, Items.ELYTRA, Items.SKULL, Items.NETHER_STAR, Items.TOTEM_OF_UNDYING)
+    @JvmStatic
+    private val RARE_ITEMS = hashSetOf(BEACON_ITEM, Items.END_CRYSTAL)
+    @JvmStatic
+    private val EPIC_ITEMS = hashSetOf(COMMAND_BLOCK_ITEM, CHAIN_COMMAND_BLOCK_ITEM, REPEATING_COMMAND_BLOCK_ITEM, DRAGON_EGG_ITEM, STRUCTURE_BLOCK_ITEM, STRUCTURE_VOID_ITEM, SPAWNER_ITEM, BARRIER_ITEM, Items.COMMAND_BLOCK_MINECART)
+
     /**
      * Prevents crouching in scaffold blocks to allow the player to fall through
      */
     @JvmStatic
     fun scaffoldFallThrough(flag: Boolean, entity: EntityLivingBase): Boolean {
         return flag && getBlockAtBase(entity).block != FBlocks.SCAFFOLDING
+    }
+
+    fun a(item: Item, stack: ItemStack): EnumRarity {
+        return getEnchantmentRarity(item, stack)
+    }
+
+    @JvmStatic
+    fun getEnchantmentRarity(item: Item, stack: ItemStack): EnumRarity {
+        if (UNCOMMON_ITEMS.contains(item)) {
+            return if (stack.isItemEnchanted) EnumRarity.RARE else EnumRarity.UNCOMMON
+        } else if (RARE_ITEMS.contains(item)) {
+            return if (stack.isItemEnchanted) EnumRarity.EPIC else EnumRarity.RARE
+        } else if (EPIC_ITEMS.contains(item)) {
+            return EnumRarity.EPIC
+        } else {
+            return if (stack.isItemEnchanted) EnumRarity.RARE else EnumRarity.COMMON
+        }
     }
 
     @JvmStatic
@@ -109,6 +156,12 @@ object ASMHooks {
         }
 
         return null
+    }
+
+    // todo config option
+    @JvmStatic
+    fun creativeEat(player: EntityPlayer): Boolean {
+        return player.isCreative
     }
 
     /**

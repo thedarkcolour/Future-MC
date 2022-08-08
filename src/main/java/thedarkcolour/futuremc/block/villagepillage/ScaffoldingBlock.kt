@@ -80,10 +80,6 @@ class ScaffoldingBlock(properties: Properties) : FBlock(properties) {
         }
     }
 
-    private fun shouldBlock(entityIn: Entity?): Boolean {
-        return entityIn!!.isSneaking
-    }
-
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromPos: BlockPos) {
         if (!worldIn.isRemote) {
             worldIn.scheduleUpdate(pos, this, 1)

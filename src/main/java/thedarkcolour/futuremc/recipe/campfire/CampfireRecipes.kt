@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.FurnaceRecipes
 import net.minecraft.item.crafting.Ingredient
 import net.minecraftforge.oredict.OreDictionary
+import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.recipe.Recipes
 
 object CampfireRecipes : Recipes<CampfireRecipe>() {
@@ -20,9 +21,14 @@ object CampfireRecipes : Recipes<CampfireRecipe>() {
     )
 
     init {
+        FutureMC.LOGGER.debug("Initializing default Campfire recipes")
+        val start = System.currentTimeMillis()
+
         for (item in OreDictionary.getOres("listAllmeatraw").plus(OreDictionary.getOres("listAllfishraw"))) {
             recipes.add(CampfireRecipe(item, FurnaceRecipes.instance().getSmeltingResult(item), 600))
         }
+
+        FutureMC.LOGGER.debug("Completed adding default Campfire recipes in {}ms", System.currentTimeMillis() - start)
     }
 
     @Deprecated("Use `duration` version", level = DeprecationLevel.ERROR)

@@ -29,8 +29,7 @@ class FlowerWorldGen(private val flower: BlockFlower) : FWorldGen {
                 random.nextInt(4) - random.nextInt(4),
                 random.nextInt(8) - random.nextInt(8)
             )
-            // check if loaded to prevent cascading worldgen
-            if (worldIn.isBlockLoaded(pos) && worldIn.isAirBlock(pos)) {
+            if (worldIn.isAirBlock(pos)) {
                 if ((!worldIn.provider.isNether || pos.y < 255) && flower.canBlockStay(worldIn, pos, state)) {
                     worldIn.setBlockState(pos, state, 2)
                 }
@@ -55,7 +54,7 @@ class FlowerWorldGen(private val flower: BlockFlower) : FWorldGen {
         val chunkPos = worldIn.getChunk(chunkX, chunkZ).pos
         if (rand.nextDouble() < flower.flowerChance) {
             if (flower.validBiomes.contains(biome) && worldIn.worldType != WorldType.FLAT) {
-                placeAround(worldIn, rand, chunkPos, 0..12, ::generate)
+                FWorldGen.placeAround(worldIn, rand, chunkPos, 0..12, ::generate)
             }
         }
     }

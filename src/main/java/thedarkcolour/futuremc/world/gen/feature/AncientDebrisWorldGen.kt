@@ -1,19 +1,21 @@
 package thedarkcolour.futuremc.world.gen.feature
 
-import net.minecraft.block.state.pattern.BlockMatcher
+import net.minecraft.block.Block
+import net.minecraft.block.state.IBlockState
 import net.minecraft.init.Blocks
 import net.minecraft.world.DimensionType
 import net.minecraft.world.World
 import net.minecraft.world.chunk.IChunkProvider
 import net.minecraft.world.gen.IChunkGenerator
 import net.minecraft.world.gen.feature.WorldGenMinable
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.registry.FBlocks
 import java.util.*
 
 object AncientDebrisWorldGen : FWorldGen {
-    private var normalGen = WorldGenMinable(FBlocks.ANCIENT_DEBRIS.defaultState, 2, BlockMatcher.forBlock(Blocks.NETHERRACK))
-    private var lapisStyleGen = WorldGenMinable(FBlocks.ANCIENT_DEBRIS.defaultState, 3, BlockMatcher.forBlock(Blocks.NETHERRACK))
+    private var normalGen = WorldGenMinable(FBlocks.ANCIENT_DEBRIS.defaultState, 2, NetherBlocks)
+    private var lapisStyleGen = WorldGenMinable(FBlocks.ANCIENT_DEBRIS.defaultState, 3, NetherBlocks)
 
     override fun generate(
         rand: Random,
@@ -37,7 +39,23 @@ object AncientDebrisWorldGen : FWorldGen {
     }
 
     fun refresh() {
-        normalGen = WorldGenMinable(FBlocks.ANCIENT_DEBRIS.defaultState, FConfig.netherUpdate.ancientDebris.normalVein.size, BlockMatcher.forBlock(Blocks.NETHERRACK))
-        lapisStyleGen = WorldGenMinable(FBlocks.ANCIENT_DEBRIS.defaultState, 3, BlockMatcher.forBlock(Blocks.NETHERRACK))
+        normalGen = WorldGenMinable(FBlocks.ANCIENT_DEBRIS.defaultState, FConfig.netherUpdate.ancientDebris.normalVein.size, NetherBlocks)
+        lapisStyleGen = WorldGenMinable(FBlocks.ANCIENT_DEBRIS.defaultState, 3, NetherBlocks)
+    }
+
+    object NetherBlocks : com.google.common.base.Predicate<IBlockState> {
+        @JvmField
+        @ObjectHolder("biomesoplenty:flesh")
+        val flesh: Block? = null
+
+        @JvmField
+        @ObjectHolder("biomesoplenty:ash_block")
+        val ashBlock: Block? = null
+
+        override fun apply(input: IBlockState?): Boolean {
+            val block = input?.block ?: return false
+
+            return block == Blocks.NETHERRACK || block == Blocks.SOUL_SAND || block == flesh || block == ashBlock
+        }
     }
 }

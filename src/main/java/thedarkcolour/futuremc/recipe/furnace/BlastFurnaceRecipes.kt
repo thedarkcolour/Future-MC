@@ -13,6 +13,7 @@ object BlastFurnaceRecipes : Recipes<SimpleRecipe>() {
 
     init {
         FutureMC.LOGGER.debug("Initializing default Blast Furnace recipes")
+        val start = System.currentTimeMillis()
 
         for (string in OreDictionary.getOreNames()) {
             if (string.startsWith("ore") || string.startsWith("dust")) {
@@ -27,6 +28,8 @@ object BlastFurnaceRecipes : Recipes<SimpleRecipe>() {
                 }
             }
         }
+
+        FutureMC.LOGGER.debug("Completed adding default Blast Furnace recipes in {}ms", System.currentTimeMillis() - start)
     }
 
     override fun addRecipe(input: Ingredient, output: ItemStack) {

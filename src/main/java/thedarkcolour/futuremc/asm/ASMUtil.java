@@ -14,8 +14,8 @@ import java.util.function.Predicate;
 import static org.objectweb.asm.Opcodes.ICONST_1;
 import static org.objectweb.asm.Opcodes.IRETURN;
 
-// todo some way to patch constructor invocations
 public final class ASMUtil {
+    private static final boolean DUMP_PATCHED_CLASSES = false;
     static boolean isObfuscated;
 
     public static ClassNode createClassNode(byte[] basicClass) {
@@ -188,7 +188,7 @@ public final class ASMUtil {
         byte[] bytes = cw.toByteArray();
 
         // change when needed
-        if (true) {
+        if (DUMP_PATCHED_CLASSES) {
             try {
                 String replace = classNode.name.substring(classNode.name.lastIndexOf('/') + 1) + ".class";
                 FileOutputStream output = new FileOutputStream("asm_dump\\" + replace);
@@ -213,7 +213,7 @@ public final class ASMUtil {
         byte[] bytes = cw.toByteArray();
 
         // change when needed
-        if (false) {
+        if (DUMP_PATCHED_CLASSES) {
             try {
                 String replace = classNode.name.substring(classNode.name.lastIndexOf('/') + 1) + ".class";
                 FileOutputStream output = new FileOutputStream("C:\\Things\\mods\\future-mc\\asm_dump\\" + replace);

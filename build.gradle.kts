@@ -14,7 +14,7 @@ plugins {
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 idea.module.inheritOutputDirs = true
 
-version = "0.2.10"
+version = "0.2.11"
 group = "thedarkcolour.futuremc"
 
 minecraft {

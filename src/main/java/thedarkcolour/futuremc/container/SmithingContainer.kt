@@ -54,8 +54,10 @@ class SmithingContainer(playerInv: InventoryPlayer, private val worldIn: World, 
 
         if (recipe != null) {
             val result = recipe!!.output.copy()
-            val tag = input.tagCompound
-            result.tagCompound = tag
+            result.tagCompound = input.tagCompound
+            if (input.isItemStackDamageable && result.isItemStackDamageable) {
+                result.itemDamage = input.itemDamage
+            }
             inventory[2] = result
         } else {
             inventory.remove(2)

@@ -1,3 +1,10 @@
+## Version 0.2.11 - Item rarities + Bugfix:
+- *Item rarities* - Vanilla items in 1.12 now have colored names like in 1.13+
+- Fixed bamboo spawning
+- Fixed Ancient Debris/Netherite spawning
+- Fixed Smithing Table only upgrading undamaged items and not carrying over nbt/durability #305
+- Fixed Beehives not entering when non-air block in front of entrance #303
+
 ## Version 0.2.10 - Scaffolding + fix a crash:
 - *Scaffolding* - Now craftable and works like in vanilla
 - Vines can now be climbed without a block behind them like in vanilla

@@ -4,7 +4,6 @@ package thedarkcolour.futuremc.tile
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockFire
-import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.item.EntityItem
@@ -28,6 +27,7 @@ import net.minecraft.world.World
 import net.minecraft.world.chunk.storage.AnvilChunkLoader
 import sun.reflect.Reflection
 import thedarkcolour.core.tile.InteractionTile
+import thedarkcolour.core.util.isAir
 import thedarkcolour.futuremc.block.buzzybees.BeeHiveBlock
 import thedarkcolour.futuremc.block.villagepillage.CampfireBlock
 import thedarkcolour.futuremc.config.FConfig
@@ -157,7 +157,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
     }
 
     private fun isExitBlocked(worldIn: World, pos: BlockPos): Boolean {
-        return worldIn.getBlockState(pos).material != Material.AIR
+        return worldIn.getBlockState(pos).isAir(worldIn, pos)
     }
 
     private fun hasFlowerPos() = flowerPos != null
