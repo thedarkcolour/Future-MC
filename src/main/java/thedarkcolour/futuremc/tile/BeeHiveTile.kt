@@ -115,7 +115,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
             val pos1 = pos.offset(direction)
             val flag = isExitBlocked(world, pos1)
 
-            if (flag && beeState != BeeState.EMERGENCY) {
+            if (!flag && beeState != BeeState.EMERGENCY) {
                 return false
             } else {
                 val entity = AnvilChunkLoader.readWorldEntity(tag, world, false)
