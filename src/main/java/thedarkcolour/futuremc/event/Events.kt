@@ -171,6 +171,7 @@ object Events {
                     if (!name.startsWith("stripped")) {
                         val axis = state.getValue(BlockRotatedPillar.AXIS)
                         val strippedBlock = ForgeRegistries.BLOCKS.getValue(ResourceLocation(FutureMC.ID, "stripped_$name")) ?: return
+                        if (strippedBlock == Blocks.AIR) return
 
                         stripBlock(worldIn, pos, player, event.hand, stack, strippedBlock.defaultState.withProperty(BlockRotatedPillar.AXIS, axis))
                     }

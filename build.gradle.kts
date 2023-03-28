@@ -1,5 +1,4 @@
 import net.minecraftforge.gradle.common.util.RunConfig
-import wtf.gofancy.fancygradle.patch.Patch
 import wtf.gofancy.fancygradle.script.extensions.curse
 import java.time.LocalDateTime
 
@@ -8,7 +7,7 @@ plugins {
     java
     idea
     id("net.minecraftforge.gradle") version "5.0.+"
-    id("wtf.gofancy.fancygradle") version "1.0.1" // For using FG5
+    id("wtf.gofancy.fancygradle") version "1.1.2-0" // For using FG5
 }
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
@@ -40,14 +39,17 @@ minecraft {
 
 fancyGradle {
     patches {
-        patch(Patch.RESOURCES, Patch.COREMODS, Patch.CODE_CHICKEN_LIB, Patch.ASM)
+        resources
+        coremods
+        codeChickenLib
+        asm
+        mergetool
     }
 }
 
 repositories {
     jcenter()
 
-    maven { url = uri("https://jitpack.io") }
     maven {
         name = "CraftTweaker/Quark/AutoRegLib"
         url = uri("https://maven.blamejared.com")
@@ -75,22 +77,30 @@ repositories {
     maven {
         name = "ChickenBones"
         url = uri("https://chickenbones.net/maven/")
+        content {
+            includeGroup("codechicken")
+        }
     }
-    maven {
-        name = "Actually Additions"
-        url = uri("https://maven.ellpeck.de/de/ellpeck/actuallyadditions/")
-    }
+    //maven {
+    //    name = "Actually Additions"
+    //    url = uri("https://maven.ellpeck.de/de/ellpeck/actuallyadditions/")
+    //}
     maven {
         name = "CurseMaven"
         url = uri("https://www.cursemaven.com")
     }
-    maven {
-        name = "IC2"
-        url = uri("https://maven.ic2.player.to/")
-    }
-    maven {   // Worldedit API
-        url = uri("https://maven.sk89q.com/repo/")
-    }
+    //maven {
+    //    name = "IC2"
+    //    url = uri("https://maven.ic2.player.to/")
+    //    content {
+    //        includeGroup("")
+    //    }
+    //}
+    //maven {   // Worldedit API
+    //    url = uri("https://maven.sk89q.com/repo/")
+    //    content { includeGroup("") }
+    //}
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
@@ -112,14 +122,14 @@ dependencies {
 
     // OTG
     compileOnly(fg.deobf(curse("otg", 265894, 3151431)))
-    compileOnly("com.sk89q.worldedit:worldedit-forge-mc1.11:6.1.6") {
-        exclude("com.google.guava")
-        exclude("com.google.gson")
-    }
-    compileOnly("com.sk89q.worldedit:worldedit-core:6.1") {
-        exclude("com.google.guava")
-        exclude("com.google.gson")
-    }
+    //compileOnly("com.sk89q.worldedit:worldedit-forge-mc1.11:6.1.6") {
+    //    exclude("com.google.guava")
+    //    exclude("com.google.gson")
+    //}
+    //compileOnly("com.sk89q.worldedit:worldedit-core:6.1") {
+    //    exclude("com.google.guava")
+    //    exclude("com.google.gson")
+    //}
 
     // Optional mod compat
     implementation(fg.deobf(curse("dynamic_trees", 252818, 3260881)))
