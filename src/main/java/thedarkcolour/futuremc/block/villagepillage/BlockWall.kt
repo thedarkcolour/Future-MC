@@ -9,6 +9,7 @@ import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.state.BlockFaceShape
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
+import net.minecraft.block.BlockGlass
 import net.minecraft.entity.Entity
 import net.minecraft.init.Blocks
 import net.minecraft.util.EnumFacing
@@ -61,7 +62,7 @@ class BlockWall(properties: Properties) : FBlock(properties), IFluidloggable {
         val state = worldIn.getBlockState(pos)
         val block = state.block
         val shape = state.getBlockFaceShape(worldIn, pos, facing)
-        val flag = shape == BlockFaceShape.MIDDLE_POLE_THICK || shape == BlockFaceShape.MIDDLE_POLE && block is BlockFenceGate
+        val flag = shape == BlockFaceShape.MIDDLE_POLE_THICK || shape == BlockFaceShape.MIDDLE_POLE && block is BlockFenceGate || block is BlockGlass
         return !isExceptBlockForAttachWithPiston(block) && shape == BlockFaceShape.SOLID || flag
     }
 
