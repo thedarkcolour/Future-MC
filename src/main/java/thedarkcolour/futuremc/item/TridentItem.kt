@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap
 import net.minecraft.block.state.IBlockState
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.renderer.block.model.IBakedModel
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.MoverType
@@ -15,16 +16,15 @@ import net.minecraft.entity.projectile.EntityArrow
 import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.item.EnumAction
 import net.minecraft.item.ItemStack
-import net.minecraft.util.ActionResult
-import net.minecraft.util.EnumActionResult
-import net.minecraft.util.EnumHand
-import net.minecraft.util.SoundCategory
+import net.minecraft.util.*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import thedarkcolour.core.item.ModeledItem
+import thedarkcolour.core.util.setItemModel
+import thedarkcolour.futuremc.client.render.TridentBakedModel
 import thedarkcolour.futuremc.enchantment.EnchantHelper
-import thedarkcolour.futuremc.entity.trident.EntityTrident
 import thedarkcolour.futuremc.entity.trident.ModelTrident
+import thedarkcolour.futuremc.entity.trident.Trident
 import thedarkcolour.futuremc.registry.FSounds
 import kotlin.math.PI
 import kotlin.math.cos
@@ -32,20 +32,19 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 class TridentItem : ModeledItem("trident"), ModeledItem.Builtin {
-
     init {
         setCreativeTab(CreativeTabs.COMBAT)
         maxDamage = 250
         setMaxStackSize(1)
 
         // -1 is impossible so we can use it for registering models internally
-        //setItemModel(this, -1, "futuremc:trident_in_hand")
+        setItemModel(this, -1, "futuremc:trident_in_hand")
 
-        //addPropertyOverride(ResourceLocation("throwing")) { stack, _, entityIn ->
-        //    if (entityIn != null && entityIn.isHandActive && entityIn.activeItemStack == stack) {
-        //        1.0f
-        //    } else 0.0f
-        //}
+        addPropertyOverride(ResourceLocation("throwing")) { stack, _, entityIn ->
+            if (entityIn != null && entityIn.isHandActive && entityIn.activeItemStack == stack) {
+                1.0f
+            } else 0.0f
+        }
     }
 
     /**
@@ -63,7 +62,7 @@ class TridentItem : ModeledItem("trident"), ModeledItem.Builtin {
      * returns the action that specifies what animation to play when the items is being used
      */
     override fun getItemUseAction(stack: ItemStack): EnumAction {
-        return EnumAction.BOW//TRIDENT_USE_ACTION
+        return TridentBakedModel.TRIDENT_USE_ACTION
     }
 
     override fun canDestroyBlockInCreative(
@@ -90,7 +89,7 @@ class TridentItem : ModeledItem("trident"), ModeledItem.Builtin {
                     if (!worldIn.isRemote) {
                         stack.damageItem(1, entityLiving)
                         if (j == 0) {
-                            val trident = EntityTrident(worldIn, entityLiving, stack)
+                            val trident = Trident(worldIn, entityLiving, stack)
                             trident.shoot(entityLiving, entityLiving.rotationPitch, entityLiving.rotationYaw, 0.0f, 2.5f + j.toFloat() * 0.5f, 1.0f)
                             if (entityLiving.capabilities.isCreativeMode) {
                                 trident.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY
@@ -187,4 +186,9 @@ class TridentItem : ModeledItem("trident"), ModeledItem.Builtin {
     override fun getItemEnchantability(): Int = 1
 
     override fun getItemStackLimit() = 1
+
+    companion object {
+        val TRIDENT_MODEL = ModelTrident()
+        lateinit var simpleModel: IBakedModel
+    }
 }

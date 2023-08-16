@@ -43,8 +43,8 @@ public final class CoreTransformer implements IClassTransformer {
                 //case "net.minecraft.client.network.NetHandlerPlayClient":
                 //    return patchNetHandlerPlayClient(basicClass);
 
-                //case "net.minecraft.client.model.ModelBiped":
-                //    return ASMUtil.patchModelBiped(basicClass);
+                case "net.minecraft.client.model.ModelBiped":
+                    return ASMUtil.patch(basicClass, CoreTransformer::patchModelBiped);
 
                 //case "net.minecraft.client.renderer.RenderItem":
                 //    return ASMUtil.patchRenderItem(basicClass);
@@ -307,22 +307,8 @@ public final class CoreTransformer implements IClassTransformer {
         );
         InsnList toAdd = ASMUtil.createInsnList(
             new VarInsnNode(ALOAD, 0),
-            new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/event/Events", "setPlayerRotations", "(Lnet/minecraft/client/model/ModelBiped;)V", false)
+            new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "rotateByPose", "(Lnet/minecraft/client/model/ModelBiped;)V", false)
         );
         ASMUtil.patchBeforeMcMethod(classNode, method, toAdd, "func_178685_a", "copyModelAngles", 1);
-    }
-
-    private static void patchRenderItem(ClassNode classNode) {
-        MethodNode method = ASMUtil.findMethod(
-                classNode,
-                "func_181564_a",
-                "renderItem",
-                "(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/renderer/block/model/ItemCameraTransforms$TransformType;)V"
-        );
-
-        /*InsnList toAdd = ASMUtil.createInsnList(list -> {
-            list.add(new VarInsnNode(ALOAD, 0));
-            list.add;
-        });*/
     }
 }

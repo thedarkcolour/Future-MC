@@ -1,12 +1,15 @@
 package thedarkcolour.futuremc.registry
 
 import net.minecraft.client.renderer.entity.RenderIronGolem
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EnumCreatureType
 import net.minecraft.init.Biomes
+import net.minecraft.util.ResourceLocation
 import net.minecraft.world.storage.loot.LootTableList
 import net.minecraftforge.fml.common.registry.EntityRegistry
 import thedarkcolour.core.util.registerEntity
 import thedarkcolour.core.util.registerEntityModel
+import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.entity.bee.BeeRenderer
 import thedarkcolour.futuremc.entity.bee.EntityBee
@@ -21,13 +24,13 @@ import thedarkcolour.futuremc.entity.fish.tropical.RenderTropicalFish
 import thedarkcolour.futuremc.entity.irongolem.LayerIronGolemCrack
 import thedarkcolour.futuremc.entity.panda.EntityPanda
 import thedarkcolour.futuremc.entity.panda.RenderPanda
-import thedarkcolour.futuremc.entity.trident.EntityTrident
 import thedarkcolour.futuremc.entity.trident.RenderTrident
+import thedarkcolour.futuremc.entity.trident.Trident
 
 object FEntities {
     fun registerEntities() {
         if (FConfig.updateAquatic.trident) {
-            registerEntity("trident", EntityTrident::class.java, 32, 1)
+            registerEntity("trident", Trident::class.java, 32, 1)
 
             //EntityRegistry.instance().lookupModSpawn(TestTrident::class.java, false)!!.setCustomSpawning({ message ->
             //    TestTrident(message.)
@@ -95,5 +98,14 @@ object FEntities {
                 renderer
             }
         }
+    }
+
+
+
+    /**
+     * Helper method to reduce verbosity when registering entities.
+     */
+    fun registerEntity(name: String, entity: Class<out Entity>, trackingRange: Int, id: Int) {
+        EntityRegistry.registerModEntity(ResourceLocation(FutureMC.ID, name), entity, name, id, FutureMC, trackingRange, 1, true)
     }
 }

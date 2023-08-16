@@ -6,11 +6,11 @@ import net.minecraft.client.renderer.entity.Render
 import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.util.math.MathHelper
 
-class RenderTrident(renderManager: RenderManager) : Render<EntityTrident>(renderManager) {
+class RenderTrident(renderManager: RenderManager) : Render<Trident>(renderManager) {
     private val modelTrident = ModelTrident()
 
     override fun doRender(
-        entity: EntityTrident,
+        entity: Trident,
         x: Double,
         y: Double,
         z: Double,
@@ -80,5 +80,5 @@ class RenderTrident(renderManager: RenderManager) : Render<EntityTrident>(render
         er.enableLightmap()
     }
 
-    override fun getEntityTexture(entity: EntityTrident) = ModelTrident.TEXTURE_LOCATION
+    override fun getEntityTexture(entity: Trident) = ModelTrident.TEXTURE_LOCATION
 }

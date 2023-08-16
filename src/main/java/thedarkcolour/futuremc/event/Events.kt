@@ -5,9 +5,6 @@ import net.minecraft.block.BlockLog.EnumAxis
 import net.minecraft.block.material.Material
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.IBlockState
-import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiMerchant
-import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.boss.EntityWither
 import net.minecraft.entity.item.EntityItem
@@ -27,11 +24,7 @@ import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
-import net.minecraftforge.client.event.DrawBlockHighlightEvent
-import net.minecraftforge.client.event.GuiOpenEvent
-import net.minecraftforge.client.event.ModelBakeEvent
-import net.minecraftforge.client.event.ModelRegistryEvent
-import net.minecraftforge.client.model.ModelLoader
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.config.Config
 import net.minecraftforge.common.config.ConfigManager
 import net.minecraftforge.event.ForgeEventFactory
@@ -42,12 +35,12 @@ import net.minecraftforge.event.entity.player.PlayerContainerEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock
 import net.minecraftforge.event.terraingen.BiomeEvent
+import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.client.event.ConfigChangedEvent
-import net.minecraftforge.fml.common.eventhandler.EventPriority
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent
 import net.minecraftforge.fml.common.registry.ForgeRegistries
-import thedarkcolour.core.util.*
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.BlockStrippedLog
 import thedarkcolour.futuremc.block.BlockWood
@@ -55,15 +48,15 @@ import thedarkcolour.futuremc.capability.hasSwimmingCap
 import thedarkcolour.futuremc.capability.isSwimming
 import thedarkcolour.futuremc.capability.lastSwimAnimation
 import thedarkcolour.futuremc.capability.swimAnimation
+import thedarkcolour.futuremc.client.ClientEvents
 import thedarkcolour.futuremc.client.color.WaterColor
-import thedarkcolour.futuremc.client.gui.GuiVillager
-import thedarkcolour.futuremc.client.render.TridentBakedModel
 import thedarkcolour.futuremc.compat.checkDynamicTrees
 import thedarkcolour.futuremc.compat.checkQuark
 import thedarkcolour.futuremc.compat.checkTConstruct
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.config.FConfig.updateAquatic
 import thedarkcolour.futuremc.container.ContainerVillager
+import thedarkcolour.futuremc.item.CrossbowItem
 import thedarkcolour.futuremc.registry.FBlocks.HONEY_BLOCK
 import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_ACACIA_LOG
 import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_BIRCH_LOG
@@ -77,6 +70,7 @@ import thedarkcolour.futuremc.registry.FItems.TRIDENT
 import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.registry.FSounds.HONEY_BOTTLE_DRINK
 import thedarkcolour.futuremc.registry.RegistryEventHandler
+import thedarkcolour.futuremc.world.FWorldListener
 import thedarkcolour.futuremc.world.OldWorldHandler
 import thedarkcolour.futuremc.world.gen.feature.AncientDebrisWorldGen
 import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator
@@ -84,47 +78,31 @@ import kotlin.math.max
 import kotlin.math.min
 
 /**
- * Event handling for Future MC.
+ * Event handling for Future MC
  *
  * @author TheDarkColour
  */
-@Suppress("UNUSED_PARAMETER")
 object Events {
-    /**
-     * Registers event subscribers to the event bus
-     * using the [addListener] function in Util.kt.
-     */
-    fun registerEvents() {
-        // do not run during tests
-        if (FutureMC.TEST) return
-
-        addListener(::onHoneyBottleConsumed)
-        addListener(::onLogStripped)
-        addListener(::spawnWitherRoseOrDropTrident)
-        addListener(::preventHoneyJump)
-        addListener(::onConfigChanged)
-        //if (updateAquatic.newWaterColor)
-        //    addListener(::onGetWaterColor)
-        addListener(::healIronGolem)
-        runOnClient { addListener(::onGuiOpen) }
-        addListener(::onContainerOpen, priority = EventPriority.HIGHEST)
-        runOnClient { addListener(::onModelRegistry) }
-        if (TODO())
-            addListener(::updateSwimAnimation)
-        subscribe(RegistryEventHandler)
-        subscribe(OldWorldHandler)
-
-        if (TODO())
-            addListener(::onModelBake)
-
+    init {
         checkDynamicTrees()?.addListeners()
+
+        MinecraftForge.EVENT_BUS.register(RegistryEventHandler)
+        MinecraftForge.EVENT_BUS.register(OldWorldHandler)
+
+        if (FutureMC.CLIENT) {
+            MinecraftForge.EVENT_BUS.register(ClientEvents)
+        }
+        if (FConfig.villageAndPillage.crossbow) {
+            MinecraftForge.EVENT_BUS.register(CrossbowItem.Companion)
+        }
     }
 
     /**
      * Changes the eating sound of honey bottle to
      * the correct drinking sound from 1.15.
      */
-    private fun onHoneyBottleConsumed(event: PlaySoundAtEntityEvent) {
+    @SubscribeEvent
+    fun onHoneyBottleConsumed(event: PlaySoundAtEntityEvent) {
         if (event.entity is EntityLivingBase) {
             val e = event.entity as EntityLivingBase
             if (e.activeItemStack.item == HONEY_BOTTLE) {
@@ -137,7 +115,8 @@ object Events {
      * Strips logs with vanilla axes or
      * axes from Tinkers Construct.
      */
-    private fun onLogStripped(event: RightClickBlock) {
+    @SubscribeEvent
+    fun onLogStripped(event: RightClickBlock) {
         val worldIn = event.world
         val pos = event.pos
         val player = event.entityPlayer
@@ -150,7 +129,7 @@ object Events {
                     var axis: IProperty<EnumAxis>? = null
                     var variant: IProperty<BlockPlanks.EnumType>? = null
 
-                    @Suppress("UNCHECKED_CAST", "UsePropertyAccessSyntax")
+                    @Suppress("UNCHECKED_CAST")
                     for (prop in state.propertyKeys) {
                         if (prop.getName() == "axis") {
                             axis = prop as IProperty<EnumAxis>
@@ -236,7 +215,8 @@ object Events {
     }
 
     // wither rose spawn + elder guardian thing
-    private fun spawnWitherRoseOrDropTrident(event: LivingDeathEvent) {
+    @SubscribeEvent
+    fun spawnWitherRoseOrDropTrident(event: LivingDeathEvent) {
         val entityIn = event.entityLiving
         val worldIn = entityIn.world
 
@@ -269,7 +249,8 @@ object Events {
     }
 
     // honey jump stickiness
-    private fun preventHoneyJump(event: LivingJumpEvent) {
+    @SubscribeEvent
+    fun preventHoneyJump(event: LivingJumpEvent) {
         val entity = event.entityLiving
         val x = MathHelper.floor(entity.posX)
         val y = MathHelper.floor(entity.posY - 0.20000000298023224)
@@ -282,7 +263,8 @@ object Events {
     }
 
     // syncs config
-    private fun onConfigChanged(event: ConfigChangedEvent) {
+    @SubscribeEvent
+    fun onConfigChanged(event: ConfigChangedEvent) {
         if (event.modID == FutureMC.ID) {
             ConfigManager.sync(FutureMC.ID, Config.Type.INSTANCE)
             // makes things reloadable
@@ -292,29 +274,14 @@ object Events {
     }
 
     // 1.13 water colors
-    private fun onGetWaterColor(event: BiomeEvent.GetWaterColor) {
+    @SubscribeEvent
+    fun onGetWaterColor(event: BiomeEvent.GetWaterColor) {
         event.newColor = (WaterColor.BIOME_COLORS[event.biome.delegate] ?: 0x3f76e4)
     }
 
-    // unused
-    /*private fun onBucketUse(event: FillBucketEvent) {
-        val pos = event.target?.blockPos
-        if (pos != null) {
-            if (event.world.getBlockState(pos).block is BlockWaterPlant) {
-                event.isCanceled = true
-            }
-        }
-    }*/
-
-    // unused
-    /*private fun canCreateFluidSource(event: BlockEvent.CreateFluidSourceEvent) {
-        if (event.state.block is BlockWaterPlant.Flowing) {
-
-        }
-    }*/
-
     // iron golem healing
-    private fun healIronGolem(event: PlayerInteractEvent.EntityInteract) {
+    @SubscribeEvent
+    fun healIronGolem(event: PlayerInteractEvent.EntityInteract) {
         if (FConfig.buzzyBees.ironGolem.ironBarHealing) {
             val entity = event.target
             if (entity is EntityIronGolem && event.itemStack.item == Items.IRON_INGOT) {
@@ -333,17 +300,8 @@ object Events {
         }
     }
 
-    private fun onGuiOpen(event: GuiOpenEvent) {
-        if (FConfig.villageAndPillage.newVillagerGui) {
-            val gui = event.gui
-
-            if (gui is GuiMerchant && gui !is GuiVillager) {
-                event.gui = GuiVillager(ContainerVillager(Minecraft.getMinecraft().player.inventory, gui.merchant, null))
-            }
-        }
-    }
-
-    private fun onContainerOpen(event: PlayerContainerEvent.Open) {
+    @SubscribeEvent
+    fun onContainerOpen(event: PlayerContainerEvent.Open) {
         if (FConfig.villageAndPillage.newVillagerGui) {
             val container = event.container
 
@@ -357,13 +315,8 @@ object Events {
         }
     }
 
-    private fun onModelRegistry(event: ModelRegistryEvent) {
-        for (item in models) {
-            ModelLoader.setCustomModelResourceLocation(item.first, item.second, ModelResourceLocation(item.third, "inventory"))
-        }
-    }
-
-    private fun updateSwimAnimation(event: PlayerTickEvent) {
+    @SubscribeEvent
+    fun updateSwimAnimation(event: PlayerTickEvent) {
         if (event.phase == Phase.END) {
             val player = event.player
 
@@ -391,16 +344,14 @@ object Events {
         return player.isInWater && player.isInsideOfMaterial(Material.WATER)
     }
 
-    private fun renderFancyBoundingBox(event: DrawBlockHighlightEvent) {
-        event.isCanceled = true
+    @SubscribeEvent
+    fun onWorldLoad(event: WorldEvent.Load) {
+        event.world.addEventListener(FWorldListener.INSTANCE)
     }
 
-    private fun onModelBake(event: ModelBakeEvent) {
-        val registry = event.modelRegistry
-        val trident = ModelResourceLocation("futuremc:trident","inventory")
-        val inventory = registry.getObject(trident)!!
-        val hand = registry.getObject(ModelResourceLocation("futuremc:trident_in_hand","inventory"))!!
-
-        registry.putObject(trident, TridentBakedModel(hand, inventory))
+    // This might be unnecessary but better safe than sorry
+    @SubscribeEvent
+    fun onWorldUnload(event: WorldEvent.Unload) {
+        event.world.removeEventListener(FWorldListener.INSTANCE)
     }
 }

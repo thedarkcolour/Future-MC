@@ -8,19 +8,13 @@ import thedarkcolour.core.util.setItemModel
 import thedarkcolour.core.util.setItemName
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.entity.trident.ModelTrident
 
 open class ModeledItem(regName: String) : Item() {
-
     init {
         setItemName(this, regName)
         setItemModel(this, 0)
 
-        // the redundant `this is Item` check
-        // is needed because Kotlin's type
-        // inference is a bit stupid at the moment
-        @Suppress("USELESS_IS_CHECK")
-        if (this is Builtin && this is Item) {
+        if (this is Builtin) {
             setBuiltinRenderer(this)
         }
     }
@@ -30,19 +24,12 @@ open class ModeledItem(regName: String) : Item() {
         return this
     }
 
-    protected companion object {
-        val TRIDENT_MODEL = ModelTrident()
-    }
-
     /**
-     * Specifies that this [ModeledItem] has
-     * a `builtin/entity` renderer entry for use
-     * in a custom `TileEntityItemStackRenderer`.
+     * Specifies that this item has a builtin TEISR
      */
     interface Builtin {
-
         /**
-        * Renders this item from a custom `TileEntityItemStackRenderer`.
+         * Renders this item from `TileEntityItemStackRenderer`
          */
         fun render(stack: ItemStack, partialTicks: Float)
     }

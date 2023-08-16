@@ -18,6 +18,7 @@ import net.minecraft.nbt.NBTTagList
 import net.minecraft.util.*
 import net.minecraft.world.World
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import thedarkcolour.core.item.ModeledItem
 import thedarkcolour.core.util.getOrCreateTag
 import thedarkcolour.futuremc.enchantment.EnchantHelper
@@ -30,16 +31,13 @@ import java.util.*
 import kotlin.math.PI
 
 class CrossbowItem : ModeledItem("crossbow") {
-    private var isLoadingStart = false
-    private var isLoadingMiddle = false
-
     init {
         setMaxStackSize(1)
         maxDamage = 326
         setCreativeTab(CreativeTabs.COMBAT)
         addPropertyOverride(ResourceLocation("pull")) { stack, _, entityIn ->
             if (entityIn != null && stack.item == this) {
-                if (Companion.isCharged(stack)) {
+                if (isCharged(stack)) {
                     0.0f
                 } else {
                     (stack.maxItemUseDuration - entityIn.itemInUseCount).toFloat() / getChargeTime(stack).toFloat()
@@ -49,17 +47,17 @@ class CrossbowItem : ModeledItem("crossbow") {
             }
         }
         addPropertyOverride(ResourceLocation("pulling")) { stack, _, entityIn ->
-            if (!Companion.isCharged(stack) && entityIn != null && entityIn.isHandActive && entityIn.activeItemStack == stack) {
+            if (!isCharged(stack) && entityIn != null && entityIn.isHandActive && entityIn.activeItemStack == stack) {
                 1.0f
             } else {
                 0.0f
             }
         }
         addPropertyOverride(ResourceLocation("charged")) { stack, _, _ ->
-            if (Companion.isCharged(stack)) 1.0f else 0.0f
+            if (isCharged(stack)) 1.0f else 0.0f
         }
         addPropertyOverride(ResourceLocation("firework")) { stack, _, entityIn ->
-            if (entityIn != null && Companion.isCharged(stack) && hasChargedProjectile(stack)) {
+            if (entityIn != null && isCharged(stack) && hasChargedProjectile(stack)) {
                 1.0f
             } else {
                 0.0f
@@ -69,12 +67,12 @@ class CrossbowItem : ModeledItem("crossbow") {
 
     override fun onItemRightClick(worldIn: World, playerIn: EntityPlayer, handIn: EnumHand): ActionResult<ItemStack> {
         val itemstack = playerIn.getHeldItem(handIn)
-        return if (Companion.isCharged(itemstack)) {
+        return if (isCharged(itemstack)) {
             fireProjectiles(worldIn, playerIn, handIn, itemstack, getSoundPitch(itemstack), 1.0f)
             setCharged(itemstack, false)
             ActionResult(EnumActionResult.SUCCESS, itemstack)
         } else if (!findAmmo(playerIn).isEmpty) {
-            if (!Companion.isCharged(itemstack)) {
+            if (!isCharged(itemstack)) {
                 isLoadingStart = false
                 isLoadingMiddle = false
                 playerIn.activeHand = handIn
@@ -89,7 +87,7 @@ class CrossbowItem : ModeledItem("crossbow") {
     override fun onPlayerStoppedUsing(stack: ItemStack, worldIn: World, entityLiving: EntityLivingBase, timeLeft: Int) {
         val i = getMaxItemUseDuration(stack) - timeLeft
         val f = getCharge(i, stack)
-        if (f >= 1.0f && !Companion.isCharged(stack) && hasAmmo(entityLiving, stack)) {
+        if (f >= 1.0f && !isCharged(stack) && hasAmmo(entityLiving, stack)) {
             setCharged(stack, true)
             val soundcategory = if (entityLiving is EntityPlayer) SoundCategory.PLAYERS else SoundCategory.HOSTILE
             worldIn.playSound(
@@ -346,62 +344,12 @@ class CrossbowItem : ModeledItem("crossbow") {
         return 1.0f / (itemRand.nextFloat() * 0.5f + 1.8f) + f
     }
 
-    fun update(event: LivingEntityUseItemEvent) {
-        val entityLiving = event.entityLiving
-        val worldIn = entityLiving.world
-        val stack = entityLiving.activeItemStack
-        val count = stack.count
-
-        if (!worldIn.isRemote) {
-            val level = EnchantHelper.getQuickCharge(stack)
-            val sound = getSoundEvent(level)
-            val sound1 = if (level == 0) {
-                FSounds.CROSSBOW_LOADING_MIDDLE
-            } else {
-                null
-            }
-            val f = (stack.maxItemUseDuration - count).toFloat() / getChargeTime(stack).toFloat()
-            if (f < 0.2) {
-                isLoadingStart = false
-                isLoadingMiddle = false
-            }
-
-            if (f >= 0.2 && !isLoadingStart) {
-                isLoadingStart = true
-                entityLiving.playSound(sound, 0.5F, 1F)
-            }
-
-            if (f >= 0.5 && sound1 != null && !isLoadingMiddle) {
-                isLoadingMiddle = true
-                entityLiving.playSound(sound1, 0.5F, 1F)
-            }
-        }
-    }
-
     override fun getMaxItemUseDuration(stack: ItemStack): Int {
         return getChargeTime(stack) + 3
     }
 
-    private fun getChargeTime(stack: ItemStack): Int {
-        val quickCharge = EnchantHelper.getQuickCharge(stack)
-        return if (quickCharge == 0) {
-            25
-        } else {
-            25 - 5 * quickCharge
-        }
-    }
-
     override fun getItemUseAction(stack: ItemStack): EnumAction {
         return EnumAction.BOW
-    }
-
-    private fun getSoundEvent(level: Int): SoundEvent {
-        return when (level) {
-            1 -> FSounds.CROSSBOW_QUICK_CHARGE_I
-            2 -> FSounds.CROSSBOW_QUICK_CHARGE_II
-            3 -> FSounds.CROSSBOW_QUICK_CHARGE_III
-            else -> FSounds.CROSSBOW_LOADING_START
-        }
     }
 
     private fun getCharge(useTime: Int, stack: ItemStack): Float {
@@ -449,6 +397,9 @@ class CrossbowItem : ModeledItem("crossbow") {
     }
 
     companion object {
+        private var isLoadingStart = false
+        private var isLoadingMiddle = false
+
         private val ARROWS: (ItemStack) -> Boolean = { stack ->
             stack.item is ItemArrow
         }
@@ -460,6 +411,57 @@ class CrossbowItem : ModeledItem("crossbow") {
         fun isCharged(stack: ItemStack): Boolean {
             val tag = stack.tagCompound
             return tag?.getBoolean("Charged") ?: false
+        }
+
+        @SubscribeEvent
+        fun update(event: LivingEntityUseItemEvent) {
+            val entityLiving = event.entityLiving
+            val worldIn = entityLiving.world
+            val stack = entityLiving.activeItemStack
+            val count = stack.count
+
+            if (!worldIn.isRemote) {
+                val level = EnchantHelper.getQuickCharge(stack)
+                val sound = getSoundEvent(level)
+                val sound1 = if (level == 0) {
+                    FSounds.CROSSBOW_LOADING_MIDDLE
+                } else {
+                    null
+                }
+                val f = (stack.maxItemUseDuration - count).toFloat() / getChargeTime(stack).toFloat()
+                if (f < 0.2) {
+                    isLoadingStart = false
+                    isLoadingMiddle = false
+                }
+
+                if (f >= 0.2 && !isLoadingStart) {
+                    isLoadingStart = true
+                    entityLiving.playSound(sound, 0.5F, 1F)
+                }
+
+                if (f >= 0.5 && sound1 != null && !isLoadingMiddle) {
+                    isLoadingMiddle = true
+                    entityLiving.playSound(sound1, 0.5F, 1F)
+                }
+            }
+        }
+
+        private fun getSoundEvent(level: Int): SoundEvent {
+            return when (level) {
+                1 -> FSounds.CROSSBOW_QUICK_CHARGE_I
+                2 -> FSounds.CROSSBOW_QUICK_CHARGE_II
+                3 -> FSounds.CROSSBOW_QUICK_CHARGE_III
+                else -> FSounds.CROSSBOW_LOADING_START
+            }
+        }
+
+        private fun getChargeTime(stack: ItemStack): Int {
+            val quickCharge = EnchantHelper.getQuickCharge(stack)
+            return if (quickCharge == 0) {
+                25
+            } else {
+                25 - 5 * quickCharge
+            }
         }
     }
 }

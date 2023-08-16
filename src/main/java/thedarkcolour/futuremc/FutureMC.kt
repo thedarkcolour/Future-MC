@@ -14,6 +14,7 @@ import net.minecraft.item.ItemShears
 import net.minecraft.item.crafting.ShapedRecipes
 import net.minecraft.launchwrapper.Launch
 import net.minecraft.tileentity.BannerPattern
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.util.EnumHelper
 import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.FMLCommonHandler
@@ -85,15 +86,12 @@ object FutureMC {
     val TEST = Launch.blackboard == null
 
     init {
-        Events.registerEvents()
+        // do not register events during tests
+        if (!TEST) {
+            MinecraftForge.EVENT_BUS.register(Events)
+        }
 
         NetworkHandler.registerPackets()
-
-        if (isModLoaded("ido")) {
-            LOGGER.info("Hello Ido!")
-        } else {
-            LOGGER.info("Ido is gone...")
-        }
     }
 
     @EventHandler
@@ -118,10 +116,6 @@ object FutureMC {
 
         GuiType.registerGuiHandler()
 
-        if (FConfig.updateAquatic.trident) {
-            // todo add separate option for this cause this feature is not actually in Vanilla
-            //registerDispenserBehaviour(FItems.TRIDENT, IProjectileDispenserBehaviour(::EntityTrident))
-        }
         if (FConfig.buzzyBees.bee.enabled) {
             for (item in ForgeRegistries.ITEMS) {
                 // Add the action for every type of shears

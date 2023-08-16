@@ -18,11 +18,11 @@ import javax.vecmath.Matrix4f
 // default to hand model for everything else
 class TridentBakedModel(private val hand: IBakedModel, private val inventory: IBakedModel) : IBakedModel {
     override fun getParticleTexture(): TextureAtlasSprite {
-        return hand.particleTexture
+        return inventory.particleTexture
     }
 
     override fun getQuads(state: IBlockState?, side: EnumFacing?, rand: Long): List<BakedQuad> {
-        return hand.getQuads(state, side, rand)
+        return inventory.getQuads(state, side, rand)
     }
 
     override fun isBuiltInRenderer(): Boolean {
@@ -30,13 +30,13 @@ class TridentBakedModel(private val hand: IBakedModel, private val inventory: IB
     }
 
     override fun isAmbientOcclusion(): Boolean {
-        return hand.isAmbientOcclusion
+        return inventory.isAmbientOcclusion
     }
 
     override fun isGui3d() = false
 
     override fun getOverrides(): ItemOverrideList {
-        return hand.overrides
+        return inventory.overrides
     }
 
     override fun handlePerspective(camera: TransformType): Pair<out IBakedModel, Matrix4f> {
@@ -50,10 +50,9 @@ class TridentBakedModel(private val hand: IBakedModel, private val inventory: IB
         }
     }
 
-    // todo fix trident rendering
     companion object {
-        val TRIDENT_USE_ACTION = EnumHelper.addAction("SPEAR_FMC")!!
+        val TRIDENT_USE_ACTION = EnumHelper.addAction("TRIDENT_FMC")!!
         @SideOnly(Side.CLIENT)
-        val TRIDENT_ARM_POSE = EnumHelper.addEnum(ModelBiped.ArmPose::class.java, "SPEAR_FMC", emptyArray())!!
+        val TRIDENT_ARM_POSE = EnumHelper.addEnum(ModelBiped.ArmPose::class.java, "TRIDENT_FMC", emptyArray())!!
     }
 }

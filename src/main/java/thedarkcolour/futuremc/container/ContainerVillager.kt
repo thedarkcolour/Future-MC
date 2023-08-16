@@ -63,7 +63,7 @@ class ContainerVillager(val playerInv: InventoryPlayer, merchant: IMerchant, wor
 
         merchant.customer = null
 
-        if (!merchant.world.isRemote) {
+        if (!world.isRemote) {
             if (!playerIn.isEntityAlive || (playerIn is EntityPlayerMP && playerIn.hasDisconnected())) {
                 var stack = merchantInventory.removeStackFromSlot(0)
 

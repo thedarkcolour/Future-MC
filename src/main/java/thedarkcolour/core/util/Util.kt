@@ -16,20 +16,15 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
-import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.client.registry.RenderingRegistry
-import net.minecraftforge.fml.common.eventhandler.Event
-import net.minecraftforge.fml.common.eventhandler.EventBus
-import net.minecraftforge.fml.common.eventhandler.EventPriority
-import net.minecraftforge.fml.common.eventhandler.IEventListener
 import net.minecraftforge.fml.common.registry.EntityRegistry
 import net.minecraftforge.oredict.OreDictionary
 import thedarkcolour.core.item.ModeledItem
 import thedarkcolour.futuremc.FutureMC
+import thedarkcolour.futuremc.client.ClientEvents
 import thedarkcolour.futuremc.config.FConfig
 import java.util.function.Consumer
 
-@Suppress("SpellCheckingInspection")
 fun <T> make(obj: T, consumer: Consumer<T>): T {
     consumer.accept(obj)
     return obj
@@ -42,9 +37,6 @@ fun getOreNames(stack: ItemStack): List<String> {
     return OreDictionary.getOreIDs(stack).map(OreDictionary::getOreName)
 }
 
-/**
- * Avoids silly proxies.
- */
 inline fun runOnClient(runnable: () -> Unit) {
     if (FutureMC.CLIENT) {
         runnable()
@@ -68,9 +60,9 @@ fun registerDispenserBehaviour(item: Item, behaviour: IBehaviorDispenseItem) {
 }
 
 /**
- * Shortcut function that only runs the behaviour on server side.
+ * Shortcut function that only runs the behavior on server side.
  *
- * @param item the item to attach behaviour to
+ * @param item the item to attach behavior to
  * @param behaviour the behaviour to attach (plus the existing behaviour if it exists)
  */
 inline fun registerServerDispenserBehaviour(
@@ -89,22 +81,6 @@ inline fun registerServerDispenserBehaviour(
             } else stack
         }
     })
-}
-
-/**
- * Helper method to reduce verbosity when registering entities.
- */
-fun registerEntity(name: String, entity: Class<out Entity>, trackingRange: Int, id: Int) {
-    EntityRegistry.registerModEntity(
-        ResourceLocation(FutureMC.ID, name),
-        entity,
-        name,
-        id,
-        FutureMC,
-        trackingRange,
-        1,
-        true
-    )
 }
 
 /**
@@ -133,30 +109,6 @@ inline fun <reified T : Entity> registerEntityModel(noinline factory: (RenderMan
     RenderingRegistry.registerEntityRenderingHandler(T::class.java, factory)
 }
 
-/**
- * Subscribes [target] to event bus for game events.
- */
-fun subscribe(target: Any) {
-    MinecraftForge.EVENT_BUS.register(target)
-}
-
-/**
- * Registers a function to the event bus like in 1.13+.
- */
-inline fun <reified E : Event> addListener(crossinline consumer: (E) -> Unit, priority: EventPriority = EventPriority.NORMAL, bus: EventBus = MinecraftForge.EVENT_BUS) {
-    val constructor = E::class.java.getConstructor()
-    constructor.isAccessible = true
-    val event = constructor.newInstance()
-
-    val listener = IEventListener {
-        consumer(it as E)
-    }
-
-    event.listenerList.register(EventBus::class.java.getDeclaredField("busID").also {
-        it.isAccessible = true
-    }.get(MinecraftForge.EVENT_BUS) as Int, priority, listener)
-}
-
 fun ItemStack.getOrCreateTag(): NBTTagCompound {
     return tagCompound ?: NBTTagCompound()
 }
@@ -181,7 +133,7 @@ fun <T> T.matchesAny(vararg any: T): Boolean {
     return false
 }
 
-fun <T> Iterable<T>.anyMatch(test: (T) -> Boolean): Boolean {
+inline fun <T> Iterable<T>.anyMatch(test: (T) -> Boolean): Boolean {
     forEach {
         if (test(it)) {
             return true
@@ -191,15 +143,13 @@ fun <T> Iterable<T>.anyMatch(test: (T) -> Boolean): Boolean {
     return false
 }
 
-fun <T> janyMatch(iterable: Iterable<T>, test: (T) -> Boolean): Boolean {
+inline fun <T> janyMatch(iterable: Iterable<T>, test: (T) -> Boolean): Boolean {
     return iterable.anyMatch(test)
 }
 
-val models = ArrayList<Triple<Item, Int, String>>()
-
 fun setItemModel(item: Item, meta: Int, string: String = item.registryName!!.toString()) {
     runOnClient {
-        models.add(Triple(item, meta, string))
+        ClientEvents.models.add(Triple(item, meta, string))
     }
 }
 
@@ -208,7 +158,7 @@ fun setItemName(item: Item, registryName: String, translationKey: String = "${Fu
     item.registryName = ResourceLocation(FutureMC.ID, registryName)
 }
 
-fun <T> setBuiltinRenderer(builtin: T) where T : ModeledItem.Builtin {
+fun setBuiltinRenderer(builtin: ModeledItem.Builtin) {
     // required because Kotlin's `where`
     // clause is broken with pre-1.4 type inference
     builtin as Item

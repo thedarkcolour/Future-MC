@@ -6,11 +6,12 @@ import net.minecraft.nbt.NBTPrimitive
 import net.minecraft.nbt.NBTTagByte
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.Capability.IStorage
 import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.event.AttachCapabilitiesEvent
-import thedarkcolour.core.util.addListener
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import thedarkcolour.futuremc.FutureMC
 
 interface SwimmingCapability {
@@ -45,10 +46,11 @@ interface SwimmingCapability {
                 },
                 ::Impl
             )
-            addListener(this::attachCapability)
+            MinecraftForge.EVENT_BUS.register(this)
         }
 
-        private fun attachCapability(event: AttachCapabilitiesEvent<*>) {
+        @SubscribeEvent
+        fun attachCapability(event: AttachCapabilitiesEvent<*>) {
             if (event.getObject() is EntityPlayer) {
                 event.addCapability(ID, SwimmingProvider())
             }

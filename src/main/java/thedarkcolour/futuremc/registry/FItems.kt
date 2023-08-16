@@ -9,7 +9,6 @@ import net.minecraftforge.registries.IForgeRegistry
 import thedarkcolour.core.item.DebuggerItem
 import thedarkcolour.core.item.ModeledItem
 import thedarkcolour.core.item.ModeledItemBlock
-import thedarkcolour.core.util.addListener
 import thedarkcolour.core.util.setItemGroup
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.config.FConfig
@@ -153,7 +152,6 @@ object FItems {
         if (FConfig.villageAndPillage.loom.enabled) items.register(BANNER_PATTERN)
         if (FConfig.villageAndPillage.crossbow) {
             items.register(CROSSBOW)
-            addListener(CROSSBOW::update)
         }
         if (FConfig.buzzyBees.bee.enabled) items.register(HONEYCOMB)
         if (FConfig.buzzyBees.bee.enabled) items.register(HONEY_BOTTLE)

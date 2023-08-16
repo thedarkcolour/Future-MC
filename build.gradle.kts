@@ -170,14 +170,14 @@ tasks {
             )
         }
     }
-
+/*
     processResources {
         inputs.property("version", project.version)
 
         filesMatching("mcmod.info") {
             expand("version" to project.version)
         }
-    }
+    }*/
 
     compileKotlin {
         kotlinOptions {

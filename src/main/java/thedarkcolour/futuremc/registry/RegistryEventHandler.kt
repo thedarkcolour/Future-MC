@@ -37,11 +37,8 @@ import thedarkcolour.futuremc.item.ItemGroup
 object RegistryEventHandler {
     @SubscribeEvent
     fun onBlockRegistry(event: RegistryEvent.Register<Block>) {
-        FutureMC.GROUP = if (useVanillaCreativeTabs) {
-            CreativeTabs.MISC
-        } else {
-            ItemGroup
-        }
+        FutureMC.GROUP = if (useVanillaCreativeTabs) CreativeTabs.MISC else ItemGroup
+
 
         FBlocks.registerBlocks(event.registry)
 
