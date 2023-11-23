@@ -6,8 +6,8 @@ plugins {
     kotlin("jvm") version "1.5.10" // For build script syntax
     java
     idea
-    id("net.minecraftforge.gradle") version "5.0.+"
-    id("wtf.gofancy.fancygradle") version "1.1.2-0" // For using FG5
+    id("net.minecraftforge.gradle") version "5.1.+"
+    id("wtf.gofancy.fancygradle") version "1.1.+" // For using FG5
 }
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
@@ -17,7 +17,7 @@ version = "0.2.11"
 group = "thedarkcolour.futuremc"
 
 minecraft {
-    mappings("stable", "39-1.12")
+    mappings("stable",  "39-1.12")
 
     accessTransformer("src/main/resources/META-INF/futuremc_at.cfg")
 
@@ -104,7 +104,7 @@ repositories {
 }
 
 dependencies {
-    minecraft(group = "net.minecraftforge", name = "forge", version = "1.12.2-14.23.5.2855")
+    minecraft(group = "net.minecraftforge", name = "forge", version = "1.12.2-14.23.5.2860")
 
     implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = "1.3.50")
     implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version = "1.3.50")

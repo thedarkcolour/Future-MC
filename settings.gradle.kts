@@ -15,9 +15,9 @@ pluginManagement {
         }
         maven {
             name = "FancyGradle"
-            url = uri("https://gitlab.com/api/v4/projects/26758973/packages/maven")
+            url = uri("https://maven.gofancy.wtf/releases")
         }
     }
 }
 
-rootProject.name = "future-mc"
+rootProject.name = "Future-MC"
