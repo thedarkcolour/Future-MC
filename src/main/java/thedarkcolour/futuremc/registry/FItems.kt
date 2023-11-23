@@ -16,6 +16,7 @@ import thedarkcolour.futuremc.entity.fish.cod.EntityCod
 import thedarkcolour.futuremc.entity.fish.pufferfish.EntityPufferfish
 import thedarkcolour.futuremc.entity.fish.salmon.EntitySalmon
 import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
+import thedarkcolour.futuremc.integration.Integration
 import thedarkcolour.futuremc.item.*
 
 /**
@@ -148,7 +149,9 @@ object FItems {
 
     fun registerItems(items: IForgeRegistry<Item>) {
         if (FConfig.villageAndPillage.dyes) items.register(DYES)
-        if (FConfig.updateAquatic.trident) items.register(TRIDENT)
+        if (!Integration.Mods.OE.isEnabled) {
+            if (FConfig.updateAquatic.trident) items.register(TRIDENT)
+        }
         if (FConfig.villageAndPillage.loom.enabled) items.register(BANNER_PATTERN)
         if (FConfig.villageAndPillage.crossbow) {
             items.register(CROSSBOW)
@@ -158,11 +161,14 @@ object FItems {
         if (FConfig.villageAndPillage.sweetBerryBush.enabled) items.register(SWEET_BERRIES)
         if (FConfig.villageAndPillage.suspiciousStew) items.register(SUSPICIOUS_STEW)
         if (FConfig.villageAndPillage.bamboo.enabled) items.register(BAMBOO)
-        if (FConfig.updateAquatic.fish.pufferfish.enabled) items.register(PUFFERFISH_BUCKET)
-        if (FConfig.updateAquatic.fish.salmon.enabled) items.register(SALMON_BUCKET)
-        if (FConfig.updateAquatic.fish.cod.enabled) items.register(COD_BUCKET)
-        if (FConfig.updateAquatic.fish.tropicalFish.enabled) items.register(TROPICAL_FISH_BUCKET)
-        if (FConfig.updateAquatic.nautilusShell) items.register(NAUTILUS_SHELL)
+        if (!Integration.Mods.OE.isEnabled) {
+            if (FConfig.updateAquatic.fish.pufferfish.enabled) items.register(PUFFERFISH_BUCKET)
+            if (FConfig.updateAquatic.fish.salmon.enabled) items.register(SALMON_BUCKET)
+            if (FConfig.updateAquatic.fish.cod.enabled) items.register(COD_BUCKET)
+            if (FConfig.updateAquatic.fish.tropicalFish.enabled) items.register(TROPICAL_FISH_BUCKET)
+            if (FConfig.updateAquatic.nautilusShell) items.register(NAUTILUS_SHELL)
+        }
+
 
         if (FutureMC.DEBUG) items.register(DEBUGGER)
         //items.register(AGRO)
@@ -230,7 +236,10 @@ object FItems {
         if (FConfig.villageAndPillage.smoothSandstone) items.register(SMOOTH_SANDSTONE)
         if (FConfig.villageAndPillage.smoothQuartz) items.register(SMOOTH_QUARTZ)
         if (FConfig.villageAndPillage.smoothRedSandstone) items.register(SMOOTH_RED_SANDSTONE)
-        if (FConfig.updateAquatic.blueIce) items.register(BLUE_ICE)
+        if (!Integration.Mods.OE.isEnabled) {
+            if (FConfig.updateAquatic.blueIce) items.register(BLUE_ICE)
+        }
+
         if (FConfig.updateAquatic.wood.strippedAcacia) items.register(STRIPPED_ACACIA_WOOD)
         if (FConfig.updateAquatic.wood.strippedJungle) items.register(STRIPPED_JUNGLE_WOOD)
         if (FConfig.updateAquatic.wood.strippedBirch) items.register(STRIPPED_BIRCH_WOOD)

@@ -26,6 +26,7 @@ import thedarkcolour.futuremc.client.gui.GuiVillager
 import thedarkcolour.futuremc.client.render.TridentBakedModel
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.container.ContainerVillager
+import thedarkcolour.futuremc.integration.Integration
 import thedarkcolour.futuremc.item.TridentItem
 import kotlin.math.abs
 import kotlin.math.max
@@ -58,14 +59,16 @@ object ClientEvents {
 
     @SubscribeEvent
     fun onModelBake(event: ModelBakeEvent) {
-        if (FConfig.updateAquatic.trident) {
-            val registry = event.modelRegistry
-            val trident = ModelResourceLocation("futuremc:trident", "inventory")
-            val simpleModel = registry.getObject(trident)!!
-            TridentItem.simpleModel = simpleModel
-            val hand = registry.getObject(ModelResourceLocation("futuremc:trident_in_hand", "inventory"))!!
+        if (!Integration.Mods.OE.isEnabled) {
+            if (FConfig.updateAquatic.trident) {
+                val registry = event.modelRegistry
+                val trident = ModelResourceLocation("futuremc:trident", "inventory")
+                val simpleModel = registry.getObject(trident)!!
+                TridentItem.simpleModel = simpleModel
+                val hand = registry.getObject(ModelResourceLocation("futuremc:trident_in_hand", "inventory"))!!
 
-            registry.putObject(trident, TridentBakedModel(hand, simpleModel))
+                registry.putObject(trident, TridentBakedModel(hand, simpleModel))
+            }
         }
     }
 
@@ -206,6 +209,8 @@ object ClientEvents {
         if (first.normal == EnumFacing.Axis.X) {
 
         }
+
+       return arrayListOf(intersection)
     }
 
     data class Face(
