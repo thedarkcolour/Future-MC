@@ -13,7 +13,7 @@ plugins {
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 idea.module.inheritOutputDirs = true
 
-version = "0.2.11"
+version = "0.2.12"
 group = "thedarkcolour.futuremc"
 
 minecraft {
@@ -106,10 +106,10 @@ repositories {
 dependencies {
     minecraft(group = "net.minecraftforge", name = "forge", version = "1.12.2-14.23.5.2860")
 
-    implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = "1.3.50")
-    implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version = "1.3.50")
-    implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version = "1.3.50")
-    implementation (group = "org.jetbrains.kotlin", name = "kotlin-reflect", version = "1.3.50")
+    implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = "1.5.32")
+    implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version = "1.5.32")
+    implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version = "1.5.32")
+    implementation (group = "org.jetbrains.kotlin", name = "kotlin-reflect", version = "1.5.32")
 
     // Stuff I care about
     implementation(fg.deobf(curse("enchantment_descriptions", 250419, 2689502)))
