@@ -1,6 +1,7 @@
 package thedarkcolour.futuremc.registry
 
 import net.minecraft.client.renderer.entity.RenderIronGolem
+import net.minecraft.client.renderer.entity.RenderSnowMan
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EnumCreatureType
 import net.minecraft.init.Biomes
@@ -24,6 +25,7 @@ import thedarkcolour.futuremc.entity.fish.tropical.RenderTropicalFish
 import thedarkcolour.futuremc.entity.irongolem.LayerIronGolemCrack
 import thedarkcolour.futuremc.entity.panda.EntityPanda
 import thedarkcolour.futuremc.entity.panda.RenderPanda
+import thedarkcolour.futuremc.entity.snowgolem.LayerSnowGolemCutHead
 import thedarkcolour.futuremc.entity.trident.RenderTrident
 import thedarkcolour.futuremc.entity.trident.Trident
 import thedarkcolour.futuremc.integration.Integration
@@ -85,23 +87,33 @@ object FEntities {
         if (FConfig.buzzyBees.bee.enabled) {
             registerEntityModel(::BeeRenderer)
         }
-        if (FConfig.updateAquatic.fish.cod.enabled) {
-            registerEntityModel(::RenderCod)
+        if (!Integration.Mods.OE.isEnabled) {
+            if (FConfig.updateAquatic.fish.cod.enabled) {
+                registerEntityModel(::RenderCod)
+            }
+            if (FConfig.updateAquatic.fish.pufferfish.enabled) {
+                registerEntityModel(::RenderPufferfish)
+            }
+            if (FConfig.updateAquatic.fish.salmon.enabled) {
+                registerEntityModel(::RenderSalmon)
+            }
+            if (FConfig.updateAquatic.fish.tropicalFish.enabled) {
+                registerEntityModel(::RenderTropicalFish)
+            }
         }
-        if (FConfig.updateAquatic.fish.pufferfish.enabled) {
-            registerEntityModel(::RenderPufferfish)
-        }
-        if (FConfig.updateAquatic.fish.salmon.enabled) {
-            registerEntityModel(::RenderSalmon)
-        }
-        if (FConfig.updateAquatic.fish.tropicalFish.enabled) {
-            registerEntityModel(::RenderTropicalFish)
-        }
+
         // of course they do :)
         if (FConfig.buzzyBees.ironGolem.doCrack) {
             registerEntityModel { manager ->
                 val renderer = RenderIronGolem(manager)
                 renderer.addLayer(LayerIronGolemCrack(renderer))
+                renderer
+            }
+        }
+
+        if (FConfig.buzzyBees.snowGolem.cutHead) {
+            registerEntityModel { manager -> val renderer = RenderSnowMan(manager)
+                renderer.addLayer(LayerSnowGolemCutHead(renderer))
                 renderer
             }
         }
