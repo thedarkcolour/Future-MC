@@ -32,6 +32,7 @@ import thedarkcolour.core.util.registerDispenserBehaviour
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.block.buzzybees.BottleDispenserBehavior
 import thedarkcolour.futuremc.block.buzzybees.ShearDispenserBehaviour
+import thedarkcolour.futuremc.block.villagepillage.FlintSteelAndShovelDispenserBehaviour
 import thedarkcolour.futuremc.capability.SwimmingCapability
 import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.client.tesr.BellTileEntityRenderer
@@ -133,7 +134,10 @@ object FutureMC {
             })
         }
         if (FConfig.villageAndPillage.campfire.enabled) {
-            // todo campfire lighting with flint steel and burnout with shovel
+            val existing = BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.getObject(Items.FLINT_AND_STEEL)
+            registerDispenserBehaviour(Items.FLINT_AND_STEEL,IBehaviorDispenseItem {source, stack ->
+                FlintSteelAndShovelDispenserBehaviour.dispense(source.world,source,stack,existing)
+            })
         }
 
         if (FConfig.villageAndPillage.loom.enabled) {
