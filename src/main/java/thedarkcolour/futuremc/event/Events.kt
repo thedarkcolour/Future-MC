@@ -309,10 +309,10 @@ object Events {
         if (FConfig.netherUpdate.snowGolem.dropHead) {
             val snowGolemEntity = event.target
             if (snowGolemEntity is EntitySnowman && event.itemStack.item == Items.SHEARS) {
-                val pumpkinItem = Item.getByNameOrId("minecraft:pumpkin")
-                if (pumpkinItem != null) {
-                    val itemStack = ItemStack(pumpkinItem)
-                    if (!event.world.isRemote) {
+                if (!event.world.isRemote) {
+                    val pumpkinItem = Item.getByNameOrId("minecraft:pumpkin")
+                    if (pumpkinItem != null) {
+                        val itemStack = ItemStack(pumpkinItem)
                         snowGolemEntity.entityDropItem(itemStack,1.7F)
                     }
                 }
