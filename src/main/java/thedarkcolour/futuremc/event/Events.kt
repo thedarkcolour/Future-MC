@@ -311,8 +311,10 @@ object Events {
             if (snowGolemEntity is EntitySnowman && event.itemStack.item == Items.SHEARS) {
                 val pumpkinItem = Item.getByNameOrId("minecraft:pumpkin")
                 if (pumpkinItem != null) {
-                    val itemStack = ItemStack(pumpkinItem,1)
-                    snowGolemEntity.entityDropItem(itemStack,1.7F)
+                    val itemStack = ItemStack(pumpkinItem)
+                    if (!event.world.isRemote) {
+                        snowGolemEntity.entityDropItem(itemStack,1.7F)
+                    }
                 }
             }
         }
