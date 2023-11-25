@@ -18,6 +18,7 @@ import net.minecraft.init.Items
 import net.minecraft.init.SoundEvents
 import net.minecraft.inventory.ContainerMerchant
 import net.minecraft.item.Item
+import net.minecraft.item.ItemShears
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemTool
 import net.minecraft.util.EnumHand
@@ -308,7 +309,7 @@ object Events {
     fun dropSnowGolemHead(event: EntityInteract) {
         if (FConfig.netherUpdate.snowGolem.dropHead) {
             val snowGolemEntity = event.target
-            if (snowGolemEntity is EntitySnowman && event.itemStack.item == Items.SHEARS) {
+            if (snowGolemEntity is EntitySnowman && event.itemStack.item is ItemShears) {
                 if (!event.world.isRemote) {
                     val pumpkinItem = Item.getByNameOrId("minecraft:pumpkin")
                     if (pumpkinItem != null) {
