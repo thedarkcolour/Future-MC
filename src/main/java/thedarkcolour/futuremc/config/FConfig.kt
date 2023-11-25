@@ -871,8 +871,7 @@ object FConfig {
 
         class SonwGolem {
             @Name("DropHead")
-            @Comment("")
-            @RequiresMcRestart
+            @Comment("Whether to drop heads when using Shears")
             @JvmField
             var dropHead = true
         }
