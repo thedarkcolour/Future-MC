@@ -10,12 +10,14 @@ import net.minecraft.entity.boss.EntityWither
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.monster.EntityElderGuardian
 import net.minecraft.entity.monster.EntityIronGolem
+import net.minecraft.entity.monster.EntitySnowman
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.init.SoundEvents
 import net.minecraft.inventory.ContainerMerchant
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemTool
 import net.minecraft.util.EnumHand
@@ -33,6 +35,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent
 import net.minecraftforge.event.entity.player.PlayerContainerEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock
 import net.minecraftforge.event.terraingen.BiomeEvent
 import net.minecraftforge.event.world.WorldEvent
@@ -295,6 +298,21 @@ object Events {
                     if (!event.entityPlayer.isCreative) {
                         event.itemStack.shrink(1)
                     }
+                }
+            }
+        }
+    }
+
+    // dropping snow golem head
+    @SubscribeEvent
+    fun dropSnowGolemHead(event: EntityInteract) {
+        if (FConfig.netherUpdate.snowGolem.dropHead) {
+            val snowGolemEntity = event.target
+            if (snowGolemEntity is EntitySnowman && event.itemStack.item == Items.SHEARS) {
+                val pumpkinItem = Item.getByNameOrId("minecraft:pumpkin")
+                if (pumpkinItem != null) {
+                    val itemStack = ItemStack(pumpkinItem,1)
+                    snowGolemEntity.entityDropItem(itemStack,1.7F)
                 }
             }
         }

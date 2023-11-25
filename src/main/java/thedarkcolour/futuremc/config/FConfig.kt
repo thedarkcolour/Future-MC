@@ -798,6 +798,11 @@ object FConfig {
         @JvmField
         val blackstone = Blackstone()
 
+        @Name("Snow Golem")
+        @Comment("Options for Snow Golem")
+        @JvmField
+        val snowGolem = SonwGolem()
+
         class AncientDebris {
             @Name("Vein 1 (Normal)")
             @Comment("Options for the normal vein of Ancient Debris in the nether")
@@ -862,6 +867,14 @@ object FConfig {
                 @JvmField
                 var spread = 8
             }
+        }
+
+        class SonwGolem {
+            @Name("DropHead")
+            @Comment("")
+            @RequiresMcRestart
+            @JvmField
+            var dropHead = true
         }
 
         class Blackstone {

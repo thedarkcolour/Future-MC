@@ -1,7 +1,6 @@
 package thedarkcolour.futuremc.registry
 
 import net.minecraft.client.renderer.entity.RenderIronGolem
-import net.minecraft.client.renderer.entity.RenderSnowMan
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EnumCreatureType
 import net.minecraft.init.Biomes
@@ -25,7 +24,6 @@ import thedarkcolour.futuremc.entity.fish.tropical.RenderTropicalFish
 import thedarkcolour.futuremc.entity.irongolem.LayerIronGolemCrack
 import thedarkcolour.futuremc.entity.panda.EntityPanda
 import thedarkcolour.futuremc.entity.panda.RenderPanda
-import thedarkcolour.futuremc.entity.snowgolem.LayerSnowGolemCutHead
 import thedarkcolour.futuremc.entity.trident.RenderTrident
 import thedarkcolour.futuremc.entity.trident.Trident
 import thedarkcolour.futuremc.integration.Integration
@@ -107,13 +105,6 @@ object FEntities {
             registerEntityModel { manager ->
                 val renderer = RenderIronGolem(manager)
                 renderer.addLayer(LayerIronGolemCrack(renderer))
-                renderer
-            }
-        }
-
-        if (FConfig.buzzyBees.snowGolem.cutHead) {
-            registerEntityModel { manager -> val renderer = RenderSnowMan(manager)
-                renderer.addLayer(LayerSnowGolemCutHead(renderer))
                 renderer
             }
         }
