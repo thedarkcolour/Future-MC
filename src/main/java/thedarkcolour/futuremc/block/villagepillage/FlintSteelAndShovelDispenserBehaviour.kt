@@ -18,10 +18,11 @@ object FlintSteelAndShovelDispenserBehaviour : BehaviorDispenseOptional() {
         if (!world.isRemote) {
             val pos = source.blockPos.offset(state.getValue(BlockDispenser.FACING))
             val campfireState = world.getBlockState(pos)
+            val upState = world.getBlockState(pos.up())
             if (campfireState.block is CampfireBlock) {
                 if (!campfireState.getValue(CampfireBlock.LIT)) {
                     if (stack.item == Items.FLINT_AND_STEEL || stack.item == Items.FIRE_CHARGE) {
-                        if (!((campfireState.block is BlockLiquid) || (campfireState.block is BlockFluidBase))) {
+                        if (!((upState.block is BlockLiquid) || (upState.block is BlockFluidBase))) {
                             CampfireBlock.setLit(world, pos, true)
                             if (stack.attemptDamageItem(1,world.rand,null)) {
                                 stack.count = 0
