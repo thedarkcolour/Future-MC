@@ -28,8 +28,6 @@ object FlintSteelAndShovelDispenserBehaviour : BehaviorDispenseOptional() {
                             }
                         }
                     }
-                } else if (stack.item.getToolClasses(stack).contains("shovel")) {
-                    CampfireBlock.setLit(world, pos, false)
                 }
             }
         }
