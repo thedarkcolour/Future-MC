@@ -12,7 +12,9 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import thedarkcolour.futuremc.client.gui.GuiVillager
 
-class ContainerVillager(val playerInv: InventoryPlayer, merchant: IMerchant, world: World?) : ContainerMerchant(playerInv, merchant, world) {
+class ContainerVillager(val playerInv: InventoryPlayer, merchant: IMerchant, world: World?) : ContainerMerchant(playerInv, merchant,
+    world
+) {
     init {
         inventorySlots.clear()
         inventoryItemStacks.clear()
@@ -63,7 +65,7 @@ class ContainerVillager(val playerInv: InventoryPlayer, merchant: IMerchant, wor
 
         merchant.customer = null
 
-        if (!world.isRemote) {
+        if (world != null && !world.isRemote) {
             if (!playerIn.isEntityAlive || (playerIn is EntityPlayerMP && playerIn.hasDisconnected())) {
                 var stack = merchantInventory.removeStackFromSlot(0)
 
