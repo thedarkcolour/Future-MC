@@ -70,25 +70,25 @@ object FEntities {
 
     fun registerEntityRenderers() {
         if (FConfig.updateAquatic.trident) {
-            registerEntityModel(::RenderTrident)
+            registerEntityModel { RenderTrident(it) }
         }
         if (FConfig.villageAndPillage.panda && FConfig.villageAndPillage.bamboo.enabled) {
-            registerEntityModel(::RenderPanda)
+            registerEntityModel { RenderPanda(it) }
         }
         if (FConfig.buzzyBees.bee.enabled) {
-            registerEntityModel(::BeeRenderer)
+            registerEntityModel { BeeRenderer(it) }
         }
         if (FConfig.updateAquatic.fish.cod.enabled) {
-            registerEntityModel(::RenderCod)
+            registerEntityModel { RenderCod(it) }
         }
         if (FConfig.updateAquatic.fish.pufferfish.enabled) {
-            registerEntityModel(::RenderPufferfish)
+            registerEntityModel { RenderPufferfish(it) }
         }
         if (FConfig.updateAquatic.fish.salmon.enabled) {
-            registerEntityModel(::RenderSalmon)
+            registerEntityModel { RenderSalmon(it) }
         }
         if (FConfig.updateAquatic.fish.tropicalFish.enabled) {
-            registerEntityModel(::RenderTropicalFish)
+            registerEntityModel { RenderTropicalFish(it) }
         }
         // of course they do :)
         if (FConfig.buzzyBees.ironGolem.doCrack) {

@@ -23,7 +23,7 @@ class StonecutterScreen(container: StonecutterContainer) : FGui<StonecutterConta
     private var hasInput = false
 
     init {
-        container.inventoryUpdateListener = ::onInventoryUpdate
+        container.inventoryUpdateListener = { onInventoryUpdate() }
     }
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {

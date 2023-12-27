@@ -51,7 +51,9 @@ object BambooWorldGen : FWorldGen {
         val biome = worldIn.getBiomeForCoordsBody(position)
         val chunkPos = worldIn.getChunk(chunkX, chunkZ).pos
         if (isBiomeValid(biome) && worldIn.worldType != WorldType.FLAT) {
-            FWorldGen.placeAround(worldIn, rand, chunkPos, 0..12, ::generate)
+            FWorldGen.placeAround(worldIn, rand, chunkPos, 0..12) { world2, random, pos ->
+                generate(world2, random, pos)
+            }
         }
     }
 

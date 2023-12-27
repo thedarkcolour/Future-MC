@@ -48,8 +48,7 @@ abstract class EntityGroupFish(worldIn: World) : EntityFish(worldIn) {
                         fish.entityBoundingBox.grow(8.0, 8.0, 8.0),
                         FollowLeaderPredicate
                     )
-                    val groupFish: EntityGroupFish =
-                        list.stream().filter(EntityGroupFish::canGroupGrow).findAny().orElse(fish)
+                    val groupFish: EntityGroupFish = list.firstOrNull { it.canGroupGrow() } ?: (fish)
                     groupFish.acceptMembers(list.stream().filter { !it.hasGroupLeader() })
                     fish.hasGroupLeader()
                 }

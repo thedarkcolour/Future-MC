@@ -54,7 +54,9 @@ class FlowerWorldGen(private val flower: BlockFlower) : FWorldGen {
         val chunkPos = worldIn.getChunk(chunkX, chunkZ).pos
         if (rand.nextDouble() < flower.flowerChance) {
             if (flower.validBiomes.contains(biome) && worldIn.worldType != WorldType.FLAT) {
-                FWorldGen.placeAround(worldIn, rand, chunkPos, 0..12, ::generate)
+                FWorldGen.placeAround(worldIn, rand, chunkPos, 0..12) { world2, random, targetPos ->
+                    generate(world2, random, targetPos)
+                }
             }
         }
     }

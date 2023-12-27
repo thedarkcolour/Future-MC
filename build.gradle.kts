@@ -1,55 +1,30 @@
-import net.minecraftforge.gradle.common.util.RunConfig
-import wtf.gofancy.fancygradle.script.extensions.curse
-import java.time.LocalDateTime
-
 plugins {
-    kotlin("jvm") version "1.5.10" // For build script syntax
     java
     idea
-    id("net.minecraftforge.gradle") version "5.0.+"
-    id("wtf.gofancy.fancygradle") version "1.1.2-0" // For using FG5
+    kotlin("jvm") version "1.9.0" // To fix broken Gradle + syntax
+    id("com.gtnewhorizons.retrofuturagradle") version "1.3.16"
 }
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
-idea.module.inheritOutputDirs = true
 
-version = "0.2.11"
+version = "0.2.12"
 group = "thedarkcolour.futuremc"
 
 minecraft {
-    mappings("stable", "39-1.12")
-
-    accessTransformer("src/main/resources/META-INF/futuremc_at.cfg")
-
-    runs {
-        val config = Action<RunConfig> {
-            properties(mapOf(
-                "forge.logging.markers" to "COREMODLOG",
-                "forge.logging.console.level" to "debug",
-                "fml.coreMods.load" to "thedarkcolour.futuremc.asm.CoreLoader"
-            ))
-            workingDirectory = project.file("run" + if (name == "server") "/server" else "").canonicalPath
-            source(sourceSets["main"])
-        }
-
-        create("client", config)
-        create("server", config)
-    }
+    mcVersion.set("1.12.2")
+    mcpMappingChannel.set("stable")
+    mcpMappingVersion.set("39")
+    username.set("Dev")
+    useDependencyAccessTransformers.set(true)
+    extraRunJvmArguments.add("-Dfml.coreMods.load=thedarkcolour.futuremc.asm.CoreLoader")
 }
 
-fancyGradle {
-    patches {
-        resources
-        coremods
-        codeChickenLib
-        asm
-        mergetool
-    }
-}
+val targetFile = "src/main/resources/META-INF/futuremc_at.cfg"
+
+tasks.deobfuscateMergedJarToSrg.get().accessTransformerFiles.from(targetFile)
+tasks.srgifyBinpatchedJar.get().accessTransformerFiles.from(targetFile)
 
 repositories {
-    jcenter()
-
     maven {
         name = "CraftTweaker/Quark/AutoRegLib"
         url = uri("https://maven.blamejared.com")
@@ -88,6 +63,9 @@ repositories {
     maven {
         name = "CurseMaven"
         url = uri("https://www.cursemaven.com")
+        content {
+            includeGroup("curse.maven")
+        }
     }
     //maven {
     //    name = "IC2"
@@ -100,90 +78,83 @@ repositories {
     //    url = uri("https://maven.sk89q.com/repo/")
     //    content { includeGroup("") }
     //}
-    maven { url = uri("https://jitpack.io") }
+    //maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
-    minecraft(group = "net.minecraftforge", name = "forge", version = "1.12.2-14.23.5.2855")
-
     implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = "1.3.50")
     implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version = "1.3.50")
     implementation (group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version = "1.3.50")
     implementation (group = "org.jetbrains.kotlin", name = "kotlin-reflect", version = "1.3.50")
 
     // Stuff I care about
-    implementation(fg.deobf(curse("enchantment_descriptions", 250419, 2689502)))
-    implementation(fg.deobf(curse("enchantment_descriptions_sources", 250419, 2689503)))
-    compileOnly(fg.deobf(curse("fluidlogged_api", 485654, 3698755)))
-    implementation(fg.deobf(curse("biomes_o_plenty", 220318, 2842510)))
+    curseMaven("enchantment_descriptions", 250419, 2689502)
+    curseMaven("enchantment_descriptions_sources", 250419, 2689503)
+    curseMaven("fluidlogged_api", 485654, 3698755)
+    curseMaven("biomes_o_plenty", 220318, 2842510)
     implementation("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.19.548")
-    implementation(fg.deobf("mezz.jei:jei_1.12.2:4.15.0.+"))
+    curseMaven("had-enough-items", 557549, 4810661, runtime = true)
     api("net.shadowfacts:Forgelin:1.8.4")
 
     // OTG
-    compileOnly(fg.deobf(curse("otg", 265894, 3151431)))
-    //compileOnly("com.sk89q.worldedit:worldedit-forge-mc1.11:6.1.6") {
-    //    exclude("com.google.guava")
-    //    exclude("com.google.gson")
-    //}
-    //compileOnly("com.sk89q.worldedit:worldedit-core:6.1") {
-    //    exclude("com.google.guava")
-    //    exclude("com.google.gson")
-    //}
+    curseMaven("otg", 265894, 3151431)
 
     // Optional mod compat
-    implementation(fg.deobf(curse("dynamic_trees", 252818, 3260881)))
-    compileOnly(curse("pams_harvestcraft", 221857, 2904825))
-    compileOnly(fg.deobf(curse("plants", 257229, 2697165)))
-    compileOnly(fg.deobf(curse("placebo", 283644, 2694382)))
-    compileOnly(fg.deobf(curse("actually_additions", 228404, 2844115)))
-    compileOnly(fg.deobf(curse("better_with_mods", 246760, 2965308)))
-    compileOnly(fg.deobf(curse("better_with_lib", 294335, 2624990)))
-    compileOnly(fg.deobf(curse("obfuscate", 289380, 2916310)))
-    compileOnly(fg.deobf("vazkii.quark:Quark:r1.6-180.7"))
-    compileOnly(fg.deobf("vazkii.autoreglib:AutoRegLib:1.3-32.+"))
-    compileOnly(fg.deobf("slimeknights.mantle:Mantle:1.12-1.3.3.49"))
-    compileOnly(fg.deobf("slimeknights:TConstruct:1.12.2-2.13.0.184"))
-    compileOnly(fg.deobf("cofh:CoFHCore:1.12.2-4.6.3.27:universal"))
-    compileOnly(fg.deobf("cofh:CoFHWorld:1.12.2-1.3.1.7:universal"))
-    compileOnly(fg.deobf("cofh:ThermalFoundation:1.12.2-2.6.3.27:universal"))
-    compileOnly(fg.deobf("cofh:ThermalExpansion:1.12.2-5.5.4.43:universal"))
-    compileOnly(fg.deobf("cofh:RedstoneFlux:1.12-2.1.0.7:universal"))
-    compileOnly(fg.deobf("codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal"))
-    implementation(fg.deobf("mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.28-17"))
+    curseMaven("dynamic_trees", 252818, 3260881)
+    curseMaven("pams_harvestcraft", 221857, 2904825)
+    curseMaven("plants", 257229, 2697165)
+    curseMaven("placebo", 283644, 2694382)
+    curseMaven("actually_additions", 228404, 2844115)
+    curseMaven("better_with_mods", 246760, 2965308)
+    curseMaven("better_with_lib", 294335, 2624990)
+    curseMaven("obfuscate", 289380, 2916310)
+    compileOnly(rfg.deobf("vazkii.quark:Quark:r1.6-180.7"))
+    compileOnly(rfg.deobf("vazkii.autoreglib:AutoRegLib:1.3-32.+"))
+    compileOnly(rfg.deobf("slimeknights.mantle:Mantle:1.12-1.3.3.49"))
+    compileOnly(rfg.deobf("slimeknights:TConstruct:1.12.2-2.13.0.184"))
+    compileOnly(rfg.deobf("cofh:CoFHCore:1.12.2-4.6.3.27:universal"))
+    compileOnly(rfg.deobf("cofh:CoFHWorld:1.12.2-1.3.1.7:universal"))
+    compileOnly(rfg.deobf("cofh:ThermalFoundation:1.12.2-2.6.3.27:universal"))
+    compileOnly(rfg.deobf("cofh:ThermalExpansion:1.12.2-5.5.4.43:universal"))
+    compileOnly(rfg.deobf("cofh:RedstoneFlux:1.12-2.1.0.7:universal"))
+    compileOnly(rfg.deobf("codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal"))
+    implementation(rfg.deobf("mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.28-17"))
+}
+
+fun DependencyHandlerScope.curseMaven(modName: String, projectId: Int, fileId: Int, runtime: Boolean = false) {
+    val dep = rfg.deobf("curse.maven:$modName-$projectId:$fileId")
+    if (runtime) {
+        implementation(dep)
+    } else {
+        compileOnly(dep)
+    }
 }
 
 tasks {
-    jar {
-        manifest {
-            attributes(
-                "Specification-Title" to "futuremc",
-                "Specification-Vendor" to "thedarkcolour",
-                "Specification-Version" to "1",
-                "Implementation-Title" to project.name,
-                "Implementation-Version" to project.version,
-                "Implementation-Vendor" to "thedarkcolour",
-                "Implementation-Timestamp" to LocalDateTime.now(),
-                "FMLCorePlugin" to "thedarkcolour.futuremc.asm.CoreLoader",
-                "FMLCorePluginContainsFMLMod" to true,
-                "FMLAT" to "futuremc_at.cfg"
-            )
-        }
-    }
-/*
     processResources {
         inputs.property("version", project.version)
+        inputs.property("mcversion", project.minecraft.mcVersion)
 
-        filesMatching("mcmod.info") {
-            expand("version" to project.version)
+        // Replace various properties in mcmod.info and pack.mcmeta if applicable
+        filesMatching(listOf("mcmod.info", "pack.mcmeta")) {
+            // Replace version and mcversion
+            expand(mapOf("version" to project.version, "mcversion" to project.minecraft.mcVersion))
         }
-    }*/
+    }
 
     compileKotlin {
         kotlinOptions {
-            freeCompilerArgs = listOf("-Xinline-classes", "-Xjvm-default=enable")
+            freeCompilerArgs = listOf("-Xinline-classes", "-Xjvm-default=all")
             jvmTarget = "1.8"
-            languageVersion = "1.3"
+            languageVersion = "1.4"
+        }
+    }
+
+    jar {
+        manifest {
+            attributes["FMLAT"] = "futuremc_at.cfg"
+            attributes["FMLCorePlugin"] = "thedarkcolour.futuremc.asm.CoreLoader"
+            attributes["FMLCorePluginContainsFMLMod"] = "true"
         }
     }
 }

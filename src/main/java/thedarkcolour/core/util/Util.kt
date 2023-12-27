@@ -34,7 +34,7 @@ fun <T> make(obj: T, consumer: Consumer<T>): T {
  * Gets the oredict names for the given stack.
  */
 fun getOreNames(stack: ItemStack): List<String> {
-    return OreDictionary.getOreIDs(stack).map(OreDictionary::getOreName)
+    return OreDictionary.getOreIDs(stack).map { OreDictionary.getOreName(it) }
 }
 
 inline fun runOnClient(runnable: () -> Unit) {
@@ -47,7 +47,7 @@ inline fun runOnClient(runnable: () -> Unit) {
  * Creates an immutable map and fills it using the [contents]
  */
 fun <K, V> immutableMapOf(contents: (ImmutableMap.Builder<K, V>) -> Unit): ImmutableMap<K, V> {
-    return ImmutableMap.Builder<K, V>().also(contents::invoke).build()
+    return ImmutableMap.Builder<K, V>().also { contents.invoke(it) }.build()
 }
 
 /**

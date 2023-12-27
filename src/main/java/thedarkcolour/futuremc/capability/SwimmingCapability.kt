@@ -27,25 +27,15 @@ interface SwimmingCapability {
             CapabilityManager.INSTANCE.register(
                 SwimmingCapability::class.java,
                 object : IStorage<SwimmingCapability> {
-                    override fun writeNBT(
-                        capability: Capability<SwimmingCapability>,
-                        instance: SwimmingCapability,
-                        side: EnumFacing
-                    ): NBTBase {
+                    override fun writeNBT(capability: Capability<SwimmingCapability>, instance: SwimmingCapability, side: EnumFacing): NBTBase {
                         return NBTTagByte((if (instance.isSwimming) 1 else 0).toByte())
                     }
 
-                    override fun readNBT(
-                        capability: Capability<SwimmingCapability>,
-                        instance: SwimmingCapability,
-                        side: EnumFacing,
-                        nbt: NBTBase
-                    ) {
+                    override fun readNBT(capability: Capability<SwimmingCapability>, instance: SwimmingCapability, side: EnumFacing, nbt: NBTBase) {
                         instance.isSwimming = (nbt as NBTPrimitive).int == 1
                     }
-                },
-                ::Impl
-            )
+                }
+            ) { Impl() }
             MinecraftForge.EVENT_BUS.register(this)
         }
 

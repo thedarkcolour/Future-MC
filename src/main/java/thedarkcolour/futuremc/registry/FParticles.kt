@@ -20,21 +20,18 @@ object FParticles {
         CAMPFIRE_COSY_SMOKE = registerParticle(
             "CAMPFIRE_COSY_SMOKE",
             "campfireCosySmoke",
-            true,
-            CampfireParticle::CosyFactory
-        )
+            true
+        ) { CampfireParticle.CosyFactory() }
         CAMPFIRE_SIGNAL_SMOKE = registerParticle(
             "CAMPFIRE_SIGNAL_SMOKE",
             "campfireSignalSmoke",
-            true,
-            CampfireParticle::SignalFactory
-        )
+            true
+        ) { CampfireParticle.SignalFactory() }
         SOUL_FLAME = registerParticle(
             "SOUL_FLAME",
             "soulFlame",
-            false,
-            SoulFlameParticle::Factory
-        )/*
+            false
+        ) { SoulFlameParticle.Factory() }/*
         FALLING_BEE_NECTAR = registerParticle(
             "FALLING_BEE_NECTAR",
             "fallingBeeNectar",
@@ -44,9 +41,8 @@ object FParticles {
         PANDA_SNEEZE = registerParticle(
             "PANDA_SNEEZE",
             "pandaSneeze",
-            false,
-            PandaSneezeParticle::Factory
-        )
+            false
+        ) { PandaSneezeParticle.Factory() }
     }
 
     // Registers a particle

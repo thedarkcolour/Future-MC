@@ -32,7 +32,7 @@ class GuiLoom(container: ContainerLoom) : FGui<ContainerLoom>(container) {
     private var recipeIndexOffset = 1
 
     init {
-        container.setInventoryUpdateListener(::onInventoryUpdate)
+        container.setInventoryUpdateListener { onInventoryUpdate() }
     }
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {

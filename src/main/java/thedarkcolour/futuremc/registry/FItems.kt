@@ -30,10 +30,10 @@ object FItems {
     val NAUTILUS_SHELL = ModeledItem("nautilus_shell").setItemGroup(CreativeTabs.MISC)
     val SCUTE = ModeledItem("scute").setItemGroup(CreativeTabs.MATERIALS)
     val TRIDENT = TridentItem()
-    val PUFFERFISH_BUCKET = FishBucketItem("pufferfish_bucket", ::EntityPufferfish)
-    val COD_BUCKET = FishBucketItem("cod_bucket", ::EntityCod)
-    val TROPICAL_FISH_BUCKET = FishBucketItem("tropical_fish_bucket", ::EntityTropicalFish)
-    val SALMON_BUCKET = FishBucketItem("salmon_bucket", ::EntitySalmon)
+    val PUFFERFISH_BUCKET = FishBucketItem("pufferfish_bucket") { EntityPufferfish(it) }
+    val COD_BUCKET = FishBucketItem("cod_bucket") { EntityCod(it) }
+    val TROPICAL_FISH_BUCKET = FishBucketItem("tropical_fish_bucket") { EntityTropicalFish(it) }
+    val SALMON_BUCKET = FishBucketItem("salmon_bucket") { EntitySalmon(it) }
 
     val DYES = ItemDye()
     val BANNER_PATTERN = BannerPatternItem()

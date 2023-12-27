@@ -53,7 +53,7 @@ object RegistryEventHandler {
     @SubscribeEvent
     fun onEntityRegistry(event: RegistryEvent.Register<EntityEntry>) {
         FEntities.registerEntities()
-        runOnClient(FEntities::registerEntityRenderers)
+        runOnClient { FEntities.registerEntityRenderers() }
     }
 
     @SubscribeEvent
@@ -109,7 +109,6 @@ object RegistryEventHandler {
     }
 
     @SubscribeEvent
-    @Suppress("UNCHECKED_CAST")
     fun registerRecipes(event: RegistryEvent.Register<IRecipe>) {
         FRecipes.registerRecipes(event.registry as IForgeRegistryModifiable<IRecipe>)
     }
@@ -135,7 +134,7 @@ object RegistryEventHandler {
             ResourceLocation(FutureMC.ID, "particles/big_smoke_9"),
             ResourceLocation(FutureMC.ID, "particles/big_smoke_10"),
             ResourceLocation(FutureMC.ID, "particles/big_smoke_11")
-        ).map(event.map::registerSprite).toTypedArray()
+        ).map { event.map.registerSprite(it) }.toTypedArray()
 
         SoulFlameParticle.texture = event.map.registerSprite(ResourceLocation(FutureMC.ID, "particles/soul_fire_flame"))
 

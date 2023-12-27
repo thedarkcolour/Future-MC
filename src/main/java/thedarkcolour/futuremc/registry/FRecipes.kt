@@ -77,7 +77,7 @@ object FRecipes {
         if (r.isNotEmpty()) {
             recipes.remove(ResourceLocation("trapdoor"))
 
-            r.forEach(recipes::register)
+            r.forEach { recipes.register(it) }
         }
 
         // actually additions compat with bees

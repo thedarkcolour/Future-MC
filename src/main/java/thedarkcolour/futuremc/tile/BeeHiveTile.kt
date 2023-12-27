@@ -369,7 +369,9 @@ class BeeHiveTile : InteractionTile(), ITickable {
     }
 
     private fun getBees(): NBTTagList {
-        return NBTTagList().also { bees.map(Bee::deserialize).forEach(it::appendTag) }
+        return NBTTagList().also {
+            bees.forEach { bee -> it.appendTag(bee.deserialize()) }
+        }
     }
 
     override fun getUpdateTag(): NBTTagCompound {
@@ -380,7 +382,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
         }
     }
 
-    private class Bee constructor(val data: NBTTagCompound, var ticksInHive: Int, val minOccupationTicks: Int) {
+    private class Bee(val data: NBTTagCompound, var ticksInHive: Int, val minOccupationTicks: Int) {
         init {
             data.setBoolean("Leashed", false)
         }
