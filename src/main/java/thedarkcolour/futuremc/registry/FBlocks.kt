@@ -129,7 +129,7 @@ object FBlocks {
     val SEAGRASS = BlockSeaGrass()
     val SEAGRASS_FLOWING = SEAGRASS.flowing
 
-    val SCAFFOLDING = ScaffoldingBlock(Properties(Material.CIRCUITS, "scaffolding").sound(FSounds.SCAFFOLDING).group(CreativeTabs.DECORATIONS))
+    val SCAFFOLDING = ScaffoldingBlock(Properties(Material.CIRCUITS, "scaffolding").hardnessAndResistance(0f, 0f).sound(FSounds.SCAFFOLDING).group(CreativeTabs.DECORATIONS))
     val BELL = BlockBell(Properties(Material.IRON, "bell").hardnessAndResistance(5.0f).sound(SoundType.ANVIL).group(CreativeTabs.DECORATIONS))
 
     fun registerBlocks(blocks: IForgeRegistry<Block>) {

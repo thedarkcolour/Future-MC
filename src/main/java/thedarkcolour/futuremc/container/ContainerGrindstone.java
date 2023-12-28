@@ -209,7 +209,8 @@ public class ContainerGrindstone extends FContainer {
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 
             for (Enchantment enchantment : enchantments.keySet()) {
-                if (!enchantment.isCurse() && enchantment.isAllowedOnBooks()) { // Fix #264
+                // some enchantments can be null :DDDD (fixes #332)
+                if (enchantment != null && !enchantment.isCurse() && enchantment.isAllowedOnBooks()) { // Fix #264
                     exp += getEnchantmentEXP(enchantment, enchantments.get(enchantment));
                 }
             }

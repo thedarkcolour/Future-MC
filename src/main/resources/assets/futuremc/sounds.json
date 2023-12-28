@@ -1120,31 +1120,55 @@
     "scaffold_break": {
         "subtitle": "futuremc.subtitles.scaffold_break",
         "sounds": [
-
+            "futuremc:scaffold/place1",
+            "futuremc:scaffold/place2",
+            "futuremc:scaffold/place3",
+            "futuremc:scaffold/place4"
         ]
     },
     "scaffold_step": {
         "subtitle": "futuremc.subtitles.scaffold_step",
         "sounds": [
-
+            "futuremc:scaffold/step1",
+            "futuremc:scaffold/step2",
+            "futuremc:scaffold/step3",
+            "futuremc:scaffold/step4",
+            "futuremc:scaffold/step5",
+            "futuremc:scaffold/step6",
+            "futuremc:scaffold/step7"
         ]
     },
     "scaffold_place": {
-        "subtitle": "futuremc.subtitles.scaffold_step",
+        "subtitle": "futuremc.subtitles.scaffold_place",
         "sounds": [
-
+            "futuremc:scaffold/place1",
+            "futuremc:scaffold/place2",
+            "futuremc:scaffold/place3",
+            "futuremc:scaffold/place4"
         ]
     },
     "scaffold_hit": {
         "subtitle": "futuremc.subtitles.scaffold_hit",
         "sounds": [
-
+            "futuremc:scaffold/step1",
+            "futuremc:scaffold/step2",
+            "futuremc:scaffold/step3",
+            "futuremc:scaffold/step4",
+            "futuremc:scaffold/step5",
+            "futuremc:scaffold/step6",
+            "futuremc:scaffold/step7"
         ]
     },
     "scaffold_fall": {
         "subtitle": "futuremc.subtitles.scaffold_fall",
         "sounds": [
-
+            "futuremc:scaffold/step1",
+            "futuremc:scaffold/step2",
+            "futuremc:scaffold/step3",
+            "futuremc:scaffold/step4",
+            "futuremc:scaffold/step5",
+            "futuremc:scaffold/step6",
+            "futuremc:scaffold/step7"
         ]
     }
 }

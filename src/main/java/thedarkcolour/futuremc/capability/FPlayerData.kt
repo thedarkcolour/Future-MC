@@ -2,8 +2,7 @@ package thedarkcolour.futuremc.capability
 
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTBase
-import net.minecraft.nbt.NBTPrimitive
-import net.minecraft.nbt.NBTTagByte
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.MinecraftForge
@@ -14,10 +13,10 @@ import net.minecraftforge.event.AttachCapabilitiesEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import thedarkcolour.futuremc.FutureMC
 
-interface SwimmingCapability {
-    var swimAnimation: Float
-    var lastSwimAnimation: Float
-    var isSwimming: Boolean
+class FPlayerData {
+    var inPowderSnow = false
+    var wasInPowderSnow = false
+    var frozenTicks = 0
 
     companion object {
         @JvmStatic
@@ -25,31 +24,29 @@ interface SwimmingCapability {
 
         fun register() {
             CapabilityManager.INSTANCE.register(
-                SwimmingCapability::class.java,
-                object : IStorage<SwimmingCapability> {
-                    override fun writeNBT(capability: Capability<SwimmingCapability>, instance: SwimmingCapability, side: EnumFacing): NBTBase {
-                        return NBTTagByte((if (instance.isSwimming) 1 else 0).toByte())
+                FPlayerData::class.java,
+                object : IStorage<FPlayerData> {
+                    override fun writeNBT(capability: Capability<FPlayerData>, instance: FPlayerData, side: EnumFacing): NBTBase {
+                        val nbt = NBTTagCompound()
+                        nbt.setInteger("frozenTicks", instance.frozenTicks)
+                        return nbt
                     }
 
-                    override fun readNBT(capability: Capability<SwimmingCapability>, instance: SwimmingCapability, side: EnumFacing, nbt: NBTBase) {
-                        instance.isSwimming = (nbt as NBTPrimitive).int == 1
+                    override fun readNBT(capability: Capability<FPlayerData>, instance: FPlayerData, side: EnumFacing, nbt: NBTBase) {
+                        if (nbt is NBTTagCompound) {
+                            instance.frozenTicks = nbt.getInteger("frozenTicks")
+                        }
                     }
                 }
-            ) { Impl() }
+            ) { FPlayerData() }
             MinecraftForge.EVENT_BUS.register(this)
         }
 
         @SubscribeEvent
         fun attachCapability(event: AttachCapabilitiesEvent<*>) {
             if (event.getObject() is EntityPlayer) {
-                event.addCapability(ID, SwimmingProvider())
+                event.addCapability(ID, FPlayerDataProvider())
             }
         }
-    }
-
-    private class Impl : SwimmingCapability {
-        override var swimAnimation = 0f
-        override var lastSwimAnimation = 0f
-        override var isSwimming = false
     }
 }

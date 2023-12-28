@@ -2,7 +2,6 @@ package thedarkcolour.futuremc.event
 
 import net.minecraft.block.*
 import net.minecraft.block.BlockLog.EnumAxis
-import net.minecraft.block.material.Material
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.EntityLivingBase
@@ -34,22 +33,16 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent
 import net.minecraftforge.event.entity.player.PlayerContainerEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock
-import net.minecraftforge.event.terraingen.BiomeEvent
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.client.event.ConfigChangedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent.Phase
-import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent
+import net.minecraftforge.fml.common.gameevent.TickEvent
 import net.minecraftforge.fml.common.registry.ForgeRegistries
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.BlockStrippedLog
 import thedarkcolour.futuremc.block.BlockWood
-import thedarkcolour.futuremc.capability.hasSwimmingCap
-import thedarkcolour.futuremc.capability.isSwimming
-import thedarkcolour.futuremc.capability.lastSwimAnimation
-import thedarkcolour.futuremc.capability.swimAnimation
+import thedarkcolour.futuremc.capability.FPlayerDataProvider
 import thedarkcolour.futuremc.client.ClientEvents
-import thedarkcolour.futuremc.client.color.WaterColor
 import thedarkcolour.futuremc.compat.checkDynamicTrees
 import thedarkcolour.futuremc.compat.checkQuark
 import thedarkcolour.futuremc.compat.checkTConstruct
@@ -75,7 +68,6 @@ import thedarkcolour.futuremc.world.OldWorldHandler
 import thedarkcolour.futuremc.world.gen.feature.AncientDebrisWorldGen
 import thedarkcolour.futuremc.world.gen.feature.BeeNestGenerator
 import kotlin.math.max
-import kotlin.math.min
 
 /**
  * Event handling for Future MC
@@ -273,12 +265,6 @@ object Events {
         }
     }
 
-    // 1.13 water colors
-    @SubscribeEvent
-    fun onGetWaterColor(event: BiomeEvent.GetWaterColor) {
-        event.newColor = (WaterColor.BIOME_COLORS[event.biome.delegate] ?: 0x3f76e4)
-    }
-
     // iron golem healing
     @SubscribeEvent
     fun healIronGolem(event: PlayerInteractEvent.EntityInteract) {
@@ -315,33 +301,23 @@ object Events {
         }
     }
 
-    @SubscribeEvent
-    fun updateSwimAnimation(event: PlayerTickEvent) {
-        if (event.phase == Phase.END) {
+    //@SubscribeEvent
+    fun updateSwimAnimation(event: TickEvent.PlayerTickEvent) {
+        if (event.phase == TickEvent.Phase.END) {
             val player = event.player
 
-            if (player.hasSwimmingCap()) {
-                player.isSwimming = if (player.isSprinting && !player.isRiding && !player.capabilities.isFlying) {
-                    if (player.isSwimming) {
-                        player.isInWater
-                    } else {
-                        canPlayerSwim(player)
+            if (!player.world.isRemote) {
+                player.getCapability(FPlayerDataProvider.DATA_CAP, null)?.also { data ->
+                    if (data.inPowderSnow) {
+                        data.frozenTicks++
+                        //sync()
+                    } else if (data.wasInPowderSnow && data.frozenTicks > 0) {
+                        data.frozenTicks = max(0, data.frozenTicks - 2)
+                        //sync()
                     }
-                } else {
-                    false
-                }
-                player.lastSwimAnimation = player.swimAnimation
-                player.swimAnimation = if (player.isSwimming) {
-                    min(1.0f, player.swimAnimation + 0.09f)
-                } else {
-                    max(0.0f, player.swimAnimation - 0.09f)
                 }
             }
         }
-    }
-
-    private fun canPlayerSwim(player: EntityPlayer): Boolean {
-        return player.isInWater && player.isInsideOfMaterial(Material.WATER)
     }
 
     @SubscribeEvent

@@ -4,6 +4,7 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.client.entity.AbstractClientPlayer
 import net.minecraft.client.model.ModelBiped
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.monster.EntitySnowman
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
@@ -16,8 +17,11 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import thedarkcolour.futuremc.client.ClientEvents
 import thedarkcolour.futuremc.client.render.TridentBakedModel
+import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.registry.FBlocks
+import java.util.*
 
+@Suppress("ReplacePutWithAssignment")
 object ASMHooks {
     @JvmStatic
     private val BEACON_ITEM = Item.getItemFromBlock(Blocks.BEACON)
@@ -38,12 +42,31 @@ object ASMHooks {
     @JvmStatic
     private val BARRIER_ITEM = Item.getItemFromBlock(Blocks.BARRIER)
 
+    // one map access is faster than three set contains
     @JvmStatic
-    private val UNCOMMON_ITEMS = hashSetOf(Items.EXPERIENCE_BOTTLE, Items.DRAGON_BREATH, Items.ELYTRA, Items.SKULL, Items.NETHER_STAR, Items.TOTEM_OF_UNDYING)
-    @JvmStatic
-    private val RARE_ITEMS = hashSetOf(BEACON_ITEM, Items.END_CRYSTAL)
-    @JvmStatic
-    private val EPIC_ITEMS = hashSetOf(COMMAND_BLOCK_ITEM, CHAIN_COMMAND_BLOCK_ITEM, REPEATING_COMMAND_BLOCK_ITEM, DRAGON_EGG_ITEM, STRUCTURE_BLOCK_ITEM, STRUCTURE_VOID_ITEM, SPAWNER_ITEM, BARRIER_ITEM, Items.COMMAND_BLOCK_MINECART)
+    private val RARITY_MAP = IdentityHashMap<Item, EnumRarity>()
+
+    init {
+        RARITY_MAP.put(Items.EXPERIENCE_BOTTLE, EnumRarity.UNCOMMON)
+        RARITY_MAP.put(Items.DRAGON_BREATH, EnumRarity.UNCOMMON)
+        RARITY_MAP.put(Items.ELYTRA, EnumRarity.UNCOMMON)
+        RARITY_MAP.put(Items.SKULL, EnumRarity.UNCOMMON)
+        RARITY_MAP.put(Items.NETHER_STAR, EnumRarity.UNCOMMON)
+        RARITY_MAP.put(Items.TOTEM_OF_UNDYING, EnumRarity.UNCOMMON)
+
+        RARITY_MAP.put(BEACON_ITEM, EnumRarity.RARE)
+        RARITY_MAP.put(Items.END_CRYSTAL, EnumRarity.RARE)
+
+        RARITY_MAP.put(COMMAND_BLOCK_ITEM, EnumRarity.EPIC)
+        RARITY_MAP.put(CHAIN_COMMAND_BLOCK_ITEM, EnumRarity.EPIC)
+        RARITY_MAP.put(REPEATING_COMMAND_BLOCK_ITEM, EnumRarity.EPIC)
+        RARITY_MAP.put(DRAGON_EGG_ITEM, EnumRarity.EPIC)
+        RARITY_MAP.put(STRUCTURE_BLOCK_ITEM, EnumRarity.EPIC)
+        RARITY_MAP.put(STRUCTURE_VOID_ITEM, EnumRarity.EPIC)
+        RARITY_MAP.put(SPAWNER_ITEM, EnumRarity.EPIC)
+        RARITY_MAP.put(BARRIER_ITEM, EnumRarity.EPIC)
+        RARITY_MAP.put(Items.COMMAND_BLOCK_MINECART, EnumRarity.EPIC)
+    }
 
     /**
      * Prevents crouching in scaffold blocks to allow the player to fall through
@@ -53,20 +76,22 @@ object ASMHooks {
         return flag && getBlockAtBase(entity).block != FBlocks.SCAFFOLDING
     }
 
+    // i don't know if this is unused, but i'm scared to touch it
     fun a(item: Item, stack: ItemStack): EnumRarity {
         return getEnchantmentRarity(item, stack)
     }
 
     @JvmStatic
     fun getEnchantmentRarity(item: Item, stack: ItemStack): EnumRarity {
-        if (UNCOMMON_ITEMS.contains(item)) {
-            return if (stack.isItemEnchanted) EnumRarity.RARE else EnumRarity.UNCOMMON
-        } else if (RARE_ITEMS.contains(item)) {
-            return if (stack.isItemEnchanted) EnumRarity.EPIC else EnumRarity.RARE
-        } else if (EPIC_ITEMS.contains(item)) {
-            return EnumRarity.EPIC
+        val rarity = RARITY_MAP.get(item) ?: EnumRarity.COMMON
+
+        return if (stack.isItemEnchanted) {
+            when (rarity) {
+                EnumRarity.COMMON, EnumRarity.UNCOMMON -> EnumRarity.RARE
+                else -> EnumRarity.EPIC
+            }
         } else {
-            return if (stack.isItemEnchanted) EnumRarity.RARE else EnumRarity.COMMON
+            rarity
         }
     }
 
@@ -123,6 +148,13 @@ object ASMHooks {
         } else if (leftPose == TridentBakedModel.TRIDENT_ARM_POSE) {
             model.bipedLeftArm.rotateAngleX = model.bipedLeftArm.rotateAngleX * 0.5f - Math.PI.toFloat()
             model.bipedLeftArm.rotateAngleY = 0.0f
+        }
+    }
+
+    @JvmStatic
+    fun onSnowmanSheared(snowman: EntitySnowman) {
+        if (FConfig.netherUpdate.snowGolemShearing && snowman.isPumpkinEquipped) {
+            snowman.dropItemWithOffset(Item.getItemFromBlock(Blocks.PUMPKIN), 1, 1.7f)
         }
     }
 }

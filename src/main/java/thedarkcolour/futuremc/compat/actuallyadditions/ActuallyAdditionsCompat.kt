@@ -4,6 +4,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.InitBlocks
 import thedarkcolour.futuremc.api.BeePollinationHandler
 import thedarkcolour.futuremc.api.BeePollinationTargetsJVM
 
+// Ignore the errors here, Gradle will compile just fine.
 object ActuallyAdditionsCompat {
     fun registerPollinationTargets() {
         BeePollinationTargetsJVM.addPollinationTarget(InitBlocks.blockBlackLotus.defaultState)

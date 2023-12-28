@@ -50,7 +50,7 @@ class DebuggerItem : ModeledItem("debugger") {
             val hive = worldIn.getTileEntity(pos) as BeeHiveTile
             if (!worldIn.isRemote) {
                 if (player.isSneaking) {
-                    hive.setHoneyLevel(5, true)
+                    hive.setHoneyLevel(5)
                 } else {
                     player.sendMessage(TextComponentString("Bees: ${hive.getBeeCount()}, HoneyLevel: ${hive.honeyLevel}, " + pos))
                 }

@@ -108,6 +108,7 @@ dependencies {
     curseMaven("better_with_mods", 246760, 2965308)
     curseMaven("better_with_lib", 294335, 2624990)
     curseMaven("obfuscate", 289380, 2916310)
+    curseMaven("carryon", 274259, 4507139, runtime = true)
     compileOnly(rfg.deobf("vazkii.quark:Quark:r1.6-180.7"))
     compileOnly(rfg.deobf("vazkii.autoreglib:AutoRegLib:1.3-32.+"))
     compileOnly(rfg.deobf("slimeknights.mantle:Mantle:1.12-1.3.3.49"))
@@ -147,6 +148,7 @@ tasks {
             freeCompilerArgs = listOf("-Xinline-classes", "-Xjvm-default=all")
             jvmTarget = "1.8"
             languageVersion = "1.4"
+            apiVersion = "1.4"
         }
     }
 

@@ -36,6 +36,9 @@ public final class CoreTransformer implements IClassTransformer {
                 case "net.minecraft.item.Item":
                     return ASMUtil.patch(basicClass, CoreTransformer::patchItem);
 
+                case "net.minecraft.entity.monster.EntitySnowman":
+                    return ASMUtil.patch(basicClass, CoreTransformer::patchEntitySnowman);
+
                 //case "net.minecraft.entity.player.EntityPlayerMP":
                 //    return patchEntityPlayerMP(basicClass);
                 //case "net.minecraft.client.entity.EntityPlayerSP":
@@ -117,6 +120,14 @@ public final class CoreTransformer implements IClassTransformer {
                 new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "getEnchantmentRarity", "(Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/EnumRarity;"),
                 new InsnNode(ARETURN)
         );
+    }
+
+    private static void patchEntitySnowman(ClassNode classNode) {
+        MethodNode method = ASMUtil.findMethod(classNode, "onSheared", "onSheared", null);
+        method.instructions.insert(ASMUtil.createInsnList(
+                new VarInsnNode(ALOAD, 0),
+                new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "onSnowmanSheared", "(Lnet/minecraft/entity/monster/EntitySnowman;)V")
+        ));
     }
 
     private static void patchEntityLivingBase(ClassNode classNode) {

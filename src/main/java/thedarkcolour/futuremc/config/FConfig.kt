@@ -798,6 +798,11 @@ object FConfig {
         @JvmField
         val blackstone = Blackstone()
 
+        @Name("Snow Golem Shearing")
+        @Comment("Whether Shears can be used on a snow golem to remove its pumpkin")
+        @JvmField
+        val snowGolemShearing = true
+
         class AncientDebris {
             @Name("Vein 1 (Normal)")
             @Comment("Options for the normal vein of Ancient Debris in the nether")

@@ -28,9 +28,8 @@ object ShearDispenserBehaviour : BehaviorDispenseOptional() {
 
             successful = shearBeehive(world, pos) || shearSheep(world as WorldServer, pos, stack)
 
-            // If no beehive, default behavior if it's present
             if (!successful && existing != null) {
-                return existing.dispense(source, stack)
+                return stack
             }
 
             // Remove item if it's broken

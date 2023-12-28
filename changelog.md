@@ -1,3 +1,14 @@
+## Version 0.2.12 - A few bugfixes
+- Fixed Grindstone crash with broken mod enchantments #332
+- Fixed Bees not leaving the hive unless blocked in #320 thanks to Slayer321
+- Fixed missing scaffolding sounds
+- Fixed scaffolding not breaking instantly
+- Fixed incorrect dispenser behavior with shears
+- Fixed bug with CarryOn duplicating Beehives
+- Snowman now drop their pumpkins when being sheared (configurable) #326
+- Walls now connect to glass like in Vanilla thanks to tyler-docherty
+- Fixed typo in "Block of Netherite" (was "Netherite Block") thanks to SeanMC
+
 ## Version 0.2.11 - Item rarities + Bugfix:
 - *Item rarities* - Vanilla items in 1.12 now have colored names like in 1.13+
 - Fixed bamboo spawning

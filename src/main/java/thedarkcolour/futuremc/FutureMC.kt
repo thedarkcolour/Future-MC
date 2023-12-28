@@ -32,7 +32,7 @@ import thedarkcolour.core.util.registerDispenserBehaviour
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.block.buzzybees.BottleDispenserBehavior
 import thedarkcolour.futuremc.block.buzzybees.ShearDispenserBehaviour
-import thedarkcolour.futuremc.capability.SwimmingCapability
+import thedarkcolour.futuremc.capability.FPlayerData
 import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.client.tesr.BellTileEntityRenderer
 import thedarkcolour.futuremc.client.tesr.CampfireRenderer
@@ -111,7 +111,7 @@ object FutureMC {
     @EventHandler
     fun init(event: FMLInitializationEvent) {
         if (DEBUG) {
-            SwimmingCapability.register()
+            FPlayerData.register()
         }
 
         GuiType.registerGuiHandler()

@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.nbt.NBTTagList
 import net.minecraft.nbt.NBTUtil
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
 import net.minecraft.util.ITickable
@@ -25,7 +24,6 @@ import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraft.world.chunk.storage.AnvilChunkLoader
-import sun.reflect.Reflection
 import thedarkcolour.core.tile.InteractionTile
 import thedarkcolour.core.util.isAir
 import thedarkcolour.futuremc.block.buzzybees.BeeHiveBlock
@@ -115,6 +113,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
             val pos1 = pos.offset(direction)
             val flag = isExitBlocked(world, pos1)
 
+            // This change "!flag" was from PR #321
             if (!flag && beeState != BeeState.EMERGENCY) {
                 return false
             } else {
@@ -138,7 +137,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
                         if (beeState == BeeState.HONEY_DELIVERED) {
                             entity.onHoneyDelivered()
 
-                            setHoneyLevel(honeyLevel + if (world.rand.nextInt(100) == 0) 2 else 1, true)
+                            setHoneyLevel(honeyLevel + if (world.rand.nextInt(100) == 0) 2 else 1)
                         }
 
                         entity.resetPollinationTicks()
@@ -198,7 +197,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
         super.readFromNBT(compound)
         bees.clear()
         val list = compound.getTagList("Bees", 10)
-        setHoneyLevel(compound.getInteger("HoneyLevel"), Reflection.getCallerClass(2) != TileEntity::class.java)
+        setHoneyLevel(compound.getInteger("HoneyLevel"))
 
         for (base in list) {
             val tag = base as NBTTagCompound
@@ -220,19 +219,16 @@ class BeeHiveTile : InteractionTile(), ITickable {
         return compound
     }
 
-    fun setHoneyLevel(level: Int, updateState: Boolean) {
+    fun setHoneyLevel(level: Int) {
         honeyLevel = if (level >= 5) {
             5
         } else {
             level
         }
 
-        if (updateState) {
-            world.setBlockState(
-                pos, getBlockType().defaultState
-                    .withProperty(BeeHiveBlock.IS_FULL, honeyLevel == 5)
-                    .withProperty(BeeHiveBlock.FACING, world.getBlockState(pos).getValue(BeeHiveBlock.FACING))
-            )
+        val blockType = getBlockType()
+        if (blockType is BeeHiveBlock) {
+            world.setBlockState(pos, blockType.defaultState.withProperty(BeeHiveBlock.IS_FULL, honeyLevel == 5).withProperty(BeeHiveBlock.FACING, world.getBlockState(pos).getValue(BeeHiveBlock.FACING)))
         }
     }
 
@@ -305,7 +301,7 @@ class BeeHiveTile : InteractionTile(), ITickable {
         val tile = worldIn.getTileEntity(pos)
 
         if (tile is BeeHiveTile) {
-            tile.setHoneyLevel(0, true)
+            tile.setHoneyLevel(0)
             tile.angerBees(playerIn, BeeState.HONEY_DELIVERED)
         }
     }
