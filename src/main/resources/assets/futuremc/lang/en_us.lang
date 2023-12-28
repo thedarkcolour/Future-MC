@@ -98,7 +98,7 @@ tile.futuremc.stripped_spruce_wood.name=Stripped Spruce Wood
 tile.futuremc.stripped_dark_oak_wood.name=Stripped Dark Oak Wood
 tile.futuremc.chain.name=Chain
 tile.futuremc.ancient_debris.name=Ancient Debris
-tile.futuremc.netherite_block.name=Netherite Block
+tile.futuremc.netherite_block.name=Block of Netherite
 entity.ItemFrame.name=Item Frame
 
 # Banner
