@@ -122,14 +122,16 @@ class BarrelBlock(properties: Properties) : FBlock(properties), ITileEntityProvi
     * */
     override fun getComparatorInputOverride(blockState: IBlockState, worldIn: World, pos: BlockPos): Int {
         var fillRatio = 0f
-        var entity = worldIn.getTileEntity(pos)
+        var i = 0
+        val entity = worldIn.getTileEntity(pos)
         if (entity is TileBarrel) {
             for (itemStack in entity.inventory) {
                 if (!itemStack.isEmpty) {
                     fillRatio += itemStack.count.toFloat() / itemStack.maxStackSize.toFloat()
+                    i++
                 }
             }
-            val output = MathHelper.floor(fillRatio / entity.inventory.getSize().toFloat() * 14.0f) + 1
+            val output = MathHelper.floor(fillRatio / entity.inventory.getSize().toFloat() * 14.0f) + (if (i > 0) 1 else 0)
             return MathHelper.clamp(output, 0, 15);
         }
 
