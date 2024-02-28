@@ -13,12 +13,14 @@ import net.minecraft.util.EnumHand
 import net.minecraft.util.Mirror
 import net.minecraft.util.Rotation
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.MathHelper
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import thedarkcolour.core.block.FBlock
 import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.tile.TileBarrel
 import java.util.*
+
 
 class BarrelBlock(properties: Properties) : FBlock(properties), ITileEntityProvider {
     init {
@@ -108,6 +110,30 @@ class BarrelBlock(properties: Properties) : FBlock(properties), ITileEntityProvi
      */
     override fun withMirror(state: IBlockState, mirrorIn: Mirror): IBlockState {
         return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)))
+    }
+
+    override fun hasComparatorInputOverride(state: IBlockState): Boolean {
+        return true
+    }
+
+    /**
+    * Comparator support
+     * Copy from {@see net.minecraft.inventory.Container.calcRedstoneFromInventory}
+    * */
+    override fun getComparatorInputOverride(blockState: IBlockState, worldIn: World, pos: BlockPos): Int {
+        var fillRatio = 0f
+        var entity = worldIn.getTileEntity(pos)
+        if (entity is TileBarrel) {
+            for (itemStack in entity.inventory) {
+                if (!itemStack.isEmpty) {
+                    fillRatio += itemStack.count.toFloat() / itemStack.maxStackSize.toFloat()
+                }
+            }
+            val output = MathHelper.floor(fillRatio / entity.inventory.getSize().toFloat() * 14.0f) + 1
+            return MathHelper.clamp(output, 0, 15);
+        }
+
+        return 0
     }
 
     companion object {
