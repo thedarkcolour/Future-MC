@@ -25,7 +25,11 @@ import thedarkcolour.futuremc.item.BannerPatternItem
 import thedarkcolour.futuremc.item.BannerPatternItem.Companion.getBannerPattern
 import thedarkcolour.futuremc.registry.FBlocks.LOOM
 
-class ContainerLoom(playerInv: InventoryPlayer, private val world: World, private val pos: BlockPos) : FContainer(playerInv) {
+class ContainerLoom(
+    playerInv: InventoryPlayer,
+    private val world: World,
+    private val pos: BlockPos
+) : FContainer(playerInv) {
     private val handler = object : FInventory(4) {
         override fun onContentsChanged(slot: Int) {
             if (slot != 3) {
@@ -71,10 +75,17 @@ class ContainerLoom(playerInv: InventoryPlayer, private val world: World, privat
     }
 
     // delegates
-    val banner: ItemStack by handler.delegate(0)
-    var color: ItemStack by handler.delegate(1)
-    var pattern by handler.delegate(2)
-    var output by handler.delegate(3)
+    val banner: ItemStack
+        get() = handler[0]
+    var color: ItemStack
+        get() = handler[1]
+        set(value) { handler[1] = value }
+    var pattern: ItemStack
+        get() = handler[2]
+        set(value) { handler[2] = value }
+    var output: ItemStack
+        get() = handler[3]
+        set(value) { handler[3] = value }
 
     fun getLoomSlot(index: Int): Slot {
         return when (index) {

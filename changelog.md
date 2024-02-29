@@ -1,3 +1,15 @@
+## Version 0.2.16
+- Barrels now have comparator output
+
+## Version 0.2.15
+- Fixed crash with Loom
+
+## Version 0.2.14
+- Fixed crash with villager trading screen
+
+## Version 0.2.13
+- Fixed crash with Honey Bottle
+
 ## Version 0.2.12 - A few bugfixes
 - Fixed Grindstone crash with broken mod enchantments #332
 - Fixed Bees not leaving the hive unless blocked in #320 thanks to Slayer321

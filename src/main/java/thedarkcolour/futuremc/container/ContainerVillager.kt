@@ -16,13 +16,6 @@ class ContainerVillager(val playerInv: InventoryPlayer, merchant: IMerchant, wor
     init {
         inventorySlots.clear()
         inventoryItemStacks.clear()
-        // Modify existing slots
-        //getSlot(0).xPos = 136
-        //getSlot(0).yPos = 37
-
-        //getSlot(1).xPos = 162
-        //getSlot(1).yPos = 37
-
         // Add to listeners
         val player = playerInv.player
         if (player is EntityPlayerMP) {
@@ -63,7 +56,7 @@ class ContainerVillager(val playerInv: InventoryPlayer, merchant: IMerchant, wor
 
         merchant.customer = null
 
-        if (!world.isRemote) {
+        if (!merchant.world.isRemote) {
             if (!playerIn.isEntityAlive || (playerIn is EntityPlayerMP && playerIn.hasDisconnected())) {
                 var stack = merchantInventory.removeStackFromSlot(0)
 

@@ -9,8 +9,6 @@ import net.minecraftforge.common.util.INBTSerializable
 import net.minecraftforge.items.IItemHandlerModifiable
 import net.minecraftforge.items.ItemHandlerHelper
 import java.util.*
-import kotlin.properties.ReadWriteProperty
-import kotlin.reflect.KProperty
 
 /**
  * An iterable [net.minecraftforge.items.ItemStackHandler] with extra functionality.
@@ -18,18 +16,14 @@ import kotlin.reflect.KProperty
  *
  * todo support nameable containers
  */
-open class FInventory constructor(
-    size: Int//,
-    //defaultName: String? = null
+open class FInventory(
+    size: Int
 ) : IItemHandlerModifiable, INBTSerializable<NBTTagCompound>, Iterable<ItemStack?> {
     @JvmField
     protected var stacks: Array<ItemStack>
-    //private val defaultName: TextComponentTranslation
-    //private val displayName: TextComponentStringHolder? = null
 
     init {
         stacks = Array(size) { ItemStack.EMPTY }
-        //this.defaultName = TextComponentTranslation(defaultName ?: "")
     }
 
     private fun setSize(size: Int) {
@@ -153,18 +147,6 @@ open class FInventory constructor(
         stacks[slot] = ItemStack.EMPTY
     }
 
-    /**
-     * Creates a delegate to a certain slot in this inventory.
-     *
-     * @throws IllegalArgumentException if the slot is outside of the inventory's indices
-     */
-    fun delegate(slot: Int): ReadWriteProperty<Any?, ItemStack> {
-        if (slot !in stacks.indices)
-            throw IllegalArgumentException("Cannot delegate to slot $slot: Outside of inventory indices")
-
-        return DarkInventoryDelegate(this, slot)
-    }
-
     fun anyMatch(predicate: (ItemStack) -> Boolean): Boolean {
         for (stack in this) {
             if (predicate(stack)) {
@@ -184,18 +166,5 @@ open class FInventory constructor(
 
     override fun iterator(): MutableIterator<ItemStack> {
         return arrayListOf(*stacks).iterator()
-    }
-
-    /**
-     * [ReadWriteProperty] delegate to a slot in a [FInventory].
-     */
-    private class DarkInventoryDelegate(private val inventory: FInventory, private val slot: Int) : ReadWriteProperty<Any?, ItemStack> {
-        override fun getValue(thisRef: Any?, property: KProperty<*>): ItemStack {
-            return inventory[slot]
-        }
-
-        override fun setValue(thisRef: Any?, property: KProperty<*>, value: ItemStack) {
-            inventory[slot] = value
-        }
     }
 }
