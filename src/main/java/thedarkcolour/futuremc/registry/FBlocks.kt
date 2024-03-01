@@ -16,6 +16,7 @@ import thedarkcolour.futuremc.block.netherupdate.NetherGoldOreBlock
 import thedarkcolour.futuremc.block.villagepillage.*
 import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.config.FConfig
+import thedarkcolour.futuremc.util.Integration
 import thedarkcolour.futuremc.tile.*
 
 // todo add properties for everything
@@ -225,8 +226,10 @@ object FBlocks {
             blocks.register(SMOOTH_QUARTZ) // register(FBlock("smooth_quartz").setHardness(2.0F).setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.BUILDING_BLOCKS else FutureMC.TAB),)
         if (FConfig.villageAndPillage.smoothRedSandstone)
             blocks.register(SMOOTH_RED_SANDSTONE)
-        if (FConfig.updateAquatic.blueIce)
-            blocks.register(BLUE_ICE)
+        if (!Integration.Mods.OE.isEnabled) {
+            if (FConfig.updateAquatic.blueIce)
+                blocks.register(BLUE_ICE)
+        }
         if (FConfig.updateAquatic.wood.strippedAcacia)
             blocks.register(STRIPPED_ACACIA_WOOD) // register(BlockWood("stripped_acacia_wood"),)
         if (FConfig.updateAquatic.wood.strippedJungle)

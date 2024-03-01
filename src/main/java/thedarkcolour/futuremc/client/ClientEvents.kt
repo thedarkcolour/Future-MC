@@ -22,6 +22,7 @@ import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.container.ContainerVillager
 import thedarkcolour.futuremc.item.TridentItem
 import thedarkcolour.futuremc.network.NetworkHandler
+import thedarkcolour.futuremc.util.Integration
 
 object ClientEvents {
     var prevGameMode = GameType.CREATIVE
@@ -49,14 +50,16 @@ object ClientEvents {
 
     @SubscribeEvent
     fun onModelBake(event: ModelBakeEvent) {
-        if (FConfig.updateAquatic.trident) {
-            val registry = event.modelRegistry
-            val trident = ModelResourceLocation("futuremc:trident", "inventory")
-            val simpleModel = registry.getObject(trident)!!
-            TridentItem.simpleModel = simpleModel
-            val hand = registry.getObject(ModelResourceLocation("futuremc:trident_in_hand", "inventory"))!!
+        if (!Integration.Mods.OE.isEnabled) {
+            if (FConfig.updateAquatic.trident) {
+                val registry = event.modelRegistry
+                val trident = ModelResourceLocation("futuremc:trident", "inventory")
+                val simpleModel = registry.getObject(trident)!!
+                TridentItem.simpleModel = simpleModel
+                val hand = registry.getObject(ModelResourceLocation("futuremc:trident_in_hand", "inventory"))!!
 
-            registry.putObject(trident, TridentBakedModel(hand, simpleModel))
+                registry.putObject(trident, TridentBakedModel(hand, simpleModel))
+            }
         }
     }
 
