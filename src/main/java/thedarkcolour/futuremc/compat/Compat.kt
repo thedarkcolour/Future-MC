@@ -28,6 +28,7 @@ const val RANDOM_TWEAKS = "randomtweaks"
 const val RANDOM_PATCHES = "random_patches"
 const val TCONSTRUCT = "tconstruct"
 const val VIVECRAFT = "vivecraftforgeextensionscore"
+const val OE = "oe"
 
 private val LOADED_MODS = Object2BooleanOpenHashMap<String>()
 

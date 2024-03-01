@@ -10,6 +10,8 @@ import net.minecraftforge.fml.common.registry.EntityRegistry
 import thedarkcolour.core.util.registerEntity
 import thedarkcolour.core.util.registerEntityModel
 import thedarkcolour.futuremc.FutureMC
+import thedarkcolour.futuremc.compat.OE
+import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.entity.bee.BeeRenderer
 import thedarkcolour.futuremc.entity.bee.EntityBee
@@ -26,11 +28,10 @@ import thedarkcolour.futuremc.entity.panda.EntityPanda
 import thedarkcolour.futuremc.entity.panda.RenderPanda
 import thedarkcolour.futuremc.entity.trident.RenderTrident
 import thedarkcolour.futuremc.entity.trident.Trident
-import thedarkcolour.futuremc.util.Integration
 
 object FEntities {
     fun registerEntities() {
-        if (!Integration.Mods.OE.isEnabled) {
+        if (!isModLoaded(OE)) {
             if (FConfig.updateAquatic.trident) {
                 registerEntity("trident", Trident::class.java, 32, 1)
 
@@ -55,7 +56,7 @@ object FEntities {
             registerEntity("bee", EntityBee::class.java, 32, 4, 16770398, 2500144)
         }
 
-        if (!Integration.Mods.OE.isEnabled) {
+        if (!isModLoaded(OE)) {
             if (FConfig.updateAquatic.fish.cod.enabled) {
                 registerEntity("cod", EntityCod::class.java, 32, 5, 12691306, 15058059)
                 LootTableList.register(EntityCod.LOOT_TABLE)
@@ -76,7 +77,7 @@ object FEntities {
     }
 
     fun registerEntityRenderers() {
-        if (!Integration.Mods.OE.isEnabled){
+        if (!isModLoaded(OE)){
             if (FConfig.updateAquatic.trident) {
                 registerEntityModel { RenderTrident(it) }
             }
