@@ -45,7 +45,7 @@ object FEntities {
         //}
         if (FConfig.villageAndPillage.panda && FConfig.villageAndPillage.bamboo.enabled) {
             registerEntity("panda", EntityPanda::class.java, 36, 3, 15198183, 1776418)
-            EntityRegistry.addSpawn(EntityPanda::class.java, 1, 1, 2, EnumCreatureType.CREATURE, Biomes.JUNGLE, Biomes.JUNGLE_HILLS, Biomes.MUTATED_JUNGLE)
+            EntityRegistry.addSpawn(EntityPanda::class.java, 14, 1, 2, EnumCreatureType.CREATURE, Biomes.JUNGLE, Biomes.JUNGLE_HILLS, Biomes.MUTATED_JUNGLE)
         }
         if (FConfig.buzzyBees.bee.enabled) {
             registerEntity("bee", EntityBee::class.java, 32, 4, 16770398, 2500144)

@@ -39,8 +39,8 @@ public final class CoreTransformer implements IClassTransformer {
                 case "net.minecraft.entity.monster.EntitySnowman":
                     return ASMUtil.patch(basicClass, CoreTransformer::patchEntitySnowman);
 
-                //case "net.minecraft.entity.player.EntityPlayerMP":
-                //    return patchEntityPlayerMP(basicClass);
+                case "net.minecraft.server.management.PlayerInteractionManager":
+                    return ASMUtil.patch(basicClass, CoreTransformer::patchPlayerInteractionManager);
                 //case "net.minecraft.client.entity.EntityPlayerSP":
                 //    return patchEntityPlayerSP(basicClass);
                 //case "net.minecraft.client.network.NetHandlerPlayClient":
@@ -102,7 +102,7 @@ public final class CoreTransformer implements IClassTransformer {
 
         InsnList insertion = ASMUtil.createInsnList(
                 new VarInsnNode(ALOAD, 0),
-                new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "creativeEat", "(Lnet/minecraft/entity/player/EntityPlayer;Z)Z"),
+                new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "creativeEat", "(Lnet/minecraft/entity/player/EntityPlayer;Z)Z", false),
                 new JumpInsnNode(IFEQ, l1),
                 new LabelNode(new Label()),
                 new InsnNode(ICONST_1),
@@ -112,12 +112,21 @@ public final class CoreTransformer implements IClassTransformer {
         instructions.insertBefore(iload0, new FrameNode(F_SAME, 0, null, 0, null));
     }
 
+    private static void patchPlayerInteractionManager(ClassNode classNode) {
+        MethodNode setGameType = ASMUtil.findMethod(classNode, "func_73076_a", "setGameType", null);
+        // Patch at head of method
+        ASMUtil.patchBeforeInsn(setGameType, ASMUtil.createInsnList(
+                new VarInsnNode(ALOAD, 0),
+                new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "setPrevGameType", "(Lnet/minecraft/server/management/PlayerInteractionManager;)V", false)
+        ), 1, node -> node.getOpcode() == ALOAD);
+    }
+
     private static void patchItem(ClassNode classNode) {
         MethodNode method = ASMUtil.findMethod(classNode, "func_77613_e", "getRarity", null);
         method.instructions = ASMUtil.createInsnList(
                 new VarInsnNode(ALOAD, 0),
                 new VarInsnNode(ALOAD, 1),
-                new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "getEnchantmentRarity", "(Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/EnumRarity;"),
+                new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "getEnchantmentRarity", "(Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/EnumRarity;", false),
                 new InsnNode(ARETURN)
         );
     }
@@ -126,7 +135,7 @@ public final class CoreTransformer implements IClassTransformer {
         MethodNode method = ASMUtil.findMethod(classNode, "onSheared", "onSheared", null);
         method.instructions.insert(ASMUtil.createInsnList(
                 new VarInsnNode(ALOAD, 0),
-                new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "onSnowmanSheared", "(Lnet/minecraft/entity/monster/EntitySnowman;)V")
+                new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "onSnowmanSheared", "(Lnet/minecraft/entity/monster/EntitySnowman;)V", false)
         ));
     }
 
@@ -143,7 +152,7 @@ public final class CoreTransformer implements IClassTransformer {
                 travelNode.instructions.insert(node, ASMUtil.createInsnList(
                         new VarInsnNode(ILOAD, flagLoc),
                         new VarInsnNode(ALOAD, 0),
-                        new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "scaffoldFallThrough", "(ZLnet/minecraft/entity/EntityLivingBase;)Z"),
+                        new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "scaffoldFallThrough", "(ZLnet/minecraft/entity/EntityLivingBase;)Z", false),
                         new VarInsnNode(ISTORE, flagLoc)
                 ));
                 break;
@@ -190,7 +199,7 @@ public final class CoreTransformer implements IClassTransformer {
                 new FieldInsnNode(PUTFIELD, className, fmcFieldName, "Z") // set instance field to FALSE
         );
         // patch at the beginning of the method
-        ASMUtil.patchBeforeInsn(classNode, ASMUtil.findMethod(classNode, "getScatterY", "getScatterY", null), toAddGetScatterY, 1, node -> {
+        ASMUtil.patchBeforeInsn(ASMUtil.findMethod(classNode, "getScatterY", "getScatterY", null), toAddGetScatterY, 1, node -> {
             return node.getOpcode() == ALOAD;
         });
 
@@ -204,13 +213,13 @@ public final class CoreTransformer implements IClassTransformer {
                 new VarInsnNode(ALOAD, 1), // load world
                 new VarInsnNode(ALOAD, 2), // load pos
                 // method call + pop vars 1 and 2 off of the stack
-                new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/compat/biomesoplenty/BiomesOPlentyCompat", "placeBeehive", "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)Z"),
+                new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/compat/biomesoplenty/BiomesOPlentyCompat", "placeBeehive", "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)Z", false),
                 // set field of remaining instance var 0
                 new FieldInsnNode(PUTFIELD, className, fmcFieldName, "Z"),
                 l7,
                 new FrameNode(F_APPEND, 1, new Object[]{"net/minecraft/block/state/IBlockState"}, 0, null)
         );
-        ASMUtil.patchBeforeReturnTrue(classNode, ASMUtil.findMethod(classNode, "setLog", "setLog", "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing$Axis;)Z"), toAddSetLog);
+        ASMUtil.patchBeforeReturnTrue(ASMUtil.findMethod(classNode, "setLog", "setLog", "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing$Axis;)Z"), toAddSetLog);
     }
 
     private static void transformBO3Loader(ClassNode classNode) {
@@ -287,7 +296,7 @@ public final class CoreTransformer implements IClassTransformer {
             new VarInsnNode(ILOAD, 4),
             new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/world/gen/feature/BeeNestGenerator", "generateBeeNestsForSmallTrees", "(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;I)V", false)
         );
-        ASMUtil.patchBeforeReturnTrue(classNode, method, toAdd);
+        ASMUtil.patchBeforeReturnTrue(method, toAdd);
     }
 
     private static void patchWorldGenBigTree(ClassNode classNode) {
@@ -306,7 +315,7 @@ public final class CoreTransformer implements IClassTransformer {
             new VarInsnNode(ALOAD, 0),
             new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/world/gen/feature/BeeNestGenerator", "generateBeeNestsForBigTrees", "(Lnet/minecraft/world/World;Ljava/util/Random;Lnet/minecraft/util/math/BlockPos;ILnet/minecraft/world/gen/feature/WorldGenAbstractTree;)V", false)
         );
-        ASMUtil.patchBeforeReturnTrue(classNode, method, toAdd);
+        ASMUtil.patchBeforeReturnTrue(method, toAdd);
     }
 
     private static void patchModelBiped(ClassNode classNode) {
@@ -320,6 +329,6 @@ public final class CoreTransformer implements IClassTransformer {
             new VarInsnNode(ALOAD, 0),
             new MethodInsnNode(INVOKESTATIC, "thedarkcolour/futuremc/asm/ASMHooks", "rotateByPose", "(Lnet/minecraft/client/model/ModelBiped;)V", false)
         );
-        ASMUtil.patchBeforeMcMethod(classNode, method, toAdd, "func_178685_a", "copyModelAngles", 1);
+        ASMUtil.patchBeforeMcMethod(method, toAdd, "func_178685_a", "copyModelAngles", 1);
     }
 }

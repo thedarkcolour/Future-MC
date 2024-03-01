@@ -803,6 +803,11 @@ object FConfig {
         @JvmField
         val snowGolemShearing = true
 
+        @Name("Game Mode Switcher")
+        @Comment("Whether the ability to switch game modes by pressing F3 + F4 is enabled")
+        @JvmField
+        val gameModeSwitcher = true
+
         class AncientDebris {
             @Name("Vein 1 (Normal)")
             @Comment("Options for the normal vein of Ancient Debris in the nether")

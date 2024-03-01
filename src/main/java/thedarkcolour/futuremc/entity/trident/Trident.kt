@@ -1,7 +1,9 @@
 package thedarkcolour.futuremc.entity.trident
 
+import net.minecraft.block.material.Material
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.effect.EntityLightningBolt
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.entity.projectile.EntityArrow
@@ -9,7 +11,11 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.datasync.DataSerializers
 import net.minecraft.network.datasync.EntityDataManager
+import net.minecraft.util.DamageSource
+import net.minecraft.util.EntityDamageSourceIndirect
+import net.minecraft.util.EnumParticleTypes
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
@@ -18,6 +24,7 @@ import thedarkcolour.futuremc.registry.FItems
 import thedarkcolour.futuremc.registry.FSounds
 import thedarkcolour.futuremc.world.FWorldListener
 import java.util.*
+import kotlin.math.ceil
 
 class Trident : EntityArrow {
     private var item = ItemStack(FItems.TRIDENT)
@@ -93,7 +100,22 @@ class Trident : EntityArrow {
             ticksInGround = 600
         }
 
+        if (inWater) {
+            for (i in 0..3) {
+                world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, posX - motionX * 0.25, posY - motionY * 0.25, posZ - motionZ * 0.25, motionX, motionY, motionZ)
+            }
+
+            motionX *= 0.98
+            motionY *= 0.98
+            motionZ *= 0.98
+        }
+
         super.onUpdate()
+    }
+
+    // stop the trident getting slowed down
+    override fun isInWater(): Boolean {
+        return false
     }
 
     override fun onHit(raytraceResultIn: RayTraceResult) {
@@ -108,11 +130,48 @@ class Trident : EntityArrow {
     }
 
     private fun onHitEntity(raytraceResultIn: RayTraceResult, target: Entity) {
-
+        val speed = MathHelper.sqrt(motionX * motionX + motionY * motionY + motionZ * motionZ)
+        val damage = ceil(damage.toFloat() * speed)
+        if (target.attackEntityFrom(EntityDamageSourceIndirect("trident", this, target), damage)) {
+            motionX *= -0.05
+            motionY *= -0.1
+            motionZ *= -0.05
+            rotationYaw += 180f
+            prevRotationYaw += 180f
+            ticksInAir = 0
+            playSound(FSounds.TRIDENT_PIERCE, 1.0f, 1.0f)
+        }
+        if (world.isThundering && EnchantHelper.getChanneling(arrowStack)) {
+            world.addWeatherEffect(EntityLightningBolt(shootingEntity.world, this.posX, this.posY, this.posZ, false));
+            this.playSound(FSounds.TRIDENT_CONDUCTIVIDAD, 5.0F, 1.0F);
+        }
     }
 
-    private fun onHitBlock(raytraceResultIn: RayTraceResult, blockPos: BlockPos) {
+    override fun setFire(seconds: Int) {
+        // fireproof
+    }
 
+    private fun onHitBlock(raytraceResultIn: RayTraceResult, hitPos: BlockPos) {
+        xTile = hitPos.x
+        yTile = hitPos.y
+        zTile = hitPos.z
+        val state = world.getBlockState(hitPos)
+        inTile = state.block
+        inData = inTile.getMetaFromState(state)
+        motionX = (raytraceResultIn.hitVec.x - posX)
+        motionY = (raytraceResultIn.hitVec.y - posY)
+        motionZ = (raytraceResultIn.hitVec.z - posZ)
+        val speed = MathHelper.sqrt(motionX * motionX + motionY * motionY + motionZ * motionZ)
+        posX -= motionX / speed * 0.05
+        posY -= motionY / speed * 0.05
+        posZ -= motionZ / speed * 0.05
+        playSound(FSounds.TRIDENT_IMPACT, 1.0f, 1.0f)
+        inGround = true
+        arrowShake = 7
+
+        if (state.material != Material.AIR) {
+            inTile.onEntityCollision(world, hitPos, state, this)
+        }
     }
 
     override fun onCollideWithPlayer(entityIn: EntityPlayer) {

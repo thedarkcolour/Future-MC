@@ -1,5 +1,7 @@
 ## Version 0.2.16
 - Barrels now have comparator output
+- F3 + F4 now changes gamemode like in 1.14+ (graphic element is missing for now, but still a nice hotkey to have)
+- Made Bamboo and Pandas more common
 
 ## Version 0.2.15
 - Fixed crash with Loom

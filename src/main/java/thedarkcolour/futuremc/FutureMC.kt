@@ -180,7 +180,7 @@ object FutureMC {
             GameRegistry.registerWorldGenerator(FlowerWorldGen(FBlocks.SWEET_BERRY_BUSH), 0)
         }
         if (FConfig.villageAndPillage.bamboo.enabled) {
-            GameRegistry.registerWorldGenerator(BambooWorldGen, 0)
+            GameRegistry.registerWorldGenerator(BambooWorldGen, -1)
         }
         if (FConfig.buzzyBees.bee.enabled) {
             BeeNestGenerator.refresh()

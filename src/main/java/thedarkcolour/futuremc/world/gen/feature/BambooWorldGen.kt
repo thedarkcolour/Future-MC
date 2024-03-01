@@ -1,5 +1,6 @@
 package thedarkcolour.futuremc.world.gen.feature
 
+import net.minecraft.block.BlockLeaves
 import net.minecraft.init.Biomes
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -12,20 +13,17 @@ import java.util.*
 
 object BambooWorldGen : FWorldGen {
     private val VALID_BIOMES = hashSetOf(
-        Biomes.JUNGLE,
-        Biomes.JUNGLE_EDGE,
-        Biomes.JUNGLE_HILLS,
-        Biomes.MUTATED_JUNGLE,
-        Biomes.MUTATED_JUNGLE_EDGE
+        Biomes.JUNGLE.registryName,
+        Biomes.JUNGLE_EDGE.registryName,
+        Biomes.JUNGLE_HILLS.registryName,
+        Biomes.MUTATED_JUNGLE.registryName,
+        Biomes.MUTATED_JUNGLE_EDGE.registryName,
     )
 
     private fun generate(worldIn: World, random: Random, pos: BlockPos) {
         val bamboo = FBlocks.BAMBOO
-        if (
-            worldIn.getBlockState(pos).block.isReplaceable(worldIn, pos) &&
-            bamboo.canPlaceBlockAt(worldIn, pos) &&
-            isBiomeValid(worldIn.getBiome(pos))
-        ) {
+        val block = worldIn.getBlockState(pos).block
+        if (block.isReplaceable(worldIn, pos) && bamboo.canPlaceBlockAt(worldIn, pos) && isBiomeValid(worldIn.getBiome(pos))) {
             worldIn.setBlockState(pos, bamboo.defaultState)
         } else {
             return
@@ -51,13 +49,13 @@ object BambooWorldGen : FWorldGen {
         val biome = worldIn.getBiomeForCoordsBody(position)
         val chunkPos = worldIn.getChunk(chunkX, chunkZ).pos
         if (isBiomeValid(biome) && worldIn.worldType != WorldType.FLAT) {
-            FWorldGen.placeAround(worldIn, rand, chunkPos, 0..12) { world2, random, pos ->
+            FWorldGen.placeAround(worldIn, rand, chunkPos, 0..22) { world2, random, pos ->
                 generate(world2, random, pos)
             }
         }
     }
 
     private fun isBiomeValid(biome: Biome): Boolean {
-        return VALID_BIOMES.contains(biome)
+        return VALID_BIOMES.contains(biome.registryName)
     }
 }

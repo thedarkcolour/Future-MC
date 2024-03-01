@@ -1,5 +1,6 @@
 package thedarkcolour.futuremc.asm;
 
+import com.google.common.base.Preconditions;
 import kotlin.collections.CollectionsKt;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -74,19 +75,17 @@ public final class ASMUtil {
      * Patches before the first occurrence of [ICONST_1, IRETURN].
      * Modifies the classNode, so using this return value is optional.
      *
-     * @param classNode the class to patch
      * @param method the method to patch
      * @param toAdd the patch to apply
      */
-    public static void patchBeforeReturnTrue(ClassNode classNode, MethodNode method, InsnList toAdd) {
-        patchBeforeInsn(classNode, method, toAdd, 1, node -> {
+    public static void patchBeforeReturnTrue(MethodNode method, InsnList toAdd) {
+        patchBeforeInsn(method, toAdd, 1, node -> {
             return node.getOpcode() == IRETURN && node.getPrevious().getOpcode() == ICONST_1;
         });
     }
 
     /**
      * Patches before a minecraft method
-     * @param classNode
      * @param method
      * @param toAdd
      * @param srgName
@@ -94,14 +93,13 @@ public final class ASMUtil {
      * @param occurrence
      */
     public static void patchBeforeMcMethod(
-            ClassNode classNode,
             MethodNode method,
             InsnList toAdd,
             String srgName,
             String mcpName,
             int occurrence
     ) {
-        patchBeforeInsn(classNode, method, toAdd, occurrence, node -> {
+        patchBeforeInsn(method, toAdd, occurrence, node -> {
             String actualName = isObfuscated ? srgName : mcpName;
 
             if (node instanceof MethodInsnNode) {
@@ -117,14 +115,14 @@ public final class ASMUtil {
     /**
      * Applies the patch BEFORE the (occurrence)th node that matches the condition.
      *
-     * @param classNode the class to patch
      * @param method the method to patch
      * @param toAdd the patch to apply
      * @param occurrence if there are multiple nodes, which of them to patch before (1 is the first occurrence)
      * @param condition the condition to check when finding a patch location
      */
-    public static void patchBeforeInsn(ClassNode classNode, MethodNode method, InsnList toAdd, int occurrence, Predicate<AbstractInsnNode> condition) {
+    public static void patchBeforeInsn(MethodNode method, InsnList toAdd, int occurrence, Predicate<AbstractInsnNode> condition) {
         int[] occurrences = { 0 };
+        Preconditions.checkArgument(occurrence > 0, "Occurrences start at 1");
 
         // And condition: only runs when condition is true, increments and checks if occurrence matches
         AbstractInsnNode insn = findInsn(method, condition.and(node -> {

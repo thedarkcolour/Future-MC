@@ -11,17 +11,21 @@ import net.minecraft.init.Items
 import net.minecraft.item.EnumRarity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.server.management.PlayerInteractionManager
 import net.minecraft.util.EnumHand
 import net.minecraft.util.EnumHandSide
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
+import net.minecraft.world.GameType
 import thedarkcolour.futuremc.client.ClientEvents
 import thedarkcolour.futuremc.client.render.TridentBakedModel
 import thedarkcolour.futuremc.config.FConfig
+import thedarkcolour.futuremc.network.GameModeSwitchPacket
+import thedarkcolour.futuremc.network.NetworkHandler
 import thedarkcolour.futuremc.registry.FBlocks
 import java.util.*
 
-@Suppress("ReplacePutWithAssignment")
+@Suppress("ReplacePutWithAssignment", "unused")
 object ASMHooks {
     @JvmStatic
     private val BEACON_ITEM = Item.getItemFromBlock(Blocks.BEACON)
@@ -155,6 +159,13 @@ object ASMHooks {
     fun onSnowmanSheared(snowman: EntitySnowman) {
         if (FConfig.netherUpdate.snowGolemShearing && snowman.isPumpkinEquipped) {
             snowman.dropItemWithOffset(Item.getItemFromBlock(Blocks.PUMPKIN), 1, 1.7f)
+        }
+    }
+
+    @JvmStatic
+    fun setPrevGameType(interactionManager: PlayerInteractionManager) {
+        if (interactionManager.gameType != GameType.NOT_SET) {
+            NetworkHandler.sendSetPrevGameMode(interactionManager.player, interactionManager.gameType)
         }
     }
 }

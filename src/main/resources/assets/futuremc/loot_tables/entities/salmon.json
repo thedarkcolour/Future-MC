@@ -9,6 +9,10 @@
                     "name": "minecraft:fish",
                     "functions": [
                         {
+                            "function": "minecraft:set_data",
+                            "data": 1
+                        },
+                        {
                             "function": "furnace_smelt",
                             "conditions": [
                                 {
@@ -19,10 +23,6 @@
                                     }
                                 }
                             ]
-                        },
-                        {
-                            "function": "minecraft:set_data",
-                            "data": 1
                         }
                     ]
                 }
