@@ -183,7 +183,7 @@ object FBlocks {
             blocks.register(BEE_NEST)
         if (FConfig.buzzyBees.bee.enabled)
             blocks.register(BEEHIVE)
-        if (!isModLoaded(OE)) {
+        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
             if (FConfig.updateAquatic.strippedLogs.acacia)
                 blocks.register(STRIPPED_ACACIA_LOG)
             if (FConfig.updateAquatic.strippedLogs.jungle)
@@ -229,7 +229,7 @@ object FBlocks {
             blocks.register(SMOOTH_QUARTZ) // register(FBlock("smooth_quartz").setHardness(2.0F).setCreativeTab(if (FConfig.useVanillaCreativeTabs) CreativeTabs.BUILDING_BLOCKS else FutureMC.TAB),)
         if (FConfig.villageAndPillage.smoothRedSandstone)
             blocks.register(SMOOTH_RED_SANDSTONE)
-        if (!isModLoaded(OE)) {
+        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
             if (FConfig.updateAquatic.blueIce)
                 blocks.register(BLUE_ICE)
 

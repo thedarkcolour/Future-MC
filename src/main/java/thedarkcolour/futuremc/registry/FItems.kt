@@ -150,7 +150,7 @@ object FItems {
 
     fun registerItems(items: IForgeRegistry<Item>) {
         if (FConfig.villageAndPillage.dyes) items.register(DYES)
-        if (!isModLoaded(OE)) {
+        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
             if (FConfig.updateAquatic.trident) items.register(TRIDENT)
         }
         if (FConfig.villageAndPillage.loom.enabled) items.register(BANNER_PATTERN)
@@ -162,7 +162,7 @@ object FItems {
         if (FConfig.villageAndPillage.sweetBerryBush.enabled) items.register(SWEET_BERRIES)
         if (FConfig.villageAndPillage.suspiciousStew) items.register(SUSPICIOUS_STEW)
         if (FConfig.villageAndPillage.bamboo.enabled) items.register(BAMBOO)
-        if (!isModLoaded(OE)) {
+        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
             if (FConfig.updateAquatic.fish.pufferfish.enabled) items.register(PUFFERFISH_BUCKET)
             if (FConfig.updateAquatic.fish.salmon.enabled) items.register(SALMON_BUCKET)
             if (FConfig.updateAquatic.fish.cod.enabled) items.register(COD_BUCKET)
@@ -215,7 +215,7 @@ object FItems {
         if (FConfig.villageAndPillage.campfire.enabled) items.register(CAMPFIRE)
         if (FConfig.villageAndPillage.scaffolding) items.register(SCAFFOLDING)
         if (FConfig.buzzyBees.bee.enabled) items.registerAll(BEE_NEST, BEEHIVE)
-        if (!isModLoaded(OE)) {
+        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
             if (FConfig.updateAquatic.strippedLogs.acacia) items.register(STRIPPED_ACACIA_LOG)
             if (FConfig.updateAquatic.strippedLogs.jungle) items.register(STRIPPED_JUNGLE_LOG)
             if (FConfig.updateAquatic.strippedLogs.birch) items.register(STRIPPED_BIRCH_LOG)
@@ -239,7 +239,7 @@ object FItems {
         if (FConfig.villageAndPillage.smoothSandstone) items.register(SMOOTH_SANDSTONE)
         if (FConfig.villageAndPillage.smoothQuartz) items.register(SMOOTH_QUARTZ)
         if (FConfig.villageAndPillage.smoothRedSandstone) items.register(SMOOTH_RED_SANDSTONE)
-        if (!isModLoaded(OE)) {
+        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
             if (FConfig.updateAquatic.blueIce) items.register(BLUE_ICE)
             if (FConfig.updateAquatic.wood.strippedAcacia) items.register(STRIPPED_ACACIA_WOOD)
             if (FConfig.updateAquatic.wood.strippedJungle) items.register(STRIPPED_JUNGLE_WOOD)
@@ -296,8 +296,7 @@ object FItems {
             OreDictionary.registerOre("cropBamboo", BAMBOO)
         }
 
-        if (!isModLoaded(OE)) {
-
+        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
             if (FConfig.updateAquatic.strippedLogs.acacia)
                 OreDictionary.registerOre("logWood", STRIPPED_ACACIA_LOG)
             if (FConfig.updateAquatic.strippedLogs.jungle)

@@ -31,23 +31,12 @@ import thedarkcolour.futuremc.entity.trident.Trident
 
 object FEntities {
     fun registerEntities() {
-        if (!isModLoaded(OE)) {
+        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
             if (FConfig.updateAquatic.trident) {
                 registerEntity("trident", Trident::class.java, 32, 1)
-
-                //EntityRegistry.instance().lookupModSpawn(TestTrident::class.java, false)!!.setCustomSpawning({ message ->
-                //    TestTrident(message.)
-                //}, false)
-
-                //EntityRegistry.registerModEntity(ResourceLocation(FutureMC.ID, "trident"), TestTrident::class.java, "trident", 1, FutureMC, 32, 1, true)
             }
         }
 
-        //if (updateAquatic.drowned) {
-        //    registerEntity("drowned", EntityDrowned::class.java, 36, 2, 9433559, 7969893)
-        //    EntityRegistry.addSpawn(EntityDrowned::class.java, 5, 1, 1, EnumCreatureType.MONSTER, Biomes.OCEAN, Biomes.DEEP_OCEAN, Biomes.FROZEN_OCEAN)
-        //    EntityRegistry.addSpawn(EntityDrowned::class.java, 100, 1, 1, EnumCreatureType.MONSTER, Biomes.RIVER, Biomes.FROZEN_RIVER)
-        //}
         if (FConfig.villageAndPillage.panda && FConfig.villageAndPillage.bamboo.enabled) {
             registerEntity("panda", EntityPanda::class.java, 36, 3, 15198183, 1776418)
             EntityRegistry.addSpawn(EntityPanda::class.java, 14, 1, 2, EnumCreatureType.CREATURE, Biomes.JUNGLE, Biomes.JUNGLE_HILLS, Biomes.MUTATED_JUNGLE)
@@ -56,7 +45,7 @@ object FEntities {
             registerEntity("bee", EntityBee::class.java, 32, 4, 16770398, 2500144)
         }
 
-        if (!isModLoaded(OE)) {
+        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
             if (FConfig.updateAquatic.fish.cod.enabled) {
                 registerEntity("cod", EntityCod::class.java, 32, 5, 12691306, 15058059)
                 LootTableList.register(EntityCod.LOOT_TABLE)
@@ -77,7 +66,7 @@ object FEntities {
     }
 
     fun registerEntityRenderers() {
-        if (!isModLoaded(OE)){
+        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
             if (FConfig.updateAquatic.trident) {
                 registerEntityModel { RenderTrident(it) }
             }

@@ -46,19 +46,6 @@ object FConfig {
         @JvmField
         var nautilusShell = true
 
-        //@Name("New Water Color")
-        //@Comment("Whether water uses its new color from 1.13+")
-        //@RequiresMcRestart
-        //@JvmField
-        @Ignore
-        val newWaterColor = false
-
-        //@Name("Seagrass")
-        //@Comment("Whether (waterloggable, but glitchy) Seagrass is enabled.")
-        //@RequiresMcRestart
-        //@JvmField
-        //var seagrass = false
-
         @Name("Stripped Logs")
         @Comment("Options for stripped logs")
         @RequiresMcRestart
@@ -71,16 +58,17 @@ object FConfig {
         @JvmField
         var trident = true
 
-        //@Name("Seagrass")
-        //@Comment("Whether Seagrass is enabled.")
-        //@RequiresMcRestart
-        //@JvmField var seagrass = false
-
         @Name("Wood")
         @Comment("Options for wood blocks")
         @RequiresMcRestart
         @JvmField
         val wood = Wood()
+
+        @Name("Oceanic Expanse Compatibility")
+        @Comment("Disables ocean features in Future MC if Oceanic Expanse is loaded and has equivalent features.")
+        @RequiresMcRestart
+        @JvmField
+        val oceanicExpanse = true
 
         class FishConfig {
             @Name("Cod")

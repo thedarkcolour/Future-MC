@@ -66,7 +66,7 @@ object ClientEvents {
 
     @SubscribeEvent
     fun onModelBake(event: ModelBakeEvent) {
-        if (!isModLoaded(OE)) {
+        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
             if (FConfig.updateAquatic.trident) {
                 val registry = event.modelRegistry
                 val trident = ModelResourceLocation("futuremc:trident", "inventory")
