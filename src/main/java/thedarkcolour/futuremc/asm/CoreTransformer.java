@@ -40,7 +40,7 @@ public final class CoreTransformer implements IClassTransformer {
                     return ASMUtil.patch(basicClass, CoreTransformer::patchEntitySnowman);
 
                 case "net.minecraft.server.management.PlayerInteractionManager":
-                    return ASMUtil.patch(basicClass, CoreTransformer::patchPlayerInteractionManager);
+                    return ASMUtil.patch(basicClass, CoreTransformer::patchPlayerInteractionManager, ClassWriter.COMPUTE_MAXS);
                 //case "net.minecraft.client.entity.EntityPlayerSP":
                 //    return patchEntityPlayerSP(basicClass);
                 //case "net.minecraft.client.network.NetHandlerPlayClient":
