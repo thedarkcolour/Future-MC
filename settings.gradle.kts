@@ -34,4 +34,4 @@ plugins {
     //id("org.gradle.toolchains.foojay-resolver-convention") version "0.4.0"
 }
 
-rootProject.name = "future-mc"
+//rootProject.name = "future-mc"
