@@ -27,6 +27,8 @@ import org.lwjgl.input.Mouse
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.client.gui.GuiVillager
 import thedarkcolour.futuremc.client.render.TridentBakedModel
+import thedarkcolour.futuremc.compat.OE
+import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.container.ContainerVillager
 import thedarkcolour.futuremc.item.TridentItem
@@ -64,14 +66,16 @@ object ClientEvents {
 
     @SubscribeEvent
     fun onModelBake(event: ModelBakeEvent) {
-        if (FConfig.updateAquatic.trident) {
-            val registry = event.modelRegistry
-            val trident = ModelResourceLocation("futuremc:trident", "inventory")
-            val simpleModel = registry.getObject(trident)!!
-            TridentItem.simpleModel = simpleModel
-            val hand = registry.getObject(ModelResourceLocation("futuremc:trident_in_hand", "inventory"))!!
+        if (!isModLoaded(OE)) {
+            if (FConfig.updateAquatic.trident) {
+                val registry = event.modelRegistry
+                val trident = ModelResourceLocation("futuremc:trident", "inventory")
+                val simpleModel = registry.getObject(trident)!!
+                TridentItem.simpleModel = simpleModel
+                val hand = registry.getObject(ModelResourceLocation("futuremc:trident_in_hand", "inventory"))!!
 
-            registry.putObject(trident, TridentBakedModel(hand, simpleModel))
+                registry.putObject(trident, TridentBakedModel(hand, simpleModel))
+            }
         }
     }
 
