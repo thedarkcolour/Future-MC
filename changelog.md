@@ -1,3 +1,8 @@
+## Version 0.2.17
+- Fix crashing on startup
+- Stop bees from trying to fly while pollinating a flower
+- Add overlay for gamemode switcher
+
 ## Version 0.2.16
 - Barrels now have comparator output
 - F3 + F4 now changes gamemode like in 1.14+ (graphic element is missing for now, but still a nice hotkey to have)
