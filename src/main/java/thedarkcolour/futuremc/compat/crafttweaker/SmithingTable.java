@@ -8,6 +8,7 @@ import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraftforge.oredict.OreDictionary;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import thedarkcolour.futuremc.recipe.smithing.SmithingRecipe;
@@ -41,6 +42,12 @@ public final class SmithingTable {
 
         @Override
         public void apply() {
+            ItemStack[] stacks = input.getMatchingStacks();
+            for (ItemStack stack : stacks) {
+                if (stack.isItemStackDamageable() && stack.getMetadata() == 0) {
+                    stack.setItemDamage(OreDictionary.WILDCARD_VALUE);
+                }
+            }
             SmithingRecipes.INSTANCE.getRecipes().add(new SmithingRecipe(input, material, result));
         }
 
