@@ -10,6 +10,8 @@ import net.minecraftforge.fml.common.registry.EntityRegistry
 import thedarkcolour.core.util.registerEntity
 import thedarkcolour.core.util.registerEntityModel
 import thedarkcolour.futuremc.FutureMC
+import thedarkcolour.futuremc.compat.OE
+import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.entity.bee.BeeRenderer
 import thedarkcolour.futuremc.entity.bee.EntityBee
@@ -29,15 +31,18 @@ import thedarkcolour.futuremc.entity.trident.Trident
 
 object FEntities {
     fun registerEntities() {
-        if (FConfig.updateAquatic.trident) {
-            registerEntity("trident", Trident::class.java, 32, 1)
+        if (!isModLoaded(OE)) {
+            if (FConfig.updateAquatic.trident) {
+                registerEntity("trident", Trident::class.java, 32, 1)
 
-            //EntityRegistry.instance().lookupModSpawn(TestTrident::class.java, false)!!.setCustomSpawning({ message ->
-            //    TestTrident(message.)
-            //}, false)
+                //EntityRegistry.instance().lookupModSpawn(TestTrident::class.java, false)!!.setCustomSpawning({ message ->
+                //    TestTrident(message.)
+                //}, false)
 
-            //EntityRegistry.registerModEntity(ResourceLocation(FutureMC.ID, "trident"), TestTrident::class.java, "trident", 1, FutureMC, 32, 1, true)
+                //EntityRegistry.registerModEntity(ResourceLocation(FutureMC.ID, "trident"), TestTrident::class.java, "trident", 1, FutureMC, 32, 1, true)
+            }
         }
+
         //if (updateAquatic.drowned) {
         //    registerEntity("drowned", EntityDrowned::class.java, 36, 2, 9433559, 7969893)
         //    EntityRegistry.addSpawn(EntityDrowned::class.java, 5, 1, 1, EnumCreatureType.MONSTER, Biomes.OCEAN, Biomes.DEEP_OCEAN, Biomes.FROZEN_OCEAN)
@@ -50,27 +55,44 @@ object FEntities {
         if (FConfig.buzzyBees.bee.enabled) {
             registerEntity("bee", EntityBee::class.java, 32, 4, 16770398, 2500144)
         }
-        if (FConfig.updateAquatic.fish.cod.enabled) {
-            registerEntity("cod", EntityCod::class.java, 32, 5, 12691306, 15058059)
-            LootTableList.register(EntityCod.LOOT_TABLE)
-        }
-        if (FConfig.updateAquatic.fish.pufferfish.enabled) {
-            registerEntity("pufferfish", EntityPufferfish::class.java, 32, 6, 16167425, 3654642)
-            LootTableList.register(EntityPufferfish.LOOT_TABLE)
-        }
-        if (FConfig.updateAquatic.fish.salmon.enabled) {
-            registerEntity("salmon", EntitySalmon::class.java, 32, 7, 10489616, 951412)
-            LootTableList.register(EntitySalmon.LOOT_TABLE)
-        }
-        if (FConfig.updateAquatic.fish.tropicalFish.enabled) {
-            registerEntity("tropical_fish", EntityTropicalFish::class.java, 32, 8, 15690005, 16775663)
-            LootTableList.register(EntityTropicalFish.LOOT_TABLE)
+
+        if (!isModLoaded(OE)) {
+            if (FConfig.updateAquatic.fish.cod.enabled) {
+                registerEntity("cod", EntityCod::class.java, 32, 5, 12691306, 15058059)
+                LootTableList.register(EntityCod.LOOT_TABLE)
+            }
+            if (FConfig.updateAquatic.fish.pufferfish.enabled) {
+                registerEntity("pufferfish", EntityPufferfish::class.java, 32, 6, 16167425, 3654642)
+                LootTableList.register(EntityPufferfish.LOOT_TABLE)
+            }
+            if (FConfig.updateAquatic.fish.salmon.enabled) {
+                registerEntity("salmon", EntitySalmon::class.java, 32, 7, 10489616, 951412)
+                LootTableList.register(EntitySalmon.LOOT_TABLE)
+            }
+            if (FConfig.updateAquatic.fish.tropicalFish.enabled) {
+                registerEntity("tropical_fish", EntityTropicalFish::class.java, 32, 8, 15690005, 16775663)
+                LootTableList.register(EntityTropicalFish.LOOT_TABLE)
+            }
         }
     }
 
     fun registerEntityRenderers() {
-        if (FConfig.updateAquatic.trident) {
-            registerEntityModel { RenderTrident(it) }
+        if (!isModLoaded(OE)){
+            if (FConfig.updateAquatic.trident) {
+                registerEntityModel { RenderTrident(it) }
+            }
+            if (FConfig.updateAquatic.fish.cod.enabled) {
+                registerEntityModel { RenderCod(it) }
+            }
+            if (FConfig.updateAquatic.fish.pufferfish.enabled) {
+                registerEntityModel { RenderPufferfish(it) }
+            }
+            if (FConfig.updateAquatic.fish.salmon.enabled) {
+                registerEntityModel { RenderSalmon(it) }
+            }
+            if (FConfig.updateAquatic.fish.tropicalFish.enabled) {
+                registerEntityModel { RenderTropicalFish(it) }
+            }
         }
         if (FConfig.villageAndPillage.panda && FConfig.villageAndPillage.bamboo.enabled) {
             registerEntityModel { RenderPanda(it) }
@@ -78,18 +100,7 @@ object FEntities {
         if (FConfig.buzzyBees.bee.enabled) {
             registerEntityModel { BeeRenderer(it) }
         }
-        if (FConfig.updateAquatic.fish.cod.enabled) {
-            registerEntityModel { RenderCod(it) }
-        }
-        if (FConfig.updateAquatic.fish.pufferfish.enabled) {
-            registerEntityModel { RenderPufferfish(it) }
-        }
-        if (FConfig.updateAquatic.fish.salmon.enabled) {
-            registerEntityModel { RenderSalmon(it) }
-        }
-        if (FConfig.updateAquatic.fish.tropicalFish.enabled) {
-            registerEntityModel { RenderTropicalFish(it) }
-        }
+
         // of course they do :)
         if (FConfig.buzzyBees.ironGolem.doCrack) {
             registerEntityModel { manager ->
