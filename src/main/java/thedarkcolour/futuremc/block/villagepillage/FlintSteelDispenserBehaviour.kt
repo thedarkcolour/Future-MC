@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import net.minecraftforge.fluids.BlockFluidBase
 
-object FlintSteelAndShovelDispenserBehaviour : BehaviorDispenseOptional() {
+object FlintSteelDispenserBehaviour : BehaviorDispenseOptional() {
 
     fun dispense(world: World, source: IBlockSource, stack: ItemStack, existing: IBehaviorDispenseItem): ItemStack {
         val state = source.blockState
