@@ -7,7 +7,7 @@ plugins {
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 
-version = "0.2.17"
+version = "0.2.18"
 group = "thedarkcolour.futuremc"
 
 minecraft {

@@ -1,3 +1,9 @@
+## Version 0.2.18
+- Actually fix Honey Bottle
+- Add option to disable 1.13 features when Oceanic Expanse is enabled (default true)
+- Add campfire dispenser behavior (thank you zeng-github01)
+- Fixed Smithing Recipes added by CraftTweaker not matching damaged tools
+
 ## Version 0.2.17
 - Fix crashing on startup
 - Stop bees from trying to fly while pollinating a flower
