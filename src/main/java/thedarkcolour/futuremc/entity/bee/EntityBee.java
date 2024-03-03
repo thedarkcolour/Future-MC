@@ -84,7 +84,7 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
         super(worldIn);
         flowerPos = null;
         hivePos = null;
-        moveHelper = new EntityFlyHelper(this);
+        moveHelper = new FlyHelper(this);
         lookHelper = new LookHelper(this);
 
         setSize(0.7F, 0.7F);
@@ -988,7 +988,7 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
         return new EntityDamageSource("sting", entityBee);
     }
 
-    private static final class FlyHelper extends EntityMoveHelper {
+    private static final class FlyHelper extends EntityFlyHelper {
         private final EntityBee entityBee;
 
         private FlyHelper(EntityBee entityBee) {
@@ -999,40 +999,7 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
         @Override
         public void onUpdateMoveHelper() {
             if (!entityBee.isPollinating()) {
-                if (action == Action.MOVE_TO) {
-                    action = Action.WAIT;
-                    entity.setNoGravity(true);
-                    double d0 = posX - entity.posX;
-                    double d1 = posY - entity.posY;
-                    double d2 = posZ - entity.posZ;
-                    double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-
-                    if (d3 < 2.500000277905201E-7D) {
-                        entity.setMoveVertical(0.0F);
-                        entity.setMoveForward(0.0F);
-                        return;
-                    }
-
-                    float f0 = (float)(MathHelper.atan2(d2, d0) * 57.2957763671875D) - 90.0F;
-                    entity.rotationYaw = limitAngle(entity.rotationYaw, f0, 10.0f);
-                    float f1;
-
-                    if (entity.onGround) {
-                        f1 = (float)(speed * entity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
-                    } else {
-                        f1 = (float)(speed * entity.getEntityAttribute(SharedMonsterAttributes.FLYING_SPEED).getAttributeValue());
-                    }
-
-                    entity.setAIMoveSpeed(f1);
-                    double d4 = MathHelper.sqrt(d0 * d0 + d2 * d2);
-                    float f2 = (float)(-(MathHelper.atan2(d1, d4) * 57.2957763671875D));
-                    entity.rotationPitch = limitAngle(entity.rotationPitch, f2, 10.0f);
-                    entity.setMoveVertical(d1 > 0.0D ? f1 : -f1);
-                } else {
-                    entity.setNoGravity(false);
-                    entity.setMoveVertical(0.0F);
-                    entity.setMoveForward(0.0F);
-                }
+                super.onUpdateMoveHelper();
             }
         }
     }
