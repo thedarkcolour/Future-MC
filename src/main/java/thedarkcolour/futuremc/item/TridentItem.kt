@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import net.minecraftforge.common.util.EnumHelper
 import thedarkcolour.core.item.ModeledItem
 import thedarkcolour.core.util.setItemModel
 import thedarkcolour.futuremc.client.render.TridentBakedModel
@@ -62,7 +63,7 @@ class TridentItem : ModeledItem("trident"), ModeledItem.Builtin {
      * returns the action that specifies what animation to play when the items is being used
      */
     override fun getItemUseAction(stack: ItemStack): EnumAction {
-        return TridentBakedModel.TRIDENT_USE_ACTION
+        return TRIDENT_USE_ACTION
     }
 
     override fun canDestroyBlockInCreative(
@@ -190,5 +191,7 @@ class TridentItem : ModeledItem("trident"), ModeledItem.Builtin {
     companion object {
         val TRIDENT_MODEL = ModelTrident()
         lateinit var simpleModel: IBakedModel
+        @JvmStatic
+        val TRIDENT_USE_ACTION = EnumHelper.addAction("TRIDENT_FMC")!!
     }
 }

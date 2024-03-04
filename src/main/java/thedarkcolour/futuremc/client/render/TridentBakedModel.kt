@@ -51,7 +51,6 @@ class TridentBakedModel(private val hand: IBakedModel, private val inventory: IB
     }
 
     companion object {
-        val TRIDENT_USE_ACTION = EnumHelper.addAction("TRIDENT_FMC")!!
         @SideOnly(Side.CLIENT)
         val TRIDENT_ARM_POSE = EnumHelper.addEnum(ModelBiped.ArmPose::class.java, "TRIDENT_FMC", emptyArray())!!
     }

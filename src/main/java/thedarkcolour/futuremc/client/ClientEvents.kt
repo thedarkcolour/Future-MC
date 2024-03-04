@@ -199,7 +199,7 @@ object ClientEvents {
             if (playerIn.itemInUseCount > 0) {
                 val action = stack.itemUseAction
 
-                if (action == TridentBakedModel.TRIDENT_USE_ACTION) {
+                if (action == TridentItem.TRIDENT_USE_ACTION) {
                     return TridentBakedModel.TRIDENT_ARM_POSE
                 }/* else if (action == CrossbowItem.CROSSBOW_USE_ACTION) {
                     pose = CrossbowItem.CROSSBOW_ARM_POSE
