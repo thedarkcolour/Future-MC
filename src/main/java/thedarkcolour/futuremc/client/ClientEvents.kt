@@ -172,8 +172,11 @@ object ClientEvents {
                 mc.renderItem.renderItemAndEffectIntoGUI(gameTypeItems[i], x1 + 5, y + 5)
             }
 
+            val w1 = mc.fontRenderer.getStringWidth("[ F4 ] Next") / 2
+            val w2 = mc.fontRenderer.getStringWidth("[ F4 ] ")
             mc.ingameGUI.drawCenteredString(mc.fontRenderer, I18n.format("gameMode." + selected.getName()), x, y - 20, 0xffffff)
-            mc.ingameGUI.drawCenteredString(mc.fontRenderer, "[ F4 ]", x, y + 5 + 31, 5636095)
+            mc.ingameGUI.drawString(mc.fontRenderer, "[ F4 ]", x - w1, y + 5 + 31, 5636095)
+            mc.ingameGUI.drawString(mc.fontRenderer, "Next", x - w1 + w2, y + 5 + 31, 0xffffff)
             GlStateManager.disableBlend()
             RenderHelper.disableStandardItemLighting()
         }
