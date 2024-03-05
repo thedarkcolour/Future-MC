@@ -1,3 +1,7 @@
+## Version 0.2.19
+- Add missing "Next" text to the gamemode switcher
+- Fix serverside crash with Trident
+
 ## Version 0.2.18
 - Actually fix Honey Bottle
 - Add option to disable 1.13 features when Oceanic Expanse is enabled (default true)
