@@ -5,15 +5,13 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Items
+import net.minecraft.init.SoundEvents
 import net.minecraft.inventory.InventoryHelper
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.NetworkManager
 import net.minecraft.network.play.server.SPacketUpdateTileEntity
-import net.minecraft.util.EnumFacing
-import net.minecraft.util.EnumHand
-import net.minecraft.util.EnumParticleTypes
-import net.minecraft.util.ITickable
+import net.minecraft.util.*
 import net.minecraft.util.math.MathHelper
 import net.minecraftforge.fluids.BlockFluidBase
 import thedarkcolour.core.inventory.FInventory
@@ -128,6 +126,7 @@ class CampfireTile : InteractionTile(), ITickable {
             }
         } else if (stack.item.getToolClasses(stack).contains("shovel")) {
             CampfireBlock.setLit(world, pos, false)
+            playerIn.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH,1.0F,1.0F)
         }
 
         if (state.getValue(CampfireBlock.LIT)) {

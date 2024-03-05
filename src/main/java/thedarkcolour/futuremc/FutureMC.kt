@@ -32,7 +32,7 @@ import thedarkcolour.core.util.registerDispenserBehaviour
 import thedarkcolour.core.util.runOnClient
 import thedarkcolour.futuremc.block.buzzybees.BottleDispenserBehavior
 import thedarkcolour.futuremc.block.buzzybees.ShearDispenserBehaviour
-import thedarkcolour.futuremc.block.villagepillage.FlintSteelAndShovelDispenserBehaviour
+import thedarkcolour.futuremc.block.villagepillage.FlintSteelDispenserBehaviour
 import thedarkcolour.futuremc.capability.FPlayerData
 import thedarkcolour.futuremc.client.gui.GuiType
 import thedarkcolour.futuremc.client.tesr.BellTileEntityRenderer
@@ -136,7 +136,7 @@ object FutureMC {
         if (FConfig.villageAndPillage.campfire.enabled) {
             val existing = BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.getObject(Items.FLINT_AND_STEEL)
             registerDispenserBehaviour(Items.FLINT_AND_STEEL,IBehaviorDispenseItem {source, stack ->
-                FlintSteelAndShovelDispenserBehaviour.dispense(source.world,source,stack,existing)
+                FlintSteelDispenserBehaviour.dispense(source.world,source,stack,existing)
             })
         }
 
