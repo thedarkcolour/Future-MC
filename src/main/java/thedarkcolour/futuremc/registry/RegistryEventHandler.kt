@@ -25,7 +25,9 @@ import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.villagepillage.CampfireBlock
 import thedarkcolour.futuremc.client.particle.CampfireParticle
 import thedarkcolour.futuremc.client.particle.SoulFlameParticle
+import thedarkcolour.futuremc.compat.OE
 import thedarkcolour.futuremc.compat.checkBetterWithMods
+import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig.updateAquatic
 import thedarkcolour.futuremc.config.FConfig.useVanillaCreativeTabs
 import thedarkcolour.futuremc.entity.fish.cod.EntityCod
@@ -86,8 +88,10 @@ object RegistryEventHandler {
                         }
                         break
                     } else {
-                        EntityRegistry.addSpawn(fishClass, Integer.parseInt(parts[2]), Integer.parseInt(parts[3]), Integer.parseInt(parts[4]), EnumCreatureType.WATER_CREATURE, biome)
-                        EntitySpawnPlacementRegistry.setPlacementType(fishClass, EntityLiving.SpawnPlacementType.IN_WATER)
+                        if (!isModLoaded(OE) || !updateAquatic.oceanicExpanse) {
+                            EntityRegistry.addSpawn(fishClass, Integer.parseInt(parts[2]), Integer.parseInt(parts[3]), Integer.parseInt(parts[4]), EnumCreatureType.WATER_CREATURE, biome)
+                            EntitySpawnPlacementRegistry.setPlacementType(fishClass, EntityLiving.SpawnPlacementType.IN_WATER)
+                        }
                     }
                 }
             }

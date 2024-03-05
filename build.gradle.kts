@@ -120,6 +120,7 @@ dependencies {
     compileOnly(rfg.deobf("cofh:RedstoneFlux:1.12-2.1.0.7:universal"))
     compileOnly(rfg.deobf("codechicken:CodeChickenLib:1.12.2-3.2.3.358:universal"))
     implementation(rfg.deobf("mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.28-17"))
+    curseMaven("oe", 840576, 4670168, runtime = true)
 }
 
 fun DependencyHandlerScope.curseMaven(modName: String, projectId: Int, fileId: Int, runtime: Boolean = false) {
