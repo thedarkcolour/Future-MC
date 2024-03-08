@@ -43,8 +43,8 @@ object BambooWorldGen : FWorldGen {
         chunkGenerator: IChunkGenerator,
         chunkProvider: IChunkProvider
     ) {
-        val x = chunkX + rand.nextInt(16) + 8
-        val z = chunkZ + rand.nextInt(16) + 8
+        val x = (chunkX shl 4) + 8
+        val z = (chunkZ shl 4) + 8
         val position = BlockPos(x, 0, z)
         val biome = worldIn.getBiomeForCoordsBody(position)
         val chunkPos = worldIn.getChunk(chunkX, chunkZ).pos
