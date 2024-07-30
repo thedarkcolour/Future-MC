@@ -50,6 +50,7 @@ import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.config.FConfig.updateAquatic
 import thedarkcolour.futuremc.container.ContainerVillager
 import thedarkcolour.futuremc.item.CrossbowItem
+import thedarkcolour.futuremc.registry.FBlocks
 import thedarkcolour.futuremc.registry.FBlocks.HONEY_BLOCK
 import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_ACACIA_LOG
 import thedarkcolour.futuremc.registry.FBlocks.STRIPPED_BIRCH_LOG
@@ -113,7 +114,7 @@ object Events {
         val pos = event.pos
         val player = event.entityPlayer
         val stack = event.itemStack
-        if (updateAquatic.strippedLogs.rightClickToStrip) {
+        if (updateAquatic.strippedLogs.rightClickToStrip && FBlocks.noOceanicExpanse()) {
             if (isVanillaAxe(stack) || checkTConstruct()?.isTinkersAxe(stack) == true) {
                 val state = worldIn.getBlockState(pos)
                 val block = state.block

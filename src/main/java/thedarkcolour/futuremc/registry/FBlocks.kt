@@ -183,7 +183,7 @@ object FBlocks {
             blocks.register(BEE_NEST)
         if (FConfig.buzzyBees.bee.enabled)
             blocks.register(BEEHIVE)
-        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
+        if (noOceanicExpanse()) {
             if (FConfig.updateAquatic.strippedLogs.acacia)
                 blocks.register(STRIPPED_ACACIA_LOG)
             if (FConfig.updateAquatic.strippedLogs.jungle)
@@ -320,5 +320,9 @@ object FBlocks {
         registerTE("futuremc:sign", WoodenSignTile::class.java, newSigns.acacia || newSigns.birch || newSigns.darkOak || newSigns.jungle || newSigns.spruce)
 
         registerTE("futuremc:water_renderer", TileSeagrassRenderer::class.java, FutureMC.DEBUG)
+    }
+
+    fun noOceanicExpanse(): Boolean {
+        return !isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse
     }
 }
