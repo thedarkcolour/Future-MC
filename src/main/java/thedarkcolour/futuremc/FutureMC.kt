@@ -166,10 +166,18 @@ object FutureMC {
             state.material == Material.AIR || !ForgeRegistries.BLOCKS.containsValue(state.block) // try to fix #281
         }
 
-        Biomes.PLAINS.addFlower(FBlocks.CORNFLOWER.defaultState, 5)
-        for (biome in listOf(Biomes.FOREST, Biomes.BIRCH_FOREST_HILLS, Biomes.BIRCH_FOREST, Biomes.FOREST_HILLS, Biomes.MUTATED_BIRCH_FOREST, Biomes.MUTATED_BIRCH_FOREST_HILLS, Biomes.MUTATED_FOREST)) {
+        val cornflower = FConfig.villageAndPillage.cornflower.enabled
+        val lilyOfTheValley = FConfig.villageAndPillage.lilyOfTheValley.enabled
+        if (cornflower) {
             Biomes.PLAINS.addFlower(FBlocks.CORNFLOWER.defaultState, 5)
-            Biomes.PLAINS.addFlower(FBlocks.LILY_OF_THE_VALLEY.defaultState, 5)
+        }
+        for (biome in listOf(Biomes.FOREST, Biomes.BIRCH_FOREST_HILLS, Biomes.BIRCH_FOREST, Biomes.FOREST_HILLS, Biomes.MUTATED_BIRCH_FOREST, Biomes.MUTATED_BIRCH_FOREST_HILLS, Biomes.MUTATED_FOREST)) {
+            if (cornflower) {
+                biome.addFlower(FBlocks.CORNFLOWER.defaultState, 5)
+            }
+            if (lilyOfTheValley) {
+                biome.addFlower(FBlocks.LILY_OF_THE_VALLEY.defaultState, 5)
+            }
         }
     }
 
