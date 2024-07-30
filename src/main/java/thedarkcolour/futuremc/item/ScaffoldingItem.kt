@@ -43,12 +43,12 @@ class ScaffoldingItem : ModeledItemBlock(FBlocks.SCAFFOLDING) {
                 var found = false
 
                 while (i < 7) {
-                    if (!worldIn.isRemote && !worldIn.worldBorder.contains(cursor)) {
-                        if (player is EntityPlayerMP && cursor.y >= 255) {
-                            // todo send world border message
-                        }
-                        break
-                    }
+//                    if (!worldIn.isRemote && !worldIn.worldBorder.contains(cursor)) {
+//                        if (player is EntityPlayerMP && cursor.y >= 255) {
+//                            // todo send world border message
+//                        }
+//                        break
+//                    }
 
                     val state = worldIn.getBlockState(cursor)
                     if (state.block != this.block) {
