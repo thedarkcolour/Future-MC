@@ -1,3 +1,9 @@
+## Version 0.2.20
+- Fix jungle bamboo generation on worlds with multiple biomes
+- Fix scaffold teleportation behaviour bug
+- Fix bonemeal issues with Cornflower and Lily of the Valley
+- Fix Stripped Log issue with Oceanic Expanse
+
 ## Version 0.2.19
 - Add missing "Next" text to the gamemode switcher
 - Fix serverside crash with Trident
