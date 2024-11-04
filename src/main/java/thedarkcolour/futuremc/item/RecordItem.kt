@@ -5,9 +5,9 @@ import net.minecraft.util.SoundEvent
 import thedarkcolour.core.util.setItemModel
 import thedarkcolour.core.util.setItemName
 
-class RecordItem(recordName: String, soundIn: SoundEvent) : ItemRecord(recordName, soundIn) {
+class RecordItem(recordName: String, soundIn: SoundEvent) : ItemRecord("futuremc.$recordName", soundIn) {
     init {
-        setItemName(this, "record_pigstep")
+        setItemName(this, "record_$recordName")
         setItemModel(this, 0)
     }
 }

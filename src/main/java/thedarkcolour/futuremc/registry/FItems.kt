@@ -146,7 +146,7 @@ object FItems {
     val CHAIN = ModeledItemBlock(FBlocks.CHAIN)
     val NETHERITE_BLOCK = FireproofItemBlock(FBlocks.NETHERITE_BLOCK)
     val ANCIENT_DEBRIS = FireproofItemBlock(FBlocks.ANCIENT_DEBRIS)
-    val RECORD_PIGSTEP = RecordItem("futuremc.pigstep", FSounds.RECORD_PIGSTEP).setItemGroup(CreativeTabs.MISC)
+    val RECORD_PIGSTEP = RecordItem("pigstep", FSounds.RECORD_PIGSTEP).setItemGroup(CreativeTabs.MISC)
 
     fun registerItems(items: IForgeRegistry<Item>) {
         if (FConfig.villageAndPillage.dyes) items.register(DYES)
