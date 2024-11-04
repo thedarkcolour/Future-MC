@@ -16,6 +16,9 @@ object FConfig {
     val netherUpdate: NetherUpdate
         get() = _Internal.netherUpdate
 
+    val cavesNCliffs: CavesNCliffs
+        get() = _Internal.cavesNCliffs
+
     val useVanillaCreativeTabs: Boolean
         get() = _Internal.useVanillaCreativeTabs
 
@@ -873,5 +876,13 @@ object FConfig {
             @JvmField
             val generation = AncientDebris.NormalVein()
         }
+    }
+
+    class CavesNCliffs {
+        @Name("otherside")
+        @Comment("Whether the (CREATIVE ONLY) otherside music disc is added.")
+        @RequiresMcRestart
+        @JvmField
+        var otherside = true
     }
 }

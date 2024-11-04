@@ -1068,6 +1068,16 @@
             }
         ]
     },
+    "otherside": {
+        "category": "records",
+        "subtitle": "futuremc.subtitles.otherside",
+        "sounds": [
+            {
+                "name": "futuremc:record/otherside",
+                "stream": true
+            }
+        ]
+    },
     "chain_break": {
         "subtitle": "futuremc.subtitles.chain_break",
         "sounds": [

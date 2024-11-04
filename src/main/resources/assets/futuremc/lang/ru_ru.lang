@@ -158,6 +158,8 @@ item.futuremc.netherite_boots.name=Незеритовые ботинки
 item.futuremc.netherite_ingot.name=Незеритовый слиток
 item.record.futuremc.pigstep.desc=Лина Рейн - Pigstep
 item.futuremc.record_pigstep.name=Пластинка
+item.record.futuremc.otherside.desc=Лина Рейн - otherside
+item.futuremc.record_otherside.name=Пластинка
 
 # GUI
 container.barrel=Бочка

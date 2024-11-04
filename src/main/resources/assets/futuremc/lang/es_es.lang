@@ -156,6 +156,8 @@ item.futuremc.netherite_boots.name=Botas de netherita
 item.futuremc.netherite_ingot.name=Lingote de netherita
 item.record.futuremc.pigstep.desc=Lena Raine - Pigstep
 item.futuremc.record_pigstep.name=Disco de música
+item.record.futuremc.otherside.desc=Lena Raine - otherside
+item.futuremc.record_otherside.name=Disco de música
 
 # GUI
 container.barrel=Barril

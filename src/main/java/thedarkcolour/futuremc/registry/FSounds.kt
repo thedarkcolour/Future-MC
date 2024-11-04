@@ -182,6 +182,7 @@ object FSounds {
     val ITEM_ARMOR_EQUIP_TURTLE = sound("equip_turtle")
     val ITEM_ARMOR_EQUIP_NETHERITE = sound("equip_netherite")
     val RECORD_PIGSTEP = sound("pigstep")
+    val RECORD_OTHERSIDE = sound("otherside")
 
     val BAMBOO = SoundType(1.0f, 1.0f, BAMBOO_PLACE, BAMBOO_STEP, BAMBOO_PLACE, BAMBOO_PLACE, BAMBOO_STEP)
     val BAMBOO_SAPLING = SoundType(1.0f, 1.0f, BAMBOO_SAPLING_HIT, BAMBOO_SAPLING_PLACE, BAMBOO_SAPLING_PLACE, BAMBOO_SAPLING_HIT, BAMBOO_SAPLING_PLACE)
