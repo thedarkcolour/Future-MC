@@ -56,18 +56,21 @@ class SweetBerryBushBlock : BlockFlower("sweet_berry_bush"), IGrowable, IPlantab
         if (worldIn.isRemote) {
             return true
         }
-        val item = playerIn.getHeldItem(EnumHand.MAIN_HAND).item
-        if (item != Items.DYE || item != Item.getItemFromBlock(SWEET_BERRY_BUSH)) {
-            if (worldIn.getBlockState(pos).block.getMetaFromState(state) == 2) {
-                worldIn.setBlockState(pos, defaultState.withProperty(AGE, 1))
-                Block.spawnAsEntity(worldIn, pos, ItemStack(SWEET_BERRIES))
-                worldIn.playSound(null, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, FSounds.SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0f, 0.8f + worldIn.rand.nextFloat() * 0.4f)
-            }
-            if (worldIn.getBlockState(pos).block.getMetaFromState(state) == 3) {
-                worldIn.setBlockState(pos, defaultState.withProperty(AGE, 1))
-                Block.spawnAsEntity(worldIn, pos, ItemStack(SWEET_BERRIES, 3))
-                worldIn.playSound(null, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, FSounds.SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0f, 0.8f + worldIn.rand.nextFloat() * 0.4f)
-            }
+        val stack = playerIn.getHeldItem(hand)
+        val isBonemeal = stack.item == Items.DYE && stack.metadata == 15
+
+        val age = state.getValue(AGE)
+
+        if (age == 3) {
+            worldIn.setBlockState(pos, defaultState.withProperty(AGE, 1))
+            Block.spawnAsEntity(worldIn, pos, ItemStack(SWEET_BERRIES, 2 + worldIn.rand.nextInt(2)))
+            worldIn.playSound(null, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, FSounds.SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0f, 0.8f + worldIn.rand.nextFloat() * 0.4f)
+            return true
+        } else if (age == 2 && !isBonemeal) {
+            worldIn.setBlockState(pos, defaultState.withProperty(AGE, 1))
+            Block.spawnAsEntity(worldIn, pos, ItemStack(SWEET_BERRIES, 1 + worldIn.rand.nextInt(2)))
+            worldIn.playSound(null, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, FSounds.SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0f, 0.8f + worldIn.rand.nextFloat() * 0.4f)
+            return true
         }
         return false
     }
