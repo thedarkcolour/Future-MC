@@ -323,6 +323,12 @@
             "futuremc:campfire/crackle_5"
         ]
     },
+    "item.sweet_berries.pick_from_bush": {
+        "sounds": [
+            "futuremc:item/sweet_berries/pick_from_bush1",
+            "futuremc:item/sweet_berries/pick_from_bush2"
+        ]
+    },
     "bell_ring": {
         "subtitle": "futuremc.subtitles.bell_ring",
         "sounds": [

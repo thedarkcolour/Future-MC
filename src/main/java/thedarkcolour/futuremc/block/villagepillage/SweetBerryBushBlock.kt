@@ -1,5 +1,6 @@
 package thedarkcolour.futuremc.block.villagepillage
 
+import thedarkcolour.futuremc.registry.FSounds
 import net.minecraft.block.Block
 import net.minecraft.block.IGrowable
 import net.minecraft.block.properties.PropertyInteger
@@ -8,6 +9,9 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.SoundCategory
+import net.minecraft.util.SoundEvent
+import net.minecraft.util.ResourceLocation
 import net.minecraft.init.Biomes
 import net.minecraft.init.Items
 import net.minecraft.item.Item
@@ -57,10 +61,12 @@ class SweetBerryBushBlock : BlockFlower("sweet_berry_bush"), IGrowable, IPlantab
             if (worldIn.getBlockState(pos).block.getMetaFromState(state) == 2) {
                 worldIn.setBlockState(pos, defaultState.withProperty(AGE, 1))
                 Block.spawnAsEntity(worldIn, pos, ItemStack(SWEET_BERRIES))
+                worldIn.playSound(null, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, FSounds.SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0f, 0.8f + worldIn.rand.nextFloat() * 0.4f)
             }
             if (worldIn.getBlockState(pos).block.getMetaFromState(state) == 3) {
                 worldIn.setBlockState(pos, defaultState.withProperty(AGE, 1))
                 Block.spawnAsEntity(worldIn, pos, ItemStack(SWEET_BERRIES, 3))
+                worldIn.playSound(null, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, FSounds.SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0f, 0.8f + worldIn.rand.nextFloat() * 0.4f)
             }
         }
         return false
