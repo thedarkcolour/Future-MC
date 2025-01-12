@@ -89,11 +89,11 @@ class SweetBerryBushBlock : BlockFlower("sweet_berry_bush"), IGrowable, IPlantab
     }
 
     override fun onEntityCollision(worldIn: World, pos: BlockPos, state: IBlockState, entityIn: Entity) {
-        if (!worldIn.isRemote && entityIn is EntityLivingBase && entityIn !is EntityBee) {
+        if (entityIn is EntityLivingBase && entityIn !is EntityBee) {
             entityIn.fallDistance = 0.0f
-            entityIn.motionX *= 0.8
-            entityIn.motionY *= 0.75
-            entityIn.motionZ *= 0.8
+            entityIn.motionX *= 0.3405f
+            entityIn.motionY *= 0.3405f
+            entityIn.motionZ *= 0.3405f
 
             if (state.getValue(AGE) > 0 && (entityIn.prevPosX != entityIn.posX || entityIn.prevPosZ != entityIn.posZ)) {
                 val dx = abs(entityIn.posX - entityIn.prevPosX)
