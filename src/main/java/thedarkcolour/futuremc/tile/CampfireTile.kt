@@ -120,16 +120,19 @@ class CampfireTile : InteractionTile(), ITickable {
         if (!state.getValue(CampfireBlock.LIT)) {
             if (stack.item == Items.FLINT_AND_STEEL || stack.item == Items.FIRE_CHARGE) {
                 if (!((block is BlockLiquid) || (block is BlockFluidBase))) {
-                    if (!world.isRemote) {
-                        CampfireBlock.setLit(world, pos, true)
-                        stack.damageItem(1, playerIn)
-                        val sound = if (stack.item == Items.FLINT_AND_STEEL) {
-                            SoundEvents.ITEM_FLINTANDSTEEL_USE
-                        } else {
-                            SoundEvents.ITEM_FIRECHARGE_USE
+                    CampfireBlock.setLit(world, pos, true)
+                    if (!playerIn.isCreative) {
+                        when (stack.item) {
+                            Items.FLINT_AND_STEEL -> stack.damageItem(1, playerIn)
+                            Items.FIRE_CHARGE -> stack.shrink(1)
                         }
-                        world.playSound(null, pos, sound, SoundCategory.BLOCKS, 1.0f, 1.0f)
                     }
+                    val sound = if (stack.item == Items.FLINT_AND_STEEL) {
+                        SoundEvents.ITEM_FLINTANDSTEEL_USE
+                    } else {
+                        SoundEvents.ITEM_FIRECHARGE_USE
+                    }
+                    world.playSound(null, pos, sound, SoundCategory.BLOCKS, 1.0f, 1.0f)
                     return true
                 }
             }
