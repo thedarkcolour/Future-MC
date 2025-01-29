@@ -12,6 +12,7 @@ import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.projectile.EntityArrow
 import net.minecraft.init.Blocks
 import net.minecraft.init.Enchantments
 import net.minecraft.init.Items
@@ -113,6 +114,11 @@ class CampfireBlock(properties: Properties) : InteractionBlock(properties) {
         if (FConfig.villageAndPillage.campfire.damage) {
             if (entityIn is EntityLivingBase && !entityIn.isImmuneToFire() && state.getValue(LIT)) {
                 entityIn.attackEntityFrom(DamageSource.IN_FIRE, 1.0f)
+            }
+            if (!worldIn.isRemote && entityIn is EntityArrow && !state.getValue(LIT)) {
+                if (entityIn.isBurning) {
+                    CampfireBlock.setLit(worldIn, pos, true)
+                }
             }
         }
     }
