@@ -218,7 +218,20 @@ class CampfireBlock(properties: Properties) : InteractionBlock(properties) {
         }
 
         fun setLit(worldIn: World, pos: BlockPos, lit: Boolean) {
-            worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(LIT, lit))
+            val oldState = worldIn.getBlockState(pos)
+            val newState = oldState.withProperty(LIT, lit)
+            worldIn.setBlockState(pos, newState)
+    
+            if (!lit) {
+                val tile = worldIn.getTileEntity(pos)
+                if (tile is CampfireTile) {
+                    for (i in 0 until 4) {
+                        tile.cookingTimes[i] = 0
+                    }
+                    tile.markDirty()
+                    worldIn.notifyBlockUpdate(pos, oldState, newState, 3)
+                }
+            }
         }
     }
 }
