@@ -24,7 +24,7 @@ object CampfireEventHandler {
             val world = throwable.world
             val stack = throwable.potion
 
-            if (stack.item === Items.SPLASH_POTION) {
+            if (stack.item === Items.SPLASH_POTION || stack.item === Items.LINGERING_POTION) {
                 val potion = PotionUtils.getPotionFromItem(stack)
                 if (potion === PotionTypes.WATER) {
                     val pos = BlockPos(throwable.posX, throwable.posY, throwable.posZ)
