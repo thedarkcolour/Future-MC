@@ -136,6 +136,10 @@ class CampfireTile : InteractionTile(), ITickable {
         } else if (stack.item.getToolClasses(stack).contains("shovel")) {
             CampfireBlock.setLit(world, pos, false)
             playerIn.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH,1.0F,1.0F)
+            if (!playerIn.isCreative) {
+                stack.damageItem(1, playerIn)
+            }
+            return true
         }
 
         if (state.getValue(CampfireBlock.LIT)) {
