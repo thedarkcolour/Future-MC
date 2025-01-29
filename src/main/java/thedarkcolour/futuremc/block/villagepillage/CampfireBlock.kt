@@ -16,6 +16,11 @@ import net.minecraft.entity.projectile.EntityArrow
 import net.minecraft.init.Blocks
 import net.minecraft.init.Enchantments
 import net.minecraft.init.Items
+import net.minecraft.init.PotionTypes
+import net.minecraft.init.SoundEvents
+import net.minecraft.util.SoundCategory
+import net.minecraft.entity.projectile.EntityPotion
+import net.minecraft.potion.PotionUtils
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
@@ -118,6 +123,16 @@ class CampfireBlock(properties: Properties) : InteractionBlock(properties) {
             if (!worldIn.isRemote && entityIn is EntityArrow && !state.getValue(LIT)) {
                 if (entityIn.isBurning) {
                     CampfireBlock.setLit(worldIn, pos, true)
+                }
+            }
+            if (!worldIn.isRemote && entityIn is EntityPotion && state.getValue(LIT)) {
+                val potionStack = entityIn.potion // Get potion ItemStack
+                if (potionStack.item === Items.SPLASH_POTION) {
+                    val potionType = PotionUtils.getPotionFromItem(potionStack)
+                    if (potionType === PotionTypes.WATER) {
+                        CampfireBlock.setLit(worldIn, pos, false)
+                        worldIn.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0f, 1.0f)
+                    }
                 }
             }
         }
