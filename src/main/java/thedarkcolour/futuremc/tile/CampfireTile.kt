@@ -135,7 +135,7 @@ class CampfireTile : InteractionTile(), ITickable {
                 }
                 stack.item.getToolClasses(stack).contains("shovel") && facing != EnumFacing.DOWN -> {
                     CampfireBlock.setLit(world, pos, false)
-                    playerIn.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, 1.0F, 1.0F)
+                    playerIn.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.5F, 2.0F)
                     if (!playerIn.isCreative) {
                         stack.damageItem(1, playerIn)
                     }
