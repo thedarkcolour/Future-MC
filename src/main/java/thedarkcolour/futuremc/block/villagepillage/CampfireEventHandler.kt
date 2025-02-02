@@ -1,18 +1,20 @@
 package thedarkcolour.futuremc.block.villagepillage
 
-import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.projectile.EntityPotion
+import net.minecraft.entity.projectile.EntitySmallFireball
 import net.minecraft.init.Items
 import net.minecraft.init.PotionTypes
 import net.minecraft.init.SoundEvents
 import net.minecraft.util.SoundCategory
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.RayTraceResult
 import net.minecraft.world.World
 import net.minecraftforge.event.entity.ProjectileImpactEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.block.villagepillage.CampfireBlock.Companion.LIT
+import thedarkcolour.futuremc.block.villagepillage.CampfireBlock.Companion.setLit
 import net.minecraft.potion.PotionUtils
 
 @Mod.EventBusSubscriber(modid = FutureMC.ID)
@@ -34,8 +36,29 @@ object CampfireEventHandler {
         }
     }
 
+    @SubscribeEvent
+    fun onFireballImpact(event: ProjectileImpactEvent) {
+        val projectile = event.entity
+        val world = projectile.world
+        
+        if (projectile is EntitySmallFireball && !world.isRemote) {
+            val hit = event.rayTraceResult
+            
+            if (hit.typeOfHit == RayTraceResult.Type.BLOCK) {
+                val pos = BlockPos(hit.hitVec.x, hit.hitVec.y, hit.hitVec.z)
+                val state = world.getBlockState(pos)
+
+                if (state.block is CampfireBlock && !state.getValue(LIT)) {
+                    setLit(world, pos, true)
+                    projectile.setDead()
+                    event.isCanceled = true
+                }
+            }
+        }
+    }
+
     private fun extinguishNearbyCampfires(world: World, center: BlockPos) {
-        val radius = 1 // Now checks a 3x3 horizontal area (1 block radius)
+        val radius = 1
         for (x in -radius..radius) {
             for (z in -radius..radius) {
                 val pos = center.add(x, 0, z)
