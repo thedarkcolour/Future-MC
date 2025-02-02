@@ -1,5 +1,6 @@
 package thedarkcolour.futuremc.block.villagepillage
 
+import net.minecraft.util.NonNullList
 import net.minecraft.block.Block
 import net.minecraft.block.BlockHorizontal
 import net.minecraft.block.BlockLiquid
@@ -81,13 +82,30 @@ class CampfireBlock(properties: Properties) : InteractionBlock(properties) {
     }
 
     override fun harvestBlock(
-        worldIn: World, player: EntityPlayer, pos: BlockPos, state: IBlockState, te: TileEntity?, stack: ItemStack
+        worldIn: World,
+        player: EntityPlayer,
+        pos: BlockPos,
+        state: IBlockState,
+        te: TileEntity?,
+        stack: ItemStack
     ) {
-        player.addExhaustion(0.005f)
-        harvesters.set(player)
-        val i = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack)
-        dropBlockAsItem(worldIn, pos, state, i)
-        harvesters.set(null)
+    
+        if (!worldIn.isRemote && !player.isCreative) {
+            if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0) {
+                spawnAsEntity(worldIn, pos, ItemStack(this))
+            } else {
+                spawnAsEntity(worldIn, pos, ItemStack(Items.COAL, 2, 1))
+            }
+        }
+    }
+
+    override fun getDrops(
+        drops: NonNullList<ItemStack>,
+        world: IBlockAccess,
+        pos: BlockPos,
+        state: IBlockState,
+        fortune: Int
+    ) {
     }
 
     override fun getItemDropped(state: IBlockState, rand: Random, fortune: Int) = Items.COAL
