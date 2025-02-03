@@ -99,8 +99,10 @@ class SweetBerryBushBlock : BlockFlower("sweet_berry_bush"), IGrowable, IPlantab
                 val dx = abs(entityIn.posX - entityIn.prevPosX)
                 val dz = abs(entityIn.posZ - entityIn.prevPosZ)
                 if (dx >= 0.003 || dz >= 0.003) {
+                    val previousHealth = entityIn.health
                     entityIn.attackEntityFrom(BERRY_BUSH_DAMAGE, 1.0f)
-                    worldIn.playSound(null, pos, FSounds.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, SoundCategory.PLAYERS, 1.0f, 0.8f + worldIn.rand.nextFloat() * 0.4f)
+                    if (entityIn.health < previousHealth) {
+                            worldIn.playSound(null, pos, FSounds.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, SoundCategory.PLAYERS, 1.0f, 0.8f + worldIn.rand.nextFloat() * 0.4f)
                     }
                 }
             }
