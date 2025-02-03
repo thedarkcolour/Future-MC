@@ -329,6 +329,12 @@
             "futuremc:item/sweet_berries/pick_from_bush2"
         ]
     },
+    "entity.player.hurt_sweet_berry_bush": {
+        "sounds": [
+            "futuremc:entity/player/hurt/berrybush_hurt1",
+            "futuremc:entity/player/hurt/berrybush_hurt2"
+        ]
+    },
     "bell_ring": {
         "subtitle": "futuremc.subtitles.bell_ring",
         "sounds": [
