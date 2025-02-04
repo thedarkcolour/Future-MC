@@ -22,10 +22,10 @@ tile.futuremc.stripped_birch_log.name=Tronco de abedul sin corteza
 tile.futuremc.stripped_jungle_log.name=Tronco de jungla sin corteza
 tile.futuremc.stripped_acacia_log.name=Tronco de acacia sin corteza
 tile.futuremc.stripped_dark_oak_log.name=Tronco de roble oscuro sin corteza
-death.attack.sweet_berry_bush=%1$s ha muerto de la forma mas estupida en maicrah
-death.attack.sting=%1$s lo balasiaron los municipales
-death.attack.trident=%1$s se la metieron por %2$s
-death.attack.trident.item=%1$s le metio duro a %2$s con %3$s
+death.attack.sweet_berry_bush=%1$s se pinchó con un arbusto de bayas dulces hasta morir
+death.attack.sting=%1$s fue picado/a hasta la muerte
+death.attack.trident=%1$s fue empalado/a por %2$s
+death.attack.trident.item=%1$s fue empalado/a por %2$s con su %3$s
 
 # Wall
 tile.futuremc.brick_wall.name=Muro de ladrillo
