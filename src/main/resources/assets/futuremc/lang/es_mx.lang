@@ -1,5 +1,6 @@
-# Spanish translations thanks to Lucian
-# Bloques funcionales
+# Spanish translations thanks to Desolate Intention
+
+# Functional Block
 tile.futuremc.lantern.name=Farol
 tile.futuremc.barrel.name=Barril
 tile.futuremc.loom.name=Telar
@@ -8,14 +9,14 @@ tile.futuremc.blast_furnace.name=Alto horno
 tile.futuremc.smoker.name=Ahumador
 tile.futuremc.grindstone.name=Afiladora
 tile.futuremc.composter.name=Compostador
-tile.futuremc.cartography_table.name=Mesa de cartografia
+tile.futuremc.cartography_table.name=Mesa de cartografía
 
-# Plantas
-tile.futuremc.lily_of_the_valley.name=Lirio de valle
+# Plant
+tile.futuremc.lily_of_the_valley.name=Lirio del valle
 tile.futuremc.wither_rose.name=Rosa del Wither
 tile.futuremc.cornflower.name=Aciano
 tile.futuremc.sweet_berry_bush.name=Arbusto de bayas dulces
-tile.futuremc.campfire.name=Hoguera
+tile.futuremc.campfire.name=Fogata
 tile.futuremc.stripped_oak_log.name=Tronco de roble sin corteza
 tile.futuremc.stripped_spruce_log.name=Tronco de abeto sin corteza
 tile.futuremc.stripped_birch_log.name=Tronco de abedul sin corteza
@@ -27,7 +28,7 @@ death.attack.sting=%1$s fue picado/a hasta la muerte
 death.attack.trident=%1$s fue empalado/a por %2$s
 death.attack.trident.item=%1$s fue empalado/a por %2$s con su %3$s
 
-# Paredes
+# Wall
 tile.futuremc.brick_wall.name=Pared de ladrillos
 tile.futuremc.andesite_wall.name=Pared de andesita
 tile.futuremc.diorite_wall.name=Pared de diorita
@@ -35,13 +36,13 @@ tile.futuremc.granite_wall.name=Pared de granito
 tile.futuremc.prismarine_wall.name=Pared de prismarina
 tile.futuremc.stone_brick_wall.name=Pared de ladrillos de piedra
 tile.futuremc.mossy_stone_brick_wall.name=Pared de ladrillos de piedra musgosa
-tile.futuremc.end_stone_brick_wall.name=Pared de piedra del End
+tile.futuremc.end_stone_brick_wall.name=Pared de ladrillos de piedra del End
 tile.futuremc.nether_brick_wall.name=Pared de ladrillos del Nether
 tile.futuremc.sandstone_wall.name=Pared de arenisca
 tile.futuremc.red_sandstone_wall.name=Pared de arenisca roja
 tile.futuremc.red_nether_brick_wall.name=Pared de ladrillos del Nether rojos
 
-# Losas
+# Slab
 tile.futuremc.granite_slab.name=Losa de granito
 tile.futuremc.andesite_slab.name=Losa de andesita
 tile.futuremc.diorite_slab.name=Losa de diorita
@@ -50,8 +51,8 @@ tile.futuremc.polished_andesite_slab.name=Losa de andesita pulida
 tile.futuremc.polished_diorite_slab.name=Losa de diorita pulida
 tile.futuremc.stone_slab.name=Losa de piedra
 tile.futuremc.prismarine_slab.name=Losa de prismarina
-tile.futuremc.dark_prismarine_slab.name=Losa de prismarina oscuro
-tile.futuremc.prismarine_brick_slab.name=Losa de ladrillos de prismarinas
+tile.futuremc.dark_prismarine_slab.name=Losa de prismarina oscura
+tile.futuremc.prismarine_brick_slab.name=Losa de ladrillos de prismarina
 tile.futuremc.smooth_red_sandstone_slab.name=Losa de arenisca roja lisa
 tile.futuremc.smooth_sandstone_slab.name=Losa de arenisca lisa
 tile.futuremc.mossy_stone_brick_slab.name=Losa de ladrillos de piedra musgosa
@@ -60,44 +61,62 @@ tile.futuremc.smooth_quartz_slab.name=Losa de cuarzo liso
 tile.futuremc.red_nether_brick_slab.name=Losa de ladrillos del Nether rojos
 tile.futuremc.end_stone_brick_slab.name=Losa de ladrillos de piedra del End
 tile.futuremc.bamboo.name=Bambú
-tile.futuremc.bee_nest.name=Nido de abejas
-tile.futuremc.beehive.name=Apiario
+tile.futuremc.bee_nest.name=Colmena de abejas
+tile.futuremc.beehive.name=Apiario de abejas
 tile.futuremc.honey_block.name=Bloque de miel
 tile.futuremc.honeycomb_block.name=Bloque de panal
 
-# Bloques decorativos
+# Decorative Block
 tile.futuremc.smooth_stone.name=Piedra lisa
 tile.futuremc.smooth_sandstone.name=Arenisca lisa
 tile.futuremc.smooth_red_sandstone.name=Arenisca roja lisa
-tile.futuremc.smooth_quartz.name=Cuarzo liso
+tile.futuremc.smooth_quartz.name=Bloque de cuarzo liso
 tile.futuremc.soul_soil.name=Tierra de almas
-tile.futuremc.fletching_table.name=Mesa de flechas
+tile.futuremc.fletching_table.name=Mesa de arquería
 tile.futuremc.smithing_table.name=Mesa de herrería
 tile.futuremc.blue_ice.name=Hielo azul
 tile.futuremc.soul_fire_torch.name=Antorcha de almas
-tile.futuremc.soul_fire_lantern.name=Linterna de almas
+tile.futuremc.soul_fire_lantern.name=Farol de almas
 tile.futuremc.acacia_trapdoor.name=Trampilla de acacia
 tile.futuremc.jungle_trapdoor.name=Trampilla de jungla
 tile.futuremc.birch_trapdoor.name=Trampilla de abedul
 tile.futuremc.spruce_trapdoor.name=Trampilla de abeto
 tile.futuremc.dark_oak_trapdoor.name=Trampilla de roble oscuro
 tile.futuremc.bell.name=Campana
-tile.futuremc.acacia_wood.name=Madera de acacia
-tile.futuremc.jungle_wood.name=Madera de jungla
-tile.futuremc.birch_wood.name=Madera de abedul
-tile.futuremc.oak_wood.name=Madera de roble
-tile.futuremc.spruce_wood.name=Madera de abeto
-tile.futuremc.dark_oak_wood.name=Madera de roble oscuro
-tile.futuremc.stripped_acacia_wood.name=Madera de acacia despojada
-tile.futuremc.stripped_jungle_wood.name=Madera de jungla despojada
-tile.futuremc.stripped_birch_wood.name=Madera de abedul despojada
-tile.futuremc.stripped_oak_wood.name=Madera de roble despojada
-tile.futuremc.stripped_spruce_wood.name=Madera de abeto despojada
-tile.futuremc.stripped_dark_oak_wood.name=Madera de roble oscuro despojada
-tile.futuremc.chain.name=Cadenas
-tile.futuremc.ancient_debris.name=Ancient Debris
-tile.futuremc.netherite_block.name=Bloque de Netherita
+tile.futuremc.acacia_wood.name=Leño de acacia
+tile.futuremc.jungle_wood.name=Leño de jungla
+tile.futuremc.birch_wood.name=Leño de abedul
+tile.futuremc.oak_wood.name=Leño de roble
+tile.futuremc.spruce_wood.name=Leño de abeto
+tile.futuremc.dark_oak_wood.name=Leño de roble oscuro
+tile.futuremc.stripped_acacia_wood.name=Tronco de acacia sin corteza
+tile.futuremc.stripped_jungle_wood.name=Tronco de jungla sin corteza
+tile.futuremc.stripped_birch_wood.name=Tronco de abedul sin corteza
+tile.futuremc.stripped_oak_wood.name=Tronco de roble sin corteza
+tile.futuremc.stripped_spruce_wood.name=Tronco de abeto sin corteza
+tile.futuremc.stripped_dark_oak_wood.name=Tronco de roble oscuro sin corteza
+tile.futuremc.chain.name=Cadena
+tile.futuremc.ancient_debris.name=Escombros ancestrales
+tile.futuremc.netherite_block.name=Bloque de netherita
 entity.ItemFrame.name=Marco
+
+# Banner
+item.banner.globe.black=Planeta negro
+item.banner.globe.red=Planeta rojo
+item.banner.globe.green=Planeta verde
+item.banner.globe.brown=Planeta café
+item.banner.globe.blue=Planeta azul
+item.banner.globe.purple=Planeta morado
+item.banner.globe.cyan=Planeta cian
+item.banner.globe.silver=Planeta gris claro
+item.banner.globe.gray=Planeta gris
+item.banner.globe.pink=Planeta rosa
+item.banner.globe.lime=Planeta verde lima
+item.banner.globe.yellow=Planeta amarillo
+item.banner.globe.lightBlue=Planeta azul claro
+item.banner.globe.magenta=Planeta magenta
+item.banner.globe.orange=Planeta naranja
+item.banner.globe.white=Planeta blanco
 
 # Crafting Materials
 item.futuremc.dye.0.name=Tinte blanco
@@ -105,29 +124,29 @@ item.futuremc.dye.1.name=Tinte azul
 item.futuremc.dye.2.name=Tinte café
 item.futuremc.dye.3.name=Tinte negro
 
-# Ítems
+# Item
 item.futuremc.trident.name=Tridente
 item.futuremc.crossbow.name=Ballesta
-item.futuremc.crossbow_loaded.name=Ballesta con flecha
+item.futuremc.crossbow_loaded.name=Ballesta cargada
 item.futuremc.suspicious_stew.name=Sopa sospechosa
 item.futuremc.sweet_berries.name=Bayas dulces
 item.futuremc.bamboo.name=Bambú
-item.futuremc.honey_bottle.name=Botella con miel
+item.futuremc.honey_bottle.name=Botella de miel
 item.futuremc.honeycomb.name=Panal
-item.futuremc.nautilus_shell.name=Caracol
-item.futuremc.pufferfish_bucket.name=Balde con pez globo
-item.futuremc.salmon_bucket.name=Balde con salmon
-item.futuremc.cod_bucket.name=Balde con bacalao
-item.futuremc.tropical_fish_bucket.name=Balde con nemo
+item.futuremc.nautilus_shell.name=Caparazón de nautilo
+item.futuremc.pufferfish_bucket.name=Cubeta con pez globo
+item.futuremc.salmon_bucket.name=Cubeta con salmón
+item.futuremc.cod_bucket.name=Cubeta con bacalao
+item.futuremc.tropical_fish_bucket.name=Cubeta con pez tropical
 item.futuremc.netherite_axe.name=Hacha de netherita
 item.futuremc.netherite_hoe.name=Azada de netherita
 item.futuremc.netherite_pickaxe.name=Pico de netherita
 item.futuremc.netherite_shovel.name=Pala de netherita
 item.futuremc.netherite_sword.name=Espada de netherita
-item.futuremc.netherite_scrap.name=Trozo de netherita
-item.futuremc.netherite_helmet.name=Casco de netherita
+item.futuremc.netherite_scrap.name=Fragmento de netherita
+item.futuremc.netherite_helmet.name=Yelmo de netherita
 item.futuremc.netherite_chestplate.name=Pechera de netherita
-item.futuremc.netherite_leggings.name=Pantalones de netherita
+item.futuremc.netherite_leggings.name=Grebas de netherita
 item.futuremc.netherite_boots.name=Botas de netherita
 item.futuremc.netherite_ingot.name=Lingote de netherita
 item.record.futuremc.pigstep.desc=Pigstep
@@ -142,21 +161,21 @@ container.smoker=Ahumador
 container.grindstone=Reparar y desencantar
 container.stonecutter=Cortapiedras
 container.loom=Telar
-container.smithing=Mesa de herreria
+container.smithing=Mesa de herrería
 
-# Entidad
+# Entity
 entity.futuremc:trident.name=Tridente
 entity.futuremc:panda.name=Panda
 entity.futuremc:bee.name=Abeja
 entity.futuremc:cod.name=Bacalao
-entity.futuremc:pufferfish.name=Pez Globo
-entity.futuremc:salmon.name=Salmon
-entity.futuremc:tropical_fish.name=Pez Tropical
+entity.futuremc:pufferfish.name=Pez globo
+entity.futuremc:salmon.name=Salmón
+entity.futuremc:tropical_fish.name=Pez tropical
 
-# Encantamientos
+# Enchantment
 enchantment.loyalty=Lealtad
 enchantment.channeling=Conductividad
-enchantment.riptide=Propulsión acutica
+enchantment.riptide=Propulsión acuática
 enchantment.impaling=Empalamiento
 enchantment.quick_charge=Carga rápida
 
@@ -164,18 +183,18 @@ enchantment.quick_charge=Carga rápida
 itemGroup.futuremc=Future MC
 
 # JEI
-container.jei.futuremc.campfire.name=Hoguera
-container.jei.futuremc.blast_furnace.name=Horno de presion
+container.jei.futuremc.campfire.name=Fogata
+container.jei.futuremc.blast_furnace.name=Alto horno
 container.jei.futuremc.smoker.name=Ahumador
-container.jei.futuremc.stonecutter.name=Corta piedra
-container.jei.futuremc.smithing.name=Reparar y desencantar
-container.jei.futuremc.composter.name=Compostar
-container.jei.futuremc.campfire.duration=Duracion
+container.jei.futuremc.stonecutter.name=Cortapiedras
+container.jei.futuremc.smithing.name=Mesa de herrería
+container.jei.futuremc.composter.name=Compostador
+container.jei.futuremc.campfire.duration=Duración
 container.jei.futuremc.composter.chance=Probabilidad
 
 # Config
 futuremc.config.blue_ice=Hielo azul
 
 # Vanilla Override
-tile.sandStone.smooth.name=Cortar arenisca
-tile.redSandStone.smooth.name=Cortar arenisca roja
+tile.sandStone.smooth.name=Arenisca lisa
+tile.redSandStone.smooth.name=Arenisca roja lisa

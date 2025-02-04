@@ -1,4 +1,4 @@
-# Bloques funcionales
+# Functional Block
 tile.futuremc.lantern.name=Farol
 tile.futuremc.barrel.name=Barril
 tile.futuremc.loom.name=Telar
@@ -9,7 +9,7 @@ tile.futuremc.grindstone.name=Afiladora
 tile.futuremc.composter.name=Compostador
 tile.futuremc.cartography_table.name=Mesa de cartografía
 
-# Plantas
+# Plant
 tile.futuremc.lily_of_the_valley.name=Convalaria
 tile.futuremc.wither_rose.name=Rosa de Wither
 tile.futuremc.cornflower.name=Aciano
@@ -26,7 +26,7 @@ death.attack.sting=%1$s ha muerto por una picadura de abeja
 death.attack.trident=%1$s ha sido empalado/a por %2$s
 death.attack.trident.item=%1$s ha sido empalado/a por %2$s y su %3$s
 
-# Muros
+# Wall
 tile.futuremc.brick_wall.name=Muro de ladrillos
 tile.futuremc.andesite_wall.name=Muro de andesita
 tile.futuremc.diorite_wall.name=Muro de diorita
@@ -40,7 +40,7 @@ tile.futuremc.sandstone_wall.name=Muro de arenisca
 tile.futuremc.red_sandstone_wall.name=Muro de arenisca roja
 tile.futuremc.red_nether_brick_wall.name=Muro de ladrillos del Nether rojos
 
-# Losas
+# Slab
 tile.futuremc.granite_slab.name=Losa de granito
 tile.futuremc.andesite_slab.name=Losa de andesita
 tile.futuremc.diorite_slab.name=Losa de diorita
@@ -64,7 +64,7 @@ tile.futuremc.beehive.name=Apiario
 tile.futuremc.honey_block.name=Bloque de miel
 tile.futuremc.honeycomb_block.name=Bloque de panal
 
-# Bloques decorativos
+# Decorative Block
 tile.futuremc.smooth_stone.name=Piedra lisa
 tile.futuremc.smooth_sandstone.name=Arenisca lisa
 tile.futuremc.smooth_red_sandstone.name=Arenisca roja lisa
@@ -98,7 +98,7 @@ tile.futuremc.ancient_debris.name=Escombros ancestrales
 tile.futuremc.netherite_block.name=Bloque de netherita
 entity.ItemFrame.name=Marco
 
-# Estandarte
+# Banner
 item.banner.globe.black=Planeta negro
 item.banner.globe.red=Planeta rojo
 item.banner.globe.green=Planeta verde
@@ -116,13 +116,13 @@ item.banner.globe.magenta=Planeta magenta
 item.banner.globe.orange=Planeta naranja
 item.banner.globe.white=Planeta blanco
 
-# Materiales de elaboración
+# Crafting Materials
 item.futuremc.dye.0.name=Tinte blanco
 item.futuremc.dye.1.name=Tinte azul
 item.futuremc.dye.2.name=Tinte marrón
 item.futuremc.dye.3.name=Tinte negro
 
-# Objetos
+# Item
 item.futuremc.trident.name=Tridente
 item.futuremc.crossbow.name=Ballesta
 item.futuremc.crossbow_loaded.name=ballesta con flecha
@@ -174,7 +174,7 @@ container.fmc_villager.journeyman=Oficial
 container.fmc_villager.expert=Experto
 container.fmc_villager.master=Maestro
 
-# Entidades
+# Entity
 entity.futuremc:trident.name=Tridente
 entity.futuremc:panda.name=Panda
 entity.futuremc:bee.name=Abeja
@@ -183,7 +183,7 @@ entity.futuremc:pufferfish.name=Pez globo
 entity.futuremc:salmon.name=Salmón
 entity.futuremc:tropical_fish.name=Pez tropical
 
-# Encantamientos
+# Enchantment
 enchantment.loyalty=Lealtad
 enchantment.futuremc.loyalty.desc=El tridente vuelve después de ser arrojado. Los niveles más altos reducen el tiempo de regreso.
 enchantment.channeling=Conductividad
@@ -195,7 +195,7 @@ enchantment.futuremc.impaling.desc=Inflige daño adicional a los mobs que se gen
 enchantment.quick_charge=Carga rápida
 enchantment.futuremc.quick_charge.desc=Disminuye el tiempo de carga.
 
-# Pestaña creativa
+# Creative Tab
 itemGroup.futuremc=Future MC
 
 # JEI
@@ -208,14 +208,14 @@ container.jei.futuremc.composter.name=Compostaje
 container.jei.futuremc.campfire.duration=Duración
 container.jei.futuremc.composter.chance=Probabilidad
 
-# Configuración
+# Config
 futuremc.config.blue_ice=Hielo azul
 
 # Vanilla Override
 tile.sandStone.smooth.name=Arenisca cortada
 tile.redSandStone.smooth.name=Arenisca roja cortada
 
-# Subtitulos
+# Subtitle
 futuremc.subtitles.barrel_close=Barril cerrado
 futuremc.subtitle.barrel_open=Barril abierto
 futuremc.subtitle.trident_throw=Tridente lanzado
