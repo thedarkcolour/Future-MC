@@ -22,8 +22,9 @@ object CampfireEventHandler {
     @SubscribeEvent
     fun onProjectileImpact(event: ProjectileImpactEvent.Throwable) {
         val throwable = event.throwable
-        if (throwable is EntityPotion) {
-            val world = throwable.world
+        val world = throwable.world
+
+        if (!world.isRemote && throwable is EntityPotion) {
             val stack = throwable.potion
 
             if (stack.item === Items.SPLASH_POTION || stack.item === Items.LINGERING_POTION) {
@@ -41,7 +42,7 @@ object CampfireEventHandler {
         val projectile = event.entity
         val world = projectile.world
         
-        if (projectile is EntitySmallFireball && !world.isRemote) {
+        if (!world.isRemote && projectile is EntitySmallFireball) {
             val hit = event.rayTraceResult
             
             if (hit.typeOfHit == RayTraceResult.Type.BLOCK) {
