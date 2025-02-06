@@ -115,27 +115,70 @@ class CampfireTile : InteractionTile(), ITickable {
             return false
         }
 
+        val isLit = state.getValue(CampfireBlock.LIT)
         val block = world.getBlockState(pos.up()).block
 
-        if (!state.getValue(CampfireBlock.LIT)) {
-            if (stack.item == Items.FLINT_AND_STEEL || stack.item == Items.FIRE_CHARGE) {
-                if (!((block is BlockLiquid) || (block is BlockFluidBase))) {
-                    CampfireBlock.setLit(world, pos, true)
-                    stack.damageItem(1, playerIn)
+        if (isLit && (stack.item == Items.FLINT_AND_STEEL || stack.item == Items.FIRE_CHARGE)) {
+            return true
+        }
+
+        if (isLit && !world.isRemote) {
+            when {
+                stack.item == Items.WATER_BUCKET -> {
+                    CampfireBlock.setLit(world, pos, false)
+                    playerIn.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, 1.0F, 1.0F)
+                    if (!playerIn.isCreative) {
+                        playerIn.setHeldItem(hand, ItemStack(Items.BUCKET))
+                    }
+                    return true
+                }
+                stack.item.getToolClasses(stack).contains("shovel") && facing != EnumFacing.DOWN -> {
+                    CampfireBlock.setLit(world, pos, false)
+                    playerIn.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.5F, 2.0F)
+                    if (!playerIn.isCreative) {
+                        stack.damageItem(1, playerIn)
+                    }
+                    return true
                 }
             }
-        } else if (stack.item.getToolClasses(stack).contains("shovel")) {
-            CampfireBlock.setLit(world, pos, false)
-            playerIn.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH,1.0F,1.0F)
         }
 
-        if (state.getValue(CampfireBlock.LIT)) {
-            if (!world.isRemote) {
-                addItem(if (playerIn.isCreative) stack.copy() else stack)
+        if (!isLit) {
+            if (stack.item == Items.FLINT_AND_STEEL || stack.item == Items.FIRE_CHARGE) {
+                if (!((block is BlockLiquid) || (block is BlockFluidBase))) {
+                    if (!world.isRemote) {
+                        CampfireBlock.setLit(world, pos, true)
+                        if (!playerIn.isCreative) {
+                            when (stack.item) {
+                                Items.FLINT_AND_STEEL -> stack.damageItem(1, playerIn)
+                                Items.FIRE_CHARGE -> stack.shrink(1)
+                            }
+                        }
+                        val sound = if (stack.item == Items.FLINT_AND_STEEL) {
+                            SoundEvents.ITEM_FLINTANDSTEEL_USE
+                        } else {
+                            SoundEvents.ITEM_FIRECHARGE_USE
+                        }
+                        world.playSound(null, pos, sound, SoundCategory.BLOCKS, 1.0f, 1.0f)
+                    }
+                    return true
+                }
             }
         }
 
-        return true
+        if (isLit) {
+            if (!world.isRemote) {
+                val stackToAdd = if (playerIn.isCreative) stack.copy() else stack
+                val success = addItem(stackToAdd)
+                return success
+            } else {
+                val canAdd = CampfireRecipes.getRecipe(stack) != null &&
+                        (0..3).any { inventory.getStackInSlot(it).isEmpty }
+                return canAdd
+            }
+        }
+
+        return false
     }
 
     private fun drop(stack: ItemStack) {
@@ -185,7 +228,7 @@ class CampfireTile : InteractionTile(), ITickable {
         readFromNBT(packet.nbtCompound)
     }
 
-    private fun addItem(stack: ItemStack) {
+    private fun addItem(stack: ItemStack): Boolean {
         for (i in 0..3) {
             if (inventory.getStackInSlot(i).isEmpty) {
                 CampfireRecipes.getRecipe(stack)?.let {
@@ -193,10 +236,11 @@ class CampfireTile : InteractionTile(), ITickable {
                     cookingTimes[i] = 0
                     inventory.setStackInSlot(i, stack.splitStack(1))
                     inventoryChanged()
-                    return
+                    return true
                 }
             }
         }
+        return false
     }
 
     fun dropAllItems() {

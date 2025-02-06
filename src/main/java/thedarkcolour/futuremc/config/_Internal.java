@@ -20,6 +20,8 @@ public final class _Internal {
     public static final FConfig.BuzzyBees buzzyBees = new FConfig.BuzzyBees();
     @Name("Nether Update")
     public static final FConfig.NetherUpdate netherUpdate = new FConfig.NetherUpdate();
+    @Name("Caves & Cliffs")
+    public static final FConfig.CavesNCliffs cavesNCliffs = new FConfig.CavesNCliffs();
     @Name("Use Vanilla Creative Tabs")
     @Comment("Whether this mod's item are displayed in a separate creative tab or sorted into their Vanilla tabs.")
     @RequiresMcRestart

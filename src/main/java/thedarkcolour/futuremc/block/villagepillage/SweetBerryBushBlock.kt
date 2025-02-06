@@ -1,5 +1,6 @@
 package thedarkcolour.futuremc.block.villagepillage
 
+import thedarkcolour.futuremc.registry.FSounds
 import net.minecraft.block.Block
 import net.minecraft.block.IGrowable
 import net.minecraft.block.properties.PropertyInteger
@@ -8,6 +9,9 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.SoundCategory
+import net.minecraft.util.SoundEvent
+import net.minecraft.util.ResourceLocation
 import net.minecraft.init.Biomes
 import net.minecraft.init.Items
 import net.minecraft.item.Item
@@ -52,16 +56,21 @@ class SweetBerryBushBlock : BlockFlower("sweet_berry_bush"), IGrowable, IPlantab
         if (worldIn.isRemote) {
             return true
         }
-        val item = playerIn.getHeldItem(EnumHand.MAIN_HAND).item
-        if (item != Items.DYE || item != Item.getItemFromBlock(SWEET_BERRY_BUSH)) {
-            if (worldIn.getBlockState(pos).block.getMetaFromState(state) == 2) {
-                worldIn.setBlockState(pos, defaultState.withProperty(AGE, 1))
-                Block.spawnAsEntity(worldIn, pos, ItemStack(SWEET_BERRIES))
-            }
-            if (worldIn.getBlockState(pos).block.getMetaFromState(state) == 3) {
-                worldIn.setBlockState(pos, defaultState.withProperty(AGE, 1))
-                Block.spawnAsEntity(worldIn, pos, ItemStack(SWEET_BERRIES, 3))
-            }
+        val stack = playerIn.getHeldItem(hand)
+        val isBonemeal = stack.item == Items.DYE && stack.metadata == 15
+
+        val age = state.getValue(AGE)
+
+        if (age == 3) {
+            worldIn.setBlockState(pos, defaultState.withProperty(AGE, 1))
+            Block.spawnAsEntity(worldIn, pos, ItemStack(SWEET_BERRIES, 2 + worldIn.rand.nextInt(2)))
+            worldIn.playSound(null, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, FSounds.SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0f, 0.8f + worldIn.rand.nextFloat() * 0.4f)
+            return true
+        } else if (age == 2 && !isBonemeal) {
+            worldIn.setBlockState(pos, defaultState.withProperty(AGE, 1))
+            Block.spawnAsEntity(worldIn, pos, ItemStack(SWEET_BERRIES, 1 + worldIn.rand.nextInt(2)))
+            worldIn.playSound(null, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, FSounds.SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0f, 0.8f + worldIn.rand.nextFloat() * 0.4f)
+            return true
         }
         return false
     }
@@ -80,17 +89,21 @@ class SweetBerryBushBlock : BlockFlower("sweet_berry_bush"), IGrowable, IPlantab
     }
 
     override fun onEntityCollision(worldIn: World, pos: BlockPos, state: IBlockState, entityIn: Entity) {
-        if (!worldIn.isRemote && entityIn is EntityLivingBase && entityIn !is EntityBee) {
+        if (entityIn is EntityLivingBase && entityIn !is EntityBee) {
             entityIn.fallDistance = 0.0f
-            entityIn.motionX *= 0.8
-            entityIn.motionY *= 0.75
-            entityIn.motionZ *= 0.8
+            entityIn.motionX *= 0.3405f
+            entityIn.motionY *= 0.3405f
+            entityIn.motionZ *= 0.3405f
 
             if (state.getValue(AGE) > 0 && (entityIn.prevPosX != entityIn.posX || entityIn.prevPosZ != entityIn.posZ)) {
                 val dx = abs(entityIn.posX - entityIn.prevPosX)
                 val dz = abs(entityIn.posZ - entityIn.prevPosZ)
                 if (dx >= 0.003 || dz >= 0.003) {
+                    val previousHealth = entityIn.health
                     entityIn.attackEntityFrom(BERRY_BUSH_DAMAGE, 1.0f)
+                    if (entityIn.health < previousHealth) {
+                            worldIn.playSound(null, pos, FSounds.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, SoundCategory.PLAYERS, 1.0f, 0.8f + worldIn.rand.nextFloat() * 0.4f)
+                    }
                 }
             }
         }

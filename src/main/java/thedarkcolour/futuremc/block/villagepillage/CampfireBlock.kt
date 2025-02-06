@@ -1,5 +1,6 @@
 package thedarkcolour.futuremc.block.villagepillage
 
+import net.minecraft.util.NonNullList
 import net.minecraft.block.Block
 import net.minecraft.block.BlockHorizontal
 import net.minecraft.block.BlockLiquid
@@ -12,9 +13,15 @@ import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.projectile.EntityArrow
 import net.minecraft.init.Blocks
 import net.minecraft.init.Enchantments
 import net.minecraft.init.Items
+import net.minecraft.init.PotionTypes
+import net.minecraft.init.SoundEvents
+import net.minecraft.util.SoundCategory
+import net.minecraft.entity.projectile.EntityPotion
+import net.minecraft.potion.PotionUtils
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
@@ -75,13 +82,30 @@ class CampfireBlock(properties: Properties) : InteractionBlock(properties) {
     }
 
     override fun harvestBlock(
-        worldIn: World, player: EntityPlayer, pos: BlockPos, state: IBlockState, te: TileEntity?, stack: ItemStack
+        worldIn: World,
+        player: EntityPlayer,
+        pos: BlockPos,
+        state: IBlockState,
+        te: TileEntity?,
+        stack: ItemStack
     ) {
-        player.addExhaustion(0.005f)
-        harvesters.set(player)
-        val i = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack)
-        dropBlockAsItem(worldIn, pos, state, i)
-        harvesters.set(null)
+    
+        if (!worldIn.isRemote && !player.isCreative) {
+            if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0) {
+                spawnAsEntity(worldIn, pos, ItemStack(this))
+            } else {
+                spawnAsEntity(worldIn, pos, ItemStack(Items.COAL, 2, 1))
+            }
+        }
+    }
+
+    override fun getDrops(
+        drops: NonNullList<ItemStack>,
+        world: IBlockAccess,
+        pos: BlockPos,
+        state: IBlockState,
+        fortune: Int
+    ) {
     }
 
     override fun getItemDropped(state: IBlockState, rand: Random, fortune: Int) = Items.COAL
@@ -113,6 +137,21 @@ class CampfireBlock(properties: Properties) : InteractionBlock(properties) {
         if (FConfig.villageAndPillage.campfire.damage) {
             if (entityIn is EntityLivingBase && !entityIn.isImmuneToFire() && state.getValue(LIT)) {
                 entityIn.attackEntityFrom(DamageSource.IN_FIRE, 1.0f)
+            }
+            if (!worldIn.isRemote && entityIn is EntityArrow && !state.getValue(LIT)) {
+                if (entityIn.isBurning) {
+                    CampfireBlock.setLit(worldIn, pos, true)
+                }
+            }
+            if (!worldIn.isRemote && entityIn is EntityPotion && state.getValue(LIT)) {
+                val potionStack = entityIn.potion // Get potion ItemStack
+                if (potionStack.item === Items.SPLASH_POTION) {
+                    val potionType = PotionUtils.getPotionFromItem(potionStack)
+                    if (potionType === PotionTypes.WATER) {
+                        CampfireBlock.setLit(worldIn, pos, false)
+                        worldIn.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0f, 1.0f)
+                    }
+                }
             }
         }
     }
@@ -218,7 +257,20 @@ class CampfireBlock(properties: Properties) : InteractionBlock(properties) {
         }
 
         fun setLit(worldIn: World, pos: BlockPos, lit: Boolean) {
-            worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(LIT, lit))
+            val oldState = worldIn.getBlockState(pos)
+            val newState = oldState.withProperty(LIT, lit)
+            worldIn.setBlockState(pos, newState)
+    
+            if (!lit) {
+                val tile = worldIn.getTileEntity(pos)
+                if (tile is CampfireTile) {
+                    for (i in 0 until 4) {
+                        tile.cookingTimes[i] = 0
+                    }
+                    tile.markDirty()
+                    worldIn.notifyBlockUpdate(pos, oldState, newState, 3)
+                }
+            }
         }
     }
 }

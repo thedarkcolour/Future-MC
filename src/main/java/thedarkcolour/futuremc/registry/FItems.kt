@@ -146,7 +146,9 @@ object FItems {
     val CHAIN = ModeledItemBlock(FBlocks.CHAIN)
     val NETHERITE_BLOCK = FireproofItemBlock(FBlocks.NETHERITE_BLOCK)
     val ANCIENT_DEBRIS = FireproofItemBlock(FBlocks.ANCIENT_DEBRIS)
-    val RECORD_PIGSTEP = RecordItem("futuremc.pigstep", FSounds.RECORD_PIGSTEP).setItemGroup(CreativeTabs.MISC)
+    val RECORD_PIGSTEP = RecordItem("pigstep", FSounds.RECORD_PIGSTEP).setItemGroup(CreativeTabs.MISC)
+    val RECORD_OTHERSIDE = RecordItem("otherside", FSounds.RECORD_OTHERSIDE).setItemGroup(CreativeTabs.MISC)
+
 
     fun registerItems(items: IForgeRegistry<Item>) {
         if (FConfig.villageAndPillage.dyes) items.register(DYES)
@@ -273,6 +275,8 @@ object FItems {
             items.registerAll(NETHERITE_BLOCK, ANCIENT_DEBRIS)
         if (FConfig.netherUpdate.pigstep)
             items.register(RECORD_PIGSTEP)
+        if (FConfig.cavesNCliffs.otherside)
+            items.register(RECORD_OTHERSIDE)
 
         //register(ItemSeagrass(), FConfig.updateAquatic.seagrass)
 
