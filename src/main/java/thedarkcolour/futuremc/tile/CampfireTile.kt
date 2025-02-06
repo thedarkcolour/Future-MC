@@ -122,8 +122,7 @@ class CampfireTile : InteractionTile(), ITickable {
             return true
         }
 
-        if (isLit) {
-            
+        if (isLit && !world.isRemote) {
             when {
                 stack.item == Items.WATER_BUCKET -> {
                     CampfireBlock.setLit(world, pos, false)
