@@ -1,5 +1,11 @@
 {
     "type": "minecraft:crafting_shapeless",
+    "conditions": [
+        {
+            "type": "minecraft:item_exists",
+            "item": "futuremc:netherite_block"
+        }
+    ],
     "result": {
         "item": "netherite_ingot",
         "count": 9
