@@ -1,4 +1,11 @@
 {
+    
+    "conditions": [
+        {
+            "type": "minecraft:item_exists",
+            "item": "futuremc:stripped_dark_oak_log"
+        }
+    ],
     "result": {
         "item": "minecraft:planks",
         "data": 5,

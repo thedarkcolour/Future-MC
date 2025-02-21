@@ -1,5 +1,11 @@
 {
     "type": "minecraft:crafting_shaped",
+    "conditions": [
+        {
+            "type": "minecraft:item_exists",
+            "item": "futuremc:composter"
+        }
+    ],
     "pattern": [
         "x x",
         "x x",

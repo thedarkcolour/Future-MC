@@ -1,5 +1,11 @@
 {
     "type": "minecraft:crafting_shaped",
+    "conditions": [
+        {
+            "type": "minecraft:item_exists",
+            "item": "futuremc:red_nether_brick_wall"
+        }
+    ],
     "pattern": [
         "   ",
         "aaa",
