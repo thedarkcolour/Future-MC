@@ -2,6 +2,7 @@ package thedarkcolour.futuremc.block.villagepillage
 
 import git.jbredwards.fluidlogged_api.api.block.IFluidloggable
 import net.minecraft.block.Block
+import net.minecraft.block.BlockEndPortalFrame
 import net.minecraft.block.BlockHopper
 import net.minecraft.block.BlockTrapDoor
 import net.minecraft.block.properties.PropertyBool
@@ -55,10 +56,37 @@ class LanternBlock(properties: Properties) : FBlock(properties), IFluidloggable 
     }
 
     private fun isValidPos(worldIn: World, pos: BlockPos, facing: EnumFacing): Boolean {
+        // Check for hanging_sign support
+        if (facing == EnumFacing.UP) {
+            val aboveBlock = worldIn.getBlockState(pos.offset(facing)).block
+            if (aboveBlock.registryName?.path?.contains("hanging_sign") == true) {
+                return true
+            }
+        }
+
         // position of the clicked block
         val pos1 = pos.offset(facing)
         // clicked block
         val state = worldIn.getBlockState(pos1)
+
+        // Fix crash with End Portal Frame
+        if (state.block is BlockEndPortalFrame) {
+            return false
+        }
+
+        // Fix slab logic: only allow placement on top half of slabs
+        if (state.block is BlockSlab) {
+            // Check down
+            if (facing == EnumFacing.DOWN) {
+                if (state.properties.containsKey(BlockSlab.HALF)) {
+                    // Slabs have a "half" property
+                    if (state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM) {
+                        return false // Disallow placement on bottom half
+                    }
+                }
+                return true
+            }
+        }
 
         val bounds = arrayListOf<AxisAlignedBB>()
         state.addCollisionBoxToList(worldIn, BlockPos.ORIGIN, AxisAlignedBB(BlockPos.ORIGIN), bounds, null, false)
