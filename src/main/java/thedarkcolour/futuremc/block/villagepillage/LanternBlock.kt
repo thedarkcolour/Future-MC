@@ -2,6 +2,7 @@ package thedarkcolour.futuremc.block.villagepillage
 
 import git.jbredwards.fluidlogged_api.api.block.IFluidloggable
 import net.minecraft.block.Block
+import net.minecraft.block.BlockEndPortalFrame
 import net.minecraft.block.BlockHopper
 import net.minecraft.block.BlockTrapDoor
 import net.minecraft.block.properties.PropertyBool
@@ -59,6 +60,33 @@ class LanternBlock(properties: Properties) : FBlock(properties), IFluidloggable 
         val pos1 = pos.offset(facing)
         // clicked block
         val state = worldIn.getBlockState(pos1)
+        val block = state.block
+
+        // Fix crash with End Portal Frame
+        if (block is BlockEndPortalFrame) {
+            return false
+        }
+
+        // Fix slab logic: only allow placement on top half of slabs
+        if (block is BlockSlab) {
+            // Check down
+            if (facing == EnumFacing.DOWN) {
+                if (state.properties.containsKey(BlockSlab.HALF)) {
+                    // Slabs have a "half" property
+                    if (state.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.BOTTOM) {
+                        return false // Disallow placement on bottom half
+                    }
+                }
+                return true
+            }
+        }
+
+        // Check for hanging_sign support
+        if (facing == EnumFacing.UP) {
+            if (block.registryName?.path?.contains("hanging_sign") == true) {
+                return true
+            }
+        }
 
         val bounds = arrayListOf<AxisAlignedBB>()
         state.addCollisionBoxToList(worldIn, BlockPos.ORIGIN, AxisAlignedBB(BlockPos.ORIGIN), bounds, null, false)
@@ -90,14 +118,14 @@ class LanternBlock(properties: Properties) : FBlock(properties), IFluidloggable 
         }
 
         // hoppers are dumb
-        if (facing == EnumFacing.UP && state.block is BlockHopper) {
+        if (facing == EnumFacing.UP && block is BlockHopper) {
             if (state.getValue(BlockHopper.FACING) == EnumFacing.DOWN) {
                 return true
             }
         }
 
         // trapdoors are also dumb
-        if (state.block is BlockTrapDoor && isTrapdoorValid(state, facing.opposite)) {
+        if (block is BlockTrapDoor && isTrapdoorValid(state, facing.opposite)) {
             return true
         }
 
