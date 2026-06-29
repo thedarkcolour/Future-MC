@@ -15,14 +15,7 @@ import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
 import thedarkcolour.futuremc.entity.bee.BeeRenderer
 import thedarkcolour.futuremc.entity.bee.EntityBee
-import thedarkcolour.futuremc.entity.fish.cod.EntityCod
-import thedarkcolour.futuremc.entity.fish.cod.RenderCod
-import thedarkcolour.futuremc.entity.fish.pufferfish.EntityPufferfish
-import thedarkcolour.futuremc.entity.fish.pufferfish.RenderPufferfish
-import thedarkcolour.futuremc.entity.fish.salmon.EntitySalmon
-import thedarkcolour.futuremc.entity.fish.salmon.RenderSalmon
-import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
-import thedarkcolour.futuremc.entity.fish.tropical.RenderTropicalFish
+// 移除所有 fish 相关的 import
 import thedarkcolour.futuremc.entity.irongolem.LayerIronGolemCrack
 import thedarkcolour.futuremc.entity.panda.EntityPanda
 import thedarkcolour.futuremc.entity.panda.RenderPanda
@@ -39,43 +32,27 @@ object FEntities {
             registerEntity("bee", EntityBee::class.java, 32, 4, 16770398, 2500144)
         }
 
-        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
-            if (FConfig.updateAquatic.fish.cod.enabled) {
-                registerEntity("cod", EntityCod::class.java, 32, 5, 12691306, 15058059)
-                LootTableList.register(EntityCod.LOOT_TABLE)
-            }
-            if (FConfig.updateAquatic.fish.pufferfish.enabled) {
-                registerEntity("pufferfish", EntityPufferfish::class.java, 32, 6, 16167425, 3654642)
-                LootTableList.register(EntityPufferfish.LOOT_TABLE)
-            }
-            if (FConfig.updateAquatic.fish.salmon.enabled) {
-                registerEntity("salmon", EntitySalmon::class.java, 32, 7, 10489616, 951412)
-                LootTableList.register(EntitySalmon.LOOT_TABLE)
-            }
-            if (FConfig.updateAquatic.fish.tropicalFish.enabled) {
-                registerEntity("tropical_fish", EntityTropicalFish::class.java, 32, 8, 15690005, 16775663)
-                LootTableList.register(EntityTropicalFish.LOOT_TABLE)
-            }
-        }
+        // 移除所有鱼类注册代码
+        // if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
+        //     if (FConfig.updateAquatic.fish.cod.enabled) {
+        //         registerEntity("cod", EntityCod::class.java, 32, 5, 12691306, 15058059)
+        //         LootTableList.register(EntityCod.LOOT_TABLE)
+        //     }
+        //     ...
+        // }
     }
 
     fun registerEntityRenderers() {
         // Trident renderer registration removed
 
-        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
-            if (FConfig.updateAquatic.fish.cod.enabled) {
-                registerEntityModel { RenderCod(it) }
-            }
-            if (FConfig.updateAquatic.fish.pufferfish.enabled) {
-                registerEntityModel { RenderPufferfish(it) }
-            }
-            if (FConfig.updateAquatic.fish.salmon.enabled) {
-                registerEntityModel { RenderSalmon(it) }
-            }
-            if (FConfig.updateAquatic.fish.tropicalFish.enabled) {
-                registerEntityModel { RenderTropicalFish(it) }
-            }
-        }
+        // 移除所有鱼类渲染器注册
+        // if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
+        //     if (FConfig.updateAquatic.fish.cod.enabled) {
+        //         registerEntityModel { RenderCod(it) }
+        //     }
+        //     ...
+        // }
+
         if (FConfig.villageAndPillage.panda && FConfig.villageAndPillage.bamboo.enabled) {
             registerEntityModel { RenderPanda(it) }
         }
