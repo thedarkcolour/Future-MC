@@ -30,10 +30,11 @@ import thedarkcolour.futuremc.compat.checkBetterWithMods
 import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig.updateAquatic
 import thedarkcolour.futuremc.config.FConfig.useVanillaCreativeTabs
-import thedarkcolour.futuremc.entity.fish.cod.EntityCod
-import thedarkcolour.futuremc.entity.fish.pufferfish.EntityPufferfish
-import thedarkcolour.futuremc.entity.fish.salmon.EntitySalmon
-import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
+// 移除鱼类实体导入
+// import thedarkcolour.futuremc.entity.fish.cod.EntityCod
+// import thedarkcolour.futuremc.entity.fish.pufferfish.EntityPufferfish
+// import thedarkcolour.futuremc.entity.fish.salmon.EntitySalmon
+// import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
 import thedarkcolour.futuremc.item.ItemGroup
 
 object RegistryEventHandler {
@@ -60,9 +61,11 @@ object RegistryEventHandler {
 
     // Enchantment registration removed
 
-    // Go after other biomes so we can add fish to them
+    // 移除鱼类生物群系生成逻辑
     @SubscribeEvent(priority = EventPriority.LOWEST)
     fun onBiomeRegistryComplete(event: RegistryEvent.Register<Biome>) {
+        // 鱼生成逻辑已移除
+        /*
         val fishConfig = updateAquatic.fish
         val logMissing = fishConfig.logMissingValidBiomes
         val classes = arrayOf(
@@ -95,20 +98,7 @@ object RegistryEventHandler {
                 }
             }
         }
-/*
-        for (biome in event.registry) {
-            runOnClient {
-                val waterColor = when (biome.waterColor) {
-                    0xffffff -> 0x3f76e4 // regular water
-                    0xe0ffae -> 0x617b64 // swamp water
-                    else -> biome.waterColor
-                }
-
-                // Use the Obj2IntMap function because Kotlin is weird about the overloads
-                @Suppress("ReplacePutWithAssignment")
-                WaterColor.BIOME_COLORS.put(biome.delegate, waterColor)
-            }
-        }*/
+        */
     }
 
     @SubscribeEvent
