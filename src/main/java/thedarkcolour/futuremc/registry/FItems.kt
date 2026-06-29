@@ -14,10 +14,11 @@ import thedarkcolour.futuremc.FutureMC
 import thedarkcolour.futuremc.compat.OE
 import thedarkcolour.futuremc.compat.isModLoaded
 import thedarkcolour.futuremc.config.FConfig
-import thedarkcolour.futuremc.entity.fish.cod.EntityCod
-import thedarkcolour.futuremc.entity.fish.pufferfish.EntityPufferfish
-import thedarkcolour.futuremc.entity.fish.salmon.EntitySalmon
-import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
+// 移除鱼类实体导入
+// import thedarkcolour.futuremc.entity.fish.cod.EntityCod
+// import thedarkcolour.futuremc.entity.fish.pufferfish.EntityPufferfish
+// import thedarkcolour.futuremc.entity.fish.salmon.EntitySalmon
+// import thedarkcolour.futuremc.entity.fish.tropical.EntityTropicalFish
 import thedarkcolour.futuremc.item.*
 
 /**
@@ -32,10 +33,11 @@ object FItems {
     val NAUTILUS_SHELL = ModeledItem("nautilus_shell").setItemGroup(CreativeTabs.MISC)
     val SCUTE = ModeledItem("scute").setItemGroup(CreativeTabs.MATERIALS)
     // val TRIDENT = TridentItem()  // Removed
-    val PUFFERFISH_BUCKET = FishBucketItem("pufferfish_bucket") { EntityPufferfish(it) }
-    val COD_BUCKET = FishBucketItem("cod_bucket") { EntityCod(it) }
-    val TROPICAL_FISH_BUCKET = FishBucketItem("tropical_fish_bucket") { EntityTropicalFish(it) }
-    val SALMON_BUCKET = FishBucketItem("salmon_bucket") { EntitySalmon(it) }
+    // 移除鱼类桶物品
+    // val PUFFERFISH_BUCKET = FishBucketItem("pufferfish_bucket") { EntityPufferfish(it) }
+    // val COD_BUCKET = FishBucketItem("cod_bucket") { EntityCod(it) }
+    // val TROPICAL_FISH_BUCKET = FishBucketItem("tropical_fish_bucket") { EntityTropicalFish(it) }
+    // val SALMON_BUCKET = FishBucketItem("salmon_bucket") { EntitySalmon(it) }
 
     val DYES = ItemDye()
     val BANNER_PATTERN = BannerPatternItem()
@@ -160,13 +162,18 @@ object FItems {
         if (FConfig.villageAndPillage.sweetBerryBush.enabled) items.register(SWEET_BERRIES)
         if (FConfig.villageAndPillage.suspiciousStew) items.register(SUSPICIOUS_STEW)
         if (FConfig.villageAndPillage.bamboo.enabled) items.register(BAMBOO)
-        if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
-            if (FConfig.updateAquatic.fish.pufferfish.enabled) items.register(PUFFERFISH_BUCKET)
-            if (FConfig.updateAquatic.fish.salmon.enabled) items.register(SALMON_BUCKET)
-            if (FConfig.updateAquatic.fish.cod.enabled) items.register(COD_BUCKET)
-            if (FConfig.updateAquatic.fish.tropicalFish.enabled) items.register(TROPICAL_FISH_BUCKET)
-            if (FConfig.updateAquatic.nautilusShell) items.register(NAUTILUS_SHELL)
-        }
+        
+        // 移除鱼类桶物品注册
+        // if (!isModLoaded(OE) || !FConfig.updateAquatic.oceanicExpanse) {
+        //     if (FConfig.updateAquatic.fish.pufferfish.enabled) items.register(PUFFERFISH_BUCKET)
+        //     if (FConfig.updateAquatic.fish.salmon.enabled) items.register(SALMON_BUCKET)
+        //     if (FConfig.updateAquatic.fish.cod.enabled) items.register(COD_BUCKET)
+        //     if (FConfig.updateAquatic.fish.tropicalFish.enabled) items.register(TROPICAL_FISH_BUCKET)
+        //     if (FConfig.updateAquatic.nautilusShell) items.register(NAUTILUS_SHELL)
+        // }
+        
+        // 保留 NAUTILUS_SHELL 的注册（如果需要的话，可以单独控制）
+        if (FConfig.updateAquatic.nautilusShell) items.register(NAUTILUS_SHELL)
 
 
         if (FutureMC.DEBUG) items.register(DEBUGGER)
