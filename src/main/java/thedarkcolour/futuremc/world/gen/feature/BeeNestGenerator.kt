@@ -116,10 +116,10 @@ object BeeNestGenerator {
 
     private fun hasNoFlowersNearby(worldIn: World, pos: BlockPos): Boolean {
         val startX = pos.x - 2
-        val startY = pos.x - 1
+        val startY = pos.y - 1
         val startZ = pos.z - 2
         val endX   = pos.x + 2
-        val endY   = pos.x + 1
+        val endY   = pos.y + 1
         val endZ   = pos.z + 2
 
         if (worldIn.isAreaLoaded(startX, startY, startZ, endX, endY, endZ, true)) {
