@@ -31,7 +31,9 @@ class GameModeSwitchPacket() : IMessage {
             val playerIn = ctx.serverHandler.player
 
             if (message.gameType != GameType.NOT_SET && playerIn.canUseCommand(2, "gamemode")) {
-                playerIn.setGameType(message.gameType)
+                playerIn.serverWorld.addScheduledTask {
+                    playerIn.setGameType(message.gameType)
+                }
                 val text = TextComponentTranslation("gameMode." + message.gameType.getName(), *arrayOfNulls<Any>(0))
 
                 if (playerIn.world.gameRules.getBoolean("sendCommandFeedback")) {
