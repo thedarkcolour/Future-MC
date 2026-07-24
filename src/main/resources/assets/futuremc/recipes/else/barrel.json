@@ -1,4 +1,10 @@
 {
+    "conditions": [
+        {
+            "type": "minecraft:item_exists",
+            "item": "futuremc:barrel"
+        }
+    ],
     "type": "minecraft:crafting_shaped",
     "pattern": [
         "xax",

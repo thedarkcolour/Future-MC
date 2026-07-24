@@ -1,5 +1,11 @@
 {
     "type": "minecraft:crafting_shaped",
+    "conditions": [
+        {
+            "type": "minecraft:item_exists",
+            "item": "futuremc:end_stone_brick_wall"
+        }
+    ],
     "pattern": [
         "   ",
         "aaa",
